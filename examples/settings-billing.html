@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Original Syntyr SaaS settings and billing composition; native HTML, responsive CSS, no JavaScript or live payment actions.">
+  <title>Northstar settings — Syntyr CSS</title>
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="../dist/syntyr.recipes.css">
+  <link rel="stylesheet" href="settings-billing.css">
+</head>
+<body class="syn-root syn-page settings-showcase" data-syn-theme="studio" data-syn-density="compact" data-syn-intensity="quiet">
+  <a class="syn-button settings-skip" href="#settings-main">Skip to content</a>
+  <div class="syn-app-shell">
+    <aside class="syn-app-rail settings-global-rail" aria-label="Workspace navigation">
+      <div class="settings-identity">
+        <span class="settings-mark" aria-hidden="true">N</span>
+        <div><strong>Northstar</strong><span class="syn-caption">Sample workspace</span></div>
+      </div>
+      <a class="settings-search" href="command-launcher.html"><span aria-hidden="true">⌕</span> View command launcher example</a>
+      <nav class="syn-app-nav" aria-label="Workspace">
+        <a href="#settings-main">Workspace settings</a>
+        <a href="#plans" aria-current="page">Billing</a>
+        <a href="#usage">Usage</a>
+        <a href="#team">Team</a>
+        <a href="#invoices">Invoices</a>
+        <a href="#account">Account</a>
+        <a href="#communication">Communication</a>
+      </nav>
+      <div class="settings-global-footer">
+        <p class="syn-caption">Illustrative interface · no live account</p>
+        <div class="settings-user"><span class="settings-avatar" aria-hidden="true">AC</span>
+          <div><strong>Alex Chen</strong><span class="syn-caption">Workspace administrator</span></div>
+        </div>
+      </div>
+    </aside>
+    <main id="settings-main" class="syn-workspace settings-main">
+      <header class="settings-header">
+        <div class="settings-header-name"><span class="syn-caption">NORTHSTAR / SETTINGS</span><h1>Settings</h1></div>
+        <nav class="syn-nav-tabs" aria-label="Settings categories">
+          <ul>
+            <li><a href="#plans" aria-current="location">Billing</a></li>
+            <li><a href="#account">Account</a></li>
+            <li><a href="#communication">Communication</a></li>
+          </ul>
+        </nav>
+      </header>
+      <div class="settings-body">
+        <aside class="settings-local-rail" aria-label="Billing sections">
+          <nav class="settings-local-nav" aria-label="Billing">
+            <a href="#plans" aria-current="location">Plans &amp; products</a>
+            <a href="#usage">Usage</a>
+            <a href="#invoices">Payments &amp; invoices</a>
+            <a href="#team">Team management</a>
+          </nav>
+        </aside>
+        <div class="settings-content">
+          <section id="plans" class="settings-section syn-region" aria-labelledby="plans-title">
+            <div class="settings-section-heading">
+              <div><p class="syn-caption">SUBSCRIPTION</p><h2 id="plans-title">Plans &amp; products</h2>
+                <p class="syn-muted">Choose a plan as your team grows. Sample prices are illustrative.</p></div>
+              <span class="syn-status syn-status--success">Current plan: Advanced</span>
+            </div>
+            <div class="settings-plan-panel">
+              <div class="settings-plan-toolbar">
+                <div><h3>Choose your plan</h3><p class="syn-muted">Compare individual seats. Plan changes are disabled in this static demo.</p></div>
+                <fieldset class="settings-cycle">
+                  <legend>Billing interval</legend>
+                  <label><input id="cycle-monthly" type="radio" name="billing-cycle" value="monthly"> Monthly</label>
+                  <label><input id="cycle-yearly" type="radio" name="billing-cycle" value="yearly" checked> Yearly</label>
+                </fieldset>
+              </div>
+              <p class="settings-discount">Save 20% compared with monthly billing when billed yearly.</p>
+              <div class="syn-pricing settings-plans" role="group" aria-label="Illustrative developer plans">
+                <article class="syn-price-card settings-price-card">
+                  <div class="settings-plan-title"><h4>Essentials</h4><span class="syn-caption">For focused work</span></div>
+                  <div class="settings-price-box">
+                    <p class="syn-price-value settings-price--monthly">$30 <small>/ developer / month</small></p>
+                    <p class="syn-price-value settings-price--yearly">$24 <small>/ developer / month</small></p>
+                    <p class="settings-price--monthly syn-caption">Billed monthly · $30 per developer</p>
+                    <p class="settings-price--yearly syn-caption">Billed annually · $288 per developer / year</p>
+                  </div>
+                  <button class="syn-button settings-plan-button" type="button" disabled>Switch to Essentials</button>
+                  <p class="syn-caption">Includes:</p>
+                  <ul class="syn-feature-list">
+                    <li>Code quality overview</li>
+                    <li>Repository reports</li>
+                    <li>Team notifications</li>
+                    <li>Saved review filters</li>
+                  </ul>
+                </article>
+                <article class="syn-price-card settings-price-card">
+                  <div class="settings-plan-title"><h4>Team</h4><span class="syn-caption">For collaborative teams</span></div>
+                  <div class="settings-price-box">
+                    <p class="syn-price-value settings-price--monthly">$60 <small>/ developer / month</small></p>
+                    <p class="syn-price-value settings-price--yearly">$48 <small>/ developer / month</small></p>
+                    <p class="settings-price--monthly syn-caption">Billed monthly · $60 per developer</p>
+                    <p class="settings-price--yearly syn-caption">Billed annually · $576 per developer / year</p>
+                  </div>
+                  <button class="syn-button settings-plan-button" type="button" disabled>Switch to Team</button>
+                  <p class="syn-caption">Everything in Essentials, plus:</p>
+                  <ul class="syn-feature-list">
+                    <li>Shared quality dashboards</li>
+                    <li>Custom team checks</li>
+                    <li>Issue planning</li>
+                    <li>Advanced reporting</li>
+                  </ul>
+                </article>
+                <article class="syn-price-card settings-price-card" data-syn-featured>
+                  <div class="settings-plan-title"><h4>Advanced</h4><span class="syn-status syn-status--success">Current plan</span></div>
+                  <div class="settings-price-box">
+                    <p class="syn-price-value settings-price--monthly">$90 <small>/ developer / month</small></p>
+                    <p class="syn-price-value settings-price--yearly">$72 <small>/ developer / month</small></p>
+                    <p class="settings-price--monthly syn-caption">Billed monthly · $90 per developer</p>
+                    <p class="settings-price--yearly syn-caption">Billed annually · $864 per developer / year</p>
+                  </div>
+                  <p class="settings-current-plan">Advanced is your current sample plan.</p>
+                  <p class="syn-caption">Everything in Team, plus:</p>
+                  <ul class="syn-feature-list">
+                    <li>Continuous security oversight</li>
+                    <li>Organization policy controls</li>
+                    <li>Priority review workflows</li>
+                    <li>Higher included capacity</li>
+                  </ul>
+                </article>
+              </div>
+              <section id="enterprise" class="settings-enterprise" aria-labelledby="enterprise-title">
+                <div><h3 id="enterprise-title">Enterprise</h3><p class="syn-muted">Institutional controls, dedicated support, and custom deployment needs.</p></div>
+                <a class="syn-button syn-button--outline" href="#team">Explore team settings</a>
+              </section>
+            </div>
+            <p class="settings-disclaimer syn-caption">Demonstration only: pricing, plans, subscribers, invoices and users are fictional. No payment processing, checkout, subscription mutation, or account persistence is implemented.</p>
+          </section>
+          <section id="usage" class="syn-app-card settings-detail" aria-labelledby="usage-title">
+            <div class="syn-app-card-header"><h2 id="usage-title">Usage</h2><span class="syn-caption">Sample activity</span></div>
+            <label for="review-usage" class="syn-label">Review capacity — 62 of 100 units</label>
+            <progress class="syn-meter" id="review-usage" value="62" max="100">62%</progress>
+            <p class="syn-muted">Illustrative usage only. An application must supply actual metering data.</p>
+          </section>
+          <section id="invoices" class="syn-app-card settings-detail" aria-labelledby="invoices-title">
+            <div class="syn-app-card-header"><h2 id="invoices-title">Payments &amp; invoices</h2><span class="syn-caption">Fictional billing record</span></div>
+            <div class="syn-table-wrap" role="region" aria-label="Illustrative invoice history; scroll horizontally if needed" tabindex="0">
+              <table class="syn-table"><caption>Sample invoice history</caption><thead><tr><th scope="col">Invoice</th><th scope="col">Date</th><th scope="col">Status</th><th scope="col">Amount</th></tr></thead>
+                <tbody><tr><th scope="row">INV-1042</th><td><time datetime="2026-11-01">Nov 1, 2026</time></td><td>Paid (sample)</td><td>$864</td></tr></tbody></table>
+            </div>
+          </section>
+          <section id="team" class="syn-app-card settings-detail" aria-labelledby="team-title">
+            <div class="syn-app-card-header"><h2 id="team-title">Team management</h2><span class="syn-caption">Example organization</span></div>
+            <dl class="syn-record-fields"><div><dt>Seats</dt><dd>1 sample administrator</dd></div><div><dt>Billing model</dt><dd>Per developer</dd></div></dl>
+          </section>
+          <section id="account" class="syn-app-card settings-detail" aria-labelledby="account-title">
+            <h2 id="account-title">Account</h2><p class="syn-muted">Identity and preferences are managed by the host application, not this CSS example.</p>
+          </section>
+          <section id="communication" class="syn-app-card settings-detail" aria-labelledby="communication-title">
+            <h2 id="communication-title">Communication</h2><p class="syn-muted">Notification and email preferences belong to the authenticated application.</p>
+          </section>
+          <footer class="syn-caption settings-page-footer">Syntyr CSS · original MIT-licensed static composition · no required JavaScript</footer>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

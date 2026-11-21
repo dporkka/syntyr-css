@@ -67,6 +67,7 @@ stylesheets.
 - [Design resources directory](https://syntyr-css.pages.dev/docs/design-resources.html): curated galleries, design systems, accessibility, typography, motion and Syntyr study priorities.
 - [Component gallery](https://syntyr-css.pages.dev/docs/)
 - [Common HTML and UI example](examples/common-ui.html): navigation links, avatars, chips, list groups, notices and native form controls; no JavaScript
+- [SaaS settings and billing showcase](examples/settings-billing.html): original three-level navigation, annual/monthly price comparison, current-plan states, and responsive billing workspace; static illustrative data, no JavaScript or live subscription actions
 - [Native HTML elements demo](examples/native-elements.html): lists, code, media, forms, progress, and native overlays with optional semantic CSS
 - [23 copy-owned blocks, 12 CSS textures, 6 typography directions, and 24 SVG icons](https://syntyr-css.pages.dev/docs/blocks.html) ([authoring guide](docs/blocks-guide.md))
 - [Practical installation, integration and performance guides](https://syntyr-css.pages.dev/docs/guides.html)
