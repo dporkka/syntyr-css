@@ -195,7 +195,7 @@
 }
 @media (forced-colors: active) {
   .app-screens :where(.app-notice,.app-metrics div,.app-integration-icon,.app-preview-fieldset,.syn-app-card) { border-color: CanvasText; }
-  .app-screens .app-nav a[aria-current="page"], .app-screens .app-step[aria-current="step"] .app-step-marker { outline: 2px solid Highlight; outline-offset: -2px; }
+  .app-screens .app-nav a[aria-current="page"]:not(:focus-visible), .app-screens .app-step[aria-current="step"] .app-step-marker { outline: 2px solid Highlight; outline-offset: -2px; }
   .app-screens .app-feed [data-app-unread] .app-feed-dot { border-color: Highlight; background: Highlight; }
 }
 /* Additional standalone app screens; component styling remains example-scoped. */

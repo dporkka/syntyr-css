@@ -50,6 +50,16 @@ const layout = () => ({
         await inspect('forced-colors');
         await page.keyboard.press('Tab');
         assert.ok(await page.locator('.app-skip').evaluate(el => el === document.activeElement), `${name} skip link focus`);
+        const currentLink = page.locator('.app-nav a[aria-current="page"]');
+        const outlineOffset = () => currentLink.evaluate(el => parseFloat(getComputedStyle(el).outlineOffset));
+        assert.ok(await outlineOffset() < 0, `${name} unfocused current link has inset outline`);
+        // The brand link precedes the screen links in keyboard order.
+        for (let i = 0; i < SCREENS.length + 1 && !(await currentLink.evaluate(el => el.matches(':focus-visible'))); i++) {
+          await page.keyboard.press('Tab');
+        }
+        assert.ok(await currentLink.evaluate(el => el.matches(':focus-visible') && getComputedStyle(el).outlineStyle === 'solid'),
+          `${name} current link shows a keyboard focus outline`);
+        assert.ok(await outlineOffset() > 0, `${name} focused current link has outside outline`);
       }
       if (width === 1280) {
         if (name === 'app-states') {
@@ -58,6 +68,13 @@ const layout = () => ({
         } else {
           const grid = await page.locator('.app-columns').evaluate(el=>getComputedStyle(el).gridTemplateColumns.split(' ').length);
           assert.equal(grid,2,`${name} desktop two-column content`);
+        }
+        if (name === 'app-notifications' || name === 'app-integrations') {
+          const nav = page.locator('.app-inline-tabs');
+          const fragment = name === 'app-notifications' ? '#read' : '#available';
+          await nav.locator(`a[href="${fragment}"]`).click();
+          assert.equal(new URL(page.url()).hash, fragment, name);
+          assert.equal(await nav.locator('[aria-current]').count(), 0, name);
         }
       }
       if (name === 'app-support' && width === 390) {
