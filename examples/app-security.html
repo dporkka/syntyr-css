@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Syntyr CSS native HTML application screen example: Security &amp; access; static, accessible and framework-neutral.">
+  <title>Security &amp; access — Syntyr CSS application screens</title>
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="../dist/syntyr.recipes.css">
+  <link rel="stylesheet" href="app-screens.css">
+</head>
+<body class="syn-root syn-page app-screens" data-syn-theme="studio" data-syn-density="compact" data-syn-intensity="quiet">
+  <a class="syn-button app-skip" href="#main">Skip to main content</a>
+  <div class="syn-app-shell app-shell">
+    <aside class="syn-app-rail app-rail" aria-label="Example application sidebar">
+      <a class="app-brand" href="app-onboarding.html"><span class="app-logo" aria-hidden="true">N</span><span><strong>Northstar</strong><small>Sample workspace</small></span></a>
+      <span class="app-rail-label">Workspace</span>
+      <nav class="syn-app-nav app-nav" aria-label="Application screens">
+        <a href="app-onboarding.html">Get started</a>
+        <a href="app-team.html">Team</a>
+        <a href="app-notifications.html">Notifications</a>
+        <a href="app-integrations.html">Integrations</a>
+        <a href="app-security.html" aria-current="page">Security</a>
+        <a href="app-account.html">Account</a>
+        <a href="app-audit.html">Audit log</a>
+        <a href="app-support.html">Help &amp; support</a>
+        <a href="app-states.html">UI states</a>
+      </nav>
+      <div class="app-rail-bottom">
+        <span class="app-rail-label">Other examples</span>
+        <a href="saas.html">Dashboard</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="../docs/app-screens.html">Integration guide</a>
+        <div class="app-profile"><span class="syn-avatar syn-avatar--sm" aria-hidden="true">AL</span><span><strong>Alex Lane</strong><small>Illustrative administrator</small></span></div>
+      </div>
+    </aside>
+    <main id="main" class="syn-workspace app-main">
+      <header class="app-page-header">
+        <div><p class="app-overline">NORTHSTAR / SECURITY</p><h1>Security &amp; access</h1><p class="syn-muted">Review authentication safeguards, active sessions, and developer credentials.</p></div>
+        <span class="syn-badge">Demo data</span>
+      </header>
+      <p class="app-notice"><strong>Illustrative interface:</strong> This is a static HTML/CSS preview. Actions that require a server are disabled; no account, subscription, security, or integration data is changed.</p>
+
+      <div class="app-columns">
+        <div class="app-content-stack">
+          <section class="syn-app-card" aria-labelledby="mfa-heading"><div class="app-section-heading"><div><p class="app-overline">IDENTITY</p><h2 id="mfa-heading">Multi-factor authentication</h2><p class="syn-muted">Second-factor verification protects sensitive actions.</p></div><span class="syn-status syn-status--warning">Not enabled (example)</span></div><p>A production implementation must verify the authenticated user and require recent authentication before changing MFA.</p><button class="syn-button syn-button--primary" type="button" disabled>Enable multi-factor authentication</button></section>
+          <section class="syn-app-card" id="security-sessions" aria-labelledby="sessions-heading"><div class="app-section-heading"><div><p class="app-overline">DEVICES</p><h2 id="sessions-heading">Active sessions</h2><p class="syn-muted">Example devices and timestamps, not actual sign-ins.</p></div><button class="syn-button syn-button--outline" type="button" disabled>Sign out other devices</button></div><div class="syn-table-wrap" role="region" aria-label="Sample sessions; scroll horizontally for all columns" tabindex="0"><table class="syn-table"><caption>Illustrative session history</caption><thead><tr><th scope="col">Device</th><th scope="col">Last activity</th><th scope="col">Status</th></tr></thead><tbody><tr><th scope="row">Desktop browser</th><td><time datetime="2026-11-21T10:30:00">November 21, 2026</time></td><td><span class="syn-status syn-status--success">Current (example)</span></td></tr><tr><th scope="row">Mobile browser</th><td><time datetime="2026-11-19T13:15:00">November 19, 2026</time></td><td>Signed in (example)</td></tr></tbody></table></div></section>
+          <section class="syn-app-card" id="api-keys" aria-labelledby="keys-heading"><div class="app-section-heading"><div><p class="app-overline">DEVELOPER ACCESS</p><h2 id="keys-heading">API keys</h2><p class="syn-muted">Keys should be created server-side and displayed only once to authorized users.</p></div><button class="syn-button syn-button--outline" type="button" disabled>Create API key</button></div><div class="syn-empty app-empty"><h3>No keys in this demo</h3><p>Never put live credentials, session cookies, or recoverable secrets in demonstration markup.</p></div></section>
+        </div>
+        <aside class="app-aside"><section class="syn-app-card"><h2>Security checklist</h2><ul class="app-checklist"><li>Enforce least privilege server-side</li><li>Verify identity before account changes</li><li>Rotate and revoke compromised keys</li><li>Record security events for review</li></ul><a href="app-team.html">Audit team roles</a></section><section class="syn-app-card"><h2>Related events</h2><p class="syn-muted">Review security-related alerts in the notification center.</p><a href="app-notifications.html">View notifications</a></section></aside>
+      </div>
+
+      <footer class="app-footer">Syntyr CSS · Nine native application screens · <a href="../docs/app-screens.html">Integration guidance</a></footer>
+    </main>
+  </div>
+</body>
+</html>

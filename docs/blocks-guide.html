@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Status: Experimental alpha.5 source gallery, not an immutable release or published npm package.">
-  <meta name="syntyr-source-sha256" content="df986860399bf6d10e2bea08ac6cc144b18f8162546609baf1884ae3c32c9c61">
+  <meta name="syntyr-source-sha256" content="67c9d04191f7325de874fde123b4d5d9565dc8fe648572f12df30b489911c60a">
   <meta name="theme-color" content="#f5f7fb">
   <title>Syntyr Blocks &amp; Assets — integration guide — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/blocks-guide">
@@ -56,14 +56,27 @@ one MIT license notice) without modifying a project:</p>
 <pre tabindex="0"><code class="language-sh">python3 scripts/registry_install.py resource-workspace --project /path/to/app
 # After reviewing every path/digest, opt in to copying missing files only:
 python3 scripts/registry_install.py resource-workspace --project /path/to/app --apply
+# CI / agent verification: exit 0 only when every expected file matches.
+python3 scripts/registry_install.py resource-workspace --project /path/to/app --verify --json
 </code></pre>
+<p><code>--verify</code> is read-only. It exits <strong>0</strong> when all installed assets match this
+source-tree version, <strong>1</strong> when any asset is missing or customized, and <strong>2</strong>
+when the registry or installation path is invalid. <code>--json</code> exposes only
+paths, statuses (<code>create</code>, <code>identical</code>, <code>conflict</code>), byte counts, and SHA-256
+digests, not file contents. It also works with the dry-run and <code>--apply</code>
+commands for local agents and CI checks.</p>
 <p>The script refuses incompatible versions, mismatched hashes, untrusted
 registry URLs, unsafe/symlinked paths, and changed existing files. It never
 executes installed markup or installs JavaScript dependencies. Re-running an
-identical installation is safe. The helper intentionally does <strong>not</strong> offer
-a force-overwrite mode; manage customization and upgrades through your own
-source control. Syntyr still works by copying a prebuilt CSS file directly,
-without Python in the consuming application.</p>
+identical installation is safe. If a later asset fails during installation,
+the helper attempts to remove earlier assets <strong>it created</strong> only when they
+still have their original content and file identity; previously existing
+identical files are preserved. Empty directories may remain after a failed
+install, and filesystem-level concurrency is not an atomic transaction.
+The helper intentionally does <strong>not</strong> offer a force-overwrite mode; manage
+customization and upgrades through your own source control. Syntyr still
+works by copying a prebuilt CSS file directly, without Python in the
+consuming application.</p>
 <p>For reproducible developer-only checks (without shipping a browser runtime),
 run <code>node tests/registry_form_workflows_browser.cjs</code> with
 <code>SYNTYR_PLAYWRIGHT_MODULE</code> pointing to an installed Playwright package and
@@ -132,16 +145,18 @@ JavaScript or network imports. Scanning beam animation respects reduced-motion
 preferences, and effects disable in forced-colors mode.</p>
 <p>Existing Syntyr geometry and effects modules should be the default choice when
 they already provide the desired result.</p>
-<h2 id="six-font-recipes-and-24-original-svg-icons">Six font recipes and 24 original SVG icons</h2>
+<h2 id="six-font-recipes-and-150-original-svg-icons">Six font recipes and 150 original SVG icons</h2>
 <p>Six system-font typography directions are displayed in the gallery:
 Studio sans, Editorial serif, Terminal mono, Technical sans, Reading serif
 and Compact system. They do not bundle or download font files. Customize
 CSS tokens for UI, display and monospace type, preserving readable fallbacks.</p>
-<p>The gallery now provides 24 original, copyable inline SVG examples using
+<p>The gallery now provides 150 original, copyable inline SVG examples using
 Syntyr's existing generic icon sizing contract. These are not a dependency,
 icon font or stand-alone icon runtime. You may also use appropriately licensed
 provider packs such as Lucide, Tabler and Heroicons; none are vendored here. Icon-only controls need accessible
-names. See <a href="symbols.html">symbols</a> for supported integration patterns.</p>
+names. Icons can optionally use 14 no-JavaScript animation presets, with
+hover/focus activation and reduced-motion support. See <a href="symbols.html">symbols</a>
+for supported integration patterns.</p>
 <h2 id="source-build-and-maintenance">Source, build and maintenance</h2>
 <p>Editable fragments live in the blocks/snippets directory. Metadata and module
 dependencies live in blocks/manifest.json. The gallery is generated, not hand
@@ -198,7 +213,7 @@ source-candidate Syntyr version and must not be confused with a tagged release.<
 <a class="docs-article-toc-link docs-article-toc-2" href="#native-html-and-framework-integration">Native HTML and framework integration</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#optional-scroll-parallax-and-hover-effects">Optional scroll, parallax, and hover effects</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#12-original-optional-css-asset-recipes">12 original, optional CSS asset recipes</a>
-<a class="docs-article-toc-link docs-article-toc-2" href="#six-font-recipes-and-24-original-svg-icons">Six font recipes and 24 original SVG icons</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#six-font-recipes-and-150-original-svg-icons">Six font recipes and 150 original SVG icons</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#source-build-and-maintenance">Source, build and maintenance</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#accessibility-fidelity-and-licensing">Accessibility, fidelity and licensing</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#experimental-shadcn-universal-item-registry">Experimental shadcn universal-item registry</a>

@@ -54,6 +54,7 @@ stylesheets.
 - **Independent visual intensity:** optional `data-syn-intensity="quiet|standard|cinematic"` controls decorative effects without changing the theme, component semantics or runtime JavaScript contract.
 - **Two modes:** explicit component classes, and a Pico-like *optional* `.syn-semantic` mode.
 - **Modular:** separate core, semantic and decorative effects files; includes convenience bundles.
+- **Optional website animations (alpha.5 source):** fade, slide, zoom and emphasis presets with finite/infinite loop controls and a native Web Animations API helper ([guide](docs/animation.md)).
 - **Real navigation and loading states:** semantic breadcrumbs, touch-friendly page links, and static accessible skeleton placeholders.
 - **No installation:** copy prebuilt CSS. Python 3 is used only by maintainers to regenerate it.
 - **Opt-in universal registry (alpha.5 source):** 23 free copy-owned HTML blocks plus 8 CSS modules in shadcn-compatible static JSON; no consumer runtime dependency. See [blocks guide](docs/blocks-guide.md).
@@ -69,7 +70,7 @@ stylesheets.
 - [Common HTML and UI example](examples/common-ui.html): navigation links, avatars, chips, list groups, notices and native form controls; no JavaScript
 - [SaaS settings and billing showcase](examples/settings-billing.html): original three-level navigation, annual/monthly price comparison, current-plan states, and responsive billing workspace; static illustrative data, no JavaScript or live subscription actions
 - [Native HTML elements demo](examples/native-elements.html): lists, code, media, forms, progress, and native overlays with optional semantic CSS
-- [23 copy-owned blocks, 12 CSS textures, 6 typography directions, and 24 SVG icons](https://syntyr-css.pages.dev/docs/blocks.html) ([authoring guide](docs/blocks-guide.md))
+- [50 copy-owned blocks, 12 CSS textures, 6 typography directions, and 150 SVG icons](https://syntyr-css.pages.dev/docs/blocks.html) ([authoring guide](docs/blocks-guide.md))
 - [Practical installation, integration and performance guides](https://syntyr-css.pages.dev/docs/guides.html)
 - [Task-based How-To tutorials](docs/how-to.html): search 10 native HTML workflows and edit 20 existing MIT blocks in the sandboxed CodeMirror playground (unreleased alpha.5 source candidate)
 - [Searchable, copyable component catalog](docs/catalog.html) with theme and width previews; [generated, portable gallery manifest](metadata/component-gallery.v1.json) for visual builders
@@ -380,3 +381,7 @@ See [LICENSE](LICENSE).
 - [Console Kit buyer validation, pre-sale release gates and measured metrics](business/commercial-launch-gates.md)
 
 No paid kit has been shipped or put up for sale in this repository. No billing or license-key code is included. The Grid and Noir visual themes are original, not officially affiliated with any entertainment franchise. **SYNTYR is the selected but not trademark-cleared name**, pending documented brand clearance. The preliminary risk screen is not authorization for paid branding.
+
+## Additional native application screens
+
+Nine copy-owned [SaaS application screens](docs/app-screens.md) cover onboarding, team membership and invitations, notifications, integrations, security, account profiles, audit logs, support, and common UI states. They are static HTML/CSS examples built from the existing core and recipes, with no required application JavaScript or live account actions.

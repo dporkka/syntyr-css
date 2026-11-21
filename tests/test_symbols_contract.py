@@ -38,6 +38,33 @@ class OptionalSymbolsContract(unittest.TestCase):
         self.assertNotIn("@import", css)
         self.assertNotIn("url(", css)
 
+    def test_opt_in_icon_motion_presets_are_scoped_and_respect_preferences(self):
+        css = (ROOT / "src/symbols.css").read_text(encoding="utf-8")
+        for preset in ("spin", "pulse", "bounce", "shake", "wiggle", "pop",
+                       "float", "swing", "heartbeat", "flash", "ping", "flip",
+                       "nudge-left", "nudge-right"):
+            with self.subTest(preset=preset):
+                self.assertIn(".syn-icon--" + preset, css)
+                self.assertIn("@keyframes syn-icon-" + preset, css)
+        for token in ("--syn-icon-motion-duration", "--syn-icon-motion-iterations",
+                      "--syn-icon-motion-easing", ".syn-icon--on-interact",
+                      "prefers-reduced-motion: reduce", "animation: none"):
+            self.assertIn(token, css)
+        self.assertNotIn("animation-play-state: paused", css)
+        self.assertIn("animation-name: none", css)
+        self.assertIn("--syn-icon-motion-keyframes", css)
+        self.assertNotIn("@import", css)
+        self.assertNotIn("url(", css)
+        guide = (ROOT / "docs/symbols.md").read_text(encoding="utf-8")
+        self.assertIn("syn-icon--spin", guide)
+        self.assertIn("syn-icon--on-interact", guide)
+        for extra in ("syn-icon--float", "syn-icon--swing", "syn-icon--heartbeat",
+                      "syn-icon--flash", "syn-icon--ping", "syn-icon--flip",
+                      "syn-icon--nudge-left", "syn-icon--nudge-right"):
+            self.assertIn(extra, guide)
+
+        self.assertIn("prefers-reduced-motion", guide)
+
     def test_unicode_and_ascii_preserve_text_and_alignment(self):
         css = (ROOT / "src/symbols.css").read_text(encoding="utf-8")
         for fragment in (".syn-symbol", ".syn-symbol--accent",

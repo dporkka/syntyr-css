@@ -294,6 +294,7 @@ EXPLICIT_TOKENS = {
     "--syn-detail-main-min": "recipes.css",
     "--syn-detail-aside-basis": "recipes.css",
     "--syn-detail-aside-min": "recipes.css",
+    "--syn-animation-iterations": "motion.css",
     "--syn-frame-cut": "geometry.css",
     "--syn-frame-cut-tl": "geometry.css",
     "--syn-frame-cut-tr": "geometry.css",

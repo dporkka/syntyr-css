@@ -30,15 +30,29 @@ one MIT license notice) without modifying a project:
 python3 scripts/registry_install.py resource-workspace --project /path/to/app
 # After reviewing every path/digest, opt in to copying missing files only:
 python3 scripts/registry_install.py resource-workspace --project /path/to/app --apply
+# CI / agent verification: exit 0 only when every expected file matches.
+python3 scripts/registry_install.py resource-workspace --project /path/to/app --verify --json
 ~~~
+
+`--verify` is read-only. It exits **0** when all installed assets match this
+source-tree version, **1** when any asset is missing or customized, and **2**
+when the registry or installation path is invalid. `--json` exposes only
+paths, statuses (`create`, `identical`, `conflict`), byte counts, and SHA-256
+digests, not file contents. It also works with the dry-run and `--apply`
+commands for local agents and CI checks.
 
 The script refuses incompatible versions, mismatched hashes, untrusted
 registry URLs, unsafe/symlinked paths, and changed existing files. It never
 executes installed markup or installs JavaScript dependencies. Re-running an
-identical installation is safe. The helper intentionally does **not** offer
-a force-overwrite mode; manage customization and upgrades through your own
-source control. Syntyr still works by copying a prebuilt CSS file directly,
-without Python in the consuming application.
+identical installation is safe. If a later asset fails during installation,
+the helper attempts to remove earlier assets **it created** only when they
+still have their original content and file identity; previously existing
+identical files are preserved. Empty directories may remain after a failed
+install, and filesystem-level concurrency is not an atomic transaction.
+The helper intentionally does **not** offer a force-overwrite mode; manage
+customization and upgrades through your own source control. Syntyr still
+works by copying a prebuilt CSS file directly, without Python in the
+consuming application.
 
 For reproducible developer-only checks (without shipping a browser runtime),
 run `node tests/registry_form_workflows_browser.cjs` with
@@ -124,18 +138,20 @@ preferences, and effects disable in forced-colors mode.
 Existing Syntyr geometry and effects modules should be the default choice when
 they already provide the desired result.
 
-## Six font recipes and 24 original SVG icons
+## Six font recipes and 150 original SVG icons
 
 Six system-font typography directions are displayed in the gallery:
 Studio sans, Editorial serif, Terminal mono, Technical sans, Reading serif
 and Compact system. They do not bundle or download font files. Customize
 CSS tokens for UI, display and monospace type, preserving readable fallbacks.
 
-The gallery now provides 24 original, copyable inline SVG examples using
+The gallery now provides 150 original, copyable inline SVG examples using
 Syntyr's existing generic icon sizing contract. These are not a dependency,
 icon font or stand-alone icon runtime. You may also use appropriately licensed
 provider packs such as Lucide, Tabler and Heroicons; none are vendored here. Icon-only controls need accessible
-names. See [symbols](symbols.md) for supported integration patterns.
+names. Icons can optionally use 14 no-JavaScript animation presets, with
+hover/focus activation and reduced-motion support. See [symbols](symbols.md)
+for supported integration patterns.
 
 ## Source, build and maintenance
 
