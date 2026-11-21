@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Status: experimental 0.3.0-alpha.5 candidate; no v1 stability promise. This document names the intended public contracts so that changes can be reviewed…">
-  <meta name="syntyr-source-sha256" content="74e8285a71b8fd7d9a5968932b00d4af57265dae4debf5ed6a36ec347c9bea0a">
+  <meta name="syntyr-source-sha256" content="a1545e101535c50d4fa654a78c9dae59eb1ce7d59026b8e7a2d23d1218c7516a">
   <meta name="theme-color" content="#f5f7fb">
   <title>SYNTYR CSS public API and prerelease stability — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/api-stability">
@@ -112,6 +112,16 @@ reviewed consistently before <code>1.0.0</code>. It is not a new compatibility g
 <td><code>syntyr.effects.css</code>, <code>syntyr.utilities.css</code></td>
 <td>Experimental, opt-in</td>
 <td>Evaluate for individual stabilization</td>
+</tr>
+<tr>
+<td><code>syntyr.motion.css</code> <code>data-syn-animate</code> presets, <code>--syn-animation-*</code> speed/loop/rotation controls and optional <code>syntyr.animate.mjs</code> loops</td>
+<td>Experimental alpha.5 opt-in; not published in alpha.4</td>
+<td>Evaluate naming, reduced-motion behavior and semantic exits before stabilization</td>
+</tr>
+<tr>
+<td><code>syn-logo-marquee</code>, <code>syn-logo-marquee__row</code>, group/track selectors and <code>--syn-logo-*</code> tokens</td>
+<td>Experimental alpha.5 CSS-only logo strip, not in published alpha.4</td>
+<td>Verify seamless looping, responsive sizing, and reduced-motion fallback before stabilization</td>
 </tr>
 <tr>
 <td><code>syntyr.css</code>, <code>syntyr.all.css</code></td>

@@ -14,6 +14,14 @@
       "description": "Accent soft design token from tokens.css; override in the appropriate Syntyr scope when needed."
     },
     {
+      "name": "--syn-animation-iterations",
+      "description": "Animation iterations design token from motion.css; override in the appropriate Syntyr scope when needed."
+    },
+    {
+      "name": "--syn-animation-keyframes",
+      "description": "Animation keyframes design token from motion.css; override in the appropriate Syntyr scope when needed."
+    },
+    {
       "name": "--syn-avatar-size",
       "description": "Avatar size design token from components/patterns.css; override in the appropriate Syntyr scope when needed."
     },
