@@ -96,6 +96,7 @@ def layout_check(browser, engine, width, scale):
                         f"Preset {preset} did not animate on hover: {actual}")
             page.emulate_media(reduced_motion="reduce")
             for icon in page.locator(".blocks-motion-example .syn-icon").all():
+                icon.locator("xpath=..").hover()
                 name = icon.evaluate("node => getComputedStyle(node).animationName")
                 require(name == "none", f"Reduced motion must suppress all icons: {name}")
             page.emulate_media(reduced_motion="no-preference")
@@ -111,6 +112,44 @@ def layout_check(browser, engine, width, scale):
 
     finally:
         context.close()
+
+
+def root_control_motion_check(browser):
+    page = browser.new_page()
+    try:
+        page.set_content("""
+          <button class="syn-root syn-button">
+            <svg class="syn-icon syn-icon--spin syn-icon--on-interact"
+                 viewBox="0 0 24 24" aria-hidden="true"></svg>
+            <span>Refresh</span>
+          </button>
+          <button>Next</button>
+        """)
+        page.add_style_tag(path=ROOT / "dist/syntyr.symbols.css")
+        icon = page.locator(".syn-icon")
+        control = page.get_by_role("button", name="Refresh")
+        animation = "node => getComputedStyle(node).animationName"
+        require(icon.evaluate(animation) == "none", "Root control motion must rest by default")
+        page.keyboard.press("Tab")
+        require(control.evaluate("node => node.matches(':focus-visible')"),
+                "Tab must focus the root control")
+        require(icon.evaluate(animation) == "syn-icon-spin", "Root control focus must start motion")
+        page.emulate_media(reduced_motion="reduce")
+        require(icon.evaluate(animation) == "none", "Reduced motion must override root control focus")
+        page.emulate_media(reduced_motion="no-preference")
+        page.keyboard.press("Tab")
+        require(icon.evaluate(animation) == "none", "Root control motion must reset after blur")
+        control.get_by_text("Refresh").hover()
+        require(icon.evaluate(animation) == "syn-icon-spin", "Hovering the root control label must start motion")
+        control.evaluate("node => node.disabled = true")
+        require(icon.evaluate(animation) == "none", "Disabled root control hover must not start motion")
+        control.evaluate("""node => {
+            node.disabled = false;
+            node.setAttribute('aria-disabled', 'true');
+        }""")
+        require(icon.evaluate(animation) == "none", "ARIA-disabled root control hover must not start motion")
+    finally:
+        page.close()
 
 
 def progressive_checks(browser, engine, screenshots):
@@ -399,6 +438,12 @@ def main():
             except Exception as exc:
                 failures.append(f"{engine} playground preview: {exc}")
                 item["playground_navigation"] = "fail"
+            try:
+                root_control_motion_check(browser)
+                item["root_control_motion"] = "pass"
+            except Exception as exc:
+                failures.append(f"{engine} root control motion: {exc}")
+                item["root_control_motion"] = "fail"
             if engine == "chromium":
                 try:
                     live_clipboard_check(browser)

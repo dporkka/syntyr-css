@@ -434,7 +434,7 @@
     {
       "id": "minimize",
       "label": "Minimize",
-      "body": "<path d=\"M9 9 3 3m0 6V3h6m6 6 6-6m-6 0h6v6M9 15l-6 6m6 0H3v-6m12 0 6 6m-6 0h6v-6\"/>"
+      "body": "<path d=\"M3 3l6 6M5 9h4V5m12-2-6 6m0-4v4h4M3 21l6-6m0 4v-4H5m16 6-6-6m4 0h-4v4\"/>"
     },
     {
       "id": "move",

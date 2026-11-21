@@ -2880,7 +2880,8 @@
   }
   :where(.syn-root .syn-icon--on-interact:is(:hover, :focus-visible),
          .syn-root.syn-icon--on-interact:is(:hover, :focus-visible),
-         .syn-root :is(button, a, [role="button"]):not(:disabled):not([aria-disabled="true"]):is(:hover, :focus-visible) .syn-icon--on-interact) {
+         .syn-root :is(button, a, [role="button"]):not(:disabled):not([aria-disabled="true"]):is(:hover, :focus-visible) .syn-icon--on-interact,
+         .syn-root:is(button, a, [role="button"]):not(:disabled):not([aria-disabled="true"]):is(:hover, :focus-visible) .syn-icon--on-interact) {
     animation-name: var(--syn-icon-motion-keyframes);
   }
 
