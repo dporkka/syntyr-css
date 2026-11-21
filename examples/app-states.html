@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Syntyr CSS native HTML application screen example: Application states; static, accessible and framework-neutral.">
+  <title>Application states — Syntyr CSS application screens</title>
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="../dist/syntyr.recipes.css">
+  <link rel="stylesheet" href="app-screens.css">
+</head>
+<body class="syn-root syn-page app-screens" data-syn-theme="studio" data-syn-density="compact" data-syn-intensity="quiet">
+  <a class="syn-button app-skip" href="#main">Skip to main content</a>
+  <div class="syn-app-shell app-shell">
+    <aside class="syn-app-rail app-rail" aria-label="Example application sidebar">
+      <a class="app-brand" href="app-onboarding.html"><span class="app-logo" aria-hidden="true">N</span><span><strong>Northstar</strong><small>Sample workspace</small></span></a>
+      <span class="app-rail-label">Workspace</span>
+      <nav class="syn-app-nav app-nav" aria-label="Application screens">
+        <a href="app-onboarding.html">Get started</a>
+        <a href="app-team.html">Team</a>
+        <a href="app-notifications.html">Notifications</a>
+        <a href="app-integrations.html">Integrations</a>
+        <a href="app-security.html">Security</a>
+        <a href="app-account.html">Account</a>
+        <a href="app-audit.html">Audit log</a>
+        <a href="app-support.html">Help &amp; support</a>
+        <a href="app-states.html" aria-current="page">UI states</a>
+      </nav>
+      <div class="app-rail-bottom">
+        <span class="app-rail-label">Other examples</span>
+        <a href="saas.html">Dashboard</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="../docs/app-screens.html">Integration guide</a>
+        <div class="app-profile"><span class="syn-avatar syn-avatar--sm" aria-hidden="true">AL</span><span><strong>Alex Lane</strong><small>Illustrative administrator</small></span></div>
+      </div>
+    </aside>
+    <main id="main" class="syn-workspace app-main">
+      <header class="app-page-header">
+        <div><p class="app-overline">NORTHSTAR / PATTERNS</p><h1>Application states</h1><p class="syn-muted">Ready-to-copy empty, error, loading, permission, and offline presentations.</p></div>
+        <span class="syn-badge">Demo data</span>
+      </header>
+      <p class="app-notice"><strong>Illustrative interface:</strong> These are static HTML/CSS presentation examples. No account, audit, support, or system-state mutations are performed.</p>
+
+      <section id="state-patterns" class="app-state-collection" aria-labelledby="patterns-heading"><div><p class="app-overline">UI STATE LIBRARY</p><h2 id="patterns-heading">Common interface states</h2><p class="syn-muted">Each example is static. Implement real data, retries and transitions in the host application.</p></div>
+        <div class="app-state-grid">
+          <section class="syn-app-card" aria-labelledby="empty-heading"><div class="app-section-heading"><h3 id="empty-heading">Empty state</h3><span class="syn-badge">No results</span></div><div class="syn-empty app-state-panel"><span class="app-state-symbol" aria-hidden="true">∅</span><strong>No projects yet</strong><p>Create your first project when your workspace is ready.</p><a class="syn-button syn-button--outline" href="app-onboarding.html">View setup checklist</a></div></section>
+          <section class="syn-app-card" aria-labelledby="error-heading"><div class="app-section-heading"><h3 id="error-heading">Error state</h3><span class="syn-badge">Example failure</span></div><div class="app-state-panel app-error"><div class="syn-alert syn-alert--danger" role="alert"><strong>Unable to load project details.</strong><p>No changes were made. Try the operation again from your real application.</p></div><button type="button" class="syn-button syn-button--outline" disabled>Retry request</button></div></section>
+          <section class="syn-app-card" aria-labelledby="loading-heading"><div class="app-section-heading"><h3 id="loading-heading">Loading state</h3><span class="syn-badge">Preview</span></div><div class="app-state-panel"><p role="status">Loading project information (illustrative).</p><div class="app-skeleton-lines" aria-hidden="true"><span class="syn-skeleton"></span><span class="syn-skeleton"></span><span class="syn-skeleton"></span></div><p class="syn-caption">Skeletons are visual placeholders; keep accessible status text until results arrive.</p></div></section>
+          <section class="syn-app-card" aria-labelledby="permission-heading"><div class="app-section-heading"><h3 id="permission-heading">Permission denied</h3><span class="syn-badge">403 example</span></div><div class="app-state-panel"><strong>You do not have access to this workspace.</strong><p class="syn-muted">Ask an administrator to confirm your membership. Authorization must be enforced by the server.</p><a class="syn-button syn-button--outline" href="app-team.html">Review team roles</a></div></section>
+          <section class="syn-app-card" aria-labelledby="offline-heading"><div class="app-section-heading"><h3 id="offline-heading">Offline</h3><span class="syn-badge">Network unavailable</span></div><div class="app-state-panel"><strong>Connection interrupted</strong><p class="syn-muted">Previously loaded data may be stale. Do not claim a save succeeded without a server acknowledgement.</p><button type="button" class="syn-button syn-button--outline" disabled>Reconnect</button></div></section>
+        </div>
+      </section>
+
+      <footer class="app-footer">Syntyr CSS · Nine native application screens · <a href="../docs/app-screens.html">Integration guidance</a></footer>
+    </main>
+  </div>
+</body>
+</html>

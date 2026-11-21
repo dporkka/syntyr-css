@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Syntyr CSS native HTML application screen example: Audit log; static, accessible and framework-neutral.">
+  <title>Audit log — Syntyr CSS application screens</title>
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="../dist/syntyr.recipes.css">
+  <link rel="stylesheet" href="app-screens.css">
+</head>
+<body class="syn-root syn-page app-screens" data-syn-theme="studio" data-syn-density="compact" data-syn-intensity="quiet">
+  <a class="syn-button app-skip" href="#main">Skip to main content</a>
+  <div class="syn-app-shell app-shell">
+    <aside class="syn-app-rail app-rail" aria-label="Example application sidebar">
+      <a class="app-brand" href="app-onboarding.html"><span class="app-logo" aria-hidden="true">N</span><span><strong>Northstar</strong><small>Sample workspace</small></span></a>
+      <span class="app-rail-label">Workspace</span>
+      <nav class="syn-app-nav app-nav" aria-label="Application screens">
+        <a href="app-onboarding.html">Get started</a>
+        <a href="app-team.html">Team</a>
+        <a href="app-notifications.html">Notifications</a>
+        <a href="app-integrations.html">Integrations</a>
+        <a href="app-security.html">Security</a>
+        <a href="app-account.html">Account</a>
+        <a href="app-audit.html" aria-current="page">Audit log</a>
+        <a href="app-support.html">Help &amp; support</a>
+        <a href="app-states.html">UI states</a>
+      </nav>
+      <div class="app-rail-bottom">
+        <span class="app-rail-label">Other examples</span>
+        <a href="saas.html">Dashboard</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="../docs/app-screens.html">Integration guide</a>
+        <div class="app-profile"><span class="syn-avatar syn-avatar--sm" aria-hidden="true">AL</span><span><strong>Alex Lane</strong><small>Illustrative administrator</small></span></div>
+      </div>
+    </aside>
+    <main id="main" class="syn-workspace app-main">
+      <header class="app-page-header">
+        <div><p class="app-overline">NORTHSTAR / GOVERNANCE</p><h1>Audit log</h1><p class="syn-muted">An event history with actors, resources, timestamps, and outcomes.</p></div>
+        <span class="syn-badge">Demo data</span>
+      </header>
+      <p class="app-notice"><strong>Illustrative interface:</strong> These are static HTML/CSS presentation examples. No account, audit, support, or system-state mutations are performed.</p>
+
+      <div class="app-columns">
+        <section class="syn-app-card" id="audit-events" aria-labelledby="audit-heading">
+          <div class="app-section-heading"><div><p class="app-overline">ACTIVITY HISTORY</p><h2 id="audit-heading">Event history</h2><p class="syn-muted">Use tenant-scoped server data and immutable event identifiers in production.</p></div><button type="button" class="syn-button syn-button--outline" disabled>Export CSV</button></div>
+          <fieldset class="app-preview-fieldset app-audit-filters" disabled><legend>Filter events (preview)</legend><div><label for="audit-type">Event type</label><select id="audit-type"><option>All events</option><option>Sign-ins</option><option>Membership</option></select></div><div><label for="audit-outcome">Outcome</label><select id="audit-outcome"><option>All outcomes</option><option>Success</option><option>Denied</option></select></div></fieldset>
+          <div class="syn-table-wrap" role="region" aria-label="Audit events; scroll horizontally to see all columns" tabindex="0"><table class="syn-table app-audit-table"><caption>Illustrative audit events in UTC; not a live security log</caption><thead><tr><th scope="col">Event</th><th scope="col">Actor</th><th scope="col">Resource</th><th scope="col">Outcome</th><th scope="col">Timestamp (UTC)</th></tr></thead><tbody>
+            <tr><th scope="row"><code>member.invited</code></th><td>Alex Lane</td><td>Workspace 01</td><td><span class="syn-status syn-status--success">Success (example)</span></td><td><time datetime="2026-11-20T14:12:00Z">2026-11-20 14:12</time></td></tr>
+            <tr><th scope="row"><code>session.created</code></th><td>Morgan Kim</td><td>Account 02</td><td><span class="syn-status syn-status--success">Success (example)</span></td><td><time datetime="2026-11-19T08:31:00Z">2026-11-19 08:31</time></td></tr>
+            <tr><th scope="row"><code>resource.denied</code></th><td>Sample viewer</td><td>Project 04</td><td><span class="syn-status syn-status--warning">Denied (example)</span></td><td><time datetime="2026-11-18T21:08:00Z">2026-11-18 21:08</time></td></tr>
+          </tbody></table></div><p class="syn-caption">Showing 3 illustrative events. Pagination and retention require real backend policies.</p>
+        </section>
+        <aside class="app-aside"><section class="syn-app-card"><h2>Audit essentials</h2><ul class="app-checklist"><li>Scope reads to the authorized organization</li><li>Record actor and effective privileges</li><li>Store event time in UTC</li><li>Separate audit storage from mutable application records</li><li>Redact secrets and unnecessary personal data</li></ul><a href="app-security.html">Review security settings</a></section></aside>
+      </div>
+
+      <footer class="app-footer">Syntyr CSS · Nine native application screens · <a href="../docs/app-screens.html">Integration guidance</a></footer>
+    </main>
+  </div>
+</body>
+</html>
