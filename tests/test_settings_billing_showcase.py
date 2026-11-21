@@ -52,9 +52,9 @@ class SettingsBillingShowcaseTests(unittest.TestCase):
         self.assertEqual(self.html.count('class="syn-price-card'), 3)
         self.assertIn("Current plan", self.html)
         self.assertIn("20% compared with monthly billing", self.html)
-        for annual in ("$288", "$576", "$864"):
+        for annual in ("$240", "$720", "$1440"):
             self.assertIn(annual, self.html)
-        self.assertIn("per developer", self.html.lower())
+        self.assertIn("per member", self.html.lower())
         self.assertIn("illustrative", self.html.lower())
         self.assertIn("payment processing", self.html.lower())
         self.assertIn('role="group" aria-label="Illustrative developer plans"', self.html)
@@ -103,6 +103,8 @@ class SettingsBillingShowcaseTests(unittest.TestCase):
         self.assertIn('"settings-billing.css"', site)
         self.assertIn('"examples/settings-billing.html"', site)
         self.assertIn("examples/settings-billing.html", readme)
+        self.assertIn("settings-billing.html", (ROOT / "docs/index.html").read_text())
+        self.assertTrue((ROOT / "tests/settings_billing_browser.cjs").is_file())
 
 if __name__ == "__main__":
     unittest.main()

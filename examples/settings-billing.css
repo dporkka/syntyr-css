@@ -23,8 +23,8 @@
 }
 .settings-avatar { background: var(--syn-surface-raised); color: var(--syn-text); border: 1px solid var(--settings-line); border-radius: 50%; font-size: .7rem; }
 .settings-search {
-  display: flex; align-items: center; gap: .5rem; min-width: 0;
-  min-height: 2.5rem; border: 1px solid var(--settings-line);
+  display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; min-width: 0;
+  overflow-wrap: anywhere; min-height: 2.5rem; border: 1px solid var(--settings-line);
   border-radius: .7rem; padding: .4rem .65rem;
   background: var(--syn-surface-raised); text-decoration: none; color: var(--syn-muted);
 }
@@ -111,6 +111,8 @@
 .settings-showcase:has(#cycle-monthly:checked) .settings-price--yearly { display: none; }
 .settings-showcase:has(#cycle-yearly:checked) .settings-price--yearly { display: block; }
 .settings-showcase:has(#cycle-yearly:checked) .settings-price--monthly { display: none; }
+/* Do not show a nonfunctional billing selector on older :has-free engines. */
+@supports not selector(:has(*)) { .settings-showcase .settings-cycle { display: none; } }
 .settings-showcase .settings-plan-button { inline-size: 100%; border-radius: .65rem; margin: 0; min-height: 2.6rem; }
 .settings-showcase .settings-plan-button:disabled { opacity: 1; background: var(--syn-surface-recessed); color: var(--syn-muted); border-color: var(--settings-line); cursor: not-allowed; }
 .settings-showcase .settings-price-card > .syn-caption { margin: .1rem 0 0; }
@@ -138,8 +140,11 @@
 @media (max-width: 51rem) {
   .settings-global-rail { gap: .65rem; }
   .settings-global-footer { display: none; }
-  .settings-showcase .settings-global-rail .syn-app-nav { display: flex; flex-wrap: nowrap; gap: .25rem; overflow-x: auto; padding-block-end: .25rem; }
-  .settings-showcase .settings-global-rail .syn-app-nav a { white-space: nowrap; flex: none; padding: .55rem .7rem; }
+  .settings-showcase .settings-global-rail .syn-app-nav { display: flex; flex-wrap: wrap; gap: .25rem; }
+  .settings-showcase .settings-global-rail .syn-app-nav a {
+    flex: 1 1 9rem; min-inline-size: 0; overflow-wrap: anywhere;
+    white-space: normal; padding: .55rem .7rem;
+  }
   .settings-body { display: block; }
   .settings-local-rail { border-inline-end: 0; border-block-end: 1px solid var(--settings-line); padding: .65rem; }
   .settings-local-nav { display: flex; flex-wrap: wrap; position: static; gap: .2rem; }
