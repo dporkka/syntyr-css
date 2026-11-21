@@ -1,6 +1,7 @@
 """Contracts for the static, source-only settings and billing showcase."""
 from html.parser import HTMLParser
 from pathlib import Path
+import re
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -80,6 +81,20 @@ class SettingsBillingShowcaseTests(unittest.TestCase):
         self.assertIn("prefers-reduced-motion", self.css)
         self.assertIn("forced-colors", self.css)
         self.assertIn("min-width", self.css)
+
+    def test_sticky_global_navigation_starts_at_two_column_shell_breakpoint(self):
+        recipes = (ROOT / "src/recipes.css").read_text(encoding="utf-8")
+        shell_breakpoint = re.search(
+            r"@media \(min-width: ([\d.]+rem)\) \{\s*&\.syn-app-shell \{ grid-template-columns:",
+            recipes,
+        )
+        sticky_breakpoint = re.search(
+            r"@media \(min-width: ([\d.]+rem)\) \{\s*\.settings-global-rail \{ position: sticky;",
+            self.css,
+        )
+        self.assertIsNotNone(shell_breakpoint, "App shell's two-column breakpoint not found")
+        self.assertIsNotNone(sticky_breakpoint, "Settings rail sticky breakpoint not found")
+        self.assertEqual(sticky_breakpoint.group(1), shell_breakpoint.group(1))
 
     def test_public_example_is_explicitly_allowlisted_and_discoverable(self):
         site = (ROOT / "scripts/build_cloudflare_site.py").read_text(encoding="utf-8")

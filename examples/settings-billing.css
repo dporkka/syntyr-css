@@ -142,7 +142,7 @@
   .settings-local-nav { display: flex; flex-wrap: wrap; position: static; gap: .2rem; }
   .settings-local-nav a { flex: 0 1 auto; }
 }
-@media (min-width: 52rem) {
+@media (min-width: 53rem) {
   .settings-global-rail { position: sticky; top: 0; height: 100vh; overflow-y: auto; }
 }
 @media (prefers-reduced-motion: reduce) {
