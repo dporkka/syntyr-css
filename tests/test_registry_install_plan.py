@@ -1,6 +1,8 @@
 """An optional local installation planner must be safe without a Node runtime."""
 import json
 from pathlib import Path
+import subprocess
+import sys
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -129,6 +131,98 @@ class RegistryInstallPlanTests(unittest.TestCase):
                     apply_install(plan, project)
             self.assertFalse(target.exists(), "failed creation must not leave a partial asset")
 
+
+
+    def test_mid_install_failure_rolls_back_only_new_assets(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            project = Path(tmp)
+            first_plan = plan_install("settings-form", project)
+            license_entry = next(item for item in first_plan["files"] if item["path"] == "syntyr/LICENSE")
+            license_target = project / license_entry["path"]
+            license_target.parent.mkdir(parents=True)
+            license_target.write_text(license_entry["_content"], encoding="utf-8")
+
+            plan = plan_install("settings-form", project)
+            self.assertEqual(
+                [item["status"] for item in plan["files"]],
+                ["create", "identical", "create"],
+            )
+            failing_target = project / "syntyr/blocks/settings-form.html"
+            original_open = Path.open
+
+            def fail_on_last_asset(path, *args, **kwargs):
+                if path == failing_target and args and args[0] == "xb":
+                    raise OSError("simulated later asset failure")
+                return original_open(path, *args, **kwargs)
+
+            with patch.object(Path, "open", fail_on_last_asset):
+                with self.assertRaisesRegex(OSError, "simulated later asset failure"):
+                    apply_install(plan, project)
+
+            self.assertFalse(
+                (project / "syntyr/css/syntyr.core.css").exists(),
+                "a failed multi-asset install must remove earlier new files",
+            )
+            self.assertFalse(failing_target.exists())
+            self.assertEqual(
+                license_target.read_text(encoding="utf-8"),
+                license_entry["_content"],
+                "previously identical customer files must remain untouched",
+            )
+
+            apply_install(plan_install("settings-form", project), project)
+            self.assertTrue(failing_target.is_file())
+            self.assertTrue(all(item["status"] == "identical" for item in
+                                plan_install("settings-form", project)["files"]))
+
+
+
+    def test_cli_json_verify_reports_installation_integrity_without_source_leaks(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            project = Path(tmp)
+            command = [
+                sys.executable, str(ROOT / "scripts/registry_install.py"),
+                "settings-form", "--project", str(project),
+            ]
+
+            def invoke(*args):
+                result = subprocess.run(
+                    [*command, *args], capture_output=True, text=True, check=False,
+                )
+                return result, json.loads(result.stdout)
+
+            missing, report = invoke("--verify", "--json")
+            self.assertEqual(missing.returncode, 1, missing.stderr)
+            self.assertFalse(report["verified"])
+            self.assertTrue(report["canApply"])
+            self.assertEqual(
+                [item["status"] for item in report["files"]],
+                ["create", "create", "create"],
+            )
+            self.assertNotIn("_content", missing.stdout)
+            self.assertNotIn("syn-root", missing.stdout)
+            self.assertFalse((project / "syntyr").exists())
+
+            applied, report = invoke("--apply", "--json")
+            self.assertEqual(applied.returncode, 0, applied.stderr)
+            self.assertTrue(report["verified"])
+            self.assertTrue(report["applied"])
+            checked, report = invoke("--verify", "--json")
+            self.assertEqual(checked.returncode, 0, checked.stderr)
+            self.assertTrue(report["verified"])
+            self.assertFalse(report["applied"])
+
+            modified = project / "syntyr/blocks/settings-form.html"
+            modified.write_text("customer customized HTML", encoding="utf-8")
+            drifted, report = invoke("--verify", "--json")
+            self.assertEqual(drifted.returncode, 1, drifted.stderr)
+            self.assertEqual(
+                next(item["status"] for item in report["files"]
+                     if item["path"] == "syntyr/blocks/settings-form.html"),
+                "conflict",
+            )
+            self.assertEqual(modified.read_text(encoding="utf-8"),
+                             "customer customized HTML")
 
 
 if __name__ == "__main__":
