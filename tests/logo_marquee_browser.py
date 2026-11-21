@@ -166,6 +166,41 @@ def main():
                 }""")
                 require(abs(metrics(page)[0]['duration'] - 12) < .01,
                         '2x speed must halve 24s to 12s on supported CSS')
+                # Demo controls can edit either row without altering the
+                # CSS-only embed contract or the other row's playback.
+                require(page.locator('#logo-marquee-controls').is_visible(),
+                        'interactive marquee controls should be available with JS')
+                page.locator('#logo-row-1-direction').select_option('right')
+                page.locator('#logo-row-2-direction').select_option('left')
+                require([r['animationDirection'] for r in metrics(page)] ==
+                        ['reverse', 'normal'], 'each direction selector works independently')
+                page.locator('#logo-row-1-speed').evaluate("""el => {
+                    el.value = "2";
+                    el.dispatchEvent(new Event('input', {bubbles: true}));
+                }""")
+                require(abs(metrics(page)[0]['duration'] - 12) < .01 and
+                        page.locator('#logo-row-1-speed-value').inner_text() == '2×',
+                        'speed slider should update CSS timing and readable output')
+                page.locator('#logo-row-2-speed').evaluate("""el => {
+                    el.value = "0.5";
+                    el.dispatchEvent(new Event('input', {bubbles: true}));
+                }""")
+                require(abs(metrics(page)[1]['duration'] - 56) < .01 and
+                        abs(metrics(page)[0]['duration'] - 12) < .01,
+                        'second speed slider should not change first row speed')
+                pause_button = page.locator('#logo-marquee-pause')
+                pause_button.click()
+                require(pause_button.get_attribute('aria-pressed') == 'true' and all(
+                    row.locator('.syn-logo-marquee__track').evaluate(
+                        "el => getComputedStyle(el).animationPlayState") == 'paused'
+                    for row in page.locator('.syn-logo-marquee__row').all()
+                ), 'global pause must stop both CSS loops')
+                pause_button.click()
+                require(pause_button.get_attribute('aria-pressed') == 'false' and all(
+                    row.locator('.syn-logo-marquee__track').evaluate(
+                        "el => getComputedStyle(el).animationPlayState") == 'running'
+                    for row in page.locator('.syn-logo-marquee__row').all()
+                ), 'global resume must restart both CSS loops')
                 page.close()
 
                 # No-JS mode still animates, while reduced motion displays every
@@ -173,6 +208,8 @@ def main():
                 plain = browser.new_page(
                     java_script_enabled=False, viewport={'width': 320, 'height': 720})
                 plain.goto(url)
+                require(plain.locator('#logo-marquee-controls').is_hidden(),
+                        'showcase controls must not be visible without JavaScript')
                 require(metrics(plain)[0]['name'] == 'syn-logo-marquee-scroll',
                         'no JS required for animation')
                 plain.close()
@@ -180,6 +217,8 @@ def main():
                     reduced_motion='reduce', java_script_enabled=False,
                     viewport={'width': 320, 'height': 720})
                 reduced.goto(url)
+                require(reduced.locator('#logo-marquee-controls').is_hidden(),
+                        'reduced-motion no-JS fallback must keep inert controls hidden')
                 for row in metrics(reduced):
                     require(row['name'] == 'none', 'reduced motion must stop loop')
                     require(row['copies'][1]['display'] == 'none',

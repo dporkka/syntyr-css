@@ -415,7 +415,10 @@ for meaningful logos and empty `alt=""` for decorative copies.
 This composition lives in the optional motion stylesheet, not core.
 There is no mandatory runtime or external asset. See the
 [animation showcase](../examples/animation.html) for a self-contained
-two-row version using fictional wordmarks.
+two-row version using fictional wordmarks. That showcase also provides
+optional per-row speed/direction sliders and a pause/resume button; those
+controls are demonstration JavaScript only, not a requirement for the
+CSS-only component or the embeddable HTML recipe.
 
 ## Website block effects (CSS only)
 

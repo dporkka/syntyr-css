@@ -45,6 +45,16 @@ class LogoMarqueeContract(unittest.TestCase):
         self.assertIn("No JavaScript", self.docs)
         self.assertIn("alpha.5", self.docs)
 
+    def test_optional_demo_controls_leave_component_css_only(self):
+        self.assertIn('id="logo-marquee-controls" hidden', self.demo)
+        for row in (1, 2):
+            self.assertIn(f'id="logo-row-{row}-direction"', self.demo)
+            self.assertIn(f'id="logo-row-{row}-speed"', self.demo)
+            self.assertIn(f'id="logo-row-{row}-speed-value"', self.demo)
+        self.assertIn('id="logo-marquee-pause"', self.demo)
+        self.assertIn("logo-marquee-controls", (ROOT / "examples/animation-demo.mjs").read_text())
+        self.assertIn("data-syn-logo-direction", self.demo)
+
     def test_build_preserves_motion_as_optional_module(self):
         from scripts.build import distributions
         distributions = distributions()

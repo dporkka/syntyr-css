@@ -238,6 +238,40 @@
               </ul>
             </div>
           </div>
+        <div id="logo-marquee-controls" hidden class="syn-stack">
+          <h3 class="syn-heading">Try logo row settings</h3>
+          <p class="syn-caption">Interactive demonstration only. The embedded marquee itself runs entirely in CSS.</p>
+          <div class="syn-grid">
+            <fieldset class="syn-panel syn-stack">
+              <legend>Top logo row</legend>
+              <label for="logo-row-1-direction">Direction</label>
+              <select id="logo-row-1-direction" class="syn-select">
+                <option value="left" selected>Scroll left</option>
+                <option value="right">Scroll right</option>
+              </select>
+              <label for="logo-row-1-speed">Speed</label>
+              <input id="logo-row-1-speed" class="syn-input" type="range"
+                     min="0.5" max="3" step="0.25" value="1">
+              <output id="logo-row-1-speed-value" for="logo-row-1-speed">1×</output>
+            </fieldset>
+            <fieldset class="syn-panel syn-stack">
+              <legend>Bottom logo row</legend>
+              <label for="logo-row-2-direction">Direction</label>
+              <select id="logo-row-2-direction" class="syn-select">
+                <option value="left">Scroll left</option>
+                <option value="right" selected>Scroll right</option>
+              </select>
+              <label for="logo-row-2-speed">Speed</label>
+              <input id="logo-row-2-speed" class="syn-input" type="range"
+                     min="0.5" max="3" step="0.25" value="1.25">
+              <output id="logo-row-2-speed-value" for="logo-row-2-speed">1.25×</output>
+            </fieldset>
+          </div>
+          <div class="syn-cluster">
+            <button type="button" class="syn-button" id="logo-marquee-pause"
+                    aria-pressed="false">Pause both logo rows</button>
+          </div>
+        </div>
       </section>
       <section class="syn-stage" aria-labelledby="viewport-title">
         <h2 id="viewport-title" class="syn-heading">Opt-in viewport entry</h2>

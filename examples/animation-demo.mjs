@@ -67,3 +67,39 @@ if (controls && preview && feedback && presetInput && repeatInput && directionIn
     feedback.textContent = 'Animation stopped.';
   });
 }
+
+
+// Optional showcase-only marquee controls: CSS motion works with no JavaScript.
+// Each row maintains its own direction and speed. The shared pause flag is
+// set on the containing marquee and inherited by both tracks.
+const logoMarquee = document.querySelector('.syn-root .syn-logo-marquee');
+const logoControls = document.querySelector('#logo-marquee-controls');
+const logoPauseButton = document.querySelector('#logo-marquee-pause');
+const logoRows = logoMarquee?.querySelectorAll(':scope > .syn-logo-marquee__row');
+
+if (logoMarquee && logoControls && logoPauseButton && logoRows?.length === 2) {
+  logoControls.hidden = false;
+  for (const [index, row] of [...logoRows].entries()) {
+    const rowNumber = index + 1;
+    const direction = document.querySelector('#logo-row-' + rowNumber + '-direction');
+    const speed = document.querySelector('#logo-row-' + rowNumber + '-speed');
+    const speedValue = document.querySelector('#logo-row-' + rowNumber + '-speed-value');
+    if (!direction || !speed || !speedValue) continue;
+
+    direction.addEventListener('change', () => {
+      row.dataset.synLogoDirection = direction.value;
+    });
+    speed.addEventListener('input', () => {
+      const multiplier = Number(speed.value);
+      row.style.setProperty('--syn-logo-speed', String(multiplier));
+      speedValue.textContent = multiplier + '×';
+    });
+  }
+
+  logoPauseButton.addEventListener('click', () => {
+    const paused = logoPauseButton.getAttribute('aria-pressed') !== 'true';
+    logoMarquee.style.setProperty('--syn-logo-play-state', paused ? 'paused' : 'running');
+    logoPauseButton.setAttribute('aria-pressed', String(paused));
+    logoPauseButton.textContent = paused ? 'Resume both logo rows' : 'Pause both logo rows';
+  });
+}
