@@ -14,7 +14,7 @@ import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
 BENCH = ROOT / "benchmarks/frameworks"
-FRAMEWORKS = ("syntyr", "plain", "pure", "tailwind", "uno", "daisyui")
+FRAMEWORKS = ("syntyr", "plain", "pure", "tailwind", "uno", "daisyui", "blades", "bulma")
 FIXTURES = ("marketing", "dashboard")
 
 # Semantic DOM is identical in all variants. Class names intentionally differ,
@@ -54,6 +54,22 @@ STYLES = {
         "hero": "syn-hero", "section": "syn-stack",
     },
 }
+# Blades is classless: semantic elements supply buttons, forms and cards.
+# Only non-native dashboard compositions receive handwritten layout helpers.
+STYLES["blades"] = {
+    **DEFAULT, "shell": "container bench-shell", "button": "bench-button",
+    "input": "", "table": "", "card": "bench-card",
+}
+# Bulma supplies component surfaces but requires a little custom page layout.
+STYLES["bulma"] = {
+    **DEFAULT, "shell": "container bench-shell",
+    "title": "title is-3", "subtle": "has-text-grey",
+    "card": "box bench-card", "stat": "title is-4",
+    "button": "button is-link", "input": "input",
+    "tablebox": "table-container", "table": "table is-fullwidth is-striped",
+    "badge": "tag is-success is-light", "hero": "box bench-hero",
+}
+
 UTILITIES = {
     "page": "min-h-screen bg-slate-50 text-slate-900 font-sans",
     "shell": "mx-auto max-w-6xl px-5 py-8",
@@ -130,6 +146,34 @@ PURE_ADAPTER = """
 .pure-table.bench-table{width:100%;font-size:14px}
 .pure-button-primary{background:#4338ca;color:#fff;border-radius:8px}
 .pure-form input[type=search]{border-radius:8px}
+"""
+
+
+BLADES_ADAPTER = """
+/* Blades benchmark adapter: layout absent from classless native CSS. */
+.bench-shell{max-width:1152px;margin-inline:auto;padding:32px 20px}
+.bench-header{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px;margin-bottom:32px}
+.bench-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.bench-form{display:flex;align-items:center;flex-wrap:wrap;gap:12px}
+.bench-table-wrap{overflow-x:auto}
+.bench-badge{display:inline-block;padding:3px 9px;background:#dcfce7;color:#166534;border-radius:99px;font-size:.75rem}
+a.bench-button{display:inline-block;padding:9px 16px;text-decoration:none;background:var(--pico-primary-background,#4338ca);color:var(--pico-primary-inverse,#fff);border-radius:var(--pico-border-radius,8px)}
+.bench-hero{margin-block:32px;padding:32px;border:1px solid var(--pico-muted-border-color,#ddd);border-radius:var(--pico-border-radius,8px)}
+.bench-card{min-width:0}.bench-section{margin-block:32px}
+@media(max-width:800px){.bench-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:450px){.bench-grid{grid-template-columns:1fr}.bench-shell{padding:20px 12px}}
+"""
+BULMA_ADAPTER = """
+/* Bulma benchmark adapter: only missing page/grid/label composition styles. */
+.bench-shell{padding:32px 20px}
+.bench-header{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px;margin-bottom:32px}
+.bench-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.bench-card{min-width:0}.bench-card .title{margin-top:8px}
+.bench-form{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+.bench-hero{margin-bottom:32px}
+.bench-section{margin-block:32px}
+@media(max-width:800px){.bench-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:450px){.bench-grid{grid-template-columns:1fr}.bench-shell{padding:20px 12px}}
 """
 
 
@@ -242,6 +286,17 @@ def prepare_css(framework: str, output: Path, root: Path = ROOT) -> Path:
         if not pure.is_file():
             raise FileNotFoundError("Pure CSS package unavailable: run npm ci in benchmarks/frameworks")
         css = pure.read_text(encoding="utf8") + "\n" + BASE_CSS + PURE_ADAPTER
+    elif framework in ("blades", "bulma"):
+        package_css = {
+            "blades": ("@anyblades/blades/css/blades.min.css", BLADES_ADAPTER),
+            "bulma": ("bulma/css/bulma.min.css", BULMA_ADAPTER),
+        }
+        relative, adapter = package_css[framework]
+        src = root / "benchmarks/frameworks/node_modules" / relative
+        if not src.is_file():
+            raise FileNotFoundError(
+                f"{framework} vendor CSS missing: run npm ci in benchmarks/frameworks")
+        css = src.read_text(encoding="utf8") + "\n" + adapter
     elif framework in ("tailwind", "uno", "daisyui"):
         src = output / f"{framework}.compiled.css"
         if not src.is_file():
