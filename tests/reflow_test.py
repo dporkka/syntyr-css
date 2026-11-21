@@ -21,6 +21,8 @@ PAGES = (
     "examples/landing.html", "examples/viz.html", "examples/console.html",
     "examples/resources.html", "examples/pricing.html",
     "docs/console-kit.html", "examples/saas.html", "examples/settings-billing.html",
+         "examples/app-onboarding.html", "examples/app-team.html", "examples/app-notifications.html",
+         "examples/app-integrations.html", "examples/app-security.html",
     "examples/business.html", "examples/terminal.html",
          "examples/geometry-terminal.html",
          "examples/operations-console.html", "examples/themes.html",

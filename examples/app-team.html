@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Syntyr CSS native HTML application screen example: Team &amp; invitations; static, accessible and framework-neutral.">
+  <title>Team &amp; invitations — Syntyr CSS application screens</title>
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="../dist/syntyr.recipes.css">
+  <link rel="stylesheet" href="app-screens.css">
+</head>
+<body class="syn-root syn-page app-screens" data-syn-theme="studio" data-syn-density="compact" data-syn-intensity="quiet">
+  <a class="syn-button app-skip" href="#main">Skip to main content</a>
+  <div class="syn-app-shell app-shell">
+    <aside class="syn-app-rail app-rail" aria-label="Example application sidebar">
+      <a class="app-brand" href="app-onboarding.html"><span class="app-logo" aria-hidden="true">N</span><span><strong>Northstar</strong><small>Sample workspace</small></span></a>
+      <span class="app-rail-label">Workspace</span>
+      <nav class="syn-app-nav app-nav" aria-label="Application screens">
+        <a href="app-onboarding.html">Get started</a>
+        <a href="app-team.html" aria-current="page">Team</a>
+        <a href="app-notifications.html">Notifications</a>
+        <a href="app-integrations.html">Integrations</a>
+        <a href="app-security.html">Security</a>
+      </nav>
+      <div class="app-rail-bottom">
+        <span class="app-rail-label">Other examples</span>
+        <a href="saas.html">Dashboard</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="../docs/app-screens.html">Integration guide</a>
+        <div class="app-profile"><span class="syn-avatar syn-avatar--sm" aria-hidden="true">AL</span><span><strong>Alex Lane</strong><small>Illustrative administrator</small></span></div>
+      </div>
+    </aside>
+    <main id="main" class="syn-workspace app-main">
+      <header class="app-page-header">
+        <div><p class="app-overline">NORTHSTAR / PEOPLE</p><h1>Team &amp; invitations</h1><p class="syn-muted">Members, roles, invitations, and permission boundaries in one place.</p></div>
+        <span class="syn-badge">Demo data</span>
+      </header>
+      <p class="app-notice"><strong>Illustrative interface:</strong> This is a static HTML/CSS preview. Actions that require a server are disabled; no account, subscription, security, or integration data is changed.</p>
+
+      <div class="app-columns">
+        <section class="syn-app-card" id="team-members" aria-labelledby="members-heading">
+          <div class="app-section-heading"><div><p class="app-overline">ACCESS</p><h2 id="members-heading">Workspace members</h2><p class="syn-muted">Role assignment requires server authorization.</p></div><button type="button" class="syn-button syn-button--primary" disabled>Invite member</button></div>
+          <div class="app-metrics" role="group" aria-label="Example team counts"><div><strong>4</strong><span>Members</span></div><div><strong>1</strong><span>Pending invitation</span></div><div><strong>2</strong><span>Role types</span></div></div>
+          <div class="syn-table-wrap" role="region" aria-label="Workspace members; scroll horizontally to view all columns" tabindex="0">
+            <table class="syn-table"><caption>Illustrative organization membership</caption><thead><tr><th scope="col">Member</th><th scope="col">Role</th><th scope="col">Access</th><th scope="col">Status</th></tr></thead><tbody>
+              <tr><th scope="row"><span class="app-person"><span class="syn-avatar syn-avatar--sm" aria-hidden="true">AL</span><span>Alex Lane <small>alex@example.invalid</small></span></span></th><td>Administrator</td><td>All projects</td><td><span class="syn-status syn-status--success">Active</span></td></tr>
+              <tr><th scope="row"><span class="app-person"><span class="syn-avatar syn-avatar--sm" aria-hidden="true">MK</span><span>Morgan Kim <small>morgan@example.invalid</small></span></span></th><td>Viewer</td><td>Selected projects</td><td><span class="syn-status syn-status--success">Active</span></td></tr>
+              <tr><th scope="row"><span class="app-person"><span class="syn-avatar syn-avatar--sm" aria-hidden="true">JR</span><span>Jordan Reed <small>jordan@example.invalid</small></span></span></th><td>Viewer</td><td>Selected projects</td><td><span class="syn-status syn-status--success">Active</span></td></tr>
+              <tr><th scope="row"><span class="app-person"><span class="syn-avatar syn-avatar--sm" aria-hidden="true">TS</span><span>Taylor Stone <small>taylor@example.invalid</small></span></span></th><td>Viewer</td><td>Selected projects</td><td><span class="syn-status syn-status--success">Active</span></td></tr>
+            </tbody></table>
+          </div>
+        </section>
+        <aside class="app-aside">
+          <section class="syn-app-card" id="pending-invitations" aria-labelledby="invitations-heading"><h2 id="invitations-heading">Pending invitations</h2><p class="syn-muted">These invitations are illustrative and cannot be resent or revoked here.</p><ul class="syn-list-group"><li class="app-list-item"><strong>sam@example.invalid</strong><span class="syn-status syn-status--warning">Pending invitation</span><small>Viewer · expires in 7 days (example)</small></li></ul><button type="button" class="syn-button syn-button--outline" disabled>Resend invitation</button></section>
+          <section class="syn-app-card"><h2>Role guidance</h2><dl class="app-definition"><div><dt>Administrator</dt><dd>Manage workspace access and configuration</dd></div><div><dt>Viewer</dt><dd>Read only the records granted by the application</dd></div></dl><a href="app-security.html">Review access safeguards</a></section>
+        </aside>
+      </div>
+
+      <footer class="app-footer">Syntyr CSS · Five native application screens · <a href="../docs/app-screens.html">Integration guidance</a></footer>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Five original, framework-neutral application screens pair existing Syntyr core and recipes classes with an optional, copy-owned example stylesheet. These…">
+  <meta name="syntyr-source-sha256" content="276f9ac144eafce817f2b3305e7d9ab124e9392b6450e06f818441dbc8477878">
+  <meta name="theme-color" content="#f5f7fb">
+  <title>Five native application screens — Syntyr CSS docs</title>
+  <link rel="canonical" href="https://syntyr-css.pages.dev/docs/app-screens">
+  <link rel="alternate" type="text/markdown" href="app-screens.md" title="Markdown source">
+  <link rel="icon" href="../assets/syntyr-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="docs.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <a class="syn-button docs-skip" href="#doc-main">Skip to guide</a>
+  <div class="syn-shell">
+    <header class="syn-header docs-header">
+      <a class="syn-logo" href="../index.html">SYNTYR / CSS</a>
+      <nav class="syn-nav" aria-label="Documentation navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav>
+      <details class="site-mobile-menu"><summary>Menu</summary><nav aria-label="Mobile navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav></details>
+    </header>
+    <main id="doc-main" class="docs-article-page">
+      <nav class="syn-breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="reference.html">Documentation</a></li><li aria-current="page">Five native application screens</li></ol></nav>
+      <header class="docs-article-heading">
+        <p class="syn-eyebrow">SYNTYR / DOCUMENTATION</p>
+        <p class="syn-muted">Current source documentation may describe unreleased alpha.5 features. <a href="distribution.html">Check released version compatibility.</a></p>
+        <p class="syn-caption">Prefer a machine-readable version? <a href="app-screens.md">Markdown source</a> · <a href="../llms.txt">LLM index</a></p>
+      </header>
+      <div class="docs-article-layout">
+        <article class="docs-prose" aria-label="Five native application screens">
+<h1 id="five-native-application-screens">Five native application screens</h1>
+<p>Five original, framework-neutral <strong>application screens</strong> pair existing Syntyr core and recipes classes with an optional, copy-owned example stylesheet. These examples are intended as complete layout starting points rather than a new component API. <strong>All names, accounts, timestamps, statuses, prices and connections are illustrative.</strong> They do not communicate with a service or persist state.</p>
+<table>
+<thead>
+<tr>
+<th>Screen</th>
+<th>Example file</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Workspace setup</td>
+<td><a href="../examples/app-onboarding.html">app-onboarding.html</a></td>
+<td>First-run checklist, progress and next-step navigation</td>
+</tr>
+<tr>
+<td>Team and invitations</td>
+<td><a href="../examples/app-team.html">app-team.html</a></td>
+<td>Member directory, roles, pending invites and scope guidance</td>
+</tr>
+<tr>
+<td>Notification center</td>
+<td><a href="../examples/app-notifications.html">app-notifications.html</a></td>
+<td>Unread/read activity, clear timestamps and preview preferences</td>
+</tr>
+<tr>
+<td>Integrations</td>
+<td><a href="../examples/app-integrations.html">app-integrations.html</a></td>
+<td>Connected and available service catalog with permission guidance</td>
+</tr>
+<tr>
+<td>Security and access</td>
+<td><a href="../examples/app-security.html">app-security.html</a></td>
+<td>MFA, session history, API-key empty state and security checklist</td>
+</tr>
+</tbody>
+</table>
+<h2 id="copy-the-markup-and-styles">Copy the markup and styles</h2>
+<p>These are <strong>five real HTML files</strong>, not sections that require a JavaScript tab router. All navigation uses ordinary links with real destinations. Each example loads <code>syntyr.core.css</code>, then <code>syntyr.recipes.css</code>, and finally <a href="../examples/app-screens.css"><code>app-screens.css</code></a>. Copy the three CSS assets or use your app's existing pinned Syntyr version. The <code>app-screens.css</code> file has no external imports or assets and styles only the <code>.app-screens</code> example subtree; it is not bundled in the stable core API. Do not load an all-in-one bundle alongside the individual CSS files.</p>
+<p>Each page uses <code>.syn-root</code>, <code>.syn-app-shell</code>, <code>.syn-app-rail</code>, <code>.syn-app-nav</code>, <code>.syn-workspace</code>, <code>.syn-app-card</code>, and appropriate native semantic HTML elements. The sidebar and page headings are standalone; when embedding a page in an existing shell, remove duplicate landmarks and preserve exactly one page <code>h1</code> and <code>main</code>. Adapt the <code>href</code> values to your router or server-rendered paths.</p>
+<h2 id="connect-real-application-behavior-safely">Connect real application behavior safely</h2>
+<ul>
+<li><strong>Team and invitations:</strong> authenticate, authorize membership mutations per organization, validate roles and email addresses on the server, apply rate limits, and send invitations through an approved backend. Buttons stay disabled in the static examples.</li>
+<li><strong>Notifications:</strong> fetch member-scoped events with stable IDs; enforce authorization before marking read. The example shows no functional preference save or notification delivery. If you add a preference form, include CSRF protection and a clear success/error response.</li>
+<li><strong>Integrations:</strong> initiate OAuth or equivalent authorization in the server flow, store tokens encrypted, track scopes and revocation, and verify callbacks. Never embed client secrets or pretend a static connected label proves an active integration.</li>
+<li><strong>Security:</strong> enforce recent authentication for MFA, recovery-code issuance, session revocation, and API-key creation. Show secrets once and never include a real key in HTML, telemetry, URLs, or screenshots. The API-key empty state is deliberate.</li>
+<li><strong>Onboarding:</strong> track completed steps in a durable member/organization record. This static example marks a step current with <code>aria-current=&quot;step&quot;</code> but does not claim persistence.</li>
+</ul>
+<p>Keep selection and activity status in content rather than relying solely on color. Read-only demonstration controls that would mutate data are intentionally disabled. Replace fictional sample data before production use, and do not remove <code>disabled</code> until the server endpoint and policy checks actually exist.</p>
+<h2 id="validation">Validation</h2>
+<p>Run focused structural tests with <code>python3 -m unittest discover -s tests -p test_app_screens.py -v</code>. The optional browser regression uses a locally installed Playwright package and Chromium, without becoming a Syntyr runtime dependency:</p>
+<pre tabindex="0"><code class="language-sh">SYNTYR_PLAYWRIGHT_MODULE=/path/to/playwright \
+SYNTYR_CHROMIUM=/path/to/chromium \
+node tests/app-screens_browser.cjs
+</code></pre>
+<p>The browser check covers native navigation, six viewport widths, 200% and 400% enlarged-text stress at 320px, keyboard focus, reduced-motion and forced-colors rendering. The regular browser matrix, reflow suite and axe audit inventories also include all five pages. A real screen-reader, actual browser zoom and production authorization test are still required before shipping a live app.</p>
+        </article>
+        <aside class="docs-article-sidebar"><nav aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+<a class="docs-article-toc-link docs-article-toc-2" href="#copy-the-markup-and-styles">Copy the markup and styles</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#connect-real-application-behavior-safely">Connect real application behavior safely</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#validation">Validation</a>
+        </nav></aside>
+      </div>
+      <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="app-screens.md">Markdown source</a></nav>
+    </main>
+    <footer class="syn-header"><span class="syn-caption">SYNTYR CSS · MIT CORE · EXPERIMENTAL</span><a href="../index.html">Home</a></footer>
+  </div>
+</body>
+</html>
