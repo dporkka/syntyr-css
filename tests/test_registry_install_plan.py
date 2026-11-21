@@ -119,6 +119,8 @@ class RegistryInstallPlanTests(unittest.TestCase):
                     return self
                 def __exit__(self, *args):
                     return self.stream.__exit__(*args)
+                def fileno(self):
+                    return self.stream.fileno()
                 def write(self, data):
                     self.stream.write(data[:3])
                     raise OSError("simulated disk failure")
@@ -133,6 +135,41 @@ class RegistryInstallPlanTests(unittest.TestCase):
             self.assertFalse(target.exists(), "failed creation must not leave a partial asset")
 
 
+
+    def test_partial_cleanup_preserves_replacement_on_write_or_close_failure(self):
+        for failure in ("write", "close"):
+            with self.subTest(failure=failure), tempfile.TemporaryDirectory() as tmp:
+                project = Path(tmp)
+                plan = plan_install("core", project)
+                target = project / plan["files"][0]["path"]
+                moved = target.with_suffix(".moved")
+                original_open = Path.open
+
+                def replace_and_fail():
+                    target.rename(moved)
+                    target.write_bytes(b"customer asset")
+                    raise OSError(f"simulated {failure} failure")
+
+                @contextmanager
+                def failing_stream(path):
+                    with original_open(path, "xb") as stream:
+                        if failure == "write":
+                            with patch.object(stream, "write", side_effect=lambda data: replace_and_fail()):
+                                yield stream
+                        else:
+                            yield stream
+                            replace_and_fail()
+
+                def injected_open(path, mode="r", *args, **kwargs):
+                    if path == target and mode == "xb":
+                        return failing_stream(path)
+                    return original_open(path, mode, *args, **kwargs)
+
+                with patch.object(Path, "open", injected_open):
+                    with self.assertRaisesRegex(OSError, f"simulated {failure} failure"):
+                        apply_install(plan, project)
+                self.assertTrue(target.exists(), "cleanup deleted the replacement")
+                self.assertEqual(target.read_bytes(), b"customer asset")
 
     def test_mid_install_failure_rolls_back_only_new_assets(self):
         with tempfile.TemporaryDirectory() as tmp:

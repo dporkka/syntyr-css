@@ -147,21 +147,28 @@ def apply_install(plan: dict, project: Path) -> None:
                 if not target.is_file() or target.read_bytes() != content:
                     raise RegistryError("Changed during installation: " + entry["path"])
                 continue
-            created = False
             try:
-                with target.open("xb") as stream:
-                    created = True
-                    stream.write(content)
-                    metadata = os.fstat(stream.fileno())
-                created_files.append((target, content, metadata.st_dev, metadata.st_ino))
+                stream = target.open("xb")
             except FileExistsError as error:
                 raise RegistryError("Concurrent installation conflict: " + entry["path"]) from error
+
+            metadata = None
+            try:
+                with stream as opened:
+                    metadata = os.fstat(opened.fileno())
+                    opened.write(content)
             except BaseException:
-                # Exclusive create succeeded: discard our partial file on write/close
-                # failure. Never remove files that existed before this attempt.
-                if created:
-                    target.unlink(missing_ok=True)
+                # A failed write or close can leave partial bytes. Compare identity
+                # before removing them, and preserve the original install error.
+                if metadata is not None:
+                    try:
+                        current = target.stat(follow_symlinks=False)
+                        if (current.st_dev, current.st_ino) == (metadata.st_dev, metadata.st_ino):
+                            target.unlink()
+                    except OSError:
+                        pass
                 raise
+            created_files.append((target, content, metadata.st_dev, metadata.st_ino))
     except BaseException:
         for target, content, device, inode in reversed(created_files):
             try:
