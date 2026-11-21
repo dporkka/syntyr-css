@@ -2583,6 +2583,15 @@
     animation-name: var(--syn-icon-motion-keyframes);
   }
 
+  /* Disabled controls must keep nested icons still, even on direct SVG hover. */
+  :where(.syn-root :is(:disabled, [aria-disabled="true"]) .syn-icon--on-interact,
+         .syn-root:is(:disabled, [aria-disabled="true"]) .syn-icon--on-interact,
+         .syn-root.syn-icon--on-interact:is(:disabled, [aria-disabled="true"]),
+         :is(:disabled, [aria-disabled="true"]) .syn-root .syn-icon--on-interact,
+         :is(:disabled, [aria-disabled="true"]) .syn-root.syn-icon--on-interact) {
+    animation-name: none;
+  }
+
   @keyframes syn-icon-spin { to { transform: rotate(360deg); } }
   @keyframes syn-icon-pulse { 50% { transform: scale(.85); opacity: .65; } }
   @keyframes syn-icon-bounce { 50% { transform: translateY(-20%); } }

@@ -143,6 +143,8 @@ def root_control_motion_check(browser):
         require(icon.evaluate(animation) == "syn-icon-spin", "Hovering the root control label must start motion")
         control.evaluate("node => node.disabled = true")
         require(icon.evaluate(animation) == "none", "Disabled root control hover must not start motion")
+        icon.hover(force=True)
+        require(icon.evaluate(animation) == "none", "Direct icon hover must not bypass disabled root control")
         control.evaluate("""node => {
             node.disabled = false;
             node.setAttribute('aria-disabled', 'true');

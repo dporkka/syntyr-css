@@ -65,6 +65,16 @@ class OptionalSymbolsContract(unittest.TestCase):
 
         self.assertIn("prefers-reduced-motion", guide)
 
+    def test_disabled_control_hover_cannot_activate_nested_icon_motion(self):
+        css = (ROOT / "src/symbols.css").read_text(encoding="utf-8")
+        interactive = css.index("/* Run only while hovered/focused")
+        guard = css.index("/* Disabled controls must keep nested icons still", interactive)
+        self.assertGreater(guard, css.index("animation-name: var(--syn-icon-motion-keyframes);", interactive))
+        disabled_rule = css[guard:css.index("@keyframes syn-icon-spin", guard)]
+        self.assertIn('.syn-root :is(:disabled, [aria-disabled="true"]) .syn-icon--on-interact', disabled_rule)
+        self.assertIn('.syn-root:is(:disabled, [aria-disabled="true"]) .syn-icon--on-interact', disabled_rule)
+        self.assertIn("animation-name: none", disabled_rule)
+
     def test_unicode_and_ascii_preserve_text_and_alignment(self):
         css = (ROOT / "src/symbols.css").read_text(encoding="utf-8")
         for fragment in (".syn-symbol", ".syn-symbol--accent",
