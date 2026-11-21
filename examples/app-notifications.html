@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Syntyr CSS native HTML application screen example: Notification center; static, accessible and framework-neutral.">
+  <title>Notification center — Syntyr CSS application screens</title>
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="../dist/syntyr.recipes.css">
+  <link rel="stylesheet" href="app-screens.css">
+</head>
+<body class="syn-root syn-page app-screens" data-syn-theme="studio" data-syn-density="compact" data-syn-intensity="quiet">
+  <a class="syn-button app-skip" href="#main">Skip to main content</a>
+  <div class="syn-app-shell app-shell">
+    <aside class="syn-app-rail app-rail" aria-label="Example application sidebar">
+      <a class="app-brand" href="app-onboarding.html"><span class="app-logo" aria-hidden="true">N</span><span><strong>Northstar</strong><small>Sample workspace</small></span></a>
+      <span class="app-rail-label">Workspace</span>
+      <nav class="syn-app-nav app-nav" aria-label="Application screens">
+        <a href="app-onboarding.html">Get started</a>
+        <a href="app-team.html">Team</a>
+        <a href="app-notifications.html" aria-current="page">Notifications</a>
+        <a href="app-integrations.html">Integrations</a>
+        <a href="app-security.html">Security</a>
+      </nav>
+      <div class="app-rail-bottom">
+        <span class="app-rail-label">Other examples</span>
+        <a href="saas.html">Dashboard</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="../docs/app-screens.html">Integration guide</a>
+        <div class="app-profile"><span class="syn-avatar syn-avatar--sm" aria-hidden="true">AL</span><span><strong>Alex Lane</strong><small>Illustrative administrator</small></span></div>
+      </div>
+    </aside>
+    <main id="main" class="syn-workspace app-main">
+      <header class="app-page-header">
+        <div><p class="app-overline">NORTHSTAR / COMMUNICATION</p><h1>Notification center</h1><p class="syn-muted">A triage-focused feed with message states and preference previews.</p></div>
+        <span class="syn-badge">Demo data</span>
+      </header>
+      <p class="app-notice"><strong>Illustrative interface:</strong> This is a static HTML/CSS preview. Actions that require a server are disabled; no account, subscription, security, or integration data is changed.</p>
+
+      <div class="app-columns">
+        <section class="syn-app-card" id="notifications-feed" aria-labelledby="feed-heading">
+          <div class="app-section-heading"><div><p class="app-overline">INBOX</p><h2 id="feed-heading">Activity and alerts</h2><p class="syn-muted">Three unread examples, grouped by relevance.</p></div><button type="button" class="syn-button syn-button--outline" disabled>Mark all as read</button></div>
+          <nav class="syn-nav-tabs app-inline-tabs" aria-label="Notification sections"><ul><li><a href="#unread">Unread</a></li><li><a href="#read">Read</a></li></ul></nav>
+          <section id="unread" aria-labelledby="unread-heading"><div class="app-section-heading"><h3 id="unread-heading">Unread</h3><span class="syn-chip">3</span></div><ol class="app-feed">
+            <li data-app-unread><span class="app-feed-dot" aria-hidden="true"></span><div><strong>New workspace invitation pending review</strong><p>Review the example invitation before assigning project access.</p><span class="syn-caption"><time datetime="2026-11-21T09:45:00">Today, 9:45 AM</time> · People</span></div><a href="app-team.html">View team</a></li>
+            <li data-app-unread><span class="app-feed-dot" aria-hidden="true"></span><div><strong>Integration configuration requires attention</strong><p>An illustrative connection has a missing permission scope.</p><span class="syn-caption"><time datetime="2026-11-20T14:20:00">Yesterday, 2:20 PM</time> · Integrations</span></div><a href="app-integrations.html">Review</a></li>
+            <li data-app-unread><span class="app-feed-dot" aria-hidden="true"></span><div><strong>New sign-in from a different device</strong><p>Review your account's active sessions and MFA settings.</p><span class="syn-caption"><time datetime="2026-11-19T11:00:00">November 19, 2026</time> · Security</span></div><a href="app-security.html">Review</a></li>
+          </ol></section>
+          <section id="read" aria-labelledby="read-heading"><div class="app-section-heading"><h3 id="read-heading">Read</h3></div><ol class="app-feed"><li><span class="app-feed-dot" aria-hidden="true"></span><div><strong>Workspace created</strong><p>Your sample setup checklist is ready for review.</p><span class="syn-caption"><time datetime="2026-11-15T12:00:00">November 15, 2026</time> · Workspace</span></div><a href="app-onboarding.html">View setup</a></li></ol></section>
+        </section>
+        <aside class="app-aside"><section class="syn-app-card" aria-labelledby="notification-preferences-heading"><h2 id="notification-preferences-heading">Notification preferences</h2><p class="syn-muted">Preview only; options cannot save without an authenticated account.</p><fieldset class="app-preview-fieldset" disabled><legend>Email summaries</legend><label><input type="checkbox" checked> Weekly workspace digest</label><label><input type="checkbox" checked> Security notices</label><label><input type="checkbox"> Product announcements</label></fieldset><p class="syn-caption">No emails are sent by this example.</p></section></aside>
+      </div>
+
+      <footer class="app-footer">Syntyr CSS · Five native application screens · <a href="../docs/app-screens.html">Integration guidance</a></footer>
+    </main>
+  </div>
+</body>
+</html>

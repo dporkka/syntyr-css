@@ -142,6 +142,16 @@
       ]
     },
     {
+      "name": "syn-animate--loop",
+      "module": "motion.css",
+      "description": "Loop appearance variant of the animate component; see motion.css for styles.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "syntyr.all.css",
+        "syntyr.motion.css"
+      ]
+    },
+    {
       "name": "syn-app-card",
       "module": "recipes.css",
       "description": "App card presentation in the recipes.css module; use semantic HTML and consult its component example.",
@@ -2585,6 +2595,56 @@
       ]
     },
     {
+      "name": "syn-logo-marquee",
+      "module": "motion.css",
+      "description": "Logo marquee presentation in the motion.css module; use semantic HTML and consult its component example.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "syntyr.all.css",
+        "syntyr.motion.css"
+      ]
+    },
+    {
+      "name": "syn-logo-marquee__group",
+      "module": "motion.css",
+      "description": "Group part of the logo marquee component; see motion.css for markup.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "syntyr.all.css",
+        "syntyr.motion.css"
+      ]
+    },
+    {
+      "name": "syn-logo-marquee__row",
+      "module": "motion.css",
+      "description": "Row part of the logo marquee component; see motion.css for markup.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "syntyr.all.css",
+        "syntyr.motion.css"
+      ]
+    },
+    {
+      "name": "syn-logo-marquee__track",
+      "module": "motion.css",
+      "description": "Track part of the logo marquee component; see motion.css for markup.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "syntyr.all.css",
+        "syntyr.motion.css"
+      ]
+    },
+    {
+      "name": "syn-logo-marquee__wordmark",
+      "module": "motion.css",
+      "description": "Wordmark part of the logo marquee component; see motion.css for markup.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "syntyr.all.css",
+        "syntyr.motion.css"
+      ]
+    },
+    {
       "name": "syn-media-card",
       "module": "media.css",
       "description": "Media card presentation in the media.css module; use semantic HTML and consult its component example.",
@@ -4731,6 +4791,26 @@
         "syntyr.css",
         "syntyr.embed.css",
         "syntyr.semantic-bundle.css"
+      ]
+    },
+    {
+      "name": "--syn-animation-iterations",
+      "module": "motion.css",
+      "description": "Animation iterations design token from motion.css; override in the appropriate Syntyr scope when needed.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "syntyr.all.css",
+        "syntyr.motion.css"
+      ]
+    },
+    {
+      "name": "--syn-animation-keyframes",
+      "module": "motion.css",
+      "description": "Animation keyframes design token from motion.css; override in the appropriate Syntyr scope when needed.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "syntyr.all.css",
+        "syntyr.motion.css"
       ]
     },
     {

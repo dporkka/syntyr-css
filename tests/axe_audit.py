@@ -20,7 +20,9 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 PAGES = ("index.html", "docs/index.html", "docs/catalog.html", "docs/blocks.html", "docs/guides.html", "docs/design-principles.html", "examples/console.html",
           "examples/resources.html", "examples/pricing.html", "docs/console-kit.html",
-         "examples/saas.html", "examples/business.html", "examples/terminal.html",
+         "examples/saas.html", "examples/settings-billing.html",
+         "examples/app-onboarding.html", "examples/app-team.html", "examples/app-notifications.html",
+         "examples/app-integrations.html", "examples/app-security.html", "examples/business.html", "examples/terminal.html",
          "examples/geometry-terminal.html",
          "examples/operations-console.html", "examples/themes.html",
          "examples/vertigo-admin.html", "examples/vertigo-resource-workflow.html", "examples/saas-workflows.html", "examples/data-tables.html", "examples/resource-workspace.html", "examples/native-workflows.html", "examples/crm.html", "examples/minimalist-patterns.html",
