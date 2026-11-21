@@ -54,6 +54,7 @@ stylesheets.
 - **Independent visual intensity:** optional `data-syn-intensity="quiet|standard|cinematic"` controls decorative effects without changing the theme, component semantics or runtime JavaScript contract.
 - **Two modes:** explicit component classes, and a Pico-like *optional* `.syn-semantic` mode.
 - **Modular:** separate core, semantic and decorative effects files; includes convenience bundles.
+- **Optional website animations (alpha.5 source):** fade, slide, zoom and emphasis presets with finite/infinite loop controls and a native Web Animations API helper ([guide](docs/animation.md)).
 - **Real navigation and loading states:** semantic breadcrumbs, touch-friendly page links, and static accessible skeleton placeholders.
 - **No installation:** copy prebuilt CSS. Python 3 is used only by maintainers to regenerate it.
 - **Opt-in universal registry (alpha.5 source):** 23 free copy-owned HTML blocks plus 8 CSS modules in shadcn-compatible static JSON; no consumer runtime dependency. See [blocks guide](docs/blocks-guide.md).

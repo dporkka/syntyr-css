@@ -202,3 +202,106 @@ test('two observers racing for the same element still animate it once', () => {
   stopOne();
   stopTwo();
 });
+
+test('standard website presets generate named entrance, exit, and emphasis frames', () => {
+  const { element, calls } = target({ '--syn-motion-distance': '1.5rem' });
+  for (const name of ['fade-in', 'fade-out', 'slide-up', 'slide-down',
+    'slide-left', 'slide-right', 'zoom-in', 'zoom-out', 'pop',
+    'bounce', 'pulse', 'shake', 'rotate-in', 'flip-in']) {
+    animate(element, name);
+  }
+  assert.equal(calls.length, 14);
+  const frames = Object.fromEntries(
+    ['fade-in', 'fade-out', 'slide-up', 'slide-down',
+      'slide-left', 'slide-right', 'zoom-in', 'zoom-out', 'pop',
+      'bounce', 'pulse', 'shake', 'rotate-in', 'flip-in']
+      .map((name, index) => [name, calls[index].frames]));
+  assert.deepEqual(frames['fade-in'], [{ opacity: 0 }, { opacity: 1 }]);
+  assert.deepEqual(frames['fade-out'], [{ opacity: 1 }, { opacity: 0 }]);
+  assert.equal(frames['slide-up'][0].translate, '0 1.5rem');
+  assert.equal(frames['slide-down'][0].translate, '0 calc(-1 * 1.5rem)');
+  assert.equal(frames['slide-left'][0].translate, '1.5rem 0');
+  assert.equal(frames['slide-right'][0].translate, 'calc(-1 * 1.5rem) 0');
+  assert.equal(frames['zoom-in'][0].scale, '0.96');
+  assert.equal(frames['zoom-out'].at(-1).opacity, 0);
+  assert.ok(frames['pop'].length >= 3);
+  assert.ok(frames['bounce'].some(frame => frame.translate));
+  assert.ok(frames['pulse'].some(frame => frame.scale));
+  assert.ok(frames['shake'].some(frame => frame.translate));
+  assert.equal(frames['rotate-in'][0].rotate, '-12deg');
+  assert.equal(frames['flip-in'][0].rotate, 'y -80deg');
+});
+
+test('loops are opt-in, accept finite counts or infinity, and support alternating playback', () => {
+  const { element, calls } = target();
+  animate(element, 'pulse');
+  animate(element, 'pulse', { iterations: 3, iterationDirection: 'alternate' });
+  animate(element, 'bounce', { loop: true });
+  animate(element, 'fade-in', { iterations: Infinity });
+  assert.equal(calls[0].options.iterations, 1);
+  assert.equal(calls[1].options.iterations, 3);
+  assert.equal(calls[1].options.direction, 'alternate');
+  assert.equal(calls[2].options.iterations, Infinity);
+  assert.equal(calls[3].options.iterations, Infinity);
+  assert.equal(calls[2].options.fill, 'none');
+});
+
+test('CSS iteration tokens can control JS loops without forcing mandatory runtime', () => {
+  const { element, calls } = target({ '--syn-animation-iterations': '4' });
+  animate(element, 'bounce');
+  assert.equal(calls[0].options.iterations, 4);
+  animate(element, 'bounce', { iterations: 2 });
+  assert.equal(calls[1].options.iterations, 2);
+  assert.equal(stagger([element], 'bounce')[0] != null, true);
+  assert.equal(calls[2].options.iterations, 4);
+});
+
+test('invalid loop settings fail instead of silently hanging animations', () => {
+  const { element } = target();
+  for (const iterations of [0, -1, 1.5, NaN, '3', null]) {
+    assert.throws(() => animate(element, 'pulse', { iterations }), /iterations/i);
+  }
+  assert.throws(() => animate(element, 'pulse', { loop: 'forever' }), /loop/i);
+  assert.throws(() => animate(element, 'pulse', { loop: true, iterations: 2 }), /loop|iterations/i);
+  assert.throws(() => animate(element, 'pulse', { iterationDirection: 'diagonal' }), /iteration direction/i);
+});
+
+test('rotate spins a full turn and supports customizable clockwise/counterclockwise angles', () => {
+  const { element, calls } = target();
+  animate(element, 'rotate', { loop: true });
+  animate(element, 'rotate', { rotation: -180, iterations: 2 });
+  assert.deepEqual(calls[0].frames, [
+    { rotate: '0deg' }, { rotate: '360deg' },
+  ]);
+  assert.deepEqual(calls[1].frames, [
+    { rotate: '0deg' }, { rotate: '-180deg' },
+  ]);
+  assert.equal(calls[1].options.iterations, 2);
+});
+
+test('speed multiplier changes native playback rate without changing timing options', () => {
+  const { element, calls } = target({ '--syn-animation-speed': '0.5' });
+  const slow = animate(element, 'rotate', { loop: true });
+  assert.equal(slow.playbackRate, 0.5);
+  const fast = animate(element, 'rotate', { speed: 2 });
+  assert.equal(fast.playbackRate, 2);
+  assert.equal(calls[1].options.duration, 220);
+  assert.equal(calls[1].options.iterations, 1);
+  const neutral = animate(element, 'rotate', { speed: 1 });
+  assert.equal(neutral.playbackRate, 1);
+});
+
+test('invalid speed and rotation are rejected with clear type errors', () => {
+  const { element } = target();
+  for (const speed of [-3, 0, NaN, Infinity, '2', null]) {
+    assert.throws(() => animate(element, 'rotate', { speed }), /speed/i);
+  }
+  for (const rotation of [NaN, Infinity, '360deg', null]) {
+    assert.throws(() => animate(element, 'rotate', { rotation }), /rotation/i);
+  }
+});
+
+test('invalid CSS speed tokens fall back to normal playback', () => {
+  const { element } = target({ '--syn-animation-speed': 'untrusted-token' });
+  assert.equal(animate(element, 'rotate').playbackRate, 1);
+});
