@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Syntyr CSS native HTML application screen example: Integrations; static, accessible and framework-neutral.">
+  <title>Integrations — Syntyr CSS application screens</title>
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="../dist/syntyr.recipes.css">
+  <link rel="stylesheet" href="app-screens.css">
+</head>
+<body class="syn-root syn-page app-screens" data-syn-theme="studio" data-syn-density="compact" data-syn-intensity="quiet">
+  <a class="syn-button app-skip" href="#main">Skip to main content</a>
+  <div class="syn-app-shell app-shell">
+    <aside class="syn-app-rail app-rail" aria-label="Example application sidebar">
+      <a class="app-brand" href="app-onboarding.html"><span class="app-logo" aria-hidden="true">N</span><span><strong>Northstar</strong><small>Sample workspace</small></span></a>
+      <span class="app-rail-label">Workspace</span>
+      <nav class="syn-app-nav app-nav" aria-label="Application screens">
+        <a href="app-onboarding.html">Get started</a>
+        <a href="app-team.html">Team</a>
+        <a href="app-notifications.html">Notifications</a>
+        <a href="app-integrations.html" aria-current="page">Integrations</a>
+        <a href="app-security.html">Security</a>
+      </nav>
+      <div class="app-rail-bottom">
+        <span class="app-rail-label">Other examples</span>
+        <a href="saas.html">Dashboard</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="../docs/app-screens.html">Integration guide</a>
+        <div class="app-profile"><span class="syn-avatar syn-avatar--sm" aria-hidden="true">AL</span><span><strong>Alex Lane</strong><small>Illustrative administrator</small></span></div>
+      </div>
+    </aside>
+    <main id="main" class="syn-workspace app-main">
+      <header class="app-page-header">
+        <div><p class="app-overline">NORTHSTAR / INTEGRATIONS</p><h1>Integrations</h1><p class="syn-muted">Inspect connected tools, available connectors, and permission requirements.</p></div>
+        <span class="syn-badge">Demo data</span>
+      </header>
+      <p class="app-notice"><strong>Illustrative interface:</strong> This is a static HTML/CSS preview. Actions that require a server are disabled; no account, subscription, security, or integration data is changed.</p>
+
+      <div class="app-columns">
+        <div class="app-content-stack">
+          <section id="integrations-directory" aria-labelledby="directory-heading"><div class="app-section-heading"><div><p class="app-overline">DIRECTORY</p><h2 id="directory-heading">Integration directory</h2><p class="syn-muted">An illustrative catalog with clearly distinguished connection states.</p></div></div><nav class="syn-nav-tabs app-inline-tabs" aria-label="Integration groups"><ul><li><a href="#connected" aria-current="location">Connected</a></li><li><a href="#available">Available</a></li></ul></nav></section>
+          <section id="connected" class="app-content-stack" aria-labelledby="connected-heading"><h3 id="connected-heading">Connected (example)</h3><div class="app-integration-grid">
+            <article class="syn-app-card app-integration"><span class="app-integration-icon" aria-hidden="true">SC</span><h4>Source control</h4><p class="syn-muted">Repository activity and read-only metadata.</p><span class="syn-status syn-status--success">Connected (example)</span><button class="syn-button syn-button--outline" type="button" disabled>Manage connection</button></article>
+            <article class="syn-app-card app-integration"><span class="app-integration-icon" aria-hidden="true">ML</span><h4>Mail delivery</h4><p class="syn-muted">Transactional notification delivery previews.</p><span class="syn-status syn-status--success">Connected (example)</span><button class="syn-button syn-button--outline" type="button" disabled>Manage connection</button></article>
+          </div></section>
+          <section id="available" class="app-content-stack" aria-labelledby="available-heading"><h3 id="available-heading">Available</h3><div class="app-integration-grid">
+            <article class="syn-app-card app-integration"><span class="app-integration-icon" aria-hidden="true">CA</span><h4>Calendar</h4><p class="syn-muted">Schedule sync and event reminders.</p><span class="syn-caption">Not connected</span><button class="syn-button syn-button--outline" type="button" disabled>Connect</button></article>
+            <article class="syn-app-card app-integration"><span class="app-integration-icon" aria-hidden="true">CH</span><h4>Team chat</h4><p class="syn-muted">Channels and notifications integration.</p><span class="syn-caption">Not connected</span><button class="syn-button syn-button--outline" type="button" disabled>Connect</button></article>
+            <article class="syn-app-card app-integration"><span class="app-integration-icon" aria-hidden="true">DB</span><h4>Analytics warehouse</h4><p class="syn-muted">Read-only report exports with clear scopes.</p><span class="syn-caption">Not connected</span><button class="syn-button syn-button--outline" type="button" disabled>Connect</button></article>
+            <article class="syn-app-card app-integration"><span class="app-integration-icon" aria-hidden="true">WH</span><h4>Webhooks</h4><p class="syn-muted">Delivery event subscriptions and retries.</p><span class="syn-caption">Not connected</span><button class="syn-button syn-button--outline" type="button" disabled>Connect</button></article>
+          </div></section>
+        </div>
+        <aside class="app-aside"><section class="syn-app-card"><h2>Permission scope</h2><p class="syn-muted">Show who authorized a connection, its effective scopes, last sync, failure status, and a verified disconnect action in a real implementation.</p><dl class="app-definition"><div><dt>Access</dt><dd>Read-only, where possible</dd></div><div><dt>Consent</dt><dd>Authorized user required</dd></div><div><dt>Secrets</dt><dd>Server-side storage only</dd></div></dl><a href="app-security.html">See security settings</a></section></aside>
+      </div>
+
+      <footer class="app-footer">Syntyr CSS · Five native application screens · <a href="../docs/app-screens.html">Integration guidance</a></footer>
+    </main>
+  </div>
+</body>
+</html>

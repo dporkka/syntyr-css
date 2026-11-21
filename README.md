@@ -380,3 +380,7 @@ See [LICENSE](LICENSE).
 - [Console Kit buyer validation, pre-sale release gates and measured metrics](business/commercial-launch-gates.md)
 
 No paid kit has been shipped or put up for sale in this repository. No billing or license-key code is included. The Grid and Noir visual themes are original, not officially affiliated with any entertainment franchise. **SYNTYR is the selected but not trademark-cleared name**, pending documented brand clearance. The preliminary risk screen is not authorization for paid branding.
+
+## Additional native application screens
+
+Five copy-owned [SaaS application screens](docs/app-screens.md) cover onboarding, team membership and invitations, notifications, integrations, and security. They are static HTML/CSS examples built from the existing core and recipes, with no required application JavaScript or live account actions.
