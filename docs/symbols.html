@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Syntyr styles user-supplied icons and text; it does not ship icon glyphs, an icon font, emoji assets, a JavaScript icon runtime, or an ASCII-art…">
-  <meta name="syntyr-source-sha256" content="d6b88b0deac2e582f5e90f8860ee8d95d8002d371838bc417f3a80133b29eaca">
+  <meta name="syntyr-source-sha256" content="5a93e0736e754249c3d5d851188d450b40b9e68dc5a643295a9aa2850cd26fb2">
   <meta name="theme-color" content="#f5f7fb">
   <title>Icons, Unicode, and ASCII art (optional) — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/symbols">
@@ -73,7 +73,75 @@ assets from Lucide, Heroicons, Tabler, and similar libraries under their
 respective licenses. None is vendored or required. Avoid loading an entire
 icon font or a massive SVG sprite for a handful of icons. An SVG that uses
 <code>currentColor</code> inherits Syntyr's theme colors automatically.</p>
-<h2 id="2-unicode-as-actual-text">2. Unicode as actual text</h2>
+<h2 id="2-animate-icons-optional-pure-css">2. Animate icons (optional, pure CSS)</h2>
+<p>The same optional symbols stylesheet provides six motion modifiers for an
+inline SVG or SVG wrapper: <code>syn-icon--spin</code>, <code>syn-icon--pulse</code>,
+<code>syn-icon--bounce</code>, <code>syn-icon--shake</code>, <code>syn-icon--wiggle</code> and <code>syn-icon--pop</code>.
+Nothing animates unless you add a modifier, and <strong>no JavaScript is required</strong>.</p>
+<p>Copy one of the <a href="blocks.html">77 original icons in the Blocks gallery</a> or use
+your own SVG. The icon artwork is not baked into the stylesheet.</p>
+<pre tabindex="0"><code class="language-html">&lt;!-- Spinning progress icon alongside visible status text --&gt;
+&lt;p role=&quot;status&quot;&gt;
+  &lt;svg class=&quot;syn-icon syn-icon--spin&quot; viewBox=&quot;0 0 24 24&quot;
+       fill=&quot;none&quot; stroke=&quot;currentColor&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;
+    &lt;path d=&quot;M12 2v4m0 12v4M2 12h4m12 0h4&quot;/&gt;
+  &lt;/svg&gt;
+  Loading report...
+&lt;/p&gt;
+
+&lt;!-- Animate only while hovering or keyboard-focusing the button --&gt;
+&lt;button type=&quot;button&quot; class=&quot;syn-button&quot;&gt;
+  &lt;svg class=&quot;syn-icon syn-icon--spin syn-icon--on-interact&quot;
+       viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot;
+       aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;
+    &lt;path d=&quot;M20 6v6h-6M4 18v-6h6M5 10a7 7 0 0 1 13-3M19 14a7 7 0 0 1-13 3&quot;/&gt;
+  &lt;/svg&gt;
+  Refresh
+&lt;/button&gt;
+</code></pre>
+<p>Motion is continuous by default. Control it per element or on a shared parent:</p>
+<pre tabindex="0"><code class="language-html">&lt;svg class=&quot;syn-icon syn-icon--pop syn-icon--on-interact&quot;
+     style=&quot;--syn-icon-motion-duration:350ms;
+            --syn-icon-motion-iterations:1;
+            --syn-icon-motion-easing:ease-out&quot;
+     viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;&lt;!-- your paths --&gt;&lt;/svg&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>CSS variable</th>
+<th>Default</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--syn-icon-motion-duration</code></td>
+<td><code>1s</code></td>
+<td>Length of one cycle</td>
+</tr>
+<tr>
+<td><code>--syn-icon-motion-iterations</code></td>
+<td><code>infinite</code></td>
+<td>Number of repetitions; use <code>1</code> for one-shot effects</td>
+</tr>
+<tr>
+<td><code>--syn-icon-motion-easing</code></td>
+<td><code>linear</code> for spin; <code>ease-in-out</code> otherwise</td>
+<td>Timing function</td>
+</tr>
+</tbody>
+</table>
+<p><code>--on-interact</code> pauses motion until the icon itself is hovered or focused, or
+its enclosing button/link is hovered or keyboard-focused. It does not register
+events or implement loading state. An icon with a running animation class and no
+<code>--on-interact</code> animates continuously.</p>
+<p>Every preset is fully disabled by <code>prefers-reduced-motion: reduce</code> (including
+hover/focus effects). Always communicate loading, success and errors in visible
+text or semantic status; motion must remain decorative. Animate a wrapper if
+other CSS already controls the SVG's <code>transform</code> property. Only one motion
+modifier should be applied per icon.</p>
+<h2 id="3-unicode-as-actual-text">3. Unicode as actual text</h2>
 <pre tabindex="0"><code class="language-html">&lt;span class=&quot;syn-symbol syn-symbol--accent&quot; aria-hidden=&quot;true&quot;&gt;◆&lt;/span&gt;
 &lt;span&gt;Operational&lt;/span&gt;
 &lt;span class=&quot;syn-symbol syn-symbol--muted&quot; aria-hidden=&quot;true&quot;&gt;→&lt;/span&gt;
@@ -85,7 +153,7 @@ symbols need font coverage; system font fallbacks, emoji variation selectors,
 platform-specific glyphs, high-contrast mode and text direction can all change
 their presentation. Check the exact characters in your target browsers and fonts.
 Do not rely on a symbol's color or shape alone to communicate state.</p>
-<h2 id="3-ascii-and-unicode-box-drawing-art">3. ASCII and Unicode box-drawing art</h2>
+<h2 id="4-ascii-and-unicode-box-drawing-art">4. ASCII and Unicode box-drawing art</h2>
 <p>Use real <code>&lt;pre&gt;</code> text. <code>.syn-ascii</code> preserves spaces, line breaks and
 monospace alignment and scrolls horizontally rather than splitting a border.
 It pairs with existing <code>.syn-terminal</code> recipes, but does not require them.</p>
@@ -126,8 +194,9 @@ terminals that cannot render it.</li>
         </article>
         <aside class="docs-article-sidebar"><nav aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#1-svg-icons-no-mandatory-icon-pack">1. SVG icons (no mandatory icon pack)</a>
-<a class="docs-article-toc-link docs-article-toc-2" href="#2-unicode-as-actual-text">2. Unicode as actual text</a>
-<a class="docs-article-toc-link docs-article-toc-2" href="#3-ascii-and-unicode-box-drawing-art">3. ASCII and Unicode box-drawing art</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#2-animate-icons-optional-pure-css">2. Animate icons (optional, pure CSS)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#3-unicode-as-actual-text">3. Unicode as actual text</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#4-ascii-and-unicode-box-drawing-art">4. ASCII and Unicode box-drawing art</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#accessibility-and-fallback-rules">Accessibility and fallback rules</a>
         </nav></aside>
       </div>

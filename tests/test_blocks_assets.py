@@ -315,10 +315,10 @@ class BlocksAssetsTests(unittest.TestCase):
             css, r"\.syn-root \.syn-block-asset--radar>span\s*\{\s*color:var\(--syn-text\)"
         )
 
-    def test_twenty_four_original_svg_icon_examples(self):
+    def test_expanded_original_svg_icon_examples(self):
         icons = json.loads((ROOT / "blocks/icons.json").read_text(encoding="utf-8"))["icons"]
-        self.assertEqual(len(icons), 24)
-        self.assertEqual(len({icon["id"] for icon in icons}), 24)
+        self.assertGreaterEqual(len(icons), 60)
+        self.assertEqual(len({icon["id"] for icon in icons}), len(icons))
         for icon in icons:
             with self.subTest(icon=icon["id"]):
                 self.assertRegex(icon["id"], r"^[a-z][a-z0-9-]+$")
@@ -327,13 +327,31 @@ class BlocksAssetsTests(unittest.TestCase):
                 self.assertNotIn("<script", icon["body"])
                 self.assertNotIn("href=", icon["body"])
                 self.assertNotIn("url(", icon["body"])
+        from xml.etree import ElementTree
+        for icon in icons:
+            with self.subTest(svg=icon["id"]):
+                svg = ElementTree.fromstring('<svg xmlns="http://www.w3.org/2000/svg">' + icon["body"] + '</svg>')
+                self.assertTrue(all(element.tag.split("}")[-1] in {"svg", "path", "circle", "rect", "line", "polyline", "ellipse"} for element in svg.iter()))
+        essential = {"home", "menu", "plus", "minus", "edit", "trash", "copy", "share",
+                     "refresh", "loader", "eye", "eye-off", "mail", "phone", "link",
+                     "folder", "file", "image", "heart", "star", "play", "pause",
+                     "chevron-down", "chevron-up", "arrow-left", "arrow-right",
+                     "more-horizontal", "check-circle", "help-circle", "log-out",
+                     "log-in", "grid", "list", "sun", "moon", "send"}
+        self.assertTrue(essential.issubset({icon["id"] for icon in icons}))
         page = (ROOT / "docs/blocks.html").read_text(encoding="utf-8")
         parser = InspectHTML()
         parser.feed(page)
         previews = [a for a in parser.attributes if "data-icon-id" in a]
-        self.assertEqual(len(previews), 24)
+        self.assertEqual(len(previews), len(icons))
         self.assertIn('id="blocks-icons-heading"', page)
         self.assertIn('aria-hidden="true"', page)
+        self.assertIn('id="blocks-icon-search"', page)
+        self.assertIn('id="blocks-icon-results"', page)
+        self.assertIn('syn-icon--on-interact', page)
+        script = (ROOT / "docs/blocks.js").read_text(encoding="utf-8")
+        self.assertIn("function filterIcons()", script)
+        self.assertIn("iconQuery.addEventListener", script)
 
     def test_public_site_ships_only_reviewed_gallery_files(self):
         from scripts.build_cloudflare_site import source_files

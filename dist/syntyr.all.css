@@ -2842,6 +2842,57 @@
     block-size: 100%;
   }
 
+  /* Opt-in icon motion. Each preset works on inline SVGs and SVG wrappers;
+     no icon artwork, color, fill or stroke is modified. */
+  :where(.syn-root .syn-icon:is(.syn-icon--spin, .syn-icon--pulse, .syn-icon--bounce, .syn-icon--shake, .syn-icon--wiggle, .syn-icon--pop),
+         .syn-root.syn-icon:is(.syn-icon--spin, .syn-icon--pulse, .syn-icon--bounce, .syn-icon--shake, .syn-icon--wiggle, .syn-icon--pop)) {
+    animation-duration: var(--syn-icon-motion-duration, 1s);
+    animation-timing-function: var(--syn-icon-motion-easing, ease-in-out);
+    animation-iteration-count: var(--syn-icon-motion-iterations, infinite);
+    transform-origin: center;
+  }
+  :where(.syn-root .syn-icon--spin, .syn-root.syn-icon--spin) {
+    animation-name: syn-icon-spin;
+    animation-timing-function: var(--syn-icon-motion-easing, linear);
+  }
+  :where(.syn-root .syn-icon--pulse, .syn-root.syn-icon--pulse) { animation-name: syn-icon-pulse; }
+  :where(.syn-root .syn-icon--bounce, .syn-root.syn-icon--bounce) { animation-name: syn-icon-bounce; }
+  :where(.syn-root .syn-icon--shake, .syn-root.syn-icon--shake) { animation-name: syn-icon-shake; }
+  :where(.syn-root .syn-icon--wiggle, .syn-root.syn-icon--wiggle) { animation-name: syn-icon-wiggle; }
+  :where(.syn-root .syn-icon--pop, .syn-root.syn-icon--pop) { animation-name: syn-icon-pop; }
+
+  /* Pause until the icon or its native interactive parent is hovered/focused. */
+  :where(.syn-root .syn-icon--on-interact, .syn-root.syn-icon--on-interact) {
+    animation-play-state: paused;
+  }
+  :where(.syn-root .syn-icon--on-interact:is(:hover, :focus-visible),
+         .syn-root.syn-icon--on-interact:is(:hover, :focus-visible),
+         .syn-root :is(button, a, [role="button"]):not(:disabled):not([aria-disabled="true"]):is(:hover, :focus-visible) .syn-icon--on-interact) {
+    animation-play-state: running;
+  }
+
+  @keyframes syn-icon-spin { to { transform: rotate(360deg); } }
+  @keyframes syn-icon-pulse { 50% { transform: scale(.85); opacity: .65; } }
+  @keyframes syn-icon-bounce { 50% { transform: translateY(-20%); } }
+  @keyframes syn-icon-shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-12%); }
+    40%, 80% { transform: translateX(12%); }
+  }
+  @keyframes syn-icon-wiggle {
+    0%, 100% { transform: rotate(0); }
+    25% { transform: rotate(-13deg); }
+    75% { transform: rotate(13deg); }
+  }
+  @keyframes syn-icon-pop { 50% { transform: scale(1.2); } }
+
+  @media (prefers-reduced-motion: reduce) {
+    :where(.syn-root .syn-icon:is(.syn-icon--spin, .syn-icon--pulse, .syn-icon--bounce, .syn-icon--shake, .syn-icon--wiggle, .syn-icon--pop),
+           .syn-root.syn-icon:is(.syn-icon--spin, .syn-icon--pulse, .syn-icon--bounce, .syn-icon--shake, .syn-icon--wiggle, .syn-icon--pop)) {
+      animation: none;
+    }
+  }
+
   /* Symbols belong in the DOM; CSS does not generate meaningful content. */
   :where(.syn-root .syn-symbol, .syn-root.syn-symbol) {
     display: inline-block;

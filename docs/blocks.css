@@ -53,3 +53,10 @@
 @media (forced-colors:active) {
  .syn-root .blocks-preview,.syn-root .blocks-source,.syn-root .blocks-type {border-color:CanvasText}
 }
+
+/* Browse the SVG gallery without hiding icons for no-JS visitors. */
+.syn-root .blocks-icon-controls {max-width:26rem;margin-block:1rem}
+.syn-root .blocks-icon-controls[hidden] {display:none}
+.syn-root .blocks-icon-controls .syn-label {display:block;margin-block-end:.4rem}
+.syn-root .blocks-motion-examples {margin-block:1rem 2rem}
+.syn-root .blocks-motion-example {gap:.5rem}

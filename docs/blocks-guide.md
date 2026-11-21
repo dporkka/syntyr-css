@@ -124,18 +124,20 @@ preferences, and effects disable in forced-colors mode.
 Existing Syntyr geometry and effects modules should be the default choice when
 they already provide the desired result.
 
-## Six font recipes and 24 original SVG icons
+## Six font recipes and 77 original SVG icons
 
 Six system-font typography directions are displayed in the gallery:
 Studio sans, Editorial serif, Terminal mono, Technical sans, Reading serif
 and Compact system. They do not bundle or download font files. Customize
 CSS tokens for UI, display and monospace type, preserving readable fallbacks.
 
-The gallery now provides 24 original, copyable inline SVG examples using
+The gallery now provides 77 original, copyable inline SVG examples using
 Syntyr's existing generic icon sizing contract. These are not a dependency,
 icon font or stand-alone icon runtime. You may also use appropriately licensed
 provider packs such as Lucide, Tabler and Heroicons; none are vendored here. Icon-only controls need accessible
-names. See [symbols](symbols.md) for supported integration patterns.
+names. Icons can optionally use six no-JavaScript animation presets, with
+hover/focus activation and reduced-motion support. See [symbols](symbols.md)
+for supported integration patterns.
 
 ## Source, build and maintenance
 

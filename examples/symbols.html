@@ -14,7 +14,7 @@
     <header class="syn-header">
       <a class="syn-logo" href="../docs/index.html">SYNTYR / SYMBOL LAB</a>
       <nav class="syn-nav" aria-label="Example navigation">
-        <a href="#icons">ICONS</a>
+        <a href="#icons">ICONS</a><a href="#icon-motion">MOTION</a>
         <a href="#unicode">UNICODE</a>
         <a href="#ascii">TEXT ART</a>
         <a href="../docs/index.html">GALLERY</a>
@@ -44,6 +44,19 @@
           </div>
           <p class="syn-caption" style="margin-block-start:var(--syn-space-2)">Buttons are disabled because this is a static illustration, not an interactive search or sync application.</p>
         </article>
+      </section>
+      <section id="icon-motion" class="syn-stack" aria-labelledby="icon-motion-title">
+        <h2 class="syn-heading" id="icon-motion-title">02 / Hover and focus icon motion</h2>
+        <p class="syn-muted">Six opt-in, CSS-only motion presets. Hover or focus a preview button to animate; buttons only demonstrate visual feedback, not application actions. Reduced-motion preferences disable every effect.</p>
+        <div class="syn-actions">
+            <button type="button" class="syn-button syn-button--outline"><svg class="syn-icon syn-icon--spin syn-icon--on-interact" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 6v6h-6M4 18v-6h6"/><path d="M5 10a7.5 7.5 0 0 1 13-3l2 5M4 12l2 5a7.5 7.5 0 0 0 13-3"/></svg>Spin preview</button>
+            <button type="button" class="syn-button syn-button--outline"><svg class="syn-icon syn-icon--pulse syn-icon--on-interact" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20.5 5.5a5.4 5.4 0 0 0-7.6 0L12 6.4l-.9-.9a5.4 5.4 0 1 0-7.6 7.6L12 21l8.5-7.9a5.4 5.4 0 0 0 0-7.6Z"/></svg>Pulse preview</button>
+            <button type="button" class="syn-button syn-button--outline"><svg class="syn-icon syn-icon--bounce syn-icon--on-interact" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 20V4m-7 7 7-7 7 7"/></svg>Bounce preview</button>
+            <button type="button" class="syn-button syn-button--outline"><svg class="syn-icon syn-icon--shake syn-icon--on-interact" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 17h14l-2-2V10c0-3.2-2-5.5-5-5.5S7 6.8 7 10v5l-2 2Zm5 3h4"/></svg>Shake preview</button>
+            <button type="button" class="syn-button syn-button--outline"><svg class="syn-icon syn-icon--wiggle syn-icon--on-interact" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 2.5 3 6.2 6.8 1-4.9 4.8 1.2 6.8-6.1-3.2-6.1 3.2 1.2-6.8-4.9-4.8 6.8-1 3-6.2Z"/></svg>Wiggle preview</button>
+            <button type="button" class="syn-button syn-button--outline"><svg class="syn-icon syn-icon--pop syn-icon--on-interact" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9.5"/><path d="m7.5 12 3 3 6-6"/></svg>Pop preview</button>
+        </div>
+        <p class="syn-caption">Add a modifier such as <code>syn-icon--spin</code>. Add <code>syn-icon--on-interact</code> for hover/keyboard-focus activation. See <a href="../docs/symbols.md">configuration and accessibility guidance</a>.</p>
       </section>
       <section id="unicode" class="syn-stack" aria-labelledby="unicode-title">
         <h2 class="syn-heading" id="unicode-title">02 / Literal Unicode typography</h2>

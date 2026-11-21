@@ -173,6 +173,7 @@ def build() -> str:
                 aria-label="Copy HTML for {escape(block['title'], quote=True)}" hidden>Copy HTML</button>
       </article>""")
     icons = json.loads((ROOT / "blocks/icons.json").read_text(encoding="utf-8"))["icons"]
+    icon_count = len(icons)
     icon_cards = []
     for icon in icons:
         ident, label = escape(icon["id"]), escape(icon["label"])
@@ -186,6 +187,21 @@ def build() -> str:
           <div class="blocks-icon-preview">{svg}<strong>{label}</strong></div>
           <details><summary data-icon-source>SVG source for {escape(icon['label'])}</summary><pre><code>{escape(svg)}</code></pre></details>
         </div>""")
+    animation_cards = []
+    motion_examples = (("spin", "refresh"), ("pulse", "heart"),
+                       ("bounce", "arrow-up"), ("shake", "notification"),
+                       ("wiggle", "star"), ("pop", "check-circle"))
+    icon_by_id = {icon["id"]: icon for icon in icons}
+    for preset, icon_id in motion_examples:
+        icon = icon_by_id[icon_id]
+        svg = ('<svg class="syn-icon syn-icon--' + preset + ' syn-icon--on-interact" '
+               'viewBox="0 0 24 24" fill="none" stroke="currentColor" '
+               'stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" '
+               'aria-hidden="true" focusable="false">' + icon["body"] + '</svg>')
+        animation_cards.append(
+            '<button type="button" class="syn-button blocks-motion-example">'
+            + svg + '<span>' + preset.capitalize() + '</span></button>'
+        )
     asset_cards = []
     for ident, title in ASSETS:
         asset_cards.append(f"""
@@ -202,7 +218,7 @@ def build() -> str:
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="{count} original HTML/CSS blocks, 12 visual assets, and 24 SVG icon examples for Syntyr. View, filter, and copy without a framework.">
+  <meta name="description" content="{count} original HTML/CSS blocks, 12 visual assets, and {icon_count} SVG icon examples for Syntyr. View, filter, and copy without a framework.">
   <title>Free HTML/CSS Blocks and UI Assets — Syntyr CSS</title>
   <link rel="stylesheet" href="../dist/syntyr.all.css">
   <link rel="stylesheet" href="docs.css">
@@ -260,11 +276,22 @@ def build() -> str:
     </section>
     <section class="docs-section" aria-labelledby="blocks-icons-heading">
       <p class="syn-eyebrow">INLINE SVG / NO ICON FONT</p>
-      <h2 id="blocks-icons-heading" class="syn-title">24 original SVG icon examples</h2>
+      <h2 id="blocks-icons-heading" class="syn-title">{icon_count} original SVG icon examples</h2>
       <p class="syn-muted">Small, copyable SVGs that inherit theme color and work with the existing
       Syntyr symbol-sizing contract. These are examples, not a bundled icon dependency.
       When icons are used alone as controls, add accessible names.</p>
+      <div class="blocks-icon-controls" id="blocks-icon-controls" hidden>
+        <label class="syn-label" for="blocks-icon-search">Find an icon</label>
+        <input class="syn-input" type="search" id="blocks-icon-search" placeholder="Search icons, e.g. mail, home, copy" autocomplete="off">
+      </div>
+      <p class="syn-caption" id="blocks-icon-results" role="status" aria-live="polite">{icon_count} icons available.</p>
       <div class="blocks-icons-grid">{''.join(icon_cards)}</div>
+      <h3 class="syn-heading">Icon animation presets</h3>
+      <p class="syn-muted">Hover or keyboard-focus these examples. Add a motion class to any icon,
+      plus <code>syn-icon--on-interact</code> to animate only during interaction. Continuous
+      animation is also supported. Motion respects reduced-motion preferences.
+      <a href="symbols.html">Read the CSS API and examples.</a></p>
+      <div class="syn-actions blocks-motion-examples">{''.join(animation_cards)}</div>
     </section>
     <section class="docs-section" aria-labelledby="blocks-type-heading">
       <p class="syn-eyebrow">FONT-AGNOSTIC / NO REMOTE FONTS</p>

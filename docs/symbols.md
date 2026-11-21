@@ -47,7 +47,65 @@ respective licenses. None is vendored or required. Avoid loading an entire
 icon font or a massive SVG sprite for a handful of icons. An SVG that uses
 `currentColor` inherits Syntyr's theme colors automatically.
 
-## 2. Unicode as actual text
+## 2. Animate icons (optional, pure CSS)
+
+The same optional symbols stylesheet provides six motion modifiers for an
+inline SVG or SVG wrapper: `syn-icon--spin`, `syn-icon--pulse`,
+`syn-icon--bounce`, `syn-icon--shake`, `syn-icon--wiggle` and `syn-icon--pop`.
+Nothing animates unless you add a modifier, and **no JavaScript is required**.
+
+Copy one of the [77 original icons in the Blocks gallery](blocks.html) or use
+your own SVG. The icon artwork is not baked into the stylesheet.
+
+~~~html
+<!-- Spinning progress icon alongside visible status text -->
+<p role="status">
+  <svg class="syn-icon syn-icon--spin" viewBox="0 0 24 24"
+       fill="none" stroke="currentColor" aria-hidden="true" focusable="false">
+    <path d="M12 2v4m0 12v4M2 12h4m12 0h4"/>
+  </svg>
+  Loading report...
+</p>
+
+<!-- Animate only while hovering or keyboard-focusing the button -->
+<button type="button" class="syn-button">
+  <svg class="syn-icon syn-icon--spin syn-icon--on-interact"
+       viewBox="0 0 24 24" fill="none" stroke="currentColor"
+       aria-hidden="true" focusable="false">
+    <path d="M20 6v6h-6M4 18v-6h6M5 10a7 7 0 0 1 13-3M19 14a7 7 0 0 1-13 3"/>
+  </svg>
+  Refresh
+</button>
+~~~
+
+Motion is continuous by default. Control it per element or on a shared parent:
+
+~~~html
+<svg class="syn-icon syn-icon--pop syn-icon--on-interact"
+     style="--syn-icon-motion-duration:350ms;
+            --syn-icon-motion-iterations:1;
+            --syn-icon-motion-easing:ease-out"
+     viewBox="0 0 24 24" aria-hidden="true"><!-- your paths --></svg>
+~~~
+
+| CSS variable | Default | Meaning |
+| --- | --- | --- |
+| `--syn-icon-motion-duration` | `1s` | Length of one cycle |
+| `--syn-icon-motion-iterations` | `infinite` | Number of repetitions; use `1` for one-shot effects |
+| `--syn-icon-motion-easing` | `linear` for spin; `ease-in-out` otherwise | Timing function |
+
+`--on-interact` pauses motion until the icon itself is hovered or focused, or
+its enclosing button/link is hovered or keyboard-focused. It does not register
+events or implement loading state. An icon with a running animation class and no
+`--on-interact` animates continuously.
+
+Every preset is fully disabled by `prefers-reduced-motion: reduce` (including
+hover/focus effects). Always communicate loading, success and errors in visible
+text or semantic status; motion must remain decorative. Animate a wrapper if
+other CSS already controls the SVG's `transform` property. Only one motion
+modifier should be applied per icon.
+
+## 3. Unicode as actual text
 
 ```html
 <span class="syn-symbol syn-symbol--accent" aria-hidden="true">◆</span>
@@ -63,7 +121,7 @@ platform-specific glyphs, high-contrast mode and text direction can all change
 their presentation. Check the exact characters in your target browsers and fonts.
 Do not rely on a symbol's color or shape alone to communicate state.
 
-## 3. ASCII and Unicode box-drawing art
+## 4. ASCII and Unicode box-drawing art
 
 Use real `<pre>` text. `.syn-ascii` preserves spaces, line breaks and
 monospace alignment and scrolls horizontally rather than splitting a border.

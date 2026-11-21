@@ -937,6 +937,41 @@
       "description": "Icon presentation in the symbols.css module; use semantic HTML and consult its component example."
     },
     {
+      "name": "syn-icon--bounce",
+      "module": "symbols.css",
+      "description": "Bounce appearance variant of the icon component; see symbols.css for styles."
+    },
+    {
+      "name": "syn-icon--on-interact",
+      "module": "symbols.css",
+      "description": "On interact appearance variant of the icon component; see symbols.css for styles."
+    },
+    {
+      "name": "syn-icon--pop",
+      "module": "symbols.css",
+      "description": "Pop appearance variant of the icon component; see symbols.css for styles."
+    },
+    {
+      "name": "syn-icon--pulse",
+      "module": "symbols.css",
+      "description": "Pulse appearance variant of the icon component; see symbols.css for styles."
+    },
+    {
+      "name": "syn-icon--shake",
+      "module": "symbols.css",
+      "description": "Shake appearance variant of the icon component; see symbols.css for styles."
+    },
+    {
+      "name": "syn-icon--spin",
+      "module": "symbols.css",
+      "description": "Spin appearance variant of the icon component; see symbols.css for styles."
+    },
+    {
+      "name": "syn-icon--wiggle",
+      "module": "symbols.css",
+      "description": "Wiggle appearance variant of the icon component; see symbols.css for styles."
+    },
+    {
       "name": "syn-inline",
       "module": "components/layout.css",
       "description": "Inline, wrapping layout for small groups of peers."
