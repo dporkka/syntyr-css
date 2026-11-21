@@ -1,4 +1,5 @@
 """An optional local installation planner must be safe without a Node runtime."""
+from contextlib import contextmanager
 import json
 from pathlib import Path
 import subprocess
@@ -176,6 +177,46 @@ class RegistryInstallPlanTests(unittest.TestCase):
                                 plan_install("settings-form", project)["files"]))
 
 
+
+    def test_rollback_preserves_identical_replacement_during_write(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            project = Path(tmp)
+            plan = plan_install("settings-form", project)
+            first = project / plan["files"][0]["path"]
+            moved = first.with_suffix(".moved")
+            failing = project / plan["files"][-1]["path"]
+            content = plan["files"][0]["_content"].encode("utf-8")
+            original_open = Path.open
+
+            @contextmanager
+            def swap_during_write(path):
+                with original_open(path, "xb") as stream:
+                    write = stream.write
+
+                    def write_then_replace(data):
+                        size = write(data)
+                        path.rename(moved)
+                        path.write_bytes(data)
+                        return size
+
+                    with patch.object(stream, "write", write_then_replace):
+                        yield stream
+
+            def injected_open(path, mode="r", *args, **kwargs):
+                if mode == "xb":
+                    if path == first:
+                        return swap_during_write(path)
+                    if path == failing:
+                        raise OSError("simulated later asset failure")
+                return original_open(path, mode, *args, **kwargs)
+
+            with patch.object(Path, "open", injected_open):
+                with self.assertRaisesRegex(OSError, "simulated later asset failure"):
+                    apply_install(plan, project)
+
+            self.assertEqual(moved.read_bytes(), content)
+            self.assertEqual(first.read_bytes(), content)
+            self.assertFalse((project / "syntyr/LICENSE").exists())
 
     def test_cli_json_verify_reports_installation_integrity_without_source_leaks(self):
         with tempfile.TemporaryDirectory() as tmp:

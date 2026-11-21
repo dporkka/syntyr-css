@@ -8,6 +8,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 from pathlib import Path
 import re
 
@@ -151,7 +152,7 @@ def apply_install(plan: dict, project: Path) -> None:
                 with target.open("xb") as stream:
                     created = True
                     stream.write(content)
-                    metadata = target.stat(follow_symlinks=False)
+                    metadata = os.fstat(stream.fileno())
                 created_files.append((target, content, metadata.st_dev, metadata.st_ino))
             except FileExistsError as error:
                 raise RegistryError("Concurrent installation conflict: " + entry["path"]) from error
