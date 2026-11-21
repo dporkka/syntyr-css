@@ -12,6 +12,10 @@ SCREENS = {
     'app-notifications.html': ('Notification center', 'notifications-feed', 'time'),
     'app-integrations.html': ('Integrations', 'integrations-directory', 'article'),
     'app-security.html': ('Security & access', 'security-sessions', 'table'),
+    'app-account.html': ('Account & profile', 'account-details', 'fieldset'),
+    'app-audit.html': ('Audit log', 'audit-events', 'table'),
+    'app-support.html': ('Help & support', 'support-questions', 'details'),
+    'app-states.html': ('Application states', 'state-patterns', 'section'),
 }
 
 class Markup(HTMLParser):
@@ -23,7 +27,7 @@ class Markup(HTMLParser):
         self.elements.append((name, dict(attrs)))
 
 class AppScreensContract(unittest.TestCase):
-    def test_five_connected_accessible_native_screens(self):
+    def test_nine_connected_accessible_native_screens(self):
         for filename, (heading, anchor, element) in SCREENS.items():
             with self.subTest(filename=filename):
                 doc = ROOT / 'examples' / filename
@@ -86,6 +90,27 @@ class AppScreensContract(unittest.TestCase):
         self.assertIn('Active sessions', security)
         self.assertIn('API keys', security)
         self.assertNotIn('sk_live_', security)
+        account = (ROOT / 'examples/app-account.html').read_text()
+        self.assertIn('Edit profile', account)
+        self.assertIn('Organization preferences', account)
+        self.assertIn('type="email"', account)
+        self.assertIn('disabled', account)
+        audit = (ROOT / 'examples/app-audit.html').read_text()
+        for label in ('Event', 'Actor', 'Resource', 'Outcome', 'Timestamp', 'Export'):
+            self.assertIn(label, audit)
+        self.assertIn('scope="col"', audit)
+        self.assertIn('role="region"', audit)
+        support = (ROOT / 'examples/app-support.html').read_text()
+        self.assertIn('Frequently asked questions', support)
+        self.assertIn('Support requests', support)
+        self.assertIn('<summary>', support)
+        states = (ROOT / 'examples/app-states.html').read_text()
+        for label in ('Empty state', 'Error state', 'Loading state', 'Permission denied', 'Offline'):
+            self.assertIn(label, states)
+        self.assertIn('syn-empty', states)
+        self.assertIn('syn-skeleton', states)
+        self.assertIn('role="status"', states)
+        self.assertIn('role="alert"', states)
         onboarding = (ROOT / 'examples/app-onboarding.html').read_text()
         self.assertIn('aria-current="step"', onboarding)
         self.assertIn('Get started', onboarding)

@@ -384,4 +384,4 @@ No paid kit has been shipped or put up for sale in this repository. No billing o
 
 ## Additional native application screens
 
-Five copy-owned [SaaS application screens](docs/app-screens.md) cover onboarding, team membership and invitations, notifications, integrations, and security. They are static HTML/CSS examples built from the existing core and recipes, with no required application JavaScript or live account actions.
+Nine copy-owned [SaaS application screens](docs/app-screens.md) cover onboarding, team membership and invitations, notifications, integrations, security, account profiles, audit logs, support, and common UI states. They are static HTML/CSS examples built from the existing core and recipes, with no required application JavaScript or live account actions.

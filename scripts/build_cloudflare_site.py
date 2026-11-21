@@ -44,6 +44,7 @@ NOINDEX_HTML = frozenset({
     "examples/settings-billing.html",
     "examples/app-onboarding.html", "examples/app-team.html", "examples/app-notifications.html",
     "examples/app-integrations.html", "examples/app-security.html",
+    "examples/app-account.html", "examples/app-audit.html", "examples/app-support.html", "examples/app-states.html",
     "examples/design-benchmarks/marketing.html", "examples/design-benchmarks/crm.html",
     "examples/design-benchmarks/documentation.html",
 })
@@ -352,6 +353,7 @@ def source_files(site_url: str = SITE_URL, *, include_cloudflare_headers: bool =
         "operations-console.css", "operations-console.html", "pricing.html", "workflow-steps.html", "settings-billing.html", "settings-billing.css",
         "app-screens.css", "app-onboarding.html", "app-team.html", "app-notifications.html",
         "app-integrations.html", "app-security.html",
+        "app-account.html", "app-audit.html", "app-support.html", "app-states.html",
         "flagship.css", "flagship-studio.html", "flagship-noir.html", "flagship-grid.html",
         "rust-axum/README.md", "resources.html", "data-tables.html", "saas.html", "preset-preview.html", "saas-workflows.html", "enterprise-compositions.html", "permission-matrix.html", "permission-matrix.css", "crm.html", "resource-workspace.html", "native-workflows.html", "file-lifecycle.html", "resizable-workspace.html", "operation-revisions.html", "saas-workflows.css", "workflow-operations.html", "workflow-operations.css", "premium-compositions.html",
         "terminal.html", "themes.html", "vertigo-admin.html", "vertigo-resource-workflow.html", "vertigo-resource-workflow.css", "symbols.html",
