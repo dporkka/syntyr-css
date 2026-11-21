@@ -48,6 +48,35 @@ class BlockMotionContract(unittest.TestCase):
         self.assertIn('(pointer: fine)', self.motion)
         self.assertIn('syn-surface--lift', self.docs)  # reuse, do not duplicate existing class
 
+    def test_common_website_animations_are_opt_in_and_scope_bounded(self):
+        names = ("fade-in", "fade-out", "slide-up", "slide-down", "slide-left",
+                 "slide-right", "zoom-in", "zoom-out", "pop", "bounce", "pulse",
+                 "shake", "rotate-in", "flip-in")
+        for name in names:
+            with self.subTest(name=name):
+                self.assertIn(f'[data-syn-animate="{name}"]', self.motion)
+                self.assertIn(f'@keyframes syn-animate-{name}', self.motion)
+                self.assertIn(f'data-syn-animate="{name}"', self.docs)
+        self.assertIn('.syn-root[data-syn-animate]', self.motion)
+        self.assertIn('.syn-root [data-syn-animate]', self.motion)
+        self.assertIn('prefers-reduced-motion: no-preference', self.motion)
+
+    def test_animation_loop_controls_have_safe_defaults(self):
+        for token in ('--syn-animation-duration', '--syn-animation-delay',
+                      '--syn-animation-easing', '--syn-animation-iterations',
+                      '--syn-animation-direction', '--syn-animation-play-state',
+                      '--syn-animation-fill-mode', '--syn-animation-distance',
+                      '--syn-animation-scale'):
+            self.assertIn(token, self.motion)
+            self.assertIn(token, self.docs)
+        self.assertIn('syn-animate--loop', self.motion)
+        self.assertIn('animation-iteration-count: var(--syn-animation-iterations, 1)', self.motion)
+        self.assertIn('animation-fill-mode: var(--syn-animation-fill-mode, none)', self.motion)
+        self.assertIn('--syn-animation-keyframes: none', self.motion)
+        self.assertNotIn('!important', self.motion)
+        self.assertIn('iterations: 3', self.docs)
+        self.assertIn('loop: true', self.docs)
+
     def test_existing_animation_demo_showcases_css_only_block_effects(self):
         demo = (ROOT / 'examples/animation.html').read_text()
         self.assertIn('href="../dist/syntyr.motion.css"', demo)

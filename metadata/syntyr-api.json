@@ -37,6 +37,11 @@
       "description": "Warning-state variant of a text-based alert."
     },
     {
+      "name": "syn-animate--loop",
+      "module": "motion.css",
+      "description": "Loop appearance variant of the animate component; see motion.css for styles."
+    },
+    {
       "name": "syn-app-card",
       "module": "recipes.css",
       "description": "App card presentation in the recipes.css module; use semantic HTML and consult its component example."
@@ -1902,6 +1907,16 @@
       "name": "--syn-accent-soft",
       "module": "tokens.css",
       "description": "Accent soft design token from tokens.css; override in the appropriate Syntyr scope when needed."
+    },
+    {
+      "name": "--syn-animation-iterations",
+      "module": "motion.css",
+      "description": "Animation iterations design token from motion.css; override in the appropriate Syntyr scope when needed."
+    },
+    {
+      "name": "--syn-animation-keyframes",
+      "module": "motion.css",
+      "description": "Animation keyframes design token from motion.css; override in the appropriate Syntyr scope when needed."
     },
     {
       "name": "--syn-avatar-size",

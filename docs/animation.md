@@ -61,11 +61,22 @@ declarations. The default package import remains the CSS entrypoint.
 | `stagger(iterable, preset = 'enter', options?)` | Animate each element with an incremental WAAPI delay | Array of animations or `null` entries |
 | `observeReveals(root = document)` | Observe `.syn-root [data-syn-reveal]` once per element | `disconnect()` cleanup function |
 
-Presets are `fade` (opacity), `enter` (opacity plus individual `translate`),
-and `scale` (opacity plus individual `scale`). There is no infinite or
-autoplay animation preset. `enter` supports `direction: 'up' | 'down' |
-'left' | 'right'` and `distance: '.75rem'`. Use `scaleFrom` to override the
-initial scale.
+Presets include `fade-in`, `fade-out`, `slide-up`, `slide-down`,
+`slide-left`, `slide-right`, `zoom-in`, `zoom-out`, `pop`, `bounce`,
+`pulse`, `shake`, `rotate-in` and `flip-in`. The existing `fade`,
+`enter` and `scale` aliases remain supported. `enter` takes
+`direction: 'up' | 'down' | 'left' | 'right'` (direction of entrance),
+while named `slide-*` presets specify travel direction.
+Use `distance` and `scaleFrom` to customize supported effects.
+
+**Playback controls:** `iterations: 3` repeats three times;
+`loop: true` (or `iterations: Infinity`) repeats indefinitely.
+Repetition is **off by default** (`iterations: 1`).
+Use `iterationDirection: 'alternate'` to reverse every other cycle.
+Also supported: `normal`, `reverse`, `alternate-reverse`.
+`loop: true` and `iterations` cannot both be set;
+invalid counts/directions throw `TypeError`. The native Animation
+returned by `animate()` exposes `pause()`, `play()` and `cancel()`.
 
 All presets accept `duration` and `delay` in milliseconds and `easing`
 as a CSS timing function. `stagger` additionally accepts `interval` in
@@ -75,6 +86,27 @@ are omitted: `--syn-motion-duration` (220ms default),
 `--syn-motion-scale-from` (.96), and `--syn-ease-out`
 (`cubic-bezier(.22, 1, .36, 1)`). These defaults also work without a Syntyr
 stylesheet, and per-element CSS tokens can override them.
+
+The CSS token `--syn-animation-iterations: 3` (or `infinite`) can
+supply the JS helper's default repetition count. Explicit options win.
+`stagger()` accepts repetition options; `observeReveals()` always
+uses a single cycle, even when the CSS token requests looping.
+
+```js
+const running = animate(card, 'pulse', { loop: true, duration: 900 });
+running?.pause();
+running?.play();
+running?.cancel();
+
+animate(card, 'slide-up', {
+  iterations: 3, iterationDirection: 'alternate', duration: 300,
+});
+
+// Exit effects are visual, not semantic hiding:
+const exit = animate(card, 'fade-out', { duration: 220 });
+if (exit) exit.finished.then(() => { card.hidden = true; }).catch(() => {});
+else card.hidden = true; // Reduced-motion and missing-API fallback
+```
 
 Unknown presets and invalid directions throw `TypeError`; missing target,
 missing Web Animations API, or a reduced-motion preference return `null`
@@ -118,8 +150,10 @@ There is no `MutationObserver` or automatic event interception.
   layout dimensions. Avoid animating essential text and high-density data,
   where fading can temporarily reduce readability. An element with custom
   individual transform properties may need a wrapper for composition.
-- The module uses one-shot `fill: 'none'` and `iterations: 1`, so focus and
-  disabled states cannot remain overridden by a completed animation.
+- The module defaults to `fill: 'none'` and `iterations: 1`.
+  A fade-out resets to visible CSS state unless your application
+  separately removes/hides the content. Loops also use `fill: 'none'`;
+  cancel long-running effects on component teardown.
 - For layout changes, prefer native View Transitions where available. For
   interactive scrubbing and complex timelines, use a specialized animation
   engine *outside* Syntyr instead of expanding this low-level module.
@@ -128,6 +162,8 @@ There is no `MutationObserver` or automatic event interception.
 
 ```sh
 node --test tests/animate.test.mjs
+# Optional local Chromium smoke test; install Playwright separately
+python3 tests/website_animation_browser.py
 python3 scripts/build.py --check
 python3 -m unittest discover -s tests -v
 ```
@@ -136,6 +172,81 @@ Node is for the optional JavaScript behavior tests, **not** for building
 Syntyr or using the CSS library. The production JS is copied byte-for-byte
 by Syntyr's existing Python build, allowing deterministic release checks.
 
+
+## Website animation presets (CSS only)
+
+`syntyr.motion.css` provides **14 opt-in, non-scroll-linked website
+animations**. No JavaScript or animation framework is needed. Only
+elements with `data-syn-animate` animate, independently of the
+`data-syn-scroll` view timeline and the optional icon animations.
+These are **unreleased alpha.5 source candidate** features.
+
+```html
+<link rel="stylesheet" href="/css/syntyr.core.css">
+<link rel="stylesheet" href="/css/syntyr.motion.css">
+<main class="syn-root">
+  <h2 data-syn-animate="fade-in">Welcome back</h2>
+  <div class="syn-panel" data-syn-animate="slide-up">
+    CSS-only entrance.
+  </div>
+  <span class="syn-badge" data-syn-animate="pulse"
+        style="--syn-animation-iterations: 3;
+               --syn-animation-duration: 800ms">Three pulses</span>
+  <span class="syn-badge syn-animate--loop" data-syn-animate="bounce"
+        aria-hidden="true"
+        style="--syn-animation-duration: 1200ms;
+               --syn-animation-direction: alternate">●</span>
+</main>
+```
+
+### Available effects
+
+| Animation | Purpose |
+| --- | --- |
+| `data-syn-animate="fade-in"` | Gentle opacity entrance |
+| `data-syn-animate="fade-out"` | Visual opacity exit |
+| `data-syn-animate="slide-up"` | Move upward into place |
+| `data-syn-animate="slide-down"` | Move downward into place |
+| `data-syn-animate="slide-left"` | Move leftward into place |
+| `data-syn-animate="slide-right"` | Move rightward into place |
+| `data-syn-animate="zoom-in"` | Scale up and appear |
+| `data-syn-animate="zoom-out"` | Scale down and disappear |
+| `data-syn-animate="pop"` | Brief overshoot entrance |
+| `data-syn-animate="bounce"` | Vertical bounce |
+| `data-syn-animate="pulse"` | Gentle scale emphasis |
+| `data-syn-animate="shake"` | Horizontal shake |
+| `data-syn-animate="rotate-in"` | Rotate gently into view |
+| `data-syn-animate="flip-in"` | 3D Y-axis entrance |
+
+### Timing and loop controls
+
+| CSS variable | Default | Purpose |
+| --- | --- | --- |
+| `--syn-animation-duration` | `420ms` | Duration of each cycle |
+| `--syn-animation-delay` | `0ms` | Delay before start |
+| `--syn-animation-easing` | `ease-out` | Timing function |
+| `--syn-animation-iterations` | `1` | Count or `infinite` |
+| `--syn-animation-direction` | `normal` | `normal` / `reverse` / `alternate` / `alternate-reverse` |
+| `--syn-animation-play-state` | `running` | `running` or `paused` |
+| `--syn-animation-fill-mode` | `none` | Native CSS fill mode |
+| `--syn-animation-distance` | `1rem` | Slide / bounce distance |
+| `--syn-animation-scale` | `.94` | Zoom start or end scale |
+
+`syn-animate--loop` is shorthand for an infinite iteration count.
+Set `--syn-animation-iterations: 2` or any positive CSS iteration count
+to make a finite loop. Combine with
+`--syn-animation-direction: alternate` to avoid abrupt jumps.
+A host can pause via `--syn-animation-play-state: paused` without
+shipping a Syntyr runtime.
+
+**Accessibility:** Animations do not create a hidden baseline state.
+Under `prefers-reduced-motion: reduce` all presets and loops are
+disabled. `fade-out` and `zoom-out` are visual only: by default,
+they return to visible state afterward, because fill is `none`.
+When dismissing a dialog, button or actionable content, update the
+DOM/HTML state and focus as well—opacity or
+`animation-fill-mode: forwards` is not a semantic hide.
+Keep infinite loops decorative and avoid moving essential text.
 
 ## Website block effects (CSS only)
 

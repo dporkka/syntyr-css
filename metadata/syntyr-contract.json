@@ -142,6 +142,16 @@
       ]
     },
     {
+      "name": "syn-animate--loop",
+      "module": "motion.css",
+      "description": "Loop appearance variant of the animate component; see motion.css for styles.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "syntyr.all.css",
+        "syntyr.motion.css"
+      ]
+    },
+    {
       "name": "syn-app-card",
       "module": "recipes.css",
       "description": "App card presentation in the recipes.css module; use semantic HTML and consult its component example.",
@@ -4581,6 +4591,26 @@
         "syntyr.css",
         "syntyr.embed.css",
         "syntyr.semantic-bundle.css"
+      ]
+    },
+    {
+      "name": "--syn-animation-iterations",
+      "module": "motion.css",
+      "description": "Animation iterations design token from motion.css; override in the appropriate Syntyr scope when needed.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "syntyr.all.css",
+        "syntyr.motion.css"
+      ]
+    },
+    {
+      "name": "--syn-animation-keyframes",
+      "module": "motion.css",
+      "description": "Animation keyframes design token from motion.css; override in the appropriate Syntyr scope when needed.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "syntyr.all.css",
+        "syntyr.motion.css"
       ]
     },
     {

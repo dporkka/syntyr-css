@@ -34,6 +34,10 @@
           "description": "Warning-state variant of a text-based alert."
         },
         {
+          "name": "syn-animate--loop",
+          "description": "Loop appearance variant of the animate component; see motion.css for styles."
+        },
+        {
           "name": "syn-app-card",
           "description": "App card presentation in the recipes.css module; use semantic HTML and consult its component example."
         },

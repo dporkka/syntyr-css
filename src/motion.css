@@ -237,4 +237,122 @@
       text-decoration-color: CanvasText;
     }
   }
+
+  /* Website UI animations are separate from scroll-linked and icon motion.
+     No baseline state is hidden; no animation runs without data-syn-animate. */
+  @keyframes syn-animate-fade-in { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes syn-animate-fade-out { from { opacity: 1; } to { opacity: 0; } }
+  @keyframes syn-animate-slide-up {
+    from { opacity: 0; translate: 0 var(--syn-animation-distance, 1rem); }
+    to { opacity: 1; translate: 0 0; }
+  }
+  @keyframes syn-animate-slide-down {
+    from { opacity: 0; translate: 0 calc(-1 * var(--syn-animation-distance, 1rem)); }
+    to { opacity: 1; translate: 0 0; }
+  }
+  @keyframes syn-animate-slide-left {
+    from { opacity: 0; translate: var(--syn-animation-distance, 1rem) 0; }
+    to { opacity: 1; translate: 0 0; }
+  }
+  @keyframes syn-animate-slide-right {
+    from { opacity: 0; translate: calc(-1 * var(--syn-animation-distance, 1rem)) 0; }
+    to { opacity: 1; translate: 0 0; }
+  }
+  @keyframes syn-animate-zoom-in {
+    from { opacity: 0; scale: var(--syn-animation-scale, .94); }
+    to { opacity: 1; scale: 1; }
+  }
+  @keyframes syn-animate-zoom-out {
+    from { opacity: 1; scale: 1; }
+    to { opacity: 0; scale: var(--syn-animation-scale, .94); }
+  }
+  @keyframes syn-animate-pop {
+    0% { opacity: 0; scale: .85; }
+    65% { opacity: 1; scale: 1.06; }
+    100% { opacity: 1; scale: 1; }
+  }
+  @keyframes syn-animate-bounce {
+    0%, 100% { translate: 0 0; }
+    50% { translate: 0 calc(-.3 * var(--syn-animation-distance, 1rem)); }
+  }
+  @keyframes syn-animate-pulse {
+    0%, 100% { scale: 1; }
+    50% { scale: 1.06; }
+  }
+  @keyframes syn-animate-shake {
+    0%, 100% { translate: 0 0; }
+    20%, 60% { translate: -.35rem 0; }
+    40%, 80% { translate: .35rem 0; }
+  }
+  @keyframes syn-animate-rotate-in {
+    from { opacity: 0; rotate: -12deg; }
+    to { opacity: 1; rotate: 0deg; }
+  }
+  @keyframes syn-animate-flip-in {
+    from { opacity: 0; rotate: y -80deg; }
+    to { opacity: 1; rotate: y 0deg; }
+  }
+
+  /* CSS-only playback controls. Looping is never the default. Reduced motion
+     gets a static document because no animation rule is activated for it. */
+  @media (prefers-reduced-motion: no-preference) {
+    :where(.syn-root[data-syn-animate], .syn-root [data-syn-animate]) {
+      /* Override inherited preset values so unknown names cannot animate. */
+      --syn-animation-keyframes: none;
+      animation-name: var(--syn-animation-keyframes);
+      animation-duration: var(--syn-animation-duration, 420ms);
+      animation-delay: var(--syn-animation-delay, 0ms);
+      animation-timing-function: var(--syn-animation-easing, ease-out);
+      animation-iteration-count: var(--syn-animation-iterations, 1);
+      animation-direction: var(--syn-animation-direction, normal);
+      animation-play-state: var(--syn-animation-play-state, running);
+      animation-fill-mode: var(--syn-animation-fill-mode, none);
+    }
+    :where(.syn-root[data-syn-animate="fade-in"], .syn-root [data-syn-animate="fade-in"]) {
+      --syn-animation-keyframes: syn-animate-fade-in;
+    }
+    :where(.syn-root[data-syn-animate="fade-out"], .syn-root [data-syn-animate="fade-out"]) {
+      --syn-animation-keyframes: syn-animate-fade-out;
+    }
+    :where(.syn-root[data-syn-animate="slide-up"], .syn-root [data-syn-animate="slide-up"]) {
+      --syn-animation-keyframes: syn-animate-slide-up;
+    }
+    :where(.syn-root[data-syn-animate="slide-down"], .syn-root [data-syn-animate="slide-down"]) {
+      --syn-animation-keyframes: syn-animate-slide-down;
+    }
+    :where(.syn-root[data-syn-animate="slide-left"], .syn-root [data-syn-animate="slide-left"]) {
+      --syn-animation-keyframes: syn-animate-slide-left;
+    }
+    :where(.syn-root[data-syn-animate="slide-right"], .syn-root [data-syn-animate="slide-right"]) {
+      --syn-animation-keyframes: syn-animate-slide-right;
+    }
+    :where(.syn-root[data-syn-animate="zoom-in"], .syn-root [data-syn-animate="zoom-in"]) {
+      --syn-animation-keyframes: syn-animate-zoom-in;
+    }
+    :where(.syn-root[data-syn-animate="zoom-out"], .syn-root [data-syn-animate="zoom-out"]) {
+      --syn-animation-keyframes: syn-animate-zoom-out;
+    }
+    :where(.syn-root[data-syn-animate="pop"], .syn-root [data-syn-animate="pop"]) {
+      --syn-animation-keyframes: syn-animate-pop;
+    }
+    :where(.syn-root[data-syn-animate="bounce"], .syn-root [data-syn-animate="bounce"]) {
+      --syn-animation-keyframes: syn-animate-bounce;
+    }
+    :where(.syn-root[data-syn-animate="pulse"], .syn-root [data-syn-animate="pulse"]) {
+      --syn-animation-keyframes: syn-animate-pulse;
+    }
+    :where(.syn-root[data-syn-animate="shake"], .syn-root [data-syn-animate="shake"]) {
+      --syn-animation-keyframes: syn-animate-shake;
+    }
+    :where(.syn-root[data-syn-animate="rotate-in"], .syn-root [data-syn-animate="rotate-in"]) {
+      --syn-animation-keyframes: syn-animate-rotate-in;
+    }
+    :where(.syn-root[data-syn-animate="flip-in"], .syn-root [data-syn-animate="flip-in"]) {
+      --syn-animation-keyframes: syn-animate-flip-in;
+    }
+    :where(.syn-root[data-syn-animate].syn-animate--loop,
+           .syn-root [data-syn-animate].syn-animate--loop) {
+      --syn-animation-iterations: infinite;
+    }
+  }
 }
