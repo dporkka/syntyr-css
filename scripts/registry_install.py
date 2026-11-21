@@ -8,6 +8,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 from pathlib import Path
 import re
 
@@ -131,48 +132,97 @@ def apply_install(plan: dict, project: Path) -> None:
         if entry["status"] == "conflict" or (target.exists() and
               (not target.is_file() or target.read_bytes() != entry["_content"].encode("utf-8"))):
             raise RegistryError("Would overwrite existing file: " + entry["path"])
-    for entry in plan["files"]:
-        target = _safe_destination(project, "~/" + entry["path"])
-        target.parent.mkdir(parents=True, exist_ok=True)
-        _safe_destination(project, "~/" + entry["path"])
-        content = entry["_content"].encode("utf-8")
-        if target.exists():
-            # Another process can modify a once-identical target after preflight.
-            if not target.is_file() or target.read_bytes() != content:
-                raise RegistryError("Changed during installation: " + entry["path"])
-            continue
-        created = False
-        try:
-            with target.open("xb") as stream:
-                created = True
-                stream.write(content)
-        except FileExistsError as error:
-            raise RegistryError("Concurrent installation conflict: " + entry["path"]) from error
-        except BaseException:
-            # Exclusive create succeeded: discard our partial file on write/close
-            # failure. Never remove files that existed before this attempt.
-            if created:
-                target.unlink(missing_ok=True)
-            raise
+    # A multi-file install can fail after earlier assets were copied (e.g. disk
+    # full or a concurrent directory change). Keep the install retryable by
+    # rolling back only assets this invocation created and that remain unchanged.
+    created_files: list[tuple[Path, bytes, int, int]] = []
+    try:
+        for entry in plan["files"]:
+            target = _safe_destination(project, "~/" + entry["path"])
+            target.parent.mkdir(parents=True, exist_ok=True)
+            _safe_destination(project, "~/" + entry["path"])
+            content = entry["_content"].encode("utf-8")
+            if target.exists():
+                # Another process can modify a once-identical target after preflight.
+                if not target.is_file() or target.read_bytes() != content:
+                    raise RegistryError("Changed during installation: " + entry["path"])
+                continue
+            try:
+                stream = target.open("xb")
+            except FileExistsError as error:
+                raise RegistryError("Concurrent installation conflict: " + entry["path"]) from error
+
+            metadata = None
+            try:
+                with stream as opened:
+                    metadata = os.fstat(opened.fileno())
+                    opened.write(content)
+            except BaseException:
+                # A failed write or close can leave partial bytes. Compare identity
+                # before removing them, and preserve the original install error.
+                if metadata is not None:
+                    try:
+                        current = target.stat(follow_symlinks=False)
+                        if (current.st_dev, current.st_ino) == (metadata.st_dev, metadata.st_ino):
+                            target.unlink()
+                    except OSError:
+                        pass
+                raise
+            created_files.append((target, content, metadata.st_dev, metadata.st_ino))
+    except BaseException:
+        for target, content, device, inode in reversed(created_files):
+            try:
+                metadata = target.stat(follow_symlinks=False)
+                if (metadata.st_dev == device and metadata.st_ino == inode
+                        and target.is_file() and target.read_bytes() == content):
+                    target.unlink()
+            except OSError:
+                # Do not mask the original failure or delete a changed target.
+                pass
+        raise
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Plan or explicitly install a local Syntyr registry item")
+    parser = argparse.ArgumentParser(description="Plan, install, or verify a local Syntyr registry item")
     parser.add_argument("item", help="Name from registry/registry.json")
     parser.add_argument("--project", type=Path, required=True)
-    parser.add_argument("--apply", action="store_true", help="Opt in to creating missing assets; never overwrites")
+    action = parser.add_mutually_exclusive_group()
+    action.add_argument("--apply", action="store_true",
+                        help="Opt in to creating missing assets; never overwrites")
+    action.add_argument("--verify", action="store_true",
+                        help="Exit nonzero if any expected installed file is missing or modified")
+    parser.add_argument("--json", action="store_true",
+                        help="Output machine-readable paths, digests, and statuses (never source)")
     args = parser.parse_args()
     try:
         plan = plan_install(args.item, args.project)
-        for entry in plan["files"]:
-            print(f"{entry['status']:9} {entry['path']} ({entry['bytes']} bytes, sha256:{entry['sha256'][:12]})")
-        print(f"Syntyr {plan['version']} / {len(plan['files'])} files")
         if args.apply:
             apply_install(plan, args.project)
-            print("Installed; existing identical files untouched")
+            plan = plan_install(args.item, args.project)
+        verified = all(entry["status"] == "identical" for entry in plan["files"])
+        if args.json:
+            print(json.dumps({
+                "item": plan["item"], "version": plan["version"],
+                "project": plan["project"],
+                "verified": verified,
+                "canApply": all(entry["status"] != "conflict" for entry in plan["files"]),
+                "applied": args.apply,
+                "files": [
+                    {key: entry[key] for key in ("path", "status", "sha256", "bytes")}
+                    for entry in plan["files"]
+                ],
+            }, indent=2))
         else:
-            print("Dry run only. Pass --apply to copy missing files.")
-        return 0
+            for entry in plan["files"]:
+                print(f"{entry['status']:9} {entry['path']} ({entry['bytes']} bytes, sha256:{entry['sha256'][:12]})")
+            print(f"Syntyr {plan['version']} / {len(plan['files'])} files")
+            if args.apply:
+                print("Installed; existing identical files untouched")
+            elif args.verify:
+                print("Verified" if verified else "Verification failed: missing or modified assets")
+            else:
+                print("Dry run only. Pass --apply to copy missing files.")
+        return 0 if not args.verify or verified else 1
     except (RegistryError, OSError) as error:
         parser.exit(2, f"Registry installation rejected: {error}\n")
 
