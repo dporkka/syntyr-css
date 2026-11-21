@@ -185,8 +185,9 @@
       <section class="syn-stage syn-logo-marquee" aria-labelledby="logo-marquee-title">
         <p class="syn-eyebrow">LOGO MARQUEE / CSS-ONLY</p>
         <h2 class="syn-heading" id="logo-marquee-title">Two continuous logo rows</h2>
-        <p>A responsive copy-and-paste marquee: the top row moves left and the bottom moves right. Use <code>--syn-logo-duration</code> or <code>--syn-logo-speed</code> per row. Hover or keyboard-focus to pause. In reduced-motion mode, both rows wrap as static lists.</p>
-          <div class="syn-logo-marquee__row" data-syn-logo-direction="left"
+        <p>A responsive copy-and-paste marquee: the top row moves left and the bottom moves right. Use <code>--syn-logo-duration</code> or <code>--syn-logo-speed</code> per row. Hover to pause in place. Tab to a row to show its original logos in a static list. In reduced-motion mode, both rows stay static.</p>
+          <div class="syn-logo-marquee__row" role="group" aria-label="Customer logos, row 1" tabindex="0"
+               data-syn-logo-direction="left"
                style="--syn-logo-duration: 24s; --syn-logo-speed: 1">
             <div class="syn-logo-marquee__track">
               <ul class="syn-logo-marquee__group" aria-label="Example customer logos">
@@ -211,7 +212,8 @@
               </ul>
             </div>
           </div>
-          <div class="syn-logo-marquee__row" data-syn-logo-direction="right"
+          <div class="syn-logo-marquee__row" role="group" aria-label="Customer logos, row 2" tabindex="0"
+               data-syn-logo-direction="right"
                style="--syn-logo-duration: 28s; --syn-logo-speed: 1.25">
             <div class="syn-logo-marquee__track">
               <ul class="syn-logo-marquee__group" aria-label="Example customer logos">

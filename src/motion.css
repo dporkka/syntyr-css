@@ -303,11 +303,12 @@
     :where(.syn-root[data-syn-animate], .syn-root [data-syn-animate]) {
       /* Override inherited preset values so unknown names cannot animate. */
       --syn-animation-keyframes: none;
+      --_syn-animation-loop-count: 1;
       animation-name: var(--syn-animation-keyframes);
       animation-duration: var(--syn-animation-duration, 420ms);
       animation-delay: var(--syn-animation-delay, 0ms);
       animation-timing-function: var(--syn-animation-easing, ease-out);
-      animation-iteration-count: var(--syn-animation-iterations, 1);
+      animation-iteration-count: var(--syn-animation-iterations, var(--_syn-animation-loop-count));
       animation-direction: var(--syn-animation-direction, normal);
       animation-play-state: var(--syn-animation-play-state, running);
       animation-fill-mode: var(--syn-animation-fill-mode, none);
@@ -367,7 +368,7 @@
     }
     :where(.syn-root[data-syn-animate].syn-animate--loop,
            .syn-root [data-syn-animate].syn-animate--loop) {
-      --syn-animation-iterations: infinite;
+      --_syn-animation-loop-count: infinite;
     }
   }
 
@@ -386,25 +387,23 @@
     min-inline-size: 0;
   }
   :where(.syn-root.syn-logo-marquee, .syn-root .syn-logo-marquee) > .syn-logo-marquee__row {
-    overflow: clip;
     inline-size: 100%;
     min-inline-size: 0;
-    container-type: inline-size;
   }
   :where(.syn-root.syn-logo-marquee, .syn-root .syn-logo-marquee) .syn-logo-marquee__track {
     display: flex;
     align-items: center;
-    inline-size: max-content;
+    inline-size: 100%;
   }
   :where(.syn-root.syn-logo-marquee, .syn-root .syn-logo-marquee) .syn-logo-marquee__group {
     display: flex;
     flex: none;
     align-items: center;
-    justify-content: space-around;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: var(--syn-logo-gap, clamp(1rem, 3vw, 3rem));
     box-sizing: border-box;
-    inline-size: max-content;
-    min-inline-size: 100cqi;
+    inline-size: 100%;
     margin: 0;
     padding: 0 calc(var(--syn-logo-gap, clamp(1rem, 3vw, 3rem)) / 2);
     list-style: none;
@@ -412,13 +411,14 @@
   :where(.syn-root.syn-logo-marquee, .syn-root .syn-logo-marquee) .syn-logo-marquee__group > li {
     flex: none;
     min-inline-size: 0;
-    white-space: nowrap;
+    max-inline-size: 100%;
+    overflow-wrap: anywhere;
   }
   :where(.syn-root.syn-logo-marquee, .syn-root .syn-logo-marquee) .syn-logo-marquee__group img,
   :where(.syn-root.syn-logo-marquee, .syn-root .syn-logo-marquee) .syn-logo-marquee__group svg {
     display: block;
     inline-size: auto;
-    max-inline-size: var(--syn-logo-max-width, 10rem);
+    max-inline-size: min(100%, var(--syn-logo-max-width, 10rem));
     block-size: var(--syn-logo-height, clamp(1.4rem, 3vw, 2.4rem));
     object-fit: contain;
   }
@@ -430,14 +430,26 @@
     line-height: 1.4;
     font-weight: 700;
     letter-spacing: .06em;
-    white-space: nowrap;
+  }
+
+  :where(.syn-root.syn-logo-marquee, .syn-root .syn-logo-marquee)
+    .syn-logo-marquee__group[aria-hidden="true"] {
+    display: none;
   }
 
   @media (prefers-reduced-motion: no-preference) {
-    /* A single unduplicated set deliberately stays still rather than
-       scrolling into empty space. Two equal groups are mandatory. */
+    /* Animate only paired rows. Keyboard focus restores the static layout
+       so all original logos and their links are visible. */
     :where(.syn-root.syn-logo-marquee, .syn-root .syn-logo-marquee)
-      :where(.syn-logo-marquee__track:has(> .syn-logo-marquee__group:first-child + .syn-logo-marquee__group:last-child)) {
+      > .syn-logo-marquee__row:not(:focus-within):has(> .syn-logo-marquee__track
+        > .syn-logo-marquee__group:first-child + .syn-logo-marquee__group:last-child) {
+      overflow: clip;
+      container-type: inline-size;
+    }
+    :where(.syn-root.syn-logo-marquee, .syn-root .syn-logo-marquee)
+      > .syn-logo-marquee__row:not(:focus-within)
+      > .syn-logo-marquee__track:has(> .syn-logo-marquee__group:first-child + .syn-logo-marquee__group:last-child) {
+      inline-size: max-content;
       animation-name: syn-logo-marquee-scroll;
       animation-duration: var(--syn-logo-duration, 32s);
       animation-timing-function: linear;
@@ -446,45 +458,40 @@
       will-change: transform;
     }
     :where(.syn-root.syn-logo-marquee, .syn-root .syn-logo-marquee)
-      > .syn-logo-marquee__row[data-syn-logo-direction="right"] .syn-logo-marquee__track {
+      > .syn-logo-marquee__row:not(:focus-within)
+      > .syn-logo-marquee__track:has(> .syn-logo-marquee__group:first-child + .syn-logo-marquee__group:last-child)
+      > .syn-logo-marquee__group {
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: space-around;
+      inline-size: max-content;
+      min-inline-size: 100cqi;
+      white-space: nowrap;
+    }
+    :where(.syn-root.syn-logo-marquee, .syn-root .syn-logo-marquee)
+      > .syn-logo-marquee__row:not(:focus-within)
+      > .syn-logo-marquee__track:has(> .syn-logo-marquee__group:first-child + .syn-logo-marquee__group:last-child)
+      > .syn-logo-marquee__group :is(img, svg) {
+      max-inline-size: var(--syn-logo-max-width, 10rem);
+    }
+    :where(.syn-root.syn-logo-marquee, .syn-root .syn-logo-marquee)
+      > .syn-logo-marquee__row[data-syn-logo-direction="right"] > .syn-logo-marquee__track {
       animation-direction: reverse;
     }
-    /* The default / left row moves leftward. Per-row duration always works,
-       and modern typed CSS arithmetic additionally supports speed multipliers. */
+    /* Typed arithmetic supports speed multipliers. Otherwise use duration. */
     @supports (animation-duration: calc(1s / 2)) {
       :where(.syn-root.syn-logo-marquee, .syn-root .syn-logo-marquee)
-        :where(.syn-logo-marquee__track:has(> .syn-logo-marquee__group:first-child + .syn-logo-marquee__group:last-child)) {
+        > .syn-logo-marquee__row:not(:focus-within)
+        > .syn-logo-marquee__track:has(> .syn-logo-marquee__group:first-child + .syn-logo-marquee__group:last-child) {
         animation-duration: calc(var(--syn-logo-duration, 32s) / var(--syn-logo-speed, 1));
       }
     }
-    :where(.syn-root.syn-logo-marquee, .syn-root .syn-logo-marquee)
-      > .syn-logo-marquee__row:focus-within .syn-logo-marquee__track {
-      animation-play-state: paused;
-    }
     @media (hover: hover) {
       :where(.syn-root.syn-logo-marquee, .syn-root .syn-logo-marquee)
-        > .syn-logo-marquee__row:hover .syn-logo-marquee__track {
+        > .syn-logo-marquee__row:hover
+        > .syn-logo-marquee__track:has(> .syn-logo-marquee__group:first-child + .syn-logo-marquee__group:last-child) {
         animation-play-state: paused;
       }
-    }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    :where(.syn-root.syn-logo-marquee, .syn-root .syn-logo-marquee) > .syn-logo-marquee__row {
-      overflow: visible;
-      container-type: normal;
-    }
-    :where(.syn-root.syn-logo-marquee, .syn-root .syn-logo-marquee) .syn-logo-marquee__track {
-      inline-size: 100%;
-    }
-    :where(.syn-root.syn-logo-marquee, .syn-root .syn-logo-marquee) .syn-logo-marquee__group {
-      flex-wrap: wrap;
-      justify-content: center;
-      inline-size: 100%;
-      min-inline-size: 0;
-    }
-    :where(.syn-root.syn-logo-marquee, .syn-root .syn-logo-marquee)
-      .syn-logo-marquee__group[aria-hidden="true"] {
-      display: none;
     }
   }
 }

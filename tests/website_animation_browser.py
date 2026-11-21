@@ -50,6 +50,26 @@ def main():
                     )
                     check(active_name == f"syn-animate-{name}",
                           f"{name} not activated: {active_name}")
+                iterations = page.evaluate("""() => {
+                    const fixture = document.createElement('div');
+                    fixture.innerHTML = `
+                        <div data-syn-animate="pulse" class="syn-animate--loop">
+                          <span data-syn-animate="fade-in"></span>
+                          <span data-syn-animate="fade-in" style="--syn-animation-iterations: 3"></span>
+                        </div>
+                        <div style="--syn-animation-iterations: 4">
+                          <span data-syn-animate="fade-in"></span>
+                          <span data-syn-animate="fade-in" class="syn-animate--loop"
+                                style="--syn-animation-iterations: 2"></span>
+                        </div>`;
+                    document.body.append(fixture);
+                    const counts = [...fixture.querySelectorAll('[data-syn-animate]')]
+                        .map(node => getComputedStyle(node).animationIterationCount);
+                    fixture.remove();
+                    return counts;
+                }""")
+                check(iterations == ['infinite', '1', '3', '4', '2'],
+                      f"Loop modifier must be local and respect explicit counts: {iterations}")
                 # Unknown child presets must not inherit a parent's animation.
                 inherited = page.evaluate("""() => {
                     const parent = document.createElement('div');

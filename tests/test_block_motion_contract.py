@@ -81,7 +81,7 @@ class BlockMotionContract(unittest.TestCase):
             self.assertIn(token, self.motion)
             self.assertIn(token, self.docs)
         self.assertIn('syn-animate--loop', self.motion)
-        self.assertIn('animation-iteration-count: var(--syn-animation-iterations, 1)', self.motion)
+        self.assertIn('animation-iteration-count: var(--syn-animation-iterations,', self.motion)
         self.assertIn('animation-fill-mode: var(--syn-animation-fill-mode, none)', self.motion)
         self.assertIn('--syn-animation-keyframes: none', self.motion)
         self.assertNotIn('!important', self.motion)

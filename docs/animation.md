@@ -393,16 +393,24 @@ engines supporting typed division also apply
 `calc(var(--syn-logo-duration) / var(--syn-logo-speed))`. To maximize
 cross-browser precision, set `--syn-logo-duration` explicitly.
 
-**Accessibility and fallback:** Scrolling pauses on hover and when
-keyboard focus enters a row. Under
-`prefers-reduced-motion: reduce`, animation stops completely, duplicate
-groups disappear, and original groups wrap to show all logos without
-horizontal clipping. Without JS, the HTML remains usable. If an author
-does not include a second group, the track stays static rather than
-scrolling into empty space. Links inside the original logo set remain
-interactive; duplicated links must be `inert` and hidden from assistive
-technologies. Provide real `alt` text for meaningful logos, and empty
-`alt=""` for decorative copies.
+<!-- coderabbit-ai-generated:v1 -->
+
+<!-- coderabbit-ai-generated-section:v1:ba62471601719527dd45406f875cda9bb1983ea2c413a8faa60e5c5439ad68f7 -->
+
+**Accessibility and fallback:** Hover pauses scrolling in place. When a
+row or one of its links receives focus, that row shows the original
+logos as a static, wrapped list and hides the decorative copy. Scrolling
+starts again when focus leaves. For a row without links, add
+`tabindex="0"`, `role="group"` and a distinct accessible name to let
+keyboard users reach it.
+
+With reduced motion or just one group, the original logos stay static
+and wrap without horizontal clipping. No JavaScript is required. Only
+the original logo links are interactive; duplicated links must remain
+`inert` and hidden from assistive technologies. Provide real `alt` text
+for meaningful logos and empty `alt=""` for decorative copies.
+
+<!-- /coderabbit-ai-generated:v1 -->
 
 This composition lives in the optional motion stylesheet, not core.
 There is no mandatory runtime or external asset. See the

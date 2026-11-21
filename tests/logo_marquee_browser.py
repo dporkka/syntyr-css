@@ -48,6 +48,17 @@ def metrics(page):
     }""")
 
 
+def originals_fit(row):
+    return row.evaluate("""row => {
+      const bounds = row.getBoundingClientRect();
+      const logos = [...row.querySelector('.syn-logo-marquee__group').children];
+      return logos.every(logo => {
+        const box = logo.firstElementChild.getBoundingClientRect();
+        return box.width > 0 && box.left >= bounds.left - 1 && box.right <= bounds.right + 1;
+      });
+    }""")
+
+
 def main():
     server = ThreadingHTTPServer(
         ('127.0.0.1', 0), partial(QuietHandler, directory=str(ROOT)))
@@ -113,18 +124,43 @@ def main():
                 require(track.evaluate(
                     "node => getComputedStyle(node).animationPlayState") == 'running',
                     'mouseleave must resume logo marquee')
-                # Keyboard focus should pause linked logos in the original group.
+                # Tab from the preceding control to each named demo row.
+                page.locator('#website-animation-controls button').last.focus()
+                page.keyboard.press('Tab')
+                require(page.get_by_role('group', name='Customer logos, row 1').evaluate(
+                    'row => row === document.activeElement'), 'first row must be reachable by Tab')
+                require(metrics(page)[0]['name'] == 'none' and
+                        metrics(page)[0]['copies'][1]['display'] == 'none' and
+                        metrics(page)[1]['name'] == 'syn-logo-marquee-scroll',
+                        'only the focused row shows static originals')
+                page.keyboard.press('Tab')
+                require(page.get_by_role('group', name='Customer logos, row 2').evaluate(
+                    'row => row === document.activeElement'), 'second row must be reachable by Tab')
+                require(metrics(page)[0]['name'] == 'syn-logo-marquee-scroll',
+                        'first row must animate again after focus leaves')
+
+                # At the start of the loop the final original is clipped.
+                # Keyboard navigation into that link must expose every original.
                 first.evaluate("""row => {
-                    const li = row.querySelector('.syn-logo-marquee__group li');
-                    const link = document.createElement('a');
-                    link.href = '#logo-marquee-title';
-                    link.textContent = 'Open logo';
-                    li.replaceChildren(link);
-                    link.focus();
+                    const group = row.querySelector('.syn-logo-marquee__group');
+                    for (const li of group.children) {
+                        const link = document.createElement('a');
+                        link.href = '#logo-marquee-title';
+                        link.textContent = li.textContent;
+                        li.replaceChildren(link);
+                    }
+                    const animation = row.querySelector('.syn-logo-marquee__track').getAnimations()[0];
+                    animation.pause();
+                    animation.currentTime = 0;
                 }""")
-                require(track.evaluate(
-                    "node => getComputedStyle(node).animationPlayState") == 'paused',
-                    'keyboard focus within logo row must pause')
+                require(not originals_fit(first), 'fixture must begin with clipped links')
+                page.keyboard.press('Shift+Tab')
+                require(first.get_by_role('link', name='HORIZON').evaluate(
+                    'link => link === document.activeElement'), 'Tab must reach the last original link')
+                require(originals_fit(first) and metrics(page)[0]['name'] == 'none' and
+                        metrics(page)[0]['copies'][1]['display'] == 'none',
+                        'keyboard focus must expose every original link and hide the copy')
+                page.locator('#website-animation-controls button').last.focus()
                 first.evaluate("""row => {
                     row.style.setProperty('--syn-logo-speed', '2');
                 }""")
@@ -161,7 +197,8 @@ def main():
                 missing.locator('.syn-logo-marquee__row').first.evaluate(
                     "row => row.querySelectorAll('.syn-logo-marquee__group')[1].remove()"
                 )
-                require(metrics(missing)[0]['name'] == 'none',
+                require(metrics(missing)[0]['name'] == 'none' and
+                        originals_fit(missing.locator('.syn-logo-marquee__row').first),
                         'single group should stay visible and static')
                 # Optional one-list progressive enhancer activates CSS-only
                 # motion after cloning, without duplicate accessibility names.
