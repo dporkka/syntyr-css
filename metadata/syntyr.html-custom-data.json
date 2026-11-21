@@ -758,8 +758,36 @@
           "description": "Bounce appearance variant of the icon component; see symbols.css for styles."
         },
         {
+          "name": "syn-icon--flash",
+          "description": "Flash appearance variant of the icon component; see symbols.css for styles."
+        },
+        {
+          "name": "syn-icon--flip",
+          "description": "Flip appearance variant of the icon component; see symbols.css for styles."
+        },
+        {
+          "name": "syn-icon--float",
+          "description": "Float appearance variant of the icon component; see symbols.css for styles."
+        },
+        {
+          "name": "syn-icon--heartbeat",
+          "description": "Heartbeat appearance variant of the icon component; see symbols.css for styles."
+        },
+        {
+          "name": "syn-icon--nudge-left",
+          "description": "Nudge left appearance variant of the icon component; see symbols.css for styles."
+        },
+        {
+          "name": "syn-icon--nudge-right",
+          "description": "Nudge right appearance variant of the icon component; see symbols.css for styles."
+        },
+        {
           "name": "syn-icon--on-interact",
           "description": "On interact appearance variant of the icon component; see symbols.css for styles."
+        },
+        {
+          "name": "syn-icon--ping",
+          "description": "Ping appearance variant of the icon component; see symbols.css for styles."
         },
         {
           "name": "syn-icon--pop",
@@ -776,6 +804,10 @@
         {
           "name": "syn-icon--spin",
           "description": "Spin appearance variant of the icon component; see symbols.css for styles."
+        },
+        {
+          "name": "syn-icon--swing",
+          "description": "Swing appearance variant of the icon component; see symbols.css for styles."
         },
         {
           "name": "syn-icon--wiggle",

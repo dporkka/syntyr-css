@@ -385,6 +385,371 @@
       "id": "volume",
       "label": "Volume",
       "body": "<path d=\"M4 9h4l5-4v14l-5-4H4V9Zm12-1c2 2 2 6 0 8m3-11c4 4 4 10 0 14\"/>"
+    },
+    {
+      "id": "layout-dashboard",
+      "label": "Dashboard",
+      "body": "<rect x=\"3\" y=\"3\" width=\"8\" height=\"8\" rx=\"1\"/><rect x=\"14\" y=\"3\" width=\"7\" height=\"5\" rx=\"1\"/><rect x=\"14\" y=\"11\" width=\"7\" height=\"10\" rx=\"1\"/><rect x=\"3\" y=\"14\" width=\"8\" height=\"7\" rx=\"1\"/>"
+    },
+    {
+      "id": "panel-left",
+      "label": "Left panel",
+      "body": "<rect x=\"2\" y=\"3\" width=\"20\" height=\"18\" rx=\"2\"/><path d=\"M9 3v18\"/>"
+    },
+    {
+      "id": "panel-right",
+      "label": "Right panel",
+      "body": "<rect x=\"2\" y=\"3\" width=\"20\" height=\"18\" rx=\"2\"/><path d=\"M15 3v18\"/>"
+    },
+    {
+      "id": "layers",
+      "label": "Layers",
+      "body": "<path d=\"m12 3 9 5-9 5-9-5 9-5ZM3 12l9 5 9-5M3 16l9 5 9-5\"/>"
+    },
+    {
+      "id": "compass",
+      "label": "Compass",
+      "body": "<circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"m15.7 8.3-2.5 4.9-4.9 2.5 2.5-4.9 4.9-2.5Z\"/>"
+    },
+    {
+      "id": "navigation",
+      "label": "Navigate",
+      "body": "<path d=\"m21 3-7.3 18-3.4-7.3L3 10.3 21 3Z\"/>"
+    },
+    {
+      "id": "map",
+      "label": "Map",
+      "body": "<path d=\"M3 6 9 3l6 3 6-3v15l-6 3-6-3-6 3V6Zm6-3v15m6-12v15\"/>"
+    },
+    {
+      "id": "route",
+      "label": "Route",
+      "body": "<circle cx=\"5\" cy=\"19\" r=\"2\"/><circle cx=\"18\" cy=\"5\" r=\"2\"/><path d=\"M7 19h6a5 5 0 0 0 0-10h-2a4 4 0 0 1 0-8\"/>"
+    },
+    {
+      "id": "maximize",
+      "label": "Maximize",
+      "body": "<path d=\"M8 3H3v5m0-5 6 6m7-6h5v5m0-5-6 6M3 16v5h5m-5 0 6-6m12 1v5h-5m5 0-6-6\"/>"
+    },
+    {
+      "id": "minimize",
+      "label": "Minimize",
+      "body": "<path d=\"M9 9 3 3m0 6V3h6m6 6 6-6m-6 0h6v6M9 15l-6 6m6 0H3v-6m12 0 6 6m-6 0h6v-6\"/>"
+    },
+    {
+      "id": "move",
+      "label": "Move",
+      "body": "<path d=\"M12 2v20m0-20-4 4m4-4 4 4m-4 16-4-4m4 4 4-4M2 12h20m-20 0 4-4m-4 4 4 4m16-4-4-4m4 4-4 4\"/>"
+    },
+    {
+      "id": "grip",
+      "label": "Drag handle",
+      "body": "<circle cx=\"8\" cy=\"5\" r=\"1.2\"/><circle cx=\"8\" cy=\"12\" r=\"1.2\"/><circle cx=\"8\" cy=\"19\" r=\"1.2\"/><circle cx=\"16\" cy=\"5\" r=\"1.2\"/><circle cx=\"16\" cy=\"12\" r=\"1.2\"/><circle cx=\"16\" cy=\"19\" r=\"1.2\"/>"
+    },
+    {
+      "id": "arrow-up-right",
+      "label": "Upper right",
+      "body": "<path d=\"M5 19 19 5M10 5h9v9\"/>"
+    },
+    {
+      "id": "arrow-down-right",
+      "label": "Lower right",
+      "body": "<path d=\"M5 5 19 19m-9 0h9v-9\"/>"
+    },
+    {
+      "id": "corner-down-left",
+      "label": "Turn lower left",
+      "body": "<path d=\"M20 4v9a4 4 0 0 1-4 4H4m6-6-6 6 6 6\"/>"
+    },
+    {
+      "id": "corner-down-right",
+      "label": "Turn lower right",
+      "body": "<path d=\"M4 4v9a4 4 0 0 0 4 4h12m-6-6 6 6-6 6\"/>"
+    },
+    {
+      "id": "expand",
+      "label": "Expand outward",
+      "body": "<path d=\"M8 8 3 3m0 5V3h5m8 5 5-5m-5 0h5v5M8 16l-5 5m0-5v5h5m8-5 5 5m-5 0h5v-5\"/>"
+    },
+    {
+      "id": "shrink",
+      "label": "Shrink inward",
+      "body": "<path d=\"m3 3 6 6M9 3v6H3m18-6-6 6m6 0h-6V3M3 21l6-6m-6 0h6v6m12 0-6-6m0 6v-6h6\"/>"
+    },
+    {
+      "id": "undo",
+      "label": "Undo",
+      "body": "<path d=\"M9 5 4 10l5 5M4 10h10a6 6 0 0 1 0 12h-3\"/>"
+    },
+    {
+      "id": "redo",
+      "label": "Redo",
+      "body": "<path d=\"m15 5 5 5-5 5m5-5H10a6 6 0 0 0 0 12h3\"/>"
+    },
+    {
+      "id": "sort-asc",
+      "label": "Sort ascending",
+      "body": "<path d=\"M5 20V4m-4 4 4-4 4 4M13 7h8m-8 5h6m-6 5h4\"/>"
+    },
+    {
+      "id": "sort-desc",
+      "label": "Sort descending",
+      "body": "<path d=\"M5 4v16m-4-4 4 4 4-4M13 7h8m-8 5h6m-6 5h4\"/>"
+    },
+    {
+      "id": "zoom-in",
+      "label": "Zoom in",
+      "body": "<circle cx=\"10\" cy=\"10\" r=\"7\"/><path d=\"M10 7v6M7 10h6m2.5 5.5L21 21\"/>"
+    },
+    {
+      "id": "zoom-out",
+      "label": "Zoom out",
+      "body": "<circle cx=\"10\" cy=\"10\" r=\"7\"/><path d=\"M7 10h6m2.5 5.5L21 21\"/>"
+    },
+    {
+      "id": "archive",
+      "label": "Archive",
+      "body": "<rect x=\"3\" y=\"3\" width=\"18\" height=\"5\" rx=\"1\"/><path d=\"M5 8v13h14V8M9 12h6\"/>"
+    },
+    {
+      "id": "inbox",
+      "label": "Inbox",
+      "body": "<path d=\"M4 4h16l2 12v5H2v-5L4 4Z M2 16h6l2 3h4l2-3h6\"/>"
+    },
+    {
+      "id": "paperclip",
+      "label": "Attachment",
+      "body": "<path d=\"m8 13 7.1-7.1a4 4 0 0 1 5.7 5.7l-9.9 9.9a6 6 0 0 1-8.5-8.5L12.3 3a2.5 2.5 0 0 1 3.5 3.5L7 15.3\"/>"
+    },
+    {
+      "id": "clipboard",
+      "label": "Clipboard",
+      "body": "<rect x=\"5\" y=\"5\" width=\"14\" height=\"17\" rx=\"2\"/><rect x=\"9\" y=\"2\" width=\"6\" height=\"5\" rx=\"1\"/><path d=\"M9 12h6m-6 4h6\"/>"
+    },
+    {
+      "id": "clipboard-check",
+      "label": "Clipboard confirmed",
+      "body": "<rect x=\"5\" y=\"5\" width=\"14\" height=\"17\" rx=\"2\"/><rect x=\"9\" y=\"2\" width=\"6\" height=\"5\" rx=\"1\"/><path d=\"m8.5 14 2.5 2.5 4.5-5\"/>"
+    },
+    {
+      "id": "file-plus",
+      "label": "New file",
+      "body": "<path d=\"M6 2h8l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Zm8 0v6h5M12 12v7m-3.5-3.5h7\"/>"
+    },
+    {
+      "id": "file-text",
+      "label": "Text file",
+      "body": "<path d=\"M6 2h8l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Zm8 0v6h5M8 12h8m-8 4h8m-8 4h5\"/>"
+    },
+    {
+      "id": "folder-open",
+      "label": "Open folder",
+      "body": "<path d=\"M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v3M3 9v10a2 2 0 0 0 2 2h13l4-9H7l-4 9\"/>"
+    },
+    {
+      "id": "folder-plus",
+      "label": "New folder",
+      "body": "<path d=\"M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7Zm9 4v7m-3.5-3.5h7\"/>"
+    },
+    {
+      "id": "hard-drive",
+      "label": "Storage drive",
+      "body": "<rect x=\"2\" y=\"5\" width=\"20\" height=\"14\" rx=\"2\"/><path d=\"M2 14h20\"/><circle cx=\"6\" cy=\"16.5\" r=\"0.8\"/><circle cx=\"10\" cy=\"16.5\" r=\"0.8\"/>"
+    },
+    {
+      "id": "package",
+      "label": "Package",
+      "body": "<path d=\"m12 2 9 5v10l-9 5-9-5V7l9-5Zm-9 5 9 5 9-5m-9 5v10M8 4l9 5\"/>"
+    },
+    {
+      "id": "tag",
+      "label": "Tag",
+      "body": "<path d=\"M3 3h9l9 9-9 9-9-9V3Z\"/><circle cx=\"8\" cy=\"8\" r=\"1.4\"/>"
+    },
+    {
+      "id": "pin",
+      "label": "Pin",
+      "body": "<path d=\"m14 2 8 8-3 1-3 5-4-4-5 3-1 3-4 4 4-7 3-1 3-5-2-3 4-4Z\"/>"
+    },
+    {
+      "id": "message-square",
+      "label": "Chat message",
+      "body": "<path d=\"M4 3h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H8l-5 3V5a2 2 0 0 1 1-2ZM7 10h10M7 14h7\"/>"
+    },
+    {
+      "id": "at-sign",
+      "label": "Mention",
+      "body": "<circle cx=\"12\" cy=\"12\" r=\"9\"/><circle cx=\"12\" cy=\"12\" r=\"4\"/><path d=\"M16 8v6a2 2 0 0 0 4 0v-2\"/>"
+    },
+    {
+      "id": "bell-off",
+      "label": "Mute notifications",
+      "body": "<path d=\"m3 3 18 18M6 6a6 6 0 0 1 12 4v5l2 2H9m-5 0 2-2v-3m4 9h4\"/>"
+    },
+    {
+      "id": "video",
+      "label": "Video call",
+      "body": "<rect x=\"2\" y=\"5\" width=\"14\" height=\"14\" rx=\"2\"/><path d=\"m16 10 6-4v12l-6-4\"/>"
+    },
+    {
+      "id": "mic",
+      "label": "Microphone",
+      "body": "<rect x=\"9\" y=\"2\" width=\"6\" height=\"13\" rx=\"3\"/><path d=\"M5 11a7 7 0 0 0 14 0m-7 7v4m-4 0h8\"/>"
+    },
+    {
+      "id": "mic-off",
+      "label": "Mute microphone",
+      "body": "<rect x=\"9\" y=\"2\" width=\"6\" height=\"13\" rx=\"3\"/><path d=\"M5 11a7 7 0 0 0 14 0m-7 7v4m-4 0h8M3 3l18 18\"/>"
+    },
+    {
+      "id": "headphones",
+      "label": "Headphones",
+      "body": "<path d=\"M4 14v-3a8 8 0 0 1 16 0v3\"/><rect x=\"3\" y=\"13\" width=\"4\" height=\"8\" rx=\"2\"/><rect x=\"17\" y=\"13\" width=\"4\" height=\"8\" rx=\"2\"/>"
+    },
+    {
+      "id": "camera",
+      "label": "Camera",
+      "body": "<path d=\"M3 7h4l2-3h6l2 3h4v13H3V7Z\"/><circle cx=\"12\" cy=\"13.5\" r=\"4\"/>"
+    },
+    {
+      "id": "music",
+      "label": "Music",
+      "body": "<path d=\"M10 18V5l11-2v13\"/><circle cx=\"7\" cy=\"18\" r=\"3\"/><circle cx=\"18\" cy=\"16\" r=\"3\"/>"
+    },
+    {
+      "id": "volume-x",
+      "label": "Muted audio",
+      "body": "<path d=\"M4 9h4l5-4v14l-5-4H4V9Zm13 1 5 5m0-5-5 5\"/>"
+    },
+    {
+      "id": "wifi",
+      "label": "Wi-Fi",
+      "body": "<path d=\"M2 8a16 16 0 0 1 20 0M5 12a11 11 0 0 1 14 0M8.5 16a5.5 5.5 0 0 1 7 0\"/><circle cx=\"12\" cy=\"20\" r=\"0.9\"/>"
+    },
+    {
+      "id": "wifi-off",
+      "label": "Wi-Fi disconnected",
+      "body": "<path d=\"M2 3 22 21M2 8a16 16 0 0 1 15-.8M5 12a11 11 0 0 1 7-.9m4 1 3 1.5M8.5 16a5.5 5.5 0 0 1 5.5-1.4\"/><circle cx=\"12\" cy=\"20\" r=\"0.9\"/>"
+    },
+    {
+      "id": "alert-circle",
+      "label": "Alert",
+      "body": "<circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M12 7v6m0 4v.2\"/>"
+    },
+    {
+      "id": "x-circle",
+      "label": "Error",
+      "body": "<circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"m9 9 6 6m0-6-6 6\"/>"
+    },
+    {
+      "id": "circle-plus",
+      "label": "Add item",
+      "body": "<circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M12 7v10m-5-5h10\"/>"
+    },
+    {
+      "id": "circle-minus",
+      "label": "Remove item",
+      "body": "<circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M7 12h10\"/>"
+    },
+    {
+      "id": "shield-check",
+      "label": "Verified",
+      "body": "<path d=\"M12 2 20 6v5c0 5.4-3 8.4-8 11-5-2.6-8-5.6-8-11V6l8-4Z\"/><path d=\"m8 12 3 3 5-6\"/>"
+    },
+    {
+      "id": "activity",
+      "label": "Activity",
+      "body": "<path d=\"M2 12h4l3-7 5 14 3-7h5\"/>"
+    },
+    {
+      "id": "power",
+      "label": "Power",
+      "body": "<path d=\"M12 2v11M6 5a9 9 0 1 0 12 0\"/>"
+    },
+    {
+      "id": "laptop",
+      "label": "Laptop",
+      "body": "<rect x=\"4\" y=\"3\" width=\"16\" height=\"14\" rx=\"1\"/><path d=\"M2 20h20l-2-3H4l-2 3Z\"/>"
+    },
+    {
+      "id": "monitor",
+      "label": "Monitor",
+      "body": "<rect x=\"2\" y=\"3\" width=\"20\" height=\"15\" rx=\"2\"/><path d=\"M12 18v4m-5 0h10\"/>"
+    },
+    {
+      "id": "smartphone",
+      "label": "Phone device",
+      "body": "<rect x=\"6\" y=\"2\" width=\"12\" height=\"20\" rx=\"2\"/><path d=\"M10 18h4\"/>"
+    },
+    {
+      "id": "cpu",
+      "label": "Processor",
+      "body": "<rect x=\"6\" y=\"6\" width=\"12\" height=\"12\" rx=\"2\"/><rect x=\"9\" y=\"9\" width=\"6\" height=\"6\" rx=\"1\"/><path d=\"M9 2v4m6-4v4M9 18v4m6-4v4M2 9h4m-4 6h4m12-6h4m-4 6h4\"/>"
+    },
+    {
+      "id": "server",
+      "label": "Server",
+      "body": "<rect x=\"3\" y=\"3\" width=\"18\" height=\"8\" rx=\"2\"/><rect x=\"3\" y=\"13\" width=\"18\" height=\"8\" rx=\"2\"/><circle cx=\"7\" cy=\"7\" r=\"1\"/><circle cx=\"7\" cy=\"17\" r=\"1\"/><path d=\"M12 7h6m-6 10h6\"/>"
+    },
+    {
+      "id": "battery",
+      "label": "Battery",
+      "body": "<rect x=\"2\" y=\"7\" width=\"18\" height=\"10\" rx=\"2\"/><path d=\"M22 10v4\"/><rect x=\"5\" y=\"10\" width=\"8\" height=\"4\" rx=\"1\"/>"
+    },
+    {
+      "id": "battery-charging",
+      "label": "Battery charging",
+      "body": "<rect x=\"2\" y=\"7\" width=\"18\" height=\"10\" rx=\"2\"/><path d=\"M22 10v4m-10-5-3 5h4l-2 4\"/>"
+    },
+    {
+      "id": "user-plus",
+      "label": "Add person",
+      "body": "<circle cx=\"9\" cy=\"8\" r=\"3.5\"/><path d=\"M2 21v-2c0-3 3.2-5 7-5m10-4v8m-4-4h8\"/>"
+    },
+    {
+      "id": "user-check",
+      "label": "Verified person",
+      "body": "<circle cx=\"9\" cy=\"8\" r=\"3.5\"/><path d=\"M2 21v-2c0-3 3.2-5 7-5m5 1 3 3 5-5\"/>"
+    },
+    {
+      "id": "user-x",
+      "label": "Remove person",
+      "body": "<circle cx=\"9\" cy=\"8\" r=\"3.5\"/><path d=\"M2 21v-2c0-3 3.2-5 7-5m7-1 6 6m0-6-6 6\"/>"
+    },
+    {
+      "id": "wallet",
+      "label": "Wallet",
+      "body": "<rect x=\"2\" y=\"5\" width=\"20\" height=\"16\" rx=\"2\"/><path d=\"M2 9V5a3 3 0 0 1 3-3h13m4 8h-7a3 3 0 0 0 0 6h7\"/><circle cx=\"16\" cy=\"13\" r=\"0.8\"/>"
+    },
+    {
+      "id": "receipt",
+      "label": "Receipt",
+      "body": "<path d=\"M5 2h14v20l-3-2-4 2-4-2-3 2V2Zm3 5h8M8 11h8M8 15h5\"/>"
+    },
+    {
+      "id": "dollar-sign",
+      "label": "Currency",
+      "body": "<path d=\"M12 2v20M18 6c-2-3-12-3-12 2 0 6 12 2 12 8 0 5-10 6-12 2\"/>"
+    },
+    {
+      "id": "gift",
+      "label": "Gift",
+      "body": "<rect x=\"3\" y=\"10\" width=\"18\" height=\"12\" rx=\"2\"/><rect x=\"2\" y=\"7\" width=\"20\" height=\"4\" rx=\"1\"/><path d=\"M12 7v15m0-15c-9-1-8-8-3-6 2 1 3 4 3 6Zm0 0c9-1 8-8 3-6-2 1-3 4-3 6Z\"/>"
+    },
+    {
+      "id": "pie-chart",
+      "label": "Pie chart",
+      "body": "<path d=\"M12 2v10h10A10 10 0 0 0 12 2Zm-3 2A10 10 0 1 0 20 15H9V4Z\"/>"
+    },
+    {
+      "id": "trending-up",
+      "label": "Trending up",
+      "body": "<path d=\"M3 18 10 11l4 4 7-8m-6 0h6v6\"/>"
+    },
+    {
+      "id": "trending-down",
+      "label": "Trending down",
+      "body": "<path d=\"m3 6 7 7 4-4 7 8m-6 0h6v-6\"/>"
     }
   ]
 }

@@ -2226,9 +2226,79 @@
       ]
     },
     {
+      "name": "syn-icon--flash",
+      "module": "symbols.css",
+      "description": "Flash appearance variant of the icon component; see symbols.css for styles.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "syntyr.all.css",
+        "syntyr.symbols.css"
+      ]
+    },
+    {
+      "name": "syn-icon--flip",
+      "module": "symbols.css",
+      "description": "Flip appearance variant of the icon component; see symbols.css for styles.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "syntyr.all.css",
+        "syntyr.symbols.css"
+      ]
+    },
+    {
+      "name": "syn-icon--float",
+      "module": "symbols.css",
+      "description": "Float appearance variant of the icon component; see symbols.css for styles.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "syntyr.all.css",
+        "syntyr.symbols.css"
+      ]
+    },
+    {
+      "name": "syn-icon--heartbeat",
+      "module": "symbols.css",
+      "description": "Heartbeat appearance variant of the icon component; see symbols.css for styles.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "syntyr.all.css",
+        "syntyr.symbols.css"
+      ]
+    },
+    {
+      "name": "syn-icon--nudge-left",
+      "module": "symbols.css",
+      "description": "Nudge left appearance variant of the icon component; see symbols.css for styles.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "syntyr.all.css",
+        "syntyr.symbols.css"
+      ]
+    },
+    {
+      "name": "syn-icon--nudge-right",
+      "module": "symbols.css",
+      "description": "Nudge right appearance variant of the icon component; see symbols.css for styles.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "syntyr.all.css",
+        "syntyr.symbols.css"
+      ]
+    },
+    {
       "name": "syn-icon--on-interact",
       "module": "symbols.css",
       "description": "On interact appearance variant of the icon component; see symbols.css for styles.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "syntyr.all.css",
+        "syntyr.symbols.css"
+      ]
+    },
+    {
+      "name": "syn-icon--ping",
+      "module": "symbols.css",
+      "description": "Ping appearance variant of the icon component; see symbols.css for styles.",
       "stylesheets": [
         "presets/cinematic.css",
         "syntyr.all.css",
@@ -2269,6 +2339,16 @@
       "name": "syn-icon--spin",
       "module": "symbols.css",
       "description": "Spin appearance variant of the icon component; see symbols.css for styles.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "syntyr.all.css",
+        "syntyr.symbols.css"
+      ]
+    },
+    {
+      "name": "syn-icon--swing",
+      "module": "symbols.css",
+      "description": "Swing appearance variant of the icon component; see symbols.css for styles.",
       "stylesheets": [
         "presets/cinematic.css",
         "syntyr.all.css",
@@ -5570,6 +5650,16 @@
         "syntyr.css",
         "syntyr.embed.css",
         "syntyr.semantic-bundle.css"
+      ]
+    },
+    {
+      "name": "--syn-icon-motion-keyframes",
+      "module": "symbols.css",
+      "description": "Icon motion keyframes design token from symbols.css; override in the appropriate Syntyr scope when needed.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "syntyr.all.css",
+        "syntyr.symbols.css"
       ]
     },
     {

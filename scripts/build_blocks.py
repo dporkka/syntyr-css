@@ -190,7 +190,11 @@ def build() -> str:
     animation_cards = []
     motion_examples = (("spin", "refresh"), ("pulse", "heart"),
                        ("bounce", "arrow-up"), ("shake", "notification"),
-                       ("wiggle", "star"), ("pop", "check-circle"))
+                       ("wiggle", "star"), ("pop", "check-circle"),
+                       ("float", "cloud"), ("swing", "notification"),
+                       ("heartbeat", "heart"), ("flash", "alert-circle"),
+                       ("ping", "wifi"), ("flip", "layers"),
+                       ("nudge-left", "arrow-left"), ("nudge-right", "arrow-right"))
     icon_by_id = {icon["id"]: icon for icon in icons}
     for preset, icon_id in motion_examples:
         icon = icon_by_id[icon_id]

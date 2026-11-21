@@ -317,7 +317,7 @@ class BlocksAssetsTests(unittest.TestCase):
 
     def test_expanded_original_svg_icon_examples(self):
         icons = json.loads((ROOT / "blocks/icons.json").read_text(encoding="utf-8"))["icons"]
-        self.assertGreaterEqual(len(icons), 60)
+        self.assertGreaterEqual(len(icons), 150)
         self.assertEqual(len({icon["id"] for icon in icons}), len(icons))
         for icon in icons:
             with self.subTest(icon=icon["id"]):
@@ -339,6 +339,24 @@ class BlocksAssetsTests(unittest.TestCase):
                      "more-horizontal", "check-circle", "help-circle", "log-out",
                      "log-in", "grid", "list", "sun", "moon", "send"}
         self.assertTrue(essential.issubset({icon["id"] for icon in icons}))
+        next_wave = {
+            "layout-dashboard", "panel-left", "panel-right", "layers", "compass",
+            "navigation", "map", "route", "maximize", "minimize", "move", "grip",
+            "arrow-up-right", "arrow-down-right", "corner-down-left", "corner-down-right",
+            "expand", "shrink", "undo", "redo", "sort-asc", "sort-desc", "zoom-in",
+            "zoom-out", "archive", "inbox", "paperclip", "clipboard", "clipboard-check",
+            "file-plus", "file-text", "folder-open", "folder-plus", "hard-drive",
+            "package", "tag", "pin", "message-square", "at-sign", "bell-off",
+            "video", "mic", "mic-off", "headphones", "camera", "music",
+            "volume-x", "wifi", "wifi-off", "alert-circle", "x-circle",
+            "circle-plus", "circle-minus", "shield-check", "activity", "power",
+            "laptop", "monitor", "smartphone", "cpu", "server", "battery",
+            "battery-charging", "user-plus", "user-check", "user-x", "wallet",
+            "receipt", "dollar-sign", "gift", "pie-chart", "trending-up",
+            "trending-down"
+        }
+        self.assertTrue(next_wave.issubset({icon["id"] for icon in icons}))
+
         page = (ROOT / "docs/blocks.html").read_text(encoding="utf-8")
         parser = InspectHTML()
         parser.feed(page)
@@ -349,6 +367,8 @@ class BlocksAssetsTests(unittest.TestCase):
         self.assertIn('id="blocks-icon-search"', page)
         self.assertIn('id="blocks-icon-results"', page)
         self.assertIn('syn-icon--on-interact', page)
+        self.assertEqual(page.count('class="syn-button blocks-motion-example"'), 14)
+
         script = (ROOT / "docs/blocks.js").read_text(encoding="utf-8")
         self.assertIn("function filterIcons()", script)
         self.assertIn("iconQuery.addEventListener", script)

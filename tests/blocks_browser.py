@@ -74,14 +74,30 @@ def layout_check(browser, engine, width, scale):
                     "Icon search did not restore the catalog")
             motion_button = page.locator(".blocks-motion-example").first
             motion_icon = motion_button.locator(".syn-icon")
-            paused = motion_icon.evaluate("node => getComputedStyle(node).animationPlayState")
-            require(paused == "paused", f"Opt-in motion should pause by default, got {paused}")
+            require(page.locator(".blocks-motion-example").count() == 14,
+                    "New animation presets are missing from the gallery")
+            resting = motion_icon.evaluate("node => getComputedStyle(node).animationName")
+            require(resting == "none", f"Opt-in motion must rest by default, got {resting}")
             motion_button.hover()
-            running = motion_icon.evaluate("node => getComputedStyle(node).animationPlayState")
-            require(running == "running", f"Motion should run on hover, got {running}")
+            running = motion_icon.evaluate("node => getComputedStyle(node).animationName")
+            require(running == "syn-icon-spin", f"Motion should run on hover, got {running}")
+            page.mouse.move(0, 0)
+            resting_again = motion_icon.evaluate("node => getComputedStyle(node).animationName")
+            require(resting_again == "none", f"Motion must reset after hover, got {resting_again}")
+            # Check every new preset and accessibility override, not only spinning.
+            for icon in page.locator(".blocks-motion-example .syn-icon").all():
+                preset = next(cls.removeprefix("syn-icon--") for cls in
+                              icon.get_attribute("class").split()
+                              if cls.startswith("syn-icon--") and cls != "syn-icon--on-interact")
+                button = icon.locator("xpath=..")
+                button.hover()
+                actual = icon.evaluate("node => getComputedStyle(node).animationName")
+                require(actual == "syn-icon-" + preset,
+                        f"Preset {preset} did not animate on hover: {actual}")
             page.emulate_media(reduced_motion="reduce")
-            name = motion_icon.evaluate("node => getComputedStyle(node).animationName")
-            require(name == "none", f"Reduced motion must suppress icon animation: {name}")
+            for icon in page.locator(".blocks-motion-example .syn-icon").all():
+                name = icon.evaluate("node => getComputedStyle(node).animationName")
+                require(name == "none", f"Reduced motion must suppress all icons: {name}")
             page.emulate_media(reduced_motion="no-preference")
         if width == 390 and scale == 1:
             # Small text must not inherit the muted token against decorative radar rings.

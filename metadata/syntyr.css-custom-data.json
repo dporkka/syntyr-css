@@ -318,6 +318,10 @@
       "description": "Horizon line accent share."
     },
     {
+      "name": "--syn-icon-motion-keyframes",
+      "description": "Icon motion keyframes design token from symbols.css; override in the appropriate Syntyr scope when needed."
+    },
+    {
       "name": "--syn-inline-gap",
       "description": "Inline flex gap; defaults to --syn-space-2."
     },

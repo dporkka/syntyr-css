@@ -49,12 +49,14 @@ icon font or a massive SVG sprite for a handful of icons. An SVG that uses
 
 ## 2. Animate icons (optional, pure CSS)
 
-The same optional symbols stylesheet provides six motion modifiers for an
-inline SVG or SVG wrapper: `syn-icon--spin`, `syn-icon--pulse`,
-`syn-icon--bounce`, `syn-icon--shake`, `syn-icon--wiggle` and `syn-icon--pop`.
+The optional symbols stylesheet provides 14 motion modifiers for an inline
+SVG or SVG wrapper: `syn-icon--spin`, `syn-icon--pulse`, `syn-icon--bounce`,
+`syn-icon--shake`, `syn-icon--wiggle`, `syn-icon--pop`, `syn-icon--float`,
+`syn-icon--swing`, `syn-icon--heartbeat`, `syn-icon--flash`, `syn-icon--ping`,
+`syn-icon--flip`, `syn-icon--nudge-left` and `syn-icon--nudge-right`.
 Nothing animates unless you add a modifier, and **no JavaScript is required**.
 
-Copy one of the [77 original icons in the Blocks gallery](blocks.html) or use
+Copy one of the [150 original icons in the Blocks gallery](blocks.html) or use
 your own SVG. The icon artwork is not baked into the stylesheet.
 
 ~~~html
@@ -94,10 +96,19 @@ Motion is continuous by default. Control it per element or on a shared parent:
 | `--syn-icon-motion-iterations` | `infinite` | Number of repetitions; use `1` for one-shot effects |
 | `--syn-icon-motion-easing` | `linear` for spin; `ease-in-out` otherwise | Timing function |
 
-`--on-interact` pauses motion until the icon itself is hovered or focused, or
-its enclosing button/link is hovered or keyboard-focused. It does not register
-events or implement loading state. An icon with a running animation class and no
-`--on-interact` animates continuously.
+`--on-interact` starts motion only while the icon itself is hovered or focused, or
+its enclosing button/link is hovered or keyboard-focused. The icon returns to
+its resting appearance when interaction ends. It does not register
+events or implement loading state. An icon with a motion class but no
+`--on-interact` animates continuously by default.
+
+| Preset | Intended use |
+| --- | --- |
+| `spin`, `pulse`, `bounce` | Loading, attention and movement cues |
+| `shake`, `wiggle`, `pop` | Error, notification and confirmation emphasis |
+| `float`, `swing`, `heartbeat` | Gentle decoration, hanging indicators and favorites |
+| `flash`, `ping`, `flip` | Short alerts, discovery and transitions |
+| `nudge-left`, `nudge-right` | Directional affordances |
 
 Every preset is fully disabled by `prefers-reduced-motion: reduce` (including
 hover/focus effects). Always communicate loading, success and errors in visible
