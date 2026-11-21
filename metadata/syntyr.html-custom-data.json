@@ -754,6 +754,66 @@
           "description": "Icon presentation in the symbols.css module; use semantic HTML and consult its component example."
         },
         {
+          "name": "syn-icon--bounce",
+          "description": "Bounce appearance variant of the icon component; see symbols.css for styles."
+        },
+        {
+          "name": "syn-icon--flash",
+          "description": "Flash appearance variant of the icon component; see symbols.css for styles."
+        },
+        {
+          "name": "syn-icon--flip",
+          "description": "Flip appearance variant of the icon component; see symbols.css for styles."
+        },
+        {
+          "name": "syn-icon--float",
+          "description": "Float appearance variant of the icon component; see symbols.css for styles."
+        },
+        {
+          "name": "syn-icon--heartbeat",
+          "description": "Heartbeat appearance variant of the icon component; see symbols.css for styles."
+        },
+        {
+          "name": "syn-icon--nudge-left",
+          "description": "Nudge left appearance variant of the icon component; see symbols.css for styles."
+        },
+        {
+          "name": "syn-icon--nudge-right",
+          "description": "Nudge right appearance variant of the icon component; see symbols.css for styles."
+        },
+        {
+          "name": "syn-icon--on-interact",
+          "description": "On interact appearance variant of the icon component; see symbols.css for styles."
+        },
+        {
+          "name": "syn-icon--ping",
+          "description": "Ping appearance variant of the icon component; see symbols.css for styles."
+        },
+        {
+          "name": "syn-icon--pop",
+          "description": "Pop appearance variant of the icon component; see symbols.css for styles."
+        },
+        {
+          "name": "syn-icon--pulse",
+          "description": "Pulse appearance variant of the icon component; see symbols.css for styles."
+        },
+        {
+          "name": "syn-icon--shake",
+          "description": "Shake appearance variant of the icon component; see symbols.css for styles."
+        },
+        {
+          "name": "syn-icon--spin",
+          "description": "Spin appearance variant of the icon component; see symbols.css for styles."
+        },
+        {
+          "name": "syn-icon--swing",
+          "description": "Swing appearance variant of the icon component; see symbols.css for styles."
+        },
+        {
+          "name": "syn-icon--wiggle",
+          "description": "Wiggle appearance variant of the icon component; see symbols.css for styles."
+        },
+        {
           "name": "syn-inline",
           "description": "Inline, wrapping layout for small groups of peers."
         },

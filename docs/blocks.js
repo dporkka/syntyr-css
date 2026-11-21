@@ -46,6 +46,28 @@
   theme.addEventListener("change", changeTheme);
   filter();
 
+  const iconControls = document.getElementById("blocks-icon-controls");
+  const iconQuery = document.getElementById("blocks-icon-search");
+  const iconResults = document.getElementById("blocks-icon-results");
+  const icons = Array.from(document.querySelectorAll("[data-icon-id]"));
+  if (iconControls && iconQuery && iconResults && icons.length) {
+    function filterIcons() {
+      const terms = iconQuery.value.trim().toLocaleLowerCase().split(/\s+/).filter(Boolean);
+      let visible = 0;
+      for (const icon of icons) {
+        const words = ((icon.dataset.iconId || "") + " " +
+          (icon.querySelector("strong")?.textContent || "")).toLocaleLowerCase();
+        const matches = terms.every(term => words.includes(term));
+        icon.hidden = !matches;
+        if (matches) visible++;
+      }
+      iconResults.textContent = "Showing " + visible + " of " + icons.length + " icons.";
+    }
+    iconControls.hidden = false;
+    iconQuery.addEventListener("input", filterIcons);
+    filterIcons();
+  }
+
   for (const item of indexed) {
     if (!item.copy || !item.code) continue;
     const edit = document.createElement("a");

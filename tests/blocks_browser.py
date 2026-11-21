@@ -61,6 +61,45 @@ def layout_check(browser, engine, width, scale):
         require(not metrics["clipped"],
                 f"{engine} {width}px {scale}x: controls clipped {metrics}")
         if width == 390 and scale == 1:
+            icons = page.locator("[data-icon-id]")
+            expected = len(json.loads((ROOT / "blocks/icons.json").read_text())["icons"])
+            require(icons.count() == expected, "Live catalog is missing icons")
+            icon_search = page.locator("#blocks-icon-search")
+            require(icon_search.is_visible(), "Icon search was not revealed")
+            icon_search.fill("moon")
+            require(page.locator("[data-icon-id]:visible").count() == 1,
+                    "Icon search did not filter to a matching icon")
+            icon_search.fill("")
+            require(page.locator("[data-icon-id]:visible").count() == expected,
+                    "Icon search did not restore the catalog")
+            motion_button = page.locator(".blocks-motion-example").first
+            motion_icon = motion_button.locator(".syn-icon")
+            require(page.locator(".blocks-motion-example").count() == 14,
+                    "New animation presets are missing from the gallery")
+            resting = motion_icon.evaluate("node => getComputedStyle(node).animationName")
+            require(resting == "none", f"Opt-in motion must rest by default, got {resting}")
+            motion_button.hover()
+            running = motion_icon.evaluate("node => getComputedStyle(node).animationName")
+            require(running == "syn-icon-spin", f"Motion should run on hover, got {running}")
+            page.mouse.move(0, 0)
+            resting_again = motion_icon.evaluate("node => getComputedStyle(node).animationName")
+            require(resting_again == "none", f"Motion must reset after hover, got {resting_again}")
+            # Check every new preset and accessibility override, not only spinning.
+            for icon in page.locator(".blocks-motion-example .syn-icon").all():
+                preset = next(cls.removeprefix("syn-icon--") for cls in
+                              icon.get_attribute("class").split()
+                              if cls.startswith("syn-icon--") and cls != "syn-icon--on-interact")
+                button = icon.locator("xpath=..")
+                button.hover()
+                actual = icon.evaluate("node => getComputedStyle(node).animationName")
+                require(actual == "syn-icon-" + preset,
+                        f"Preset {preset} did not animate on hover: {actual}")
+            page.emulate_media(reduced_motion="reduce")
+            for icon in page.locator(".blocks-motion-example .syn-icon").all():
+                name = icon.evaluate("node => getComputedStyle(node).animationName")
+                require(name == "none", f"Reduced motion must suppress all icons: {name}")
+            page.emulate_media(reduced_motion="no-preference")
+        if width == 390 and scale == 1:
             # Small text must not inherit the muted token against decorative radar rings.
             radar = page.locator(".syn-block-asset--radar")
             require(radar.count() == 1, f"{engine}: radar preview missing")
@@ -83,7 +122,8 @@ def progressive_checks(browser, engine, screenshots):
     require(page.locator("[data-block-id]").count() == BLOCK_COUNT, "No-JS: blocks missing")
     require(page.locator(".blocks-preview a[href]").count() == 0,
             "No-JS: gallery preview still navigates to placeholder routes")
-    require(page.locator("[data-icon-id]").count() == 24, "No-JS: SVG icons missing")
+    icon_count = len(json.loads((ROOT / "blocks/icons.json").read_text())["icons"])
+    require(page.locator("[data-icon-id]").count() == icon_count, "No-JS: SVG icons missing")
     require(page.locator(".syn-block-asset").count() == 12, "No-JS: CSS assets missing")
     require(page.locator("#blocks-controls").is_hidden(), "No-JS: controls should be hidden")
     details = page.locator(".blocks-details").first
@@ -137,7 +177,10 @@ def progressive_checks(browser, engine, screenshots):
     # pipeline is reachable via Tab and exposes later lanes using keyboard arrows.
     pipeline = page.locator('[data-block-id="crm-workspace"] .syn-pipeline')
     focused = False
-    for _ in range(90):
+    # Expanded icon galleries add keyboard-reachable source disclosures.
+    # Walk the actual page tab-order rather than assuming <=90 focus stops.
+    max_stops = page.locator("a,button,input,select,textarea,summary,[tabindex]").count() + 1
+    for _ in range(max_stops):
         page.keyboard.press("Tab")
         if pipeline.evaluate("e => e === document.activeElement"):
             focused = True
