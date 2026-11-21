@@ -103,7 +103,7 @@ animate(card, 'slide-up', {
 });
 
 // Exit effects are visual, not semantic hiding:
-const exit = animate(card, 'fade-out', { duration: 220 });
+const exit = animate(card, 'fade-out', { duration: 220, iterations: 1 });
 if (exit) exit.finished.then(() => { card.hidden = true; }).catch(() => {});
 else card.hidden = true; // Reduced-motion and missing-API fallback
 ```

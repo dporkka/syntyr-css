@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="syntyr.animate.mjs is an opt-in, dependency-free ES module for application-triggered motion. It delegates timing and compositing to the native Web…">
-  <meta name="syntyr-source-sha256" content="8975b7f77bb5d7c556c01cf9319f439eb8b22659fda6d2a13b803eb3bafb3bf9">
+  <meta name="syntyr-source-sha256" content="e43802ad17c895ffd37e43153e9c20cfada62f958e4a55a6a2d6d4de31138fed">
   <meta name="theme-color" content="#f5f7fb">
   <title>Optional Syntyr animation library — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/animation">
@@ -140,7 +140,7 @@ animate(card, 'slide-up', {
 });
 
 // Exit effects are visual, not semantic hiding:
-const exit = animate(card, 'fade-out', { duration: 220 });
+const exit = animate(card, 'fade-out', { duration: 220, iterations: 1 });
 if (exit) exit.finished.then(() =&gt; { card.hidden = true; }).catch(() =&gt; {});
 else card.hidden = true; // Reduced-motion and missing-API fallback
 </code></pre>
