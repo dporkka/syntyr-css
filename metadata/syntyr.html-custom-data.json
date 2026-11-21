@@ -814,6 +814,26 @@
           "description": "Logo presentation in the components/typography.css module; use semantic HTML and consult its component example."
         },
         {
+          "name": "syn-logo-marquee",
+          "description": "Logo marquee presentation in the motion.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-logo-marquee__group",
+          "description": "Group part of the logo marquee component; see motion.css for markup."
+        },
+        {
+          "name": "syn-logo-marquee__row",
+          "description": "Row part of the logo marquee component; see motion.css for markup."
+        },
+        {
+          "name": "syn-logo-marquee__track",
+          "description": "Track part of the logo marquee component; see motion.css for markup."
+        },
+        {
+          "name": "syn-logo-marquee__wordmark",
+          "description": "Wordmark part of the logo marquee component; see motion.css for markup."
+        },
+        {
           "name": "syn-media-card",
           "description": "Media card presentation in the media.css module; use semantic HTML and consult its component example."
         },

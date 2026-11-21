@@ -1,0 +1,192 @@
+"""Optional Chromium checks for the responsive two-row CSS-only logo marquee.
+
+PYTHONPATH=/tmp/syntyr-icons-playwright python3 tests/logo_marquee_browser.py
+"""
+from functools import partial
+from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
+from pathlib import Path
+from threading import Thread
+from playwright.sync_api import sync_playwright
+
+ROOT = Path(__file__).resolve().parents[1]
+
+
+class QuietHandler(SimpleHTTPRequestHandler):
+    def log_message(self, *_args):
+        pass
+
+
+def require(truth, label):
+    if not truth:
+        raise AssertionError(label)
+
+
+def metrics(page):
+    return page.evaluate(r"""() => {
+      const rows = [...document.querySelectorAll('.syn-logo-marquee__row')];
+      return rows.map(row => {
+        const track = row.querySelector('.syn-logo-marquee__track');
+        const groups = [...track.querySelectorAll('.syn-logo-marquee__group')];
+        const style = getComputedStyle(track);
+        return {
+          direction: row.dataset.synLogoDirection,
+          duration: parseFloat(style.animationDuration),
+          name: style.animationName,
+          iterationCount: style.animationIterationCount,
+          animationDirection: style.animationDirection,
+          rowWidth: row.getBoundingClientRect().width,
+          groupWidths: groups.map(group => group.getBoundingClientRect().width),
+          trackWidth: track.getBoundingClientRect().width,
+          copies: groups.map(group => ({
+            hidden: group.getAttribute('aria-hidden'),
+            inert: group.inert,
+            display: getComputedStyle(group).display,
+            text: group.textContent.trim().replace(/\s+/g, ' '),
+          })),
+        };
+      });
+    }""")
+
+
+def main():
+    server = ThreadingHTTPServer(
+        ('127.0.0.1', 0), partial(QuietHandler, directory=str(ROOT)))
+    Thread(target=server.serve_forever, daemon=True).start()
+    url = f'http://127.0.0.1:{server.server_port}/examples/animation.html'
+    try:
+        with sync_playwright() as playwright:
+            browser = playwright.chromium.launch()
+            try:
+                for width in (320, 390, 768, 1280, 1920):
+                    page = browser.new_page(viewport={'width': width, 'height': 800})
+                    page.goto(url)
+                    rows = metrics(page)
+                    require(len(rows) == 2, f'{width}: expected two logo rows')
+                    for index, row in enumerate(rows):
+                        require(row['direction'] == ('left' if index == 0 else 'right'),
+                                f'{width}: opposite directions')
+                        require(row['name'] == 'syn-logo-marquee-scroll',
+                                f'{width}: animation not active: {row}')
+                        require(row['iterationCount'] == 'infinite',
+                                f'{width}: must repeat indefinitely')
+                        require(row['animationDirection'] == ('normal' if index == 0 else 'reverse'),
+                                f'{width}: incorrect travel direction {row}')
+                        first, second = row['groupWidths']
+                        require(abs(first-second) < 0.5,
+                                f'{width}: repeating groups must match: {row}')
+                        require(first >= row['rowWidth'] - 1,
+                                f'{width}: too few logos to cover full visible row: {row}')
+                        require(abs(row['trackWidth']-first-second) < 1,
+                                f'{width}: track not exactly two groups')
+                        require(row['copies'][1]['hidden'] == 'true' and row['copies'][1]['inert'],
+                                f'{width}: duplicated logos must be inert/AT-hidden')
+                        require(row['copies'][0]['text'] == row['copies'][1]['text'],
+                                f'{width}: duplicate set must match first set')
+                    require(page.evaluate(
+                        "() => document.documentElement.scrollWidth <= innerWidth + 1"),
+                        f'{width}: document overflowing horizontally')
+                    page.close()
+
+                page = browser.new_page(viewport={'width': 390, 'height': 800})
+                page.goto(url)
+                first = page.locator('.syn-logo-marquee__row').first
+                track = first.locator('.syn-logo-marquee__track')
+                # Check displacement is precisely one group width, not a visible jump.
+                seam = track.evaluate("""node => {
+                    const animation = node.getAnimations()[0];
+                    animation.pause();
+                    const duration = animation.effect.getTiming().duration;
+                    animation.currentTime = 0;
+                    const startX = node.getBoundingClientRect().x;
+                    animation.currentTime = duration - 1;
+                    const endX = node.getBoundingClientRect().x;
+                    return {delta: startX - endX, groupWidth:
+                        node.querySelector('.syn-logo-marquee__group').getBoundingClientRect().width};
+                }""")
+                require(abs(seam['delta'] - seam['groupWidth']) < 1,
+                        f'loop must translate exactly one group: {seam}')
+                first.hover()
+                require(track.evaluate(
+                    "node => getComputedStyle(node).animationPlayState") == 'paused',
+                    'hover must pause logo marquee')
+                page.locator('h1').hover()
+                require(track.evaluate(
+                    "node => getComputedStyle(node).animationPlayState") == 'running',
+                    'mouseleave must resume logo marquee')
+                # Keyboard focus should pause linked logos in the original group.
+                first.evaluate("""row => {
+                    const li = row.querySelector('.syn-logo-marquee__group li');
+                    const link = document.createElement('a');
+                    link.href = '#logo-marquee-title';
+                    link.textContent = 'Open logo';
+                    li.replaceChildren(link);
+                    link.focus();
+                }""")
+                require(track.evaluate(
+                    "node => getComputedStyle(node).animationPlayState") == 'paused',
+                    'keyboard focus within logo row must pause')
+                first.evaluate("""row => {
+                    row.style.setProperty('--syn-logo-speed', '2');
+                }""")
+                require(abs(metrics(page)[0]['duration'] - 12) < .01,
+                        '2x speed must halve 24s to 12s on supported CSS')
+                page.close()
+
+                # No-JS mode still animates, while reduced motion displays every
+                # original logo and removes repeated decorative copies.
+                plain = browser.new_page(
+                    java_script_enabled=False, viewport={'width': 320, 'height': 720})
+                plain.goto(url)
+                require(metrics(plain)[0]['name'] == 'syn-logo-marquee-scroll',
+                        'no JS required for animation')
+                plain.close()
+                reduced = browser.new_page(
+                    reduced_motion='reduce', java_script_enabled=False,
+                    viewport={'width': 320, 'height': 720})
+                reduced.goto(url)
+                for row in metrics(reduced):
+                    require(row['name'] == 'none', 'reduced motion must stop loop')
+                    require(row['copies'][1]['display'] == 'none',
+                            'decorative duplicate should be hidden under reduced motion')
+                    require(row['copies'][0]['display'] == 'flex',
+                            'original logos remain visible under reduced motion')
+                require(reduced.evaluate(
+                    "() => document.documentElement.scrollWidth <= innerWidth + 1"),
+                    'reduced-motion layout must not overflow mobile viewport')
+                reduced.close()
+
+                # Missing duplicate: no empty-space animation.
+                missing = browser.new_page(viewport={'width': 390, 'height': 720})
+                missing.goto(url)
+                missing.locator('.syn-logo-marquee__row').first.evaluate(
+                    "row => row.querySelectorAll('.syn-logo-marquee__group')[1].remove()"
+                )
+                require(metrics(missing)[0]['name'] == 'none',
+                        'single group should stay visible and static')
+                # Optional one-list progressive enhancer activates CSS-only
+                # motion after cloning, without duplicate accessibility names.
+                missing.locator('.syn-logo-marquee__row').first.evaluate("""row => {
+                    const track = row.querySelector(':scope > .syn-logo-marquee__track');
+                    const source = track?.querySelector(':scope > .syn-logo-marquee__group:only-child');
+                    if (!source) return;
+                    const copy = source.cloneNode(true);
+                    copy.setAttribute('aria-hidden', 'true');
+                    copy.inert = true;
+                    copy.querySelectorAll('[id]').forEach(node => node.removeAttribute('id'));
+                    copy.querySelectorAll('img').forEach(image => { image.alt = ''; });
+                    track.append(copy);
+                }""")
+                require(metrics(missing)[0]['name'] == 'syn-logo-marquee-scroll' and
+                        metrics(missing)[0]['copies'][1]['hidden'] == 'true',
+                        'optional progressive duplication must safely enable looping')
+                missing.close()
+                print('PASS: two seamless responsive rows, opposite directions, speed, pause, reduced motion and no-JS')
+            finally:
+                browser.close()
+    finally:
+        server.shutdown()
+        server.server_close()
+
+
+if __name__ == '__main__':
+    main()

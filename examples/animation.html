@@ -182,6 +182,61 @@
           <p class="syn-caption" id="website-animation-status" role="status" aria-live="polite">Animation controls become available when JavaScript runs.</p>
         </div>
       </section>
+      <section class="syn-stage syn-logo-marquee" aria-labelledby="logo-marquee-title">
+        <p class="syn-eyebrow">LOGO MARQUEE / CSS-ONLY</p>
+        <h2 class="syn-heading" id="logo-marquee-title">Two continuous logo rows</h2>
+        <p>A responsive copy-and-paste marquee: the top row moves left and the bottom moves right. Use <code>--syn-logo-duration</code> or <code>--syn-logo-speed</code> per row. Hover or keyboard-focus to pause. In reduced-motion mode, both rows wrap as static lists.</p>
+          <div class="syn-logo-marquee__row" data-syn-logo-direction="left"
+               style="--syn-logo-duration: 24s; --syn-logo-speed: 1">
+            <div class="syn-logo-marquee__track">
+              <ul class="syn-logo-marquee__group" aria-label="Example customer logos">
+                <li><span class="syn-logo-marquee__wordmark">NORTHSTAR</span></li>
+                <li><span class="syn-logo-marquee__wordmark">KINETIC</span></li>
+                <li><span class="syn-logo-marquee__wordmark">LUMINA</span></li>
+                <li><span class="syn-logo-marquee__wordmark">VECTOR</span></li>
+                <li><span class="syn-logo-marquee__wordmark">SUMMIT</span></li>
+                <li><span class="syn-logo-marquee__wordmark">MONO</span></li>
+                <li><span class="syn-logo-marquee__wordmark">ORBIT</span></li>
+                <li><span class="syn-logo-marquee__wordmark">HORIZON</span></li>
+              </ul>
+              <ul class="syn-logo-marquee__group" aria-hidden="true" inert>
+                <li><span class="syn-logo-marquee__wordmark">NORTHSTAR</span></li>
+                <li><span class="syn-logo-marquee__wordmark">KINETIC</span></li>
+                <li><span class="syn-logo-marquee__wordmark">LUMINA</span></li>
+                <li><span class="syn-logo-marquee__wordmark">VECTOR</span></li>
+                <li><span class="syn-logo-marquee__wordmark">SUMMIT</span></li>
+                <li><span class="syn-logo-marquee__wordmark">MONO</span></li>
+                <li><span class="syn-logo-marquee__wordmark">ORBIT</span></li>
+                <li><span class="syn-logo-marquee__wordmark">HORIZON</span></li>
+              </ul>
+            </div>
+          </div>
+          <div class="syn-logo-marquee__row" data-syn-logo-direction="right"
+               style="--syn-logo-duration: 28s; --syn-logo-speed: 1.25">
+            <div class="syn-logo-marquee__track">
+              <ul class="syn-logo-marquee__group" aria-label="Example customer logos">
+                <li><span class="syn-logo-marquee__wordmark">FJORD</span></li>
+                <li><span class="syn-logo-marquee__wordmark">AURORA</span></li>
+                <li><span class="syn-logo-marquee__wordmark">CANOPY</span></li>
+                <li><span class="syn-logo-marquee__wordmark">ALTITUDE</span></li>
+                <li><span class="syn-logo-marquee__wordmark">FORMANT</span></li>
+                <li><span class="syn-logo-marquee__wordmark">NOVA</span></li>
+                <li><span class="syn-logo-marquee__wordmark">ECHO</span></li>
+                <li><span class="syn-logo-marquee__wordmark">ATLAS</span></li>
+              </ul>
+              <ul class="syn-logo-marquee__group" aria-hidden="true" inert>
+                <li><span class="syn-logo-marquee__wordmark">FJORD</span></li>
+                <li><span class="syn-logo-marquee__wordmark">AURORA</span></li>
+                <li><span class="syn-logo-marquee__wordmark">CANOPY</span></li>
+                <li><span class="syn-logo-marquee__wordmark">ALTITUDE</span></li>
+                <li><span class="syn-logo-marquee__wordmark">FORMANT</span></li>
+                <li><span class="syn-logo-marquee__wordmark">NOVA</span></li>
+                <li><span class="syn-logo-marquee__wordmark">ECHO</span></li>
+                <li><span class="syn-logo-marquee__wordmark">ATLAS</span></li>
+              </ul>
+            </div>
+          </div>
+      </section>
       <section class="syn-stage" aria-labelledby="viewport-title">
         <h2 id="viewport-title" class="syn-heading">Opt-in viewport entry</h2>
         <p>The two paragraphs below use <code>data-syn-reveal</code>. They never start hidden, even if the observer is unsupported.</p>

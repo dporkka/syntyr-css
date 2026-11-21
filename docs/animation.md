@@ -274,6 +274,141 @@ DOM/HTML state and focus as well—opacity or
 `animation-fill-mode: forwards` is not a semantic hide.
 Keep infinite loops decorative and avoid moving essential text.
 
+## Responsive two-row logo marquee (CSS only)
+
+The optional `syntyr.motion.css` module includes a seamless, continuous
+logo marquee for landing pages, customer galleries and partner strips.
+The `.syn-logo-marquee` wrapper holds two `.syn-logo-marquee__row`
+elements, each containing a `.syn-logo-marquee__track` and two matching
+`.syn-logo-marquee__group` lists. One row moves left and the other right;
+each row has adjustable speed and direction. **No JavaScript** or
+animation library is needed, and no logos, fonts, or network assets are
+bundled with Syntyr. This is an **unreleased alpha.5 source candidate**.
+
+### Copy-and-paste HTML
+
+Load `syntyr.motion.css` alongside the chosen Syntyr core stylesheet.
+Replace the sample paths and logo names with your own, and repeat
+each row's *exact same group* once. The second copy must remain
+`aria-hidden="true"` and `inert` so assistive technology and keyboard
+navigation never encounter duplicate logos or links.
+
+```html
+<link rel="stylesheet" href="/css/syntyr.core.css">
+<link rel="stylesheet" href="/css/syntyr.motion.css">
+
+<section class="syn-root syn-logo-marquee" aria-label="Our customers"
+         style="--syn-logo-gap: 2rem; --syn-logo-height: 2rem">
+  <!-- Row 1: leftward, 30 seconds per cycle -->
+  <div class="syn-logo-marquee__row" data-syn-logo-direction="left"
+       style="--syn-logo-duration: 30s">
+    <div class="syn-logo-marquee__track">
+      <ul class="syn-logo-marquee__group">
+        <li><img src="/logos/acme.svg" alt="Acme" width="120" height="40"></li>
+        <li><img src="/logos/north.svg" alt="North" width="120" height="40"></li>
+        <li><img src="/logos/orbit.svg" alt="Orbit" width="120" height="40"></li>
+      </ul>
+      <!-- Identical second copy; purely decorative -->
+      <ul class="syn-logo-marquee__group" aria-hidden="true" inert>
+        <li><img src="/logos/acme.svg" alt="" width="120" height="40"></li>
+        <li><img src="/logos/north.svg" alt="" width="120" height="40"></li>
+        <li><img src="/logos/orbit.svg" alt="" width="120" height="40"></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Row 2: rightward, 40 seconds per cycle (1.5× speed) -->
+  <div class="syn-logo-marquee__row" data-syn-logo-direction="right"
+       style="--syn-logo-duration: 40s; --syn-logo-speed: 1.5">
+    <div class="syn-logo-marquee__track">
+      <ul class="syn-logo-marquee__group">
+        <li><img src="/logos/lumen.svg" alt="Lumen" width="120" height="40"></li>
+        <li><img src="/logos/pixel.svg" alt="Pixel" width="120" height="40"></li>
+        <li><img src="/logos/zenith.svg" alt="Zenith" width="120" height="40"></li>
+      </ul>
+      <ul class="syn-logo-marquee__group" aria-hidden="true" inert>
+        <li><img src="/logos/lumen.svg" alt="" width="120" height="40"></li>
+        <li><img src="/logos/pixel.svg" alt="" width="120" height="40"></li>
+        <li><img src="/logos/zenith.svg" alt="" width="120" height="40"></li>
+      </ul>
+    </div>
+  </div>
+</section>
+```
+
+Rows accept `data-syn-logo-direction="left"` (the default) or
+`data-syn-logo-direction="right"`. Set the duration and multiplier on
+each row independently, or set shared defaults on the root.
+The layout adapts to narrow and wide viewports using container query
+units, flexible logo widths, and gap variables; small lists expand to
+fill each row, while long lists keep their intrinsic width.
+The exact visual loop uses two *identical* groups and shifts the
+combined track by **half its width**, so there is no abrupt reset.
+Keep both copies in the **same order with matching sizing**; differing
+logos or reordered items cause a visible seam.
+
+### Maintaining one source list (optional enhancement)
+
+If logos change frequently, generate the two identical lists from one array
+in your SSR/CMS template instead of editing both by hand. You can also
+render **one** group per row and use this small, optional enhancement to
+duplicate it after load. With JavaScript disabled, the original logos remain
+visible and the incomplete track stays still; CSS-only copied markup above
+needs **no** JavaScript.
+
+```js
+// Copy into your own local module. Run after rendering the logo rows.
+for (const row of document.querySelectorAll('.syn-root .syn-logo-marquee__row')) {
+  const track = row.querySelector(':scope > .syn-logo-marquee__track');
+  const source = track?.querySelector(':scope > .syn-logo-marquee__group:only-child');
+  if (!source) continue; // Idempotent: never duplicate again
+  const copy = source.cloneNode(true);
+  copy.setAttribute('aria-hidden', 'true');
+  copy.inert = true;
+  copy.querySelectorAll('[id]').forEach(node => node.removeAttribute('id'));
+  copy.querySelectorAll('img').forEach(image => { image.alt = ''; });
+  track.append(copy);
+}
+```
+
+This optional snippet has no imports or dependencies. Host it locally to
+satisfy sites with strict Content Security Policy; do not attach event
+listeners or forms to decorative duplicates. For server-rendered pages,
+duplicating the same template fragment twice avoids JavaScript entirely.
+
+### Style and playback variables
+
+| Variable | Default | Purpose |
+| --- | --- | --- |
+| `--syn-logo-duration` | `32s` | Baseline duration for one full pass (lower = faster) |
+| `--syn-logo-speed` | `1` | Positive playback multiplier; `2` = twice as fast, `0.5` = half as fast |
+| `--syn-logo-gap` | `clamp(1rem, 3vw, 3rem)` | Horizontal spacing between logos |
+| `--syn-logo-height` | `clamp(1.4rem, 3vw, 2.4rem)` | Logo image/SVG block height |
+| `--syn-logo-max-width` | `10rem` | Maximum image/SVG width |
+| `--syn-logo-row-gap` | `clamp(.75rem, 2vw, 1.5rem)` | Vertical distance between rows |
+| `--syn-logo-play-state` | `running` | `running` or `paused` |
+
+`--syn-logo-duration` works in all supported browsers; newer CSS
+engines supporting typed division also apply
+`calc(var(--syn-logo-duration) / var(--syn-logo-speed))`. To maximize
+cross-browser precision, set `--syn-logo-duration` explicitly.
+
+**Accessibility and fallback:** Scrolling pauses on hover and when
+keyboard focus enters a row. Under
+`prefers-reduced-motion: reduce`, animation stops completely, duplicate
+groups disappear, and original groups wrap to show all logos without
+horizontal clipping. Without JS, the HTML remains usable. If an author
+does not include a second group, the track stays static rather than
+scrolling into empty space. Links inside the original logo set remain
+interactive; duplicated links must be `inert` and hidden from assistive
+technologies. Provide real `alt` text for meaningful logos, and empty
+`alt=""` for decorative copies.
+
+This composition lives in the optional motion stylesheet, not core.
+There is no mandatory runtime or external asset. See the
+[animation showcase](../examples/animation.html) for a self-contained
+two-row version using fictional wordmarks.
+
 ## Website block effects (CSS only)
 
 Load the optional `syntyr.motion.css` stylesheet **alongside core**. These
