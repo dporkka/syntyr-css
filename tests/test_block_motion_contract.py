@@ -61,6 +61,17 @@ class BlockMotionContract(unittest.TestCase):
         self.assertIn('.syn-root [data-syn-animate]', self.motion)
         self.assertIn('prefers-reduced-motion: no-preference', self.motion)
 
+    def test_rotate_and_speed_control_are_opt_in_and_configurable(self):
+        self.assertIn('@keyframes syn-animate-rotate', self.motion)
+        self.assertIn('[data-syn-animate="rotate"]', self.motion)
+        self.assertIn('--syn-animation-rotation', self.motion)
+        self.assertIn('--syn-animation-speed', self.motion)
+        self.assertIn('calc(var(--syn-animation-duration, 420ms) / var(--syn-animation-speed, 1))', self.motion)
+        self.assertIn('@supports (animation-duration: calc(1s / 2))', self.motion)
+        self.assertIn('data-syn-animate="rotate"', self.docs)
+        self.assertIn('--syn-animation-speed', self.docs)
+        self.assertIn('speed: 2', self.docs)
+
     def test_animation_loop_controls_have_safe_defaults(self):
         for token in ('--syn-animation-duration', '--syn-animation-delay',
                       '--syn-animation-easing', '--syn-animation-iterations',

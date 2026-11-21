@@ -4,7 +4,7 @@ export type SyntyrAnimationPreset =
   | 'fade-in' | 'fade-out'
   | 'slide-up' | 'slide-down' | 'slide-left' | 'slide-right'
   | 'zoom-in' | 'zoom-out' | 'pop' | 'bounce' | 'pulse'
-  | 'shake' | 'rotate-in' | 'flip-in';
+  | 'shake' | 'rotate-in' | 'flip-in' | 'rotate';
 export type SyntyrAnimationDirection = 'up' | 'down' | 'left' | 'right';
 
 export interface SyntyrAnimationOptions {
@@ -17,6 +17,10 @@ export interface SyntyrAnimationOptions {
   /** CSS length, e.g. '1rem'. */
   distance?: string;
   scaleFrom?: string | number;
+  /** Degrees for the rotate preset; negative values reverse its spin. Defaults to 360. */
+  rotation?: number;
+  /** Positive finite playback multiplier. 0.5 = half speed, 2 = double speed. */
+  speed?: number;
   /** Number of cycles, at least 1, or Infinity. Defaults to --syn-animation-iterations / 1. */
   iterations?: number;
   /** Shorthand for infinite repetition; cannot combine true with iterations. */

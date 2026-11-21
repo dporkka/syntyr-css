@@ -39,11 +39,11 @@ def main():
                 page.on("pageerror", lambda error: errors.append(str(error)))
                 page.goto(url)
                 page.locator("#website-animation-controls").wait_for(state="visible")
-                check(page.locator('[data-syn-animate]').count() == 14,
-                      "All 14 CSS effects should be demonstrated")
+                check(page.locator('[data-syn-animate]').count() == 15,
+                      "All 15 CSS effects should be demonstrated")
                 for name in ("fade-in", "fade-out", "slide-up", "slide-down",
                              "slide-left", "slide-right", "zoom-in", "zoom-out",
-                             "pop", "bounce", "pulse", "shake", "rotate-in", "flip-in"):
+                             "pop", "bounce", "pulse", "shake", "rotate-in", "flip-in", "rotate"):
                     animation = page.locator(f'[data-syn-animate="{name}"]')
                     active_name = animation.evaluate(
                         "node => getComputedStyle(node).animationName"
@@ -65,6 +65,15 @@ def main():
                 }""")
                 check(inherited == ["syn-animate-bounce", "none"],
                       f"Unknown presets must fail closed: {inherited}")
+                rotate = page.locator('[data-syn-animate="rotate"]')
+                check(rotate.evaluate(
+                    "node => getComputedStyle(node).animationDuration"
+                ) == "0.6s", "CSS 2× speed should halve a 1200ms rotation to 600ms")
+                rotation_frames = rotate.evaluate(
+                    "node => node.getAnimations()[0]?.effect.getKeyframes().map(f => f.rotate)"
+                )
+                check(rotation_frames == ["0deg", "-360deg"],
+                      f"CSS rotation should support counterclockwise motion: {rotation_frames}")
                 pulse = page.locator('[data-syn-animate="pulse"]')
                 bounce = page.locator('[data-syn-animate="bounce"]')
                 check(pulse.evaluate(
@@ -114,6 +123,36 @@ def main():
                 check(target.evaluate(
                     "node => node.getAnimations()[0]?.effect.getTiming().iterations"
                 ) == float("inf"), "Native infinite loop should work")
+                page.locator("#website-animation-preset").select_option("rotate")
+                page.locator("#website-animation-rotation").select_option("-360")
+                page.locator("#website-animation-repeat").select_option("infinite")
+                speed_control = page.locator("#website-animation-speed")
+                speed_control.evaluate("""node => {
+                    node.value = "2";
+                    node.dispatchEvent(new Event("input", { bubbles: true }));
+                }""")
+                page.locator("#website-animation-play").click()
+                rotation_info = target.evaluate("""node => {
+                    const animation = node.getAnimations()[0];
+                    return {
+                        speed: animation?.playbackRate,
+                        rotations: animation?.effect.getKeyframes().map(frame => frame.rotate),
+                        iterations: animation?.effect.getTiming().iterations,
+                    };
+                }""")
+                check(rotation_info["speed"] == 2 and
+                      rotation_info["rotations"] == ["0deg", "-360deg"] and
+                      rotation_info["iterations"] == float("inf"),
+                      f"JS rotation, direction, speed, looping failed: {rotation_info}")
+                speed_control.evaluate("""node => {
+                    node.value = "0.5";
+                    node.dispatchEvent(new Event("input", { bubbles: true }));
+                }""")
+                check(target.evaluate(
+                    "node => node.getAnimations()[0]?.playbackRate"
+                ) == 0.5, "Speed slider should adjust live playback rate")
+                check(page.locator("#website-animation-speed-value").inner_text() == "0.5×",
+                      "Speed output should remain synchronized")
                 page.locator("#website-animation-stop").click()
                 check(target.evaluate("node => node.getAnimations().length") == 0,
                       "Cancel must restore ordinary CSS")
@@ -151,7 +190,7 @@ def main():
                 check(no_js.locator("#website-animation-target").is_visible(),
                       "No-JS fallback must preserve content")
                 no_js.close()
-                print("PASS: 14 CSS presets, finite/infinite loops, WAAPI pause/resume, reduced motion and no-JS")
+                print("PASS: 15 CSS presets, rotation, speed, loops, native pause/resume, reduced motion and no-JS")
             finally:
                 browser.close()
     finally:

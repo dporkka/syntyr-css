@@ -24,11 +24,20 @@ const feedback = document.querySelector('#website-animation-status');
 const presetInput = document.querySelector('#website-animation-preset');
 const repeatInput = document.querySelector('#website-animation-repeat');
 const directionInput = document.querySelector('#website-animation-direction');
+const speedInput = document.querySelector('#website-animation-speed');
+const speedOutput = document.querySelector('#website-animation-speed-value');
+const rotationInput = document.querySelector('#website-animation-rotation');
 let activePreview = null;
 
-if (controls && preview && feedback && presetInput && repeatInput && directionInput) {
+if (controls && preview && feedback && presetInput && repeatInput && directionInput && speedInput && speedOutput && rotationInput) {
   controls.hidden = false;
   feedback.textContent = 'Choose an animation and press Play.';
+  speedInput.addEventListener('input', () => {
+    const speed = Number(speedInput.value);
+    speedOutput.textContent = speed + '×';
+    // Native playback rate can be adjusted while a loop is running.
+    if (activePreview) activePreview.playbackRate = speed;
+  });
 
   document.querySelector('#website-animation-play')?.addEventListener('click', () => {
     activePreview?.cancel();
@@ -37,9 +46,11 @@ if (controls && preview && feedback && presetInput && repeatInput && directionIn
       ...(repeat === 'infinite' ? { loop: true } : { iterations: Number(repeat) }),
       iterationDirection: directionInput.value,
       duration: 900,
+      speed: Number(speedInput.value),
+      rotation: Number(rotationInput.value),
     });
     feedback.textContent = activePreview
-      ? 'Playing ' + presetInput.value + ' (' + repeat + ' cycle setting).'
+      ? 'Playing ' + presetInput.value + ' at ' + speedInput.value + '× (' + repeat + ' cycle setting).'
       : 'Motion skipped by browser preference or API support.';
   });
   document.querySelector('#website-animation-pause')?.addEventListener('click', () => {

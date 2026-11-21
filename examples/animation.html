@@ -43,8 +43,8 @@
       </section>
       <section class="syn-stage" aria-labelledby="website-css-presets-title">
         <p class="syn-eyebrow">CSS-ONLY / WEBSITE ELEMENTS</p>
-        <h2 class="syn-heading" id="website-css-presets-title">14 website animations</h2>
-        <p>Fade, slide, zoom and emphasis cues use <code>data-syn-animate</code>. Effects are off unless opted in. The pulse repeats indefinitely; the bounce has three cycles. The labels remain static and readable.</p>
+        <h2 class="syn-heading" id="website-css-presets-title">15 website animations</h2>
+        <p>Fade, slide, zoom and emphasis cues use <code>data-syn-animate</code>. Effects are off unless opted in. The pulse and rotation can loop indefinitely; the bounce has three cycles. You can adjust duration and speed per element. The labels remain static and readable.</p>
         <div class="syn-grid">
           <article class="syn-panel">
             <h3 class="syn-heading">Fade in</h3>
@@ -107,6 +107,13 @@
             <p class="syn-caption">shake / optional CSS</p>
           </article>
           <article class="syn-panel">
+            <h3 class="syn-heading">Rotate</h3>
+            <span data-syn-animate="rotate" class="syn-badge syn-animate--loop"
+                  style="--syn-animation-duration: 1200ms; --syn-animation-speed: 2; --syn-animation-rotation: -360deg"
+                  aria-hidden="true">◆</span>
+            <p class="syn-caption">rotate / 2× speed / counterclockwise</p>
+          </article>
+          <article class="syn-panel">
             <h3 class="syn-heading">Rotate in</h3>
             <span data-syn-animate="rotate-in" class="syn-badge" aria-hidden="true">◆</span>
             <p class="syn-caption">rotate-in / optional CSS</p>
@@ -121,7 +128,7 @@
       <section class="syn-stage" aria-labelledby="website-loop-controls-title">
         <p class="syn-eyebrow">OPTIONAL / NATIVE WEB ANIMATIONS API</p>
         <h2 class="syn-heading" id="website-loop-controls-title">Replay and repeat an animation</h2>
-        <p>Choose a preset, the repeat count and an optional alternating direction. Play, pause, resume or cancel without a third-party runtime. Controls appear only when JavaScript is enabled.</p>
+        <p>Choose a preset, rotation direction, speed multiplier, repeat count, and optional alternating cycles. Play, pause, resume or cancel without a third-party runtime. Controls appear only when JavaScript is enabled.</p>
         <div class="syn-stack">
           <div class="syn-cluster" id="website-animation-controls" hidden>
             <label for="website-animation-preset">Effect</label>
@@ -138,6 +145,7 @@
               <option value="bounce">Bounce</option>
               <option value="pulse">Pulse</option>
               <option value="shake">Shake</option>
+              <option value="rotate">Rotate</option>
               <option value="rotate-in">Rotate in</option>
               <option value="flip-in">Flip in</option>
             </select>
@@ -147,6 +155,15 @@
               <option value="2">2 times</option>
               <option value="3">3 times</option>
               <option value="infinite">Loop forever</option>
+            </select>
+            <label for="website-animation-speed">Speed</label>
+            <input class="syn-input" type="range" id="website-animation-speed"
+                   min="0.25" max="4" step="0.25" value="1">
+            <output id="website-animation-speed-value" for="website-animation-speed">1×</output>
+            <label for="website-animation-rotation">Rotate direction</label>
+            <select class="syn-select" id="website-animation-rotation">
+              <option value="360">Clockwise</option>
+              <option value="-360">Counterclockwise</option>
             </select>
             <label for="website-animation-direction">Cycle direction</label>
             <select class="syn-select" id="website-animation-direction">

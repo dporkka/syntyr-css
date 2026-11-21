@@ -284,6 +284,10 @@
     20%, 60% { translate: -.35rem 0; }
     40%, 80% { translate: .35rem 0; }
   }
+  @keyframes syn-animate-rotate {
+    from { rotate: 0deg; }
+    to { rotate: var(--syn-animation-rotation, 360deg); }
+  }
   @keyframes syn-animate-rotate-in {
     from { opacity: 0; rotate: -12deg; }
     to { opacity: 1; rotate: 0deg; }
@@ -307,6 +311,13 @@
       animation-direction: var(--syn-animation-direction, normal);
       animation-play-state: var(--syn-animation-play-state, running);
       animation-fill-mode: var(--syn-animation-fill-mode, none);
+    }
+    /* CSS typed arithmetic supports speed as a unitless multiplier. On
+       older browsers, the base duration still works at 1x speed. */
+    @supports (animation-duration: calc(1s / 2)) {
+      :where(.syn-root[data-syn-animate], .syn-root [data-syn-animate]) {
+        animation-duration: calc(var(--syn-animation-duration, 420ms) / var(--syn-animation-speed, 1));
+      }
     }
     :where(.syn-root[data-syn-animate="fade-in"], .syn-root [data-syn-animate="fade-in"]) {
       --syn-animation-keyframes: syn-animate-fade-in;
@@ -343,6 +354,10 @@
     }
     :where(.syn-root[data-syn-animate="shake"], .syn-root [data-syn-animate="shake"]) {
       --syn-animation-keyframes: syn-animate-shake;
+    }
+    :where(.syn-root[data-syn-animate="rotate"], .syn-root [data-syn-animate="rotate"]) {
+      --syn-animation-keyframes: syn-animate-rotate;
+      animation-timing-function: var(--syn-animation-easing, linear);
     }
     :where(.syn-root[data-syn-animate="rotate-in"], .syn-root [data-syn-animate="rotate-in"]) {
       --syn-animation-keyframes: syn-animate-rotate-in;

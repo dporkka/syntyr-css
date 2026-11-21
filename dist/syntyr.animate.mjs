@@ -9,7 +9,7 @@
 const PRESETS = new Set([
   'fade', 'enter', 'scale',
   'fade-in', 'fade-out', 'slide-up', 'slide-down', 'slide-left', 'slide-right',
-  'zoom-in', 'zoom-out', 'pop', 'bounce', 'pulse', 'shake', 'rotate-in', 'flip-in',
+  'zoom-in', 'zoom-out', 'pop', 'bounce', 'pulse', 'shake', 'rotate-in', 'flip-in', 'rotate',
 ]);
 const ITERATION_DIRECTIONS = new Set(['normal', 'reverse', 'alternate', 'alternate-reverse']);
 const DIRECTIONS = new Set(['up', 'down', 'left', 'right']);
@@ -60,6 +60,13 @@ function keyframes(preset, options, style) {
     { translate: '.35rem 0' }, { translate: '-.35rem 0' },
     { translate: '.35rem 0' }, { translate: '0 0' },
   ];
+  if (preset === 'rotate') {
+    const rotation = options.rotation === undefined ? 360 : options.rotation;
+    if (typeof rotation !== 'number' || !Number.isFinite(rotation)) {
+      throw new TypeError('rotation must be a finite number of degrees');
+    }
+    return [{ rotate: '0deg' }, { rotate: String(rotation) + 'deg' }];
+  }
   if (preset === 'rotate-in') return [
     { opacity: 0, rotate: '-12deg' }, { opacity: 1, rotate: '0deg' },
   ];
@@ -100,6 +107,18 @@ function keyframes(preset, options, style) {
   return [{ opacity: 0, translate: origin }, { opacity: 1, translate: '0 0' }];
 }
 
+function speedMultiplier(options, style) {
+  const selected = options.speed;
+  if (selected !== undefined) {
+    if (typeof selected !== 'number' || !Number.isFinite(selected) || selected <= 0) {
+      throw new TypeError('speed must be a positive finite multiplier');
+    }
+    return selected;
+  }
+  const inherited = Number(token(style, '--syn-animation-speed', '1'));
+  return Number.isFinite(inherited) && inherited > 0 ? inherited : 1;
+}
+
 function repeatCount(options, style) {
   if (options.loop !== undefined && typeof options.loop !== 'boolean') {
     throw new TypeError('loop must be a boolean');
@@ -129,6 +148,7 @@ function repeatCount(options, style) {
  * @param {string} [preset='enter'] A built-in animation name.
  * @param {{duration?: number, delay?: number, easing?: string,
  *  direction?: 'up'|'down'|'left'|'right', distance?: string, scaleFrom?: string,
+ *  speed?: number, rotation?: number,
  *  iterations?: number, loop?: boolean,
  *  iterationDirection?: 'normal'|'reverse'|'alternate'|'alternate-reverse'}} [options]
  */
@@ -142,6 +162,7 @@ export function animate(element, preset = 'enter', options = {}) {
   const delay = milliseconds(options.delay, 0);
   const easing = options.easing ?? token(style, '--syn-ease-out', 'cubic-bezier(.22, 1, .36, 1)');
   const iterations = repeatCount(options, style);
+  const speed = speedMultiplier(options, style);
   const iterationDirection = options.iterationDirection;
   if (iterationDirection !== undefined && !ITERATION_DIRECTIONS.has(iterationDirection)) {
     throw new TypeError('Invalid iteration direction: ' + iterationDirection);
@@ -149,10 +170,14 @@ export function animate(element, preset = 'enter', options = {}) {
 
   // fill:none prevents completed animations from capturing focus, disabled,
   // transform, or opacity styles after their one-shot effect has finished.
-  return element.animate(keyframes(preset, options, style), {
+  const animation = element.animate(keyframes(preset, options, style), {
     duration, easing, delay, iterations, fill: 'none',
     ...(iterationDirection === undefined ? {} : { direction: iterationDirection }),
   });
+  // Native playbackRate updates speed without creating timers or rewriting
+  // timing/keyframes. This also works for infinite and alternating cycles.
+  animation.playbackRate = speed;
+  return animation;
 }
 
 /**

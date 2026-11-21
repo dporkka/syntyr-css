@@ -21,7 +21,7 @@ reviewed consistently before `1.0.0`. It is not a new compatibility guarantee.
 | `metadata/css-contract.v1.json` | Build artifact-manifest schema v1 | Version schema independently of public CSS API |
 | `syntyr.recipes.css`, `syntyr.geometry.css` | Experimental, opt-in | Evaluate for individual stabilization |
 | `syntyr.effects.css`, `syntyr.utilities.css` | Experimental, opt-in | Evaluate for individual stabilization |
-| `syntyr.motion.css` `data-syn-animate` presets, `--syn-animation-*` controls and optional `syntyr.animate.mjs` loops | Experimental alpha.5 opt-in; not published in alpha.4 | Evaluate naming, reduced-motion behavior and semantic exits before stabilization |
+| `syntyr.motion.css` `data-syn-animate` presets, `--syn-animation-*` speed/loop/rotation controls and optional `syntyr.animate.mjs` loops | Experimental alpha.5 opt-in; not published in alpha.4 | Evaluate naming, reduced-motion behavior and semantic exits before stabilization |
 | `syntyr.css`, `syntyr.all.css` | Public convenience bundles | Maintain documented contents/meaning at v1 |
 | `terminal/palettes.json` | Optional example/palette asset | Separate compatibility decision from CSS |
 | `integrations/`, `examples/`, documentation editor | Non-core adapters/showcases | No automatic CSS-core stability promise |

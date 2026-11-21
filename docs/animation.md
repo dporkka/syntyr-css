@@ -63,7 +63,7 @@ declarations. The default package import remains the CSS entrypoint.
 
 Presets include `fade-in`, `fade-out`, `slide-up`, `slide-down`,
 `slide-left`, `slide-right`, `zoom-in`, `zoom-out`, `pop`, `bounce`,
-`pulse`, `shake`, `rotate-in` and `flip-in`. The existing `fade`,
+`pulse`, `shake`, `rotate-in`, `flip-in` and `rotate`. The existing `fade`,
 `enter` and `scale` aliases remain supported. `enter` takes
 `direction: 'up' | 'down' | 'left' | 'right'` (direction of entrance),
 while named `slide-*` presets specify travel direction.
@@ -77,6 +77,15 @@ Also supported: `normal`, `reverse`, `alternate-reverse`.
 `loop: true` and `iterations` cannot both be set;
 invalid counts/directions throw `TypeError`. The native Animation
 returned by `animate()` exposes `pause()`, `play()` and `cancel()`.
+
+**Speed and rotation:** `speed: 2` runs at double speed; `speed: .5`
+runs at half speed. The value is a positive finite multiplier of
+native playback rate, and defaults to `--syn-animation-speed` or `1`.
+`rotation: -360` makes the `rotate` preset spin counterclockwise
+(`360` degrees is the default clockwise turn). The JavaScript
+options are also available through `stagger()`.
+Use `iterationDirection: 'reverse'` to reverse an entire
+animation sequence, including its keyframe progression.
 
 All presets accept `duration` and `delay` in milliseconds and `easing`
 as a CSS timing function. `stagger` additionally accepts `interval` in
@@ -93,7 +102,9 @@ supply the JS helper's default repetition count. Explicit options win.
 uses a single cycle, even when the CSS token requests looping.
 
 ```js
-const running = animate(card, 'pulse', { loop: true, duration: 900 });
+const running = animate(card, 'rotate', {
+  loop: true, speed: 2, rotation: 360, duration: 900,
+});
 running?.pause();
 running?.play();
 running?.cancel();
@@ -175,7 +186,7 @@ by Syntyr's existing Python build, allowing deterministic release checks.
 
 ## Website animation presets (CSS only)
 
-`syntyr.motion.css` provides **14 opt-in, non-scroll-linked website
+`syntyr.motion.css` provides **15 opt-in, non-scroll-linked website
 animations**. No JavaScript or animation framework is needed. Only
 elements with `data-syn-animate` animate, independently of the
 `data-syn-scroll` view timeline and the optional icon animations.
@@ -196,6 +207,11 @@ These are **unreleased alpha.5 source candidate** features.
         aria-hidden="true"
         style="--syn-animation-duration: 1200ms;
                --syn-animation-direction: alternate">●</span>
+  <span class="syn-badge syn-animate--loop"
+        data-syn-animate="rotate" aria-hidden="true"
+        style="--syn-animation-duration: 1.2s;
+               --syn-animation-speed: 2;
+               --syn-animation-rotation: -360deg">◌</span>
 </main>
 ```
 
@@ -215,6 +231,7 @@ These are **unreleased alpha.5 source candidate** features.
 | `data-syn-animate="bounce"` | Vertical bounce |
 | `data-syn-animate="pulse"` | Gentle scale emphasis |
 | `data-syn-animate="shake"` | Horizontal shake |
+| `data-syn-animate="rotate"` | Complete turn, clockwise or counterclockwise |
 | `data-syn-animate="rotate-in"` | Rotate gently into view |
 | `data-syn-animate="flip-in"` | 3D Y-axis entrance |
 
@@ -223,6 +240,7 @@ These are **unreleased alpha.5 source candidate** features.
 | CSS variable | Default | Purpose |
 | --- | --- | --- |
 | `--syn-animation-duration` | `420ms` | Duration of each cycle |
+| `--syn-animation-speed` | `1` | Positive speed multiplier: `0.5` slow, `2` fast (modern CSS typed arithmetic) |
 | `--syn-animation-delay` | `0ms` | Delay before start |
 | `--syn-animation-easing` | `ease-out` | Timing function |
 | `--syn-animation-iterations` | `1` | Count or `infinite` |
@@ -231,13 +249,21 @@ These are **unreleased alpha.5 source candidate** features.
 | `--syn-animation-fill-mode` | `none` | Native CSS fill mode |
 | `--syn-animation-distance` | `1rem` | Slide / bounce distance |
 | `--syn-animation-scale` | `.94` | Zoom start or end scale |
+| `--syn-animation-rotation` | `360deg` | Rotation angle; set `-360deg` for counterclockwise |
 
 `syn-animate--loop` is shorthand for an infinite iteration count.
 Set `--syn-animation-iterations: 2` or any positive CSS iteration count
 to make a finite loop. Combine with
 `--syn-animation-direction: alternate` to avoid abrupt jumps.
 A host can pause via `--syn-animation-play-state: paused` without
-shipping a Syntyr runtime.
+shipping a Syntyr runtime. `--syn-animation-speed: 2` halves the cycle
+duration; `--syn-animation-speed: 0.5` doubles it. Modern CSS engines
+with typed arithmetic support the multiplier directly. Browsers without
+typed CSS division retain the explicit `--syn-animation-duration`
+instead. CSS users can always set that duration directly for universal
+speed control. The CSS speed multiplier changes cycle duration but
+does not change delay; native JavaScript playback rate changes the
+animation clock (including delays).
 
 **Accessibility:** Animations do not create a hidden baseline state.
 Under `prefers-reduced-motion: reduce` all presets and loops are

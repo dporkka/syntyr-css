@@ -265,3 +265,43 @@ test('invalid loop settings fail instead of silently hanging animations', () => 
   assert.throws(() => animate(element, 'pulse', { loop: true, iterations: 2 }), /loop|iterations/i);
   assert.throws(() => animate(element, 'pulse', { iterationDirection: 'diagonal' }), /iteration direction/i);
 });
+
+test('rotate spins a full turn and supports customizable clockwise/counterclockwise angles', () => {
+  const { element, calls } = target();
+  animate(element, 'rotate', { loop: true });
+  animate(element, 'rotate', { rotation: -180, iterations: 2 });
+  assert.deepEqual(calls[0].frames, [
+    { rotate: '0deg' }, { rotate: '360deg' },
+  ]);
+  assert.deepEqual(calls[1].frames, [
+    { rotate: '0deg' }, { rotate: '-180deg' },
+  ]);
+  assert.equal(calls[1].options.iterations, 2);
+});
+
+test('speed multiplier changes native playback rate without changing timing options', () => {
+  const { element, calls } = target({ '--syn-animation-speed': '0.5' });
+  const slow = animate(element, 'rotate', { loop: true });
+  assert.equal(slow.playbackRate, 0.5);
+  const fast = animate(element, 'rotate', { speed: 2 });
+  assert.equal(fast.playbackRate, 2);
+  assert.equal(calls[1].options.duration, 220);
+  assert.equal(calls[1].options.iterations, 1);
+  const neutral = animate(element, 'rotate', { speed: 1 });
+  assert.equal(neutral.playbackRate, 1);
+});
+
+test('invalid speed and rotation are rejected with clear type errors', () => {
+  const { element } = target();
+  for (const speed of [-3, 0, NaN, Infinity, '2', null]) {
+    assert.throws(() => animate(element, 'rotate', { speed }), /speed/i);
+  }
+  for (const rotation of [NaN, Infinity, '360deg', null]) {
+    assert.throws(() => animate(element, 'rotate', { rotation }), /rotation/i);
+  }
+});
+
+test('invalid CSS speed tokens fall back to normal playback', () => {
+  const { element } = target({ '--syn-animation-speed': 'untrusted-token' });
+  assert.equal(animate(element, 'rotate').playbackRate, 1);
+});

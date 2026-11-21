@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="syntyr.animate.mjs is an opt-in, dependency-free ES module for application-triggered motion. It delegates timing and compositing to the native Web…">
-  <meta name="syntyr-source-sha256" content="e43802ad17c895ffd37e43153e9c20cfada62f958e4a55a6a2d6d4de31138fed">
+  <meta name="syntyr-source-sha256" content="b65f3a682fc8091c58ed58487e3c4d17b28ad102b0b785bc00f141042b0d1523">
   <meta name="theme-color" content="#f5f7fb">
   <title>Optional Syntyr animation library — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/animation">
@@ -105,7 +105,7 @@ declarations. The default package import remains the CSS entrypoint.</p>
 </table>
 <p>Presets include <code>fade-in</code>, <code>fade-out</code>, <code>slide-up</code>, <code>slide-down</code>,
 <code>slide-left</code>, <code>slide-right</code>, <code>zoom-in</code>, <code>zoom-out</code>, <code>pop</code>, <code>bounce</code>,
-<code>pulse</code>, <code>shake</code>, <code>rotate-in</code> and <code>flip-in</code>. The existing <code>fade</code>,
+<code>pulse</code>, <code>shake</code>, <code>rotate-in</code>, <code>flip-in</code> and <code>rotate</code>. The existing <code>fade</code>,
 <code>enter</code> and <code>scale</code> aliases remain supported. <code>enter</code> takes
 <code>direction: 'up' | 'down' | 'left' | 'right'</code> (direction of entrance),
 while named <code>slide-*</code> presets specify travel direction.
@@ -118,6 +118,14 @@ Also supported: <code>normal</code>, <code>reverse</code>, <code>alternate-rever
 <code>loop: true</code> and <code>iterations</code> cannot both be set;
 invalid counts/directions throw <code>TypeError</code>. The native Animation
 returned by <code>animate()</code> exposes <code>pause()</code>, <code>play()</code> and <code>cancel()</code>.</p>
+<p><strong>Speed and rotation:</strong> <code>speed: 2</code> runs at double speed; <code>speed: .5</code>
+runs at half speed. The value is a positive finite multiplier of
+native playback rate, and defaults to <code>--syn-animation-speed</code> or <code>1</code>.
+<code>rotation: -360</code> makes the <code>rotate</code> preset spin counterclockwise
+(<code>360</code> degrees is the default clockwise turn). The JavaScript
+options are also available through <code>stagger()</code>.
+Use <code>iterationDirection: 'reverse'</code> to reverse an entire
+animation sequence, including its keyframe progression.</p>
 <p>All presets accept <code>duration</code> and <code>delay</code> in milliseconds and <code>easing</code>
 as a CSS timing function. <code>stagger</code> additionally accepts <code>interval</code> in
 milliseconds. The module reads existing CSS custom properties when options
@@ -130,7 +138,9 @@ stylesheet, and per-element CSS tokens can override them.</p>
 supply the JS helper's default repetition count. Explicit options win.
 <code>stagger()</code> accepts repetition options; <code>observeReveals()</code> always
 uses a single cycle, even when the CSS token requests looping.</p>
-<pre tabindex="0"><code class="language-js">const running = animate(card, 'pulse', { loop: true, duration: 900 });
+<pre tabindex="0"><code class="language-js">const running = animate(card, 'rotate', {
+  loop: true, speed: 2, rotation: 360, duration: 900,
+});
 running?.pause();
 running?.play();
 running?.cancel();
@@ -198,7 +208,7 @@ python3 -m unittest discover -s tests -v
 Syntyr or using the CSS library. The production JS is copied byte-for-byte
 by Syntyr's existing Python build, allowing deterministic release checks.</p>
 <h2 id="website-animation-presets-css-only">Website animation presets (CSS only)</h2>
-<p><code>syntyr.motion.css</code> provides <strong>14 opt-in, non-scroll-linked website
+<p><code>syntyr.motion.css</code> provides <strong>15 opt-in, non-scroll-linked website
 animations</strong>. No JavaScript or animation framework is needed. Only
 elements with <code>data-syn-animate</code> animate, independently of the
 <code>data-syn-scroll</code> view timeline and the optional icon animations.
@@ -217,6 +227,11 @@ These are <strong>unreleased alpha.5 source candidate</strong> features.</p>
         aria-hidden=&quot;true&quot;
         style=&quot;--syn-animation-duration: 1200ms;
                --syn-animation-direction: alternate&quot;&gt;●&lt;/span&gt;
+  &lt;span class=&quot;syn-badge syn-animate--loop&quot;
+        data-syn-animate=&quot;rotate&quot; aria-hidden=&quot;true&quot;
+        style=&quot;--syn-animation-duration: 1.2s;
+               --syn-animation-speed: 2;
+               --syn-animation-rotation: -360deg&quot;&gt;◌&lt;/span&gt;
 &lt;/main&gt;
 </code></pre>
 <h3 id="available-effects">Available effects</h3>
@@ -277,6 +292,10 @@ These are <strong>unreleased alpha.5 source candidate</strong> features.</p>
 <td>Horizontal shake</td>
 </tr>
 <tr>
+<td><code>data-syn-animate=&quot;rotate&quot;</code></td>
+<td>Complete turn, clockwise or counterclockwise</td>
+</tr>
+<tr>
 <td><code>data-syn-animate=&quot;rotate-in&quot;</code></td>
 <td>Rotate gently into view</td>
 </tr>
@@ -300,6 +319,11 @@ These are <strong>unreleased alpha.5 source candidate</strong> features.</p>
 <td><code>--syn-animation-duration</code></td>
 <td><code>420ms</code></td>
 <td>Duration of each cycle</td>
+</tr>
+<tr>
+<td><code>--syn-animation-speed</code></td>
+<td><code>1</code></td>
+<td>Positive speed multiplier: <code>0.5</code> slow, <code>2</code> fast (modern CSS typed arithmetic)</td>
 </tr>
 <tr>
 <td><code>--syn-animation-delay</code></td>
@@ -341,6 +365,11 @@ These are <strong>unreleased alpha.5 source candidate</strong> features.</p>
 <td><code>.94</code></td>
 <td>Zoom start or end scale</td>
 </tr>
+<tr>
+<td><code>--syn-animation-rotation</code></td>
+<td><code>360deg</code></td>
+<td>Rotation angle; set <code>-360deg</code> for counterclockwise</td>
+</tr>
 </tbody>
 </table>
 <p><code>syn-animate--loop</code> is shorthand for an infinite iteration count.
@@ -348,7 +377,14 @@ Set <code>--syn-animation-iterations: 2</code> or any positive CSS iteration cou
 to make a finite loop. Combine with
 <code>--syn-animation-direction: alternate</code> to avoid abrupt jumps.
 A host can pause via <code>--syn-animation-play-state: paused</code> without
-shipping a Syntyr runtime.</p>
+shipping a Syntyr runtime. <code>--syn-animation-speed: 2</code> halves the cycle
+duration; <code>--syn-animation-speed: 0.5</code> doubles it. Modern CSS engines
+with typed arithmetic support the multiplier directly. Browsers without
+typed CSS division retain the explicit <code>--syn-animation-duration</code>
+instead. CSS users can always set that duration directly for universal
+speed control. The CSS speed multiplier changes cycle duration but
+does not change delay; native JavaScript playback rate changes the
+animation clock (including delays).</p>
 <p><strong>Accessibility:</strong> Animations do not create a hidden baseline state.
 Under <code>prefers-reduced-motion: reduce</code> all presets and loops are
 disabled. <code>fade-out</code> and <code>zoom-out</code> are visual only: by default,
