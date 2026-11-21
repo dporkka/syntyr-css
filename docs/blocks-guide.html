@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Status: Experimental alpha.5 source gallery, not an immutable release or published npm package.">
-  <meta name="syntyr-source-sha256" content="c3c3645b83af56ef180846c39c556060211ec5d6a022fe35c0944235f418ee30">
+  <meta name="syntyr-source-sha256" content="67c9d04191f7325de874fde123b4d5d9565dc8fe648572f12df30b489911c60a">
   <meta name="theme-color" content="#f5f7fb">
   <title>Syntyr Blocks &amp; Assets — integration guide — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/blocks-guide">
@@ -56,14 +56,27 @@ one MIT license notice) without modifying a project:</p>
 <pre tabindex="0"><code class="language-sh">python3 scripts/registry_install.py resource-workspace --project /path/to/app
 # After reviewing every path/digest, opt in to copying missing files only:
 python3 scripts/registry_install.py resource-workspace --project /path/to/app --apply
+# CI / agent verification: exit 0 only when every expected file matches.
+python3 scripts/registry_install.py resource-workspace --project /path/to/app --verify --json
 </code></pre>
+<p><code>--verify</code> is read-only. It exits <strong>0</strong> when all installed assets match this
+source-tree version, <strong>1</strong> when any asset is missing or customized, and <strong>2</strong>
+when the registry or installation path is invalid. <code>--json</code> exposes only
+paths, statuses (<code>create</code>, <code>identical</code>, <code>conflict</code>), byte counts, and SHA-256
+digests, not file contents. It also works with the dry-run and <code>--apply</code>
+commands for local agents and CI checks.</p>
 <p>The script refuses incompatible versions, mismatched hashes, untrusted
 registry URLs, unsafe/symlinked paths, and changed existing files. It never
 executes installed markup or installs JavaScript dependencies. Re-running an
-identical installation is safe. The helper intentionally does <strong>not</strong> offer
-a force-overwrite mode; manage customization and upgrades through your own
-source control. Syntyr still works by copying a prebuilt CSS file directly,
-without Python in the consuming application.</p>
+identical installation is safe. If a later asset fails during installation,
+the helper attempts to remove earlier assets <strong>it created</strong> only when they
+still have their original content and file identity; previously existing
+identical files are preserved. Empty directories may remain after a failed
+install, and filesystem-level concurrency is not an atomic transaction.
+The helper intentionally does <strong>not</strong> offer a force-overwrite mode; manage
+customization and upgrades through your own source control. Syntyr still
+works by copying a prebuilt CSS file directly, without Python in the
+consuming application.</p>
 <p>For reproducible developer-only checks (without shipping a browser runtime),
 run <code>node tests/registry_form_workflows_browser.cjs</code> with
 <code>SYNTYR_PLAYWRIGHT_MODULE</code> pointing to an installed Playwright package and
