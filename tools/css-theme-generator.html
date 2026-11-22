@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Create Syntyr CSS theme colors, preview real components, automatically choose readable black or white text, check key WCAG text pairs, and export CSS variables.">
+  <meta name="color-scheme" content="dark light">
+  <title>Free Accessible CSS Theme Generator and Design Tokens — Syntyr CSS</title>
+  <link rel="icon" href="../assets/syntyr-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="site.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio" data-tool="theme">
+  <a class="syn-button tool-skip" href="#main">Skip to main content</a>
+  <div class="tool-shell">
+    <header class="tool-header">
+      <a class="tool-brand" href="../index.html" aria-label="Syntyr CSS home">SYNTYR <span>/ Tools</span></a>
+      <nav class="tool-nav" aria-label="Tools navigation">
+        <a href="index.html">All tools</a>
+        <a href="color-contrast-checker.html">Contrast</a>
+        <a href="css-theme-generator.html" aria-current="page">Themes</a>
+        <a href="css-clamp-generator.html">Fluid type</a>
+        <a href="responsive-design-tester.html">Responsive</a>
+      </nav>
+    </header>
+    <main id="main">
+      <section class="tool-hero">
+        <p class="tool-eyebrow">Free color palette tool / CSS variables</p>
+        <h1>Accessible CSS theme generator</h1>
+        <p class="tool-lede">Create a palette that matches your brand. Preview a real Syntyr panel and button, inspect three important contrast pairs, then copy native CSS custom properties—no application-side JavaScript.</p>
+      </section>
+      <div class="tool-layout">
+<section class="tool-card" aria-labelledby="theme-controls-title"><h2 id="theme-controls-title">Choose a palette</h2>
+<form id="theme-form" class="tool-form">
+  <label class="tool-field" for="theme-base">Syntyr base theme<select id="theme-base"><option value="studio">Studio</option><option value="grid">Grid</option><option value="noir">Noir</option><option value="minimal">Minimal (source preview)</option><option value="industrial">Industrial (source preview)</option><option value="corporate">Corporate (source preview)</option><option value="terminal">Terminal (source preview)</option></select></label>
+  <div class="tool-fields-2">
+    <label class="tool-field" for="theme-bg">Page background<input type="color" id="theme-bg" value="#080f19"></label>
+    <label class="tool-field" for="theme-surface">Card background<input type="color" id="theme-surface" value="#111c2b"></label>
+  </div>
+  <label class="tool-field" for="theme-accent">Accent / primary button<input type="color" id="theme-accent" value="#76e7f7"></label>
+</form>
+<p class="tool-help">Text color is auto-selected as black or white for the strongest background contrast. Check the card surface result before exporting.</p>
+</section>
+<section class="tool-card" aria-labelledby="theme-results-title"><h2 id="theme-results-title">Live component preview</h2>
+  <div class="tool-preview"><div id="theme-preview" class="syn-root syn-page tool-sample" data-syn-theme="studio">
+    <span class="syn-eyebrow">SYNTYR / LIVE PREVIEW</span>
+    <h3>A clearer interface.</h3><p>Readable design tokens, reusable components and semantic HTML.</p>
+    <div class="syn-panel" style="padding:1rem"><strong>Surface example</strong><p>Test text on the panel surface.</p></div>
+    <div class="syn-actions"><button class="syn-button syn-button--primary" type="button">Primary action</button><button class="syn-button" type="button">Secondary</button></div>
+  </div></div>
+  <p id="theme-report" class="tool-status" role="status"></p>
+  <h3>Copy theme tokens</h3><pre class="tool-output"><code id="theme-code">Choose colors to generate CSS.</code></pre>
+  <div class="tool-actions"><button class="syn-button syn-button--primary" type="button" data-copy="theme-code" data-feedback="theme-copy">Copy CSS tokens</button><span id="theme-copy" role="status"></span></div>
+</section></div>
+      <section class="tool-notes" aria-labelledby="tool-notes-title">
+        <div>
+          <h2 id="tool-notes-title">How to use this tool</h2>
+          <p>The exported selector applies to a Syntyr root carrying the matching <code>data-syn-theme</code> attribute. Load the core stylesheet first, then paste the generated override into your application stylesheet. The output uses existing tokens: <code>--syn-bg</code>, <code>--syn-surface</code>, <code>--syn-text</code>, <code>--syn-accent</code> and <code>--syn-on-accent</code>.</p><p>The generator selects high-contrast black or white text for the main background and accent, but a single foreground token may not pass on every selected surface. It cannot validate every component, link, muted text, border or state; test those separately.</p><p>Syntyr's source-preview theme collection may differ from the published immutable release. For a richer editor, see the <a href="../docs/theme-editor.html">theme editor</a> and <a href="../docs/distribution.html">release guidance</a>.</p>
+        </div>
+        <aside>
+          <h2>Build with Syntyr</h2>
+          <p>Use the generated CSS with semantic HTML and Syntyr components. These utilities run in your browser; using the resulting code does not require any tool JavaScript.</p>
+          <p><a href="../docs/catalog.html">Explore copyable components</a> · <a href="../docs/theme-editor.html">Syntyr theme editor</a></p>
+          <p><a href="../docs/accessibility.html">Accessibility guidance</a> · <a href="../docs/products.html">Products</a></p>
+        </aside>
+      </section>
+    </main>
+    <footer class="tool-footer">
+      <span>Free, local-first design utilities. No signup or backend scans.</span>
+      <span><a href="../index.html">Syntyr CSS</a> · <a href="index.html">All free tools</a> · <a href="https://github.com/dporkka/syntyr-css">GitHub</a></span>
+    </footer>
+  </div>
+  <script type="module" src="site.mjs"></script>
+</body>
+</html>

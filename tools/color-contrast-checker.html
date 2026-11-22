@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Calculate the contrast ratio between text and background colors. Check WCAG 2.2 AA and AAA normal and large text thresholds and copy the CSS color pair.">
+  <meta name="color-scheme" content="dark light">
+  <title>Free WCAG 2.2 Color Contrast Checker (AA and AAA) — Syntyr CSS</title>
+  <link rel="icon" href="../assets/syntyr-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="site.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio" data-tool="contrast">
+  <a class="syn-button tool-skip" href="#main">Skip to main content</a>
+  <div class="tool-shell">
+    <header class="tool-header">
+      <a class="tool-brand" href="../index.html" aria-label="Syntyr CSS home">SYNTYR <span>/ Tools</span></a>
+      <nav class="tool-nav" aria-label="Tools navigation">
+        <a href="index.html">All tools</a>
+        <a href="color-contrast-checker.html" aria-current="page">Contrast</a>
+        <a href="css-theme-generator.html">Themes</a>
+        <a href="css-clamp-generator.html">Fluid type</a>
+        <a href="responsive-design-tester.html">Responsive</a>
+      </nav>
+    </header>
+    <main id="main">
+      <section class="tool-hero">
+        <p class="tool-eyebrow">Free accessibility tool / WCAG 2.2</p>
+        <h1>Color contrast checker</h1>
+        <p class="tool-lede">Choose a text color and a solid background. Check their contrast ratio against WCAG 2.2 AA and AAA text contrast thresholds, preview the combination, and copy the CSS.</p>
+      </section>
+      <div class="tool-layout">
+  <section class="tool-card" aria-labelledby="contrast-controls-title"><h2 id="contrast-controls-title">Choose your colors</h2>
+    <div class="tool-form"><label class="tool-field" for="foreground">Text color<input id="foreground" type="color" value="#ffffff"></label>
+    <label class="tool-field" for="background">Background color<input id="background" type="color" value="#142130"></label></div>
+    <button class="syn-button syn-button--outline" id="contrast-suggest" type="button">Suggest readable black or white text</button>
+    <p class="tool-help">Checks opaque sRGB colors only. Images, transparency, gradients, focus indicators and non-text UI require separate evaluation.</p>
+  </section>
+  <section class="tool-card" aria-labelledby="contrast-result-title"><h2 id="contrast-result-title">Your results</h2>
+    <div class="tool-preview"><div class="tool-preview-text" id="contrast-preview"><strong>Readable interface text</strong><span>A preview of normal and large text.</span></div></div>
+    <h3 id="contrast-ratio" aria-live="polite">Calculating contrast ratio…</h3>
+    <p class="tool-status" id="contrast-explain" role="status"></p>
+    <ul class="tool-results" id="contrast-outcomes" aria-label="WCAG text contrast thresholds"></ul>
+    <h3>Copy the CSS</h3><pre class="tool-output"><code id="contrast-code">Select colors to generate CSS.</code></pre>
+    <div class="tool-actions"><button class="syn-button syn-button--primary" type="button" data-copy="contrast-code" data-feedback="contrast-copy">Copy CSS</button><span id="contrast-copy" role="status"></span></div>
+  </section>
+</div>
+      <section class="tool-notes" aria-labelledby="tool-notes-title">
+        <div>
+          <h2 id="tool-notes-title">How to use this tool</h2>
+          <p>WCAG 2.2 success criterion 1.4.3 requires at least <strong>4.5:1</strong> for normal text and <strong>3:1</strong> for qualifying large text at AA. AAA uses <strong>7:1</strong> for normal text and <strong>4.5:1</strong> for large text. The text-size definitions are specific; simply making a heading bold does not automatically qualify.</p><p>Contrast alone cannot certify that a component or website is accessible. Check your actual typography, focus states and interactive controls. For broader guidance, read <a href="../docs/accessibility.html">Syntyr's accessibility notes</a>.</p><p>Source: <a href="https://www.w3.org/TR/WCAG22/#contrast-minimum">WCAG 2.2 Contrast (Minimum)</a> and <a href="https://www.w3.org/TR/WCAG22/#contrast-enhanced">Contrast (Enhanced)</a>.</p>
+        </div>
+        <aside>
+          <h2>Build with Syntyr</h2>
+          <p>Use the generated CSS with semantic HTML and Syntyr components. These utilities run in your browser; using the resulting code does not require any tool JavaScript.</p>
+          <p><a href="../docs/catalog.html">Explore copyable components</a> · <a href="../docs/theme-editor.html">Syntyr theme editor</a></p>
+          <p><a href="../docs/accessibility.html">Accessibility guidance</a> · <a href="../docs/products.html">Products</a></p>
+        </aside>
+      </section>
+    </main>
+    <footer class="tool-footer">
+      <span>Free, local-first design utilities. No signup or backend scans.</span>
+      <span><a href="../index.html">Syntyr CSS</a> · <a href="index.html">All free tools</a> · <a href="https://github.com/dporkka/syntyr-css">GitHub</a></span>
+    </footer>
+  </div>
+  <script type="module" src="site.mjs"></script>
+</body>
+</html>

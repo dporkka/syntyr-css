@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Generate accessible, responsive CSS clamp() font-size values from minimum and maximum sizes and viewport widths. Preview the result and copy dependency-free CSS.">
+  <meta name="color-scheme" content="dark light">
+  <title>Free CSS clamp() Generator for Fluid Typography — Syntyr CSS</title>
+  <link rel="icon" href="../assets/syntyr-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="site.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio" data-tool="clamp">
+  <a class="syn-button tool-skip" href="#main">Skip to main content</a>
+  <div class="tool-shell">
+    <header class="tool-header">
+      <a class="tool-brand" href="../index.html" aria-label="Syntyr CSS home">SYNTYR <span>/ Tools</span></a>
+      <nav class="tool-nav" aria-label="Tools navigation">
+        <a href="index.html">All tools</a>
+        <a href="color-contrast-checker.html">Contrast</a>
+        <a href="css-theme-generator.html">Themes</a>
+        <a href="css-clamp-generator.html" aria-current="page">Fluid type</a>
+        <a href="responsive-design-tester.html">Responsive</a>
+      </nav>
+    </header>
+    <main id="main">
+      <section class="tool-hero">
+        <p class="tool-eyebrow">Fluid typography / zero dependencies</p>
+        <h1>CSS clamp() generator</h1>
+        <p class="tool-lede">Set a minimum and maximum font size and the viewport widths where each should apply. Generate a CSS clamp() expression that scales smoothly between those breakpoints.</p>
+      </section>
+      <div class="tool-layout">
+<section class="tool-card" aria-labelledby="clamp-controls-title"><h2 id="clamp-controls-title">Define your type scale</h2><form class="tool-form" id="clamp-form">
+  <div class="tool-fields-2"><label class="tool-field" for="min-size">Minimum font size (px)<input id="min-size" type="number" min="1" max="512" step=".5" value="18"></label><label class="tool-field" for="max-size">Maximum font size (px)<input id="max-size" type="number" min="1" max="512" step=".5" value="48"></label></div>
+  <div class="tool-fields-2"><label class="tool-field" for="min-viewport">Minimum viewport (px)<input id="min-viewport" type="number" min="240" max="7680" step="1" value="320"></label><label class="tool-field" for="max-viewport">Maximum viewport (px)<input id="max-viewport" type="number" min="240" max="7680" step="1" value="1440"></label></div>
+</form><p class="tool-help">Assumes 1rem = 16px. Validate browser text zoom and minimum readable sizes in your target environments.</p></section>
+<section class="tool-card" aria-labelledby="clamp-result-title"><h2 id="clamp-result-title">Live typography preview</h2>
+<div class="tool-preview"><div class="tool-preview-text"><strong id="clamp-preview" style="font-size:1.125rem;line-height:1.15;letter-spacing:-.04em;">Responsive, naturally.</strong><span>Resize this browser window to see the type change.</span></div></div>
+<p class="tool-status" id="clamp-report" role="status"></p><h3>Copy standalone CSS</h3>
+<pre class="tool-output"><code id="clamp-code">Choose values to generate clamp() CSS.</code></pre>
+<div class="tool-actions"><button class="syn-button syn-button--primary" type="button" data-copy="clamp-code" data-feedback="clamp-copy">Copy CSS</button><span id="clamp-copy" role="status"></span></div>
+</section></div>
+      <section class="tool-notes" aria-labelledby="tool-notes-title">
+        <div>
+          <h2 id="tool-notes-title">How to use this tool</h2>
+          <p><code>clamp(minimum, preferred, maximum)</code> returns a value between two bounds. The preferred value here is a linear interpolation across a viewport range; no media query or runtime script is required in the generated CSS.</p><p>Always consider browser zoom and whether the chosen minimum text size remains readable. Prefer relative units for font sizing, and test at 200% and 400% zoom. The generated example uses rem and vw and assumes the root font size is 16px; modifying that root affects the interpolation.</p><p>See <a href="../docs/theme-customization.html">Syntyr typography guidance</a> and <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/clamp">MDN's CSS clamp() reference</a>.</p>
+        </div>
+        <aside>
+          <h2>Build with Syntyr</h2>
+          <p>Use the generated CSS with semantic HTML and Syntyr components. These utilities run in your browser; using the resulting code does not require any tool JavaScript.</p>
+          <p><a href="../docs/catalog.html">Explore copyable components</a> · <a href="../docs/theme-editor.html">Syntyr theme editor</a></p>
+          <p><a href="../docs/accessibility.html">Accessibility guidance</a> · <a href="../docs/products.html">Products</a></p>
+        </aside>
+      </section>
+    </main>
+    <footer class="tool-footer">
+      <span>Free, local-first design utilities. No signup or backend scans.</span>
+      <span><a href="../index.html">Syntyr CSS</a> · <a href="index.html">All free tools</a> · <a href="https://github.com/dporkka/syntyr-css">GitHub</a></span>
+    </footer>
+  </div>
+  <script type="module" src="site.mjs"></script>
+</body>
+</html>
