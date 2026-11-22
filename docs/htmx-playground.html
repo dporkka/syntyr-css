@@ -10,6 +10,7 @@
   <title>Live HTMX component playground — Syntyr CSS</title>
   <link rel="icon" href="../assets/syntyr-mark.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="../dist/syntyr.recipes.css">
   <link rel="stylesheet" href="../integrations/htmx/syntyr.htmx.css">
   <link rel="stylesheet" href="docs.css">
   <!-- Self-hosted, pinned HTMX: https://cdn.jsdelivr.net/npm/htmx.org@2.0.11/dist/htmx.min.js
@@ -56,6 +57,7 @@
         <div class="docs-prose">
           <section class="syn-stack" aria-labelledby="interactive-title">
             <h2 id="interactive-title">Live customer explorer</h2>
+            <p class="syn-caption">On narrow screens, swipe horizontally within the customer table to view every column. Keyboard users can focus the table region and scroll with arrow keys.</p>
             <form id="customer-search" class="syn-panel syn-stack"
                   action="/api/htmx-demo/customers" method="get" role="search"
                   hx-get="/api/htmx-demo/customers"
