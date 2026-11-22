@@ -110,6 +110,43 @@ keywords, native HTML, semantic element names, actual `syn-*` classes, and
 semantic CSS module; loading `syntyr.core.css` alone is not always sufficient.
 The `module` field preserves the primary stylesheet shown in the gallery.
 
+### Select HTML examples by task and installed CSS
+
+Every example now includes **curated, non-exclusive `use_cases`** tags, stable
+`catalog_url` and `playground_url` fragments, plus the exact
+`required_stylesheets` list. The top-level `use_case_definitions` explains
+the five supported tags: `marketing-site`, `saas-dashboard`,
+`forms-workflow`, `content-docs`, and `navigation`.
+The `adoption_guidance` field describes CSS order, framework guidance,
+release boundaries, and browser fallback obligations. These are **discovery
+hints**, not a guarantee that a component implements application behavior.
+
+An editor or agent can select candidates deterministically without executing
+a runtime or downloading packages:
+
+```python
+import json
+from pathlib import Path
+
+gallery = json.loads(Path("metadata/component-gallery.v1.json").read_text())
+installed = {"syntyr.core.css", "syntyr.recipes.css"}  # actual installed files
+candidates = [
+    example for example in gallery["examples"]
+    if "saas-dashboard" in example["use_cases"]
+    and set(example["required_stylesheets"]).issubset(installed)
+]
+for example in candidates:
+    print(example["title"], example["catalog_url"], example["required_stylesheets"])
+```
+
+Use the selected example's `html` with a stable `.syn-root` ancestor and
+honor its CSS dependencies in order. Follow `playground_url` to inspect or
+edit it, and check `native_feature_requirements` before shipping. An empty
+feature list only means no *tracked* native interaction APIs were detected.
+The gallery's CSS-module and use-case dropdowns use the **same authored
+catalog card labels and use-case tags** as this generated JSON; scripts are
+needed only for gallery convenience, not for rendered Syntyr components.
+
 The additive `native_feature_requirements` array on each example records only
 three *detectable native HTML interaction contracts*: `popover`,
 `invoker-commands`, and `details-name`. These are derived from the example's
