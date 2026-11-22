@@ -86,6 +86,7 @@ stylesheets.
 - [Native interaction recipes](https://syntyr-css.pages.dev/examples/native-interactions.html): exclusive accordions, GET search, dialog confirmations, datalist, meter/output without application JavaScript
 - [Intrinsic sidecar and cluster layouts](docs/composition-adoption.md), [zero-JS example](examples/composition-adoption.html): container-width wrapping and configurable alignment
 - [Runnable Go + html/template + optional HTMX](examples/go-htmx/README.md): native GET fallback, escaped queries and tested HTML fragments
+- [Runnable Go resource workbench](examples/go-resource-workbench/README.md): real server-side filtering, pagination, safe bulk previews and local-only POST edits with signed CSRF form tokens; zero frontend JavaScript
 - [Optional headless interactions](docs/headless-interactions.md): accessible Radix menus/toasts and React Aria combobox source example; no core JavaScript dependency
 - [Copy-owned form recipes](docs/component-recipes.md), [live form compositions](https://syntyr-css.pages.dev/examples/form-composition.html), and [optional Radix styling adapter](docs/radix-integration.md)
 - [Form customizer](docs/form-builder.html): build, preview, and export progressively enhanced HTML forms with no JavaScript required on the published form
