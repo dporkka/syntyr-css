@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "locations-hours",
+  "type": "registry:item",
+  "title": "Locations and opening hours",
+  "description": "Semantic multi-location contacts with structured hours and accessibility links.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://syntyr-css.pages.dev/registry/r/core.json"
+  ],
+  "files": [
+    {
+      "path": "blocks/snippets/locations-hours.html",
+      "type": "registry:file",
+      "target": "~/syntyr/blocks/locations-hours.html",
+      "content": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"locations-hours-heading\">\n  <p class=\"syn-eyebrow\">VISIT / CONTACT</p>\n  <h2 id=\"locations-hours-heading\" class=\"syn-heading\">Find a location near you.</h2>\n  <p class=\"syn-muted\">Example addresses and hours below are placeholders; publish only verified business details and local time zones.</p>\n  <div class=\"syn-grid\">\n    <article class=\"syn-panel\">\n      <h3 class=\"syn-heading\">Central office</h3>\n      <address>100 Example Street, Suite 100<br>Sample City, ST 00000</address>\n      <dl>\n        <dt>Monday–Friday</dt><dd>9:00 AM–5:00 PM (local time)</dd>\n        <dt>Saturday–Sunday</dt><dd>Closed</dd>\n      </dl>\n      <a href=\"/locations/central\">Directions and accessibility details</a>\n    </article>\n    <article class=\"syn-panel\">\n      <h3 class=\"syn-heading\">North office</h3>\n      <address>200 Sample Avenue<br>Sample City, ST 00000</address>\n      <dl>\n        <dt>Monday–Friday</dt><dd>10:00 AM–6:00 PM (local time)</dd>\n        <dt>Saturday–Sunday</dt><dd>Closed</dd>\n      </dl>\n      <a href=\"/locations/north\">Directions and accessibility details</a>\n    </article>\n  </div>\n  <p><a class=\"syn-button syn-button--primary\" href=\"/locations\">View all locations</a></p>\n</section>\n"
+    },
+    {
+      "path": "LICENSE",
+      "type": "registry:file",
+      "target": "~/syntyr/LICENSE",
+      "content": "MIT License\n\nCopyright (c) 2026 Syntyr CSS contributors\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n"
+    }
+  ],
+  "meta": {
+    "syntyrVersion": "0.3.0-alpha.5",
+    "source": "MIT source candidate",
+    "runtimeJavaScript": false,
+    "fileDigests": {
+      "~/syntyr/blocks/locations-hours.html": "5ca3a8b18e22cd7aa992e70e16606b3ad779418b4740ef3d7197b8f9085dacd4",
+      "~/syntyr/LICENSE": "42f56369ac06362dbfe433d2d50b178bf74c369a55ea22337ab40fd9433521bf"
+    }
+  },
+  "docs": "Experimental source-candidate asset. Review exact version, HTML routes, keyboard behavior and integration before production use."
+}
