@@ -46,7 +46,7 @@ class NativeCarouselContracts(unittest.TestCase):
         self.assertIn("scroll-marker-group: after", css)
         self.assertIn("attr(data-syn-scroll-label)", css)
         marker_group = css.split(".syn-media-rail--markers::scroll-marker-group {", 1)[1].split("}", 1)[0]
-        self.assertIn("inline-size: min(calc(100vw - 2rem), 30rem)", marker_group)
+        self.assertIn("max-inline-size: min(100%, anchor-size(self-inline, 100%), 30rem)", marker_group)
         self.assertIn("overflow-x: auto", marker_group)
         self.assertIn("overscroll-behavior-inline: contain", marker_group)
         self.assertIn("::scroll-marker:target-current", css)
