@@ -24,7 +24,7 @@
     /* Marketing-site layout only. The reusable styling contract stays in src/. */
     .site-skip { position: absolute; inset-block-start: -10rem; inset-inline-start: 1rem; z-index: 20; }
     .site-skip:focus-visible { inset-block-start: 1rem; }
-    .site-header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem 2rem; padding-block: 1.5rem; border-block-end: 1px solid var(--syn-border-subtle); }
+    .site-header { display: flex; flex-wrap: nowrap; align-items: center; justify-content: space-between; gap: .5rem 1rem; padding-block: .75rem; border-block-end: 1px solid var(--syn-border-subtle); }
     .site-brand { display: inline-flex; align-items: center; min-block-size: 2rem; font: 750 1.15rem/1 var(--syn-font); letter-spacing: -.055em; }
     .site-brand span { color: var(--syn-muted); font-weight: 500; font-size: .8em; letter-spacing: 0; }
     .site-nav { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem 1.5rem; }
@@ -32,7 +32,7 @@
     .site-nav a:hover, .site-nav a:focus-visible { color: var(--syn-text); }
     .site-nav a:last-child { color: var(--syn-accent); }
     .site-tertiary-link { display: inline-flex; align-items: center; min-block-size: 2rem; align-self: center; color: var(--syn-muted); text-underline-offset: .2em; font-size: .9rem; }
-    .site-mobile-menu { display: none; position: relative; margin-inline-start: auto; }
+    .site-mobile-menu { display: block; position: relative; margin-inline-start: auto; }
     .site-mobile-menu summary { cursor: pointer; display: flex; align-items: center; justify-content: center; min-height: 44px; min-width: 5rem; padding: .55rem .85rem; border: 1px solid var(--syn-border-subtle); border-radius: .4rem; background: var(--syn-surface); list-style: none; color: var(--syn-text); font-weight: 650; }
     .site-mobile-menu summary::-webkit-details-marker { display: none; }
     .site-mobile-menu summary::after { content: "⌄"; margin-inline-start: .65rem; }
@@ -40,13 +40,13 @@
     .site-mobile-menu nav { position: absolute; inset-block-start: calc(100% + .45rem); inset-inline-end: 0; z-index: 10; min-width: min(17rem, 84vw); display: grid; gap: .15rem; padding: .55rem; border: 1px solid var(--syn-border-subtle); border-radius: .55rem; background: var(--syn-surface); box-shadow: 0 20px 50px rgb(0 0 0 / 16%); }
     .site-mobile-menu nav a { display: flex; align-items: center; min-height: 44px; padding: .55rem .75rem; border-radius: .25rem; text-decoration: none; color: var(--syn-text); }
     .site-mobile-menu nav a:hover, .site-mobile-menu nav a:focus-visible { background: var(--syn-surface-hi); }
-    .site-hero { padding-block: clamp(3.5rem, 8vw, 7rem) clamp(3rem, 6vw, 5rem); display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); align-items: center; gap: clamp(2rem, 6vw, 5rem); }
+    .site-hero { padding-block: clamp(1.5rem, 4vw, 3rem) clamp(1.5rem, 3vw, 2.5rem); display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); align-items: center; gap: clamp(1rem, 3vw, 3rem); }
     .site-kicker { display: inline-flex; flex-wrap: wrap; max-inline-size: 100%; overflow-wrap: anywhere; align-items: center; gap: .65rem; color: var(--syn-accent); font: 700 .78rem/1.5 var(--syn-font-ui); letter-spacing: .11em; text-transform: uppercase; }
     .site-kicker::before { content: ""; display: inline-block; inline-size: 1.25rem; block-size: 2px; background: currentColor; }
-    .site-hero h1 { margin-block: 1.1rem 1.3rem; max-inline-size: 12ch; font: 690 clamp(3.1rem, 5vw + 1rem, 5.8rem)/1.02 var(--syn-font-display); letter-spacing: -.075em; overflow-wrap: anywhere; }
+    .site-hero h1 { margin-block: .7rem .9rem; max-inline-size: 14ch; font: 690 clamp(2.65rem, 4.5vw + .6rem, 5rem)/1.03 var(--syn-font-display); letter-spacing: -.075em; overflow-wrap: anywhere; }
     .site-hero h1 em { color: var(--syn-accent); font-style: normal; }
-    .site-lede { max-inline-size: 52ch; color: var(--syn-muted); font-size: clamp(1.0625rem, 1rem + .35vw, 1.25rem); line-height: 1.65; }
-    .site-hero .syn-actions { margin-block: 1.75rem 1.2rem; }
+    .site-lede { max-inline-size: 52ch; color: var(--syn-muted); font-size: clamp(1rem, 1rem + .2vw, 1.15rem); line-height: 1.5; }
+    .site-hero .syn-actions { margin-block: 1rem .7rem; }
     .site-trust { display: flex; flex-wrap: wrap; gap: .6rem 1.25rem; padding: 0; list-style: none; color: var(--syn-muted); font-size: .85rem; }
     .site-trust li { display: flex; align-items: center; gap: .4rem; }
     .site-trust li::before { content: ""; inline-size: .4rem; block-size: .4rem; border-radius: 100%; background: var(--syn-success); }
@@ -143,6 +143,7 @@
     .site-footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; padding-block: 2rem 3rem; border-block-start: 1px solid var(--syn-border-subtle); }
     .site-footer nav { display: flex; flex-wrap: wrap; gap: .75rem 1.5rem; }
     .site-footer a { display: inline-flex; align-items: center; min-block-size: 2rem; color: var(--syn-muted); font-size: var(--syn-type-sm); }
+    @media (max-width: 70rem) { .site-nav { display: none; } }
     @media (max-width: 45rem) {
       .site-nav { display: none; }
       .site-mobile-menu { display: block; }
@@ -150,12 +151,14 @@
     }
     @media (max-width: 53rem) {
       .site-hero, .site-try, .site-quickstart { grid-template-columns: minmax(0, 1fr); }
-      .site-hero { padding-block: clamp(2.25rem, 5vw, 3.5rem) 2.5rem; gap: 1.5rem; }
+      .site-hero { gap: clamp(1rem, 3vw, 1.5rem); }
       .site-preview-board { max-inline-size: 38rem; }
     }
     @media (max-width: 32rem) {
       .site-header { align-items: flex-start; }
-      .site-hero h1 { font-size: clamp(2.65rem, 12vw, 4rem); }
+      .site-hero { padding-block: 1.5rem 2rem; }
+      .site-hero h1 { font-size: clamp(2.25rem, 10vw, 3.4rem); }
+      .site-lede { font-size: 1rem; line-height: 1.5; }
       .site-preview-body { grid-template-columns: 3.3rem minmax(0, 1fr); }
       .site-preview-rail { padding-inline: .35rem; }
       .site-mini-metric { padding: .6rem; }
@@ -181,17 +184,7 @@
         <a href="#quickstart">Get started</a>
         <a href="docs/catalog.html">Components</a>
         <a href="docs/blocks.html">Blocks</a>
-        <a href="docs/products.html">Products</a>
-        <a href="docs/design-resources.html">Design resources</a>
-        <a href="blog/">Blog</a>
-        <a href="docs/compare.html">Compare</a>
-        <a href="docs/faq.html">FAQ</a>
         <a href="#themes">Themes</a>
-        <a href="#showcase">Examples</a>
-        <a href="docs/console-kit.html">Console Kit</a>
-        <a href="examples/semantic-starter.html">Semantic starter</a>
-        <a href="docs/semantic-components.html">Semantic HTML recipes</a>
-        <a href="examples/semantic-compositions.html">Semantic HTML gallery: forms, docs, MathML</a>
         <a href="https://github.com/dporkka/syntyr-css">GitHub</a>
       </nav>
       <details class="site-mobile-menu">
@@ -225,9 +218,6 @@
           <div class="syn-actions">
             <a class="syn-button syn-button--primary" href="#quickstart">Get started</a>
             <a class="syn-button syn-button--outline" href="docs/catalog.html">Explore components</a>
-            <a class="syn-button syn-button--ghost" href="docs/site-builders.html">Use on WordPress, Shopify & more</a>
-            <a class="syn-button" href="docs/console-kit.html">Preview Console Kit</a>
-            <a class="site-tertiary-link" href="docs/#install">Installation guide</a>
           </div>
           <p class="syn-caption">Considering a switch? <a href="docs/tailwind-alternative.html">Compare Syntyr, Tailwind and plain CSS</a> before choosing.</p>
           <ul class="site-trust" aria-label="Library characteristics">
@@ -289,6 +279,7 @@
           <h2 class="site-section-title" id="quickstart-title">From plain HTML to polished UI.</h2>
           <p class="site-section-intro">Download the published, version-pinned core CSS, then add the stylesheet and Syntyr classes to your page. No build tool or component runtime required.</p>
           <p class="site-release-note"><strong>Release status:</strong> alpha.4 is the published download. This website also previews the unreleased alpha.5 source candidate, so not every showcased style is in alpha.4. Self-host the pinned CSS in production.</p>
+          <p class="site-section-intro">Using a site builder? <a href="docs/site-builders.html">Use Syntyr with WordPress, Shopify, and more.</a></p>
           <div class="syn-actions">
             <a class="syn-button syn-button--primary" href="https://syntyr-css.pages.dev/v/0.3.0-alpha.4/syntyr.core.css" download="syntyr.core.css">Download alpha.4 CSS</a>
             <a class="syn-button syn-button--outline" href="docs/#install">Full installation guide</a>
