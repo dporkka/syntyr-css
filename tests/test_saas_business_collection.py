@@ -7,7 +7,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 MARKETING = {
     "scrollable-card-rail", "bento-feature-grid", "hero-product-preview",
-    "feature-spotlight", "customer-case-study", "pricing-comparison",
+    "feature-spotlight-detail", "customer-case-study", "pricing-comparison",
 }
 APPLICATIONS = {
     "auth-sign-up", "resource-crud", "organization-members",
@@ -34,7 +34,7 @@ class SaaSBusinessCollectionTests(unittest.TestCase):
     def test_manifest_has_twelve_new_blocks_without_losing_prior_library(self):
         blocks = json.loads((ROOT / "blocks/manifest.json").read_text())["blocks"]
         by_id = {b["id"]: b for b in blocks}
-        self.assertEqual(len(blocks), 62)
+        self.assertEqual(len(blocks), 68)
         self.assertEqual(len(by_id), len(blocks))
         for ident in MARKETING:
             self.assertEqual(by_id[ident]["category"], "Marketing")
@@ -134,7 +134,7 @@ class SaaSBusinessCollectionTests(unittest.TestCase):
                 self.assertIn('tabindex="0"', markup)
 
     def test_spotlight_section_heading_precedes_illustration_heading(self):
-        source = (ROOT / "blocks/snippets/feature-spotlight.html").read_text()
+        source = (ROOT / "blocks/snippets/feature-spotlight-detail.html").read_text()
         self.assertLess(
             source.index('id="syn-feature-spotlight-title"'),
             source.index("<h3>Project detail</h3>"),

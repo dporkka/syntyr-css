@@ -1524,6 +1524,8 @@ Original: https://syntyr-css.pages.dev/docs/component-recipes.md
 
 # Copy-owned form recipes
 
+Prefer an interactive starting point? The [Syntyr Form Customizer](form-builder.html) generates copyable forms and standalone HTML, with native form submission and no JavaScript in the output. Configure a real server endpoint before publishing.
+
 These are **MIT-licensed, plain-HTML examples**. Copy and modify them without installing a Syntyr CLI, template registry, React, or a JavaScript runtime. Syntyr provides presentation; your browser and application provide behavior.
 
 Load `dist/syntyr.core.css` and apply `.syn-root` on a stable ancestor. Input groups and fields are included in core. The examples below also work in Go/templ, Askama, Django templates, Astro, React, and HTMX.
@@ -1783,6 +1785,20 @@ Test keyboard interaction, forced colors, zoom/reflow, and real product
 copy in the target browsers. **Application-owned behavior** includes
 search filtering, validation on the server, destructive action
 authorization, and live calculations; none are provided by CSS.
+
+## Native horizontal carousels
+
+The existing opt-in `syntyr.media.css` module supplies
+`syn-media-rail--controls` for browser-generated previous/next buttons and
+`syn-media-rail--markers` for optional position markers. The underlying
+`syn-media-rail` continues to scroll and snap without those features.
+Every marked direct child must provide a localized `data-syn-scroll-label`
+for its accessible marker name.
+
+[Copy the script-free example](https://syntyr-css.pages.dev/examples/media-entertainment.html) and read
+[compatibility details and the full recipe](https://syntyr-css.pages.dev/docs/media-entertainment.md).
+Do not replace real ARIA tab widgets with CSS markers, or claim that markers
+provide autoplay, filtering, infinite looping or application state.
 
 ## Resource outline (nested native navigation)
 
@@ -3127,6 +3143,7 @@ reviewed consistently before `1.0.0`. It is not a new compatibility guarantee.
 | `syntyr.semantic.css` and `.syn-semantic` | Opt-in prerelease API | Stable scoped semantics after audit |
 | `dist/presets/{minimal,saas,cinematic}.css` | Experimental single-file entrypoints | Stabilize names and inclusion contract only after explicit review |
 | `metadata/css-contract.v1.json` | Build artifact-manifest schema v1 | Version schema independently of public CSS API |
+| `syntyr.media.css`: `syn-media-rail--controls`, `syn-media-rail--markers`, `data-syn-scroll-label` | Experimental alpha.5 progressive carousel affordances; require CSS Overflow 5 and anchor positioning | Evaluate cross-browser parity and marker accessibility before v1 |
 | `syntyr.recipes.css`, `syntyr.geometry.css` | Experimental, opt-in | Evaluate for individual stabilization |
 | `syntyr.effects.css`, `syntyr.utilities.css` | Experimental, opt-in | Evaluate for individual stabilization |
 | `syntyr.motion.css` `data-syn-animate` presets, `--syn-animation-*` speed/loop/rotation controls and optional `syntyr.animate.mjs` loops | Experimental alpha.5 opt-in; not published in alpha.4 | Evaluate naming, reduced-motion behavior and semantic exits before stabilization |
@@ -3296,7 +3313,6 @@ The optional `syntyr.recipes.css` source candidate adds `.syn-view-switcher`,
 CSS selectors, not part of the immutable alpha.4 package and not a guarantee
 of application-level selection, dialog focus management, image verification
 or review workflows. See [recipe contracts](recipes.md).
-
 
 ## Experimental alpha.5 copy-owned composition additions
 

@@ -1575,6 +1575,536 @@
         "syn-viz-bars"
       ],
       "html": "<ol class=\"syn-viz-bars\" aria-label=\"Illustrative channel share\">\n  <li class=\"syn-viz-bar\">\n    <div class=\"syn-viz-bar-label\"><span>Direct</span><data value=\"54\">54%</data></div>\n    <div class=\"syn-viz-bar-track\" aria-hidden=\"true\"><span class=\"syn-viz-bar-fill\" style=\"--syn-viz-value: 54\"></span></div>\n  </li>\n  <li class=\"syn-viz-bar\">\n    <div class=\"syn-viz-bar-label\"><span>Agency</span><data value=\"31\">31%</data></div>\n    <div class=\"syn-viz-bar-track\" aria-hidden=\"true\"><span class=\"syn-viz-bar-fill\" style=\"--syn-viz-value: 31\"></span></div>\n  </li>\n</ol>"
+    },
+    {
+      "id": "catalog-primary-nav-title",
+      "title": "Primary navigation",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "A named navigation landmark with a list of real destinations and one current-page indicator.",
+      "keywords": [
+        "primary",
+        "site",
+        "navigation",
+        "landmark",
+        "active",
+        "page",
+        "aria-current",
+        "list"
+      ],
+      "category": "navigation",
+      "elements": [
+        "a",
+        "li",
+        "nav",
+        "ul"
+      ],
+      "classes": [
+        "syn-inline"
+      ],
+      "html": "<nav aria-label=\"Primary navigation\">\n  <ul class=\"syn-inline\">\n    <li><a href=\"index.html\">Overview</a></li>\n    <li><a href=\"catalog.html\" aria-current=\"page\">Components</a></li>\n    <li><a href=\"guides.html\">Guides</a></li>\n  </ul>\n</nav>"
+    },
+    {
+      "id": "catalog-table-of-contents-title",
+      "title": "On-page table of contents",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "Real fragment links point to heading IDs in the same example; no scroll handler is necessary.",
+      "keywords": [
+        "table",
+        "of",
+        "contents",
+        "jump",
+        "links",
+        "anchor",
+        "section",
+        "navigation",
+        "same",
+        "page"
+      ],
+      "category": "navigation",
+      "elements": [
+        "a",
+        "h3",
+        "li",
+        "nav",
+        "p",
+        "section",
+        "ul"
+      ],
+      "classes": [],
+      "html": "<nav aria-label=\"In-page example sections\">\n  <ul>\n    <li><a href=\"#catalog-toc-overview\">Overview</a></li>\n    <li><a href=\"#catalog-toc-notes\">Notes</a></li>\n  </ul>\n</nav>\n<section aria-labelledby=\"catalog-toc-overview\">\n  <h3 id=\"catalog-toc-overview\">Overview</h3>\n  <p>Each section has an addressable heading.</p>\n</section>\n<section aria-labelledby=\"catalog-toc-notes\">\n  <h3 id=\"catalog-toc-notes\">Notes</h3>\n  <p>Native anchors work without JavaScript.</p>\n</section>"
+    },
+    {
+      "id": "catalog-footer-nav-title",
+      "title": "Footer link groups",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "Place a footer within its owning section and name each navigation landmark.",
+      "keywords": [
+        "footer",
+        "contentinfo",
+        "navigation",
+        "about",
+        "legal",
+        "links",
+        "sitemap"
+      ],
+      "category": "navigation",
+      "elements": [
+        "a",
+        "footer",
+        "h3",
+        "li",
+        "nav",
+        "section",
+        "small",
+        "ul"
+      ],
+      "classes": [
+        "syn-inline"
+      ],
+      "html": "<section aria-labelledby=\"catalog-footer-example-title\">\n  <h3 id=\"catalog-footer-example-title\">Documentation</h3>\n  <footer>\n    <nav aria-label=\"Footer resources\">\n      <ul class=\"syn-inline\">\n        <li><a href=\"guides.html\">Guides</a></li>\n        <li><a href=\"faq.html\">FAQ</a></li>\n        <li><a href=\"distribution.html\">Installation</a></li>\n      </ul>\n    </nav>\n    <small>Example footer — update links for your own site.</small>\n  </footer>\n</section>"
+    },
+    {
+      "id": "catalog-pagination-title",
+      "title": "Pagination navigation",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "Numbered navigation with a clearly identified current page; replace demo query URLs with real routes.",
+      "keywords": [
+        "pagination",
+        "pages",
+        "previous",
+        "next",
+        "rel",
+        "prev",
+        "next",
+        "aria-current"
+      ],
+      "category": "navigation",
+      "elements": [
+        "a",
+        "nav",
+        "span"
+      ],
+      "classes": [
+        "syn-pagination"
+      ],
+      "html": "<nav class=\"syn-pagination\" aria-label=\"Example result pages\">\n  <a href=\"catalog.html?page=1\" rel=\"prev\">Previous</a>\n  <a href=\"catalog.html?page=1\">1</a>\n  <span aria-current=\"page\">2</span>\n  <a href=\"catalog.html?page=3\">3</a>\n  <a href=\"catalog.html?page=3\" rel=\"next\">Next</a>\n</nav>"
+    },
+    {
+      "id": "catalog-contact-title",
+      "title": "Contact details",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "Use address for the nearest article or section contact; sample contacts are placeholders.",
+      "keywords": [
+        "contact",
+        "address",
+        "email",
+        "phone",
+        "support",
+        "organization",
+        "details"
+      ],
+      "category": "layout",
+      "elements": [
+        "a",
+        "address",
+        "h3",
+        "p",
+        "section",
+        "small",
+        "span"
+      ],
+      "classes": [],
+      "html": "<section aria-labelledby=\"catalog-contact-heading\">\n  <h3 id=\"catalog-contact-heading\">Customer support</h3>\n  <address>\n    <a href=\"mailto:support@example.com\">support@example.com</a>\n    <span aria-hidden=\"true\"> · </span>\n    <a href=\"tel:+12025550123\">+1 (202) 555-0123</a>\n  </address>\n  <p><small>Replace example.com and the example telephone number.</small></p>\n</section>"
+    },
+    {
+      "id": "catalog-aside-title",
+      "title": "Section and complementary aside",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "Keep a named content section and related complementary material distinct; sidecar layout is optional.",
+      "keywords": [
+        "section",
+        "sidebar",
+        "complementary",
+        "related",
+        "resources",
+        "aside",
+        "landmark"
+      ],
+      "category": "layout",
+      "elements": [
+        "a",
+        "aside",
+        "div",
+        "h3",
+        "li",
+        "p",
+        "section",
+        "ul"
+      ],
+      "classes": [
+        "syn-sidecar"
+      ],
+      "html": "<div class=\"syn-sidecar\">\n  <section aria-labelledby=\"catalog-aside-main-heading\">\n    <h3 id=\"catalog-aside-main-heading\">Project overview</h3>\n    <p>Core project content belongs in a named section.</p>\n  </section>\n  <aside aria-labelledby=\"catalog-aside-related-heading\">\n    <h3 id=\"catalog-aside-related-heading\">Related resources</h3>\n    <ul><li><a href=\"guides.html\">Read the guides</a></li></ul>\n  </aside>\n</div>"
+    },
+    {
+      "id": "catalog-heading-group-title",
+      "title": "Heading group",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "Group a title and supporting subtitle without inserting fake heading levels.",
+      "keywords": [
+        "hgroup",
+        "heading",
+        "title",
+        "subtitle",
+        "introduction",
+        "lede",
+        "editorial"
+      ],
+      "category": "typography",
+      "elements": [
+        "h3",
+        "hgroup",
+        "p",
+        "section"
+      ],
+      "classes": [
+        "syn-lede"
+      ],
+      "html": "<section aria-labelledby=\"catalog-hgroup-heading\">\n  <hgroup>\n    <h3 id=\"catalog-hgroup-heading\">Product updates</h3>\n    <p class=\"syn-lede\">New releases, written for people.</p>\n  </hgroup>\n  <p>Follow the updates that matter to your team.</p>\n</section>"
+    },
+    {
+      "id": "catalog-event-agenda-title",
+      "title": "Event agenda",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "Machine-readable times in an ordered agenda; the display time zone is explicit.",
+      "keywords": [
+        "agenda",
+        "schedule",
+        "event",
+        "time",
+        "datetime",
+        "ordered",
+        "list",
+        "sessions"
+      ],
+      "category": "data",
+      "elements": [
+        "h3",
+        "li",
+        "ol",
+        "section",
+        "time"
+      ],
+      "classes": [
+        "syn-stack"
+      ],
+      "html": "<section aria-labelledby=\"catalog-agenda-heading\">\n  <h3 id=\"catalog-agenda-heading\">Workshop schedule</h3>\n  <ol class=\"syn-stack\">\n    <li><time datetime=\"2026-12-03T09:00:00-03:00\">09:00 BRT</time> — Welcome</li>\n    <li><time datetime=\"2026-12-03T10:30:00-03:00\">10:30 BRT</time> — Hands-on session</li>\n    <li><time datetime=\"2026-12-03T12:00:00-03:00\">12:00 BRT</time> — Questions</li>\n  </ol>\n</section>"
+    },
+    {
+      "id": "catalog-table-totals-title",
+      "title": "Table with totals",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "Use caption, scoped column headings and a real table footer for aggregated values.",
+      "keywords": [
+        "table",
+        "caption",
+        "summary",
+        "tfoot",
+        "total",
+        "column",
+        "scope",
+        "numeric"
+      ],
+      "category": "data",
+      "elements": [
+        "caption",
+        "div",
+        "table",
+        "tbody",
+        "td",
+        "tfoot",
+        "th",
+        "thead",
+        "tr"
+      ],
+      "classes": [
+        "syn-table",
+        "syn-table-wrap"
+      ],
+      "html": "<div class=\"syn-table-wrap\">\n  <table class=\"syn-table\">\n    <caption>Illustrative monthly orders</caption>\n    <thead><tr><th scope=\"col\">Month</th><th scope=\"col\">Orders</th></tr></thead>\n    <tbody>\n      <tr><th scope=\"row\">January</th><td>12</td></tr>\n      <tr><th scope=\"row\">February</th><td>18</td></tr>\n    </tbody>\n    <tfoot><tr><th scope=\"row\">Total</th><td>30</td></tr></tfoot>\n  </table>\n</div>"
+    },
+    {
+      "id": "catalog-revisions-title",
+      "title": "Revisions and abbreviations",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "Give abbreviations definitions and mark edits with native insertion and deletion elements.",
+      "keywords": [
+        "abbreviation",
+        "definition",
+        "edit",
+        "insert",
+        "delete",
+        "ins",
+        "del",
+        "dfn",
+        "datetime",
+        "revisions"
+      ],
+      "category": "typography",
+      "elements": [
+        "abbr",
+        "del",
+        "dfn",
+        "h3",
+        "ins",
+        "p",
+        "section"
+      ],
+      "classes": [],
+      "html": "<section aria-labelledby=\"catalog-revisions-heading\">\n  <h3 id=\"catalog-revisions-heading\">Release terminology</h3>\n  <p><abbr title=\"Application programming interface\">API</abbr> is the public contract.</p>\n  <p><dfn>Progressive enhancement</dfn> keeps core content usable without scripts.</p>\n  <p>Plan: <del datetime=\"2026-11-20\">Ship a prototype</del>\n     <ins datetime=\"2026-11-22\">Ship a tested component</ins>.</p>\n</section>"
+    },
+    {
+      "id": "catalog-form-help-title",
+      "title": "Form help and validation",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "Built-in constraint validation with a visible description; adapt the example GET endpoint.",
+      "keywords": [
+        "form",
+        "validation",
+        "help",
+        "required",
+        "number",
+        "range",
+        "aria-describedby",
+        "label"
+      ],
+      "category": "forms",
+      "elements": [
+        "button",
+        "form",
+        "input",
+        "label",
+        "p"
+      ],
+      "classes": [
+        "syn-button",
+        "syn-button--primary",
+        "syn-form",
+        "syn-help",
+        "syn-input",
+        "syn-label"
+      ],
+      "html": "<form class=\"syn-form\" action=\"catalog.html\" method=\"get\">\n  <label class=\"syn-label\" for=\"catalog-results-limit\">Maximum results</label>\n  <input class=\"syn-input\" id=\"catalog-results-limit\" name=\"limit\"\n         type=\"number\" min=\"1\" max=\"50\" value=\"10\" required\n         aria-describedby=\"catalog-validation-help\">\n  <p class=\"syn-help\" id=\"catalog-validation-help\">Choose a number from 1 to 50.</p>\n  <button class=\"syn-button syn-button--primary\" type=\"submit\">Apply limit</button>\n</form>"
+    },
+    {
+      "id": "catalog-skip-link-title",
+      "title": "Skip navigation link",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "A working skip link moves to real content in the same example.",
+      "keywords": [
+        "skip",
+        "content",
+        "anchor",
+        "keyboard",
+        "accessible"
+      ],
+      "category": "navigation",
+      "elements": [
+        "a",
+        "div",
+        "h3",
+        "nav",
+        "p",
+        "section"
+      ],
+      "classes": [
+        "syn-button"
+      ],
+      "html": "<div>\n  <a class=\"syn-button\" href=\"#catalog-skip-destination\">Skip to example content</a>\n  <nav aria-label=\"Example introductory links\"><a href=\"guides.html\">Browse guides</a></nav>\n  <section id=\"catalog-skip-destination\" tabindex=\"-1\" aria-labelledby=\"catalog-skip-heading\">\n    <h3 id=\"catalog-skip-heading\">Example main content</h3>\n    <p>Use a matching target ID in your application.</p>\n  </section>\n</div>"
+    },
+    {
+      "id": "catalog-status-list-title",
+      "title": "Status indicator list",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "Use textual status labels that stay understandable without color.",
+      "keywords": [
+        "status",
+        "list",
+        "badges",
+        "semantic",
+        "state",
+        "text"
+      ],
+      "category": "data",
+      "elements": [
+        "h3",
+        "li",
+        "section",
+        "span",
+        "ul"
+      ],
+      "classes": [
+        "syn-badge",
+        "syn-stack"
+      ],
+      "html": "<section aria-labelledby=\"catalog-status-heading\">\n  <h3 id=\"catalog-status-heading\">Workflow status</h3>\n  <ul class=\"syn-stack\">\n    <li><span class=\"syn-badge\">Ready</span> · Draft reviewed</li>\n    <li><span class=\"syn-badge\">Pending</span> · Awaiting approval</li>\n    <li><span class=\"syn-badge\">Needs attention</span> · Missing document</li>\n  </ul>\n</section>"
+    },
+    {
+      "id": "catalog-activity-entry-title",
+      "title": "Activity timeline",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "Use an ordered list with machine-readable timestamps for an activity feed.",
+      "keywords": [
+        "activity",
+        "timeline",
+        "events",
+        "ordered",
+        "time",
+        "feed"
+      ],
+      "category": "data",
+      "elements": [
+        "h3",
+        "li",
+        "ol",
+        "section",
+        "time"
+      ],
+      "classes": [
+        "syn-stack"
+      ],
+      "html": "<section aria-labelledby=\"catalog-activity-heading\">\n  <h3 id=\"catalog-activity-heading\">Recent activity</h3>\n  <ol class=\"syn-stack\">\n    <li><time datetime=\"2026-11-22T10:00:00Z\">Nov 22, 10:00 UTC</time> — Draft updated</li>\n    <li><time datetime=\"2026-11-21T15:30:00Z\">Nov 21, 15:30 UTC</time> — Review requested</li>\n  </ol>\n</section>"
+    },
+    {
+      "id": "catalog-property-list-title",
+      "title": "Key-value details",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "A definition list for record attributes, not a faux two-column table.",
+      "keywords": [
+        "property",
+        "key",
+        "value",
+        "details",
+        "description",
+        "list",
+        "metadata"
+      ],
+      "category": "data",
+      "elements": [
+        "dd",
+        "dl",
+        "dt",
+        "h3",
+        "section",
+        "time"
+      ],
+      "classes": [],
+      "html": "<section aria-labelledby=\"catalog-property-heading\">\n  <h3 id=\"catalog-property-heading\">Record details</h3>\n  <dl>\n    <dt>Status</dt><dd>Active</dd>\n    <dt>Plan</dt><dd>Starter</dd>\n    <dt>Updated</dt><dd><time datetime=\"2026-11-22\">November 22, 2026</time></dd>\n  </dl>\n</section>"
+    },
+    {
+      "id": "catalog-link-card-title",
+      "title": "Linked resource card",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "A card with one real destination and a meaningful accessible link name.",
+      "keywords": [
+        "resource",
+        "article",
+        "card",
+        "link",
+        "description"
+      ],
+      "category": "layout",
+      "elements": [
+        "a",
+        "article",
+        "h3",
+        "p"
+      ],
+      "classes": [
+        "syn-eyebrow",
+        "syn-heading",
+        "syn-panel"
+      ],
+      "html": "<article class=\"syn-panel\">\n  <p class=\"syn-eyebrow\">DOCUMENTATION</p>\n  <h3 class=\"syn-heading\"><a href=\"guides.html\">Getting started guides</a></h3>\n  <p>Find practical examples for integrating native HTML and Syntyr CSS.</p>\n</article>"
+    },
+    {
+      "id": "catalog-section-actions-title",
+      "title": "Section header with actions",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "A labeled section with actions kept in normal document order.",
+      "keywords": [
+        "section",
+        "header",
+        "toolbar",
+        "actions",
+        "links",
+        "responsive"
+      ],
+      "category": "layout",
+      "elements": [
+        "a",
+        "h3",
+        "header",
+        "p",
+        "section"
+      ],
+      "classes": [
+        "syn-button",
+        "syn-button--outline",
+        "syn-inline"
+      ],
+      "html": "<section aria-labelledby=\"catalog-action-section-heading\">\n  <header class=\"syn-inline\">\n    <h3 id=\"catalog-action-section-heading\">Workspace overview</h3>\n    <a class=\"syn-button syn-button--outline\" href=\"guides.html\">View guides</a>\n  </header>\n  <p>Place supporting content after the section heading.</p>\n</section>"
     }
   ]
 }

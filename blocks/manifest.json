@@ -727,6 +727,103 @@
       ]
     },
     {
+      "id": "feature-spotlight",
+      "category": "Marketing",
+      "title": "Feature spotlight",
+      "description": "An editorial split section with a concrete feature benefit and a complementary product detail.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "feature",
+        "spotlight",
+        "split",
+        "landing",
+        "layout"
+      ]
+    },
+    {
+      "id": "trust-assurance",
+      "category": "Marketing",
+      "title": "Trust and assurance section",
+      "description": "Transparent questions to ask about security, reliability, and data handling; not certification claims.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "trust",
+        "security",
+        "assurance",
+        "compliance",
+        "marketing"
+      ]
+    },
+    {
+      "id": "event-registration",
+      "category": "Marketing",
+      "title": "Event registration section",
+      "description": "An agenda and accessible native signup form; your server must implement registration.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "event",
+        "registration",
+        "webinar",
+        "signup",
+        "marketing",
+        "form"
+      ]
+    },
+    {
+      "id": "help-center",
+      "category": "Applications",
+      "title": "Help center landing",
+      "description": "A searchable-looking help index built from real navigation links, not a fake search control.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "help",
+        "support",
+        "knowledgebase",
+        "navigation",
+        "layout"
+      ]
+    },
+    {
+      "id": "notification-center",
+      "category": "Applications",
+      "title": "Notification center",
+      "description": "Time-ordered notifications with visible status labels and real detail destinations.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "inbox",
+        "alerts",
+        "notification",
+        "activity",
+        "layout"
+      ]
+    },
+    {
+      "id": "api-endpoint-reference",
+      "category": "Technical",
+      "title": "API endpoint reference",
+      "description": "Readable example request and response, with method, route, and JSON; your API owns behavior.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "api",
+        "endpoint",
+        "documentation",
+        "technical",
+        "code"
+      ]
+    },
+    {
       "id": "scrollable-card-rail",
       "category": "Marketing",
       "title": "Scrollable product card rail",
@@ -773,10 +870,10 @@
       ]
     },
     {
-      "id": "feature-spotlight",
+      "id": "feature-spotlight-detail",
       "category": "Marketing",
-      "title": "Product feature spotlight",
-      "description": "Alternating product detail section with a structured UI illustration.",
+      "title": "Split feature detail spotlight",
+      "description": "Full split section with illustration, record details and activity timeline.",
       "modules": [
         "core",
         "recipes"

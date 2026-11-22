@@ -204,6 +204,9 @@ HEADERS = """/*
 /blog/*
   Cache-Control: public, max-age=0, must-revalidate
 
+/tools/*
+  Cache-Control: public, max-age=0, must-revalidate
+
 /blog/rss.xml
   Content-Type: application/rss+xml; charset=utf-8
 
@@ -289,6 +292,7 @@ PUBLIC_DOCS = (
     "geometry-terminal.md", "native-browser-apis.md", "dropdowns.md", "radix-integration.md", "visual-intensity.md", "performance-and-polish.md",
     "performance-validation.md", "progressive-enhancement.md", "progressive-loading.md", "live-performance-audit.md",
     "index.html", "design-resources.html", "animation.md", "clipboard.md", "lit-integration.md", "playground.html", "playground.css", "playground.js", "playground-catalog.js", "playground-snippet.js", "playground-editor.js", "playground-editor.licenses.txt", "page-builder-guide.md", "page-builder.html", "page-builder.css", "page-builder.js", "page-builder-model.mjs",
+    "form-builder.html", "form-builder.css", "form-builder.js", "form-builder-model.mjs",
     "editor-integration.md", "recipes.md", "saas-cli-business.md", "products.html",
     "cms-integration.md", "site-generator-decision.md", "static-site-generators.md", "site-builders.md", "tailwind-research.md", "tailwind-alternative.html",
     "wordpress.md", "shopify.md", "wix.md", "webflow.md", "framer.md", "squarespace.md", "ghost.md", "hubspot.md", "drupal.md", "joomla.md", "carrd.md", "duda.md", "tilda.md",
@@ -362,6 +366,13 @@ def source_files(site_url: str = SITE_URL, *, include_cloudflare_headers: bool =
     # Import the canonical distribution registry rather than maintaining
     # a second list that can silently omit new CSS entrypoints.
     public_css = tuple(all_distributions())
+    # Independent SEO landing pages, no server-side URL scanning or npm dependencies.
+    public_tools = (
+        "index.html", "color-contrast-checker.html", "css-theme-generator.html",
+        "css-clamp-generator.html", "responsive-design-tester.html",
+        "site.css", "logic.mjs", "site.mjs",
+    )
+    paths.extend(ROOT / "tools" / name for name in public_tools)
     paths.extend(ROOT / "docs" / name for name in PUBLIC_DOCS)
     paths.extend(ROOT / "docs" / (name.removesuffix(".md") + ".html")
                  for name in PUBLIC_DOCS if name.endswith(".md"))

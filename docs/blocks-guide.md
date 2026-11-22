@@ -2,22 +2,22 @@
 
 **Status:** Experimental alpha.5 source gallery, not an immutable release or published npm package.
 
-[Browse 62 blocks](blocks.html) | [Component catalog](catalog.html) | [Themes](theme-customization.md) | [Accessibility](accessibility.md)
+[Browse 68 blocks](blocks.html) | [Component catalog](catalog.html) | [Themes](theme-customization.md) | [Accessibility](accessibility.md)
 
 ## Contract
 
-The 62 copy-owned HTML compositions cover marketing, application, services, portfolio, editorial, navigation, publishing, commerce and technical use
+The 68 copy-owned HTML compositions cover marketing, application, services, portfolio, editorial, navigation, publishing, commerce and technical use
 cases. Each contains its own Syntyr root, uses accessible native markup and requires
 no application JavaScript. The data, testimonials and prices are illustrative, not live.
 
 The gallery script powers optional documentation search, theme switching and copy
-buttons. Disable JavaScript and all 62 static previews remain visible, with
+buttons. Disable JavaScript and all 68 static previews remain visible, with
 selectable source under native disclosure elements. No scripts are included in
 application CSS, and the core Syntyr build is unchanged.
 
 ## Safe local registry installation (experimental alpha.5 source)
 
-The static [universal registry](../registry/registry.json) contains the 62 MIT
+The static [universal registry](../registry/registry.json) contains the 68 MIT
 HTML blocks and nine CSS module entries. Every item includes its exact
 source-tree version, SHA-256 content hashes, declared CSS dependencies, files,
 and destination paths. This is **not** a published immutable alpha.5 release.
@@ -58,9 +58,9 @@ validation and persistence. See [form state contracts](component-recipes.md).
 
 ## SaaS and business collection (experimental alpha.5 source)
 
-Twelve additional copy-owned compositions expand the collection from 50 to 62:
+Twelve additional copy-owned compositions expand the collection from 56 to 68:
 six marketing sections (scrollable card rail, bento features, product preview hero,
-feature spotlight, full example case study, pricing comparison) and six SaaS
+split feature detail spotlight, full example case study, pricing comparison) and six SaaS
 workspaces (sign-up, resource management, workspace invitations, billing usage,
 integration connection states, API keys and webhooks).
 
@@ -205,7 +205,7 @@ copied into the public project. The separate private Console Kit is unaffected.
 ## Experimental shadcn universal-item registry
 
 The source candidate can generate a **copy-owned, framework-independent**
-shadcn-compatible universal-item registry from the same 62 MIT blocks and
+shadcn-compatible universal-item registry from the same 68 MIT blocks and
 checked-in CSS distributions. It neither replaces nor duplicates the native
 block installer from PR #104. Universal files use explicit project-relative
 targets, so no React, Tailwind, or Syntyr runtime JavaScript is required.

@@ -21,4 +21,33 @@
   .catalog-source code { white-space: pre; }
   .catalog-copy { justify-self: start; }
   @media (forced-colors: active) { .catalog-preview, .catalog-source { border-color: CanvasText; } }
+  .catalog-pathways { margin-block: 1.5rem; }
+  .catalog-pathways > .syn-heading { margin-block: .5rem; }
+  .catalog-pathways > .syn-grid { --syn-grid-min: 14rem; margin-block-start: 1rem; }
+  .catalog-pathways .syn-panel { min-width: 0; display: grid; gap: .5rem; align-content: start; }
+  .catalog-pathways .syn-panel > :where(h3, p) { margin: 0; }
+  .catalog-pathways .syn-panel a { overflow-wrap: anywhere; }
+  /* Static anchor index, with documentation-only scrollspy enhancement. */
+  .catalog-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.5rem; align-items: start; }
+  .catalog-layout > .catalog-content { min-width: 0; }
+  .catalog-sidebar { min-width: 0; border-block-end: 1px solid var(--syn-border-subtle); padding-block: 1rem; }
+  .catalog-index-heading { display: flex; gap: .65rem; align-items: center; margin: 0 0 .65rem; font-size: 1rem; }
+  .catalog-index-list { display: flex; gap: .25rem; padding: 0; margin: 0; list-style: none; overflow-x: auto; scrollbar-width: thin; }
+  .catalog-index-list li { flex: 0 0 auto; }
+  .catalog-index-link { display: block; padding: .5rem .65rem; border-inline-start: 3px solid transparent; font-size: .85rem; line-height: 1.4; text-decoration: none; color: var(--syn-text); border-radius: .2rem; }
+  .catalog-index-link:hover, .catalog-index-link:focus-visible { background: var(--syn-surface-recessed); text-decoration: underline; }
+  .catalog-index-link.is-in-view { background: var(--syn-surface-recessed); border-inline-start-color: currentColor; }
+  .catalog-index-link[aria-current="location"] { font-weight: 700; }
+  .catalog-index-link:focus-visible { outline: 2px solid currentColor; outline-offset: -2px; }
+  .catalog-preview-anchor { display: block; block-size: 0; scroll-margin-block-start: 1.25rem; }
+  .catalog-card-top h2 { scroll-margin-block-start: 1.25rem; }
+  .catalog-actions { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; min-width: 0; }
+  .catalog-actions > .syn-button { --syn-button-padding-inline: .75rem; margin: 0; flex: 0 0 auto; }
+  @media (min-width: 64rem) {
+    .catalog-layout { grid-template-columns: minmax(12.5rem, 15rem) minmax(0, 1fr); }
+    .catalog-sidebar { position: sticky; inset-block-start: 1rem; max-block-size: calc(100vh - 2rem); overflow-y: auto; border-block-end: 0; border-inline-end: 1px solid var(--syn-border-subtle); padding-block: 1rem; padding-inline-end: .5rem; scrollbar-width: thin; }
+    .catalog-index-list { display: grid; gap: .15rem; overflow: visible; }
+    .catalog-index-list li { min-width: 0; }
+    .catalog-index-link { white-space: normal; overflow-wrap: anywhere; }
+  }
 }

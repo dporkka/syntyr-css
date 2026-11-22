@@ -237,6 +237,7 @@ def build() -> str:
     <nav class="syn-nav" aria-label="Documentation">
       <a href="index.html">Gallery</a><a href="catalog.html">Components</a>
       <a href="blocks-guide.html">Integration guide</a><a href="how-to.html">How-To</a>
+      <a href="premium-compositions.html">Premium-inspired layouts</a><a href="console-kit.html">Console Kit previews</a>
     </nav>
   </header>
   <main class="syn-shell" id="blocks-main">
@@ -249,6 +250,34 @@ def build() -> str:
       <p class="syn-caption">These are static illustrative presentations: real authentication,
       billing, filtering, form validation, persistence and permissions belong to your application.
       <a href="blocks-guide.html">Read integration and accessibility guidance.</a></p>
+      <section class="blocks-pathways" aria-labelledby="blocks-pathways-heading">
+        <p class="syn-eyebrow">DISCOVER / BUILD COMPLETE PAGES</p>
+        <h2 class="syn-heading" id="blocks-pathways-heading">From small components to full layouts</h2>
+        <p class="syn-muted">Free examples are MIT-licensed. Commercial kits are concepts and not available for purchase.</p>
+        <div class="syn-grid">
+          <article class="syn-panel">
+            <p class="syn-eyebrow">FREE / MIT</p>
+            <h3 class="syn-heading"><a href="blocks.html">Free sections &amp; layouts</a></h3>
+            <p>Copy complete hero, support, feature, account, and documentation sections.</p>
+          </article>
+          <article class="syn-panel">
+            <p class="syn-eyebrow">FREE / MIT</p>
+            <h3 class="syn-heading"><a href="premium-compositions.html">Premium-inspired compositions</a></h3>
+            <p>Polished page anatomy and storytelling recipes, still part of the free CSS library.</p>
+            <p><a href="../examples/premium-compositions.html">Open the working HTML demo</a></p>
+          </article>
+          <article class="syn-panel">
+            <p class="syn-eyebrow">PRIVATE PREVIEW / NOT FOR SALE</p>
+            <h3 class="syn-heading"><a href="console-kit.html">Console Kit layout previews</a></h3>
+            <p>Static screenshots of application layouts. The private kit is not available for purchase.</p>
+          </article>
+          <article class="syn-panel">
+            <p class="syn-eyebrow">PRODUCT RESEARCH</p>
+            <h3 class="syn-heading"><a href="products.html">Products and future Premium layouts</a></h3>
+            <p>See proposed paid section and application packs. No Premium products are available for purchase.</p>
+          </article>
+        </div>
+      </section>
       <div class="blocks-controls" id="blocks-controls" hidden>
         <div><label class="syn-label" for="blocks-search">Search blocks</label>
           <input class="syn-input" type="search" id="blocks-search" placeholder="Try pricing, settings, telemetry…" autocomplete="off"></div>

@@ -2,19 +2,18 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "feature-spotlight",
   "type": "registry:item",
-  "title": "Product feature spotlight",
-  "description": "Alternating product detail section with a structured UI illustration.",
+  "title": "Feature spotlight",
+  "description": "An editorial split section with a concrete feature benefit and a complementary product detail.",
   "dependencies": [],
   "registryDependencies": [
-    "https://syntyr-css.pages.dev/registry/r/core.json",
-    "https://syntyr-css.pages.dev/registry/r/recipes.json"
+    "https://syntyr-css.pages.dev/registry/r/core.json"
   ],
   "files": [
     {
       "path": "blocks/snippets/feature-spotlight.html",
       "type": "registry:file",
       "target": "~/syntyr/blocks/feature-spotlight.html",
-      "content": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-feature-spotlight-title\">\n  <div class=\"syn-showcase\">\n    <div class=\"syn-showcase-copy\">\n      <p class=\"syn-eyebrow\">KEEP EVERYONE ALIGNED</p>\n      <h2 id=\"syn-feature-spotlight-title\" class=\"syn-heading\">Decisions have context.</h2>\n      <p>Each update can have an owner, a timestamp and a next action. Bring the details together in a single readable record.</p>\n      <ul><li>Understand the latest changes.</li><li>Locate the next step.</li><li>Keep relevant history in view.</li></ul>\n      <a class=\"syn-button syn-button--outline\" href=\"/features/activity\">Learn about activity</a>\n    </div>\n    <div class=\"syn-showcase-visual\">\n      <div class=\"syn-app-card\">\n        <header class=\"syn-app-card-header\"><h3>Project detail</h3><span class=\"syn-badge\">In progress</span></header>\n        <dl class=\"syn-record-fields\">\n          <div><dt>Owner</dt><dd>Operations team</dd></div>\n          <div><dt>Milestone</dt><dd>Content review</dd></div>\n          <div><dt>Next step</dt><dd>Confirm delivery</dd></div>\n        </dl>\n        <ol class=\"syn-activity-timeline\">\n          <li><strong>Plan approved</strong><time datetime=\"2026-10-03\">Oct 3</time></li>\n          <li><strong>Review requested</strong><time datetime=\"2026-10-04\">Oct 4</time></li>\n        </ol>\n      </div>\n    </div>\n  </div>\n</section>\n"
+      "content": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"feature-spotlight-heading\">\n  <div class=\"syn-sidecar\">\n    <div>\n      <p class=\"syn-eyebrow\">PRODUCT / FEATURE</p>\n      <h2 class=\"syn-heading\" id=\"feature-spotlight-heading\">Stay on top of every handoff.</h2>\n      <p class=\"syn-lede\">One clear place to review owners, deadlines, and next steps.</p>\n      <a class=\"syn-button syn-button--primary\" href=\"/features\">Explore features</a>\n    </div>\n    <aside class=\"syn-panel\" aria-label=\"Illustrative task status\">\n      <p class=\"syn-caption\">EXAMPLE TASK</p>\n      <h3 class=\"syn-heading\">Review proposal</h3>\n      <p><span class=\"syn-badge\">Ready for review</span></p>\n      <p class=\"syn-muted\">Owner: Sample team · Due: Next week</p>\n    </aside>\n  </div>\n</section>\n"
     },
     {
       "path": "LICENSE",
@@ -28,7 +27,7 @@
     "source": "MIT source candidate",
     "runtimeJavaScript": false,
     "fileDigests": {
-      "~/syntyr/blocks/feature-spotlight.html": "1a5f081479610a7e090633fd408d5c49cd6c5e7a127df25531aa5f1e1f230317",
+      "~/syntyr/blocks/feature-spotlight.html": "8859b910e82a9438e3c7d353f51e7b27b01e45589b112a8e3d350b6320c16f57",
       "~/syntyr/LICENSE": "42f56369ac06362dbfe433d2d50b178bf74c369a55ea22337ab40fd9433521bf"
     }
   },

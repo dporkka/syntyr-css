@@ -288,6 +288,159 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "guidance": "See the component API reference for compatible classes and CSS modules."
   },
   {
+    "id": "catalog-primary-nav-title",
+    "title": "Primary navigation",
+    "module": "syntyr.core.css",
+    "description": "A named navigation landmark with a list of real destinations and one current-page indicator.",
+    "html": "\u003cnav aria-label=\"Primary navigation\">\n  \u003cul class=\"syn-inline\">\n    \u003cli>\u003ca href=\"index.html\">Overview\u003c/a>\u003c/li>\n    \u003cli>\u003ca href=\"catalog.html\" aria-current=\"page\">Components\u003c/a>\u003c/li>\n    \u003cli>\u003ca href=\"guides.html\">Guides\u003c/a>\u003c/li>\n  \u003c/ul>\n\u003c/nav>",
+    "keywords": "primary site navigation landmark active page aria-current list",
+    "guidance": "See the component API reference for compatible classes and CSS modules."
+  },
+  {
+    "id": "catalog-table-of-contents-title",
+    "title": "On-page table of contents",
+    "module": "syntyr.core.css",
+    "description": "Real fragment links point to heading IDs in the same example; no scroll handler is necessary.",
+    "html": "\u003cnav aria-label=\"In-page example sections\">\n  \u003cul>\n    \u003cli>\u003ca href=\"#catalog-toc-overview\">Overview\u003c/a>\u003c/li>\n    \u003cli>\u003ca href=\"#catalog-toc-notes\">Notes\u003c/a>\u003c/li>\n  \u003c/ul>\n\u003c/nav>\n\u003csection aria-labelledby=\"catalog-toc-overview\">\n  \u003ch3 id=\"catalog-toc-overview\">Overview\u003c/h3>\n  \u003cp>Each section has an addressable heading.\u003c/p>\n\u003c/section>\n\u003csection aria-labelledby=\"catalog-toc-notes\">\n  \u003ch3 id=\"catalog-toc-notes\">Notes\u003c/h3>\n  \u003cp>Native anchors work without JavaScript.\u003c/p>\n\u003c/section>",
+    "keywords": "table of contents jump links anchor section navigation same page",
+    "guidance": "See the component API reference for compatible classes and CSS modules."
+  },
+  {
+    "id": "catalog-footer-nav-title",
+    "title": "Footer link groups",
+    "module": "syntyr.core.css",
+    "description": "Place a footer within its owning section and name each navigation landmark.",
+    "html": "\u003csection aria-labelledby=\"catalog-footer-example-title\">\n  \u003ch3 id=\"catalog-footer-example-title\">Documentation\u003c/h3>\n  \u003cfooter>\n    \u003cnav aria-label=\"Footer resources\">\n      \u003cul class=\"syn-inline\">\n        \u003cli>\u003ca href=\"guides.html\">Guides\u003c/a>\u003c/li>\n        \u003cli>\u003ca href=\"faq.html\">FAQ\u003c/a>\u003c/li>\n        \u003cli>\u003ca href=\"distribution.html\">Installation\u003c/a>\u003c/li>\n      \u003c/ul>\n    \u003c/nav>\n    \u003csmall>Example footer \u2014 update links for your own site.\u003c/small>\n  \u003c/footer>\n\u003c/section>",
+    "keywords": "footer contentinfo navigation about legal links sitemap",
+    "guidance": "See the component API reference for compatible classes and CSS modules."
+  },
+  {
+    "id": "catalog-pagination-title",
+    "title": "Pagination navigation",
+    "module": "syntyr.core.css",
+    "description": "Numbered navigation with a clearly identified current page; replace demo query URLs with real routes.",
+    "html": "\u003cnav class=\"syn-pagination\" aria-label=\"Example result pages\">\n  \u003ca href=\"catalog.html?page=1\" rel=\"prev\">Previous\u003c/a>\n  \u003ca href=\"catalog.html?page=1\">1\u003c/a>\n  \u003cspan aria-current=\"page\">2\u003c/span>\n  \u003ca href=\"catalog.html?page=3\">3\u003c/a>\n  \u003ca href=\"catalog.html?page=3\" rel=\"next\">Next\u003c/a>\n\u003c/nav>",
+    "keywords": "pagination pages previous next rel prev next aria-current",
+    "guidance": "Real links and aria-current only for the actual current page."
+  },
+  {
+    "id": "catalog-contact-title",
+    "title": "Contact details",
+    "module": "syntyr.core.css",
+    "description": "Use address for the nearest article or section contact; sample contacts are placeholders.",
+    "html": "\u003csection aria-labelledby=\"catalog-contact-heading\">\n  \u003ch3 id=\"catalog-contact-heading\">Customer support\u003c/h3>\n  \u003caddress>\n    \u003ca href=\"mailto:support@example.com\">support@example.com\u003c/a>\n    \u003cspan aria-hidden=\"true\"> \u00b7 \u003c/span>\n    \u003ca href=\"tel:+12025550123\">+1 (202) 555-0123\u003c/a>\n  \u003c/address>\n  \u003cp>\u003csmall>Replace example.com and the example telephone number.\u003c/small>\u003c/p>\n\u003c/section>",
+    "keywords": "contact address email phone support organization details",
+    "guidance": "See the component API reference for compatible classes and CSS modules."
+  },
+  {
+    "id": "catalog-aside-title",
+    "title": "Section and complementary aside",
+    "module": "syntyr.core.css",
+    "description": "Keep a named content section and related complementary material distinct; sidecar layout is optional.",
+    "html": "\u003cdiv class=\"syn-sidecar\">\n  \u003csection aria-labelledby=\"catalog-aside-main-heading\">\n    \u003ch3 id=\"catalog-aside-main-heading\">Project overview\u003c/h3>\n    \u003cp>Core project content belongs in a named section.\u003c/p>\n  \u003c/section>\n  \u003caside aria-labelledby=\"catalog-aside-related-heading\">\n    \u003ch3 id=\"catalog-aside-related-heading\">Related resources\u003c/h3>\n    \u003cul>\u003cli>\u003ca href=\"guides.html\">Read the guides\u003c/a>\u003c/li>\u003c/ul>\n  \u003c/aside>\n\u003c/div>",
+    "keywords": "section sidebar complementary related resources aside landmark",
+    "guidance": "See the component API reference for compatible classes and CSS modules."
+  },
+  {
+    "id": "catalog-heading-group-title",
+    "title": "Heading group",
+    "module": "syntyr.core.css",
+    "description": "Group a title and supporting subtitle without inserting fake heading levels.",
+    "html": "\u003csection aria-labelledby=\"catalog-hgroup-heading\">\n  \u003chgroup>\n    \u003ch3 id=\"catalog-hgroup-heading\">Product updates\u003c/h3>\n    \u003cp class=\"syn-lede\">New releases, written for people.\u003c/p>\n  \u003c/hgroup>\n  \u003cp>Follow the updates that matter to your team.\u003c/p>\n\u003c/section>",
+    "keywords": "hgroup heading title subtitle introduction lede editorial",
+    "guidance": "See the component API reference for compatible classes and CSS modules."
+  },
+  {
+    "id": "catalog-event-agenda-title",
+    "title": "Event agenda",
+    "module": "syntyr.core.css",
+    "description": "Machine-readable times in an ordered agenda; the display time zone is explicit.",
+    "html": "\u003csection aria-labelledby=\"catalog-agenda-heading\">\n  \u003ch3 id=\"catalog-agenda-heading\">Workshop schedule\u003c/h3>\n  \u003col class=\"syn-stack\">\n    \u003cli>\u003ctime datetime=\"2026-12-03T09:00:00-03:00\">09:00 BRT\u003c/time> \u2014 Welcome\u003c/li>\n    \u003cli>\u003ctime datetime=\"2026-12-03T10:30:00-03:00\">10:30 BRT\u003c/time> \u2014 Hands-on session\u003c/li>\n    \u003cli>\u003ctime datetime=\"2026-12-03T12:00:00-03:00\">12:00 BRT\u003c/time> \u2014 Questions\u003c/li>\n  \u003c/ol>\n\u003c/section>",
+    "keywords": "agenda schedule event time datetime ordered list sessions",
+    "guidance": "See the component API reference for compatible classes and CSS modules."
+  },
+  {
+    "id": "catalog-table-totals-title",
+    "title": "Table with totals",
+    "module": "syntyr.core.css",
+    "description": "Use caption, scoped column headings and a real table footer for aggregated values.",
+    "html": "\u003cdiv class=\"syn-table-wrap\">\n  \u003ctable class=\"syn-table\">\n    \u003ccaption>Illustrative monthly orders\u003c/caption>\n    \u003cthead>\u003ctr>\u003cth scope=\"col\">Month\u003c/th>\u003cth scope=\"col\">Orders\u003c/th>\u003c/tr>\u003c/thead>\n    \u003ctbody>\n      \u003ctr>\u003cth scope=\"row\">January\u003c/th>\u003ctd>12\u003c/td>\u003c/tr>\n      \u003ctr>\u003cth scope=\"row\">February\u003c/th>\u003ctd>18\u003c/td>\u003c/tr>\n    \u003c/tbody>\n    \u003ctfoot>\u003ctr>\u003cth scope=\"row\">Total\u003c/th>\u003ctd>30\u003c/td>\u003c/tr>\u003c/tfoot>\n  \u003c/table>\n\u003c/div>",
+    "keywords": "table caption summary tfoot total column scope numeric",
+    "guidance": "Use proper headers, captions and scroll containers."
+  },
+  {
+    "id": "catalog-revisions-title",
+    "title": "Revisions and abbreviations",
+    "module": "syntyr.core.css",
+    "description": "Give abbreviations definitions and mark edits with native insertion and deletion elements.",
+    "html": "\u003csection aria-labelledby=\"catalog-revisions-heading\">\n  \u003ch3 id=\"catalog-revisions-heading\">Release terminology\u003c/h3>\n  \u003cp>\u003cabbr title=\"Application programming interface\">API\u003c/abbr> is the public contract.\u003c/p>\n  \u003cp>\u003cdfn>Progressive enhancement\u003c/dfn> keeps core content usable without scripts.\u003c/p>\n  \u003cp>Plan: \u003cdel datetime=\"2026-11-20\">Ship a prototype\u003c/del>\n     \u003cins datetime=\"2026-11-22\">Ship a tested component\u003c/ins>.\u003c/p>\n\u003c/section>",
+    "keywords": "abbreviation definition edit insert delete ins del dfn datetime revisions",
+    "guidance": "See the component API reference for compatible classes and CSS modules."
+  },
+  {
+    "id": "catalog-form-help-title",
+    "title": "Form help and validation",
+    "module": "syntyr.core.css",
+    "description": "Built-in constraint validation with a visible description; adapt the example GET endpoint.",
+    "html": "\u003cform class=\"syn-form\" action=\"catalog.html\" method=\"get\">\n  \u003clabel class=\"syn-label\" for=\"catalog-results-limit\">Maximum results\u003c/label>\n  \u003cinput class=\"syn-input\" id=\"catalog-results-limit\" name=\"limit\"\n         type=\"number\" min=\"1\" max=\"50\" value=\"10\" required\n         aria-describedby=\"catalog-validation-help\">\n  \u003cp class=\"syn-help\" id=\"catalog-validation-help\">Choose a number from 1 to 50.\u003c/p>\n  \u003cbutton class=\"syn-button syn-button--primary\" type=\"submit\">Apply limit\u003c/button>\n\u003c/form>",
+    "keywords": "form validation help required number range aria-describedby label",
+    "guidance": "Real handlers and field validation belong to the application."
+  },
+  {
+    "id": "catalog-skip-link-title",
+    "title": "Skip navigation link",
+    "module": "syntyr.core.css",
+    "description": "A working skip link moves to real content in the same example.",
+    "html": "\u003cdiv>\n  \u003ca class=\"syn-button\" href=\"#catalog-skip-destination\">Skip to example content\u003c/a>\n  \u003cnav aria-label=\"Example introductory links\">\u003ca href=\"guides.html\">Browse guides\u003c/a>\u003c/nav>\n  \u003csection id=\"catalog-skip-destination\" tabindex=\"-1\" aria-labelledby=\"catalog-skip-heading\">\n    \u003ch3 id=\"catalog-skip-heading\">Example main content\u003c/h3>\n    \u003cp>Use a matching target ID in your application.\u003c/p>\n  \u003c/section>\n\u003c/div>",
+    "keywords": "skip content anchor keyboard accessible",
+    "guidance": "Use button for actions and a for navigation. ARIA states describe real application state."
+  },
+  {
+    "id": "catalog-status-list-title",
+    "title": "Status indicator list",
+    "module": "syntyr.core.css",
+    "description": "Use textual status labels that stay understandable without color.",
+    "html": "\u003csection aria-labelledby=\"catalog-status-heading\">\n  \u003ch3 id=\"catalog-status-heading\">Workflow status\u003c/h3>\n  \u003cul class=\"syn-stack\">\n    \u003cli>\u003cspan class=\"syn-badge\">Ready\u003c/span> \u00b7 Draft reviewed\u003c/li>\n    \u003cli>\u003cspan class=\"syn-badge\">Pending\u003c/span> \u00b7 Awaiting approval\u003c/li>\n    \u003cli>\u003cspan class=\"syn-badge\">Needs attention\u003c/span> \u00b7 Missing document\u003c/li>\n  \u003c/ul>\n\u003c/section>",
+    "keywords": "status list badges semantic state text",
+    "guidance": "See the component API reference for compatible classes and CSS modules."
+  },
+  {
+    "id": "catalog-activity-entry-title",
+    "title": "Activity timeline",
+    "module": "syntyr.core.css",
+    "description": "Use an ordered list with machine-readable timestamps for an activity feed.",
+    "html": "\u003csection aria-labelledby=\"catalog-activity-heading\">\n  \u003ch3 id=\"catalog-activity-heading\">Recent activity\u003c/h3>\n  \u003col class=\"syn-stack\">\n    \u003cli>\u003ctime datetime=\"2026-11-22T10:00:00Z\">Nov 22, 10:00 UTC\u003c/time> \u2014 Draft updated\u003c/li>\n    \u003cli>\u003ctime datetime=\"2026-11-21T15:30:00Z\">Nov 21, 15:30 UTC\u003c/time> \u2014 Review requested\u003c/li>\n  \u003c/ol>\n\u003c/section>",
+    "keywords": "activity timeline events ordered time feed",
+    "guidance": "See the component API reference for compatible classes and CSS modules."
+  },
+  {
+    "id": "catalog-property-list-title",
+    "title": "Key-value details",
+    "module": "syntyr.core.css",
+    "description": "A definition list for record attributes, not a faux two-column table.",
+    "html": "\u003csection aria-labelledby=\"catalog-property-heading\">\n  \u003ch3 id=\"catalog-property-heading\">Record details\u003c/h3>\n  \u003cdl>\n    \u003cdt>Status\u003c/dt>\u003cdd>Active\u003c/dd>\n    \u003cdt>Plan\u003c/dt>\u003cdd>Starter\u003c/dd>\n    \u003cdt>Updated\u003c/dt>\u003cdd>\u003ctime datetime=\"2026-11-22\">November 22, 2026\u003c/time>\u003c/dd>\n  \u003c/dl>\n\u003c/section>",
+    "keywords": "property key value details description list metadata",
+    "guidance": "See the component API reference for compatible classes and CSS modules."
+  },
+  {
+    "id": "catalog-link-card-title",
+    "title": "Linked resource card",
+    "module": "syntyr.core.css",
+    "description": "A card with one real destination and a meaningful accessible link name.",
+    "html": "\u003carticle class=\"syn-panel\">\n  \u003cp class=\"syn-eyebrow\">DOCUMENTATION\u003c/p>\n  \u003ch3 class=\"syn-heading\">\u003ca href=\"guides.html\">Getting started guides\u003c/a>\u003c/h3>\n  \u003cp>Find practical examples for integrating native HTML and Syntyr CSS.\u003c/p>\n\u003c/article>",
+    "keywords": "resource article card link description",
+    "guidance": "Choose native headings and accessible labels."
+  },
+  {
+    "id": "catalog-section-actions-title",
+    "title": "Section header with actions",
+    "module": "syntyr.core.css",
+    "description": "A labeled section with actions kept in normal document order.",
+    "html": "\u003csection aria-labelledby=\"catalog-action-section-heading\">\n  \u003cheader class=\"syn-inline\">\n    \u003ch3 id=\"catalog-action-section-heading\">Workspace overview\u003c/h3>\n    \u003ca class=\"syn-button syn-button--outline\" href=\"guides.html\">View guides\u003c/a>\n  \u003c/header>\n  \u003cp>Place supporting content after the section heading.\u003c/p>\n\u003c/section>",
+    "keywords": "section header toolbar actions links responsive",
+    "guidance": "Use button for actions and a for navigation. ARIA states describe real application state."
+  },
+  {
     "id": "block-hero-product",
     "title": "Product launch hero",
     "module": "syntyr.core.css + syntyr.recipes.css",
@@ -838,6 +991,72 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
+    "id": "block-feature-spotlight",
+    "title": "Feature spotlight",
+    "module": "syntyr.core.css",
+    "description": "An editorial split section with a concrete feature benefit and a complementary product detail.",
+    "html": "\u003csection class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"feature-spotlight-heading\">\n  \u003cdiv class=\"syn-sidecar\">\n    \u003cdiv>\n      \u003cp class=\"syn-eyebrow\">PRODUCT / FEATURE\u003c/p>\n      \u003ch2 class=\"syn-heading\" id=\"feature-spotlight-heading\">Stay on top of every handoff.\u003c/h2>\n      \u003cp class=\"syn-lede\">One clear place to review owners, deadlines, and next steps.\u003c/p>\n      \u003ca class=\"syn-button syn-button--primary\" href=\"/features\">Explore features\u003c/a>\n    \u003c/div>\n    \u003caside class=\"syn-panel\" aria-label=\"Illustrative task status\">\n      \u003cp class=\"syn-caption\">EXAMPLE TASK\u003c/p>\n      \u003ch3 class=\"syn-heading\">Review proposal\u003c/h3>\n      \u003cp>\u003cspan class=\"syn-badge\">Ready for review\u003c/span>\u003c/p>\n      \u003cp class=\"syn-muted\">Owner: Sample team \u00b7 Due: Next week\u003c/p>\n    \u003c/aside>\n  \u003c/div>\n\u003c/section>",
+    "keywords": "Feature spotlight An editorial split section with a concrete feature benefit and a complementary product detail. feature spotlight split landing layout",
+    "kind": "block",
+    "category": "Marketing",
+    "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
+  },
+  {
+    "id": "block-trust-assurance",
+    "title": "Trust and assurance section",
+    "module": "syntyr.core.css",
+    "description": "Transparent questions to ask about security, reliability, and data handling; not certification claims.",
+    "html": "\u003csection class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"trust-assurance-heading\">\n  \u003ch2 class=\"syn-heading\" id=\"trust-assurance-heading\">Trust needs evidence.\u003c/h2>\n  \u003cp>Replace these sample prompts with verified policies and public documentation.\u003c/p>\n  \u003cul class=\"syn-grid\">\n    \u003cli class=\"syn-panel\">\u003ch3 class=\"syn-heading\">Access controls\u003c/h3>\u003cp>Describe how permissions are enforced and audited.\u003c/p>\u003c/li>\n    \u003cli class=\"syn-panel\">\u003ch3 class=\"syn-heading\">Data handling\u003c/h3>\u003cp>Publish retention, export and deletion policies.\u003c/p>\u003c/li>\n    \u003cli class=\"syn-panel\">\u003ch3 class=\"syn-heading\">Incident response\u003c/h3>\u003cp>Explain reporting channels and response expectations.\u003c/p>\u003c/li>\n  \u003c/ul>\n  \u003ca href=\"/security\">Read our documented practices\u003c/a>\n\u003c/section>",
+    "keywords": "Trust and assurance section Transparent questions to ask about security, reliability, and data handling; not certification claims. trust security assurance compliance marketing",
+    "kind": "block",
+    "category": "Marketing",
+    "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
+  },
+  {
+    "id": "block-event-registration",
+    "title": "Event registration section",
+    "module": "syntyr.core.css",
+    "description": "An agenda and accessible native signup form; your server must implement registration.",
+    "html": "\u003csection class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"event-registration-heading\">\n  \u003ch2 class=\"syn-heading\" id=\"event-registration-heading\">Join a product workshop\u003c/h2>\n  \u003cp>\u003ctime datetime=\"2026-12-03T14:00:00Z\">December 3, 2026 at 14:00 UTC\u003c/time> \u00b7 Online\u003c/p>\n  \u003cp class=\"syn-muted\">Illustrative event. Replace the date and submission route.\u003c/p>\n  \u003cform class=\"syn-form\" action=\"/events/register\" method=\"post\">\n    \u003clabel class=\"syn-label\" for=\"event-register-email\">Email address\u003c/label>\n    \u003cinput class=\"syn-input\" id=\"event-register-email\" name=\"email\" type=\"email\"\n           autocomplete=\"email\" required>\n    \u003cbutton class=\"syn-button syn-button--primary\" type=\"submit\">Request a seat\u003c/button>\n  \u003c/form>\n\u003c/section>",
+    "keywords": "Event registration section An agenda and accessible native signup form; your server must implement registration. event registration webinar signup marketing form",
+    "kind": "block",
+    "category": "Marketing",
+    "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
+  },
+  {
+    "id": "block-help-center",
+    "title": "Help center landing",
+    "module": "syntyr.core.css",
+    "description": "A searchable-looking help index built from real navigation links, not a fake search control.",
+    "html": "\u003csection class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"help-center-heading\">\n  \u003ch2 class=\"syn-heading\" id=\"help-center-heading\">How can we help?\u003c/h2>\n  \u003cp class=\"syn-muted\">Start with the topic that matches your question.\u003c/p>\n  \u003cnav aria-label=\"Help categories\">\n    \u003cul class=\"syn-grid\">\n      \u003cli class=\"syn-panel\">\u003ch3 class=\"syn-heading\">\u003ca href=\"/help/getting-started\">Getting started\u003c/a>\u003c/h3>\u003cp>Accounts, setup, and your first project.\u003c/p>\u003c/li>\n      \u003cli class=\"syn-panel\">\u003ch3 class=\"syn-heading\">\u003ca href=\"/help/billing\">Billing and plans\u003c/a>\u003c/h3>\u003cp>Invoices, subscriptions, and receipts.\u003c/p>\u003c/li>\n      \u003cli class=\"syn-panel\">\u003ch3 class=\"syn-heading\">\u003ca href=\"/help/security\">Account security\u003c/a>\u003c/h3>\u003cp>Access and sign-in guidance.\u003c/p>\u003c/li>\n    \u003c/ul>\n  \u003c/nav>\n\u003c/section>",
+    "keywords": "Help center landing A searchable-looking help index built from real navigation links, not a fake search control. help support knowledgebase navigation layout",
+    "kind": "block",
+    "category": "Applications",
+    "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
+  },
+  {
+    "id": "block-notification-center",
+    "title": "Notification center",
+    "module": "syntyr.core.css",
+    "description": "Time-ordered notifications with visible status labels and real detail destinations.",
+    "html": "\u003csection class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"notification-center-heading\">\n  \u003ch2 class=\"syn-heading\" id=\"notification-center-heading\">Recent notifications\u003c/h2>\n  \u003col class=\"syn-stack\">\n    \u003cli class=\"syn-panel\">\n      \u003ch3 class=\"syn-heading\">New review requested \u003cspan class=\"syn-badge\">Unread\u003c/span>\u003c/h3>\n      \u003cp>A teammate requested your review of a draft.\u003c/p>\n      \u003cp>\u003ctime datetime=\"2026-11-22T10:00:00Z\">November 22, 10:00 UTC\u003c/time> \u00b7 \u003ca href=\"/notifications/review\">View request\u003c/a>\u003c/p>\n    \u003c/li>\n    \u003cli class=\"syn-panel\">\n      \u003ch3 class=\"syn-heading\">Export finished\u003c/h3>\n      \u003cp>A sample export is ready to inspect.\u003c/p>\n      \u003cp>\u003ctime datetime=\"2026-11-21T16:30:00Z\">November 21, 16:30 UTC\u003c/time> \u00b7 \u003ca href=\"/notifications/export\">View export\u003c/a>\u003c/p>\n    \u003c/li>\n  \u003c/ol>\n\u003c/section>",
+    "keywords": "Notification center Time-ordered notifications with visible status labels and real detail destinations. inbox alerts notification activity layout",
+    "kind": "block",
+    "category": "Applications",
+    "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
+  },
+  {
+    "id": "block-api-endpoint-reference",
+    "title": "API endpoint reference",
+    "module": "syntyr.core.css",
+    "description": "Readable example request and response, with method, route, and JSON; your API owns behavior.",
+    "html": "\u003csection class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"api-endpoint-heading\">\n  \u003cp class=\"syn-eyebrow\">REFERENCE / ILLUSTRATIVE\u003c/p>\n  \u003ch2 class=\"syn-heading\" id=\"api-endpoint-heading\">List example records\u003c/h2>\n  \u003cp>\u003ccode>GET /v1/records\u003c/code> \u00b7 Sample contract, not a live endpoint.\u003c/p>\n  \u003ch3 class=\"syn-heading\">Request\u003c/h3>\n  \u003cpre>\u003ccode>GET /v1/records?limit=10\u003c/code>\u003c/pre>\n  \u003ch3 class=\"syn-heading\">Example response\u003c/h3>\n  \u003cpre>\u003ccode>{\n  \"items\": [{\"id\": \"example-1\", \"status\": \"ready\"}],\n  \"next\": null\n}\u003c/code>\u003c/pre>\n  \u003ca href=\"/docs/api\">Full API reference\u003c/a>\n\u003c/section>",
+    "keywords": "API endpoint reference Readable example request and response, with method, route, and JSON; your API owns behavior. api endpoint documentation technical code",
+    "kind": "block",
+    "category": "Technical",
+    "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
+  },
+  {
     "id": "block-scrollable-card-rail",
     "title": "Scrollable product card rail",
     "module": "syntyr.core.css + syntyr.recipes.css",
@@ -871,12 +1090,12 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
-    "id": "block-feature-spotlight",
-    "title": "Product feature spotlight",
+    "id": "block-feature-spotlight-detail",
+    "title": "Split feature detail spotlight",
     "module": "syntyr.core.css + syntyr.recipes.css",
-    "description": "Alternating product detail section with a structured UI illustration.",
+    "description": "Full split section with illustration, record details and activity timeline.",
     "html": "\u003csection class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-feature-spotlight-title\">\n  \u003cdiv class=\"syn-showcase\">\n    \u003cdiv class=\"syn-showcase-copy\">\n      \u003cp class=\"syn-eyebrow\">KEEP EVERYONE ALIGNED\u003c/p>\n      \u003ch2 id=\"syn-feature-spotlight-title\" class=\"syn-heading\">Decisions have context.\u003c/h2>\n      \u003cp>Each update can have an owner, a timestamp and a next action. Bring the details together in a single readable record.\u003c/p>\n      \u003cul>\u003cli>Understand the latest changes.\u003c/li>\u003cli>Locate the next step.\u003c/li>\u003cli>Keep relevant history in view.\u003c/li>\u003c/ul>\n      \u003ca class=\"syn-button syn-button--outline\" href=\"/features/activity\">Learn about activity\u003c/a>\n    \u003c/div>\n    \u003cdiv class=\"syn-showcase-visual\">\n      \u003cdiv class=\"syn-app-card\">\n        \u003cheader class=\"syn-app-card-header\">\u003ch3>Project detail\u003c/h3>\u003cspan class=\"syn-badge\">In progress\u003c/span>\u003c/header>\n        \u003cdl class=\"syn-record-fields\">\n          \u003cdiv>\u003cdt>Owner\u003c/dt>\u003cdd>Operations team\u003c/dd>\u003c/div>\n          \u003cdiv>\u003cdt>Milestone\u003c/dt>\u003cdd>Content review\u003c/dd>\u003c/div>\n          \u003cdiv>\u003cdt>Next step\u003c/dt>\u003cdd>Confirm delivery\u003c/dd>\u003c/div>\n        \u003c/dl>\n        \u003col class=\"syn-activity-timeline\">\n          \u003cli>\u003cstrong>Plan approved\u003c/strong>\u003ctime datetime=\"2026-10-03\">Oct 3\u003c/time>\u003c/li>\n          \u003cli>\u003cstrong>Review requested\u003c/strong>\u003ctime datetime=\"2026-10-04\">Oct 4\u003c/time>\u003c/li>\n        \u003c/ol>\n      \u003c/div>\n    \u003c/div>\n  \u003c/div>\n\u003c/section>",
-    "keywords": "Product feature spotlight Alternating product detail section with a structured UI illustration. features showcase split",
+    "keywords": "Split feature detail spotlight Full split section with illustration, record details and activity timeline. features showcase split",
     "kind": "block",
     "category": "Marketing",
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."

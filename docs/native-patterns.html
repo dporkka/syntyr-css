@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="This prerelease Syntyr example uses original CSS, not upstream Blades source. All patterns retain native HTML semantics and need no runtime JavaScript…">
-  <meta name="syntyr-source-sha256" content="e2116c1f4a8db73a5f885b01bb45eaef15912c451a9f11d52544e957bfb61293">
+  <meta name="syntyr-source-sha256" content="75a1d0303f4294aea01e24a28db3971cd99a10279554ff49bcb64711df8eecd9">
   <meta name="theme-color" content="#f5f7fb">
   <title>Native platform patterns and component imports — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/native-patterns">
@@ -96,6 +96,17 @@ Test keyboard interaction, forced colors, zoom/reflow, and real product
 copy in the target browsers. <strong>Application-owned behavior</strong> includes
 search filtering, validation on the server, destructive action
 authorization, and live calculations; none are provided by CSS.</p>
+<h2 id="native-horizontal-carousels">Native horizontal carousels</h2>
+<p>The existing opt-in <code>syntyr.media.css</code> module supplies
+<code>syn-media-rail--controls</code> for browser-generated previous/next buttons and
+<code>syn-media-rail--markers</code> for optional position markers. The underlying
+<code>syn-media-rail</code> continues to scroll and snap without those features.
+Every marked direct child must provide a localized <code>data-syn-scroll-label</code>
+for its accessible marker name.</p>
+<p><a href="https://syntyr-css.pages.dev/examples/media-entertainment.html">Copy the script-free example</a> and read
+<a href="https://syntyr-css.pages.dev/docs/media-entertainment.md">compatibility details and the full recipe</a>.
+Do not replace real ARIA tab widgets with CSS markers, or claim that markers
+provide autoplay, filtering, infinite looping or application state.</p>
 <h2 id="resource-outline-nested-native-navigation">Resource outline (nested native navigation)</h2>
 <p>A <strong>Resource outline</strong> is a CSS-only, progressively enhanced way to browse
 hierarchical folders, account groups and assets. Load <code>syntyr.core.css</code> and
@@ -308,6 +319,7 @@ and fallbacks.</p>
         <aside class="docs-article-sidebar"><nav aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#native-visibility-is-authoritative">Native visibility is authoritative</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#native-interaction-recipes">Native interaction recipes</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#native-horizontal-carousels">Native horizontal carousels</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#resource-outline-nested-native-navigation">Resource outline (nested native navigation)</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#individually-importable-css">Individually importable CSS</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#native-anchored-popovers-and-modal-commands">Native anchored popovers and modal commands</a>

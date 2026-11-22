@@ -2819,6 +2819,22 @@
       ]
     },
     {
+      "name": "syn-media-rail--controls",
+      "module": "media.css",
+      "description": "Opt-in native CSS carousel previous/next buttons; Scroll Snap remains usable without CSS Overflow 5 support.",
+      "stylesheets": [
+        "syntyr.media.css"
+      ]
+    },
+    {
+      "name": "syn-media-rail--markers",
+      "module": "media.css",
+      "description": "Opt-in native CSS position markers; label each direct child with data-syn-scroll-label.",
+      "stylesheets": [
+        "syntyr.media.css"
+      ]
+    },
+    {
       "name": "syn-media-search",
       "module": "media.css",
       "description": "Media search presentation in the media.css module; use semantic HTML and consult its component example.",

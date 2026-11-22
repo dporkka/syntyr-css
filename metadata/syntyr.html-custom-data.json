@@ -978,6 +978,14 @@
           "description": "Media rail presentation in the media.css module; use semantic HTML and consult its component example."
         },
         {
+          "name": "syn-media-rail--controls",
+          "description": "Opt-in native CSS carousel previous/next buttons; Scroll Snap remains usable without CSS Overflow 5 support."
+        },
+        {
+          "name": "syn-media-rail--markers",
+          "description": "Opt-in native CSS position markers; label each direct child with data-syn-scroll-label."
+        },
+        {
           "name": "syn-media-search",
           "description": "Media search presentation in the media.css module; use semantic HTML and consult its component example."
         },

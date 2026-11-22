@@ -67,6 +67,20 @@ copy in the target browsers. **Application-owned behavior** includes
 search filtering, validation on the server, destructive action
 authorization, and live calculations; none are provided by CSS.
 
+## Native horizontal carousels
+
+The existing opt-in `syntyr.media.css` module supplies
+`syn-media-rail--controls` for browser-generated previous/next buttons and
+`syn-media-rail--markers` for optional position markers. The underlying
+`syn-media-rail` continues to scroll and snap without those features.
+Every marked direct child must provide a localized `data-syn-scroll-label`
+for its accessible marker name.
+
+[Copy the script-free example](https://syntyr-css.pages.dev/examples/media-entertainment.html) and read
+[compatibility details and the full recipe](https://syntyr-css.pages.dev/docs/media-entertainment.md).
+Do not replace real ARIA tab widgets with CSS markers, or claim that markers
+provide autoplay, filtering, infinite looping or application state.
+
 ## Resource outline (nested native navigation)
 
 A **Resource outline** is a CSS-only, progressively enhanced way to browse

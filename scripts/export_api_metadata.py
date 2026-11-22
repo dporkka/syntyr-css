@@ -26,6 +26,9 @@ THEME = re.compile(r'data-syn-theme="([^"]+)"')
 
 CLASS_DOCS = {
     "syn-root": "Required style scope for Syntyr components and themes.",
+    "syn-media-rail--controls": "Opt-in native CSS carousel previous/next buttons; Scroll Snap remains usable without CSS Overflow 5 support.",
+    "syn-media-rail--markers": "Opt-in native CSS position markers; label each direct child with data-syn-scroll-label.",
+
     "syn-panel": "General-purpose surface; customize via --syn-panel-* properties.",
     "syn-frame--accent": "Optional 2px accent outline for a selected frame shape.",
     "syn-frame--step": "Optional square-stepped top-right and bottom-left frame.",

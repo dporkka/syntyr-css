@@ -60,3 +60,11 @@
 .syn-root .blocks-icon-controls .syn-label {display:block;margin-block-end:.4rem}
 .syn-root .blocks-motion-examples {margin-block:1rem 2rem}
 .syn-root .blocks-motion-example {gap:.5rem}
+
+/* Discovery links stay visible when documentation JavaScript is disabled. */
+.syn-root .blocks-pathways { margin-block: 1.5rem 2rem; }
+.syn-root .blocks-pathways > .syn-heading { margin-block: .5rem; }
+.syn-root .blocks-pathways > .syn-grid { --syn-grid-min: 14rem; margin-block-start: 1rem; }
+.syn-root .blocks-pathways .syn-panel { min-width:0; display:grid; gap:.5rem; align-content:start; }
+.syn-root .blocks-pathways .syn-panel > :where(h3,p) { margin:0; }
+.syn-root .blocks-pathways .syn-panel a { overflow-wrap:anywhere; }
