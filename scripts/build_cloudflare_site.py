@@ -314,6 +314,11 @@ def source_files(site_url: str = SITE_URL, *, include_cloudflare_headers: bool =
         ROOT / "index.html",
         ROOT / "assets/syntyr-mark.svg",
         ROOT / "assets/og-syntyr.png",
+        ROOT / "assets/gallery-horizon.svg",
+        ROOT / "assets/gallery-architecture.svg",
+        ROOT / "assets/gallery-signal.svg",
+        ROOT / "assets/gallery-botanical.svg",
+
         ROOT / "404.html",
         ROOT / "LICENSE",
         ROOT / "README.md",

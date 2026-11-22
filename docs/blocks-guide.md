@@ -2,22 +2,22 @@
 
 **Status:** Experimental alpha.5 source gallery, not an immutable release or published npm package.
 
-[Browse 68 blocks](blocks.html) | [Component catalog](catalog.html) | [Themes](theme-customization.md) | [Accessibility](accessibility.md)
+[Browse 73 blocks](blocks.html) | [Component catalog](catalog.html) | [Themes](theme-customization.md) | [Accessibility](accessibility.md)
 
 ## Contract
 
-The 68 copy-owned HTML compositions cover marketing, application, services, portfolio, editorial, navigation, publishing, commerce and technical use
+The 73 copy-owned HTML compositions cover marketing, application, services, portfolio, editorial, navigation, publishing, commerce and technical use
 cases. Each contains its own Syntyr root, uses accessible native markup and requires
 no application JavaScript. The data, testimonials and prices are illustrative, not live.
 
 The gallery script powers optional documentation search, theme switching and copy
-buttons. Disable JavaScript and all 68 static previews remain visible, with
+buttons. Disable JavaScript and all 73 static previews remain visible, with
 selectable source under native disclosure elements. No scripts are included in
-application CSS, and the core Syntyr build is unchanged.
+application CSS; the added gallery rules remain CSS-only.
 
 ## Safe local registry installation (experimental alpha.5 source)
 
-The static [universal registry](../registry/registry.json) contains the 68 MIT
+The static [universal registry](../registry/registry.json) contains the 73 MIT
 HTML blocks and nine CSS module entries. Every item includes its exact
 source-tree version, SHA-256 content hashes, declared CSS dependencies, files,
 and destination paths. This is **not** a published immutable alpha.5 release.
@@ -88,6 +88,29 @@ All example names, plan details, statuses and usage metrics are illustrative.
 Registration, authorization, invites, persistence, CSRF protection, OAuth,
 billing, webhook security and API key issuance are **host application** responsibilities.
 Replace example routes and sample data before deploying.
+
+## Image gallery and reusable website sections (unreleased source)
+
+Five additional sections expand the collection from 68 to 73:
+responsive **image gallery**, **image-and-copy story**, **multi-testimonial
+social proof**, **company milestones timeline**, and **event agenda**.
+They use native figures, captions, quotes, ordered lists, and machine-readable
+dates/times rather than introducing application JavaScript.
+
+The image gallery uses `syn-image-gallery` and the story uses
+`syn-media-figure`, both in `syntyr.core.css`. Every thumbnail in the copied HTML
+is a real anchor to its full-size original illustration, not a simulated
+JavaScript lightbox. Documentation previews keep links inert to prevent accidental navigation. Keyboard and screen-reader users can follow the same
+links. The media use intrinsic width and height and lazy loading to reduce
+layout shift and unnecessary downloads.
+
+The four SVG illustrations are original, self-hosted demo assets. The
+universal registry installs them to `syntyr/assets/` alongside the HTML,
+so relative example paths work immediately. When pasting a snippet directly
+into your own template, **replace the `../assets/gallery-*.svg` URLs with
+your own local, optimized images** and update descriptive alt text. Do not
+treat illustrative testimonials, company dates, or event times as factual.
+The agenda's example times require a real date and time zone in production.
 
 ## Native HTML and framework integration
 
@@ -205,7 +228,7 @@ copied into the public project. The separate private Console Kit is unaffected.
 ## Experimental shadcn universal-item registry
 
 The source candidate can generate a **copy-owned, framework-independent**
-shadcn-compatible universal-item registry from the same 68 MIT blocks and
+shadcn-compatible universal-item registry from the same 73 MIT blocks and
 checked-in CSS distributions. It neither replaces nor duplicates the native
 block installer from PR #104. Universal files use explicit project-relative
 targets, so no React, Tailwind, or Syntyr runtime JavaScript is required.
