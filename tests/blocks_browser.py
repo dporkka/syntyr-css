@@ -154,6 +154,39 @@ def root_control_motion_check(browser):
         page.close()
 
 
+def disabled_icon_wrapper_motion_check(browser):
+    page = browser.new_page()
+    try:
+        page.set_content("""
+          <div class="syn-root">
+            <button class="syn-icon syn-icon--spin syn-icon--on-interact"
+                    aria-label="Refresh">
+              <svg viewBox="0 0 24 24" aria-hidden="true"></svg>
+            </button>
+          </div>
+        """)
+        page.add_style_tag(path=ROOT / "dist/syntyr.symbols.css")
+        wrapper = page.get_by_role("button", name="Refresh")
+        animation = "node => getComputedStyle(node).animationName"
+        require(wrapper.evaluate(animation) == "none", "Icon wrapper must rest by default")
+        wrapper.hover()
+        require(wrapper.evaluate(animation) == "syn-icon-spin", "Enabled icon wrapper must animate on hover")
+        wrapper.evaluate("node => node.setAttribute('aria-disabled', 'true')")
+        require(wrapper.evaluate(animation) == "none", "ARIA-disabled icon wrapper must not animate on hover")
+        page.mouse.move(0, 0)
+        page.keyboard.press("Tab")
+        require(wrapper.evaluate("node => node.matches(':focus-visible')"),
+                "ARIA-disabled icon wrapper must still receive keyboard focus")
+        require(wrapper.evaluate(animation) == "none", "ARIA-disabled icon wrapper must not animate on focus")
+        wrapper.evaluate("node => node.removeAttribute('aria-disabled')")
+        require(wrapper.evaluate(animation) == "syn-icon-spin", "Enabled icon wrapper must animate on focus")
+        wrapper.hover(force=True)
+        wrapper.evaluate("node => node.disabled = true")
+        require(wrapper.evaluate(animation) == "none", "Native disabled icon wrapper must not animate on hover")
+    finally:
+        page.close()
+
+
 def progressive_checks(browser, engine, screenshots):
     context = browser.new_context(java_script_enabled=False,
                                   viewport={"width": 390, "height": 844},
@@ -446,6 +479,12 @@ def main():
             except Exception as exc:
                 failures.append(f"{engine} root control motion: {exc}")
                 item["root_control_motion"] = "fail"
+            try:
+                disabled_icon_wrapper_motion_check(browser)
+                item["disabled_icon_wrapper_motion"] = "pass"
+            except Exception as exc:
+                failures.append(f"{engine} disabled icon wrapper motion: {exc}")
+                item["disabled_icon_wrapper_motion"] = "fail"
             if engine == "chromium":
                 try:
                     live_clipboard_check(browser)

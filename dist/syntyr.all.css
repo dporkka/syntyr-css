@@ -2885,9 +2885,10 @@
     animation-name: var(--syn-icon-motion-keyframes);
   }
 
-  /* Disabled controls must keep nested icons still, even on direct SVG hover. */
+  /* Disabled controls must keep nested icons still, including icons on the controls themselves. */
   :where(.syn-root :is(:disabled, [aria-disabled="true"]) .syn-icon--on-interact,
          .syn-root:is(:disabled, [aria-disabled="true"]) .syn-icon--on-interact,
+         .syn-root .syn-icon--on-interact:is(:disabled, [aria-disabled="true"]),
          .syn-root.syn-icon--on-interact:is(:disabled, [aria-disabled="true"]),
          :is(:disabled, [aria-disabled="true"]) .syn-root .syn-icon--on-interact,
          :is(:disabled, [aria-disabled="true"]) .syn-root.syn-icon--on-interact) {
