@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Three CSS-only, swipeable scrollable card rails using Syntyr's optional recipes.">
+  <title>Scrollable card rails — Syntyr CSS</title>
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="../dist/syntyr.recipes.css">
+  <style>
+    .rail-gallery { padding-block: clamp(1.5rem, 4vw, 3rem) 5rem; }
+    .rail-gallery > header { max-inline-size: 65ch; margin-block-end: 2.5rem; }
+    .rail-gallery .syn-card-rail { margin-block-start: 2.25rem; }
+    .rail-gallery .syn-feature-card, .rail-gallery .syn-app-card { height: 100%; }
+    .rail-art {
+      display: grid; place-items: end start; min-inline-size: 0; padding: 1.25rem;
+      aspect-ratio: 16 / 9; border-radius: var(--syn-radius);
+      color: #fff; font: 800 clamp(1.2rem, 3vw, 2rem)/1.05 var(--syn-font-display, system-ui);
+      letter-spacing: -.04em; background: linear-gradient(135deg, #102e58, #507db1 50%, #101d33);
+    }
+    .rail-art--violet { background: linear-gradient(135deg, #211344, #8e45a5 60%, #2f1850); }
+    .rail-art--copper { background: linear-gradient(135deg, #42251b, #b77546 55%, #40211b); }
+    .rail-art--teal { background: linear-gradient(135deg, #09373b, #238e8c 60%, #11272d); }
+    .rail-art--rose { background: linear-gradient(135deg, #502238, #bf5883 55%, #331931); }
+    .rail-art--slate { background: linear-gradient(135deg, #1a2533, #5e738d 60%, #131a2a); }
+    .rail-art--poster { aspect-ratio: 2 / 3; align-items: end; }
+    .rail-gallery .syn-feature-card { display: grid; align-content: start; gap: .65rem; }
+    .rail-gallery .syn-feature-card :where(h3,p) { margin: 0; }
+    .rail-gallery .syn-feature-card a { color: var(--syn-text); font-weight: 700; }
+    .rail-gallery .syn-feature-card a:focus-visible { outline: 3px solid var(--syn-focus-ring); outline-offset: 2px; }
+    .rail-gallery .syn-app-card h3 { margin-block: 0 .6rem; }
+    .rail-gallery .syn-app-card p { margin-block: 0 .75rem; }
+    @media (forced-colors: active) { .rail-art { color: CanvasText; background: Canvas; border: 1px solid CanvasText; } }
+  </style>
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <a class="syn-button" href="#main">Skip to examples</a>
+  <main id="main" class="syn-shell rail-gallery">
+    <header>
+      <p class="syn-eyebrow">SYNTYR / SECTION RECIPES</p>
+      <h1>Scrollable card rails</h1>
+      <p class="syn-lede">Category-first horizontal discovery for media, portfolios, products and SaaS. Swipe on touch, scroll with a pointer, or tab to the named region and use arrow keys. No JavaScript or external assets.</p>
+    </header>
+
+    <section class="syn-card-rail" aria-labelledby="featured">
+      <div class="syn-card-rail__header">
+        <h2 class="syn-card-rail__heading" id="featured">Featured interfaces</h2>
+        <a href="#guidance">How it works</a>
+      </div>
+      <ul class="syn-card-rail__track" role="list" tabindex="0" aria-labelledby="featured">
+        <li class="syn-feature-card"><div class="rail-art" aria-hidden="true">Analytics</div><h3>Insight dashboards</h3><p class="syn-muted">See the important numbers quickly.</p><a href="#guidance">Explore pattern</a></li>
+        <li class="syn-feature-card"><div class="rail-art rail-art--violet" aria-hidden="true">Campaigns</div><h3>Campaign builder</h3><p class="syn-muted">Move from brief to launch.</p><a href="#guidance">Explore pattern</a></li>
+        <li class="syn-feature-card"><div class="rail-art rail-art--copper" aria-hidden="true">Locations</div><h3>Map explorer</h3><p class="syn-muted">Discover places and availability.</p><a href="#guidance">Explore pattern</a></li>
+        <li class="syn-feature-card"><div class="rail-art rail-art--teal" aria-hidden="true">Portals</div><h3>Customer portals</h3><p class="syn-muted">Keep work accessible to clients.</p><a href="#guidance">Explore pattern</a></li>
+        <li class="syn-feature-card"><div class="rail-art rail-art--rose" aria-hidden="true">Documents</div><h3>Document review</h3><p class="syn-muted">Review and coordinate approvals.</p><a href="#guidance">Explore pattern</a></li>
+        <li class="syn-feature-card"><div class="rail-art rail-art--slate" aria-hidden="true">Billing</div><h3>Billing workspace</h3><p class="syn-muted">Understand plans and invoices.</p><a href="#guidance">Explore pattern</a></li>
+      </ul>
+    </section>
+
+    <section class="syn-card-rail" style="--syn-card-rail-width: 16rem" aria-labelledby="workflow">
+      <div class="syn-card-rail__header">
+        <h2 class="syn-card-rail__heading" id="workflow">Workflows you can explore</h2>
+        <span class="syn-muted">Compact, text-first cards</span>
+      </div>
+      <ol class="syn-card-rail__track" role="list" tabindex="0" aria-labelledby="workflow">
+        <li class="syn-app-card"><h3>01 / Discovery</h3><p class="syn-muted">Browse opportunities and filter relevant options.</p><a href="#guidance">Read composition guide</a></li>
+        <li class="syn-app-card"><h3>02 / Planning</h3><p class="syn-muted">Choose assets and organize an actionable plan.</p><a href="#guidance">Read composition guide</a></li>
+        <li class="syn-app-card"><h3>03 / Review</h3><p class="syn-muted">Assess information before approval.</p><a href="#guidance">Read composition guide</a></li>
+        <li class="syn-app-card"><h3>04 / Delivery</h3><p class="syn-muted">Track outcomes with clear status labels.</p><a href="#guidance">Read composition guide</a></li>
+      </ol>
+    </section>
+
+    <section class="syn-card-rail" style="--syn-card-rail-width: 12rem" aria-labelledby="editorial">
+      <div class="syn-card-rail__header">
+        <h2 class="syn-card-rail__heading" id="editorial">Editorial picks</h2>
+        <span class="syn-muted">Portrait artwork via ordinary HTML</span>
+      </div>
+      <ul class="syn-card-rail__track" role="list" tabindex="0" aria-labelledby="editorial">
+        <li class="syn-feature-card"><div class="rail-art rail-art--poster" aria-hidden="true">Foundations</div><h3>Design foundations</h3><a href="#guidance">Open guide</a></li>
+        <li class="syn-feature-card"><div class="rail-art rail-art--poster rail-art--violet" aria-hidden="true">Typography</div><h3>Readable systems</h3><a href="#guidance">Open guide</a></li>
+        <li class="syn-feature-card"><div class="rail-art rail-art--poster rail-art--copper" aria-hidden="true">Motion</div><h3>Purposeful motion</h3><a href="#guidance">Open guide</a></li>
+        <li class="syn-feature-card"><div class="rail-art rail-art--poster rail-art--teal" aria-hidden="true">Navigation</div><h3>Finding your way</h3><a href="#guidance">Open guide</a></li>
+        <li class="syn-feature-card"><div class="rail-art rail-art--poster rail-art--slate" aria-hidden="true">Patterns</div><h3>Composed interfaces</h3><a href="#guidance">Open guide</a></li>
+      </ul>
+    </section>
+
+    <section id="guidance" class="syn-panel" aria-labelledby="guidance-title" style="margin-block-start: 3rem">
+      <h2 id="guidance-title">Implementation notes</h2>
+      <p>Load <code>syntyr.core.css</code> and the opt-in <code>syntyr.recipes.css</code>. The row uses native horizontal overflow and proximity snap, with a visible scrollbar and a peek at the next card. Its width is controlled by <code>--syn-card-rail-width</code>; its gap by <code>--syn-card-rail-gap</code>. Reuse any card component inside the track.</p>
+      <p>This static gallery is not a playlist, filtering engine, autoplay system, or server-backed navigator. For full usage and accessibility guidance, see <a href="../docs/recipes.html">Composition recipes</a>.</p>
+    </section>
+  </main>
+</body>
+</html>

@@ -150,6 +150,22 @@
           "description": "Secondary caption text for supporting context."
         },
         {
+          "name": "syn-card-rail",
+          "description": "Card rail presentation in the recipes.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-card-rail__header",
+          "description": "Header part of the card rail component; see recipes.css for markup."
+        },
+        {
+          "name": "syn-card-rail__heading",
+          "description": "Heading part of the card rail component; see recipes.css for markup."
+        },
+        {
+          "name": "syn-card-rail__track",
+          "description": "Track part of the card rail component; see recipes.css for markup."
+        },
+        {
           "name": "syn-cell--nowrap",
           "description": "Nowrap appearance variant of the cell component; see components/data.css for styles."
         },

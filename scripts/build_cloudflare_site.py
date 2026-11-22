@@ -347,7 +347,7 @@ def source_files(site_url: str = SITE_URL, *, include_cloudflare_headers: bool =
 
     public_examples = (
         "business.html", "form-state-contracts.html",
-        "media-entertainment.html", "email.html", "common-ui.html", "platform-embed.html", "console.html", "form-composition.html", "geometry-terminal.html", "intensity-geometry.html", "landing.html", "semantic-starter.html",
+        "media-entertainment.html", "card-rails.html", "email.html", "common-ui.html", "platform-embed.html", "console.html", "form-composition.html", "geometry-terminal.html", "intensity-geometry.html", "landing.html", "semantic-starter.html",
         "minimalist-patterns.html", "design-states.html", "native-elements.html", "semantic-compositions.html", "native-interactions.html", "native-recipes.html", "resource-outline.html", "query-review.html", "command-launcher.html", "command-launcher.mjs", "native-choice-filter-list.html", "composition-adoption.html", "native-apis.html", "dropdowns.html", "performance-first.html",
         "operations-console.css", "operations-console.html", "pricing.html", "workflow-steps.html", "settings-billing.html", "settings-billing.css",
         "app-screens.css", "app-onboarding.html", "app-team.html", "app-notifications.html",

@@ -66,6 +66,14 @@
       "description": "Card padding design token from tokens.css; override in the appropriate Syntyr scope when needed."
     },
     {
+      "name": "--syn-card-rail-gap",
+      "description": "Card rail gap design token from recipes.css; override in the appropriate Syntyr scope when needed."
+    },
+    {
+      "name": "--syn-card-rail-width",
+      "description": "Card rail width design token from recipes.css; override in the appropriate Syntyr scope when needed."
+    },
+    {
       "name": "--syn-chart-1",
       "description": "Chart presentation design token chart 1; provide non-color chart labels."
     },

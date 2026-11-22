@@ -542,6 +542,50 @@
       ]
     },
     {
+      "name": "syn-card-rail",
+      "module": "recipes.css",
+      "description": "Card rail presentation in the recipes.css module; use semantic HTML and consult its component example.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
+      "name": "syn-card-rail__header",
+      "module": "recipes.css",
+      "description": "Header part of the card rail component; see recipes.css for markup.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
+      "name": "syn-card-rail__heading",
+      "module": "recipes.css",
+      "description": "Heading part of the card rail component; see recipes.css for markup.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
+      "name": "syn-card-rail__track",
+      "module": "recipes.css",
+      "description": "Track part of the card rail component; see recipes.css for markup.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
       "name": "syn-cell--nowrap",
       "module": "components/data.css",
       "description": "Nowrap appearance variant of the cell component; see components/data.css for styles.",
@@ -4981,6 +5025,28 @@
         "syntyr.css",
         "syntyr.embed.css",
         "syntyr.semantic-bundle.css"
+      ]
+    },
+    {
+      "name": "--syn-card-rail-gap",
+      "module": "recipes.css",
+      "description": "Card rail gap design token from recipes.css; override in the appropriate Syntyr scope when needed.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
+      "name": "--syn-card-rail-width",
+      "module": "recipes.css",
+      "description": "Card rail width design token from recipes.css; override in the appropriate Syntyr scope when needed.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.recipes.css"
       ]
     },
     {
