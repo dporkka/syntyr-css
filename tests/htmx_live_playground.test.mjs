@@ -32,6 +32,14 @@ test('HTMX normal GET returns only a swap-safe fragment, including table and pag
   assert.match(html,/Page 1 of/);
 });
 
+test('customer table is keyboard-scrollable and opts into existing readable-table CSS', async () => {
+  const fragment = await body(await call('', {'HX-Request': 'true'}));
+  const document = await body(await call());
+  assert.match(fragment, /class="syn-table-wrap" role="region" aria-label="Scrollable customer table" tabindex="0"/);
+  assert.match(fragment, /class="syn-table syn-table--striped syn-table--readable"/);
+  assert.match(document, /\/dist\/syntyr\.recipes\.css/);
+});
+
 test('HTMX history cache miss returns a full document, even with HX-Request true', async () => {
   const r=await call('?q=acme',{'HX-Request':'true','HX-History-Restore-Request':'true'});
   assert.match(await body(r),/<!doctype html>/i);
