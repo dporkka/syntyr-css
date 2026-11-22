@@ -1,0 +1,28 @@
+<section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-billing-usage-title">
+  <header class="syn-page-header">
+    <div><p class="syn-eyebrow">WORKSPACE BILLING</p><h2 id="syn-billing-usage-title" class="syn-heading">Subscription and usage</h2>
+      <p class="syn-muted">Illustrative billing data; payment operations belong to your billing provider and backend.</p></div>
+    <a class="syn-button syn-button--outline" href="/billing/payment-method">Payment methods</a>
+  </header>
+  <div class="syn-grid">
+    <article class="syn-panel" aria-labelledby="syn-usage-plan-title">
+      <h3 id="syn-usage-plan-title">Team plan</h3><p class="syn-lede">$79 / month</p>
+      <p>Next scheduled renewal: <time datetime="2027-01-01">January 1, 2027</time> (sample)</p>
+      <a href="/billing/plans">Review plans</a>
+    </article>
+    <article class="syn-panel" aria-labelledby="syn-usage-meter-title">
+      <h3 id="syn-usage-meter-title">Monthly quota</h3>
+      <p><label for="syn-usage-meter">68 of 100 credits used</label></p>
+      <meter id="syn-usage-meter" min="0" max="100" value="68">68%</meter>
+      <p class="syn-caption">Resets January 1 (example). The server calculates the authoritative usage.</p>
+      <a href="/billing/usage">View usage details</a>
+    </article>
+  </div>
+  <div class="syn-table-wrap" role="region" tabindex="0" aria-label="Billing invoices, scroll horizontally for more columns">
+    <table class="syn-table syn-table--readable"><caption>Example invoice history</caption>
+      <thead><tr><th scope="col">Invoice</th><th scope="col">Date</th><th scope="col">Amount</th><th scope="col">Status</th></tr></thead>
+      <tbody><tr><th scope="row"><a href="/billing/invoices/inv-104">INV-104</a></th><td><time datetime="2026-11-01">Nov 1, 2026</time></td><td>$79</td><td>Paid</td></tr>
+        <tr><th scope="row"><a href="/billing/invoices/inv-103">INV-103</a></th><td><time datetime="2026-10-01">Oct 1, 2026</time></td><td>$79</td><td>Paid</td></tr></tbody>
+    </table>
+  </div>
+</section>

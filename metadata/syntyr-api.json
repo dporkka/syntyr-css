@@ -122,6 +122,16 @@
       "description": "Accent-emphasis variant of a badge or status label."
     },
     {
+      "name": "syn-bento-card--wide",
+      "module": "recipes.css",
+      "description": "Span two bento tracks only when the parent container has enough room."
+    },
+    {
+      "name": "syn-bento-grid",
+      "module": "recipes.css",
+      "description": "Optional container-aware card grid for responsive feature compositions."
+    },
+    {
       "name": "syn-body",
       "module": "components/typography.css",
       "description": "Body presentation in the components/typography.css module; use semantic HTML and consult its component example."
@@ -1442,6 +1452,11 @@
       "description": "Scanlines presentation in the effects.css module; use semantic HTML and consult its component example."
     },
     {
+      "name": "syn-scroll-rail",
+      "module": "recipes.css",
+      "description": "Optional, keyboard-scrollable card rail with native scroll snapping; host owns any arrow controls or filtering."
+    },
+    {
       "name": "syn-section-heading",
       "module": "components/typography.css",
       "description": "Section heading presentation in the components/typography.css module; use semantic HTML and consult its component example."
@@ -1675,6 +1690,11 @@
       "name": "syn-table--compact",
       "module": "recipes.css",
       "description": "Compact-density native table variant."
+    },
+    {
+      "name": "syn-table--readable",
+      "module": "recipes.css",
+      "description": "Optional min-width table presentation; use inside a keyboard-focusable syn-table-wrap region for narrow screens."
     },
     {
       "name": "syn-table--sticky",

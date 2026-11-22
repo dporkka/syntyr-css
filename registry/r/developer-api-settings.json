@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "developer-api-settings",
+  "type": "registry:item",
+  "title": "API key and webhook settings",
+  "description": "Masked API-key metadata, secure-endpoint form and documentation routes.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://syntyr-css.pages.dev/registry/r/core.json",
+    "https://syntyr-css.pages.dev/registry/r/recipes.json"
+  ],
+  "files": [
+    {
+      "path": "blocks/snippets/developer-api-settings.html",
+      "type": "registry:file",
+      "target": "~/syntyr/blocks/developer-api-settings.html",
+      "content": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-developer-settings-title\">\n  <header class=\"syn-page-header\">\n    <div><p class=\"syn-eyebrow\">DEVELOPER WORKSPACE</p><h2 id=\"syn-developer-settings-title\" class=\"syn-heading\">API keys and webhooks</h2>\n      <p class=\"syn-muted\">Manage integration credentials and event delivery from your application.</p></div>\n    <a class=\"syn-button syn-button--outline\" href=\"/docs/api\">API documentation</a>\n  </header>\n  <div class=\"syn-detail-layout\">\n    <div class=\"syn-detail-main syn-panel\">\n      <h3>API keys</h3><p class=\"syn-caption\">Masked example identifiers only. Never render live secret values in this table.</p>\n      <div class=\"syn-table-wrap\" role=\"region\" tabindex=\"0\" aria-label=\"API key metadata, scroll for additional columns\">\n        <table class=\"syn-table syn-table--readable\"><caption>Example API key metadata</caption>\n          <thead><tr><th scope=\"col\">Name</th><th scope=\"col\">Identifier</th><th scope=\"col\">Scope</th><th scope=\"col\">Created</th></tr></thead>\n          <tbody><tr><th scope=\"row\">Production sync</th><td><code>key_…7c2a</code></td><td>Read only</td>\n            <td><time datetime=\"2026-10-15\">Oct 15, 2026</time></td></tr></tbody>\n        </table>\n      </div>\n      <p><a class=\"syn-button syn-button--primary\" href=\"/settings/api-keys/new\">Create API key</a></p>\n    </div>\n    <section class=\"syn-detail-aside syn-panel\" aria-labelledby=\"syn-webhook-new-title\">\n      <h3 id=\"syn-webhook-new-title\">New webhook endpoint</h3>\n      <form class=\"syn-form\" method=\"post\" action=\"/settings/webhooks\">\n        <div class=\"syn-field\"><label class=\"syn-label\" for=\"syn-webhook-url\">HTTPS endpoint URL</label>\n          <input class=\"syn-input\" id=\"syn-webhook-url\" name=\"url\" type=\"url\" placeholder=\"Enter an HTTPS endpoint\" pattern=\"https:&#47;&#47;.*\" required></div>\n        <div class=\"syn-field\"><label class=\"syn-label\" for=\"syn-webhook-event\">Event</label>\n          <select class=\"syn-input\" id=\"syn-webhook-event\" name=\"event\" required>\n            <option value=\"project.created\">project.created</option><option value=\"project.updated\">project.updated</option></select></div>\n        <button class=\"syn-button syn-button--primary\" type=\"submit\">Add endpoint</button>\n      </form>\n      <p class=\"syn-caption\">Implement SSRF protections, signing secrets, retries, CSRF defenses and delivery logs server-side.</p>\n      <a href=\"/settings/webhooks/deliveries\">Review delivery events</a>\n    </section>\n  </div>\n</section>\n"
+    },
+    {
+      "path": "LICENSE",
+      "type": "registry:file",
+      "target": "~/syntyr/LICENSE",
+      "content": "MIT License\n\nCopyright (c) 2026 Syntyr CSS contributors\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n"
+    }
+  ],
+  "meta": {
+    "syntyrVersion": "0.3.0-alpha.5",
+    "source": "MIT source candidate",
+    "runtimeJavaScript": false,
+    "fileDigests": {
+      "~/syntyr/blocks/developer-api-settings.html": "638302ff22c62ab565a9e550d2ad05436292453fdec2c96eaa5b9332d4085b62",
+      "~/syntyr/LICENSE": "42f56369ac06362dbfe433d2d50b178bf74c369a55ea22337ab40fd9433521bf"
+    }
+  },
+  "docs": "Experimental source-candidate asset. Review exact version, HTML routes, keyboard behavior and integration before production use."
+}

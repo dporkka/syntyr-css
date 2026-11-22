@@ -60,6 +60,17 @@ class AgentDocsTests(unittest.TestCase):
                      "docs/api-stability.md", "docs/ai-quickstart.md"):
             self.assertIn(name, published)
 
+    def test_agent_block_index_matches_public_block_manifest(self):
+        manifest = json.loads((ROOT / "blocks/manifest.json").read_text())
+        blocks = manifest["blocks"]
+        index = (ROOT / "llms.txt").read_text(encoding="utf-8")
+        guide = next(line for line in index.splitlines()
+                     if "docs/blocks-guide.md" in line)
+        self.assertIn(f"{len(blocks)} copy-owned blocks", guide)
+        self.assertIn("SaaS", guide)
+        self.assertIn("business", guide.lower())
+        self.assertIn("scrollable", guide.lower())
+
     def test_v1_contract_proposal_is_discoverable_and_not_misrepresented_as_stable(self):
         index = (ROOT / "llms.txt").read_text(encoding="utf-8")
         entry = next(line for line in index.splitlines() if "docs/api-stability.md" in line)

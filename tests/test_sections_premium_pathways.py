@@ -44,8 +44,8 @@ class ComponentAndPremiumPathTests(unittest.TestCase):
     def test_six_additional_free_sections_are_source_owned(self):
         manifest = json.loads((ROOT / "blocks/manifest.json").read_text())["blocks"]
         by_id = {item["id"]: item for item in manifest}
-        self.assertEqual(len(manifest), 56)
-        self.assertEqual(len(by_id), 56)
+        self.assertEqual(len(manifest), 68)
+        self.assertEqual(len(by_id), 68)
         for ident, category in SECTIONS.items():
             with self.subTest(ident=ident):
                 self.assertIn(ident, by_id)
@@ -59,7 +59,7 @@ class ComponentAndPremiumPathTests(unittest.TestCase):
                 gallery = (ROOT / "docs/blocks.html").read_text()
                 self.assertIn(f'data-block-id="{ident}"', gallery)
                 self.assertIn(f'block-title-{ident}', gallery)
-                self.assertIn("56 blocks available.", gallery)
+                self.assertIn("68 blocks available.", gallery)
 
     def test_crosslinks_have_real_destinations_and_distinguish_availability(self):
         catalog = (ROOT / "docs/catalog.html").read_text()

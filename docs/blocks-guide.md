@@ -2,22 +2,22 @@
 
 **Status:** Experimental alpha.5 source gallery, not an immutable release or published npm package.
 
-[Browse 56 blocks](blocks.html) | [Component catalog](catalog.html) | [Themes](theme-customization.md) | [Accessibility](accessibility.md)
+[Browse 68 blocks](blocks.html) | [Component catalog](catalog.html) | [Themes](theme-customization.md) | [Accessibility](accessibility.md)
 
 ## Contract
 
-The 56 copy-owned HTML compositions cover marketing, application, services, portfolio, editorial, navigation, publishing, commerce and technical use
+The 68 copy-owned HTML compositions cover marketing, application, services, portfolio, editorial, navigation, publishing, commerce and technical use
 cases. Each contains its own Syntyr root, uses accessible native markup and requires
 no application JavaScript. The data, testimonials and prices are illustrative, not live.
 
 The gallery script powers optional documentation search, theme switching and copy
-buttons. Disable JavaScript and all 56 static previews remain visible, with
+buttons. Disable JavaScript and all 68 static previews remain visible, with
 selectable source under native disclosure elements. No scripts are included in
 application CSS, and the core Syntyr build is unchanged.
 
 ## Safe local registry installation (experimental alpha.5 source)
 
-The static [universal registry](../registry/registry.json) contains the 56 MIT
+The static [universal registry](../registry/registry.json) contains the 68 MIT
 HTML blocks and nine CSS module entries. Every item includes its exact
 source-tree version, SHA-256 content hashes, declared CSS dependencies, files,
 and destination paths. This is **not** a published immutable alpha.5 release.
@@ -55,6 +55,39 @@ The three complete application compositions in this source candidate are:
 contain **illustrative data and placeholder host routes**. Their host
 application must supply authorization, data queries, CSRF protection,
 validation and persistence. See [form state contracts](component-recipes.md).
+
+## SaaS and business collection (experimental alpha.5 source)
+
+Twelve additional copy-owned compositions expand the collection from 56 to 68:
+six marketing sections (scrollable card rail, bento features, product preview hero,
+split feature detail spotlight, full example case study, pricing comparison) and six SaaS
+workspaces (sign-up, resource management, workspace invitations, billing usage,
+integration connection states, API keys and webhooks).
+
+For generic horizontal collections, load `syntyr.recipes.css` and use
+`syn-scroll-rail` on a named, focusable `role="region"` wrapper. Each direct
+child is an independent card. Customize `--syn-scroll-rail-card-width` and
+`--syn-scroll-rail-gap` locally. Native overflow and scroll snapping work
+without JavaScript; this does **not** add carousel buttons, autoplay or a new
+interaction runtime. The existing `syn-media-rail` remains unchanged and
+better suited to media/poster catalogs.
+
+For asymmetric feature cards, use `syn-bento-grid` and opt-in
+`syn-bento-card--wide` on an individual card. The grid's own container width
+determines when a wide card may span two columns. The previous `syn-grid`
+and `syn-feature-grid` remain available for equal-size cards. Reuse
+`syn-showcase` for split product storytelling rather than creating another
+split-layout API.
+
+Dense four-column tables in the SaaS screen examples opt into
+`syn-table--readable`. Place them inside an existing named, keyboard-focusable
+`syn-table-wrap` and customize `--syn-table-readable-min` (default 38rem) to
+preserve readable columns while allowing local horizontal scrolling.
+
+All example names, plan details, statuses and usage metrics are illustrative.
+Registration, authorization, invites, persistence, CSRF protection, OAuth,
+billing, webhook security and API key issuance are **host application** responsibilities.
+Replace example routes and sample data before deploying.
 
 ## Native HTML and framework integration
 
@@ -172,7 +205,7 @@ copied into the public project. The separate private Console Kit is unaffected.
 ## Experimental shadcn universal-item registry
 
 The source candidate can generate a **copy-owned, framework-independent**
-shadcn-compatible universal-item registry from the same 56 MIT blocks and
+shadcn-compatible universal-item registry from the same 68 MIT blocks and
 checked-in CSS distributions. It neither replaces nor duplicates the native
 block installer from PR #104. Universal files use explicit project-relative
 targets, so no React, Tailwind, or Syntyr runtime JavaScript is required.

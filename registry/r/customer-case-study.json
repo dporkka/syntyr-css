@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "customer-case-study",
+  "type": "registry:item",
+  "title": "Customer case study detail",
+  "description": "A complete editorial case-study layout with honest illustrative metrics.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://syntyr-css.pages.dev/registry/r/core.json",
+    "https://syntyr-css.pages.dev/registry/r/recipes.json"
+  ],
+  "files": [
+    {
+      "path": "blocks/snippets/customer-case-study.html",
+      "type": "registry:file",
+      "target": "~/syntyr/blocks/customer-case-study.html",
+      "content": "<article class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-case-study-title\">\n  <header class=\"syn-site-hero\">\n    <p class=\"syn-eyebrow\">CUSTOMER STORY / ILLUSTRATIVE EXAMPLE</p>\n    <h2 id=\"syn-case-study-title\" class=\"syn-site-heading\">More clarity in every handoff.</h2>\n    <p class=\"syn-lede\">How a fictional services team could organize its work in one place.</p>\n    <p class=\"syn-caption\">This is sample editorial content. Replace it with a verified customer story before publishing.</p>\n  </header>\n  <section class=\"syn-region\" aria-labelledby=\"syn-case-results-title\">\n    <h3 id=\"syn-case-results-title\">Illustrative outcomes</h3>\n    <div class=\"syn-kpi-grid\">\n      <div class=\"syn-panel\"><p class=\"syn-caption\">Teams in one workspace</p><strong>4</strong></div>\n      <div class=\"syn-panel\"><p class=\"syn-caption\">Core handoff stages</p><strong>6</strong></div>\n      <div class=\"syn-panel\"><p class=\"syn-caption\">Shared project view</p><strong>1</strong></div>\n    </div>\n  </section>\n  <div class=\"syn-detail-layout\">\n    <div class=\"syn-detail-main\">\n      <section class=\"syn-panel\" aria-labelledby=\"syn-case-challenge-title\"><h3 id=\"syn-case-challenge-title\">The challenge</h3>\n        <p>Requests arrived through separate channels, leaving project owners without a consistent record of decisions.</p></section>\n      <section class=\"syn-panel\" aria-labelledby=\"syn-case-approach-title\"><h3 id=\"syn-case-approach-title\">The approach</h3>\n        <p>A single intake, a defined set of milestones and shared status reporting created a repeatable workflow.</p></section>\n    </div>\n    <aside class=\"syn-detail-aside syn-panel\" aria-labelledby=\"syn-case-summary-title\">\n      <h3 id=\"syn-case-summary-title\">Story outline</h3>\n      <dl class=\"syn-record-fields\"><div><dt>Industry</dt><dd>Professional services</dd></div>\n        <div><dt>Use case</dt><dd>Cross-team coordination</dd></div></dl>\n      <a href=\"/stories\">More customer stories</a>\n    </aside>\n  </div>\n</article>\n"
+    },
+    {
+      "path": "LICENSE",
+      "type": "registry:file",
+      "target": "~/syntyr/LICENSE",
+      "content": "MIT License\n\nCopyright (c) 2026 Syntyr CSS contributors\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n"
+    }
+  ],
+  "meta": {
+    "syntyrVersion": "0.3.0-alpha.5",
+    "source": "MIT source candidate",
+    "runtimeJavaScript": false,
+    "fileDigests": {
+      "~/syntyr/blocks/customer-case-study.html": "683b555e454e8177c60f892e20011176bdfb529d80f4b88eabb69ce01c18e44b",
+      "~/syntyr/LICENSE": "42f56369ac06362dbfe433d2d50b178bf74c369a55ea22337ab40fd9433521bf"
+    }
+  },
+  "docs": "Experimental source-candidate asset. Review exact version, HTML routes, keyboard behavior and integration before production use."
+}

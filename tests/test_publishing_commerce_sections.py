@@ -31,7 +31,7 @@ class PublishingCommerceTests(unittest.TestCase):
     def test_only_four_unique_blocks_added_without_removing_existing_blocks(self):
         manifest=json.loads((ROOT/'blocks/manifest.json').read_text())['blocks']
         ids=[x['id'] for x in manifest]
-        self.assertEqual(len(ids),56)
+        self.assertEqual(len(ids),68)
         self.assertEqual(len(ids),len(set(ids)))
         self.assertTrue(ADDITIONS <= set(ids))
         self.assertTrue({'site-header','site-footer','mega-navigation',
