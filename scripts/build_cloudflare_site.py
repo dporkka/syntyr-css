@@ -204,6 +204,9 @@ HEADERS = """/*
 /blog/*
   Cache-Control: public, max-age=0, must-revalidate
 
+/tools/*
+  Cache-Control: public, max-age=0, must-revalidate
+
 /blog/rss.xml
   Content-Type: application/rss+xml; charset=utf-8
 
@@ -362,6 +365,13 @@ def source_files(site_url: str = SITE_URL, *, include_cloudflare_headers: bool =
     # Import the canonical distribution registry rather than maintaining
     # a second list that can silently omit new CSS entrypoints.
     public_css = tuple(all_distributions())
+    # Independent SEO landing pages, no server-side URL scanning or npm dependencies.
+    public_tools = (
+        "index.html", "color-contrast-checker.html", "css-theme-generator.html",
+        "css-clamp-generator.html", "responsive-design-tester.html",
+        "site.css", "logic.mjs", "site.mjs",
+    )
+    paths.extend(ROOT / "tools" / name for name in public_tools)
     paths.extend(ROOT / "docs" / name for name in PUBLIC_DOCS)
     paths.extend(ROOT / "docs" / (name.removesuffix(".md") + ".html")
                  for name in PUBLIC_DOCS if name.endswith(".md"))
