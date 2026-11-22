@@ -1524,6 +1524,8 @@ Original: https://syntyr-css.pages.dev/docs/component-recipes.md
 
 # Copy-owned form recipes
 
+Prefer an interactive starting point? The [Syntyr Form Customizer](form-builder.html) generates copyable forms and standalone HTML, with native form submission and no JavaScript in the output. Configure a real server endpoint before publishing.
+
 These are **MIT-licensed, plain-HTML examples**. Copy and modify them without installing a Syntyr CLI, template registry, React, or a JavaScript runtime. Syntyr provides presentation; your browser and application provide behavior.
 
 Load `dist/syntyr.core.css` and apply `.syn-root` on a stable ancestor. Input groups and fields are included in core. The examples below also work in Go/templ, Askama, Django templates, Astro, React, and HTMX.

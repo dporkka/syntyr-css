@@ -13,6 +13,7 @@ For browser readers, use the [human-readable HTML documentation directory](https
 - [Canonical DESIGN.md contract](https://syntyr-css.pages.dev/DESIGN.md): Agent-readable design rationale and Studio token snapshot generated from source CSS; other themes remain in CSS.
 - [AI quickstart](https://syntyr-css.pages.dev/docs/ai-quickstart.md): Version-aware CSS installation and valid HTML examples.
 - [Complete curated reference](https://syntyr-css.pages.dev/llms-full.txt): Concatenated public technical guides, generated from source.
+- [Free CSS developer tools](https://syntyr-css.pages.dev/tools/): Client-side WCAG text contrast checker, accessible CSS theme token generator, fluid typography clamp() calculator and sandboxed responsive HTML preview. Tool scripts are docs-only; the distributed Syntyr CSS has no runtime JavaScript requirement.
 - [Curated web design resources and Syntyr research priorities](https://syntyr-css.pages.dev/docs/design-resources.html): Standalone HTML page with 82 curated directories, tools, design systems and libraries, descriptions, links and Syntyr research priorities.
 - [Syntyr vs Tailwind vs plain CSS decision guide](https://syntyr-css.pages.dev/docs/tailwind-alternative.html): Source-aware comparison of HTML-first styling, explicit reasons to keep Tailwind or native CSS, and free adoption examples (alpha.5 source preview).
 - [Agreed design principles and conformance](https://syntyr-css.pages.dev/docs/design-principles.md): Hierarchy, semantic components, states, native HTML recipes, and tested palette roles.
@@ -61,6 +62,7 @@ For browser readers, use the [human-readable HTML documentation directory](https
 - [Optional Vertigo admin integration guide](https://syntyr-css.pages.dev/docs/vertigo-integration.md): Optional MIT Syntyr styling for Vertigo. The static public preview has no backend; separate private local PostGIS and authenticated-tenant development evidence is not a shipped plugin, hosted demo, or paid product.
 - [Premium CSS-only compositions and browser validation](https://syntyr-css.pages.dev/docs/premium-compositions.md): SaaS surfaces, native command presentation, responsive layouts, and maintainer-only Chromium/Firefox/WebKit reflow, keyboard and axe verification (alpha.5 source candidate).
 - [Copyable form recipes](https://syntyr-css.pages.dev/docs/component-recipes.md): Candidate-only native form groups and accessible markup.
+- [Syntyr Form Customizer](https://syntyr-css.pages.dev/docs/form-builder.html): Build and preview native forms in the documentation editor, which uses JavaScript. Export copyable form markup or standalone HTML that requires no JavaScript.
 - [Semantic HTML and native workflow recipes](https://syntyr-css.pages.dev/docs/semantic-components.md): FAQ disclosures, accessible issue search, grouped choice forms, progress/meter and responsive media; unreleased alpha.5 source candidate.
 - [Native dropdowns and selects](https://syntyr-css.pages.dev/docs/dropdowns.md): Native action panels, selects, and optional ARIA menu enhancement; alpha.5 source candidate.
 - [Native patterns and component imports](https://syntyr-css.pages.dev/docs/native-patterns.md): Five native interaction recipes (accordion, GET search, dialog, datalist, meter/output), progressive CSS-only carousel buttons/markers, and individual CSS entrypoints; unreleased alpha.5 source.
@@ -102,7 +104,7 @@ For browser readers, use the [human-readable HTML documentation directory](https
 ## Assets
 
 - [Pinned v0.3.0-alpha.4 core stylesheet](https://syntyr-css.pages.dev/v/0.3.0-alpha.4/syntyr.core.css)
-- [Expanded 32-example native HTML component catalog](https://syntyr-css.pages.dev/docs/catalog.html): Category-filtered copyable examples for typography, forms, navigation, data tables, media, semantic content and interactive HTML, including optional recipes, geometry and visualization modules (unreleased alpha.5 source candidate; load the indicated CSS module for each example).
+- [Expanded 43-example native HTML component catalog](https://syntyr-css.pages.dev/docs/catalog.html): Category-filtered copyable examples for typography, forms, navigation, data tables, media, semantic content and interactive HTML, including optional recipes, geometry and visualization modules (unreleased alpha.5 source candidate; load the indicated CSS module for each example).
 - [Current experimental component gallery](https://syntyr-css.pages.dev/docs/)
 
 - [Intrinsic composition and adoption](docs/composition-adoption.md) — wrapping clusters and sidecars without JavaScript.

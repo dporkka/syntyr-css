@@ -76,9 +76,17 @@ class InteractiveReferenceTests(unittest.TestCase):
         self.assertIn('"playground-snippet.js"', site)
 
     def test_catalog_can_open_any_example_in_playground(self):
+        catalog = (ROOT / "docs/catalog.html").read_text()
         js = (ROOT / "docs/catalog.js").read_text()
-        self.assertIn("playground.html#component=", js)
-        self.assertIn('document.createElement("a")', js)
+        card_ids = re.findall(
+            r'<article class="catalog-card[^>]*aria-labelledby="([^"]+)"', catalog
+        )
+        playground_links = re.findall(
+            r'<a class="syn-button catalog-edit" href="playground\.html#component=([^"]+)">',
+            catalog,
+        )
+        self.assertGreaterEqual(len(card_ids), 32)
+        self.assertEqual(playground_links, card_ids)
         self.assertIn("catalog-copy", js)
 
     def test_deployment_includes_generated_catalog(self):
