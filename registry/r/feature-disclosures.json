@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "feature-disclosures",
+  "type": "registry:item",
+  "title": "Native feature switcher",
+  "description": "Exclusive browser-native disclosures for feature storytelling without a script.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://syntyr-css.pages.dev/registry/r/core.json"
+  ],
+  "files": [
+    {
+      "path": "blocks/snippets/feature-disclosures.html",
+      "type": "registry:file",
+      "target": "~/syntyr/blocks/feature-disclosures.html",
+      "content": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"feature-disclosures-heading\">\n  <p class=\"syn-eyebrow\">PRODUCT / CAPABILITIES</p>\n  <h2 id=\"feature-disclosures-heading\" class=\"syn-heading\">Explore what each feature does.</h2>\n  <p class=\"syn-muted\">Native, exclusive disclosures offer keyboard-accessible content switching without requiring JavaScript. This is an accordion, not an ARIA tabs widget.</p>\n  <div class=\"syn-stack\">\n    <details class=\"syn-details syn-panel\" name=\"syntyr-features\" open>\n      <summary><strong>Plan with clarity</strong></summary>\n      <p>Review scope, owners, and dependencies in one place before work begins.</p>\n      <p><a href=\"/features/planning\">Explore planning</a></p>\n    </details>\n    <details class=\"syn-details syn-panel\" name=\"syntyr-features\">\n      <summary><strong>Track progress</strong></summary>\n      <p>See what has been completed and what still requires attention.</p>\n      <p><a href=\"/features/progress\">Explore progress tracking</a></p>\n    </details>\n    <details class=\"syn-details syn-panel\" name=\"syntyr-features\">\n      <summary><strong>Share the outcome</strong></summary>\n      <p>Capture decisions and provide updates to the people who need them.</p>\n      <p><a href=\"/features/reporting\">Explore reporting</a></p>\n    </details>\n  </div>\n</section>\n"
+    },
+    {
+      "path": "LICENSE",
+      "type": "registry:file",
+      "target": "~/syntyr/LICENSE",
+      "content": "MIT License\n\nCopyright (c) 2026 Syntyr CSS contributors\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n"
+    }
+  ],
+  "meta": {
+    "syntyrVersion": "0.3.0-alpha.5",
+    "source": "MIT source candidate",
+    "runtimeJavaScript": false,
+    "fileDigests": {
+      "~/syntyr/blocks/feature-disclosures.html": "b9e044a35f2709f172b254cff87c7cdfa5cf36f900dd8cc08239c24bfd8f2594",
+      "~/syntyr/LICENSE": "42f56369ac06362dbfe433d2d50b178bf74c369a55ea22337ab40fd9433521bf"
+    }
+  },
+  "docs": "Experimental source-candidate asset. Review exact version, HTML routes, keyboard behavior and integration before production use."
+}
