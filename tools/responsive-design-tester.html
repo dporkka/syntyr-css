@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Paste HTML and preview Syntyr CSS components at mobile, tablet and desktop widths in a sandboxed iframe. Check layout reflow and overflow without uploading content.">
+  <meta name="color-scheme" content="dark light">
+  <title>Free Responsive HTML Design Tester and Viewport Preview — Syntyr CSS</title>
+  <link rel="icon" href="../assets/syntyr-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="site.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio" data-tool="responsive">
+  <a class="syn-button tool-skip" href="#main">Skip to main content</a>
+  <div class="tool-shell">
+    <header class="tool-header">
+      <a class="tool-brand" href="../index.html" aria-label="Syntyr CSS home">SYNTYR <span>/ Tools</span></a>
+      <nav class="tool-nav" aria-label="Tools navigation">
+        <a href="index.html">All tools</a>
+        <a href="color-contrast-checker.html">Contrast</a>
+        <a href="css-theme-generator.html">Themes</a>
+        <a href="css-clamp-generator.html">Fluid type</a>
+        <a href="responsive-design-tester.html" aria-current="page">Responsive</a>
+      </nav>
+    </header>
+    <main id="main">
+      <section class="tool-hero">
+        <p class="tool-eyebrow">Free responsive preview / sandboxed</p>
+        <h1>Responsive HTML design tester</h1>
+        <p class="tool-lede">Paste HTML or edit the included semantic component example, then preview at common mobile, tablet and desktop widths. The content remains local and runs in a script-disabled sandbox.</p>
+      </section>
+      <div class="tool-layout">
+<section class="tool-card" aria-labelledby="responsive-controls-title"><h2 id="responsive-controls-title">Configure the preview</h2>
+<div class="tool-form"><label class="tool-field" for="viewport-preset">Viewport preset<select id="viewport-preset"><option value="320">Small mobile · 320px</option><option value="375" selected>Mobile · 375px</option><option value="768">Tablet · 768px</option><option value="1024">Laptop · 1024px</option><option value="1440">Desktop · 1440px</option></select></label>
+<label class="tool-field" for="viewport-width">Custom width (240–1920 px)<input type="number" id="viewport-width" value="375" min="240" max="1920" step="1"></label>
+<label class="tool-field" for="responsive-html">HTML to preview<textarea id="responsive-html" rows="11" spellcheck="false">&lt;section class="syn-panel" style="padding:1.5rem"&gt;
+  &lt;p class="syn-eyebrow"&gt;Syntyr / Responsive&lt;/p&gt;
+  &lt;h2&gt;Build without the bloat.&lt;/h2&gt;
+  &lt;p&gt;Semantic HTML and CSS components.&lt;/p&gt;
+  &lt;div class="syn-actions"&gt;
+    &lt;button class="syn-button syn-button--primary"&gt;Start building&lt;/button&gt;
+    &lt;a class="syn-button" href="#"&gt;Learn more&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</textarea></label>
+</div><p class="tool-help">The preview uses the local Syntyr core CSS. Custom HTML is not saved or sent to a server. Scripts, forms and top-level navigation are disabled inside the sandbox.</p>
+</section>
+<section class="tool-card" aria-labelledby="responsive-result-title"><h2 id="responsive-result-title">Viewport preview</h2>
+<p id="responsive-report" class="tool-status" role="status">Enable JavaScript to edit the preview.</p>
+<div class="tool-stage"><iframe id="responsive-frame" title="Sandboxed responsive HTML preview" sandbox="" loading="lazy" srcdoc="&lt;!doctype html&gt;&lt;html lang=&quot;en&quot;&gt;&lt;body&gt;&lt;p&gt;Enable JavaScript to update the preview.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"></iframe></div>
+</section>
+</div>
+      <section class="tool-notes" aria-labelledby="tool-notes-title">
+        <div>
+          <h2 id="tool-notes-title">How to use this tool</h2>
+          <p>Use the width presets to inspect whether a component reflows at small mobile widths and whether a wide layout creates horizontal overflow. The preview uses a real width-constrained iframe—not a scaled screenshot.</p><p>This is a local HTML preview, <strong>not a scanner for arbitrary website URLs</strong>. Remote pages may disallow framing via CSP or X-Frame-Options; validating full live websites requires a real browser test setup. For comprehensive accessibility, performance and page audits, see <a href="https://websyt.dev/">Websyt.dev</a>.</p><p>Verify touch targets, keyboard navigation, text resizing, forms and assistive-technology behavior separately in the actual application.</p>
+        </div>
+        <aside>
+          <h2>Build with Syntyr</h2>
+          <p>Use the generated CSS with semantic HTML and Syntyr components. These utilities run in your browser; using the resulting code does not require any tool JavaScript.</p>
+          <p><a href="../docs/catalog.html">Explore copyable components</a> · <a href="../docs/theme-editor.html">Syntyr theme editor</a></p>
+          <p><a href="../docs/accessibility.html">Accessibility guidance</a> · <a href="../docs/form-builder.html">Form customizer</a> · <a href="../docs/products.html">Products</a></p>
+        </aside>
+      </section>
+    </main>
+    <footer class="tool-footer">
+      <span>Free, local-first design utilities. No signup or backend scans.</span>
+      <span><a href="../index.html">Syntyr CSS</a> · <a href="index.html">All free tools</a> · <a href="https://github.com/dporkka/syntyr-css">GitHub</a></span>
+    </footer>
+  </div>
+  <script type="module" src="site.mjs"></script>
+</body>
+</html>

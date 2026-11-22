@@ -92,6 +92,8 @@ class CloudflareSiteTests(unittest.TestCase):
                 for page in out.rglob("*.html")
                 if page.relative_to(out).as_posix() not in {
                     "docs/form-builder.html", "docs/theme-editor.html", "docs/catalog.html",
+                    "tools/color-contrast-checker.html", "tools/css-theme-generator.html",
+                    "tools/css-clamp-generator.html", "tools/responsive-design-tester.html",
                     "docs/playground.html", "docs/page-builder.html", "docs/blocks.html",
                     "docs/how-to.html",  # Docs-only search, same CSP as the catalog.
                     "docs/starter-wizard.html",  # Docs-only generator, no runtime dependency.
