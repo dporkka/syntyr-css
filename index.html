@@ -47,6 +47,8 @@
     .site-hero h1 em { color: var(--syn-accent); font-style: normal; }
     .site-lede { max-inline-size: 52ch; color: var(--syn-muted); font-size: clamp(1rem, 1rem + .2vw, 1.15rem); line-height: 1.5; }
     .site-hero .syn-actions { margin-block: 1rem .7rem; }
+    .site-hero-resources { display: flex; flex-wrap: wrap; gap: .25rem 1rem; align-items: center; margin: 0 0 .65rem; font: 600 .85rem/1.5 var(--syn-font-ui); }
+    .site-hero-resources a { color: var(--syn-accent); text-underline-offset: .2em; }
     .site-trust { display: flex; flex-wrap: wrap; gap: .6rem 1.25rem; padding: 0; list-style: none; color: var(--syn-muted); font-size: .85rem; }
     .site-trust li { display: flex; align-items: center; gap: .4rem; }
     .site-trust li::before { content: ""; inline-size: .4rem; block-size: .4rem; border-radius: 100%; background: var(--syn-success); }
@@ -185,11 +187,13 @@
         <a href="docs/catalog.html">Components</a>
         <a href="docs/blocks.html">Blocks</a>
         <a href="#themes">Themes</a>
+        <a href="docs/console-kit.html">Console Kit</a>
+        <a href="examples/semantic-starter.html">Semantic starter</a>
         <a href="https://github.com/dporkka/syntyr-css">GitHub</a>
       </nav>
       <details class="site-mobile-menu">
         <summary>Menu</summary>
-        <nav aria-label="Site menu">
+        <nav aria-label="Mobile navigation">
           <a href="#quickstart">Get started</a>
           <a href="docs/catalog.html">Components</a>
         <a href="docs/blocks.html">Blocks</a>
@@ -219,6 +223,10 @@
             <a class="syn-button syn-button--primary" href="#quickstart">Get started</a>
             <a class="syn-button syn-button--outline" href="docs/catalog.html">Explore components</a>
           </div>
+          <p class="site-hero-resources">
+            <a href="docs/#install">Installation guide</a>
+            <a href="docs/console-kit.html">Console Kit concept</a>
+          </p>
           <p class="syn-caption">Considering a switch? <a href="docs/tailwind-alternative.html">Compare Syntyr, Tailwind and plain CSS</a> before choosing.</p>
           <ul class="site-trust" aria-label="Library characteristics">
             <li>MIT-licensed core</li>
