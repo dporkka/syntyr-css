@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import gzip
 import io
+import json
 from pathlib import Path
 import tarfile
 import tempfile
@@ -140,6 +141,22 @@ class NpmTarballAuditTests(unittest.TestCase):
             "package/package.json": b'{"name":"@syntyr/css","exports":[]}',
         }))
         self.assertTrue(any("metadata" in err.lower() for err in errors), errors)
+
+    def test_css_side_effects_contract_is_required(self):
+        original = json.loads((ROOT / "package.json").read_text(encoding="utf-8"))
+        for invalid in (None, False, [], ["**/*.js"]):
+            with self.subTest(side_effects=invalid):
+                modified = dict(original)
+                if invalid is None:
+                    modified.pop("sideEffects", None)
+                else:
+                    modified["sideEffects"] = invalid
+                errors = self.check(archive_with(changes={
+                    "package/package.json": json.dumps(modified).encode("utf-8"),
+                }))
+                self.assertTrue(
+                    any("sideEffects" in error for error in errors), errors
+                )
 
     def test_rejects_bad_package_metadata_in_tarball(self):
         errors = self.check(archive_with(changes={"package/package.json": b'{"name": "something-else"}'}))
