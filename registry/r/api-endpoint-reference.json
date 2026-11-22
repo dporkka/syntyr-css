@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "api-endpoint-reference",
+  "type": "registry:item",
+  "title": "API endpoint reference",
+  "description": "Readable example request and response, with method, route, and JSON; your API owns behavior.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://syntyr-css.pages.dev/registry/r/core.json"
+  ],
+  "files": [
+    {
+      "path": "blocks/snippets/api-endpoint-reference.html",
+      "type": "registry:file",
+      "target": "~/syntyr/blocks/api-endpoint-reference.html",
+      "content": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"api-endpoint-heading\">\n  <p class=\"syn-eyebrow\">REFERENCE / ILLUSTRATIVE</p>\n  <h2 class=\"syn-heading\" id=\"api-endpoint-heading\">List example records</h2>\n  <p><code>GET /v1/records</code> · Sample contract, not a live endpoint.</p>\n  <h3 class=\"syn-heading\">Request</h3>\n  <pre><code>GET /v1/records?limit=10</code></pre>\n  <h3 class=\"syn-heading\">Example response</h3>\n  <pre><code>{\n  \"items\": [{\"id\": \"example-1\", \"status\": \"ready\"}],\n  \"next\": null\n}</code></pre>\n  <a href=\"/docs/api\">Full API reference</a>\n</section>\n"
+    },
+    {
+      "path": "LICENSE",
+      "type": "registry:file",
+      "target": "~/syntyr/LICENSE",
+      "content": "MIT License\n\nCopyright (c) 2026 Syntyr CSS contributors\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n"
+    }
+  ],
+  "meta": {
+    "syntyrVersion": "0.3.0-alpha.5",
+    "source": "MIT source candidate",
+    "runtimeJavaScript": false,
+    "fileDigests": {
+      "~/syntyr/blocks/api-endpoint-reference.html": "81dd34827f458ca4e4873da5f497a5ede9aad300ca21b383e3d5bf4b41d765c8",
+      "~/syntyr/LICENSE": "42f56369ac06362dbfe433d2d50b178bf74c369a55ea22337ab40fd9433521bf"
+    }
+  },
+  "docs": "Experimental source-candidate asset. Review exact version, HTML routes, keyboard behavior and integration before production use."
+}

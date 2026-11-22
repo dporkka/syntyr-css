@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "event-registration",
+  "type": "registry:item",
+  "title": "Event registration section",
+  "description": "An agenda and accessible native signup form; your server must implement registration.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://syntyr-css.pages.dev/registry/r/core.json"
+  ],
+  "files": [
+    {
+      "path": "blocks/snippets/event-registration.html",
+      "type": "registry:file",
+      "target": "~/syntyr/blocks/event-registration.html",
+      "content": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"event-registration-heading\">\n  <h2 class=\"syn-heading\" id=\"event-registration-heading\">Join a product workshop</h2>\n  <p><time datetime=\"2026-12-03T14:00:00Z\">December 3, 2026 at 14:00 UTC</time> · Online</p>\n  <p class=\"syn-muted\">Illustrative event. Replace the date and submission route.</p>\n  <form class=\"syn-form\" action=\"/events/register\" method=\"post\">\n    <label class=\"syn-label\" for=\"event-register-email\">Email address</label>\n    <input class=\"syn-input\" id=\"event-register-email\" name=\"email\" type=\"email\"\n           autocomplete=\"email\" required>\n    <button class=\"syn-button syn-button--primary\" type=\"submit\">Request a seat</button>\n  </form>\n</section>\n"
+    },
+    {
+      "path": "LICENSE",
+      "type": "registry:file",
+      "target": "~/syntyr/LICENSE",
+      "content": "MIT License\n\nCopyright (c) 2026 Syntyr CSS contributors\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n"
+    }
+  ],
+  "meta": {
+    "syntyrVersion": "0.3.0-alpha.5",
+    "source": "MIT source candidate",
+    "runtimeJavaScript": false,
+    "fileDigests": {
+      "~/syntyr/blocks/event-registration.html": "3cfc62bbe364a513a1ab839cd423ea24ef23ffa1a74272a9ee1c4ecc9fc8b1af",
+      "~/syntyr/LICENSE": "42f56369ac06362dbfe433d2d50b178bf74c369a55ea22337ab40fd9433521bf"
+    }
+  },
+  "docs": "Experimental source-candidate asset. Review exact version, HTML routes, keyboard behavior and integration before production use."
+}

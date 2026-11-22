@@ -21,6 +21,12 @@
   .catalog-source code { white-space: pre; }
   .catalog-copy { justify-self: start; }
   @media (forced-colors: active) { .catalog-preview, .catalog-source { border-color: CanvasText; } }
+  .catalog-pathways { margin-block: 1.5rem; }
+  .catalog-pathways > .syn-heading { margin-block: .5rem; }
+  .catalog-pathways > .syn-grid { --syn-grid-min: 14rem; margin-block-start: 1rem; }
+  .catalog-pathways .syn-panel { min-width: 0; display: grid; gap: .5rem; align-content: start; }
+  .catalog-pathways .syn-panel > :where(h3, p) { margin: 0; }
+  .catalog-pathways .syn-panel a { overflow-wrap: anywhere; }
   /* Static anchor index, with documentation-only scrollspy enhancement. */
   .catalog-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.5rem; align-items: start; }
   .catalog-layout > .catalog-content { min-width: 0; }
