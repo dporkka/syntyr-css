@@ -112,6 +112,10 @@ def audit_archive(archive: Path, root: Path = ROOT) -> list[str]:
                       "optionalDependencies", "scripts", "bin", "main"):
             if field in metadata:
                 errors.append(f"package metadata unexpectedly declares {field}")
+        # Imported CSS must survive tree shaking; optional JS companions remain
+        # independently removable. A broadened sideEffects map is a contract change.
+        if metadata.get("sideEffects") != ["**/*.css"]:
+            errors.append("package metadata sideEffects must be ['**/*.css']")
         exports = metadata.get("exports")
         if not isinstance(exports, dict):
             raise ValueError("exports must be an object")
