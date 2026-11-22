@@ -66,6 +66,22 @@ async function run(browserType, name, base) {
     assert(await page.getByText("1 selected.").count()>0);
     await page.close();
 
+    // A real native POST must work with browser JavaScript disabled, then PRG
+    // must expose the updated record. Restore seeded values for the next engine.
+    const editor=await browser.newPage({viewport:{width:390,height:844},javaScriptEnabled:false});
+    await editor.goto(base+"/resources?id=RS-204&theme=grid");
+    await editor.locator("#edit-owner").fill("Local Workshop");
+    await editor.locator("#edit-status").selectOption("done");
+    await editor.getByRole("button",{name:"Save local change"}).click();
+    assert(editor.url().includes("id=RS-204"),"POST must redirect to saved inspector");
+    assert(await editor.locator("aside").getByText("Local Workshop").count()>0,"edit must update server state");
+    assert.equal(await editor.locator("aside").locator("dd").filter({hasText:"done"}).count(),1);
+    await editor.locator("#edit-owner").fill("Operations");
+    await editor.locator("#edit-status").selectOption("review");
+    await editor.getByRole("button",{name:"Save local change"}).click();
+    assert(await editor.locator("aside").getByText("Operations").count()>0,"seeded owner restored");
+    await editor.close();
+
     const paged=await browser.newPage({viewport:{width:390,height:844},javaScriptEnabled:false});
     await paged.goto(base+"/resources?theme=grid&sort=name&columns_present=1&columns=owner");
     await paged.getByRole("link",{name:"Next"}).click();
