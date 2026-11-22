@@ -2,22 +2,22 @@
 
 **Status:** Experimental alpha.5 source gallery, not an immutable release or published npm package.
 
-[Browse 73 blocks](blocks.html) | [Component catalog](catalog.html) | [Themes](theme-customization.md) | [Accessibility](accessibility.md)
+[Browse 79 blocks](blocks.html) | [Component catalog](catalog.html) | [Themes](theme-customization.md) | [Accessibility](accessibility.md)
 
 ## Contract
 
-The 73 copy-owned HTML compositions cover marketing, application, services, portfolio, editorial, navigation, publishing, commerce and technical use
+The 79 copy-owned HTML compositions cover marketing, application, services, portfolio, editorial, navigation, publishing, commerce and technical use
 cases. Each contains its own Syntyr root, uses accessible native markup and requires
 no application JavaScript. The data, testimonials and prices are illustrative, not live.
 
 The gallery script powers optional documentation search, theme switching and copy
-buttons. Disable JavaScript and all 73 static previews remain visible, with
+buttons. Disable JavaScript and all 79 static previews remain visible, with
 selectable source under native disclosure elements. No scripts are included in
 application CSS; the added gallery rules remain CSS-only.
 
 ## Safe local registry installation (experimental alpha.5 source)
 
-The static [universal registry](../registry/registry.json) contains the 73 MIT
+The static [universal registry](../registry/registry.json) contains the 79 MIT
 HTML blocks and nine CSS module entries. Every item includes its exact
 source-tree version, SHA-256 content hashes, declared CSS dependencies, files,
 and destination paths. This is **not** a published immutable alpha.5 release.
@@ -89,9 +89,17 @@ Registration, authorization, invites, persistence, CSRF protection, OAuth,
 billing, webhook security and API key issuance are **host application** responsibilities.
 Replace example routes and sample data before deploying.
 
+## Additional Core website sections (unreleased source)
+
+Six independent, framework-neutral website sections joined the collection
+from the latest Core catalog: a **company story**, **customer reviews**,
+**use case showcase**, **locations and opening hours**, **career listings**,
+and **native feature disclosures**. All use semantic HTML and CSS-first
+presentation; review sample content and replace example links before use.
+
 ## Image gallery and reusable website sections (unreleased source)
 
-Five additional sections expand the collection from 68 to 73:
+Five further sections expand the collection from 74 to 79:
 responsive **image gallery**, **image-and-copy story**, **multi-testimonial
 social proof**, **company milestones timeline**, and **event agenda**.
 They use native figures, captions, quotes, ordered lists, and machine-readable
@@ -228,7 +236,7 @@ copied into the public project. The separate private Console Kit is unaffected.
 ## Experimental shadcn universal-item registry
 
 The source candidate can generate a **copy-owned, framework-independent**
-shadcn-compatible universal-item registry from the same 73 MIT blocks and
+shadcn-compatible universal-item registry from the same 79 MIT blocks and
 checked-in CSS distributions. It neither replaces nor duplicates the native
 block installer from PR #104. Universal files use explicit project-relative
 targets, so no React, Tailwind, or Syntyr runtime JavaScript is required.

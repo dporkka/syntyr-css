@@ -35,7 +35,7 @@ class EditorialSectionsTests(unittest.TestCase):
         blocks = json.loads((ROOT / 'blocks/manifest.json').read_text())['blocks']
         ids = {block['id'] for block in blocks}
         self.assertEqual(len(ids), len(blocks))
-        self.assertEqual(len(blocks), 73)
+        self.assertEqual(len(blocks), 79)
         self.assertTrue(EDITORIAL <= ids)
         for original in ('logo-wall', 'services-grid', 'portfolio-grid',
                          'resource-workspace', 'crm-workspace', 'billing-workspace'):

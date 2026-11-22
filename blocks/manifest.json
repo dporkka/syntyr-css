@@ -1077,6 +1077,95 @@
         "schedule",
         "conference"
       ]
+    },
+    {
+      "id": "company-story",
+      "category": "Company",
+      "title": "Company story and milestones",
+      "description": "An accessible company introduction with mission copy and an ordered story timeline.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "about",
+        "story",
+        "company",
+        "mission"
+      ]
+    },
+    {
+      "id": "customer-reviews",
+      "category": "Marketing",
+      "title": "Customer review grid",
+      "description": "Original attributed review cards with an explicit sample-content disclosure.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "reviews",
+        "testimonials",
+        "social proof"
+      ]
+    },
+    {
+      "id": "use-case-showcase",
+      "category": "Marketing",
+      "title": "Industry and use-case showcase",
+      "description": "Audience-specific benefits with real destination links and honest example content.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "solutions",
+        "industries",
+        "use cases",
+        "cards"
+      ]
+    },
+    {
+      "id": "locations-hours",
+      "category": "Services",
+      "title": "Locations and opening hours",
+      "description": "Semantic multi-location contacts with structured hours and accessibility links.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "locations",
+        "hours",
+        "local business",
+        "contact"
+      ]
+    },
+    {
+      "id": "careers-listings",
+      "category": "Company",
+      "title": "Careers and open positions",
+      "description": "Readable role summaries with clear application routes and example-data disclosure.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "careers",
+        "jobs",
+        "recruiting",
+        "hiring"
+      ]
+    },
+    {
+      "id": "feature-disclosures",
+      "category": "Marketing",
+      "title": "Native feature switcher",
+      "description": "Exclusive browser-native disclosures for feature storytelling without a script.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "features",
+        "accordion",
+        "progressive enhancement",
+        "no javascript"
+      ]
     }
   ]
 }

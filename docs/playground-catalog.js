@@ -1242,5 +1242,71 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "kind": "block",
     "category": "Services",
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
+  },
+  {
+    "id": "block-company-story",
+    "title": "Company story and milestones",
+    "module": "syntyr.core.css",
+    "description": "An accessible company introduction with mission copy and an ordered story timeline.",
+    "html": "\u003csection class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"company-story-heading\">\n  \u003cp class=\"syn-eyebrow\">ABOUT / OUR STORY\u003c/p>\n  \u003cdiv class=\"syn-sidecar\">\n    \u003cdiv class=\"syn-stack\">\n      \u003ch2 id=\"company-story-heading\" class=\"syn-heading\">Built around the work that matters.\u003c/h2>\n      \u003cp class=\"syn-lede\">Explain why your organization exists, the people it serves, and what makes its approach distinct.\u003c/p>\n      \u003cp class=\"syn-muted\">Replace this illustrative copy and milestones with your own verified history, mission, and values.\u003c/p>\n      \u003ca class=\"syn-button syn-button--primary\" href=\"/about\">Meet the company\u003c/a>\n    \u003c/div>\n    \u003cdiv class=\"syn-panel\">\n      \u003ch3 class=\"syn-heading\">Our journey\u003c/h3>\n      \u003col class=\"syn-stack\">\n        \u003cli>\u003cstrong>The beginning\u003c/strong>\u003cp class=\"syn-muted\">Describe the customer problem that motivated your team.\u003c/p>\u003c/li>\n        \u003cli>\u003cstrong>The breakthrough\u003c/strong>\u003cp class=\"syn-muted\">Explain an actual product milestone or meaningful change.\u003c/p>\u003c/li>\n        \u003cli>\u003cstrong>What comes next\u003c/strong>\u003cp class=\"syn-muted\">Share a concrete commitment to customers and partners.\u003c/p>\u003c/li>\n      \u003c/ol>\n    \u003c/div>\n  \u003c/div>\n\u003c/section>",
+    "keywords": "Company story and milestones An accessible company introduction with mission copy and an ordered story timeline. about story company mission",
+    "kind": "block",
+    "category": "Company",
+    "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
+  },
+  {
+    "id": "block-customer-reviews",
+    "title": "Customer review grid",
+    "module": "syntyr.core.css",
+    "description": "Original attributed review cards with an explicit sample-content disclosure.",
+    "html": "\u003csection class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"customer-reviews-heading\">\n  \u003cp class=\"syn-eyebrow\">CUSTOMER VOICES\u003c/p>\n  \u003ch2 id=\"customer-reviews-heading\" class=\"syn-heading\">What customers are saying\u003c/h2>\n  \u003cp class=\"syn-muted\">Illustrative feedback only. Replace with authentic, permission-based reviews and accurately attributed sources.\u003c/p>\n  \u003cdiv class=\"syn-grid\">\n    \u003cfigure class=\"syn-panel\">\n      \u003cblockquote>\u003cp>\u201cThe onboarding was clear, and the team knew what to do next.\u201d\u003c/p>\u003c/blockquote>\n      \u003cfigcaption class=\"syn-muted\">Illustrative review \u2014 Customer role, organization\u003c/figcaption>\n    \u003c/figure>\n    \u003cfigure class=\"syn-panel\">\n      \u003cblockquote>\u003cp>\u201cWe have a much better view of projects and follow-ups.\u201d\u003c/p>\u003c/blockquote>\n      \u003cfigcaption class=\"syn-muted\">Illustrative review \u2014 Customer role, organization\u003c/figcaption>\n    \u003c/figure>\n    \u003cfigure class=\"syn-panel\">\n      \u003cblockquote>\u003cp>\u201cA simpler workflow made the handoffs easier to manage.\u201d\u003c/p>\u003c/blockquote>\n      \u003cfigcaption class=\"syn-muted\">Illustrative review \u2014 Customer role, organization\u003c/figcaption>\n    \u003c/figure>\n  \u003c/div>\n  \u003cp>\u003ca class=\"syn-button\" href=\"/reviews\">Read customer stories\u003c/a>\u003c/p>\n\u003c/section>",
+    "keywords": "Customer review grid Original attributed review cards with an explicit sample-content disclosure. reviews testimonials social proof",
+    "kind": "block",
+    "category": "Marketing",
+    "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
+  },
+  {
+    "id": "block-use-case-showcase",
+    "title": "Industry and use-case showcase",
+    "module": "syntyr.core.css",
+    "description": "Audience-specific benefits with real destination links and honest example content.",
+    "html": "\u003csection class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"use-cases-heading\">\n  \u003cp class=\"syn-eyebrow\">USE CASES / WHO IT HELPS\u003c/p>\n  \u003ch2 id=\"use-cases-heading\" class=\"syn-heading\">One workspace, different ways of working.\u003c/h2>\n  \u003cp class=\"syn-lede\">Show the specific problem each audience can solve without assuming one workflow fits everyone.\u003c/p>\n  \u003cdiv class=\"syn-grid\">\n    \u003carticle class=\"syn-panel\">\n      \u003cp class=\"syn-badge\">Operations\u003c/p>\n      \u003ch3 class=\"syn-heading\">Coordinate delivery\u003c/h3>\n      \u003cp>Keep ownership, deadlines, and project handoffs visible across the team.\u003c/p>\n      \u003ca href=\"/solutions/operations\">Explore operations use cases\u003c/a>\n    \u003c/article>\n    \u003carticle class=\"syn-panel\">\n      \u003cp class=\"syn-badge\">Sales\u003c/p>\n      \u003ch3 class=\"syn-heading\">Follow the opportunity\u003c/h3>\n      \u003cp>Organize prospects and next steps without losing account context.\u003c/p>\n      \u003ca href=\"/solutions/sales\">Explore sales use cases\u003c/a>\n    \u003c/article>\n    \u003carticle class=\"syn-panel\">\n      \u003cp class=\"syn-badge\">Customer teams\u003c/p>\n      \u003ch3 class=\"syn-heading\">Serve customers clearly\u003c/h3>\n      \u003cp>Provide a shared record of requests, decisions, and outstanding work.\u003c/p>\n      \u003ca href=\"/solutions/customer-teams\">Explore customer team use cases\u003c/a>\n    \u003c/article>\n  \u003c/div>\n\u003c/section>",
+    "keywords": "Industry and use-case showcase Audience-specific benefits with real destination links and honest example content. solutions industries use cases cards",
+    "kind": "block",
+    "category": "Marketing",
+    "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
+  },
+  {
+    "id": "block-locations-hours",
+    "title": "Locations and opening hours",
+    "module": "syntyr.core.css",
+    "description": "Semantic multi-location contacts with structured hours and accessibility links.",
+    "html": "\u003csection class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"locations-hours-heading\">\n  \u003cp class=\"syn-eyebrow\">VISIT / CONTACT\u003c/p>\n  \u003ch2 id=\"locations-hours-heading\" class=\"syn-heading\">Find a location near you.\u003c/h2>\n  \u003cp class=\"syn-muted\">Example addresses and hours below are placeholders; publish only verified business details and local time zones.\u003c/p>\n  \u003cdiv class=\"syn-grid\">\n    \u003carticle class=\"syn-panel\">\n      \u003ch3 class=\"syn-heading\">Central office\u003c/h3>\n      \u003caddress>100 Example Street, Suite 100\u003cbr>Sample City, ST 00000\u003c/address>\n      \u003cdl>\n        \u003cdt>Monday\u2013Friday\u003c/dt>\u003cdd>9:00 AM\u20135:00 PM (local time)\u003c/dd>\n        \u003cdt>Saturday\u2013Sunday\u003c/dt>\u003cdd>Closed\u003c/dd>\n      \u003c/dl>\n      \u003ca href=\"/locations/central\">Directions and accessibility details\u003c/a>\n    \u003c/article>\n    \u003carticle class=\"syn-panel\">\n      \u003ch3 class=\"syn-heading\">North office\u003c/h3>\n      \u003caddress>200 Sample Avenue\u003cbr>Sample City, ST 00000\u003c/address>\n      \u003cdl>\n        \u003cdt>Monday\u2013Friday\u003c/dt>\u003cdd>10:00 AM\u20136:00 PM (local time)\u003c/dd>\n        \u003cdt>Saturday\u2013Sunday\u003c/dt>\u003cdd>Closed\u003c/dd>\n      \u003c/dl>\n      \u003ca href=\"/locations/north\">Directions and accessibility details\u003c/a>\n    \u003c/article>\n  \u003c/div>\n  \u003cp>\u003ca class=\"syn-button syn-button--primary\" href=\"/locations\">View all locations\u003c/a>\u003c/p>\n\u003c/section>",
+    "keywords": "Locations and opening hours Semantic multi-location contacts with structured hours and accessibility links. locations hours local business contact",
+    "kind": "block",
+    "category": "Services",
+    "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
+  },
+  {
+    "id": "block-careers-listings",
+    "title": "Careers and open positions",
+    "module": "syntyr.core.css",
+    "description": "Readable role summaries with clear application routes and example-data disclosure.",
+    "html": "\u003csection class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"careers-heading\">\n  \u003cp class=\"syn-eyebrow\">CAREERS / OPEN ROLES\u003c/p>\n  \u003ch2 id=\"careers-heading\" class=\"syn-heading\">Do meaningful work with us.\u003c/h2>\n  \u003cp class=\"syn-muted\">Illustrative roles only. Replace with actual openings, location or remote policy, and transparent employment details.\u003c/p>\n  \u003cul class=\"syn-stack\">\n    \u003cli class=\"syn-panel\">\n      \u003cdiv class=\"syn-sidecar\">\n        \u003cdiv>\u003ch3 class=\"syn-heading\">Product designer\u003c/h3>\u003cp class=\"syn-muted\">Design \u00b7 Remote eligible \u00b7 Full-time\u003c/p>\u003c/div>\n        \u003ca class=\"syn-button\" href=\"/careers/product-designer\">View role details\u003c/a>\n      \u003c/div>\n    \u003c/li>\n    \u003cli class=\"syn-panel\">\n      \u003cdiv class=\"syn-sidecar\">\n        \u003cdiv>\u003ch3 class=\"syn-heading\">Customer success specialist\u003c/h3>\u003cp class=\"syn-muted\">Customer success \u00b7 Hybrid \u00b7 Full-time\u003c/p>\u003c/div>\n        \u003ca class=\"syn-button\" href=\"/careers/customer-success-specialist\">View role details\u003c/a>\n      \u003c/div>\n    \u003c/li>\n    \u003cli class=\"syn-panel\">\n      \u003cdiv class=\"syn-sidecar\">\n        \u003cdiv>\u003ch3 class=\"syn-heading\">Software engineer\u003c/h3>\u003cp class=\"syn-muted\">Engineering \u00b7 Remote eligible \u00b7 Full-time\u003c/p>\u003c/div>\n        \u003ca class=\"syn-button\" href=\"/careers/software-engineer\">View role details\u003c/a>\n      \u003c/div>\n    \u003c/li>\n  \u003c/ul>\n  \u003cp>\u003ca href=\"/careers\">Browse all open positions\u003c/a>\u003c/p>\n\u003c/section>",
+    "keywords": "Careers and open positions Readable role summaries with clear application routes and example-data disclosure. careers jobs recruiting hiring",
+    "kind": "block",
+    "category": "Company",
+    "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
+  },
+  {
+    "id": "block-feature-disclosures",
+    "title": "Native feature switcher",
+    "module": "syntyr.core.css",
+    "description": "Exclusive browser-native disclosures for feature storytelling without a script.",
+    "html": "\u003csection class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"feature-disclosures-heading\">\n  \u003cp class=\"syn-eyebrow\">PRODUCT / CAPABILITIES\u003c/p>\n  \u003ch2 id=\"feature-disclosures-heading\" class=\"syn-heading\">Explore what each feature does.\u003c/h2>\n  \u003cp class=\"syn-muted\">Native, exclusive disclosures offer keyboard-accessible content switching without requiring JavaScript. This is an accordion, not an ARIA tabs widget.\u003c/p>\n  \u003cdiv class=\"syn-stack\">\n    \u003cdetails class=\"syn-details syn-panel\" name=\"syntyr-features\" open>\n      \u003csummary>\u003cstrong>Plan with clarity\u003c/strong>\u003c/summary>\n      \u003cp>Review scope, owners, and dependencies in one place before work begins.\u003c/p>\n      \u003cp>\u003ca href=\"/features/planning\">Explore planning\u003c/a>\u003c/p>\n    \u003c/details>\n    \u003cdetails class=\"syn-details syn-panel\" name=\"syntyr-features\">\n      \u003csummary>\u003cstrong>Track progress\u003c/strong>\u003c/summary>\n      \u003cp>See what has been completed and what still requires attention.\u003c/p>\n      \u003cp>\u003ca href=\"/features/progress\">Explore progress tracking\u003c/a>\u003c/p>\n    \u003c/details>\n    \u003cdetails class=\"syn-details syn-panel\" name=\"syntyr-features\">\n      \u003csummary>\u003cstrong>Share the outcome\u003c/strong>\u003c/summary>\n      \u003cp>Capture decisions and provide updates to the people who need them.\u003c/p>\n      \u003cp>\u003ca href=\"/features/reporting\">Explore reporting\u003c/a>\u003c/p>\n    \u003c/details>\n  \u003c/div>\n\u003c/section>",
+    "keywords": "Native feature switcher Exclusive browser-native disclosures for feature storytelling without a script. features accordion progressive enhancement no javascript",
+    "kind": "block",
+    "category": "Marketing",
+    "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   }
 ];

@@ -26,7 +26,7 @@ class InspectHTML(HTMLParser):
 class BlocksAssetsTests(unittest.TestCase):
     def test_all_independent_copy_owned_blocks(self):
         blocks = json.loads(MANIFEST.read_text(encoding="utf-8"))["blocks"]
-        self.assertEqual(len(blocks), 73)
+        self.assertEqual(len(blocks), 79)
         self.assertEqual(len({b["id"] for b in blocks}), len(blocks))
         self.assertGreaterEqual(len({b["category"] for b in blocks}), 3)
         for block in blocks:
@@ -58,7 +58,7 @@ class BlocksAssetsTests(unittest.TestCase):
             "comparison-table", "integrations-grid", "newsletter-signup",
             "announcement-banner",
         }
-        self.assertEqual(len(blocks), 73)
+        self.assertEqual(len(blocks), 79)
         for ident in new_blocks:
             with self.subTest(ident=ident):
                 self.assertIn(ident, by_id)
@@ -74,7 +74,7 @@ class BlocksAssetsTests(unittest.TestCase):
         current = {b["id"] for b in manifest}
         sections = {"logo-wall", "process-steps", "services-grid", "service-areas",
                     "portfolio-grid", "team-grid", "contact-quote"}
-        self.assertEqual(len(manifest), 73)
+        self.assertEqual(len(manifest), 79)
         self.assertTrue(sections <= current - old)
         self.assertTrue(old <= current, "New blocks must not replace existing blocks")
         for ident in sections:
