@@ -142,6 +142,28 @@
       <p class="syn-caption">For larger tables and enterprise-style interfaces, compare the <a href="../examples/data-grid.html">read-only data grid example</a>, <a href="../examples/data-tables.html">accessible data tables</a> and <a href="data-grid.html">data grid integration guidance</a>. These examples do not implement application sorting, virtualization or persistence.</p>
       <p class="syn-caption">For responsive layout patterns, see the <a href="composition-adoption.html">intrinsic layout cookbook</a>: fluid spacing, stacks, wrapping clusters, sidecars and grids, all with copyable HTML.</p>
       <p class="syn-caption">For additional native patterns see <a href="../examples/native-elements.html">all HTML controls</a>, <a href="../examples/semantic-compositions.html">semantic compositions</a>, and <a href="../examples/native-apis.html">browser-native overlays</a>. Advanced page compositions are <a href="premium-compositions.html">documented separately</a>.</p>
+      <section id="catalog-browser-support" class="catalog-adoption syn-panel" aria-labelledby="catalog-browser-heading">
+        <p class="syn-eyebrow">USE IT IN YOUR APP / COMPATIBILITY</p>
+        <h2 class="syn-heading" id="catalog-browser-heading">Copy a working starting page, then adapt it.</h2>
+        <p>Each component offers its original HTML and an enhanced <strong>Copy full page</strong> action that includes the actual required stylesheets and a scoped <code>syn-root</code> body. Self-host the matching <strong>unreleased alpha.5</strong> CSS files under <code>/dist/</code> or adjust the paths. Replace demonstration destinations, field IDs and server handlers for production. Without JavaScript on this documentation page, every component's source remains readable and selectable.</p>
+        <p><strong>Browse complete copyable layouts:</strong> <a href="blocks.html#hero-product">Product hero</a> · <a href="blocks.html#pricing-trio">Pricing plans</a> · <a href="blocks.html#layout-dashboard">Dashboard shell</a> · <a href="framework-integrations.html">React, Vue, HTMX and server-rendered HTML guides</a>.</p>
+        <details class="catalog-browser-details">
+          <summary>Browser support and accessible fallbacks</summary>
+          <p>Support depends on the browser feature, not the Syntyr theme. These are implementation notes, not a compatibility certification or promise of identical behavior in every engine.</p>
+          <div class="syn-table-wrap" tabindex="0" role="region" aria-label="Browser compatibility table">
+          <table class="syn-table"><caption>Browser-dependent native interactions</caption>
+            <thead><tr><th scope="col">Feature</th><th scope="col">Older browsers and fallbacks</th><th scope="col">Reference</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">HTML Popover API</th><td>If an invoker cannot open the popover, critical content needs an ordinary link or a disclosure alternative.</td><td><a href="https://developer.mozilla.org/en-US/docs/Web/API/Popover_API">MDN Popover API</a></td></tr>
+              <tr><th scope="row">Invoker Commands</th><td><code>commandfor</code>/<code>show-modal</code> may not open a dialog; provide an accessible review page or host-owned fallback.</td><td><a href="https://developer.mozilla.org/en-US/docs/Web/API/Invoker_Commands_API">MDN Invoker Commands</a></td></tr>
+              <tr><th scope="row"><code>details</code> name grouping</th><td>Individual disclosures still work where exclusive grouping is unsupported; several may remain open.</td><td><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details">MDN details</a></td></tr>
+              <tr><th scope="row">Responsive CSS</th><td>Intrinsic grid/flex wrapping remains usable; newer layout features should have conservative fallback styles.</td><td><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_containment/Container_size_and_style_queries">MDN container queries</a></td></tr>
+            </tbody>
+          </table>
+          </div>
+          <p>Check feature-specific compatibility and your own target-browser matrix before deploying. See <a href="native-browser-apis.html">Syntyr's browser-native API guide</a>.</p>
+        </details>
+      </section>
       <section class="catalog-pathways" aria-labelledby="catalog-pathways-heading">
         <p class="syn-eyebrow">DISCOVER / BUILD COMPLETE PAGES</p>
         <h2 class="syn-heading" id="catalog-pathways-heading">From small components to full layouts</h2>
@@ -228,12 +250,13 @@
 </div>
           </div>
           <details class="catalog-code-details">
-            <summary>View HTML source</summary>
+            <summary>View HTML source and copy a full page</summary>
             <pre class="catalog-source"><code>&lt;div class=&quot;syn-inline&quot;&gt;
   &lt;button type=&quot;button&quot; class=&quot;syn-button syn-button--primary&quot;&gt;Save changes&lt;/button&gt;
   &lt;button type=&quot;button&quot; class=&quot;syn-button syn-button--outline&quot;&gt;Preview&lt;/button&gt;
   &lt;button type=&quot;button&quot; class=&quot;syn-button&quot; disabled&gt;Disabled&lt;/button&gt;
 &lt;/div&gt;</code></pre>
+            <button type="button" class="syn-button catalog-copy-page" hidden data-catalog-copy-page>Copy full page</button>
           </details>
           <div class="catalog-actions">
             <a class="syn-button catalog-live" href="#catalog-buttons-title-preview">Live View</a>
@@ -256,12 +279,13 @@
 </div>
           </div>
           <details class="catalog-code-details">
-            <summary>View HTML source</summary>
+            <summary>View HTML source and copy a full page</summary>
             <pre class="catalog-source"><code>&lt;div class=&quot;syn-form&quot;&gt;
   &lt;label class=&quot;syn-label&quot; for=&quot;catalog-email&quot;&gt;Email address&lt;/label&gt;
   &lt;input class=&quot;syn-input&quot; id=&quot;catalog-email&quot; type=&quot;email&quot; placeholder=&quot;you@example.com&quot; required&gt;
   &lt;p class=&quot;syn-help&quot;&gt;Use your work email.&lt;/p&gt;
 &lt;/div&gt;</code></pre>
+            <button type="button" class="syn-button catalog-copy-page" hidden data-catalog-copy-page>Copy full page</button>
           </details>
           <div class="catalog-actions">
             <a class="syn-button catalog-live" href="#catalog-forms-title-preview">Live View</a>
@@ -287,7 +311,7 @@
 </div>
           </div>
           <details class="catalog-code-details">
-            <summary>View HTML source</summary>
+            <summary>View HTML source and copy a full page</summary>
             <pre class="catalog-source"><code>&lt;div class=&quot;syn-form&quot; id=&quot;catalog-native-controls&quot;&gt;
   &lt;label class=&quot;syn-label&quot; for=&quot;catalog-range&quot;&gt;Threshold&lt;/label&gt;
   &lt;input id=&quot;catalog-range&quot; type=&quot;range&quot; class=&quot;syn-input&quot; min=&quot;0&quot; max=&quot;100&quot; value=&quot;60&quot;&gt;
@@ -296,6 +320,7 @@
   &lt;label class=&quot;syn-label&quot; for=&quot;catalog-color&quot;&gt;Accent color&lt;/label&gt;
   &lt;input id=&quot;catalog-color&quot; type=&quot;color&quot; class=&quot;syn-input&quot; value=&quot;#3355aa&quot;&gt;
 &lt;/div&gt;</code></pre>
+            <button type="button" class="syn-button catalog-copy-page" hidden data-catalog-copy-page>Copy full page</button>
           </details>
           <div class="catalog-actions">
             <a class="syn-button catalog-live" href="#catalog-native-controls-title-preview">Live View</a>
@@ -309,6 +334,7 @@
             <span class="syn-badge">syntyr.core.css</span>
           </div>
           <p class="syn-muted">Related disclosures use native <code>details name</code>; no script or custom roles.</p>
+          <p class="syn-caption catalog-feature-note"><strong>Browser note:</strong> If exclusive <code>details name</code> grouping is unavailable, each disclosure remains independently usable; multiple answers may stay open. <a href="#catalog-browser-support">Compatibility and fallbacks</a>.</p>
           <span class="catalog-preview-anchor" id="catalog-interaction-card-0-preview" aria-hidden="true"></span>
           <div class="catalog-preview">
 <section aria-labelledby="catalog-faq-heading">
@@ -324,7 +350,7 @@
 </section>
           </div>
           <details class="catalog-code-details">
-            <summary>View HTML source</summary>
+            <summary>View HTML source and copy a full page</summary>
             <pre class="catalog-source"><code>&lt;section aria-labelledby=&quot;catalog-faq-heading&quot;&gt;
   &lt;h3 id=&quot;catalog-faq-heading&quot;&gt;Common questions&lt;/h3&gt;
   &lt;details class=&quot;syn-details&quot; name=&quot;catalog-interaction-faq&quot; open&gt;
@@ -336,6 +362,7 @@
     &lt;p&gt;No. Native disclosures handle their own open state.&lt;/p&gt;
   &lt;/details&gt;
 &lt;/section&gt;</code></pre>
+            <button type="button" class="syn-button catalog-copy-page" hidden data-catalog-copy-page>Copy full page</button>
           </details>
           <div class="catalog-actions">
             <a class="syn-button catalog-live" href="#catalog-interaction-card-0-preview">Live View</a>
@@ -361,7 +388,7 @@
 </search>
           </div>
           <details class="catalog-code-details">
-            <summary>View HTML source</summary>
+            <summary>View HTML source and copy a full page</summary>
             <pre class="catalog-source"><code>&lt;search aria-label=&quot;Search example inventory&quot;&gt;
   &lt;form class=&quot;syn-form&quot; action=&quot;../examples/native-interactions.html&quot; method=&quot;get&quot;&gt;
     &lt;label class=&quot;syn-label&quot; for=&quot;catalog-inventory-query&quot;&gt;Inventory search&lt;/label&gt;
@@ -370,6 +397,7 @@
     &lt;button class=&quot;syn-button syn-button--primary&quot; type=&quot;submit&quot;&gt;Search&lt;/button&gt;
   &lt;/form&gt;
 &lt;/search&gt;</code></pre>
+            <button type="button" class="syn-button catalog-copy-page" hidden data-catalog-copy-page>Copy full page</button>
           </details>
           <div class="catalog-actions">
             <a class="syn-button catalog-live" href="#catalog-interaction-card-1-preview">Live View</a>
@@ -383,6 +411,7 @@
             <span class="syn-badge">syntyr.core.css</span>
           </div>
           <p class="syn-muted">Native modal command and dialog-only choices; confirming this preview does not persist changes.</p>
+          <p class="syn-caption catalog-feature-note"><strong>Browser note:</strong> Dialog opening through <code>commandfor</code> needs native invoker support. Production flows must supply an accessible review-page or host-owned fallback. <a href="#catalog-browser-support">Compatibility and fallbacks</a>.</p>
           <span class="catalog-preview-anchor" id="catalog-interaction-card-2-preview" aria-hidden="true"></span>
           <div class="catalog-preview">
 <div class="syn-inline">
@@ -402,7 +431,7 @@
 </div>
           </div>
           <details class="catalog-code-details">
-            <summary>View HTML source</summary>
+            <summary>View HTML source and copy a full page</summary>
             <pre class="catalog-source"><code>&lt;div class=&quot;syn-inline&quot;&gt;
   &lt;button type=&quot;button&quot; class=&quot;syn-button&quot; commandfor=&quot;catalog-interaction-dialog&quot;
           command=&quot;show-modal&quot;&gt;Open confirmation&lt;/button&gt;
@@ -418,6 +447,7 @@
     &lt;/form&gt;
   &lt;/dialog&gt;
 &lt;/div&gt;</code></pre>
+            <button type="button" class="syn-button catalog-copy-page" hidden data-catalog-copy-page>Copy full page</button>
           </details>
           <div class="catalog-actions">
             <a class="syn-button catalog-live" href="#catalog-interaction-card-2-preview">Live View</a>
@@ -445,7 +475,7 @@
 </div>
           </div>
           <details class="catalog-code-details">
-            <summary>View HTML source</summary>
+            <summary>View HTML source and copy a full page</summary>
             <pre class="catalog-source"><code>&lt;div class=&quot;syn-form&quot;&gt;
   &lt;label class=&quot;syn-label&quot; for=&quot;catalog-suggested-city&quot;&gt;City&lt;/label&gt;
   &lt;input class=&quot;syn-input&quot; id=&quot;catalog-suggested-city&quot; name=&quot;city&quot;
@@ -456,6 +486,7 @@
     &lt;option value=&quot;New York&quot;&gt;&lt;/option&gt;
   &lt;/datalist&gt;
 &lt;/div&gt;</code></pre>
+            <button type="button" class="syn-button catalog-copy-page" hidden data-catalog-copy-page>Copy full page</button>
           </details>
           <div class="catalog-actions">
             <a class="syn-button catalog-live" href="#catalog-interaction-card-3-preview">Live View</a>
@@ -480,7 +511,7 @@
 </div>
           </div>
           <details class="catalog-code-details">
-            <summary>View HTML source</summary>
+            <summary>View HTML source and copy a full page</summary>
             <pre class="catalog-source"><code>&lt;div class=&quot;syn-semantic syn-stack&quot;&gt;
   &lt;label for=&quot;catalog-capacity-meter&quot;&gt;Utilization&lt;/label&gt;
   &lt;meter id=&quot;catalog-capacity-meter&quot; min=&quot;0&quot; max=&quot;100&quot; low=&quot;20&quot;
@@ -488,6 +519,7 @@
   &lt;label for=&quot;catalog-inventory-output&quot;&gt;Matching inventory&lt;/label&gt;
   &lt;output id=&quot;catalog-inventory-output&quot; name=&quot;results&quot;&gt;42 available locations&lt;/output&gt;
 &lt;/div&gt;</code></pre>
+            <button type="button" class="syn-button catalog-copy-page" hidden data-catalog-copy-page>Copy full page</button>
           </details>
           <div class="catalog-actions">
             <a class="syn-button catalog-live" href="#catalog-interaction-card-4-preview">Live View</a>
@@ -509,11 +541,12 @@
 </article>
           </div>
           <details class="catalog-code-details">
-            <summary>View HTML source</summary>
+            <summary>View HTML source and copy a full page</summary>
             <pre class="catalog-source"><code>&lt;article class=&quot;syn-panel&quot; style=&quot;--syn-surface: var(--syn-surface-hi)&quot;&gt;
   &lt;h3 class=&quot;syn-heading&quot;&gt;Workspace settings&lt;/h3&gt;
   &lt;p&gt;Use scoped CSS properties to customize an individual panel.&lt;/p&gt;
 &lt;/article&gt;</code></pre>
+            <button type="button" class="syn-button catalog-copy-page" hidden data-catalog-copy-page>Copy full page</button>
           </details>
           <div class="catalog-actions">
             <a class="syn-button catalog-live" href="#catalog-panels-title-preview">Live View</a>
@@ -537,13 +570,14 @@
 </section>
           </div>
           <details class="catalog-code-details">
-            <summary>View HTML source</summary>
+            <summary>View HTML source and copy a full page</summary>
             <pre class="catalog-source"><code>&lt;section class=&quot;syn-region&quot; aria-label=&quot;Service metrics&quot;&gt;
   &lt;div class=&quot;syn-stats&quot;&gt;
     &lt;article class=&quot;syn-stat&quot;&gt;&lt;span class=&quot;syn-stat-label&quot;&gt;UPTIME&lt;/span&gt;&lt;strong class=&quot;syn-stat-value&quot;&gt;99.9%&lt;/strong&gt;&lt;/article&gt;
     &lt;article class=&quot;syn-stat&quot;&gt;&lt;span class=&quot;syn-stat-label&quot;&gt;USERS&lt;/span&gt;&lt;strong class=&quot;syn-stat-value&quot;&gt;2,840&lt;/strong&gt;&lt;/article&gt;
   &lt;/div&gt;
 &lt;/section&gt;</code></pre>
+            <button type="button" class="syn-button catalog-copy-page" hidden data-catalog-copy-page>Copy full page</button>
           </details>
           <div class="catalog-actions">
             <a class="syn-button catalog-live" href="#catalog-metrics-title-preview">Live View</a>
@@ -568,7 +602,7 @@
 </div>
           </div>
           <details class="catalog-code-details">
-            <summary>View HTML source</summary>
+            <summary>View HTML source and copy a full page</summary>
             <pre class="catalog-source"><code>&lt;div class=&quot;syn-table-wrap&quot;&gt;
   &lt;table class=&quot;syn-table&quot;&gt;
     &lt;caption&gt;Recent deployments&lt;/caption&gt;
@@ -576,6 +610,7 @@
     &lt;tbody&gt;&lt;tr&gt;&lt;td&gt;v1.2&lt;/td&gt;&lt;td&gt;Passed&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;v1.1&lt;/td&gt;&lt;td&gt;Passed&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;
   &lt;/table&gt;
 &lt;/div&gt;</code></pre>
+            <button type="button" class="syn-button catalog-copy-page" hidden data-catalog-copy-page>Copy full page</button>
           </details>
           <div class="catalog-actions">
             <a class="syn-button catalog-live" href="#catalog-tables-title-preview">Live View</a>
@@ -595,9 +630,10 @@
 <div class="syn-alert syn-alert--danger">Could not connect. Try again.</div>
           </div>
           <details class="catalog-code-details">
-            <summary>View HTML source</summary>
+            <summary>View HTML source and copy a full page</summary>
             <pre class="catalog-source"><code>&lt;div class=&quot;syn-alert&quot;&gt;Your changes have been saved.&lt;/div&gt;
 &lt;div class=&quot;syn-alert syn-alert--danger&quot;&gt;Could not connect. Try again.&lt;/div&gt;</code></pre>
+            <button type="button" class="syn-button catalog-copy-page" hidden data-catalog-copy-page>Copy full page</button>
           </details>
           <div class="catalog-actions">
             <a class="syn-button catalog-live" href="#catalog-alerts-title-preview">Live View</a>
@@ -619,11 +655,12 @@
 </details>
           </div>
           <details class="catalog-code-details">
-            <summary>View HTML source</summary>
+            <summary>View HTML source and copy a full page</summary>
             <pre class="catalog-source"><code>&lt;details class=&quot;syn-details&quot;&gt;
   &lt;summary&gt;What does Syntyr require?&lt;/summary&gt;
   &lt;p&gt;Just CSS and semantic HTML. JavaScript is optional.&lt;/p&gt;
 &lt;/details&gt;</code></pre>
+            <button type="button" class="syn-button catalog-copy-page" hidden data-catalog-copy-page>Copy full page</button>
           </details>
           <div class="catalog-actions">
             <a class="syn-button catalog-live" href="#catalog-disclosures-title-preview">Live View</a>
@@ -647,13 +684,14 @@
 </nav>
           </div>
           <details class="catalog-code-details">
-            <summary>View HTML source</summary>
+            <summary>View HTML source and copy a full page</summary>
             <pre class="catalog-source"><code>&lt;nav class=&quot;syn-breadcrumbs&quot; aria-label=&quot;Breadcrumb&quot;&gt;
   &lt;ol&gt;
     &lt;li&gt;&lt;a href=&quot;/&quot;&gt;Home&lt;/a&gt;&lt;/li&gt;
     &lt;li&gt;&lt;span aria-current=&quot;page&quot;&gt;Settings&lt;/span&gt;&lt;/li&gt;
   &lt;/ol&gt;
 &lt;/nav&gt;</code></pre>
+            <button type="button" class="syn-button catalog-copy-page" hidden data-catalog-copy-page>Copy full page</button>
           </details>
           <div class="catalog-actions">
             <a class="syn-button catalog-live" href="#catalog-breadcrumbs-title-preview">Live View</a>
@@ -673,9 +711,10 @@
 <progress id="catalog-progress" class="syn-meter" value="65" max="100">65%</progress>
           </div>
           <details class="catalog-code-details">
-            <summary>View HTML source</summary>
+            <summary>View HTML source and copy a full page</summary>
             <pre class="catalog-source"><code>&lt;label class=&quot;syn-label&quot; for=&quot;catalog-progress&quot;&gt;Uploading files&lt;/label&gt;
 &lt;progress id=&quot;catalog-progress&quot; class=&quot;syn-meter&quot; value=&quot;65&quot; max=&quot;100&quot;&gt;65%&lt;/progress&gt;</code></pre>
+            <button type="button" class="syn-button catalog-copy-page" hidden data-catalog-copy-page>Copy full page</button>
           </details>
           <div class="catalog-actions">
             <a class="syn-button catalog-live" href="#catalog-progress-title-preview">Live View</a>
@@ -699,13 +738,14 @@
 </section>
           </div>
           <details class="catalog-code-details">
-            <summary>View HTML source</summary>
+            <summary>View HTML source and copy a full page</summary>
             <pre class="catalog-source"><code>&lt;section class=&quot;syn-region&quot; aria-label=&quot;Example plans&quot;&gt;
   &lt;div class=&quot;syn-pricing&quot;&gt;
     &lt;article class=&quot;syn-price-card&quot;&gt;&lt;h3&gt;Starter&lt;/h3&gt;&lt;p class=&quot;syn-price-value&quot;&gt;$19&lt;/p&gt;&lt;a href=&quot;#catalog-top&quot; class=&quot;syn-button&quot;&gt;Explore&lt;/a&gt;&lt;/article&gt;
     &lt;article class=&quot;syn-price-card&quot; data-syn-featured&gt;&lt;h3&gt;Pro&lt;/h3&gt;&lt;p class=&quot;syn-price-value&quot;&gt;$49&lt;/p&gt;&lt;a href=&quot;#catalog-top&quot; class=&quot;syn-button syn-button--primary&quot;&gt;Explore&lt;/a&gt;&lt;/article&gt;
   &lt;/div&gt;
 &lt;/section&gt;</code></pre>
+            <button type="button" class="syn-button catalog-copy-page" hidden data-catalog-copy-page>Copy full page</button>
           </details>
           <div class="catalog-actions">
             <a class="syn-button catalog-live" href="#catalog-pricing-title-preview">Live View</a>
@@ -728,12 +768,13 @@
 </section>
           </div>
           <details class="catalog-code-details">
-            <summary>View HTML source</summary>
+            <summary>View HTML source and copy a full page</summary>
             <pre class="catalog-source"><code>&lt;section aria-label=&quot;Typography sample&quot;&gt;
   &lt;h2 class=&quot;syn-heading&quot;&gt;Design with native text&lt;/h2&gt;
   &lt;p&gt;Combine &lt;strong&gt;importance&lt;/strong&gt;, &lt;em&gt;emphasis&lt;/em&gt;, and &lt;mark&gt;relevance&lt;/mark&gt;.&lt;/p&gt;
   &lt;p&gt;&lt;small&gt;Small print belongs in meaningful supporting text.&lt;/small&gt;&lt;/p&gt;
 &lt;/section&gt;</code></pre>
+            <button type="button" class="syn-button catalog-copy-page" hidden data-catalog-copy-page>Copy full page</button>
           </details>
           <div class="catalog-actions">
             <a class="syn-button catalog-live" href="#catalog-typography-and-inline-text-title-preview">Live View</a>
@@ -755,11 +796,12 @@
 </section>
           </div>
           <details class="catalog-code-details">
-            <summary>View HTML source</summary>
+            <summary>View HTML source and copy a full page</summary>
             <pre class="catalog-source"><code>&lt;section aria-label=&quot;Code sample&quot;&gt;
   &lt;p&gt;Press &lt;kbd&gt;Ctrl&lt;/kbd&gt; + &lt;kbd&gt;K&lt;/kbd&gt; to search.&lt;/p&gt;
   &lt;pre&gt;&lt;code&gt;&amp;lt;button type=&quot;button&quot;&amp;gt;Save&amp;lt;/button&amp;gt;&lt;/code&gt;&lt;/pre&gt;
 &lt;/section&gt;</code></pre>
+            <button type="button" class="syn-button catalog-copy-page" hidden data-catalog-copy-page>Copy full page</button>
           </details>
           <div class="catalog-actions">
             <a class="syn-button catalog-live" href="#catalog-code-and-keyboard-input-title-preview">Live View</a>
@@ -781,11 +823,12 @@
 </div>
           </div>
           <details class="catalog-code-details">
-            <summary>View HTML source</summary>
+            <summary>View HTML source and copy a full page</summary>
             <pre class="catalog-source"><code>&lt;div class=&quot;syn-grid&quot;&gt;
   &lt;ul&gt;&lt;li&gt;Accessible markup&lt;/li&gt;&lt;li&gt;Scoped styling&lt;/li&gt;&lt;/ul&gt;
   &lt;ol&gt;&lt;li&gt;Add the stylesheet&lt;/li&gt;&lt;li&gt;Choose a theme&lt;/li&gt;&lt;/ol&gt;
 &lt;/div&gt;</code></pre>
+            <button type="button" class="syn-button catalog-copy-page" hidden data-catalog-copy-page>Copy full page</button>
           </details>
           <div class="catalog-actions">
             <a class="syn-button catalog-live" href="#catalog-ordered-and-unordered-lists-title-preview">Live View</a>
@@ -807,11 +850,12 @@
 </dl>
           </div>
           <details class="catalog-code-details">
-            <summary>View HTML source</summary>
+            <summary>View HTML source and copy a full page</summary>
             <pre class="catalog-source"><code>&lt;dl&gt;
   &lt;dt&gt;Deployment&lt;/dt&gt;&lt;dd&gt;Production&lt;/dd&gt;
   &lt;dt&gt;Region&lt;/dt&gt;&lt;dd&gt;Americas&lt;/dd&gt;
 &lt;/dl&gt;</code></pre>
+            <button type="button" class="syn-button catalog-copy-page" hidden data-catalog-copy-page>Copy full page</button>
           </details>
           <div class="catalog-actions">
             <a class="syn-button catalog-live" href="#catalog-definition-list-title-preview">Live View</a>
@@ -834,12 +878,13 @@
 </article>
           </div>
           <details class="catalog-code-details">
-            <summary>View HTML source</summary>
+            <summary>View HTML source and copy a full page</summary>
             <pre class="catalog-source"><code>&lt;article class=&quot;syn-panel&quot;&gt;
   &lt;header&gt;&lt;h3&gt;Release notes&lt;/h3&gt;&lt;/header&gt;
   &lt;p&gt;Native-first components reduce upkeep.&lt;/p&gt;
   &lt;footer&gt;&lt;small&gt;Updated November 2026&lt;/small&gt;&lt;/footer&gt;
 &lt;/article&gt;</code></pre>
+            <button type="button" class="syn-button catalog-copy-page" hidden data-catalog-copy-page>Copy full page</button>
           </details>
           <div class="catalog-actions">
             <a class="syn-button catalog-live" href="#catalog-article-with-header-and-footer-title-preview">Live View</a>
@@ -866,7 +911,7 @@
 </form>
           </div>
           <details class="catalog-code-details">
-            <summary>View HTML source</summary>
+            <summary>View HTML source and copy a full page</summary>
             <pre class="catalog-source"><code>&lt;form action=&quot;#catalog-top&quot; method=&quot;get&quot;&gt;
   &lt;fieldset&gt;
     &lt;legend&gt;Notification frequency&lt;/legend&gt;
@@ -876,6 +921,7 @@
   &lt;label&gt;&lt;input type=&quot;checkbox&quot; name=&quot;catalog-updates&quot; checked&gt; Product updates&lt;/label&gt;
   &lt;button type=&quot;submit&quot; class=&quot;syn-button&quot;&gt;Apply&lt;/button&gt;
 &lt;/form&gt;</code></pre>
+            <button type="button" class="syn-button catalog-copy-page" hidden data-catalog-copy-page>Copy full page</button>
           </details>
           <div class="catalog-actions">
             <a class="syn-button catalog-live" href="#catalog-fieldset-and-choice-inputs-title-preview">Live View</a>
@@ -901,7 +947,7 @@
 </div>
           </div>
           <details class="catalog-code-details">
-            <summary>View HTML source</summary>
+            <summary>View HTML source and copy a full page</summary>
             <pre class="catalog-source"><code>&lt;div class=&quot;syn-form&quot;&gt;
   &lt;label class=&quot;syn-label&quot; for=&quot;catalog-role&quot;&gt;Role&lt;/label&gt;
   &lt;select class=&quot;syn-input&quot; id=&quot;catalog-role&quot;&gt;
@@ -910,6 +956,7 @@
   &lt;label class=&quot;syn-label&quot; for=&quot;catalog-note&quot;&gt;Notes&lt;/label&gt;
   &lt;textarea class=&quot;syn-input&quot; id=&quot;catalog-note&quot; rows=&quot;2&quot; placeholder=&quot;Optional details&quot;&gt;&lt;/textarea&gt;
 &lt;/div&gt;</code></pre>
+            <button type="button" class="syn-button catalog-copy-page" hidden data-catalog-copy-page>Copy full page</button>
           </details>
           <div class="catalog-actions">
             <a class="syn-button catalog-live" href="#catalog-select-and-textarea-title-preview">Live View</a>
@@ -931,11 +978,12 @@
 </dl>
           </div>
           <details class="catalog-code-details">
-            <summary>View HTML source</summary>
+            <summary>View HTML source and copy a full page</summary>
             <pre class="catalog-source"><code>&lt;dl&gt;
   &lt;dt&gt;Launch&lt;/dt&gt;&lt;dd&gt;&lt;time datetime=&quot;2026-11-16&quot;&gt;November 16, 2026&lt;/time&gt;&lt;/dd&gt;
   &lt;dt&gt;Seats&lt;/dt&gt;&lt;dd&gt;&lt;data value=&quot;12&quot;&gt;12 active seats&lt;/data&gt;&lt;/dd&gt;
 &lt;/dl&gt;</code></pre>
+            <button type="button" class="syn-button catalog-copy-page" hidden data-catalog-copy-page>Copy full page</button>
           </details>
           <div class="catalog-actions">
             <a class="syn-button catalog-live" href="#catalog-dates-and-structured-values-title-preview">Live View</a>
@@ -960,7 +1008,7 @@
 </figure>
           </div>
           <details class="catalog-code-details">
-            <summary>View HTML source</summary>
+            <summary>View HTML source and copy a full page</summary>
             <pre class="catalog-source"><code>&lt;figure&gt;
   &lt;picture&gt;
     &lt;source media=&quot;(min-width: 50rem)&quot; srcset=&quot;../assets/og-syntyr.png&quot;&gt;
@@ -968,6 +1016,7 @@
   &lt;/picture&gt;
   &lt;figcaption&gt;Replace these local demo assets with your own images.&lt;/figcaption&gt;
 &lt;/figure&gt;</code></pre>
+            <button type="button" class="syn-button catalog-copy-page" hidden data-catalog-copy-page>Copy full page</button>
           </details>
           <div class="catalog-actions">
             <a class="syn-button catalog-live" href="#catalog-responsive-image-with-caption-title-preview">Live View</a>
@@ -989,11 +1038,12 @@
 </figure>
           </div>
           <details class="catalog-code-details">
-            <summary>View HTML source</summary>
+            <summary>View HTML source and copy a full page</summary>
             <pre class="catalog-source"><code>&lt;figure&gt;
   &lt;blockquote&gt;&lt;p&gt;Prefer the native browser platform.&lt;/p&gt;&lt;/blockquote&gt;
   &lt;figcaption&gt;From &lt;cite&gt;Interface Design Notes&lt;/cite&gt;&lt;/figcaption&gt;
 &lt;/figure&gt;</code></pre>
+            <button type="button" class="syn-button catalog-copy-page" hidden data-catalog-copy-page>Copy full page</button>
           </details>
           <div class="catalog-actions">
             <a class="syn-button catalog-live" href="#catalog-quotation-and-source-title-preview">Live View</a>
@@ -1007,6 +1057,7 @@
             <span class="syn-badge">syntyr.core.css</span>
           </div>
           <p class="syn-muted">Native popovers preserve browser-managed opening, dismissal, and focus behavior.</p>
+          <p class="syn-caption catalog-feature-note"><strong>Browser note:</strong> Native <code>popovertarget</code> needs Popover API support. Provide critical information through an ordinary link or disclosure in older browsers. <a href="#catalog-browser-support">Compatibility and fallbacks</a>.</p>
           <span class="catalog-preview-anchor" id="catalog-native-popover-title-preview" aria-hidden="true"></span>
           <div class="catalog-preview">
 <button type="button" class="syn-button" popovertarget="catalog-help-popover">More information</button>
@@ -1016,12 +1067,13 @@
 </div>
           </div>
           <details class="catalog-code-details">
-            <summary>View HTML source</summary>
+            <summary>View HTML source and copy a full page</summary>
             <pre class="catalog-source"><code>&lt;button type=&quot;button&quot; class=&quot;syn-button&quot; popovertarget=&quot;catalog-help-popover&quot;&gt;More information&lt;/button&gt;
 &lt;div id=&quot;catalog-help-popover&quot; popover class=&quot;syn-popover&quot;&gt;
   &lt;p&gt;Browser-native popover; no JavaScript component required.&lt;/p&gt;
   &lt;button type=&quot;button&quot; class=&quot;syn-button&quot; popovertarget=&quot;catalog-help-popover&quot; popovertargetaction=&quot;hide&quot;&gt;Close&lt;/button&gt;
 &lt;/div&gt;</code></pre>
+            <button type="button" class="syn-button catalog-copy-page" hidden data-catalog-copy-page>Copy full page</button>
           </details>
           <div class="catalog-actions">
             <a class="syn-button catalog-live" href="#catalog-native-popover-title-preview">Live View</a>
@@ -1047,7 +1099,7 @@
 </div>
           </div>
           <details class="catalog-code-details">
-            <summary>View HTML source</summary>
+            <summary>View HTML source and copy a full page</summary>
             <pre class="catalog-source"><code>&lt;div class=&quot;syn-field&quot;&gt;
   &lt;label class=&quot;syn-label&quot; for=&quot;catalog-website&quot;&gt;Website URL&lt;/label&gt;
   &lt;div class=&quot;syn-input-group&quot;&gt;
@@ -1056,6 +1108,7 @@
   &lt;/div&gt;
   &lt;p class=&quot;syn-help&quot;&gt;Enter the host name; validate the full URL in your app.&lt;/p&gt;
 &lt;/div&gt;</code></pre>
+            <button type="button" class="syn-button catalog-copy-page" hidden data-catalog-copy-page>Copy full page</button>
           </details>
           <div class="catalog-actions">
             <a class="syn-button catalog-live" href="#catalog-input-group-title-preview">Live View</a>
@@ -1085,7 +1138,7 @@
 </form>
           </div>
           <details class="catalog-code-details">
-            <summary>View HTML source</summary>
+            <summary>View HTML source and copy a full page</summary>
             <pre class="catalog-source"><code>&lt;form class=&quot;syn-filter-bar&quot; action=&quot;../examples/crm.html#pipeline&quot; method=&quot;get&quot;&gt;
   &lt;label class=&quot;syn-label syn-filter-field syn-filter-field--query&quot; for=&quot;catalog-account-query&quot;&gt;Account
     &lt;input class=&quot;syn-input&quot; id=&quot;catalog-account-query&quot; name=&quot;query&quot; type=&quot;search&quot; placeholder=&quot;Search accounts&quot;&gt;
@@ -1098,6 +1151,7 @@
   &lt;/label&gt;
   &lt;div class=&quot;syn-filter-actions&quot;&gt;&lt;button class=&quot;syn-button syn-button--primary&quot; type=&quot;submit&quot;&gt;Apply&lt;/button&gt;&lt;/div&gt;
 &lt;/form&gt;</code></pre>
+            <button type="button" class="syn-button catalog-copy-page" hidden data-catalog-copy-page>Copy full page</button>
           </details>
           <div class="catalog-actions">
             <a class="syn-button catalog-live" href="#catalog-crm-filters-title-preview">Live View</a>
@@ -1120,12 +1174,13 @@
 </section>
           </div>
           <details class="catalog-code-details">
-            <summary>View HTML source</summary>
+            <summary>View HTML source and copy a full page</summary>
             <pre class="catalog-source"><code>&lt;section class=&quot;syn-result-state&quot; aria-labelledby=&quot;catalog-recovery-title&quot;&gt;
   &lt;h3 id=&quot;catalog-recovery-title&quot;&gt;No matching records&lt;/h3&gt;
   &lt;p&gt;Try a broader search or review the documentation.&lt;/p&gt;
   &lt;a class=&quot;syn-button syn-button--outline&quot; href=&quot;https://syntyr-css.pages.dev/docs/guides.html&quot;&gt;Browse guides&lt;/a&gt;
 &lt;/section&gt;</code></pre>
+            <button type="button" class="syn-button catalog-copy-page" hidden data-catalog-copy-page>Copy full page</button>
           </details>
           <div class="catalog-actions">
             <a class="syn-button catalog-live" href="#catalog-recovery-state-title-preview">Live View</a>
@@ -1147,11 +1202,12 @@
 </article>
           </div>
           <details class="catalog-code-details">
-            <summary>View HTML source</summary>
+            <summary>View HTML source and copy a full page</summary>
             <pre class="catalog-source"><code>&lt;article class=&quot;syn-panel syn-frame syn-frame--bracket&quot; aria-labelledby=&quot;catalog-frame-title&quot;&gt;
   &lt;h3 class=&quot;syn-heading&quot; id=&quot;catalog-frame-title&quot;&gt;Connection established&lt;/h3&gt;
   &lt;p&gt;Geometry changes presentation, not meaning.&lt;/p&gt;
 &lt;/article&gt;</code></pre>
+            <button type="button" class="syn-button catalog-copy-page" hidden data-catalog-copy-page>Copy full page</button>
           </details>
           <div class="catalog-actions">
             <a class="syn-button catalog-live" href="#catalog-geometry-frame-title-preview">Live View</a>
@@ -1179,7 +1235,7 @@
 </ol>
           </div>
           <details class="catalog-code-details">
-            <summary>View HTML source</summary>
+            <summary>View HTML source and copy a full page</summary>
             <pre class="catalog-source"><code>&lt;ol class=&quot;syn-viz-bars&quot; aria-label=&quot;Illustrative channel share&quot;&gt;
   &lt;li class=&quot;syn-viz-bar&quot;&gt;
     &lt;div class=&quot;syn-viz-bar-label&quot;&gt;&lt;span&gt;Direct&lt;/span&gt;&lt;data value=&quot;54&quot;&gt;54%&lt;/data&gt;&lt;/div&gt;
@@ -1190,6 +1246,7 @@
     &lt;div class=&quot;syn-viz-bar-track&quot; aria-hidden=&quot;true&quot;&gt;&lt;span class=&quot;syn-viz-bar-fill&quot; style=&quot;--syn-viz-value: 31&quot;&gt;&lt;/span&gt;&lt;/div&gt;
   &lt;/li&gt;
 &lt;/ol&gt;</code></pre>
+            <button type="button" class="syn-button catalog-copy-page" hidden data-catalog-copy-page>Copy full page</button>
           </details>
           <div class="catalog-actions">
             <a class="syn-button catalog-live" href="#catalog-viz-bars-title-preview">Live View</a>
@@ -1214,7 +1271,7 @@
 </nav>
           </div>
           <details class="catalog-code-details">
-            <summary>View HTML source</summary>
+            <summary>View HTML source and copy a full page</summary>
             <pre class="catalog-source"><code>&lt;nav aria-label=&quot;Primary navigation&quot;&gt;
   &lt;ul class=&quot;syn-inline&quot;&gt;
     &lt;li&gt;&lt;a href=&quot;index.html&quot;&gt;Overview&lt;/a&gt;&lt;/li&gt;
@@ -1222,6 +1279,7 @@
     &lt;li&gt;&lt;a href=&quot;guides.html&quot;&gt;Guides&lt;/a&gt;&lt;/li&gt;
   &lt;/ul&gt;
 &lt;/nav&gt;</code></pre>
+            <button type="button" class="syn-button catalog-copy-page" hidden data-catalog-copy-page>Copy full page</button>
           </details>
           <div class="catalog-actions">
             <a class="syn-button catalog-live" href="#catalog-primary-nav-title-preview">Live View</a>
@@ -1253,7 +1311,7 @@
 </section>
           </div>
           <details class="catalog-code-details">
-            <summary>View HTML source</summary>
+            <summary>View HTML source and copy a full page</summary>
             <pre class="catalog-source"><code>&lt;nav aria-label=&quot;In-page example sections&quot;&gt;
   &lt;ul&gt;
     &lt;li&gt;&lt;a href=&quot;#catalog-toc-overview&quot;&gt;Overview&lt;/a&gt;&lt;/li&gt;
@@ -1268,6 +1326,7 @@
   &lt;h3 id=&quot;catalog-toc-notes&quot;&gt;Notes&lt;/h3&gt;
   &lt;p&gt;Native anchors work without JavaScript.&lt;/p&gt;
 &lt;/section&gt;</code></pre>
+            <button type="button" class="syn-button catalog-copy-page" hidden data-catalog-copy-page>Copy full page</button>
           </details>
           <div class="catalog-actions">
             <a class="syn-button catalog-live" href="#catalog-table-of-contents-title-preview">Live View</a>
@@ -1298,7 +1357,7 @@
 </section>
           </div>
           <details class="catalog-code-details">
-            <summary>View HTML source</summary>
+            <summary>View HTML source and copy a full page</summary>
             <pre class="catalog-source"><code>&lt;section aria-labelledby=&quot;catalog-footer-example-title&quot;&gt;
   &lt;h3 id=&quot;catalog-footer-example-title&quot;&gt;Documentation&lt;/h3&gt;
   &lt;footer&gt;
@@ -1312,6 +1371,7 @@
     &lt;small&gt;Example footer — update links for your own site.&lt;/small&gt;
   &lt;/footer&gt;
 &lt;/section&gt;</code></pre>
+            <button type="button" class="syn-button catalog-copy-page" hidden data-catalog-copy-page>Copy full page</button>
           </details>
           <div class="catalog-actions">
             <a class="syn-button catalog-live" href="#catalog-footer-nav-title-preview">Live View</a>
@@ -1336,7 +1396,7 @@
 </nav>
           </div>
           <details class="catalog-code-details">
-            <summary>View HTML source</summary>
+            <summary>View HTML source and copy a full page</summary>
             <pre class="catalog-source"><code>&lt;nav class=&quot;syn-pagination&quot; aria-label=&quot;Example result pages&quot;&gt;
   &lt;a href=&quot;catalog.html?page=1&quot; rel=&quot;prev&quot;&gt;Previous&lt;/a&gt;
   &lt;a href=&quot;catalog.html?page=1&quot;&gt;1&lt;/a&gt;
@@ -1344,6 +1404,7 @@
   &lt;a href=&quot;catalog.html?page=3&quot;&gt;3&lt;/a&gt;
   &lt;a href=&quot;catalog.html?page=3&quot; rel=&quot;next&quot;&gt;Next&lt;/a&gt;
 &lt;/nav&gt;</code></pre>
+            <button type="button" class="syn-button catalog-copy-page" hidden data-catalog-copy-page>Copy full page</button>
           </details>
           <div class="catalog-actions">
             <a class="syn-button catalog-live" href="#catalog-pagination-title-preview">Live View</a>
@@ -1370,7 +1431,7 @@
 </section>
           </div>
           <details class="catalog-code-details">
-            <summary>View HTML source</summary>
+            <summary>View HTML source and copy a full page</summary>
             <pre class="catalog-source"><code>&lt;section aria-labelledby=&quot;catalog-contact-heading&quot;&gt;
   &lt;h3 id=&quot;catalog-contact-heading&quot;&gt;Customer support&lt;/h3&gt;
   &lt;address&gt;
@@ -1380,6 +1441,7 @@
   &lt;/address&gt;
   &lt;p&gt;&lt;small&gt;Replace example.com and the example telephone number.&lt;/small&gt;&lt;/p&gt;
 &lt;/section&gt;</code></pre>
+            <button type="button" class="syn-button catalog-copy-page" hidden data-catalog-copy-page>Copy full page</button>
           </details>
           <div class="catalog-actions">
             <a class="syn-button catalog-live" href="#catalog-contact-title-preview">Live View</a>
@@ -1407,7 +1469,7 @@
 </div>
           </div>
           <details class="catalog-code-details">
-            <summary>View HTML source</summary>
+            <summary>View HTML source and copy a full page</summary>
             <pre class="catalog-source"><code>&lt;div class=&quot;syn-sidecar&quot;&gt;
   &lt;section aria-labelledby=&quot;catalog-aside-main-heading&quot;&gt;
     &lt;h3 id=&quot;catalog-aside-main-heading&quot;&gt;Project overview&lt;/h3&gt;
@@ -1418,6 +1480,7 @@
     &lt;ul&gt;&lt;li&gt;&lt;a href=&quot;guides.html&quot;&gt;Read the guides&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;
   &lt;/aside&gt;
 &lt;/div&gt;</code></pre>
+            <button type="button" class="syn-button catalog-copy-page" hidden data-catalog-copy-page>Copy full page</button>
           </details>
           <div class="catalog-actions">
             <a class="syn-button catalog-live" href="#catalog-aside-title-preview">Live View</a>
@@ -1442,7 +1505,7 @@
 </section>
           </div>
           <details class="catalog-code-details">
-            <summary>View HTML source</summary>
+            <summary>View HTML source and copy a full page</summary>
             <pre class="catalog-source"><code>&lt;section aria-labelledby=&quot;catalog-hgroup-heading&quot;&gt;
   &lt;hgroup&gt;
     &lt;h3 id=&quot;catalog-hgroup-heading&quot;&gt;Product updates&lt;/h3&gt;
@@ -1450,6 +1513,7 @@
   &lt;/hgroup&gt;
   &lt;p&gt;Follow the updates that matter to your team.&lt;/p&gt;
 &lt;/section&gt;</code></pre>
+            <button type="button" class="syn-button catalog-copy-page" hidden data-catalog-copy-page>Copy full page</button>
           </details>
           <div class="catalog-actions">
             <a class="syn-button catalog-live" href="#catalog-heading-group-title-preview">Live View</a>
@@ -1475,7 +1539,7 @@
 </section>
           </div>
           <details class="catalog-code-details">
-            <summary>View HTML source</summary>
+            <summary>View HTML source and copy a full page</summary>
             <pre class="catalog-source"><code>&lt;section aria-labelledby=&quot;catalog-agenda-heading&quot;&gt;
   &lt;h3 id=&quot;catalog-agenda-heading&quot;&gt;Workshop schedule&lt;/h3&gt;
   &lt;ol class=&quot;syn-stack&quot;&gt;
@@ -1484,6 +1548,7 @@
     &lt;li&gt;&lt;time datetime=&quot;2026-12-03T12:00:00-03:00&quot;&gt;12:00 BRT&lt;/time&gt; — Questions&lt;/li&gt;
   &lt;/ol&gt;
 &lt;/section&gt;</code></pre>
+            <button type="button" class="syn-button catalog-copy-page" hidden data-catalog-copy-page>Copy full page</button>
           </details>
           <div class="catalog-actions">
             <a class="syn-button catalog-live" href="#catalog-event-agenda-title-preview">Live View</a>
@@ -1512,7 +1577,7 @@
 </div>
           </div>
           <details class="catalog-code-details">
-            <summary>View HTML source</summary>
+            <summary>View HTML source and copy a full page</summary>
             <pre class="catalog-source"><code>&lt;div class=&quot;syn-table-wrap&quot;&gt;
   &lt;table class=&quot;syn-table&quot;&gt;
     &lt;caption&gt;Illustrative monthly orders&lt;/caption&gt;
@@ -1524,6 +1589,7 @@
     &lt;tfoot&gt;&lt;tr&gt;&lt;th scope=&quot;row&quot;&gt;Total&lt;/th&gt;&lt;td&gt;30&lt;/td&gt;&lt;/tr&gt;&lt;/tfoot&gt;
   &lt;/table&gt;
 &lt;/div&gt;</code></pre>
+            <button type="button" class="syn-button catalog-copy-page" hidden data-catalog-copy-page>Copy full page</button>
           </details>
           <div class="catalog-actions">
             <a class="syn-button catalog-live" href="#catalog-table-totals-title-preview">Live View</a>
@@ -1548,7 +1614,7 @@
 </section>
           </div>
           <details class="catalog-code-details">
-            <summary>View HTML source</summary>
+            <summary>View HTML source and copy a full page</summary>
             <pre class="catalog-source"><code>&lt;section aria-labelledby=&quot;catalog-revisions-heading&quot;&gt;
   &lt;h3 id=&quot;catalog-revisions-heading&quot;&gt;Release terminology&lt;/h3&gt;
   &lt;p&gt;&lt;abbr title=&quot;Application programming interface&quot;&gt;API&lt;/abbr&gt; is the public contract.&lt;/p&gt;
@@ -1556,6 +1622,7 @@
   &lt;p&gt;Plan: &lt;del datetime=&quot;2026-11-20&quot;&gt;Ship a prototype&lt;/del&gt;
      &lt;ins datetime=&quot;2026-11-22&quot;&gt;Ship a tested component&lt;/ins&gt;.&lt;/p&gt;
 &lt;/section&gt;</code></pre>
+            <button type="button" class="syn-button catalog-copy-page" hidden data-catalog-copy-page>Copy full page</button>
           </details>
           <div class="catalog-actions">
             <a class="syn-button catalog-live" href="#catalog-revisions-title-preview">Live View</a>
@@ -1581,7 +1648,7 @@
 </form>
           </div>
           <details class="catalog-code-details">
-            <summary>View HTML source</summary>
+            <summary>View HTML source and copy a full page</summary>
             <pre class="catalog-source"><code>&lt;form class=&quot;syn-form&quot; action=&quot;catalog.html&quot; method=&quot;get&quot;&gt;
   &lt;label class=&quot;syn-label&quot; for=&quot;catalog-results-limit&quot;&gt;Maximum results&lt;/label&gt;
   &lt;input class=&quot;syn-input&quot; id=&quot;catalog-results-limit&quot; name=&quot;limit&quot;
@@ -1590,6 +1657,7 @@
   &lt;p class=&quot;syn-help&quot; id=&quot;catalog-validation-help&quot;&gt;Choose a number from 1 to 50.&lt;/p&gt;
   &lt;button class=&quot;syn-button syn-button--primary&quot; type=&quot;submit&quot;&gt;Apply limit&lt;/button&gt;
 &lt;/form&gt;</code></pre>
+            <button type="button" class="syn-button catalog-copy-page" hidden data-catalog-copy-page>Copy full page</button>
           </details>
           <div class="catalog-actions">
             <a class="syn-button catalog-live" href="#catalog-form-help-title-preview">Live View</a>
@@ -1615,7 +1683,7 @@
 </div>
           </div>
           <details class="catalog-code-details">
-            <summary>View HTML source</summary>
+            <summary>View HTML source and copy a full page</summary>
             <pre class="catalog-source"><code>&lt;div&gt;
   &lt;a class=&quot;syn-button&quot; href=&quot;#catalog-skip-destination&quot;&gt;Skip to example content&lt;/a&gt;
   &lt;nav aria-label=&quot;Example introductory links&quot;&gt;&lt;a href=&quot;guides.html&quot;&gt;Browse guides&lt;/a&gt;&lt;/nav&gt;
@@ -1624,6 +1692,7 @@
     &lt;p&gt;Use a matching target ID in your application.&lt;/p&gt;
   &lt;/section&gt;
 &lt;/div&gt;</code></pre>
+            <button type="button" class="syn-button catalog-copy-page" hidden data-catalog-copy-page>Copy full page</button>
           </details>
           <div class="catalog-actions">
             <a class="syn-button catalog-live" href="#catalog-skip-link-title-preview">Live View</a>
@@ -1649,7 +1718,7 @@
 </section>
           </div>
           <details class="catalog-code-details">
-            <summary>View HTML source</summary>
+            <summary>View HTML source and copy a full page</summary>
             <pre class="catalog-source"><code>&lt;section aria-labelledby=&quot;catalog-status-heading&quot;&gt;
   &lt;h3 id=&quot;catalog-status-heading&quot;&gt;Workflow status&lt;/h3&gt;
   &lt;ul class=&quot;syn-stack&quot;&gt;
@@ -1658,6 +1727,7 @@
     &lt;li&gt;&lt;span class=&quot;syn-badge&quot;&gt;Needs attention&lt;/span&gt; · Missing document&lt;/li&gt;
   &lt;/ul&gt;
 &lt;/section&gt;</code></pre>
+            <button type="button" class="syn-button catalog-copy-page" hidden data-catalog-copy-page>Copy full page</button>
           </details>
           <div class="catalog-actions">
             <a class="syn-button catalog-live" href="#catalog-status-list-title-preview">Live View</a>
@@ -1682,7 +1752,7 @@
 </section>
           </div>
           <details class="catalog-code-details">
-            <summary>View HTML source</summary>
+            <summary>View HTML source and copy a full page</summary>
             <pre class="catalog-source"><code>&lt;section aria-labelledby=&quot;catalog-activity-heading&quot;&gt;
   &lt;h3 id=&quot;catalog-activity-heading&quot;&gt;Recent activity&lt;/h3&gt;
   &lt;ol class=&quot;syn-stack&quot;&gt;
@@ -1690,6 +1760,7 @@
     &lt;li&gt;&lt;time datetime=&quot;2026-11-21T15:30:00Z&quot;&gt;Nov 21, 15:30 UTC&lt;/time&gt; — Review requested&lt;/li&gt;
   &lt;/ol&gt;
 &lt;/section&gt;</code></pre>
+            <button type="button" class="syn-button catalog-copy-page" hidden data-catalog-copy-page>Copy full page</button>
           </details>
           <div class="catalog-actions">
             <a class="syn-button catalog-live" href="#catalog-activity-entry-title-preview">Live View</a>
@@ -1715,7 +1786,7 @@
 </section>
           </div>
           <details class="catalog-code-details">
-            <summary>View HTML source</summary>
+            <summary>View HTML source and copy a full page</summary>
             <pre class="catalog-source"><code>&lt;section aria-labelledby=&quot;catalog-property-heading&quot;&gt;
   &lt;h3 id=&quot;catalog-property-heading&quot;&gt;Record details&lt;/h3&gt;
   &lt;dl&gt;
@@ -1724,6 +1795,7 @@
     &lt;dt&gt;Updated&lt;/dt&gt;&lt;dd&gt;&lt;time datetime=&quot;2026-11-22&quot;&gt;November 22, 2026&lt;/time&gt;&lt;/dd&gt;
   &lt;/dl&gt;
 &lt;/section&gt;</code></pre>
+            <button type="button" class="syn-button catalog-copy-page" hidden data-catalog-copy-page>Copy full page</button>
           </details>
           <div class="catalog-actions">
             <a class="syn-button catalog-live" href="#catalog-property-list-title-preview">Live View</a>
@@ -1746,12 +1818,13 @@
 </article>
           </div>
           <details class="catalog-code-details">
-            <summary>View HTML source</summary>
+            <summary>View HTML source and copy a full page</summary>
             <pre class="catalog-source"><code>&lt;article class=&quot;syn-panel&quot;&gt;
   &lt;p class=&quot;syn-eyebrow&quot;&gt;DOCUMENTATION&lt;/p&gt;
   &lt;h3 class=&quot;syn-heading&quot;&gt;&lt;a href=&quot;guides.html&quot;&gt;Getting started guides&lt;/a&gt;&lt;/h3&gt;
   &lt;p&gt;Find practical examples for integrating native HTML and Syntyr CSS.&lt;/p&gt;
 &lt;/article&gt;</code></pre>
+            <button type="button" class="syn-button catalog-copy-page" hidden data-catalog-copy-page>Copy full page</button>
           </details>
           <div class="catalog-actions">
             <a class="syn-button catalog-live" href="#catalog-link-card-title-preview">Live View</a>
@@ -1776,7 +1849,7 @@
 </section>
           </div>
           <details class="catalog-code-details">
-            <summary>View HTML source</summary>
+            <summary>View HTML source and copy a full page</summary>
             <pre class="catalog-source"><code>&lt;section aria-labelledby=&quot;catalog-action-section-heading&quot;&gt;
   &lt;header class=&quot;syn-inline&quot;&gt;
     &lt;h3 id=&quot;catalog-action-section-heading&quot;&gt;Workspace overview&lt;/h3&gt;
@@ -1784,6 +1857,7 @@
   &lt;/header&gt;
   &lt;p&gt;Place supporting content after the section heading.&lt;/p&gt;
 &lt;/section&gt;</code></pre>
+            <button type="button" class="syn-button catalog-copy-page" hidden data-catalog-copy-page>Copy full page</button>
           </details>
           <div class="catalog-actions">
             <a class="syn-button catalog-live" href="#catalog-section-actions-title-preview">Live View</a>

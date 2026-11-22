@@ -6,7 +6,7 @@
   .catalog-preview-controls > div { min-width: 0; }
   .catalog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 27rem), 1fr)); align-items: start; gap: 1rem; }
   .catalog-card { display: grid; gap: .875rem; min-width: 0; }
-  .catalog-card[hidden], #catalog-empty[hidden], #catalog-controls[hidden], .catalog-copy[hidden] { display: none; }
+  .catalog-card[hidden], #catalog-empty[hidden], #catalog-controls[hidden], .catalog-copy[hidden], .catalog-copy-page[hidden] { display: none; }
   .catalog-card-top { display: flex; justify-content: space-between; align-items: start; flex-wrap: wrap; gap: .6rem; }
   .catalog-card-top h2 { margin: 0; }
   .catalog-preview { min-width: 0; padding: 1rem; border: 1px solid var(--syn-border-subtle); background: var(--syn-surface-recessed); overflow: auto; }
@@ -20,7 +20,15 @@
   .catalog-source { max-width: 100%; margin-block: .75rem 0; padding: .875rem; border: 1px solid var(--syn-border-subtle); color: var(--syn-text); background: var(--syn-bg); overflow: auto; font: .82rem/1.55 var(--syn-mono); }
   .catalog-source code { white-space: pre; }
   .catalog-copy { justify-self: start; }
+  .catalog-copy-page { margin-block-start: .65rem; }
   @media (forced-colors: active) { .catalog-preview, .catalog-source { border-color: CanvasText; } }
+  .catalog-adoption { margin-block: 1.5rem; display: grid; gap: .75rem; }
+  .catalog-adoption > :where(h2, p) { margin: 0; }
+  .catalog-browser-details summary { font-weight: 650; cursor: pointer; min-block-size: 2.75rem; }
+  .catalog-browser-details table { inline-size: 100%; margin-block: .75rem; }
+  .catalog-browser-details th, .catalog-browser-details td { overflow-wrap: anywhere; }
+  .catalog-feature-note { border-inline-start: 2px solid var(--syn-border-default); padding-inline-start: .6rem; }
+  .catalog-page-fallback { min-inline-size: 0; }
   .catalog-pathways { margin-block: 1.5rem; }
   .catalog-pathways > .syn-heading { margin-block: .5rem; }
   .catalog-pathways > .syn-grid { --syn-grid-min: 14rem; margin-block-start: 1rem; }
