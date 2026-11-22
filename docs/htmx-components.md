@@ -2,6 +2,8 @@
 
 Use Syntyr's existing CSS components with **HTMX as an optional enhancement** for server-rendered HTML. These are **12 copy-owned recipes**, not a JavaScript widget runtime or prebuilt backend. Each code sample assumes an application endpoint that returns complete documents on ordinary requests and an appropriate fragment on HTMX requests.
 
+**Try the [live HTMX playground](htmx-playground.html):** it uses a read-only Cloudflare Pages Function for real search, sorting and pagination, with working native GET fallback. The example is specific to the website; no application backend ships with the CSS library.
+
 **Availability:** This page describes the **unreleased 0.3.0-alpha.5 source candidate**, not the published alpha.4 release. Core CSS works independently of HTMX; the optional adapter only styles request indicators and opt-in swap transitions.
 
 ## Install and compatibility
