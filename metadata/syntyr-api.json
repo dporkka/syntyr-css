@@ -2609,6 +2609,26 @@
       "description": "Spacing scale token 5; use for consistent layout spacing."
     },
     {
+      "name": "--syn-space-fluid-1",
+      "module": "tokens.css",
+      "description": "Spacing scale token fluid-1; use for consistent layout spacing."
+    },
+    {
+      "name": "--syn-space-fluid-2",
+      "module": "tokens.css",
+      "description": "Spacing scale token fluid-2; use for consistent layout spacing."
+    },
+    {
+      "name": "--syn-space-fluid-3",
+      "module": "tokens.css",
+      "description": "Spacing scale token fluid-3; use for consistent layout spacing."
+    },
+    {
+      "name": "--syn-space-fluid-4",
+      "module": "tokens.css",
+      "description": "Spacing scale token fluid-4; use for consistent layout spacing."
+    },
+    {
       "name": "--syn-stack-gap",
       "module": "components/layout.css",
       "description": "Stack gap; defaults to --syn-space-3."

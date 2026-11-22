@@ -63,6 +63,105 @@ rather than guessing from the viewport. Content may still overflow if
 application-defined children use fixed dimensions; make tables and code blocks
 scrollable and keyboard reachable where necessary.
 
+## Fluid spacing and a copyable intrinsic layout cookbook (unreleased alpha.5)
+
+Core now provides four **opt-in** fluid spacing tokens. They grow smoothly
+with the logical viewport inline size between adjacent fixed tokens; the
+existing `--syn-space-1` through `--syn-space-5`, default component spacing,
+and density settings do **not** change.
+
+| Fluid token | Bounded by | Typical use |
+| --- | --- | --- |
+| `--syn-space-fluid-1` | `--syn-space-1` to `--syn-space-2` | Tight action and chip gaps |
+| `--syn-space-fluid-2` | `--syn-space-2` to `--syn-space-3` | Toolbars and form groups |
+| `--syn-space-fluid-3` | `--syn-space-3` to `--syn-space-4` | Cards and content stacks |
+| `--syn-space-fluid-4` | `--syn-space-4` to `--syn-space-5` | Page sections and feature grids |
+
+`clamp()` and `vi` are handled by CSS alone. When the browser lacks logical
+viewport units, the feature-gated declarations use the lower fixed bound. The
+tokens depend on the **viewport**, not an element's container size: combine
+them with existing intrinsic-wrapping classes to handle embedded layouts.
+
+### Vertical stack: article or onboarding steps
+
+~~~html
+<link rel="stylesheet" href="/dist/syntyr.core.css">
+<section class="syn-root syn-stack" data-syn-theme="studio"
+         style="--syn-stack-gap:var(--syn-space-fluid-3)">
+  <h2>Launch checklist</h2>
+  <p>Publish the landing page and review the results.</p>
+  <a class="syn-button" href="/checklist">Open checklist</a>
+</section>
+~~~
+
+### Wrapping navigation and filter actions
+
+~~~html
+<nav class="syn-root syn-inline" aria-label="Project filters"
+     style="--syn-inline-gap:var(--syn-space-fluid-1)">
+  <a href="/projects">All projects</a>
+  <a href="/projects?status=active">Active</a>
+  <a href="/projects?status=archived">Archived</a>
+</nav>
+~~~
+
+Use actual GET forms for input filters; ordinary navigation links do not need
+tab roles or application-owned keyboard handlers.
+
+### Responsive main content and complementary aside
+
+~~~html
+<div class="syn-root syn-sidecar" data-syn-theme="studio"
+     style="--syn-sidecar-gap:var(--syn-space-fluid-3)">
+  <main class="syn-panel">
+    <h1>Project overview</h1>
+    <p>Core information stays first in document and keyboard order.</p>
+  </main>
+  <aside class="syn-panel" aria-label="Project activity">
+    <h2>Recent activity</h2>
+    <p>Three updates this week.</p>
+  </aside>
+</div>
+~~~
+
+### Responsive feature and pricing grid
+
+~~~html
+<section class="syn-root" data-syn-theme="studio" aria-labelledby="features-title">
+  <h2 id="features-title">Features</h2>
+  <div class="syn-grid"
+       style="--syn-grid-gap:var(--syn-space-fluid-4); --syn-grid-min:16rem">
+    <article class="syn-panel"><h3>Accessible</h3><p>Real HTML controls.</p></article>
+    <article class="syn-panel"><h3>Portable</h3><p>No runtime framework.</p></article>
+    <article class="syn-panel"><h3>Responsive</h3><p>Intrinsic CSS grid.</p></article>
+  </div>
+</section>
+~~~
+
+### Optional all-or-nothing card switcher
+
+The `syn-switcher` class is in **optional** `syntyr.recipes.css`, *not*
+`syntyr.core.css`; load recipes after core to use it:
+
+~~~html
+<link rel="stylesheet" href="/dist/syntyr.core.css">
+<link rel="stylesheet" href="/dist/syntyr.recipes.css">
+<div class="syn-root syn-switcher" data-syn-theme="studio"
+     style="--syn-switcher-threshold:42rem; gap:var(--syn-space-fluid-2)">
+  <article class="syn-panel"><h2>Starter</h2><p>For small teams.</p></article>
+  <article class="syn-panel"><h2>Growth</h2><p>For busy teams.</p></article>
+  <article class="syn-panel"><h2>Scale</h2><p>For large teams.</p></article>
+</div>
+~~~
+
+These snippets are original MIT examples. They work with no JavaScript and
+can be reordered in source; moving blocks in the DOM also changes reading and focus
+order. Use semantic headings, named navigation, descriptive link text, and
+visible focus indicators. Content with fixed widths, long tables, or code may
+need separate overflow handling. Test zoom, RTL, and embedded widths before
+shipping. CSS does not fetch data, virtualize cards, or implement infinite
+loading.
+
 ## Import only what you need
 
 For no-build consumers, the preferred option is one self-hosted

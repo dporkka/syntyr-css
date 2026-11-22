@@ -151,6 +151,30 @@
       "requires_browser_validation": false
     },
     {
+      "css_variable": "--syn-space-fluid-1",
+      "css_value": "var(--syn-space-1)",
+      "figma_px": null,
+      "requires_browser_validation": true
+    },
+    {
+      "css_variable": "--syn-space-fluid-2",
+      "css_value": "var(--syn-space-2)",
+      "figma_px": null,
+      "requires_browser_validation": true
+    },
+    {
+      "css_variable": "--syn-space-fluid-3",
+      "css_value": "var(--syn-space-3)",
+      "figma_px": null,
+      "requires_browser_validation": true
+    },
+    {
+      "css_variable": "--syn-space-fluid-4",
+      "css_value": "var(--syn-space-4)",
+      "figma_px": null,
+      "requires_browser_validation": true
+    },
+    {
       "css_variable": "--syn-tracking-display",
       "css_value": "-.045em",
       "figma_px": null,
