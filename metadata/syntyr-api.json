@@ -942,6 +942,81 @@
       "description": "Icon presentation in the symbols.css module; use semantic HTML and consult its component example."
     },
     {
+      "name": "syn-icon--bounce",
+      "module": "symbols.css",
+      "description": "Bounce appearance variant of the icon component; see symbols.css for styles."
+    },
+    {
+      "name": "syn-icon--flash",
+      "module": "symbols.css",
+      "description": "Flash appearance variant of the icon component; see symbols.css for styles."
+    },
+    {
+      "name": "syn-icon--flip",
+      "module": "symbols.css",
+      "description": "Flip appearance variant of the icon component; see symbols.css for styles."
+    },
+    {
+      "name": "syn-icon--float",
+      "module": "symbols.css",
+      "description": "Float appearance variant of the icon component; see symbols.css for styles."
+    },
+    {
+      "name": "syn-icon--heartbeat",
+      "module": "symbols.css",
+      "description": "Heartbeat appearance variant of the icon component; see symbols.css for styles."
+    },
+    {
+      "name": "syn-icon--nudge-left",
+      "module": "symbols.css",
+      "description": "Nudge left appearance variant of the icon component; see symbols.css for styles."
+    },
+    {
+      "name": "syn-icon--nudge-right",
+      "module": "symbols.css",
+      "description": "Nudge right appearance variant of the icon component; see symbols.css for styles."
+    },
+    {
+      "name": "syn-icon--on-interact",
+      "module": "symbols.css",
+      "description": "On interact appearance variant of the icon component; see symbols.css for styles."
+    },
+    {
+      "name": "syn-icon--ping",
+      "module": "symbols.css",
+      "description": "Ping appearance variant of the icon component; see symbols.css for styles."
+    },
+    {
+      "name": "syn-icon--pop",
+      "module": "symbols.css",
+      "description": "Pop appearance variant of the icon component; see symbols.css for styles."
+    },
+    {
+      "name": "syn-icon--pulse",
+      "module": "symbols.css",
+      "description": "Pulse appearance variant of the icon component; see symbols.css for styles."
+    },
+    {
+      "name": "syn-icon--shake",
+      "module": "symbols.css",
+      "description": "Shake appearance variant of the icon component; see symbols.css for styles."
+    },
+    {
+      "name": "syn-icon--spin",
+      "module": "symbols.css",
+      "description": "Spin appearance variant of the icon component; see symbols.css for styles."
+    },
+    {
+      "name": "syn-icon--swing",
+      "module": "symbols.css",
+      "description": "Swing appearance variant of the icon component; see symbols.css for styles."
+    },
+    {
+      "name": "syn-icon--wiggle",
+      "module": "symbols.css",
+      "description": "Wiggle appearance variant of the icon component; see symbols.css for styles."
+    },
+    {
       "name": "syn-inline",
       "module": "components/layout.css",
       "description": "Inline, wrapping layout for small groups of peers."
@@ -2322,6 +2397,11 @@
       "name": "--syn-horizon-alpha",
       "module": "tokens.css",
       "description": "Horizon line accent share."
+    },
+    {
+      "name": "--syn-icon-motion-keyframes",
+      "module": "symbols.css",
+      "description": "Icon motion keyframes design token from symbols.css; override in the appropriate Syntyr scope when needed."
     },
     {
       "name": "--syn-inline-gap",
