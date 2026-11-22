@@ -1308,5 +1308,71 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "kind": "block",
     "category": "Marketing",
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
+  },
+  {
+    "id": "block-hero-photo",
+    "title": "Photographic hero section",
+    "module": "syntyr.core.css",
+    "description": "An image-led introduction with a meaningful action and figure caption.",
+    "html": "\u003csection class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-photo-hero\">\n  \u003cdiv class=\"syn-sidecar\">\n    \u003cdiv>\n      \u003cp class=\"syn-eyebrow\">A PLACE TO EXPLORE\u003c/p>\n      \u003ch2 class=\"syn-heading\" id=\"syn-photo-hero\">A visual introduction worth exploring.\u003c/h2>\n      \u003cp class=\"syn-lede\">Pair your main message with real photography or product imagery.\u003c/p>\n      \u003cp class=\"syn-muted\">Responsive, semantic, and ready for your own story.\u003c/p>\n      \u003ca class=\"syn-button syn-button--primary\" href=\"/explore\">Explore the collection\u003c/a>\n    \u003c/div>\n    \u003cfigure class=\"syn-media-figure\">\n      \u003cimg src=\"../assets/gallery-horizon.svg\" alt=\"Original illustration of layered coastal hills at sunset\" width=\"960\" height=\"640\" loading=\"lazy\" decoding=\"async\">\n      \u003cfigcaption>Example image; replace with your own licensed photography.\u003c/figcaption>\n    \u003c/figure>\n  \u003c/div>\n\u003c/section>",
+    "keywords": "Photographic hero section An image-led introduction with a meaningful action and figure caption. hero image landing photography",
+    "kind": "block",
+    "category": "Marketing",
+    "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
+  },
+  {
+    "id": "block-before-after",
+    "title": "Before and after image comparison",
+    "module": "syntyr.core.css",
+    "description": "Two semantic, responsive photos with accessible full-image links; no scripted comparison slider.",
+    "html": "\u003csection class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-compare-images\">\n  \u003cp class=\"syn-eyebrow\">PROJECT COMPARISON\u003c/p>\n  \u003ch2 class=\"syn-heading\" id=\"syn-compare-images\">See the change side by side.\u003c/h2>\n  \u003cp class=\"syn-muted\">Use two real photos to show a process or transformation. These unrelated illustrations are layout placeholders, not a factual before-and-after claim.\u003c/p>\n  \u003cdiv class=\"syn-image-gallery\">\n    \u003cfigure>\u003ca href=\"../assets/gallery-architecture.svg\" aria-label=\"View example before artwork\">\u003cimg src=\"../assets/gallery-architecture.svg\" alt=\"Warm building arches in an abstract illustration\" width=\"960\" height=\"640\" loading=\"lazy\" decoding=\"async\">\u003c/a>\u003cfigcaption>Before / illustrative artwork\u003c/figcaption>\u003c/figure>\n    \u003cfigure>\u003ca href=\"../assets/gallery-botanical.svg\" aria-label=\"View example after artwork\">\u003cimg src=\"../assets/gallery-botanical.svg\" alt=\"Abstract study of overlapping green leaves\" width=\"960\" height=\"640\" loading=\"lazy\" decoding=\"async\">\u003c/a>\u003cfigcaption>After / illustrative artwork\u003c/figcaption>\u003c/figure>\n  \u003c/div>\n\u003c/section>",
+    "keywords": "Before and after image comparison Two semantic, responsive photos with accessible full-image links; no scripted comparison slider. before after portfolio images",
+    "kind": "block",
+    "category": "Portfolio",
+    "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
+  },
+  {
+    "id": "block-resource-downloads",
+    "title": "Free resources and downloads",
+    "module": "syntyr.core.css",
+    "description": "Native download links to reusable illustrations in a flexible resource grid.",
+    "html": "\u003csection class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-free-resources\">\n  \u003cp class=\"syn-eyebrow\">FREE DOWNLOADS\u003c/p>\n  \u003ch2 class=\"syn-heading\" id=\"syn-free-resources\">Useful resources to take with you.\u003c/h2>\n  \u003cp class=\"syn-muted\">Example downloadable SVG artwork; replace these with your own guides, reports, templates or product downloads.\u003c/p>\n  \u003cul class=\"syn-grid\">\n    \u003cli class=\"syn-panel\">\u003ch3>Coastal illustration\u003c/h3>\u003cp>Original SVG artwork for layouts and prototypes.\u003c/p>\u003ca class=\"syn-button\" href=\"../assets/gallery-horizon.svg\" download=\"coastal-illustration.svg\">Download SVG\u003c/a>\u003c/li>\n    \u003cli class=\"syn-panel\">\u003ch3>Architectural illustration\u003c/h3>\u003cp>A simple geometric artwork for a portfolio or landing page.\u003c/p>\u003ca class=\"syn-button\" href=\"../assets/gallery-architecture.svg\" download=\"architectural-illustration.svg\">Download SVG\u003c/a>\u003c/li>\n    \u003cli class=\"syn-panel\">\u003ch3>Botanical illustration\u003c/h3>\u003cp>Lightweight visual art for editorial content.\u003c/p>\u003ca class=\"syn-button\" href=\"../assets/gallery-botanical.svg\" download=\"botanical-illustration.svg\">Download SVG\u003c/a>\u003c/li>\n  \u003c/ul>\n\u003c/section>",
+    "keywords": "Free resources and downloads Native download links to reusable illustrations in a flexible resource grid. resources downloads files library",
+    "kind": "block",
+    "category": "Publishing",
+    "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
+  },
+  {
+    "id": "block-press-highlights",
+    "title": "News and press highlights",
+    "module": "syntyr.core.css",
+    "description": "A dated editorial summary grid with descriptive story destinations.",
+    "html": "\u003csection class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-press-highlights\">\n  \u003cp class=\"syn-eyebrow\">FROM THE JOURNAL / EXAMPLES\u003c/p>\n  \u003ch2 class=\"syn-heading\" id=\"syn-press-highlights\">Recent stories and announcements\u003c/h2>\n  \u003cp class=\"syn-muted\">These are fictional editorial examples, not actual press mentions or endorsements.\u003c/p>\n  \u003cdiv class=\"syn-grid\">\n    \u003carticle class=\"syn-panel\">\u003cp class=\"syn-caption\">\u003ctime datetime=\"2026-09-15\">September 15, 2026\u003c/time>\u003c/p>\u003ch3>Why readable layouts matter\u003c/h3>\u003cp>Practical notes on clarity, hierarchy and useful content.\u003c/p>\u003ca href=\"/news/layout-clarity\">Read sample story\u003c/a>\u003c/article>\n    \u003carticle class=\"syn-panel\">\u003cp class=\"syn-caption\">\u003ctime datetime=\"2026-10-02\">October 2, 2026\u003c/time>\u003c/p>\u003ch3>Building better resource pages\u003c/h3>\u003cp>Make helpful information easy to discover and keep current.\u003c/p>\u003ca href=\"/news/resource-pages\">Read sample story\u003c/a>\u003c/article>\n    \u003carticle class=\"syn-panel\">\u003cp class=\"syn-caption\">\u003ctime datetime=\"2026-10-23\">October 23, 2026\u003c/time>\u003c/p>\u003ch3>Creating an accessible launch\u003c/h3>\u003cp>Use native controls, tested navigation and clear feedback.\u003c/p>\u003ca href=\"/news/accessible-launch\">Read sample story\u003c/a>\u003c/article>\n  \u003c/div>\n\u003c/section>",
+    "keywords": "News and press highlights A dated editorial summary grid with descriptive story destinations. press mentions news announcements",
+    "kind": "block",
+    "category": "Marketing",
+    "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
+  },
+  {
+    "id": "block-social-links",
+    "title": "Community and social links",
+    "module": "syntyr.core.css",
+    "description": "A semantic link directory for communities, updates and contact channels.",
+    "html": "\u003csection class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-social-links\">\n  \u003cp class=\"syn-eyebrow\">STAY CONNECTED\u003c/p>\n  \u003ch2 class=\"syn-heading\" id=\"syn-social-links\">Find the right place to connect.\u003c/h2>\n  \u003cp class=\"syn-muted\">Example destinations: replace these routes with your organization's actual public profiles.\u003c/p>\n  \u003cnav aria-label=\"Example community destinations\">\n    \u003cul class=\"syn-grid\">\n      \u003cli class=\"syn-panel\">\u003ch3>Community\u003c/h3>\u003cp>Questions, conversation and shared ideas.\u003c/p>\u003ca href=\"/community\">Visit community\u003c/a>\u003c/li>\n      \u003cli class=\"syn-panel\">\u003ch3>Updates\u003c/h3>\u003cp>Announcements and product notes.\u003c/p>\u003ca href=\"/updates\">Read updates\u003c/a>\u003c/li>\n      \u003cli class=\"syn-panel\">\u003ch3>Contact\u003c/h3>\u003cp>Reach our team directly.\u003c/p>\u003ca href=\"/contact\">Get in touch\u003c/a>\u003c/li>\n    \u003c/ul>\n  \u003c/nav>\n\u003c/section>",
+    "keywords": "Community and social links A semantic link directory for communities, updates and contact channels. social community links follow",
+    "kind": "block",
+    "category": "Navigation",
+    "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
+  },
+  {
+    "id": "block-product-specifications",
+    "title": "Product specifications table",
+    "module": "syntyr.core.css",
+    "description": "Accessible product details in a named, keyboard-scrollable semantic table.",
+    "html": "\u003csection class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-specs-heading\">\n  \u003cp class=\"syn-eyebrow\">PRODUCT DETAILS / EXAMPLE\u003c/p>\n  \u003ch2 class=\"syn-heading\" id=\"syn-specs-heading\">Specifications at a glance\u003c/h2>\n  \u003cp class=\"syn-muted\">Illustrative specifications for a fictional desk notebook. Replace with verified product data.\u003c/p>\n  \u003cdiv class=\"syn-table-wrap\" role=\"region\" tabindex=\"0\" aria-label=\"Example notebook specifications\">\n    \u003ctable class=\"syn-table\">\n      \u003ccaption>Example notebook specification table\u003c/caption>\n      \u003ctbody>\n        \u003ctr>\u003cth scope=\"row\">Size\u003c/th>\u003ctd>A5 (148 \u00d7 210 mm)\u003c/td>\u003c/tr>\n        \u003ctr>\u003cth scope=\"row\">Pages\u003c/th>\u003ctd>128\u003c/td>\u003c/tr>\n        \u003ctr>\u003cth scope=\"row\">Paper\u003c/th>\u003ctd>Uncoated, blank\u003c/td>\u003c/tr>\n        \u003ctr>\u003cth scope=\"row\">Binding\u003c/th>\u003ctd>Stitched\u003c/td>\u003c/tr>\n      \u003c/tbody>\n    \u003c/table>\n  \u003c/div>\n\u003c/section>",
+    "keywords": "Product specifications table Accessible product details in a named, keyboard-scrollable semantic table. product details specifications commerce",
+    "kind": "block",
+    "category": "Commerce",
+    "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   }
 ];

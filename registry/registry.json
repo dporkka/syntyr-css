@@ -1972,6 +1972,168 @@
           "target": "~/syntyr/LICENSE"
         }
       ]
+    },
+    {
+      "name": "hero-photo",
+      "type": "registry:item",
+      "title": "Photographic hero section",
+      "description": "An image-led introduction with a meaningful action and figure caption.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://syntyr-css.pages.dev/registry/r/core.json"
+      ],
+      "files": [
+        {
+          "path": "blocks/snippets/hero-photo.html",
+          "type": "registry:file",
+          "target": "~/syntyr/blocks/hero-photo.html"
+        },
+        {
+          "path": "assets/gallery-horizon.svg",
+          "type": "registry:file",
+          "target": "~/syntyr/assets/gallery-horizon.svg"
+        },
+        {
+          "path": "LICENSE",
+          "type": "registry:file",
+          "target": "~/syntyr/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "before-after",
+      "type": "registry:item",
+      "title": "Before and after image comparison",
+      "description": "Two semantic, responsive photos with accessible full-image links; no scripted comparison slider.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://syntyr-css.pages.dev/registry/r/core.json"
+      ],
+      "files": [
+        {
+          "path": "blocks/snippets/before-after.html",
+          "type": "registry:file",
+          "target": "~/syntyr/blocks/before-after.html"
+        },
+        {
+          "path": "assets/gallery-architecture.svg",
+          "type": "registry:file",
+          "target": "~/syntyr/assets/gallery-architecture.svg"
+        },
+        {
+          "path": "assets/gallery-botanical.svg",
+          "type": "registry:file",
+          "target": "~/syntyr/assets/gallery-botanical.svg"
+        },
+        {
+          "path": "LICENSE",
+          "type": "registry:file",
+          "target": "~/syntyr/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "resource-downloads",
+      "type": "registry:item",
+      "title": "Free resources and downloads",
+      "description": "Native download links to reusable illustrations in a flexible resource grid.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://syntyr-css.pages.dev/registry/r/core.json"
+      ],
+      "files": [
+        {
+          "path": "blocks/snippets/resource-downloads.html",
+          "type": "registry:file",
+          "target": "~/syntyr/blocks/resource-downloads.html"
+        },
+        {
+          "path": "assets/gallery-architecture.svg",
+          "type": "registry:file",
+          "target": "~/syntyr/assets/gallery-architecture.svg"
+        },
+        {
+          "path": "assets/gallery-botanical.svg",
+          "type": "registry:file",
+          "target": "~/syntyr/assets/gallery-botanical.svg"
+        },
+        {
+          "path": "assets/gallery-horizon.svg",
+          "type": "registry:file",
+          "target": "~/syntyr/assets/gallery-horizon.svg"
+        },
+        {
+          "path": "LICENSE",
+          "type": "registry:file",
+          "target": "~/syntyr/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "press-highlights",
+      "type": "registry:item",
+      "title": "News and press highlights",
+      "description": "A dated editorial summary grid with descriptive story destinations.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://syntyr-css.pages.dev/registry/r/core.json"
+      ],
+      "files": [
+        {
+          "path": "blocks/snippets/press-highlights.html",
+          "type": "registry:file",
+          "target": "~/syntyr/blocks/press-highlights.html"
+        },
+        {
+          "path": "LICENSE",
+          "type": "registry:file",
+          "target": "~/syntyr/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "social-links",
+      "type": "registry:item",
+      "title": "Community and social links",
+      "description": "A semantic link directory for communities, updates and contact channels.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://syntyr-css.pages.dev/registry/r/core.json"
+      ],
+      "files": [
+        {
+          "path": "blocks/snippets/social-links.html",
+          "type": "registry:file",
+          "target": "~/syntyr/blocks/social-links.html"
+        },
+        {
+          "path": "LICENSE",
+          "type": "registry:file",
+          "target": "~/syntyr/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "product-specifications",
+      "type": "registry:item",
+      "title": "Product specifications table",
+      "description": "Accessible product details in a named, keyboard-scrollable semantic table.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://syntyr-css.pages.dev/registry/r/core.json"
+      ],
+      "files": [
+        {
+          "path": "blocks/snippets/product-specifications.html",
+          "type": "registry:file",
+          "target": "~/syntyr/blocks/product-specifications.html"
+        },
+        {
+          "path": "LICENSE",
+          "type": "registry:file",
+          "target": "~/syntyr/LICENSE"
+        }
+      ]
     }
   ]
 }

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="The visual builder is a local-first, optional editing tool in the public Syntyr documentation. It assembles a small set of existing Syntyr CSS/HTML…">
-  <meta name="syntyr-source-sha256" content="2d18528b774486829116bdafb7b3c4241eaf2896bf77e75b5fdb950ca19e7cc9">
+  <meta name="syntyr-source-sha256" content="0d5c1c08ddb2dc910c2ecd46da81101e49e1148639f7d7abe1d87131cfa5064d">
   <meta name="theme-color" content="#f5f7fb">
   <title>Syntyr visual page builder (experimental) — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/page-builder-guide">
@@ -39,15 +39,36 @@
 <h2 id="what-works">What works</h2>
 <ul>
 <li>Add hero, feature-card, split-text, testimonial, FAQ, CTA, site header and footer sections from the palette.</li>
+<li>Browse and search <strong>85 copy-owned website/SaaS sections</strong> from the generated canonical `metadata/section-composer.v1.json` library, filter by category, and edit their textual content and safe links. The library tracks the Blocks source manifest and snippets, so it does not maintain a second hand-edited section inventory.</li>
 <li>Search and insert <strong>gallery components</strong> from the generated <code>metadata/component-gallery.v1.json</code> contract (16 curated examples in the current source candidate). Edit their visible text, placeholders and safe links; examples carry the CSS modules needed and can be repeated without duplicate input IDs.</li>
 <li>The gallery is loaded from the same origin as the builder. If the JSON is missing, the original eight semantic page sections remain available; no external API or build service is required.</li>
-<li>Select sections in the outline or preview, edit their text and links, reorder with buttons or drag-and-drop, and remove sections. Keyboard focus remains in the outline during reordering; native FAQ disclosures open in the preview.</li>
+<li>Select sections in the outline or preview, edit text and safe links, reorder with keyboard-accessible <strong>Up, Down, First, Last</strong> buttons or drag-and-drop; duplicate or remove sections. Choose <strong>Add after selected block</strong> when inserting a new section in the middle of a page. Keyboard focus remains in the outline during reordering; native FAQ disclosures open in the preview.</li>
 <li>Switch among themes available to the unreleased source candidate and preview true 1200px desktop, 760px tablet, and 390px mobile iframe viewports. Narrow canvases scroll rather than silently scaling the device viewport.</li>
 <li>Undo and redo editing changes (limited in-memory history).</li>
-<li>Export an HTML file and matching Syntyr CSS as separate files and host them alongside each other.</li>
+<li>Download a <strong>static website ZIP</strong> with `index.html`, the matching `syntyr.all.css`, any self-hosted SVG image assets, the MIT license and a brief publishing README. The ZIP contains <strong>no JavaScript</strong>. Standalone HTML/CSS downloads remain available.</li>
 <li>Download a JSON project and reopen that JSON to restore editability.</li>
 </ul>
 <p>The builder runs entirely in your browser. It does not upload projects or require a server account. Save the JSON file before closing the page: unsaved edits are not persisted.</p>
+<h2 id="static-first-export-and-assets">Static-first export and assets</h2>
+<p>The optional browser-based builder uses JavaScript <strong>only as an authoring tool</strong>.
+Its static ZIP output contains ordinary HTML/CSS and required local images,
+without a Syntyr script, framework or build step. Native `details` disclosures,
+image links, download links and visual layouts work without client JavaScript.
+Use the ZIP when composing image sections so assets stay alongside `index.html`.
+The standalone HTML download is only complete if you also supply the matching
+stylesheet and referenced images. Asset paths in the exported site are relative
+to the page, not to Syntyr's docs.</p>
+<p>For the generated section library, the manifest contains only reviewed,
+copy-owned canonical HTML. Imported projects contain <strong>no executable HTML
+templates</strong>; text and links are escaped and restricted to declared editable
+fields. Category search and section selection are optional editor behaviors,
+not dependencies in exported markup.</p>
+<p>Static exports deliberately <strong>do not implement</strong> authentication, commerce,
+newsletter subscriptions, server forms, real search/filter results or
+dynamic data. Those blocks are <em>presentational</em> and their form actions/routes
+must be wired to your own backend. Replace fictional examples and claims.
+Save the project JSON separately to continue editing; ZIP HTML is not a
+lossless project source file.</p>
 <h2 id="framework-independent-output">Framework-independent output</h2>
 <p>Gallery-backed blocks use a <code>gallery:&lt;catalog-example-id&gt;</code> type with only typed,
 string-valued editable properties. The trusted native HTML fragment comes from
@@ -69,7 +90,8 @@ are normalized to local anchors/paths or HTTPS. Every user-controlled text value
 <p>This experimental tool is deliberately separate from the MIT CSS core. It uses only small first-party documentation scripts; adopting a heavyweight editor engine such as GrapesJS should be justified through comparative testing, not as a mandatory dependency.</p>
 <h2 id="maintainer-verification">Maintainer verification</h2>
 <p>Run from repository root:</p>
-<pre tabindex="0"><code>node --test tests/page_builder_model.test.mjs tests/page_builder_gallery.test.mjs
+<pre tabindex="0"><code>node --test tests/page_builder_model.test.mjs tests/page_builder_gallery.test.mjs tests/page_builder_sections.test.mjs tests/page_builder_zip.test.mjs
+python3 scripts/build_section_composer.py --check
 python3 -m unittest tests.test_cloudflare_site -v
 python3 scripts/build_cloudflare_site.py --check
 </code></pre>
@@ -81,6 +103,7 @@ python3 scripts/build_cloudflare_site.py --check
         <aside class="docs-article-sidebar">
           <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#what-works">What works</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#static-first-export-and-assets">Static-first export and assets</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#framework-independent-output">Framework-independent output</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#security-boundaries">Security boundaries</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#maintainer-verification">Maintainer verification</a>
@@ -89,6 +112,7 @@ python3 scripts/build_cloudflare_site.py --check
             <summary>On this page <span>Jump to section</span></summary>
             <nav aria-label="On this page (mobile)">
 <a class="docs-article-toc-link docs-article-toc-2" href="#what-works">What works</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#static-first-export-and-assets">Static-first export and assets</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#framework-independent-output">Framework-independent output</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#security-boundaries">Security boundaries</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#maintainer-verification">Maintainer verification</a>

@@ -54,7 +54,8 @@
           </select>
         </label>
         <div class="builder-export">
-          <button type="button" class="syn-button syn-button--primary" id="builder-export-html">DOWNLOAD HTML</button>
+          <button type="button" class="syn-button syn-button--primary" id="builder-export-zip">DOWNLOAD STATIC SITE ZIP</button>
+          <button type="button" class="syn-button" id="builder-export-html">DOWNLOAD HTML</button>
           <a class="syn-button" href="../dist/syntyr.all.css" download="syntyr.all.css" id="builder-export-css">DOWNLOAD CSS</a>
           <button type="button" class="syn-button" id="builder-export-json">SAVE PROJECT</button>
           <label class="syn-button builder-file-label" for="builder-import">OPEN PROJECT
@@ -76,6 +77,19 @@
             <p id="builder-gallery-count" class="syn-caption" role="status">Loading gallery examples…</p>
             <div id="builder-gallery-palette" class="builder-palette builder-gallery-palette" role="group" aria-label="Catalog components"></div>
           </section>
+          <section aria-labelledby="builder-sections-title" class="builder-gallery builder-sections">
+            <h3 id="builder-sections-title" class="syn-heading">Website sections</h3>
+            <p class="syn-caption">Search the copy-owned Blocks library. Your exported page needs no JavaScript; forms and backend features need your own server.</p>
+            <label class="syn-label" for="builder-section-search">Search sections</label>
+            <input id="builder-section-search" class="syn-input" type="search" placeholder="Gallery, pricing, news, contact…">
+            <label class="syn-label" for="builder-section-category">Category</label>
+            <select id="builder-section-category" class="syn-select"><option value="all">All categories</option></select>
+            <p id="builder-section-count" class="syn-caption" role="status">Loading website sections…</p>
+            <div id="builder-section-palette" class="builder-palette builder-gallery-palette" role="group" aria-label="Website sections"></div>
+          </section>
+          <label class="syn-label builder-insert-choice" for="builder-insert-after">
+            <input id="builder-insert-after" type="checkbox"> Add new sections after selected block
+          </label>
           <div class="builder-outline-heading">
             <h2 class="syn-heading" id="builder-outline-title">Page structure</h2>
             <div class="syn-inline">
@@ -96,7 +110,7 @@
               <iframe id="builder-preview" title="Sandboxed Syntyr page preview" sandbox="allow-same-origin" referrerpolicy="no-referrer"></iframe>
             </div>
           </div>
-          <p class="syn-caption">Select a section to edit it. Interactive links are disabled in the preview. HTML and CSS remain portable.</p>
+          <p class="syn-caption">Select a section to edit it. Drag to reorder, use accessible move buttons, or duplicate sections. Links remain inert in the preview. The downloaded site contains no editor scripts.</p>
         </section>
 
         <aside class="syn-panel builder-inspector-panel" aria-labelledby="builder-inspector-title">
@@ -108,7 +122,8 @@
       <p class="syn-caption builder-status" id="builder-status" role="status" aria-live="polite">Ready to compose.</p>
       <section class="syn-panel builder-notes" aria-labelledby="builder-notes-title">
         <h2 class="syn-heading" id="builder-notes-title">Own your output</h2>
-        <p>The HTML export references <code>syntyr.all.css</code> in the same directory. Download both files to publish a static site, or replace that stylesheet with a self-hosted Syntyr build. Save a JSON project to edit it later. A standalone HTML file is not a lossless project backup. Gallery components reference the versioned component catalog, so retain the matching stylesheet and project JSON for future editing.</p>
+        <p>Download the static-site ZIP for a portable <code>index.html</code>, <code>syntyr.all.css</code>, local image assets, license and publishing instructions. Your exported page contains no JavaScript. Standalone HTML and CSS downloads remain available. Save the JSON project separately to reopen and edit your layout later.</p>
+        <p>Most sections are purely HTML/CSS; forms, authentication, checkout, live data and some destination links need integration with your own backend before production. Demo testimonials, dates, product claims and URLs are not real endorsements or configured services.</p>
         <p>This early composer intentionally provides content-first sections rather than arbitrary pixel positioning or a hosted CMS. It adds no JavaScript to Syntyr's distributed CSS core.</p>
       </section>
     </main>

@@ -125,3 +125,10 @@
   .builder-viewport iframe { height: 540px; }
   .builder-export { width: 100%; }
 }
+
+/* Scroll the complete copy-owned section palette without expanding the outline. */
+.builder-sections .builder-gallery-palette { max-height: 23rem; }
+.builder-insert-choice { display: flex; align-items: center; gap: .5rem; font-size: var(--syn-type-sm); }
+.builder-insert-choice input { width: 1.25rem; height: 1.25rem; accent-color: var(--syn-accent); }
+.builder-sections select { width: 100%; }
+.builder-outline-item:focus-within { outline: 2px solid var(--syn-accent); outline-offset: 1px; }

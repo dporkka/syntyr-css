@@ -21,12 +21,14 @@ if __package__:
     from .build_shadcn_registry import generate as universal_registry_files
     from .build_playground_catalog import generate as playground_catalog
     from .build_blocks import build as blocks_gallery
+    from .build_section_composer import build as section_catalog
     from .static_deploy import validate_site_url
 else:
     from build import all_distributions, javascript_distributions
     from build_shadcn_registry import generate as universal_registry_files
     from build_playground_catalog import generate as playground_catalog
     from build_blocks import build as blocks_gallery
+    from build_section_composer import build as section_catalog
     from static_deploy import validate_site_url
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -225,6 +227,9 @@ HEADERS = """/*
 /metadata/component-gallery.v1.json
   Access-Control-Allow-Origin: *
 
+/metadata/section-composer.v1.json
+  Access-Control-Allow-Origin: *
+
 /_assets/css/*
   Cache-Control: public, max-age=31536000, immutable
 """
@@ -291,7 +296,7 @@ PUBLIC_DOCS = (
     "blocks.html", "blocks.css", "blocks.js", "blocks-assets.css", "blocks-guide.md", "headless-interactions.md", "framework-integrations.md", "mobile-frameworks.md",
     "geometry-terminal.md", "native-browser-apis.md", "dropdowns.md", "radix-integration.md", "visual-intensity.md", "performance-and-polish.md",
     "performance-validation.md", "progressive-enhancement.md", "progressive-loading.md", "live-performance-audit.md",
-    "index.html", "design-resources.html", "animation.md", "clipboard.md", "lit-integration.md", "playground.html", "playground.css", "playground.js", "playground-catalog.js", "playground-snippet.js", "playground-editor.js", "playground-editor.licenses.txt", "page-builder-guide.md", "page-builder.html", "page-builder.css", "page-builder.js", "page-builder-model.mjs",
+    "index.html", "design-resources.html", "animation.md", "clipboard.md", "lit-integration.md", "playground.html", "playground.css", "playground.js", "playground-catalog.js", "playground-snippet.js", "playground-editor.js", "playground-editor.licenses.txt", "page-builder-guide.md", "page-builder.html",  "page-builder.css", "page-builder.js", "page-builder-model.mjs", "page-builder-zip.mjs",
     "form-builder.html", "form-builder.css", "form-builder.js", "form-builder-model.mjs",
     "editor-integration.md", "recipes.md", "saas-cli-business.md", "products.html", "pro.html", "studio.html",
     "cms-integration.md", "site-generator-decision.md", "static-site-generators.md", "site-builders.md", "tailwind-research.md", "tailwind-alternative.html",
@@ -306,6 +311,8 @@ def source_files(site_url: str = SITE_URL, *, include_cloudflare_headers: bool =
     # Both galleries are generated from reviewed, MIT-owned source fragments.
     if (ROOT / "docs/blocks.html").read_text(encoding="utf-8") != blocks_gallery():
         raise ValueError("Stale blocks gallery: run scripts/build_blocks.py")
+    if (ROOT / "metadata/section-composer.v1.json").read_bytes() != section_catalog():
+        raise ValueError("Stale section composer library: run scripts/build_section_composer.py")
     # Fail closed if either gallery changes without updating the playground.
     if (ROOT / "docs/playground-catalog.js").read_text(encoding="utf-8") != playground_catalog():
         raise ValueError("Stale playground examples: run scripts/build_playground_catalog.py")
@@ -328,6 +335,7 @@ def source_files(site_url: str = SITE_URL, *, include_cloudflare_headers: bool =
         ROOT / "llms-full.txt",
         ROOT / "metadata/components.json",
         ROOT / "metadata/component-gallery.v1.json",
+        ROOT / "metadata/section-composer.v1.json",
         # Public, generated, dependency-free mobile design tokens and copy-owned source.
         ROOT / "metadata/mobile/syntyr.tokens.json",
         ROOT / "integrations/react-native/tokens.ts",

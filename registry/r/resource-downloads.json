@@ -1,0 +1,56 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "resource-downloads",
+  "type": "registry:item",
+  "title": "Free resources and downloads",
+  "description": "Native download links to reusable illustrations in a flexible resource grid.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://syntyr-css.pages.dev/registry/r/core.json"
+  ],
+  "files": [
+    {
+      "path": "blocks/snippets/resource-downloads.html",
+      "type": "registry:file",
+      "target": "~/syntyr/blocks/resource-downloads.html",
+      "content": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-free-resources\">\n  <p class=\"syn-eyebrow\">FREE DOWNLOADS</p>\n  <h2 class=\"syn-heading\" id=\"syn-free-resources\">Useful resources to take with you.</h2>\n  <p class=\"syn-muted\">Example downloadable SVG artwork; replace these with your own guides, reports, templates or product downloads.</p>\n  <ul class=\"syn-grid\">\n    <li class=\"syn-panel\"><h3>Coastal illustration</h3><p>Original SVG artwork for layouts and prototypes.</p><a class=\"syn-button\" href=\"../assets/gallery-horizon.svg\" download=\"coastal-illustration.svg\">Download SVG</a></li>\n    <li class=\"syn-panel\"><h3>Architectural illustration</h3><p>A simple geometric artwork for a portfolio or landing page.</p><a class=\"syn-button\" href=\"../assets/gallery-architecture.svg\" download=\"architectural-illustration.svg\">Download SVG</a></li>\n    <li class=\"syn-panel\"><h3>Botanical illustration</h3><p>Lightweight visual art for editorial content.</p><a class=\"syn-button\" href=\"../assets/gallery-botanical.svg\" download=\"botanical-illustration.svg\">Download SVG</a></li>\n  </ul>\n</section>\n"
+    },
+    {
+      "path": "assets/gallery-architecture.svg",
+      "type": "registry:file",
+      "target": "~/syntyr/assets/gallery-architecture.svg",
+      "content": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 960 640\" role=\"img\" aria-label=\"An abstract modern building with arches and warm daylight\"><defs><linearGradient id=\"sky\" x2=\"0\" y2=\"1\"><stop stop-color=\"#23333c\"/><stop offset=\"1\" stop-color=\"#ca9b74\"/></linearGradient></defs><rect width=\"960\" height=\"640\" fill=\"url(#sky)\"/><rect x=\"120\" y=\"70\" width=\"710\" height=\"540\" rx=\"12\" fill=\"#cfac85\"/><path d=\"M180 570V280a115 115 0 0 1 230 0v290Z\" fill=\"#2d4c57\"/><path d=\"M460 570V230a145 145 0 0 1 290 0v340Z\" fill=\"#325767\"/><rect x=\"0\" y=\"545\" width=\"960\" height=\"95\" fill=\"#a67c64\"/><path d=\"M0 595H960\" stroke=\"#edc9a2\" stroke-width=\"9\"/><path d=\"M0 38h960M0 602h960\" stroke=\"#9dd0bc\" stroke-opacity=\".28\" stroke-width=\"2\"/></svg>\n"
+    },
+    {
+      "path": "assets/gallery-botanical.svg",
+      "type": "registry:file",
+      "target": "~/syntyr/assets/gallery-botanical.svg",
+      "content": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 960 640\" role=\"img\" aria-label=\"An abstract botanical study with overlapping leaves\"><defs><linearGradient id=\"sky\" x2=\"0\" y2=\"1\"><stop stop-color=\"#183a35\"/><stop offset=\"1\" stop-color=\"#b4d88a\"/></linearGradient></defs><rect width=\"960\" height=\"640\" fill=\"url(#sky)\"/><path d=\"M480 590V155\" stroke=\"#e2ebca\" stroke-width=\"18\" stroke-linecap=\"round\"/><path d=\"M470 440C170 420 145 180 185 90c200 0 305 175 285 350Z\" fill=\"#b4d88a\"/><path d=\"M490 380C750 405 850 180 775 80 590 85 490 220 490 380Z\" fill=\"#84b69b\"/><path d=\"M480 550C250 550 180 445 200 365c150-18 285 65 280 185Z\" fill=\"#7faea0\"/><path d=\"M490 530c190 0 275-90 270-170-165-15-265 70-270 170Z\" fill=\"#d1d89c\"/><path d=\"M480 585c-90 0-190 30-255 55h515c-100-35-170-55-260-55Z\" fill=\"#b28c70\"/><path d=\"M0 38h960M0 602h960\" stroke=\"#f4c891\" stroke-opacity=\".28\" stroke-width=\"2\"/></svg>\n"
+    },
+    {
+      "path": "assets/gallery-horizon.svg",
+      "type": "registry:file",
+      "target": "~/syntyr/assets/gallery-horizon.svg",
+      "content": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 960 640\" role=\"img\" aria-label=\"A coastal horizon with layered hills at dusk\"><defs><linearGradient id=\"sky\" x2=\"0\" y2=\"1\"><stop stop-color=\"#14283a\"/><stop offset=\"1\" stop-color=\"#f2a66a\"/></linearGradient></defs><rect width=\"960\" height=\"640\" fill=\"url(#sky)\"/><circle cx=\"730\" cy=\"135\" r=\"84\" fill=\"#f2a66a\"/><path d=\"M0 380 Q190 210 360 375 T960 320V640H0Z\" fill=\"#397187\"/><path d=\"M0 470 Q250 355 440 460 T960 410V640H0Z\" fill=\"#1b4258\"/><path d=\"M0 552 Q200 465 430 545 T960 475V640H0Z\" fill=\"#102c40\"/><path d=\"M0 38h960M0 602h960\" stroke=\"#6cbcc6\" stroke-opacity=\".28\" stroke-width=\"2\"/></svg>\n"
+    },
+    {
+      "path": "LICENSE",
+      "type": "registry:file",
+      "target": "~/syntyr/LICENSE",
+      "content": "MIT License\n\nCopyright (c) 2026 Syntyr CSS contributors\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n"
+    }
+  ],
+  "meta": {
+    "syntyrVersion": "0.3.0-alpha.5",
+    "source": "MIT source candidate",
+    "runtimeJavaScript": false,
+    "fileDigests": {
+      "~/syntyr/blocks/resource-downloads.html": "c166185db140aa7eec51a87f082ec6be36fa8f801ef4b9aab19aacf7be0d868f",
+      "~/syntyr/assets/gallery-architecture.svg": "9dc3945d9aa7bd01b32f10b2234b73497856a29cfc816231631fc491a78c1aa2",
+      "~/syntyr/assets/gallery-botanical.svg": "38007e2799c8d104cf7d573fcfe8ea1b373f77a7eaa82b16e20679e71c20362d",
+      "~/syntyr/assets/gallery-horizon.svg": "37627b59fae7e8eba58b6cf50e850b9898aef1ea17b2361387d6bd0b9a3b06a3",
+      "~/syntyr/LICENSE": "42f56369ac06362dbfe433d2d50b178bf74c369a55ea22337ab40fd9433521bf"
+    }
+  },
+  "docs": "Experimental source-candidate asset. Review exact version, HTML routes, keyboard behavior and integration before production use."
+}

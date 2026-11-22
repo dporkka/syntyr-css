@@ -2,22 +2,22 @@
 
 **Status:** Experimental alpha.5 source gallery, not an immutable release or published npm package.
 
-[Browse 79 blocks](blocks.html) | [Component catalog](catalog.html) | [Themes](theme-customization.md) | [Accessibility](accessibility.md)
+[Browse 85 blocks](blocks.html) | [Component catalog](catalog.html) | [Themes](theme-customization.md) | [Accessibility](accessibility.md)
 
 ## Contract
 
-The 79 copy-owned HTML compositions cover marketing, application, services, portfolio, editorial, navigation, publishing, commerce and technical use
+The 85 copy-owned HTML compositions cover marketing, application, services, portfolio, editorial, navigation, publishing, commerce and technical use
 cases. Each contains its own Syntyr root, uses accessible native markup and requires
 no application JavaScript. The data, testimonials and prices are illustrative, not live.
 
 The gallery script powers optional documentation search, theme switching and copy
-buttons. Disable JavaScript and all 79 static previews remain visible, with
+buttons. Disable JavaScript and all 85 static previews remain visible, with
 selectable source under native disclosure elements. No scripts are included in
 application CSS; the added gallery rules remain CSS-only.
 
 ## Safe local registry installation (experimental alpha.5 source)
 
-The static [universal registry](../registry/registry.json) contains the 79 MIT
+The static [universal registry](../registry/registry.json) contains the 85 MIT
 HTML blocks and nine CSS module entries. Every item includes its exact
 source-tree version, SHA-256 content hashes, declared CSS dependencies, files,
 and destination paths. This is **not** a published immutable alpha.5 release.
@@ -99,7 +99,7 @@ presentation; review sample content and replace example links before use.
 
 ## Image gallery and reusable website sections (unreleased source)
 
-Five further sections expand the collection from 74 to 79:
+Five further sections expand the collection from 74 to 85:
 responsive **image gallery**, **image-and-copy story**, **multi-testimonial
 social proof**, **company milestones timeline**, and **event agenda**.
 They use native figures, captions, quotes, ordered lists, and machine-readable
@@ -119,6 +119,19 @@ into your own template, **replace the `../assets/gallery-*.svg` URLs with
 your own local, optimized images** and update descriptive alt text. Do not
 treat illustrative testimonials, company dates, or event times as factual.
 The agenda's example times require a real date and time zone in production.
+
+## Six additional everyday website sections (unreleased source)
+
+Six new copy-owned blocks bring the library to **85 sections**: a photographic hero,
+a side-by-side before/after image comparison, a resources/downloads library,
+press/news highlights, a community/social links panel, and a product
+specifications table. These use real native links and figures, not simulated
+interactive controls or invented press endorsements.
+
+The images reuse original local SVG files in `assets/`. The comparison uses
+two distinct illustrative artworks (not evidence of a real transformation).
+Replace all example text, fictional products and host-owned routes with verified
+production content.
 
 ## Native HTML and framework integration
 
@@ -236,7 +249,7 @@ copied into the public project. The separate private Console Kit is unaffected.
 ## Experimental shadcn universal-item registry
 
 The source candidate can generate a **copy-owned, framework-independent**
-shadcn-compatible universal-item registry from the same 79 MIT blocks and
+shadcn-compatible universal-item registry from the same 85 MIT blocks and
 checked-in CSS distributions. It neither replaces nor duplicates the native
 block installer from PR #104. Universal files use explicit project-relative
 targets, so no React, Tailwind, or Syntyr runtime JavaScript is required.

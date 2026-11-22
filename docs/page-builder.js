@@ -1,15 +1,20 @@
 /* Docs-only, dependency-free visual composition. The shipped Syntyr CSS stays JS-free. */
 import {
   BLOCK_TYPES, THEMES, MAX_PROJECT_BYTES,
-  registerGalleryManifest, galleryBlockTypes, getBlockDefinition,
-  createBlock, createDefaultDocument, parseDocument, moveBlock, exportHtml,
-  projectNeedsGalleryManifest
+  registerGalleryManifest, galleryBlockTypes, registerSectionManifest, sectionBlockTypes,
+  getBlockDefinition, createBlock, createDefaultDocument, parseDocument, moveBlock,
+  duplicateBlock, insertBlockAfter, exportHtml, requiredAssets,
+  projectNeedsGalleryManifest, projectNeedsSectionManifest
 } from "./page-builder-model.mjs";
+import { createStoredZip } from "./page-builder-zip.mjs";
 
 const byId = (id) => document.getElementById(id);
 const palette = byId("builder-palette");
 const galleryPalette = byId("builder-gallery-palette");
 const gallerySearch = byId("builder-gallery-search");
+const sectionPalette = byId("builder-section-palette");
+const sectionSearch = byId("builder-section-search");
+const sectionCategory = byId("builder-section-category");
 const outline = byId("builder-outline");
 const inspector = byId("builder-inspector");
 const preview = byId("builder-preview");
@@ -103,6 +108,44 @@ async function loadGallery() {
     notify("Optional gallery could not load. The basic page composer remains usable.");
   }
 }
+function renderSectionPalette() {
+  sectionPalette.replaceChildren();
+  const terms = sectionSearch.value.trim().toLocaleLowerCase().split(/\s+/).filter(Boolean);
+  const category = sectionCategory.value;
+  let count = 0;
+  for (const type of sectionBlockTypes()) {
+    const def = getBlockDefinition(type);
+    if (category !== "all" && def.category !== category) continue;
+    const searchable = (def.label + " " + def.description + " " + def.category + " " + type).toLocaleLowerCase();
+    if (!terms.every(term => searchable.includes(term))) continue;
+    appendPaletteButton(sectionPalette, type);
+    count++;
+  }
+  byId("builder-section-count").textContent =
+    count + " of " + sectionBlockTypes().length + " copy-owned sections.";
+}
+sectionSearch.addEventListener("input", renderSectionPalette);
+sectionCategory.addEventListener("change", renderSectionPalette);
+async function loadSections() {
+  try {
+    const url = new URL("../metadata/section-composer.v1.json", import.meta.url);
+    const response = await fetch(url, {credentials: "same-origin"});
+    if (!response.ok) throw new Error("HTTP " + response.status);
+    const manifest = await response.json();
+    const count = registerSectionManifest(manifest);
+    for (const category of [...new Set(manifest.sections.map(item => item.category))].sort()) {
+      const option = makeElement("option", category);
+      option.value = category;
+      sectionCategory.append(option);
+    }
+    renderSectionPalette();
+    notify(count + " copy-owned sections available for static page composition.");
+  } catch {
+    byId("builder-section-count").textContent = "Website sections unavailable; basic blocks still work.";
+    notify("Section manifest unavailable. The basic page composer remains usable.");
+  }
+}
+
 function renderOutline() {
   const focusedButton = outline.contains(document.activeElement)
     ? document.activeElement.closest("button[data-action]") : null;
@@ -124,6 +167,9 @@ function renderOutline() {
     actions.append(
       makeButton("↑ Up", "up", index === 0),
       makeButton("↓ Down", "down", index === page.blocks.length - 1),
+      makeButton("First", "first", index === 0),
+      makeButton("Last", "last", index === page.blocks.length - 1),
+      makeButton("Duplicate", "duplicate", page.blocks.length >= 50),
       makeButton("Remove", "remove")
     );
     item.append(name, actions);
@@ -188,8 +234,8 @@ function renderPreview() {
   // The iframe cannot run scripts or submit forms, including pasted hostile content.
   const styleOrigin = /^https?:$/.test(location.protocol) ? location.origin : "'self'";
   const csp = '<meta http-equiv="Content-Security-Policy" content="default-src \'none\'; style-src \'self\' \'unsafe-inline\' ' +
-    styleOrigin + '; img-src data:; base-uri \'none\'; form-action \'none\'">';
-  preview.srcdoc = exportHtml(page)
+    styleOrigin + '; img-src \'self\' data:; base-uri \'none\'; form-action \'none\'">';
+  preview.srcdoc = exportHtml(page, {previewAssets: true})
     .replace('href="syntyr.all.css"', 'href="../dist/syntyr.all.css"')
     .replace("</head>", csp + "</head>");
 }
@@ -230,7 +276,7 @@ function redraw() {
 }
 function nextBlockId(type) {
   let id;
-  do { id = type.replace(/^gallery:/, "").slice(0, 42) + "-" + sequence++; }
+  do { id = type.replace(/^(?:gallery|section):/, "").slice(0, 42) + "-" + sequence++; }
   while (page.blocks.some(block => block.id === id));
   return id;
 }
@@ -248,7 +294,9 @@ function addFromPalette(event) {
   try {
     const block = createBlock(button.dataset.blockType, nextBlockId(button.dataset.blockType));
     const next = structuredClone(page);
-    next.blocks.push(block);
+    if (byId("builder-insert-after").checked && selectedId)
+      next.blocks = insertBlockAfter(next, selectedId, block).blocks;
+    else next.blocks.push(block);
     commit(next, getBlockDefinition(block.type).label + " added.");
     selectedId = block.id;
     redraw();
@@ -258,6 +306,7 @@ function addFromPalette(event) {
 }
 palette.addEventListener("click", addFromPalette);
 galleryPalette.addEventListener("click", addFromPalette);
+sectionPalette.addEventListener("click", addFromPalette);
 outline.addEventListener("click", (event) => {
   const button = event.target.closest("button[data-action]");
   const item = event.target.closest("[data-index]");
@@ -271,6 +320,16 @@ outline.addEventListener("click", (event) => {
   }
   if (action === "up" && index > 0) shift(index, index - 1);
   if (action === "down" && index < page.blocks.length - 1) shift(index, index + 1);
+  if (action === "first" && index > 0) shift(index, 0);
+  if (action === "last" && index < page.blocks.length - 1) shift(index, page.blocks.length - 1);
+  if (action === "duplicate") {
+    try {
+      const clonedId = nextBlockId(page.blocks[index].type);
+      commit(duplicateBlock(page, index, clonedId), "Section duplicated.");
+      selectedId = clonedId;
+      redraw();
+    } catch (error) { notify(error.message); }
+  }
   if (action === "remove") {
     const next = structuredClone(page);
     next.blocks.splice(index, 1);
@@ -356,7 +415,49 @@ function download(filename, data, type) {
 }
 byId("builder-export-html").addEventListener("click", () => {
   download("index.html", exportHtml(page), "text/html;charset=utf-8");
-  notify("HTML exported. Download syntyr.all.css alongside index.html.");
+  notify("HTML downloaded. Add syntyr.all.css and referenced images, or use the complete static-site ZIP.");
+});
+byId("builder-export-zip").addEventListener("click", async () => {
+  const button = byId("builder-export-zip");
+  button.disabled = true;
+  notify("Preparing static site files…");
+  try {
+    const cssResponse = await fetch(new URL("../dist/syntyr.all.css", import.meta.url),
+      {credentials: "same-origin"});
+    if (!cssResponse.ok) throw new Error("Syntyr stylesheet unavailable");
+    const entries = [
+      {name: "index.html", content: exportHtml(page)},
+      {name: "syntyr.all.css", content: await cssResponse.text()}
+    ];
+    for (const name of requiredAssets(page)) {
+      const url = new URL("../assets/" + name, import.meta.url);
+      const response = await fetch(url, {credentials: "same-origin"});
+      if (!response.ok) throw new Error("Missing approved local asset: " + name);
+      entries.push({name: "assets/" + name, content: new Uint8Array(await response.arrayBuffer())});
+    }
+    const license = await fetch(new URL("../LICENSE", import.meta.url),
+      {credentials: "same-origin"});
+    if (!license.ok) throw new Error("MIT license file unavailable");
+    entries.push({name: "LICENSE", content: await license.text()});
+    entries.push({name: "README.txt", content: [
+      "Syntyr static website export",
+      "",
+      "Upload index.html, syntyr.all.css, and any assets/ folder together.",
+      "No JavaScript or build step is necessary for static layout and native details/links.",
+      "Forms, checkout, authentication, search, filtering and live data need an application backend.",
+      "Replace demo routes, fictional claims and examples with your own verified content.",
+      "Save your syntyr-page.json project separately to continue editing.",
+      "The original Syntyr CSS and HTML source is MIT-licensed.",
+      "https://github.com/dporkka/syntyr-css/blob/main/LICENSE"
+    ].join("\n") + "\n"});
+    const archive = createStoredZip(entries);
+    download("syntyr-static-site.zip", archive, "application/zip");
+    notify("Static-site ZIP downloaded: HTML, CSS and " + requiredAssets(page).length + " local images; no JavaScript.");
+  } catch (error) {
+    notify("Static export failed: " + error.message);
+  } finally {
+    button.disabled = false;
+  }
 });
 byId("builder-export-json").addEventListener("click", () => {
   download("syntyr-page.json", JSON.stringify(parseDocument(page), null, 2) + "\n", "application/json");
@@ -389,6 +490,17 @@ byId("builder-import").addEventListener("change", async (event) => {
       if (!galleryBlockTypes().length)
         throw new Error("Gallery definitions unavailable. Try again after the gallery loads.");
     }
+    if (projectNeedsSectionManifest(candidate)) {
+      let timeout;
+      try {
+        await Promise.race([
+          sectionLoadPromise,
+          new Promise(resolve => { timeout = setTimeout(resolve, 4000); })
+        ]);
+      } finally { clearTimeout(timeout); }
+      if (!sectionBlockTypes().length)
+        throw new Error("Section definitions unavailable. Try again after the library loads.");
+    }
     // A previously selected gallery project may finish after a newer native
     // file has already been imported. Never let stale async work overwrite it.
     if (generation !== importGeneration) return;
@@ -406,3 +518,5 @@ byId("builder-import").addEventListener("change", async (event) => {
 renderPalette();
 redraw();
 const galleryLoadPromise = loadGallery();
+
+const sectionLoadPromise = loadSections();

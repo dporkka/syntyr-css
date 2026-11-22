@@ -1166,6 +1166,96 @@
         "progressive enhancement",
         "no javascript"
       ]
+    },
+    {
+      "id": "hero-photo",
+      "category": "Marketing",
+      "title": "Photographic hero section",
+      "description": "An image-led introduction with a meaningful action and figure caption.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "hero",
+        "image",
+        "landing",
+        "photography"
+      ]
+    },
+    {
+      "id": "before-after",
+      "category": "Portfolio",
+      "title": "Before and after image comparison",
+      "description": "Two semantic, responsive photos with accessible full-image links; no scripted comparison slider.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "before",
+        "after",
+        "portfolio",
+        "images"
+      ]
+    },
+    {
+      "id": "resource-downloads",
+      "category": "Publishing",
+      "title": "Free resources and downloads",
+      "description": "Native download links to reusable illustrations in a flexible resource grid.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "resources",
+        "downloads",
+        "files",
+        "library"
+      ]
+    },
+    {
+      "id": "press-highlights",
+      "category": "Marketing",
+      "title": "News and press highlights",
+      "description": "A dated editorial summary grid with descriptive story destinations.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "press",
+        "mentions",
+        "news",
+        "announcements"
+      ]
+    },
+    {
+      "id": "social-links",
+      "category": "Navigation",
+      "title": "Community and social links",
+      "description": "A semantic link directory for communities, updates and contact channels.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "social",
+        "community",
+        "links",
+        "follow"
+      ]
+    },
+    {
+      "id": "product-specifications",
+      "category": "Commerce",
+      "title": "Product specifications table",
+      "description": "Accessible product details in a named, keyboard-scrollable semantic table.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "product",
+        "details",
+        "specifications",
+        "commerce"
+      ]
     }
   ]
 }
