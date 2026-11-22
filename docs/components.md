@@ -349,7 +349,8 @@ toast lifecycles) belong to the host app, not a CSS runtime.
 | `--syn-accent`, `--syn-on-accent`, `--syn-accent-soft` | Accent and contrast |
 | `--syn-frame`, `--syn-danger` | Borders and warning states |
 | `--syn-font`, `--syn-mono` | System typography |
-| `--syn-space-1` ... `--syn-space-5` | Spacing scale |
+| `--syn-space-1` ... `--syn-space-5` | Stable fixed spacing scale |
+| `--syn-space-fluid-1` ... `--syn-space-fluid-4` | Optional fluid gaps and padding, bounded by adjacent fixed tokens (unreleased alpha.5) |
 | `--syn-cut`, `--syn-radius`, `--syn-line`, `--syn-control-height` | Shape and layout |
 
 Application CSS can override tokens:

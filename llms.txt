@@ -109,7 +109,7 @@ For browser readers, use the [human-readable HTML documentation directory](https
 - [Expanded 49-example native HTML component catalog](https://syntyr-css.pages.dev/docs/catalog.html): Category-filtered copyable examples for typography, forms, navigation, data tables, media, semantic content and interactive HTML, including optional recipes, geometry and visualization modules (unreleased alpha.5 source candidate; load the indicated CSS module for each example).
 - [Current experimental component gallery](https://syntyr-css.pages.dev/docs/)
 
-- [Intrinsic composition and adoption](docs/composition-adoption.md) — wrapping clusters and sidecars without JavaScript.
+- [Intrinsic layout cookbook and adoption](docs/composition-adoption.md) — CSS-only fluid spacing tokens, stacks, wrapping clusters, sidecars, responsive grids, and optional card switchers, with copyable HTML (unreleased alpha.5).
 
 - [Syntyr CSS Blog](https://syntyr-css.pages.dev/blog/): Practical articles on CSS-first design, semantic HTML, accessibility, and copy-owned UI blocks.
 
