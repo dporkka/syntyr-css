@@ -213,7 +213,7 @@
     :where(.syn-root) .syn-media-rail--markers {
       anchor-name: --syn-media-rail;
       scroll-marker-group: after;
-      margin-block-end: 2.75rem;
+      margin-block-end: 3.5rem;
     }
     :where(.syn-root) .syn-media-rail--markers::scroll-marker-group {
       position: absolute;
@@ -221,8 +221,14 @@
       inset-block-start: calc(anchor(bottom) + .5rem);
       justify-self: anchor-center;
       display: flex;
-      justify-content: center;
-      max-inline-size: min(100%, 30rem);
+      justify-content: safe center;
+      box-sizing: border-box;
+      inline-size: max-content;
+      max-inline-size: min(100%, anchor-size(self-inline, 100%), 30rem);
+      overflow-x: auto;
+      overscroll-behavior-inline: contain;
+      scrollbar-width: thin;
+      padding: .375rem;
       gap: .5rem;
     }
     :where(.syn-root) .syn-media-rail--markers > [data-syn-scroll-label]::scroll-marker {

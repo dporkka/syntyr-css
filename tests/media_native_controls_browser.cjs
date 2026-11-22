@@ -42,11 +42,16 @@ async function main() {
     } else {
       console.log("SKIP native generated buttons: browser does not support them");
     }
-    await rail.focus();
-    await page.keyboard.press("End");
-    await page.waitForTimeout(120);
-    assert.ok(await rail.evaluate(el => el.scrollLeft) > 0,
-      "keyboard scrolling works with JavaScript disabled");
+    await page.reload();
+    await rail.evaluate(el => el.classList.remove("syn-media-rail--markers", "syn-media-rail--controls"));
+    const baseRail = page.locator(".syn-media-rail").first();
+    await baseRail.focus();
+    const beforeKeyboard = await baseRail.evaluate(el => el.scrollLeft);
+    assert.equal(beforeKeyboard, 0, "keyboard check starts at the beginning of the rail");
+    // Tab to a card beyond the visible area to exercise native focus scrolling.
+    for (let i = 0; i < 4; i++) await page.keyboard.press("Tab");
+    await page.waitForFunction(({ el, beforeKeyboard }) => el.scrollLeft > beforeKeyboard,
+      { el: await baseRail.elementHandle(), beforeKeyboard }, { timeout: 2000 });
     console.log("PASS accessible scrollbar and keyboard fallback (JavaScript disabled)");
 
     if (initial.supports) {
@@ -68,6 +73,34 @@ async function main() {
         getComputedStyle(el, `::scroll-button(${side})`).content));
       assert.deepEqual(labels, ['"→" / "Scroll backward"', '"←" / "Scroll forward"']);
       console.log("PASS RTL buttons advance left and return right within the rail");
+    }
+
+    await page.reload();
+    if (await rail.evaluate(el => getComputedStyle(el, "::scroll-marker-group").display === "flex")) {
+      await rail.evaluate(el => {
+        for (let i = el.children.length; i < 30; i++) {
+          const card = document.createElement("article");
+          card.setAttribute("data-syn-scroll-label", `Story ${i + 1}`);
+          card.textContent = `Story ${i + 1}`;
+          el.append(card);
+        }
+      });
+      await rail.scrollIntoViewIfNeeded();
+      const bounds = await rail.boundingBox();
+      assert.ok(bounds, "long marker rail exists");
+      const [documentWidth, viewportWidth] = await page.evaluate(() => [
+        document.documentElement.scrollWidth, document.documentElement.clientWidth,
+      ]);
+      assert.equal(documentWidth, viewportWidth, "markers do not widen the page");
+      const markerY = bounds.y + bounds.height + 22;
+      const markerX = bounds.x + bounds.width - 14;
+      await page.mouse.move(markerX, markerY);
+      await page.mouse.wheel(1500, 0);
+      await page.waitForTimeout(250);
+      await page.mouse.click(markerX, markerY);
+      await page.waitForFunction(el => el.scrollWidth - el.clientWidth - el.scrollLeft <= 1,
+        await rail.elementHandle(), { timeout: 2000 });
+      console.log("PASS long marker strip stays local and the last marker is clickable");
     }
   } finally {
     await browser.close();
