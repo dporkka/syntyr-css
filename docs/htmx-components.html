@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Copy 12 HTMX component patterns for search, tables, forms, dialogs, infinite scroll and server-rendered SaaS interfaces with optional Syntyr CSS.">
+  <meta name="syntyr-source-sha256" content="f63cef19a1df31c04d7deaac847edba265a480cad3738a9643d787cc9164a18c">
+  <meta name="theme-color" content="#f5f7fb">
+  <title>HTMX Components &amp; Patterns | Syntyr CSS</title>
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="HTMX Components &amp; Patterns | Syntyr CSS">
+  <meta property="og:description" content="Copy 12 HTMX component patterns for search, tables, forms, dialogs, infinite scroll and server-rendered SaaS interfaces with optional Syntyr CSS.">
+  <meta property="og:url" content="https://syntyr-css.pages.dev/docs/htmx-components">
+  <meta property="og:image" content="https://syntyr-css.pages.dev/assets/og-syntyr.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://syntyr-css.pages.dev/docs/htmx-components">
+  <link rel="alternate" type="text/markdown" href="htmx-components.md" title="Markdown source">
+  <link rel="icon" href="../assets/syntyr-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="docs.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <a class="syn-button docs-skip" href="#doc-main">Skip to guide</a>
+  <div class="syn-shell">
+    <header class="syn-header docs-header">
+      <a class="syn-logo" href="../index.html">SYNTYR / CSS</a>
+      <nav class="syn-nav" aria-label="Documentation navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav>
+      <details class="site-mobile-menu"><summary>Menu</summary><nav aria-label="Mobile navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav></details>
+    </header>
+    <main id="doc-main" class="docs-article-page">
+      <nav class="syn-breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="reference.html">Documentation</a></li><li aria-current="page">HTMX components and server-rendered UI patterns</li></ol></nav>
+      <header class="docs-article-heading">
+        <p class="syn-eyebrow">SYNTYR / DOCUMENTATION</p>
+        <p class="syn-muted">Current source documentation may describe unreleased alpha.5 features. <a href="distribution.html">Check released version compatibility.</a></p>
+        <p class="syn-caption">Prefer a machine-readable version? <a href="htmx-components.md">Markdown source</a> · <a href="../llms.txt">LLM index</a></p>
+      </header>
+      <div class="docs-article-layout">
+        <article class="docs-prose" aria-label="HTMX components and server-rendered UI patterns">
+<h1 id="htmx-components-and-server-rendered-ui-patterns">HTMX components and server-rendered UI patterns</h1>
+<p>Use Syntyr's existing CSS components with <strong>HTMX as an optional enhancement</strong> for server-rendered HTML. These are <strong>12 copy-owned recipes</strong>, not a JavaScript widget runtime or prebuilt backend. Each code sample assumes an application endpoint that returns complete documents on ordinary requests and an appropriate fragment on HTMX requests.</p>
+<p><strong>Availability:</strong> This page describes the <strong>unreleased 0.3.0-alpha.5 source candidate</strong>, not the published alpha.4 release. Core CSS works independently of HTMX; the optional adapter only styles request indicators and opt-in swap transitions.</p>
+<h2 id="install-and-compatibility">Install and compatibility</h2>
+<p>Self-host pinned copies of your chosen Syntyr release and HTMX. Add the optional adapter <em>after</em> core CSS, if you want its states. Do not bundle HTMX or load it automatically as part of Syntyr.</p>
+<pre tabindex="0"><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.core.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.htmx.css&quot;&gt;
+&lt;script defer src=&quot;/js/htmx.min.js&quot;&gt;&lt;/script&gt;
+&lt;main class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot;&gt;
+  &lt;!-- Keep this root outside hx-target replacements. --&gt;
+&lt;/main&gt;
+</code></pre>
+<p>The additional CSS is the copy-owned file <a href="https://github.com/dporkka/syntyr-css/blob/main/integrations/htmx/syntyr.htmx.css"><code>integrations/htmx/syntyr.htmx.css</code></a>, or the optional <code>@syntyr/css/htmx.css</code> package export <strong>once an alpha.5 package actually ships</strong>. You can omit it entirely and reuse <a href="framework-integrations.html"><code>syntyr.server.css</code></a> for a loading cursor. The adapter uses opt-in <code>.syn-htmx-indicator</code> and <code>data-syn-htmx-transition</code>; both are scoped under <code>.syn-root</code>. The adapter is not part of core or the all-in-one CSS bundle.</p>
+<p>For strict Content Security Policy, self-host the HTMX script and disable its injected indicator CSS. In <strong>HTMX 2</strong>, set <code>includeIndicatorStyles: false</code>; in <strong>HTMX 4</strong>, use <code>includeIndicatorCSS: false</code>. HTMX 4 also renames the v2 <code>hx-disabled-elt</code> attribute to <code>hx-disable</code>. Check the relevant HTMX release documentation before choosing a version; avoid mixing configuration names.</p>
+<p><strong>Server rules for all recipes:</strong> Authenticate and authorize each request, escape all untrusted HTML, validate and bound query values, use CSRF protection on mutations, and return the right status codes. For cacheable endpoints that serve both pages and fragments, set <code>Vary: HX-Request, HX-History-Restore-Request</code>. A request with <code>HX-History-Restore-Request: true</code> must receive a complete document, even if <code>HX-Request: true</code> is also present. In HTMX 2, configure <code>historyRestoreAsHxRequest: false</code> when using split responses. Treat 422 error-fragment swapping as <strong>app-owned</strong>: HTMX 2 does not automatically swap all error responses.</p>
+<h2 id="search-and-tables">Search and tables</h2>
+<h3 id="1-live-search">1. Live search</h3>
+<p>A native GET form remains functional when HTMX is absent. Return a list fragment for HTMX and a full results page for ordinary GET requests.</p>
+<pre tabindex="0"><code class="language-html">&lt;form action=&quot;/customers&quot; method=&quot;get&quot; role=&quot;search&quot; class=&quot;syn-stack&quot;&gt;
+  &lt;label for=&quot;customer-query&quot;&gt;Search customers&lt;/label&gt;
+  &lt;input id=&quot;customer-query&quot; class=&quot;syn-input&quot; type=&quot;search&quot;
+         name=&quot;q&quot; maxlength=&quot;120&quot; placeholder=&quot;Customer name&quot;
+         hx-get=&quot;/customers&quot; hx-trigger=&quot;input changed delay:300ms, search&quot;
+         hx-target=&quot;#customer-results&quot; hx-push-url=&quot;true&quot;
+         hx-indicator=&quot;#search-indicator&quot;&gt;
+  &lt;button class=&quot;syn-button&quot; type=&quot;submit&quot;&gt;Search&lt;/button&gt;
+  &lt;span id=&quot;search-indicator&quot; class=&quot;syn-htmx-indicator&quot; role=&quot;status&quot;&gt;Searching…&lt;/span&gt;
+&lt;/form&gt;
+&lt;section id=&quot;customer-results&quot; aria-live=&quot;polite&quot; aria-label=&quot;Search results&quot;&gt;
+  &lt;p&gt;Enter a name or submit the form.&lt;/p&gt;
+&lt;/section&gt;
+</code></pre>
+<h3 id="2-pagination">2. Pagination</h3>
+<p>Server-render the entire table-and-pager region on each page. Real links preserve keyboard and no-JavaScript navigation.</p>
+<pre tabindex="0"><code class="language-html">&lt;section id=&quot;customer-list&quot;&gt;
+  &lt;div class=&quot;syn-table-wrap&quot;&gt;
+    &lt;table class=&quot;syn-table&quot;&gt;&lt;caption&gt;Customers&lt;/caption&gt;
+      &lt;thead&gt;&lt;tr&gt;&lt;th scope=&quot;col&quot;&gt;Name&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+      &lt;tbody&gt;&lt;tr&gt;&lt;td&gt;Acme&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;
+    &lt;/table&gt;
+  &lt;/div&gt;
+  &lt;nav aria-label=&quot;Customer pages&quot;&gt;
+    &lt;a href=&quot;/customers?page=2&quot; class=&quot;syn-button&quot;
+       hx-get=&quot;/customers?page=2&quot; hx-target=&quot;#customer-list&quot;
+       hx-swap=&quot;outerHTML&quot; hx-push-url=&quot;true&quot;&gt;Next page&lt;/a&gt;
+  &lt;/nav&gt;
+&lt;/section&gt;
+</code></pre>
+<h3 id="3-sortable-table">3. Sortable table</h3>
+<p>The backend owns sort direction, allowlisted sort keys and updated <code>aria-sort</code> attributes. Replace the full region so table headings and rows stay synchronized.</p>
+<pre tabindex="0"><code class="language-html">&lt;section id=&quot;orders-table&quot; aria-label=&quot;Orders&quot;&gt;
+  &lt;div class=&quot;syn-table-wrap&quot;&gt;
+    &lt;table class=&quot;syn-table&quot;&gt;
+      &lt;caption&gt;Recent orders&lt;/caption&gt;
+      &lt;thead&gt;&lt;tr&gt;
+        &lt;th scope=&quot;col&quot; aria-sort=&quot;ascending&quot;&gt;
+          &lt;a class=&quot;syn-table-sort&quot; href=&quot;/orders?sort=name_desc&quot;
+             hx-get=&quot;/orders?sort=name_desc&quot; hx-target=&quot;#orders-table&quot;
+             hx-swap=&quot;outerHTML&quot; hx-push-url=&quot;true&quot;&gt;Name&lt;/a&gt;
+        &lt;/th&gt;
+        &lt;th scope=&quot;col&quot;&gt;Amount&lt;/th&gt;
+      &lt;/tr&gt;&lt;/thead&gt;
+      &lt;tbody&gt;&lt;tr&gt;&lt;th scope=&quot;row&quot;&gt;Invoice A&lt;/th&gt;&lt;td&gt;$120&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;
+    &lt;/table&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+</code></pre>
+<h2 id="forms-and-workflows">Forms and workflows</h2>
+<h3 id="4-inline-edit">4. Inline edit</h3>
+<p>The GET link displays the edit form inside a stable record container; the endpoint also provides a full document for native navigation. The POST form sends a CSRF token and returns a refreshed record fragment to HTMX, or redirects after native POST.</p>
+<pre tabindex="0"><code class="language-html">&lt;article id=&quot;contact-42&quot; class=&quot;syn-panel&quot;&gt;
+  &lt;h3&gt;Acme contact&lt;/h3&gt;
+  &lt;p&gt;Owner: Alex&lt;/p&gt;
+  &lt;a href=&quot;/contacts/42/edit&quot; class=&quot;syn-button&quot;
+     hx-get=&quot;/contacts/42/edit&quot; hx-target=&quot;#contact-42&quot;
+     hx-swap=&quot;outerHTML&quot;&gt;Edit&lt;/a&gt;
+&lt;/article&gt;
+&lt;!-- Example fragment returned by GET /contacts/42/edit: --&gt;
+&lt;article id=&quot;contact-42&quot; class=&quot;syn-panel&quot;&gt;
+  &lt;form action=&quot;/contacts/42&quot; method=&quot;post&quot; hx-post=&quot;/contacts/42&quot;
+        hx-target=&quot;#contact-42&quot; hx-swap=&quot;outerHTML&quot;&gt;
+    &lt;input type=&quot;hidden&quot; name=&quot;csrf_token&quot; value=&quot;SERVER_ISSUED_TOKEN&quot;&gt;
+    &lt;label for=&quot;contact-owner&quot;&gt;Owner&lt;/label&gt;
+    &lt;input id=&quot;contact-owner&quot; class=&quot;syn-input&quot; name=&quot;owner&quot; value=&quot;Alex&quot; required&gt;
+    &lt;button type=&quot;submit&quot; class=&quot;syn-button&quot;&gt;Save&lt;/button&gt;
+    &lt;a href=&quot;/contacts/42&quot;&gt;Cancel&lt;/a&gt;
+  &lt;/form&gt;
+&lt;/article&gt;
+</code></pre>
+<p>The second article represents a <strong>response fragment</strong>, not markup to render alongside the first article at the same time.</p>
+<h3 id="5-dependent-select">5. Dependent select</h3>
+<p>The button provides a no-JavaScript fallback to the regions page. HTMX updates the dependent field on change, without changing the form's native GET behavior.</p>
+<pre tabindex="0"><code class="language-html">&lt;form action=&quot;/regions&quot; method=&quot;get&quot;&gt;
+  &lt;label for=&quot;country&quot;&gt;Country&lt;/label&gt;
+  &lt;select id=&quot;country&quot; class=&quot;syn-input&quot; name=&quot;country&quot;
+          hx-get=&quot;/regions/options&quot; hx-trigger=&quot;change&quot;
+          hx-target=&quot;#region-field&quot; hx-swap=&quot;outerHTML&quot;&gt;
+    &lt;option value=&quot;&quot;&gt;Choose a country&lt;/option&gt;
+    &lt;option value=&quot;BR&quot;&gt;Brazil&lt;/option&gt;
+    &lt;option value=&quot;US&quot;&gt;United States&lt;/option&gt;
+  &lt;/select&gt;
+  &lt;div id=&quot;region-field&quot;&gt;
+    &lt;label for=&quot;region&quot;&gt;Region&lt;/label&gt;
+    &lt;select id=&quot;region&quot; class=&quot;syn-input&quot; name=&quot;region&quot;&gt;
+      &lt;option value=&quot;&quot;&gt;Choose a country first&lt;/option&gt;
+    &lt;/select&gt;
+  &lt;/div&gt;
+  &lt;button class=&quot;syn-button&quot; type=&quot;submit&quot;&gt;View regions&lt;/button&gt;
+&lt;/form&gt;
+</code></pre>
+<p>The fragment must replace <code>#region-field</code> with a labeled, escaped selection. Validate <code>country</code> against an allowlist on the server.</p>
+<h3 id="6-validated-form">6. Validated form</h3>
+<p>Keep native required fields and an error summary. The backend should return a full document on native validation failures; if sending HTMX error fragments with HTTP 422, configure an application-specific error-swap handler.</p>
+<pre tabindex="0"><code class="language-html">&lt;form action=&quot;/leads&quot; method=&quot;post&quot; class=&quot;syn-stack&quot;
+      hx-post=&quot;/leads&quot; hx-target=&quot;#lead-feedback&quot;&gt;
+  &lt;input type=&quot;hidden&quot; name=&quot;csrf_token&quot; value=&quot;SERVER_ISSUED_TOKEN&quot;&gt;
+  &lt;label for=&quot;lead-email&quot;&gt;Email&lt;/label&gt;
+  &lt;input id=&quot;lead-email&quot; class=&quot;syn-input&quot; type=&quot;email&quot;
+         name=&quot;email&quot; autocomplete=&quot;email&quot; required&gt;
+  &lt;button class=&quot;syn-button syn-button--primary&quot; type=&quot;submit&quot;&gt;Add lead&lt;/button&gt;
+  &lt;div id=&quot;lead-feedback&quot; aria-live=&quot;polite&quot; aria-atomic=&quot;true&quot;&gt;&lt;/div&gt;
+&lt;/form&gt;
+</code></pre>
+<p>On invalid input, server-render <code>aria-invalid=&quot;true&quot;</code>, an associated <code>aria-describedby</code> error, and a clear message in the response. The CSS alone does not add validation.</p>
+<h2 id="navigation-and-overlays">Navigation and overlays</h2>
+<h3 id="7-lazy-loaded-navigation">7. Lazy-loaded navigation</h3>
+<p>These are <strong>links</strong>, not ARIA tabs. Native navigation works with JavaScript disabled; the server should render the active link state on the next full page or swapped navigation fragment.</p>
+<pre tabindex="0"><code class="language-html">&lt;nav aria-label=&quot;Account sections&quot; class=&quot;syn-inline&quot;&gt;
+  &lt;a href=&quot;/account/profile&quot; hx-get=&quot;/account/profile&quot;
+     hx-target=&quot;#account-content&quot; hx-push-url=&quot;true&quot;&gt;Profile&lt;/a&gt;
+  &lt;a href=&quot;/account/billing&quot; hx-get=&quot;/account/billing&quot;
+     hx-target=&quot;#account-content&quot; hx-push-url=&quot;true&quot;&gt;Billing&lt;/a&gt;
+&lt;/nav&gt;
+&lt;section id=&quot;account-content&quot; aria-live=&quot;polite&quot;&gt;
+  &lt;h2&gt;Account&lt;/h2&gt;
+  &lt;p&gt;Choose a section.&lt;/p&gt;
+&lt;/section&gt;
+</code></pre>
+<h3 id="8-popover-details">8. Popover details</h3>
+<p>Use the browser's native popover for opening/closing; HTMX optionally loads the detail body. Provide a full-page link in the fallback content.</p>
+<pre tabindex="0"><code class="language-html">&lt;button type=&quot;button&quot; class=&quot;syn-button&quot;
+        popovertarget=&quot;invoice-popover&quot;
+        hx-get=&quot;/invoices/42/summary&quot;
+        hx-target=&quot;#invoice-summary&quot;&gt;Preview invoice&lt;/button&gt;
+&lt;div id=&quot;invoice-popover&quot; popover class=&quot;syn-panel&quot;&gt;
+  &lt;h2&gt;Invoice summary&lt;/h2&gt;
+  &lt;div id=&quot;invoice-summary&quot; aria-live=&quot;polite&quot;&gt;
+    &lt;p&gt;&lt;a href=&quot;/invoices/42&quot;&gt;Open full invoice&lt;/a&gt;&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;button type=&quot;button&quot; class=&quot;syn-button&quot;
+          popovertarget=&quot;invoice-popover&quot; popovertargetaction=&quot;hide&quot;&gt;Close&lt;/button&gt;
+&lt;/div&gt;
+</code></pre>
+<h2 id="lists-updates-and-feedback">Lists, updates and feedback</h2>
+<h3 id="9-infinite-scroll">9. Infinite scroll</h3>
+<p>A real link gives an explicit fallback when <code>revealed</code> never fires. The response is a sequence of <code>&lt;li&gt;</code> elements ending with the next-page sentinel, or no sentinel at the end.</p>
+<pre tabindex="0"><code class="language-html">&lt;ul id=&quot;activity-list&quot; class=&quot;syn-stack&quot;&gt;
+  &lt;li&gt;Invoice created&lt;/li&gt;
+  &lt;li&gt;Campaign approved&lt;/li&gt;
+  &lt;li hx-get=&quot;/activity?page=2&quot;
+      hx-trigger=&quot;revealed&quot; hx-swap=&quot;outerHTML&quot;&gt;
+    &lt;a href=&quot;/activity?page=2&quot;&gt;Load more activity&lt;/a&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+<p>Limit page size and consider explicit pagination for users who cannot or prefer not to scroll.</p>
+<h3 id="10-bulk-actions">10. Bulk actions</h3>
+<p>Native POST behavior remains available. Verify that each submitted record belongs to the authenticated tenant; never trust selection values as authorization.</p>
+<pre tabindex="0"><code class="language-html">&lt;form action=&quot;/contacts/archive&quot; method=&quot;post&quot;
+      hx-post=&quot;/contacts/archive&quot; hx-target=&quot;#contact-workspace&quot;&gt;
+  &lt;input type=&quot;hidden&quot; name=&quot;csrf_token&quot; value=&quot;SERVER_ISSUED_TOKEN&quot;&gt;
+  &lt;fieldset&gt;
+    &lt;legend&gt;Contacts to archive&lt;/legend&gt;
+    &lt;label&gt;&lt;input type=&quot;checkbox&quot; name=&quot;contact_id&quot; value=&quot;42&quot;&gt; Acme&lt;/label&gt;
+    &lt;label&gt;&lt;input type=&quot;checkbox&quot; name=&quot;contact_id&quot; value=&quot;43&quot;&gt; Northstar&lt;/label&gt;
+  &lt;/fieldset&gt;
+  &lt;button class=&quot;syn-button&quot; type=&quot;submit&quot;&gt;Archive selected&lt;/button&gt;
+&lt;/form&gt;
+&lt;section id=&quot;contact-workspace&quot; aria-live=&quot;polite&quot;&gt;&lt;/section&gt;
+</code></pre>
+<p>The server must provide a full native response or redirect for POST and an accessible fragment for HTMX. Avoid optimistic deletion of records before the server succeeds.</p>
+<h3 id="11-polled-status">11. Polled status</h3>
+<p>Polling is optional and must be bounded server-side. The link is a manual refresh fallback; do not poll extremely frequently or announce unchanged text on every interval.</p>
+<pre tabindex="0"><code class="language-html">&lt;section aria-label=&quot;Export status&quot;&gt;
+  &lt;div id=&quot;export-status&quot; class=&quot;syn-panel&quot;
+       hx-get=&quot;/exports/42/status&quot;
+       hx-trigger=&quot;every 15s&quot; hx-swap=&quot;innerHTML&quot;&gt;
+    &lt;p&gt;Export pending.&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;a href=&quot;/exports/42/status&quot;&gt;Refresh status&lt;/a&gt;
+&lt;/section&gt;
+</code></pre>
+<h3 id="12-request-feedback">12. Request feedback</h3>
+<p>Loading feedback is not an optimistic mutation. HTMX marks the configured indicator while the request is active; the backend owns the final success or error message.</p>
+<pre tabindex="0"><code class="language-html">&lt;form action=&quot;/reports&quot; method=&quot;get&quot;
+      hx-get=&quot;/reports&quot; hx-target=&quot;#report-results&quot;
+      hx-indicator=&quot;#report-loading&quot;&gt;
+  &lt;button type=&quot;submit&quot; class=&quot;syn-button&quot;&gt;
+    Generate report
+    &lt;span id=&quot;report-loading&quot; class=&quot;syn-htmx-indicator&quot; role=&quot;status&quot;&gt;
+      Loading…
+    &lt;/span&gt;
+  &lt;/button&gt;
+&lt;/form&gt;
+&lt;div id=&quot;report-results&quot; aria-live=&quot;polite&quot;
+     data-syn-htmx-transition&gt;
+  &lt;p&gt;Run a report to see results.&lt;/p&gt;
+&lt;/div&gt;
+</code></pre>
+<p>In HTMX 2, consider <code>hx-disabled-elt=&quot;find button[type='submit']&quot;</code> for duplicate-submit prevention; in HTMX 4 use the newer <code>hx-disable</code> semantics. Indicator visibility and loading cursors do not block duplicate actions. Avoid moving focus without user intent; test focus and keyboard navigation after fragment replacement.</p>
+<h2 id="runnable-server-examples-and-recipes">Runnable server examples and recipes</h2>
+<p>The repository already contains <a href="https://github.com/dporkka/syntyr-css/tree/main/examples">a real Python HTTP-server HTMX search demo</a>, <a href="https://github.com/dporkka/syntyr-css/tree/main/examples/go-htmx">a Go standard-library HTMX starter</a>, and <a href="https://github.com/dporkka/syntyr-css/tree/main/examples/server-components-node/fragments">a Node.js fragment server</a>. They test concrete server response behavior and do not require Syntyr runtime JavaScript.</p>
+<p><strong>Go/templ:</strong> Apply the same <code>hx-*</code> attributes to the HTML emitted by your templ components; render a full page for ordinary navigation and component fragments for HTMX requests. See the <a href="https://github.com/dporkka/syntyr-css/tree/main/examples/server-components-templ">copy-owned templ component adapter</a>.</p>
+<p><strong>Django:</strong> Use standard Django templates with <code>request.headers.get(&quot;HX-Request&quot;) == &quot;true&quot;</code> to select a fragment <em>only when the request is not a history restore</em>. Use Django's <code>{% csrf_token %}</code> for POST forms, HTML autoescaping, method checks, and template-rendered validation errors. This is an integration recipe, not a runnable Django project included in this repository.</p>
+<p><strong>Pro / Studio boundary:</strong> This entire set of basic recipes and optional CSS is MIT-licensed. Advanced data-grid controllers, tenant-aware workflows and full SaaS templates would require separately developed application code; they are not included or available for sale here.</p>
+        </article>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+<a class="docs-article-toc-link docs-article-toc-2" href="#install-and-compatibility">Install and compatibility</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#search-and-tables">Search and tables</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#1-live-search">1. Live search</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#2-pagination">2. Pagination</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#3-sortable-table">3. Sortable table</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#forms-and-workflows">Forms and workflows</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#4-inline-edit">4. Inline edit</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#5-dependent-select">5. Dependent select</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#6-validated-form">6. Validated form</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#navigation-and-overlays">Navigation and overlays</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#7-lazy-loaded-navigation">7. Lazy-loaded navigation</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#8-popover-details">8. Popover details</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#lists-updates-and-feedback">Lists, updates and feedback</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#9-infinite-scroll">9. Infinite scroll</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#10-bulk-actions">10. Bulk actions</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#11-polled-status">11. Polled status</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#12-request-feedback">12. Request feedback</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#runnable-server-examples-and-recipes">Runnable server examples and recipes</a>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#install-and-compatibility">Install and compatibility</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#search-and-tables">Search and tables</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#1-live-search">1. Live search</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#2-pagination">2. Pagination</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#3-sortable-table">3. Sortable table</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#forms-and-workflows">Forms and workflows</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#4-inline-edit">4. Inline edit</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#5-dependent-select">5. Dependent select</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#6-validated-form">6. Validated form</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#navigation-and-overlays">Navigation and overlays</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#7-lazy-loaded-navigation">7. Lazy-loaded navigation</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#8-popover-details">8. Popover details</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#lists-updates-and-feedback">Lists, updates and feedback</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#9-infinite-scroll">9. Infinite scroll</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#10-bulk-actions">10. Bulk actions</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#11-polled-status">11. Polled status</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#12-request-feedback">12. Request feedback</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#runnable-server-examples-and-recipes">Runnable server examples and recipes</a>
+            </nav>
+          </details>
+        </aside>
+      </div>
+      <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="htmx-components.md">Markdown source</a></nav>
+    </main>
+    <footer class="syn-header"><span class="syn-caption">SYNTYR CSS · MIT CORE · EXPERIMENTAL</span><a href="../index.html">Home</a></footer>
+  </div>
+</body>
+</html>

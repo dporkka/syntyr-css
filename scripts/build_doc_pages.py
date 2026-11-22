@@ -33,7 +33,7 @@ SECTIONS = (
                     "recipes", "app-screens", "native-patterns", "native-workflows", "semantic-components", "composition-adoption", "component-recipes",
                     "email-components")),
     ("Design system", ("design-principles", "theme-customization", "visual-intensity", "geometry-terminal", "symbols", "viz", "geo", "blocks-guide", "premium-compositions", "component-authoring")),
-    ("Integrations", ("framework-integrations", "site-builders", "wordpress", "shopify", "wix", "webflow", "framer", "squarespace", "ghost", "hubspot", "drupal", "joomla", "carrd", "duda", "tilda", "mobile-frameworks", "headless-interactions", "clipboard", "lit-integration", "radix-integration", "shadcn-integration", "ecosystem-integrations", "editor-integration", "figma-component-kit", "vertigo-integration", "rust-saas-integration", "saas-cli-business")),
+    ("Integrations", ("framework-integrations", "htmx-components", "site-builders", "wordpress", "shopify", "wix", "webflow", "framer", "squarespace", "ghost", "hubspot", "drupal", "joomla", "carrd", "duda", "tilda", "mobile-frameworks", "headless-interactions", "clipboard", "lit-integration", "radix-integration", "shadcn-integration", "ecosystem-integrations", "editor-integration", "figma-component-kit", "vertigo-integration", "rust-saas-integration", "saas-cli-business")),
     ("Accessibility and performance", ("accessibility", "accessibility-alpha5-review", "progressive-enhancement", "native-browser-apis", "progressive-loading", "performance-and-polish", "performance-validation", "live-performance-audit", "visual-regression")),
     ("Maintainer and reference", ("agent-integration", "api-stability", "cloudflare-hosting", "nulang-cloud-hosting", "site-generator-decision", "design-research-linear-resend", "design-reference-matrix", "tailwind-research", "selective-builds", "release-readiness-ecosystem")),
 )
@@ -73,6 +73,7 @@ PLATFORM_SEO_TITLES = {
 }
 
 SEO_PAGE_TITLES = {
+    "htmx-components.md": "HTMX Components & Patterns | Syntyr CSS",
     "faq.md": "Syntyr CSS FAQ | Installation, Licensing & Frameworks",
     "compare.md": "Syntyr Alternatives | Compare CSS & UI Libraries",
     "compare-tailwind.md": "Syntyr vs Tailwind CSS | Components vs Utilities",
@@ -97,6 +98,7 @@ DESCRIPTION_OVERRIDES = {
     "semantic-components.md": "Copy HTML patterns for native suggestions, glossaries, highlights, ordered timelines, MathML, resources, disclosures, search, forms and responsive images.",
     "components.md": "Reference Syntyr CSS components, class names, design tokens, scopes, and semantic HTML patterns for lightweight application interfaces.",
     "framework-integrations.md": "Integrate Syntyr CSS with server-rendered HTML, HTMX, LiveView, Livewire, and frontend frameworks without requiring client-side JavaScript.",
+    "htmx-components.md": "Copy 12 HTMX component patterns for search, tables, forms, dialogs, infinite scroll and server-rendered SaaS interfaces with optional Syntyr CSS.",
     "from-pico.md": "Migrate from Pico CSS to Syntyr with semantic HTML, explicit component styling, theme tokens, and minimal runtime dependencies.",
     "distribution.md": "Install and self-host Syntyr CSS using versioned stylesheets, optional modules, and immutable releases for production websites.",
     "theme-customization.md": "Customize Syntyr CSS themes and design tokens for SaaS dashboards, accessible business applications, and futuristic interfaces.",
