@@ -1297,6 +1297,138 @@
           "target": "~/syntyr/LICENSE"
         }
       ]
+    },
+    {
+      "name": "feature-spotlight",
+      "type": "registry:item",
+      "title": "Feature spotlight",
+      "description": "An editorial split section with a concrete feature benefit and a complementary product detail.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://syntyr-css.pages.dev/registry/r/core.json"
+      ],
+      "files": [
+        {
+          "path": "blocks/snippets/feature-spotlight.html",
+          "type": "registry:file",
+          "target": "~/syntyr/blocks/feature-spotlight.html"
+        },
+        {
+          "path": "LICENSE",
+          "type": "registry:file",
+          "target": "~/syntyr/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "trust-assurance",
+      "type": "registry:item",
+      "title": "Trust and assurance section",
+      "description": "Transparent questions to ask about security, reliability, and data handling; not certification claims.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://syntyr-css.pages.dev/registry/r/core.json"
+      ],
+      "files": [
+        {
+          "path": "blocks/snippets/trust-assurance.html",
+          "type": "registry:file",
+          "target": "~/syntyr/blocks/trust-assurance.html"
+        },
+        {
+          "path": "LICENSE",
+          "type": "registry:file",
+          "target": "~/syntyr/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "event-registration",
+      "type": "registry:item",
+      "title": "Event registration section",
+      "description": "An agenda and accessible native signup form; your server must implement registration.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://syntyr-css.pages.dev/registry/r/core.json"
+      ],
+      "files": [
+        {
+          "path": "blocks/snippets/event-registration.html",
+          "type": "registry:file",
+          "target": "~/syntyr/blocks/event-registration.html"
+        },
+        {
+          "path": "LICENSE",
+          "type": "registry:file",
+          "target": "~/syntyr/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "help-center",
+      "type": "registry:item",
+      "title": "Help center landing",
+      "description": "A searchable-looking help index built from real navigation links, not a fake search control.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://syntyr-css.pages.dev/registry/r/core.json"
+      ],
+      "files": [
+        {
+          "path": "blocks/snippets/help-center.html",
+          "type": "registry:file",
+          "target": "~/syntyr/blocks/help-center.html"
+        },
+        {
+          "path": "LICENSE",
+          "type": "registry:file",
+          "target": "~/syntyr/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "notification-center",
+      "type": "registry:item",
+      "title": "Notification center",
+      "description": "Time-ordered notifications with visible status labels and real detail destinations.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://syntyr-css.pages.dev/registry/r/core.json"
+      ],
+      "files": [
+        {
+          "path": "blocks/snippets/notification-center.html",
+          "type": "registry:file",
+          "target": "~/syntyr/blocks/notification-center.html"
+        },
+        {
+          "path": "LICENSE",
+          "type": "registry:file",
+          "target": "~/syntyr/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "api-endpoint-reference",
+      "type": "registry:item",
+      "title": "API endpoint reference",
+      "description": "Readable example request and response, with method, route, and JSON; your API owns behavior.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://syntyr-css.pages.dev/registry/r/core.json"
+      ],
+      "files": [
+        {
+          "path": "blocks/snippets/api-endpoint-reference.html",
+          "type": "registry:file",
+          "target": "~/syntyr/blocks/api-endpoint-reference.html"
+        },
+        {
+          "path": "LICENSE",
+          "type": "registry:file",
+          "target": "~/syntyr/LICENSE"
+        }
+      ]
     }
   ]
 }

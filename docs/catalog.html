@@ -17,15 +17,18 @@
       <a href="index.html">Gallery</a>
       <a href="theme-editor.html">Themes</a>
       <a href="components.html">API reference</a>
+      <a href="blocks.html">Sections &amp; layouts</a>
+      <a href="console-kit.html">Premium previews</a>
     </nav>
   </header>
   <main class="syn-shell catalog-layout">
     <aside class="catalog-sidebar" aria-labelledby="catalog-index-heading">
-      <p class="syn-heading catalog-index-heading" id="catalog-index-heading">Components <span class="syn-badge">43</span></p>
+      <p class="syn-heading catalog-index-heading" id="catalog-index-heading">Components <span class="syn-badge">49</span></p>
       <nav id="catalog-index" aria-label="Component anchor navigation">
         <ol class="catalog-index-list">
           <li><a class="catalog-index-link" href="#catalog-viz-bars-title">Accessible data bars</a></li>
           <li><a class="catalog-index-link" href="#catalog-tables-title">Accessible data tables</a></li>
+          <li><a class="catalog-index-link" href="#catalog-activity-entry-title">Activity timeline</a></li>
           <li><a class="catalog-index-link" href="#catalog-alerts-title">Alerts</a></li>
           <li><a class="catalog-index-link" href="#catalog-article-with-header-and-footer-title">Article with header and footer</a></li>
           <li><a class="catalog-index-link" href="#catalog-breadcrumbs-title">Breadcrumb navigation</a></li>
@@ -47,7 +50,9 @@
           <li><a class="catalog-index-link" href="#catalog-geometry-frame-title">Geometry frame</a></li>
           <li><a class="catalog-index-link" href="#catalog-interaction-card-1">GET search form</a></li>
           <li><a class="catalog-index-link" href="#catalog-heading-group-title">Heading group</a></li>
+          <li><a class="catalog-index-link" href="#catalog-property-list-title">Key-value details</a></li>
           <li><a class="catalog-index-link" href="#catalog-forms-title">Labeled fields</a></li>
+          <li><a class="catalog-index-link" href="#catalog-link-card-title">Linked resource card</a></li>
           <li><a class="catalog-index-link" href="#catalog-interaction-card-4">Meter and output</a></li>
           <li><a class="catalog-index-link" href="#catalog-disclosures-title">Native disclosure</a></li>
           <li><a class="catalog-index-link" href="#catalog-native-popover-title">Native popover</a></li>
@@ -64,7 +69,10 @@
           <li><a class="catalog-index-link" href="#catalog-metrics-title">Responsive metrics</a></li>
           <li><a class="catalog-index-link" href="#catalog-revisions-title">Revisions and abbreviations</a></li>
           <li><a class="catalog-index-link" href="#catalog-aside-title">Section and complementary aside</a></li>
+          <li><a class="catalog-index-link" href="#catalog-section-actions-title">Section header with actions</a></li>
           <li><a class="catalog-index-link" href="#catalog-select-and-textarea-title">Select and textarea</a></li>
+          <li><a class="catalog-index-link" href="#catalog-skip-link-title">Skip navigation link</a></li>
+          <li><a class="catalog-index-link" href="#catalog-status-list-title">Status indicator list</a></li>
           <li><a class="catalog-index-link" href="#catalog-table-totals-title">Table with totals</a></li>
           <li><a class="catalog-index-link" href="#catalog-typography-and-inline-text-title">Typography and inline text</a></li>
         </ol>
@@ -76,6 +84,34 @@
       <p class="syn-lede">Browse common HTML elements by category, inspect their source, and copy into any Syntyr-styled page. Every preview and HTML snippet works without JavaScript; optional search and clipboard controls enhance this documentation page only.</p>
       <p class="syn-caption">Load <code>syntyr.core.css</code> and place components within a <code>syn-root</code> scope. The examples below use the existing component API—no hydration or framework wrappers. Optional recipe, geometry and visualization examples require the named CSS module after core, or the all-in-one stylesheet.</p>
       <p class="syn-caption">For additional native patterns see <a href="../examples/native-elements.html">all HTML controls</a>, <a href="../examples/semantic-compositions.html">semantic compositions</a>, and <a href="../examples/native-apis.html">browser-native overlays</a>. Advanced page compositions are <a href="premium-compositions.html">documented separately</a>.</p>
+      <section class="catalog-pathways" aria-labelledby="catalog-pathways-heading">
+        <p class="syn-eyebrow">DISCOVER / BUILD COMPLETE PAGES</p>
+        <h2 class="syn-heading" id="catalog-pathways-heading">From small components to full layouts</h2>
+        <p class="syn-muted">Free examples are MIT-licensed. Commercial kits are concepts and not available for purchase.</p>
+        <div class="syn-grid">
+          <article class="syn-panel">
+            <p class="syn-eyebrow">FREE / MIT</p>
+            <h3 class="syn-heading"><a href="blocks.html">Free sections &amp; layouts</a></h3>
+            <p>Copy complete hero, support, feature, account, and documentation sections.</p>
+          </article>
+          <article class="syn-panel">
+            <p class="syn-eyebrow">FREE / MIT</p>
+            <h3 class="syn-heading"><a href="premium-compositions.html">Premium-inspired compositions</a></h3>
+            <p>Polished page anatomy and storytelling recipes, still part of the free CSS library.</p>
+            <p><a href="../examples/premium-compositions.html">Open the working HTML demo</a></p>
+          </article>
+          <article class="syn-panel">
+            <p class="syn-eyebrow">PRIVATE PREVIEW / NOT FOR SALE</p>
+            <h3 class="syn-heading"><a href="console-kit.html">Console Kit layout previews</a></h3>
+            <p>Static screenshots of application layouts. The private kit is not available for purchase.</p>
+          </article>
+          <article class="syn-panel">
+            <p class="syn-eyebrow">PRODUCT RESEARCH</p>
+            <h3 class="syn-heading"><a href="products.html">Products and future Premium layouts</a></h3>
+            <p>See proposed paid section and application packs. No Premium products are available for purchase.</p>
+          </article>
+        </div>
+      </section>
       <div id="catalog-controls" class="catalog-controls" hidden>
         <label class="syn-label" for="catalog-search">Find a component</label>
         <input id="catalog-search" class="syn-input" type="search" autocomplete="off" placeholder="Search buttons, tables, alerts…" aria-controls="catalog-items">
@@ -114,7 +150,7 @@
         </div>
       </div>
       <p class="syn-caption">For editors and page builders, use the <a href="../metadata/component-gallery.v1.json">generated component and example JSON</a>. It is sourced from these copyable previews and the curated component contract, and describes an unreleased source candidate.</p>
-      <p id="catalog-results" class="syn-caption" role="status" aria-live="polite">43 examples available.</p>
+      <p id="catalog-results" class="syn-caption" role="status" aria-live="polite">49 examples available.</p>
       <p id="catalog-feedback" class="syn-caption" role="status" aria-live="polite" aria-atomic="true"></p>
       <p id="catalog-empty" class="syn-alert" hidden>No components match your search. Try a different term.</p>
       <div id="catalog-items" class="catalog-grid">
@@ -1500,6 +1536,200 @@
             <a class="syn-button catalog-live" href="#catalog-form-help-title-preview">Live View</a>
             <button type="button" class="syn-button catalog-copy" hidden data-catalog-copy>Copy HTML</button>
             <a class="syn-button catalog-edit" href="playground.html#component=catalog-form-help-title">Edit in playground</a>
+          </div>
+        </article>
+        <article class="catalog-card syn-panel" data-catalog-category="navigation" data-catalog-keywords="skip content anchor keyboard accessible" aria-labelledby="catalog-skip-link-title">
+          <div class="catalog-card-top">
+            <h2 class="syn-heading" id="catalog-skip-link-title">Skip navigation link</h2>
+            <span class="syn-badge">syntyr.core.css</span>
+          </div>
+          <p class="syn-muted">A working skip link moves to real content in the same example.</p>
+          <span class="catalog-preview-anchor" id="catalog-skip-link-title-preview" aria-hidden="true"></span>
+          <div class="catalog-preview">
+<div>
+  <a class="syn-button" href="#catalog-skip-destination">Skip to example content</a>
+  <nav aria-label="Example introductory links"><a href="guides.html">Browse guides</a></nav>
+  <section id="catalog-skip-destination" tabindex="-1" aria-labelledby="catalog-skip-heading">
+    <h3 id="catalog-skip-heading">Example main content</h3>
+    <p>Use a matching target ID in your application.</p>
+  </section>
+</div>
+          </div>
+          <details class="catalog-code-details">
+            <summary>View HTML source</summary>
+            <pre class="catalog-source"><code>&lt;div&gt;
+  &lt;a class=&quot;syn-button&quot; href=&quot;#catalog-skip-destination&quot;&gt;Skip to example content&lt;/a&gt;
+  &lt;nav aria-label=&quot;Example introductory links&quot;&gt;&lt;a href=&quot;guides.html&quot;&gt;Browse guides&lt;/a&gt;&lt;/nav&gt;
+  &lt;section id=&quot;catalog-skip-destination&quot; tabindex=&quot;-1&quot; aria-labelledby=&quot;catalog-skip-heading&quot;&gt;
+    &lt;h3 id=&quot;catalog-skip-heading&quot;&gt;Example main content&lt;/h3&gt;
+    &lt;p&gt;Use a matching target ID in your application.&lt;/p&gt;
+  &lt;/section&gt;
+&lt;/div&gt;</code></pre>
+          </details>
+          <div class="catalog-actions">
+            <a class="syn-button catalog-live" href="#catalog-skip-link-title-preview">Live View</a>
+            <button type="button" class="syn-button catalog-copy" hidden data-catalog-copy>Copy HTML</button>
+            <a class="syn-button catalog-edit" href="playground.html#component=catalog-skip-link-title">Edit in playground</a>
+          </div>
+        </article>
+        <article class="catalog-card syn-panel" data-catalog-category="data" data-catalog-keywords="status list badges semantic state text" aria-labelledby="catalog-status-list-title">
+          <div class="catalog-card-top">
+            <h2 class="syn-heading" id="catalog-status-list-title">Status indicator list</h2>
+            <span class="syn-badge">syntyr.core.css</span>
+          </div>
+          <p class="syn-muted">Use textual status labels that stay understandable without color.</p>
+          <span class="catalog-preview-anchor" id="catalog-status-list-title-preview" aria-hidden="true"></span>
+          <div class="catalog-preview">
+<section aria-labelledby="catalog-status-heading">
+  <h3 id="catalog-status-heading">Workflow status</h3>
+  <ul class="syn-stack">
+    <li><span class="syn-badge">Ready</span> · Draft reviewed</li>
+    <li><span class="syn-badge">Pending</span> · Awaiting approval</li>
+    <li><span class="syn-badge">Needs attention</span> · Missing document</li>
+  </ul>
+</section>
+          </div>
+          <details class="catalog-code-details">
+            <summary>View HTML source</summary>
+            <pre class="catalog-source"><code>&lt;section aria-labelledby=&quot;catalog-status-heading&quot;&gt;
+  &lt;h3 id=&quot;catalog-status-heading&quot;&gt;Workflow status&lt;/h3&gt;
+  &lt;ul class=&quot;syn-stack&quot;&gt;
+    &lt;li&gt;&lt;span class=&quot;syn-badge&quot;&gt;Ready&lt;/span&gt; · Draft reviewed&lt;/li&gt;
+    &lt;li&gt;&lt;span class=&quot;syn-badge&quot;&gt;Pending&lt;/span&gt; · Awaiting approval&lt;/li&gt;
+    &lt;li&gt;&lt;span class=&quot;syn-badge&quot;&gt;Needs attention&lt;/span&gt; · Missing document&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/section&gt;</code></pre>
+          </details>
+          <div class="catalog-actions">
+            <a class="syn-button catalog-live" href="#catalog-status-list-title-preview">Live View</a>
+            <button type="button" class="syn-button catalog-copy" hidden data-catalog-copy>Copy HTML</button>
+            <a class="syn-button catalog-edit" href="playground.html#component=catalog-status-list-title">Edit in playground</a>
+          </div>
+        </article>
+        <article class="catalog-card syn-panel" data-catalog-category="data" data-catalog-keywords="activity timeline events ordered time feed" aria-labelledby="catalog-activity-entry-title">
+          <div class="catalog-card-top">
+            <h2 class="syn-heading" id="catalog-activity-entry-title">Activity timeline</h2>
+            <span class="syn-badge">syntyr.core.css</span>
+          </div>
+          <p class="syn-muted">Use an ordered list with machine-readable timestamps for an activity feed.</p>
+          <span class="catalog-preview-anchor" id="catalog-activity-entry-title-preview" aria-hidden="true"></span>
+          <div class="catalog-preview">
+<section aria-labelledby="catalog-activity-heading">
+  <h3 id="catalog-activity-heading">Recent activity</h3>
+  <ol class="syn-stack">
+    <li><time datetime="2026-11-22T10:00:00Z">Nov 22, 10:00 UTC</time> — Draft updated</li>
+    <li><time datetime="2026-11-21T15:30:00Z">Nov 21, 15:30 UTC</time> — Review requested</li>
+  </ol>
+</section>
+          </div>
+          <details class="catalog-code-details">
+            <summary>View HTML source</summary>
+            <pre class="catalog-source"><code>&lt;section aria-labelledby=&quot;catalog-activity-heading&quot;&gt;
+  &lt;h3 id=&quot;catalog-activity-heading&quot;&gt;Recent activity&lt;/h3&gt;
+  &lt;ol class=&quot;syn-stack&quot;&gt;
+    &lt;li&gt;&lt;time datetime=&quot;2026-11-22T10:00:00Z&quot;&gt;Nov 22, 10:00 UTC&lt;/time&gt; — Draft updated&lt;/li&gt;
+    &lt;li&gt;&lt;time datetime=&quot;2026-11-21T15:30:00Z&quot;&gt;Nov 21, 15:30 UTC&lt;/time&gt; — Review requested&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/section&gt;</code></pre>
+          </details>
+          <div class="catalog-actions">
+            <a class="syn-button catalog-live" href="#catalog-activity-entry-title-preview">Live View</a>
+            <button type="button" class="syn-button catalog-copy" hidden data-catalog-copy>Copy HTML</button>
+            <a class="syn-button catalog-edit" href="playground.html#component=catalog-activity-entry-title">Edit in playground</a>
+          </div>
+        </article>
+        <article class="catalog-card syn-panel" data-catalog-category="data" data-catalog-keywords="property key value details description list metadata" aria-labelledby="catalog-property-list-title">
+          <div class="catalog-card-top">
+            <h2 class="syn-heading" id="catalog-property-list-title">Key-value details</h2>
+            <span class="syn-badge">syntyr.core.css</span>
+          </div>
+          <p class="syn-muted">A definition list for record attributes, not a faux two-column table.</p>
+          <span class="catalog-preview-anchor" id="catalog-property-list-title-preview" aria-hidden="true"></span>
+          <div class="catalog-preview">
+<section aria-labelledby="catalog-property-heading">
+  <h3 id="catalog-property-heading">Record details</h3>
+  <dl>
+    <dt>Status</dt><dd>Active</dd>
+    <dt>Plan</dt><dd>Starter</dd>
+    <dt>Updated</dt><dd><time datetime="2026-11-22">November 22, 2026</time></dd>
+  </dl>
+</section>
+          </div>
+          <details class="catalog-code-details">
+            <summary>View HTML source</summary>
+            <pre class="catalog-source"><code>&lt;section aria-labelledby=&quot;catalog-property-heading&quot;&gt;
+  &lt;h3 id=&quot;catalog-property-heading&quot;&gt;Record details&lt;/h3&gt;
+  &lt;dl&gt;
+    &lt;dt&gt;Status&lt;/dt&gt;&lt;dd&gt;Active&lt;/dd&gt;
+    &lt;dt&gt;Plan&lt;/dt&gt;&lt;dd&gt;Starter&lt;/dd&gt;
+    &lt;dt&gt;Updated&lt;/dt&gt;&lt;dd&gt;&lt;time datetime=&quot;2026-11-22&quot;&gt;November 22, 2026&lt;/time&gt;&lt;/dd&gt;
+  &lt;/dl&gt;
+&lt;/section&gt;</code></pre>
+          </details>
+          <div class="catalog-actions">
+            <a class="syn-button catalog-live" href="#catalog-property-list-title-preview">Live View</a>
+            <button type="button" class="syn-button catalog-copy" hidden data-catalog-copy>Copy HTML</button>
+            <a class="syn-button catalog-edit" href="playground.html#component=catalog-property-list-title">Edit in playground</a>
+          </div>
+        </article>
+        <article class="catalog-card syn-panel" data-catalog-category="layout" data-catalog-keywords="resource article card link description" aria-labelledby="catalog-link-card-title">
+          <div class="catalog-card-top">
+            <h2 class="syn-heading" id="catalog-link-card-title">Linked resource card</h2>
+            <span class="syn-badge">syntyr.core.css</span>
+          </div>
+          <p class="syn-muted">A card with one real destination and a meaningful accessible link name.</p>
+          <span class="catalog-preview-anchor" id="catalog-link-card-title-preview" aria-hidden="true"></span>
+          <div class="catalog-preview">
+<article class="syn-panel">
+  <p class="syn-eyebrow">DOCUMENTATION</p>
+  <h3 class="syn-heading"><a href="guides.html">Getting started guides</a></h3>
+  <p>Find practical examples for integrating native HTML and Syntyr CSS.</p>
+</article>
+          </div>
+          <details class="catalog-code-details">
+            <summary>View HTML source</summary>
+            <pre class="catalog-source"><code>&lt;article class=&quot;syn-panel&quot;&gt;
+  &lt;p class=&quot;syn-eyebrow&quot;&gt;DOCUMENTATION&lt;/p&gt;
+  &lt;h3 class=&quot;syn-heading&quot;&gt;&lt;a href=&quot;guides.html&quot;&gt;Getting started guides&lt;/a&gt;&lt;/h3&gt;
+  &lt;p&gt;Find practical examples for integrating native HTML and Syntyr CSS.&lt;/p&gt;
+&lt;/article&gt;</code></pre>
+          </details>
+          <div class="catalog-actions">
+            <a class="syn-button catalog-live" href="#catalog-link-card-title-preview">Live View</a>
+            <button type="button" class="syn-button catalog-copy" hidden data-catalog-copy>Copy HTML</button>
+            <a class="syn-button catalog-edit" href="playground.html#component=catalog-link-card-title">Edit in playground</a>
+          </div>
+        </article>
+        <article class="catalog-card syn-panel" data-catalog-category="layout" data-catalog-keywords="section header toolbar actions links responsive" aria-labelledby="catalog-section-actions-title">
+          <div class="catalog-card-top">
+            <h2 class="syn-heading" id="catalog-section-actions-title">Section header with actions</h2>
+            <span class="syn-badge">syntyr.core.css</span>
+          </div>
+          <p class="syn-muted">A labeled section with actions kept in normal document order.</p>
+          <span class="catalog-preview-anchor" id="catalog-section-actions-title-preview" aria-hidden="true"></span>
+          <div class="catalog-preview">
+<section aria-labelledby="catalog-action-section-heading">
+  <header class="syn-inline">
+    <h3 id="catalog-action-section-heading">Workspace overview</h3>
+    <a class="syn-button syn-button--outline" href="guides.html">View guides</a>
+  </header>
+  <p>Place supporting content after the section heading.</p>
+</section>
+          </div>
+          <details class="catalog-code-details">
+            <summary>View HTML source</summary>
+            <pre class="catalog-source"><code>&lt;section aria-labelledby=&quot;catalog-action-section-heading&quot;&gt;
+  &lt;header class=&quot;syn-inline&quot;&gt;
+    &lt;h3 id=&quot;catalog-action-section-heading&quot;&gt;Workspace overview&lt;/h3&gt;
+    &lt;a class=&quot;syn-button syn-button--outline&quot; href=&quot;guides.html&quot;&gt;View guides&lt;/a&gt;
+  &lt;/header&gt;
+  &lt;p&gt;Place supporting content after the section heading.&lt;/p&gt;
+&lt;/section&gt;</code></pre>
+          </details>
+          <div class="catalog-actions">
+            <a class="syn-button catalog-live" href="#catalog-section-actions-title-preview">Live View</a>
+            <button type="button" class="syn-button catalog-copy" hidden data-catalog-copy>Copy HTML</button>
+            <a class="syn-button catalog-edit" href="playground.html#component=catalog-section-actions-title">Edit in playground</a>
           </div>
         </article>
       </div>
