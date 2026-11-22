@@ -1,0 +1,888 @@
+{
+  "schema_version": 1,
+  "source_version": "0.3.0-alpha.5",
+  "runtime_requirement": "none",
+  "source_of_truth": [
+    "blocks/manifest.json",
+    "blocks/snippets/*.html"
+  ],
+  "sections": [
+    {
+      "id": "hero-product",
+      "title": "Product launch hero",
+      "description": "A concise product introduction with real calls to action.",
+      "category": "Marketing",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-hero-product\">\n  <div class=\"syn-site-hero\">\n    <p class=\"syn-eyebrow\">ANALYTICS / WITHOUT FRICTION</p>\n    <h2 id=\"syn-hero-product\" class=\"syn-site-heading\">Understand your product. <strong>Act with confidence.</strong></h2>\n    <p class=\"syn-lede\">One clear workspace for teams tracking what matters.</p>\n    <div class=\"syn-actions\">\n      <a class=\"syn-button syn-button--primary\" href=\"/start\">Start free</a>\n      <a class=\"syn-button syn-button--outline\" href=\"/demo\">Explore demo</a>\n    </div>\n  </div>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
+      "id": "hero-security",
+      "title": "Security-first hero",
+      "description": "A restrained security product hero with an explicit trust message.",
+      "category": "Marketing",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-hero-security\">\n  <div class=\"syn-site-hero\">\n    <span class=\"syn-badge\">SECURITY BY DESIGN</span>\n    <h2 id=\"syn-hero-security\" class=\"syn-site-heading\">Ship fast. <strong>Stay in control.</strong></h2>\n    <p class=\"syn-lede\">Deploy reliable software without trading away visibility or ownership.</p>\n    <div class=\"syn-actions\"><a class=\"syn-button syn-button--primary\" href=\"/docs\">Read the docs</a></div>\n    <p class=\"syn-caption\">Self-hosting and access controls are supplied by your application, not by CSS.</p>\n  </div>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
+      "id": "feature-grid",
+      "title": "Three-feature grid",
+      "description": "Responsive feature cards based on a fluid CSS grid.",
+      "category": "Marketing",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-feature-heading\">\n  <h2 id=\"syn-feature-heading\" class=\"syn-heading\">Everything in one place</h2>\n  <div class=\"syn-feature-grid\">\n    <article class=\"syn-feature-card\"><h3>Bring your data</h3><p>Connect the tools your team already uses.</p></article>\n    <article class=\"syn-feature-card\"><h3>See what changed</h3><p>Inspect the activity behind each decision.</p></article>\n    <article class=\"syn-feature-card\"><h3>Keep moving</h3><p>Turn insights into actionable workflows.</p></article>\n  </div>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
+      "id": "feature-checklist",
+      "title": "Benefits checklist",
+      "description": "A short benefits section with native list semantics.",
+      "category": "Marketing",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-checklist-heading\">\n  <div class=\"syn-panel\">\n    <p class=\"syn-eyebrow\">WHY TEAMS SWITCH</p>\n    <h2 id=\"syn-checklist-heading\" class=\"syn-heading\">A more deliberate workflow</h2>\n    <ul class=\"syn-feature-list\">\n      <li>Centralize critical information.</li>\n      <li>Track work from request through delivery.</li>\n      <li>Export data whenever you need it.</li>\n    </ul>\n  </div>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
+      "id": "pricing-trio",
+      "title": "Three-tier pricing",
+      "description": "Three responsive pricing cards with a featured plan.",
+      "category": "Marketing",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-pricing-heading\">\n  <h2 id=\"syn-pricing-heading\" class=\"syn-heading\">Plans that scale</h2>\n  <div class=\"syn-pricing\">\n    <article class=\"syn-price-card\"><h3>Solo</h3><p class=\"syn-price-value\">$19 <small>/ mo</small></p><ul class=\"syn-feature-list\"><li>One workspace</li><li>Essential reports</li></ul><a class=\"syn-button\" href=\"/checkout/solo\">Choose Solo</a></article>\n    <article class=\"syn-price-card\" data-syn-featured><h3>Team</h3><p class=\"syn-price-value\">$49 <small>/ mo</small></p><ul class=\"syn-feature-list\"><li>Unlimited workspaces</li><li>Team permissions</li></ul><a class=\"syn-button syn-button--primary\" href=\"/checkout/team\">Choose Team</a></article>\n    <article class=\"syn-price-card\"><h3>Scale</h3><p class=\"syn-price-value\">Custom</p><ul class=\"syn-feature-list\"><li>Advanced controls</li><li>Assisted onboarding</li></ul><a class=\"syn-button\" href=\"/contact\">Contact sales</a></article>\n  </div>\n  <p class=\"syn-caption\">Example prices only; replace plan data and checkout routes.</p>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "testimonial",
+      "title": "Customer testimonial",
+      "description": "Readable social proof with explicit quotation attribution.",
+      "category": "Marketing",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-label=\"Customer testimonial\">\n  <figure class=\"syn-panel\">\n    <blockquote><p class=\"syn-lede\">“Our team finally has a shared view of the work that matters.”</p></blockquote>\n    <figcaption class=\"syn-muted\">Illustrative quote — replace with permission-based customer feedback.</figcaption>\n  </figure>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "faq",
+      "title": "Frequently asked questions",
+      "description": "Keyboard-accessible native disclosures without a script.",
+      "category": "Marketing",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-faq-heading\">\n  <h2 id=\"syn-faq-heading\" class=\"syn-heading\">Frequently asked questions</h2>\n  <details class=\"syn-details\"><summary>Can I use my own hosting?</summary><p>Yes. This example is plain HTML and CSS.</p></details>\n  <details class=\"syn-details\"><summary>Do I need JavaScript?</summary><p>Not for this native disclosure interface.</p></details>\n  <details class=\"syn-details\"><summary>Can I customize the theme?</summary><p>Override the documented CSS custom properties.</p></details>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "cta-band",
+      "title": "Call-to-action band",
+      "description": "A compact conversion section with clear hierarchy.",
+      "category": "Marketing",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-cta-heading\">\n  <div class=\"syn-cta-band\">\n    <div><h2 id=\"syn-cta-heading\" class=\"syn-heading\">Ready to explore?</h2><p>Start with a workflow that works for your team.</p></div>\n    <a class=\"syn-button syn-button--primary\" href=\"/contact\">Talk to us</a>\n  </div>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
+      "id": "metric-overview",
+      "title": "KPI overview",
+      "description": "Container-aware operational metrics with text labels.",
+      "category": "Applications",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-kpi-heading\">\n  <h2 id=\"syn-kpi-heading\" class=\"syn-heading\">Operations snapshot</h2>\n  <div class=\"syn-stats\">\n    <article class=\"syn-stat\"><p class=\"syn-stat-label\">Active accounts</p><p class=\"syn-stat-value\">1,284</p></article>\n    <article class=\"syn-stat\"><p class=\"syn-stat-label\">Open requests</p><p class=\"syn-stat-value\">38</p></article>\n    <article class=\"syn-stat\"><p class=\"syn-stat-label\">Completion</p><p class=\"syn-stat-value\">94%</p></article>\n  </div>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "activity-feed",
+      "title": "Recent activity",
+      "description": "A compact activity feed in a reusable application card.",
+      "category": "Applications",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-activity-heading\">\n  <div class=\"syn-app-card\">\n    <header class=\"syn-app-card-header\"><h2 id=\"syn-activity-heading\" class=\"syn-heading\">Recent activity</h2><span class=\"syn-badge\">Today</span></header>\n    <ol class=\"syn-activity-list\">\n      <li><span>Report prepared</span><time datetime=\"2026-11-15T10:30:00\">10:30</time></li>\n      <li><span>New workspace added</span><time datetime=\"2026-11-15T09:15:00\">09:15</time></li>\n      <li><span>Settings reviewed</span><time datetime=\"2026-11-15T08:00:00\">08:00</time></li>\n    </ol>\n  </div>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
+      "id": "data-table",
+      "title": "Records table",
+      "description": "Semantic, scrollable table with caption and column scopes.",
+      "category": "Applications",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-table-heading\">\n  <h2 id=\"syn-table-heading\" class=\"syn-heading\">Active requests</h2>\n  <div class=\"syn-table-wrap\">\n    <table class=\"syn-table\">\n      <caption>Illustrative requests and their current state</caption>\n      <thead><tr><th scope=\"col\">Request</th><th scope=\"col\">Owner</th><th scope=\"col\">Status</th></tr></thead>\n      <tbody>\n        <tr><th scope=\"row\">REQ-103</th><td>Alex</td><td><span class=\"syn-status syn-status--success\">Ready</span></td></tr>\n        <tr><th scope=\"row\">REQ-104</th><td>Casey</td><td><span class=\"syn-status syn-status--warning\">Review</span></td></tr>\n      </tbody>\n    </table>\n  </div>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "filter-toolbar",
+      "title": "Search and filter form",
+      "description": "Server-ready GET filters that preserve native form semantics.",
+      "category": "Applications",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-filter-heading\">\n  <h2 id=\"syn-filter-heading\" class=\"syn-heading\">Find a request</h2>\n  <form class=\"syn-panel syn-form\" method=\"get\" action=\"/requests\">\n    <label class=\"syn-label\" for=\"syn-block-query\">Search by name</label>\n    <input class=\"syn-input\" id=\"syn-block-query\" name=\"query\" type=\"search\" placeholder=\"Search requests\">\n    <label class=\"syn-label\" for=\"syn-block-status\">Status</label>\n    <select class=\"syn-select\" id=\"syn-block-status\" name=\"status\">\n      <option value=\"\">All statuses</option><option value=\"open\">Open</option><option value=\"closed\">Closed</option>\n    </select>\n    <button class=\"syn-button syn-button--primary\" type=\"submit\">Apply filters</button>\n  </form>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "settings-form",
+      "title": "Account settings",
+      "description": "Labeled settings form for server-backed applications.",
+      "category": "Applications",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-settings-heading\">\n  <h2 id=\"syn-settings-heading\" class=\"syn-heading\">Workspace settings</h2>\n  <form class=\"syn-panel syn-form\" method=\"post\" action=\"/settings\">\n    <label class=\"syn-label\" for=\"syn-block-name\">Workspace name</label>\n    <input class=\"syn-input\" id=\"syn-block-name\" name=\"name\" autocomplete=\"organization\" value=\"Northstar Operations\" required>\n    <label class=\"syn-label\" for=\"syn-block-timezone\">Timezone</label>\n    <select class=\"syn-select\" id=\"syn-block-timezone\" name=\"timezone\"><option value=\"UTC\">UTC</option><option value=\"America/Sao_Paulo\">Brasília</option></select>\n    <p class=\"syn-help\">Connect your actual validation, CSRF protection and persistence.</p>\n    <button class=\"syn-button syn-button--primary\" type=\"submit\">Save settings</button>\n  </form>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "team-directory",
+      "title": "Team directory",
+      "description": "Simple list of people and roles with descriptive content.",
+      "category": "Applications",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-team-heading\">\n  <div class=\"syn-app-card\">\n    <header class=\"syn-app-card-header\"><h2 id=\"syn-team-heading\" class=\"syn-heading\">Team members</h2><span class=\"syn-badge\">3 members</span></header>\n    <ul class=\"syn-activity-list\">\n      <li><strong>Alex Kim</strong><span class=\"syn-muted\">Owner</span></li>\n      <li><strong>Sam Lee</strong><span class=\"syn-muted\">Editor</span></li>\n      <li><strong>Casey Rivera</strong><span class=\"syn-muted\">Viewer</span></li>\n    </ul>\n  </div>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
+      "id": "billing-summary",
+      "title": "Billing summary",
+      "description": "A compact, readable subscription overview.",
+      "category": "Applications",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-billing-heading\">\n  <article class=\"syn-app-card\">\n    <header class=\"syn-app-card-header\"><h2 id=\"syn-billing-heading\" class=\"syn-heading\">Subscription</h2><span class=\"syn-status syn-status--success\">Active</span></header>\n    <p class=\"syn-eyebrow\">TEAM PLAN</p>\n    <p class=\"syn-metric\">$49 <span class=\"syn-caption\">/ month</span></p>\n    <p class=\"syn-muted\">Next illustrative invoice: December 1, 2026.</p>\n    <a href=\"/billing\" class=\"syn-button\">Manage billing</a>\n  </article>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
+      "id": "onboarding-steps",
+      "title": "Onboarding checklist",
+      "description": "A short onboarding progression conveyed without color-only state.",
+      "category": "Applications",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-onboarding-heading\">\n  <div class=\"syn-panel\">\n    <h2 id=\"syn-onboarding-heading\" class=\"syn-heading\">Complete your setup</h2>\n    <ol class=\"syn-activity-list\">\n      <li><span>1. Create your workspace</span><span class=\"syn-status syn-status--success\">Done</span></li>\n      <li><span>2. Invite teammates</span><span class=\"syn-status syn-status--warning\">Next</span></li>\n      <li><span>3. Connect a data source</span><span class=\"syn-muted\">Not started</span></li>\n    </ol>\n    <a href=\"/onboarding\" class=\"syn-button syn-button--primary\">Continue setup</a>\n  </div>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
+      "id": "terminal-session",
+      "title": "Terminal output",
+      "description": "A static terminal presentation, not an interactive shell.",
+      "category": "Technical",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-terminal-heading\">\n  <h2 id=\"syn-terminal-heading\" class=\"syn-heading\">Deploy preview</h2>\n  <div class=\"syn-terminal\" role=\"group\" aria-label=\"Illustrative deployment output\">\n    <div class=\"syn-terminal-bar\"><span class=\"syn-terminal-title\">deploy.log</span><span>EXIT 0</span></div>\n    <pre class=\"syn-terminal-body\"><code><span class=\"syn-terminal-prompt\">$</span> <span class=\"syn-terminal-command\">deploy --preview</span>\n<span class=\"syn-terminal-success\">✓ Build completed</span>\n<span class=\"syn-terminal-success\">✓ Static assets verified</span>\n<span class=\"syn-terminal-muted\">Preview is ready</span></code></pre>\n  </div>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
+      "id": "incident-notice",
+      "title": "Service incident notice",
+      "description": "Status notice with actionable text and honest semantics.",
+      "category": "Technical",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-incident-heading\">\n  <div class=\"syn-alert syn-alert--danger\">\n    <h2 id=\"syn-incident-heading\" class=\"syn-heading\">Degraded API performance</h2>\n    <p>Some requests may be delayed. Engineers are investigating and will post updates.</p>\n    <a href=\"/status\">View status history</a>\n  </div>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "telemetry-status",
+      "title": "Telemetry panel",
+      "description": "Readable service status with native progress indicators.",
+      "category": "Technical",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-telemetry-heading\">\n  <div class=\"syn-panel\">\n    <p class=\"syn-eyebrow\">SYSTEM TELEMETRY</p>\n    <h2 id=\"syn-telemetry-heading\" class=\"syn-heading\">Cluster health</h2>\n    <label class=\"syn-label\" for=\"syn-block-uptime\">Requests completed — 96%</label>\n    <progress class=\"syn-meter\" id=\"syn-block-uptime\" value=\"96\" max=\"100\">96%</progress>\n    <p class=\"syn-caption\">Illustrative values; connect to real monitoring data.</p>\n  </div>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "release-notes",
+      "title": "Release notes",
+      "description": "Compact changelog entry with a machine-readable date.",
+      "category": "Technical",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-release-heading\">\n  <article class=\"syn-panel\">\n    <p class=\"syn-eyebrow\"><time datetime=\"2026-11-15\">NOV 15, 2026</time> / RELEASE</p>\n    <h2 id=\"syn-release-heading\" class=\"syn-heading\">Version 1.4</h2>\n    <p class=\"syn-muted\">A more focused way to review and filter your activity.</p>\n    <ul class=\"syn-feature-list\">\n      <li>Improved record filtering.</li><li>Clearer empty and loading states.</li><li>Keyboard navigation refinements.</li>\n    </ul>\n    <a href=\"/changelog\">View all releases</a>\n  </article>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "resource-workspace",
+      "title": "Resource management workspace",
+      "description": "Server-ready resource search, record table, pagination and empty state.",
+      "category": "Applications",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-resource-workspace-heading\">\n  <header class=\"syn-collection-toolbar\">\n    <div>\n      <h2 id=\"syn-resource-workspace-heading\" class=\"syn-heading\">Resources</h2>\n      <p class=\"syn-muted\">Illustrative records. Search, edits, and permissions require your application.</p>\n    </div>\n    <div class=\"syn-collection-actions\">\n      <a class=\"syn-button syn-button--primary\" href=\"/resources/new\">Create resource</a>\n    </div>\n  </header>\n  <form class=\"syn-filter-bar syn-panel\" action=\"/resources\" method=\"get\" role=\"search\" aria-label=\"Filter resources\">\n    <div class=\"syn-filter-field syn-filter-field--query\">\n      <label class=\"syn-label\" for=\"syn-rw-search\">Find resources</label>\n      <input class=\"syn-input\" id=\"syn-rw-search\" name=\"q\" type=\"search\" placeholder=\"Name or identifier\">\n    </div>\n    <div class=\"syn-filter-field\">\n      <label class=\"syn-label\" for=\"syn-rw-status\">Status</label>\n      <select class=\"syn-select\" id=\"syn-rw-status\" name=\"status\">\n        <option value=\"\">All statuses</option>\n        <option value=\"active\">Active</option>\n        <option value=\"pending\">Pending review</option>\n      </select>\n    </div>\n    <div class=\"syn-filter-actions\"><button class=\"syn-button syn-button--primary\" type=\"submit\">Filter</button></div>\n  </form>\n  <div class=\"syn-panel\">\n    <div class=\"syn-table-wrap\" role=\"region\" aria-label=\"Resources; scroll horizontally for more columns\" tabindex=\"0\">\n      <table class=\"syn-table\">\n        <caption>Illustrative resources, sorted by name</caption>\n        <thead>\n          <tr><th scope=\"col\">Name</th><th scope=\"col\">Owner</th><th scope=\"col\">Status</th><th scope=\"col\">Details</th></tr>\n        </thead>\n        <tbody>\n          <tr>\n            <th scope=\"row\">North warehouse</th><td>Morgan</td>\n            <td><span class=\"syn-status syn-status--success\">Active</span></td>\n            <td><a href=\"/resources/north-warehouse\">View</a></td>\n          </tr>\n          <tr>\n            <th scope=\"row\">West terminal</th><td>Casey</td>\n            <td><span class=\"syn-status syn-status--warning\">Pending</span></td>\n            <td><a href=\"/resources/west-terminal\">View</a></td>\n          </tr>\n        </tbody>\n      </table>\n    </div>\n    <nav aria-label=\"Resource pages\" class=\"syn-inline\">\n      <span aria-current=\"page\">Page 1 of 2</span>\n      <a href=\"/resources?page=2\">Next page</a>\n    </nav>\n  </div>\n  <details>\n    <summary>Alternative empty-result state (illustration)</summary>\n    <div class=\"syn-result-state\">\n      <h3 class=\"syn-heading\">No matching resources</h3>\n      <p>Try different filters or <a href=\"/resources/new\">create a resource</a>.</p>\n    </div>\n  </details>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
+      "id": "crm-workspace",
+      "title": "CRM pipeline workspace",
+      "description": "Accessible native deal stages, filters and links with no drag runtime.",
+      "category": "Applications",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-crm-workspace-heading\">\n  <header class=\"syn-collection-toolbar\">\n    <div>\n      <h2 id=\"syn-crm-workspace-heading\" class=\"syn-heading\">Deal pipeline</h2>\n      <p class=\"syn-muted\">Illustrative opportunities. The server supplies real stages, deal states, and permissions.</p>\n    </div>\n    <a class=\"syn-button syn-button--primary\" href=\"/crm/deals/new\">New deal</a>\n  </header>\n  <form method=\"get\" action=\"/crm/deals\" class=\"syn-filter-bar syn-panel\" role=\"search\" aria-label=\"Filter opportunities\">\n    <div class=\"syn-filter-field syn-filter-field--query\">\n      <label class=\"syn-label\" for=\"syn-crm-query\">Search deals</label>\n      <input class=\"syn-input\" id=\"syn-crm-query\" type=\"search\" name=\"q\" placeholder=\"Company or deal\">\n    </div>\n    <div class=\"syn-filter-field\">\n      <label class=\"syn-label\" for=\"syn-crm-owner\">Owner</label>\n      <select class=\"syn-select\" id=\"syn-crm-owner\" name=\"owner\">\n        <option value=\"\">All owners</option>\n        <option value=\"morgan\">Morgan</option><option value=\"casey\">Casey</option>\n      </select>\n    </div>\n    <div class=\"syn-filter-actions\"><button class=\"syn-button syn-button--primary\" type=\"submit\">Apply</button></div>\n  </form>\n  <div class=\"syn-pipeline\" tabindex=\"0\" role=\"region\" aria-label=\"Deal stages; scroll horizontally for more stages\">\n    <section class=\"syn-pipeline-lane\" aria-labelledby=\"syn-crm-prospect\">\n      <h3 id=\"syn-crm-prospect\">Prospecting <span class=\"syn-badge\">1</span></h3>\n      <ol class=\"syn-pipeline-list\">\n        <li class=\"syn-pipeline-card\"><a href=\"/crm/deals/atlas\">Atlas Systems</a>\n          <p>New site evaluation</p><small>Owner: Morgan · $8,000 estimated</small></li>\n      </ol>\n    </section>\n    <section class=\"syn-pipeline-lane\" aria-labelledby=\"syn-crm-proposal\">\n      <h3 id=\"syn-crm-proposal\">Proposal <span class=\"syn-badge\">1</span></h3>\n      <ol class=\"syn-pipeline-list\">\n        <li class=\"syn-pipeline-card\"><a href=\"/crm/deals/cedar\">Cedar Labs</a>\n          <p>Annual placement</p><small>Owner: Casey · $12,000 estimated</small></li>\n      </ol>\n    </section>\n    <section class=\"syn-pipeline-lane\" aria-labelledby=\"syn-crm-won\">\n      <h3 id=\"syn-crm-won\">Closed won <span class=\"syn-badge\">0</span></h3>\n      <p class=\"syn-muted\">No deals in this stage.</p>\n    </section>\n  </div>\n  <p class=\"syn-help\">Stages are presentation only. Changing a deal's stage needs an authorized server operation; there is no drag-and-drop JavaScript.</p>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
+      "id": "billing-workspace",
+      "title": "Billing and settings workspace",
+      "description": "Subscription details, invoice history and a server-owned billing contact form.",
+      "category": "Applications",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-billing-workspace-heading\">\n  <header class=\"syn-collection-toolbar\">\n    <div>\n      <h2 id=\"syn-billing-workspace-heading\" class=\"syn-heading\">Workspace and billing</h2>\n      <p class=\"syn-muted\">Illustrative subscription and invoice information, not a payment interface.</p>\n    </div>\n    <a class=\"syn-button syn-button--outline\" href=\"/billing/payment-method\">Manage payment method</a>\n  </header>\n  <div class=\"syn-layout\">\n    <section class=\"syn-panel\" aria-labelledby=\"syn-billing-plan-heading\">\n      <h3 id=\"syn-billing-plan-heading\">Current plan</h3>\n      <dl class=\"syn-record-fields\">\n        <div><dt>Plan</dt><dd>Growth (example)</dd></div>\n        <div><dt>Billing cycle</dt><dd>Monthly</dd></div>\n        <div><dt>Next invoice</dt><dd><time datetime=\"2027-01-01\">January 1, 2027</time></dd></div>\n      </dl>\n      <p><a href=\"/billing/plans\">Compare plans</a></p>\n    </section>\n    <section class=\"syn-panel\" aria-labelledby=\"syn-billing-settings-heading\">\n      <h3 id=\"syn-billing-settings-heading\">Billing contact</h3>\n      <form method=\"post\" action=\"/billing/settings\" class=\"syn-form\">\n        <div class=\"syn-field\">\n          <label class=\"syn-label\" for=\"syn-billing-email\">Billing email</label>\n          <input class=\"syn-input\" type=\"email\" id=\"syn-billing-email\" name=\"billing_email\"\n                 autocomplete=\"email\" value=\"billing@example.invalid\" aria-describedby=\"syn-billing-help\" required>\n          <p id=\"syn-billing-help\" class=\"syn-help\">Your server must validate this address and protect writes against CSRF.</p>\n        </div>\n        <button class=\"syn-button syn-button--primary\" type=\"submit\">Save contact</button>\n      </form>\n    </section>\n  </div>\n  <section class=\"syn-panel\" aria-labelledby=\"syn-billing-invoices-heading\">\n    <h3 id=\"syn-billing-invoices-heading\">Recent invoices</h3>\n    <div class=\"syn-table-wrap\" role=\"region\" aria-label=\"Recent invoices; scroll horizontally for more columns\" tabindex=\"0\">\n      <table class=\"syn-table\">\n        <caption>Illustrative invoice history</caption>\n        <thead><tr><th scope=\"col\">Invoice</th><th scope=\"col\">Date</th><th scope=\"col\">Status</th><th scope=\"col\">Amount</th></tr></thead>\n        <tbody>\n          <tr><th scope=\"row\"><a href=\"/billing/invoices/inv-102\">INV-102</a></th>\n              <td><time datetime=\"2026-11-01\">Nov 1, 2026</time></td><td>Paid</td><td>$149</td></tr>\n        </tbody>\n      </table>\n    </div>\n  </section>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
+      "id": "auth-sign-in",
+      "title": "Sign-in form",
+      "description": "Native authentication form with accessible labels and recovery link.",
+      "category": "Applications",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-signin-heading\">\n  <div class=\"syn-panel\">\n    <h2 class=\"syn-heading\" id=\"syn-signin-heading\">Sign in to Northstar</h2>\n    <p class=\"syn-muted\">Use your account credentials. Authentication is implemented by your application.</p>\n    <form class=\"syn-form\" method=\"post\" action=\"/sign-in\">\n      <label class=\"syn-label\" for=\"syn-signin-email\">Email address</label>\n      <input class=\"syn-input\" id=\"syn-signin-email\" name=\"email\" type=\"email\" autocomplete=\"username\" required>\n      <label class=\"syn-label\" for=\"syn-signin-password\">Password</label>\n      <input class=\"syn-input\" id=\"syn-signin-password\" name=\"password\" type=\"password\" autocomplete=\"current-password\" required>\n      <button class=\"syn-button syn-button--primary\" type=\"submit\">Sign in</button>\n    </form>\n    <p class=\"syn-caption\"><a href=\"/password/forgot\">Forgot password?</a> · <a href=\"/sign-up\">Create account</a></p>\n  </div>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "auth-recovery",
+      "title": "Account recovery",
+      "description": "Email recovery request presentation with security integration notes.",
+      "category": "Applications",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-recovery-heading\">\n  <div class=\"syn-panel\">\n    <h2 class=\"syn-heading\" id=\"syn-recovery-heading\">Recover account access</h2>\n    <p>Enter the email address associated with your account. If eligible, the service will send a recovery link.</p>\n    <form class=\"syn-form\" method=\"post\" action=\"/password/forgot\">\n      <label class=\"syn-label\" for=\"syn-recovery-email\">Email address</label>\n      <input class=\"syn-input\" id=\"syn-recovery-email\" name=\"email\" type=\"email\" autocomplete=\"email\" required>\n      <button class=\"syn-button syn-button--primary\" type=\"submit\">Request recovery link</button>\n    </form>\n    <p class=\"syn-help\">The server should return a non-enumerating response and enforce token expiry, rate limits and CSRF protection.</p>\n    <a href=\"/sign-in\">Return to sign in</a>\n  </div>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "error-recovery",
+      "title": "Error recovery view",
+      "description": "Actionable error state without fake success or client-side retry.",
+      "category": "Applications",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-error-heading\">\n  <div class=\"syn-panel\">\n    <p class=\"syn-eyebrow\">Unable to load / 503</p>\n    <h2 id=\"syn-error-heading\" class=\"syn-heading\">This view is temporarily unavailable</h2>\n    <p>No changes were submitted. Check service status or return to your dashboard.</p>\n    <div class=\"syn-inline\"><a class=\"syn-button syn-button--primary\" href=\"/dashboard\">Return to dashboard</a><a class=\"syn-button\" href=\"/status\">Service status</a></div>\n    <p class=\"syn-help\">The server must return the correct HTTP error status and provide a working retry route if available.</p>\n  </div>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "empty-state",
+      "title": "Empty collection state",
+      "description": "Clear primary action and filter recovery guidance.",
+      "category": "Applications",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-empty-heading\">\n  <div class=\"syn-panel syn-empty\">\n    <h2 id=\"syn-empty-heading\" class=\"syn-heading\">No projects yet</h2>\n    <p>Create a project to organize tasks and invite teammates.</p>\n    <a class=\"syn-button syn-button--primary\" href=\"/projects/new\">Create a project</a>\n    <p class=\"syn-caption\">Try clearing your filters if you expected existing projects.</p>\n  </div>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "comparison-table",
+      "title": "Features comparison table",
+      "description": "A semantic comparison matrix that can scroll within narrow containers.",
+      "category": "Marketing",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-compare\">\n  <h2 id=\"syn-compare\" class=\"syn-heading\">Compare plan capabilities</h2>\n  <div class=\"syn-table-wrap\" role=\"region\" aria-label=\"Plan capabilities; scroll horizontally to view all columns\" tabindex=\"0\">\n    <table class=\"syn-table\">\n      <caption>Illustrative package feature comparison</caption>\n      <thead><tr><th scope=\"col\">Capability</th><th scope=\"col\">Basic</th><th scope=\"col\">Team</th></tr></thead>\n      <tbody>\n        <tr><th scope=\"row\">Shared projects</th><td>3</td><td>Unlimited</td></tr>\n        <tr><th scope=\"row\">Email support</th><td>Included</td><td>Included</td></tr>\n        <tr><th scope=\"row\">Team permissions</th><td>Not included</td><td>Included</td></tr>\n      </tbody>\n    </table>\n  </div>\n  <p class=\"syn-caption\">Replace sample capabilities with real product entitlements.</p>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "integrations-grid",
+      "title": "Integration directory grid",
+      "description": "A grid of documented integration entry points and benefits.",
+      "category": "Marketing",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-integrations\">\n  <h2 id=\"syn-integrations\" class=\"syn-heading\">Works with your workflow</h2>\n  <div class=\"syn-grid\">\n    <article class=\"syn-panel\"><h3>Calendar export</h3><p>Plan dates alongside existing schedules.</p><a href=\"/integrations/calendar\">Integration guide</a></article>\n    <article class=\"syn-panel\"><h3>Webhooks</h3><p>Send event data to systems you control.</p><a href=\"/integrations/webhooks\">Webhook guide</a></article>\n    <article class=\"syn-panel\"><h3>CSV import</h3><p>Move your records from a simple file.</p><a href=\"/integrations/csv\">CSV import guide</a></article>\n  </div>\n  <p class=\"syn-caption\">Example capabilities only. Connect these application-owned /integrations/ routes before publishing.</p>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "newsletter-signup",
+      "title": "Newsletter signup panel",
+      "description": "An accessible subscription form with a native server-backed fallback.",
+      "category": "Marketing",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-newsletter\">\n  <div class=\"syn-panel\">\n    <p class=\"syn-eyebrow\">STAY IN THE LOOP</p><h2 id=\"syn-newsletter\" class=\"syn-heading\">A useful note, once a month</h2>\n    <p>Design patterns, maintenance tips and new articles. Unsubscribe at any time.</p>\n    <form class=\"syn-form\" action=\"/newsletter/subscribe\" method=\"post\">\n      <div class=\"syn-field\"><label class=\"syn-label\" for=\"syn-newsletter-email\">Email address</label>\n        <input class=\"syn-input\" type=\"email\" id=\"syn-newsletter-email\" name=\"email\" autocomplete=\"email\" required></div>\n      <button class=\"syn-button syn-button--primary\" type=\"submit\">Subscribe</button>\n    </form>\n    <p class=\"syn-caption\">Connect a real consent-aware endpoint, CSRF protection and confirmation flow before publishing.</p>\n  </div>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "announcement-banner",
+      "title": "Site announcement strip",
+      "description": "A lightweight product or event announcement with a contextual destination.",
+      "category": "Marketing",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-announcement\">\n  <div class=\"syn-panel\">\n    <p class=\"syn-eyebrow\">PRODUCT UPDATE</p>\n    <h2 id=\"syn-announcement\" class=\"syn-heading\">A new set of guides is available</h2>\n    <p>Explore recently published resources and discover what has changed.</p>\n    <a class=\"syn-button syn-button--outline\" href=\"/updates\">Read the update</a>\n  </div>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "logo-wall",
+      "title": "Partner logo text wall",
+      "description": "A compact text-only partner strip with no unlicensed logos.",
+      "category": "Marketing",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-partners\">\n  <h2 id=\"syn-partners\" class=\"syn-heading\">Compatible with your tools</h2>\n  <p class=\"syn-muted\">Example technology categories, not customer endorsements.</p>\n  <ul class=\"syn-grid\">\n    <li class=\"syn-panel\"><strong>SQL databases</strong></li>\n    <li class=\"syn-panel\"><strong>Static generators</strong></li>\n    <li class=\"syn-panel\"><strong>Web components</strong></li>\n  </ul>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "process-steps",
+      "title": "How it works steps",
+      "description": "An ordered and accessible sequence for explaining a service.",
+      "category": "Services",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-process\">\n  <h2 id=\"syn-process\" class=\"syn-heading\">A straightforward process</h2>\n  <ol class=\"syn-grid\">\n    <li class=\"syn-panel\"><h3>Discover</h3><p>Understand the people, context and constraints.</p></li>\n    <li class=\"syn-panel\"><h3>Design</h3><p>Validate the important flows with realistic content.</p></li>\n    <li class=\"syn-panel\"><h3>Deliver</h3><p>Ship, document and prepare for ongoing maintenance.</p></li>\n  </ol>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "services-grid",
+      "title": "Service offerings grid",
+      "description": "A services section with clear descriptions and destination links.",
+      "category": "Services",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-services\">\n  <p class=\"syn-eyebrow\">WHAT WE DO</p><h2 id=\"syn-services\" class=\"syn-heading\">Services built around your goals</h2>\n  <div class=\"syn-grid\">\n    <article class=\"syn-panel\"><h3>Website design</h3><p>Clear, responsive pages for growing teams.</p><a href=\"/services/design\">Explore design services</a></article>\n    <article class=\"syn-panel\"><h3>Product development</h3><p>Reliable tools designed for everyday workflows.</p><a href=\"/services/development\">Explore development</a></article>\n    <article class=\"syn-panel\"><h3>Ongoing care</h3><p>Maintenance, performance and accessibility reviews.</p><a href=\"/services/maintenance\">Explore ongoing care</a></article>\n  </div>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "service-areas",
+      "title": "Service coverage cards",
+      "description": "A service-area section suitable for local and regional businesses.",
+      "category": "Services",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-coverage\">\n  <h2 id=\"syn-coverage\" class=\"syn-heading\">Where we work</h2>\n  <p class=\"syn-lede\">Remote collaboration with optional on-site project sessions.</p>\n  <div class=\"syn-grid\">\n    <article class=\"syn-panel\"><h3>Local teams</h3><p>On-site workshops and coordination by arrangement.</p><a href=\"/contact/local\">Request local availability</a></article>\n    <article class=\"syn-panel\"><h3>Remote teams</h3><p>Structured online reviews, delivery and documentation.</p><a href=\"/contact/remote\">Plan a remote project</a></article>\n  </div>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "portfolio-grid",
+      "title": "Selected work grid",
+      "description": "An accessible project gallery without fragile image dependencies.",
+      "category": "Portfolio",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-portfolio\">\n  <h2 id=\"syn-portfolio\" class=\"syn-heading\">Selected projects</h2>\n  <div class=\"syn-grid\">\n    <article class=\"syn-panel\"><p class=\"syn-eyebrow\">WEB APP</p><h3>Field operations portal</h3><p>Planning and reporting in one practical workspace.</p><a href=\"/work/field-portal\">View project details</a></article>\n    <article class=\"syn-panel\"><p class=\"syn-eyebrow\">WEBSITE</p><h3>Independent publisher</h3><p>A durable editorial system built for reading.</p><a href=\"/work/publisher\">View publishing project</a></article>\n    <article class=\"syn-panel\"><p class=\"syn-eyebrow\">COMMERCE</p><h3>Specialty storefront</h3><p>Products presented with clarity and accessible browsing.</p><a href=\"/work/storefront\">View storefront project</a></article>\n  </div>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "team-grid",
+      "title": "Team introduction cards",
+      "description": "A team directory section without invented portraits or credentials.",
+      "category": "Services",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-team\">\n  <h2 id=\"syn-team\" class=\"syn-heading\">Meet the team</h2>\n  <div class=\"syn-grid\">\n    <article class=\"syn-panel\"><h3>Design</h3><p>Research, content design and accessible interaction patterns.</p><a href=\"/team/design\">About the design team</a></article>\n    <article class=\"syn-panel\"><h3>Engineering</h3><p>Development, integration and long-term site operations.</p><a href=\"/team/engineering\">About the engineering team</a></article>\n  </div>\n  <p class=\"syn-caption\">Role-based sample content; add actual people only with permission.</p>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "contact-quote",
+      "title": "Project inquiry form",
+      "description": "A labeled contact form with appropriate native inputs and privacy guidance.",
+      "category": "Services",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-inquiry\">\n  <h2 id=\"syn-inquiry\" class=\"syn-heading\">Tell us about your project</h2>\n  <form class=\"syn-panel syn-form\" action=\"/contact/request\" method=\"post\">\n    <div class=\"syn-field\"><label class=\"syn-label\" for=\"syn-inquiry-name\">Your name</label>\n      <input class=\"syn-input\" id=\"syn-inquiry-name\" name=\"name\" autocomplete=\"name\" required></div>\n    <div class=\"syn-field\"><label class=\"syn-label\" for=\"syn-inquiry-email\">Email address</label>\n      <input class=\"syn-input\" id=\"syn-inquiry-email\" name=\"email\" type=\"email\" autocomplete=\"email\" required></div>\n    <div class=\"syn-field\"><label class=\"syn-label\" for=\"syn-inquiry-details\">Project details</label>\n      <textarea class=\"syn-input\" id=\"syn-inquiry-details\" name=\"details\" rows=\"3\" required></textarea></div>\n    <button class=\"syn-button syn-button--primary\" type=\"submit\">Request a conversation</button>\n  </form>\n  <p class=\"syn-caption\">Sample form only. Add consent, anti-spam, CSRF and server validation in your application.</p>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "article-featured",
+      "title": "Featured editorial story",
+      "description": "A prominent lead article with an accessible summary and a real reading link.",
+      "category": "Editorial",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-featured-story\">\n  <p class=\"syn-eyebrow\">FROM THE JOURNAL</p>\n  <div class=\"syn-split\">\n    <div>\n      <h2 id=\"syn-featured-story\" class=\"syn-heading\">Designing calmer customer experiences</h2>\n      <p class=\"syn-lede\">Practical ways to make useful software easier to understand.</p>\n      <p class=\"syn-caption\"><time datetime=\"2026-10-14\">October 14, 2026</time> · 6 min read</p>\n      <a class=\"syn-button syn-button--primary\" href=\"/journal/calm-interfaces\">Read the article</a>\n    </div>\n    <aside class=\"syn-panel\" aria-label=\"Article highlights\">\n      <p class=\"syn-eyebrow\">IN THIS ARTICLE</p>\n      <ul class=\"syn-feature-list\"><li>Clear information hierarchy</li><li>Helpful empty states</li><li>Accessible interaction patterns</li></ul>\n    </aside>\n  </div>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "article-grid",
+      "title": "Article and news grid",
+      "description": "A responsive collection of dated articles with titles and excerpts.",
+      "category": "Editorial",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-journal-grid\">\n  <h2 id=\"syn-journal-grid\" class=\"syn-heading\">Latest from the journal</h2>\n  <div class=\"syn-grid\">\n    <article class=\"syn-panel\"><p class=\"syn-eyebrow\">DESIGN</p><h3><a href=\"/journal/reading-layouts\">Better reading layouts</a></h3><p>Make long-form pages inviting across screen sizes.</p><p class=\"syn-caption\"><time datetime=\"2026-11-03\">November 3, 2026</time></p></article>\n    <article class=\"syn-panel\"><p class=\"syn-eyebrow\">DEVELOPMENT</p><h3><a href=\"/journal/native-elements\">Start with native elements</a></h3><p>Accessible controls before complex abstractions.</p><p class=\"syn-caption\"><time datetime=\"2026-10-18\">October 18, 2026</time></p></article>\n    <article class=\"syn-panel\"><p class=\"syn-eyebrow\">PRACTICE</p><h3><a href=\"/journal/design-systems\">A small design system</a></h3><p>Build reusable interfaces without growing complexity.</p><p class=\"syn-caption\"><time datetime=\"2026-10-02\">October 2, 2026</time></p></article>\n  </div>\n  <p><a href=\"/journal\">All articles</a></p>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "article-detail",
+      "title": "Long-form article layout",
+      "description": "A semantic article header, readable paragraphs and related links.",
+      "category": "Editorial",
+      "html": "<article class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-article-title\">\n  <header>\n    <p class=\"syn-eyebrow\">FIELD NOTES</p>\n    <h2 id=\"syn-article-title\" class=\"syn-heading\">Build a website that lasts</h2>\n    <p class=\"syn-lede\">Make room for clarity, portability and simple maintenance.</p>\n    <p class=\"syn-caption\">By the editorial team · <time datetime=\"2026-10-20\">October 20, 2026</time></p>\n  </header>\n  <section aria-labelledby=\"syn-article-body\">\n    <h3 id=\"syn-article-body\">Start with meaningful content</h3>\n    <p>Use real headings, links and lists to give every reader a clear path through the page. Structure should remain understandable without a stylesheet.</p>\n    <h3>Keep layouts flexible</h3><p>Use fluid sizing and relative units so content can respond to different screens and text settings.</p>\n    <blockquote><p>Good defaults make the common case easier.</p></blockquote>\n  </section>\n  <footer><p><a href=\"/journal\">Back to all articles</a></p></footer>\n</article>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "author-profile",
+      "title": "Author bio card",
+      "description": "A concise author introduction with a clearly labeled profile link.",
+      "category": "Editorial",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-author-name\">\n  <div class=\"syn-panel\">\n    <p class=\"syn-eyebrow\">ABOUT THE AUTHOR</p>\n    <h2 id=\"syn-author-name\" class=\"syn-heading\">Editorial Team</h2>\n    <p>Writing about resilient websites, accessible interfaces and practical design decisions.</p>\n    <a href=\"/authors/editorial\">View all articles by the editorial team</a>\n  </div>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "case-study-preview",
+      "title": "Case-study teaser",
+      "description": "A project outcome summary with challenges, solution and next action.",
+      "category": "Portfolio",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-case-study\">\n  <div class=\"syn-split\">\n    <div>\n      <p class=\"syn-eyebrow\">EXAMPLE CASE STUDY</p><h2 id=\"syn-case-study\" class=\"syn-heading\">A simpler client portal</h2>\n      <p class=\"syn-lede\">An illustrative project brief for a field-services company.</p>\n      <a class=\"syn-button syn-button--outline\" href=\"/work/client-portal\">Read case study</a>\n    </div>\n    <dl class=\"syn-panel\">\n      <dt><strong>Challenge</strong></dt><dd>Updates were scattered across email and documents.</dd>\n      <dt><strong>Approach</strong></dt><dd>A focused portal with consistent status and file access.</dd>\n      <dt><strong>Outcome</strong></dt><dd>Prototype ready for stakeholder review; no performance claims.</dd>\n    </dl>\n  </div>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "site-header",
+      "title": "Responsive site header",
+      "description": "A compact brand, navigation and call-to-action header with native links.",
+      "category": "Navigation",
+      "html": "<header class=\"syn-root syn-header syn-region\" data-syn-theme=\"studio\" aria-label=\"Example site header\">\n  <a class=\"syn-logo syn-list-row\" href=\"/home\">Northstar Studio</a>\n  <nav class=\"syn-nav\" aria-label=\"Primary navigation\">\n    <a class=\"syn-list-row\" href=\"/services\">Services</a><a class=\"syn-list-row\" href=\"/work\">Work</a><a class=\"syn-list-row\" href=\"/journal\">Journal</a>\n  </nav>\n  <a class=\"syn-button syn-button--primary\" href=\"/contact\">Start a project</a>\n</header>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "site-footer",
+      "title": "Multi-column site footer",
+      "description": "A reusable footer with separate navigation groups and business information.",
+      "category": "Navigation",
+      "html": "<footer class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-label=\"Example site footer\">\n  <div class=\"syn-grid\">\n    <section class=\"syn-panel\" aria-labelledby=\"syn-footer-brand\">\n      <h2 class=\"syn-heading\" id=\"syn-footer-brand\">Northstar Studio</h2>\n      <p class=\"syn-muted\">Independent design and engineering for useful websites.</p>\n    </section>\n    <nav class=\"syn-panel\" aria-label=\"Explore\">\n      <strong>Explore</strong>\n      <ul><li><a class=\"syn-list-row\" href=\"/services\">Services</a></li><li><a class=\"syn-list-row\" href=\"/work\">Selected work</a></li><li><a class=\"syn-list-row\" href=\"/journal\">Journal</a></li></ul>\n    </nav>\n    <nav class=\"syn-panel\" aria-label=\"Information\">\n      <strong>Information</strong>\n      <ul><li><a class=\"syn-list-row\" href=\"/contact\">Contact</a></li><li><a class=\"syn-list-row\" href=\"/privacy\">Privacy</a></li><li><a class=\"syn-list-row\" href=\"/accessibility\">Accessibility</a></li></ul>\n    </nav>\n  </div>\n  <p class=\"syn-caption\">Example footer. Replace brand details and links before publishing.</p>\n</footer>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "mega-navigation",
+      "title": "Native expandable mega menu",
+      "description": "Keyboard-friendly disclosure with grouped destination links and no menu runtime.",
+      "category": "Navigation",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-label=\"Expandable website navigation example\">\n  <nav aria-label=\"Products and resources\" class=\"syn-stack\">\n    <div class=\"syn-inline\" style=\"--syn-inline-justify:space-between\">\n      <a class=\"syn-logo\" href=\"/\">NORTH / STUDIO</a>\n      <a class=\"syn-button syn-button--outline\" href=\"/contact\">Get in touch</a>\n    </div>\n    <details class=\"syn-details\" open>\n      <summary>Explore our solutions</summary>\n      <div class=\"syn-stack\">\n        <p class=\"syn-muted\">Browse product areas or jump straight to a guide.</p>\n        <div class=\"syn-feature-grid\">\n          <section class=\"syn-feature-card\">\n            <h2 class=\"syn-heading\">Products</h2>\n            <ul class=\"syn-stack\">\n              <li><a href=\"/products/analytics\">Analytics platform</a></li>\n              <li><a href=\"/products/automation\">Workflow automation</a></li>\n            </ul>\n          </section>\n          <section class=\"syn-feature-card\">\n            <h2 class=\"syn-heading\">Resources</h2>\n            <ul class=\"syn-stack\">\n              <li><a href=\"/docs\">Documentation</a></li>\n              <li><a href=\"/journal\">Journal</a></li>\n            </ul>\n          </section>\n        </div>\n      </div>\n    </details>\n  </nav>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
+      "id": "docs-layout",
+      "title": "Documentation page",
+      "description": "Documentation navigation, breadcrumb and article content.",
+      "category": "Technical",
+      "html": "<section class=\"syn-root syn-shell\" data-syn-theme=\"studio\" aria-labelledby=\"syn-docs-heading\">\n  <nav class=\"syn-breadcrumbs\" aria-label=\"Breadcrumb\"><ol><li><a href=\"/docs\">Docs</a></li><li aria-current=\"page\">Getting started</li></ol></nav>\n  <div class=\"syn-sidecar\">\n    <article><h2 class=\"syn-title\" id=\"syn-docs-heading\">Getting started</h2>\n      <p>Import the version-pinned stylesheet and wrap your application in a Syntyr root.</p>\n      <pre class=\"syn-code\"><code>&lt;main class=\"syn-root\"&gt;Hello world&lt;/main&gt;</code></pre>\n      <h3 id=\"syn-docs-next\">Next steps</h3><p>Explore composable components and semantic forms.</p>\n      <a href=\"/docs/components\">Browse components</a>\n    </article>\n    <nav class=\"syn-panel\" aria-label=\"Documentation sections\"><h2 class=\"syn-heading\">Guides</h2>\n      <ul class=\"syn-list-group\">\n        <li><a class=\"syn-list-row\" href=\"/docs/start\" aria-current=\"page\">Getting started</a></li>\n        <li><a class=\"syn-list-row\" href=\"/docs/components\">Components</a></li>\n        <li><a class=\"syn-list-row\" href=\"/docs/themes\">Themes</a></li>\n      </ul>\n    </nav>\n  </div>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "content-collection",
+      "title": "Filterable content collection",
+      "description": "Loop-style article cards with real GET search, taxonomy selection and pagination.",
+      "category": "Publishing",
+      "html": "<section class=\"syn-root syn-region syn-stack\" data-syn-theme=\"studio\" aria-labelledby=\"syn-collection-heading\">\n  <header class=\"syn-stack\">\n    <p class=\"syn-eyebrow\">THE JOURNAL</p>\n    <h2 class=\"syn-section-heading\" id=\"syn-collection-heading\">Ideas for practical teams</h2>\n    <p class=\"syn-muted\">A reusable archive: the host server supplies matching items and pagination.</p>\n  </header>\n  <form class=\"syn-filter-bar\" method=\"get\" action=\"/journal\" role=\"search\" aria-label=\"Filter articles\">\n    <div class=\"syn-filter-field syn-filter-field--query\">\n      <label class=\"syn-label\" for=\"syn-collection-search\">Search articles</label>\n      <input class=\"syn-input\" id=\"syn-collection-search\" type=\"search\" name=\"q\" placeholder=\"Search the journal\">\n    </div>\n    <div class=\"syn-filter-field\">\n      <label class=\"syn-label\" for=\"syn-collection-category\">Topic</label>\n      <select class=\"syn-select\" id=\"syn-collection-category\" name=\"category\">\n        <option value=\"\">All topics</option>\n        <option value=\"engineering\">Engineering</option>\n        <option value=\"design\">Design</option>\n      </select>\n    </div>\n    <div class=\"syn-filter-actions\"><button class=\"syn-button syn-button--primary\" type=\"submit\">Find articles</button></div>\n  </form>\n  <div class=\"syn-feature-grid\">\n    <article class=\"syn-feature-card syn-stack\">\n      <span class=\"syn-badge\">Engineering</span>\n      <h3 class=\"syn-heading\"><a href=\"/journal/accessible-forms\">Forms that work for everyone</a></h3>\n      <p class=\"syn-muted\">Why native controls are a strong foundation for production forms.</p>\n      <p class=\"syn-caption\"><time datetime=\"2026-10-19\">October 19, 2026</time> · 5 min read</p>\n    </article>\n    <article class=\"syn-feature-card syn-stack\">\n      <span class=\"syn-badge\">Design</span>\n      <h3 class=\"syn-heading\"><a href=\"/journal/clear-layouts\">Make dense pages easier to scan</a></h3>\n      <p class=\"syn-muted\">Build responsive hierarchy using existing layout primitives.</p>\n      <p class=\"syn-caption\"><time datetime=\"2026-10-26\">October 26, 2026</time> · 4 min read</p>\n    </article>\n    <article class=\"syn-feature-card syn-stack\">\n      <span class=\"syn-badge\">Engineering</span>\n      <h3 class=\"syn-heading\"><a href=\"/journal/steady-components\">Components built to last</a></h3>\n      <p class=\"syn-muted\">A practical approach to stable tokens and low-maintenance HTML.</p>\n      <p class=\"syn-caption\"><time datetime=\"2026-11-02\">November 2, 2026</time> · 7 min read</p>\n    </article>\n  </div>\n  <nav class=\"syn-pagination\" aria-label=\"Pagination\">\n    <a class=\"syn-page-link\" href=\"/journal?page=1\" aria-current=\"page\">1</a>\n    <a class=\"syn-page-link\" href=\"/journal?page=2\">2</a>\n    <a class=\"syn-page-link\" href=\"/journal?page=2\" aria-label=\"Next page\">Next</a>\n  </nav>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
+      "id": "product-collection",
+      "title": "Product collection cards",
+      "description": "Product catalog cards with explicit price and detail links.",
+      "category": "Commerce",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-collection\">\n  <h2 id=\"syn-collection\" class=\"syn-heading\">Featured collection</h2>\n  <div class=\"syn-grid\">\n    <article class=\"syn-panel\"><p class=\"syn-eyebrow\">EVERYDAY</p><h3>Desk notebook</h3><p>Plain-paper notebook for planning.</p><p><strong>$18.00</strong></p><a href=\"/products/notebook\">View notebook</a></article>\n    <article class=\"syn-panel\"><p class=\"syn-eyebrow\">ESSENTIAL</p><h3>Canvas case</h3><p>A compact case for small essentials.</p><p><strong>$24.00</strong></p><a href=\"/products/canvas-case\">View canvas case</a></article>\n    <article class=\"syn-panel\"><p class=\"syn-eyebrow\">WORKSPACE</p><h3>Daily planner</h3><p>A simple structure for each day.</p><p><strong>$21.00</strong></p><a href=\"/products/planner\">View planner</a></article>\n  </div>\n  <p class=\"syn-caption\">Fictional products and prices; no checkout behavior is provided.</p>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "category-showcase",
+      "title": "Shop category highlights",
+      "description": "A merchandise category section with links instead of fabricated checkout controls.",
+      "category": "Commerce",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-shop-categories\">\n  <h2 id=\"syn-shop-categories\" class=\"syn-heading\">Explore the collection</h2>\n  <div class=\"syn-grid\">\n    <article class=\"syn-panel\"><p class=\"syn-eyebrow\">01</p><h3>Writing tools</h3><p>Useful objects for capturing ideas.</p><a href=\"/shop/writing\">Browse writing tools</a></article>\n    <article class=\"syn-panel\"><p class=\"syn-eyebrow\">02</p><h3>Desk essentials</h3><p>Simple products for daily work.</p><a href=\"/shop/desk\">Browse desk essentials</a></article>\n  </div>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "feature-spotlight",
+      "title": "Feature spotlight",
+      "description": "An editorial split section with a concrete feature benefit and a complementary product detail.",
+      "category": "Marketing",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"feature-spotlight-heading\">\n  <div class=\"syn-sidecar\">\n    <div>\n      <p class=\"syn-eyebrow\">PRODUCT / FEATURE</p>\n      <h2 class=\"syn-heading\" id=\"feature-spotlight-heading\">Stay on top of every handoff.</h2>\n      <p class=\"syn-lede\">One clear place to review owners, deadlines, and next steps.</p>\n      <a class=\"syn-button syn-button--primary\" href=\"/features\">Explore features</a>\n    </div>\n    <aside class=\"syn-panel\" aria-label=\"Illustrative task status\">\n      <p class=\"syn-caption\">EXAMPLE TASK</p>\n      <h3 class=\"syn-heading\">Review proposal</h3>\n      <p><span class=\"syn-badge\">Ready for review</span></p>\n      <p class=\"syn-muted\">Owner: Sample team · Due: Next week</p>\n    </aside>\n  </div>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "trust-assurance",
+      "title": "Trust and assurance section",
+      "description": "Transparent questions to ask about security, reliability, and data handling; not certification claims.",
+      "category": "Marketing",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"trust-assurance-heading\">\n  <h2 class=\"syn-heading\" id=\"trust-assurance-heading\">Trust needs evidence.</h2>\n  <p>Replace these sample prompts with verified policies and public documentation.</p>\n  <ul class=\"syn-grid\">\n    <li class=\"syn-panel\"><h3 class=\"syn-heading\">Access controls</h3><p>Describe how permissions are enforced and audited.</p></li>\n    <li class=\"syn-panel\"><h3 class=\"syn-heading\">Data handling</h3><p>Publish retention, export and deletion policies.</p></li>\n    <li class=\"syn-panel\"><h3 class=\"syn-heading\">Incident response</h3><p>Explain reporting channels and response expectations.</p></li>\n  </ul>\n  <a href=\"/security\">Read our documented practices</a>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "event-registration",
+      "title": "Event registration section",
+      "description": "An agenda and accessible native signup form; your server must implement registration.",
+      "category": "Marketing",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"event-registration-heading\">\n  <h2 class=\"syn-heading\" id=\"event-registration-heading\">Join a product workshop</h2>\n  <p><time datetime=\"2026-12-03T14:00:00Z\">December 3, 2026 at 14:00 UTC</time> · Online</p>\n  <p class=\"syn-muted\">Illustrative event. Replace the date and submission route.</p>\n  <form class=\"syn-form\" action=\"/events/register\" method=\"post\">\n    <label class=\"syn-label\" for=\"event-register-email\">Email address</label>\n    <input class=\"syn-input\" id=\"event-register-email\" name=\"email\" type=\"email\"\n           autocomplete=\"email\" required>\n    <button class=\"syn-button syn-button--primary\" type=\"submit\">Request a seat</button>\n  </form>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "help-center",
+      "title": "Help center landing",
+      "description": "A searchable-looking help index built from real navigation links, not a fake search control.",
+      "category": "Applications",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"help-center-heading\">\n  <h2 class=\"syn-heading\" id=\"help-center-heading\">How can we help?</h2>\n  <p class=\"syn-muted\">Start with the topic that matches your question.</p>\n  <nav aria-label=\"Help categories\">\n    <ul class=\"syn-grid\">\n      <li class=\"syn-panel\"><h3 class=\"syn-heading\"><a href=\"/help/getting-started\">Getting started</a></h3><p>Accounts, setup, and your first project.</p></li>\n      <li class=\"syn-panel\"><h3 class=\"syn-heading\"><a href=\"/help/billing\">Billing and plans</a></h3><p>Invoices, subscriptions, and receipts.</p></li>\n      <li class=\"syn-panel\"><h3 class=\"syn-heading\"><a href=\"/help/security\">Account security</a></h3><p>Access and sign-in guidance.</p></li>\n    </ul>\n  </nav>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "notification-center",
+      "title": "Notification center",
+      "description": "Time-ordered notifications with visible status labels and real detail destinations.",
+      "category": "Applications",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"notification-center-heading\">\n  <h2 class=\"syn-heading\" id=\"notification-center-heading\">Recent notifications</h2>\n  <ol class=\"syn-stack\">\n    <li class=\"syn-panel\">\n      <h3 class=\"syn-heading\">New review requested <span class=\"syn-badge\">Unread</span></h3>\n      <p>A teammate requested your review of a draft.</p>\n      <p><time datetime=\"2026-11-22T10:00:00Z\">November 22, 10:00 UTC</time> · <a href=\"/notifications/review\">View request</a></p>\n    </li>\n    <li class=\"syn-panel\">\n      <h3 class=\"syn-heading\">Export finished</h3>\n      <p>A sample export is ready to inspect.</p>\n      <p><time datetime=\"2026-11-21T16:30:00Z\">November 21, 16:30 UTC</time> · <a href=\"/notifications/export\">View export</a></p>\n    </li>\n  </ol>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "api-endpoint-reference",
+      "title": "API endpoint reference",
+      "description": "Readable example request and response, with method, route, and JSON; your API owns behavior.",
+      "category": "Technical",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"api-endpoint-heading\">\n  <p class=\"syn-eyebrow\">REFERENCE / ILLUSTRATIVE</p>\n  <h2 class=\"syn-heading\" id=\"api-endpoint-heading\">List example records</h2>\n  <p><code>GET /v1/records</code> · Sample contract, not a live endpoint.</p>\n  <h3 class=\"syn-heading\">Request</h3>\n  <pre><code>GET /v1/records?limit=10</code></pre>\n  <h3 class=\"syn-heading\">Example response</h3>\n  <pre><code>{\n  \"items\": [{\"id\": \"example-1\", \"status\": \"ready\"}],\n  \"next\": null\n}</code></pre>\n  <a href=\"/docs/api\">Full API reference</a>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "scrollable-card-rail",
+      "title": "Scrollable product card rail",
+      "description": "An accessible, CSS-only horizontal collection for feature, portfolio or editorial cards.",
+      "category": "Marketing",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-scroll-collection-title\">\n  <header class=\"syn-page-header\">\n    <div><p class=\"syn-eyebrow\">EXPLORE THE PLATFORM</p><h2 id=\"syn-scroll-collection-title\" class=\"syn-heading\">Built for the whole team</h2>\n      <p class=\"syn-muted\">An overflow-friendly collection of independent cards. Scroll sideways for more.</p></div>\n    <a class=\"syn-button syn-button--outline\" href=\"/features\">All features</a>\n  </header>\n  <div class=\"syn-scroll-rail\" role=\"region\" tabindex=\"0\" aria-label=\"Product highlights, scroll horizontally for additional cards\">\n    <article class=\"syn-evidence-card\">\n      <div class=\"syn-evidence-media syn-evidence-media--placeholder\" aria-hidden=\"true\">01 / REPORTS</div>\n      <div class=\"syn-evidence-body\"><h3>Reports without friction</h3><p>Give your team a shared view of the latest numbers.</p>\n        <a href=\"/features/reports\">Explore reporting</a></div>\n    </article>\n    <article class=\"syn-evidence-card\">\n      <div class=\"syn-evidence-media syn-evidence-media--placeholder\" aria-hidden=\"true\">02 / WORKFLOWS</div>\n      <div class=\"syn-evidence-body\"><h3>Work moves forward</h3><p>Track owners, due dates, approvals and handoffs.</p>\n        <a href=\"/features/workflows\">Explore workflows</a></div>\n    </article>\n    <article class=\"syn-evidence-card\">\n      <div class=\"syn-evidence-media syn-evidence-media--placeholder\" aria-hidden=\"true\">03 / CONNECT</div>\n      <div class=\"syn-evidence-body\"><h3>Connect your tools</h3><p>Bring key records together without switching tabs.</p>\n        <a href=\"/features/integrations\">Explore integrations</a></div>\n    </article>\n    <article class=\"syn-evidence-card\">\n      <div class=\"syn-evidence-media syn-evidence-media--placeholder\" aria-hidden=\"true\">04 / CONTROL</div>\n      <div class=\"syn-evidence-body\"><h3>Stay in control</h3><p>See permission scopes and operational history.</p>\n        <a href=\"/features/security\">Explore security</a></div>\n    </article>\n  </div>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
+      "id": "bento-feature-grid",
+      "title": "Responsive bento feature grid",
+      "description": "A container-aware asymmetric feature section using composable cards.",
+      "category": "Marketing",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-bento-title\">\n  <header><p class=\"syn-eyebrow\">WHY TEAMS CHOOSE US</p><h2 id=\"syn-bento-title\" class=\"syn-heading\">One clear place to get work done</h2>\n    <p class=\"syn-muted\">A container-aware bento layout built from ordinary semantic cards.</p></header>\n  <div class=\"syn-bento-grid\">\n    <article class=\"syn-feature-card syn-surface--accent syn-bento-card--wide\">\n      <p class=\"syn-eyebrow\">VISIBILITY</p><h3>See the complete picture</h3>\n      <p>Combine your pipeline, project milestones and operational signals without hopping between tools.</p>\n      <dl class=\"syn-record-fields\"><div><dt>Open projects</dt><dd>24 (sample)</dd></div>\n        <div><dt>Items needing review</dt><dd>3 (sample)</dd></div></dl>\n      <a href=\"/features/overview\">Explore the overview</a>\n    </article>\n    <article class=\"syn-feature-card\"><p class=\"syn-eyebrow\">SECURITY</p><h3>Know who can do what</h3>\n      <p>Organize members and workspaces with clear permissions.</p><a href=\"/features/permissions\">Learn about access</a></article>\n    <article class=\"syn-feature-card\"><p class=\"syn-eyebrow\">AUTOMATION</p><h3>Make repeat work simpler</h3>\n      <p>Present each workflow step and its owner in context.</p><a href=\"/features/automation\">Explore workflows</a></article>\n    <article class=\"syn-feature-card\"><p class=\"syn-eyebrow\">REPORTING</p><h3>Share results with clarity</h3>\n      <p>Prepare actionable summaries that make sense to every stakeholder.</p><a href=\"/features/analytics\">Explore analytics</a></article>\n  </div>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
+      "id": "hero-product-preview",
+      "title": "Product screenshot hero",
+      "description": "Split-screen product hero with semantic CSS-only mock dashboard content.",
+      "category": "Marketing",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-hero-preview-title\">\n  <div class=\"syn-showcase\">\n    <div class=\"syn-showcase-copy\">\n      <p class=\"syn-eyebrow\">A SIMPLER WAY TO OPERATE</p>\n      <h2 id=\"syn-hero-preview-title\" class=\"syn-fluid-display\">Your work, finally in focus.</h2>\n      <p class=\"syn-lede\">Plan work, keep stakeholders aligned and understand what happens next from one calm workspace.</p>\n      <div class=\"syn-actions\"><a class=\"syn-button syn-button--primary\" href=\"/start\">Start free</a>\n        <a class=\"syn-button syn-button--outline\" href=\"/demo\">See the demo</a></div>\n      <p class=\"syn-caption\">Illustrative product presentation, not a live dashboard.</p>\n    </div>\n    <div class=\"syn-showcase-visual\" role=\"region\" aria-label=\"Illustrative product dashboard\">\n      <div class=\"syn-app-card\">\n        <header class=\"syn-app-card-header\"><h3>Operations overview</h3><span class=\"syn-badge\">Example</span></header>\n        <div class=\"syn-kpi-grid\">\n          <div class=\"syn-panel\"><p class=\"syn-caption\">Active projects</p><strong>24</strong></div>\n          <div class=\"syn-panel\"><p class=\"syn-caption\">Pending review</p><strong>3</strong></div>\n        </div>\n        <div class=\"syn-table-wrap\" role=\"region\" tabindex=\"0\" aria-label=\"Illustrative dashboard records, scroll for more columns\">\n          <table class=\"syn-table syn-table--readable\"><caption>Recent work (sample data)</caption>\n            <thead><tr><th scope=\"col\">Workstream</th><th scope=\"col\">Owner</th><th scope=\"col\">State</th></tr></thead>\n            <tbody><tr><th scope=\"row\">Website release</th><td>Design</td><td>In review</td></tr>\n              <tr><th scope=\"row\">Customer onboarding</th><td>Operations</td><td>Active</td></tr></tbody>\n          </table>\n        </div>\n      </div>\n    </div>\n  </div>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
+      "id": "feature-spotlight-detail",
+      "title": "Split feature detail spotlight",
+      "description": "Full split section with illustration, record details and activity timeline.",
+      "category": "Marketing",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-feature-spotlight-title\">\n  <div class=\"syn-showcase\">\n    <div class=\"syn-showcase-copy\">\n      <p class=\"syn-eyebrow\">KEEP EVERYONE ALIGNED</p>\n      <h2 id=\"syn-feature-spotlight-title\" class=\"syn-heading\">Decisions have context.</h2>\n      <p>Each update can have an owner, a timestamp and a next action. Bring the details together in a single readable record.</p>\n      <ul><li>Understand the latest changes.</li><li>Locate the next step.</li><li>Keep relevant history in view.</li></ul>\n      <a class=\"syn-button syn-button--outline\" href=\"/features/activity\">Learn about activity</a>\n    </div>\n    <div class=\"syn-showcase-visual\">\n      <div class=\"syn-app-card\">\n        <header class=\"syn-app-card-header\"><h3>Project detail</h3><span class=\"syn-badge\">In progress</span></header>\n        <dl class=\"syn-record-fields\">\n          <div><dt>Owner</dt><dd>Operations team</dd></div>\n          <div><dt>Milestone</dt><dd>Content review</dd></div>\n          <div><dt>Next step</dt><dd>Confirm delivery</dd></div>\n        </dl>\n        <ol class=\"syn-activity-timeline\">\n          <li><strong>Plan approved</strong><time datetime=\"2026-10-03\">Oct 3</time></li>\n          <li><strong>Review requested</strong><time datetime=\"2026-10-04\">Oct 4</time></li>\n        </ol>\n      </div>\n    </div>\n  </div>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
+      "id": "customer-case-study",
+      "title": "Customer case study detail",
+      "description": "A complete editorial case-study layout with honest illustrative metrics.",
+      "category": "Marketing",
+      "html": "<article class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-case-study-title\">\n  <header class=\"syn-site-hero\">\n    <p class=\"syn-eyebrow\">CUSTOMER STORY / ILLUSTRATIVE EXAMPLE</p>\n    <h2 id=\"syn-case-study-title\" class=\"syn-site-heading\">More clarity in every handoff.</h2>\n    <p class=\"syn-lede\">How a fictional services team could organize its work in one place.</p>\n    <p class=\"syn-caption\">This is sample editorial content. Replace it with a verified customer story before publishing.</p>\n  </header>\n  <section class=\"syn-region\" aria-labelledby=\"syn-case-results-title\">\n    <h3 id=\"syn-case-results-title\">Illustrative outcomes</h3>\n    <div class=\"syn-kpi-grid\">\n      <div class=\"syn-panel\"><p class=\"syn-caption\">Teams in one workspace</p><strong>4</strong></div>\n      <div class=\"syn-panel\"><p class=\"syn-caption\">Core handoff stages</p><strong>6</strong></div>\n      <div class=\"syn-panel\"><p class=\"syn-caption\">Shared project view</p><strong>1</strong></div>\n    </div>\n  </section>\n  <div class=\"syn-detail-layout\">\n    <div class=\"syn-detail-main\">\n      <section class=\"syn-panel\" aria-labelledby=\"syn-case-challenge-title\"><h3 id=\"syn-case-challenge-title\">The challenge</h3>\n        <p>Requests arrived through separate channels, leaving project owners without a consistent record of decisions.</p></section>\n      <section class=\"syn-panel\" aria-labelledby=\"syn-case-approach-title\"><h3 id=\"syn-case-approach-title\">The approach</h3>\n        <p>A single intake, a defined set of milestones and shared status reporting created a repeatable workflow.</p></section>\n    </div>\n    <aside class=\"syn-detail-aside syn-panel\" aria-labelledby=\"syn-case-summary-title\">\n      <h3 id=\"syn-case-summary-title\">Story outline</h3>\n      <dl class=\"syn-record-fields\"><div><dt>Industry</dt><dd>Professional services</dd></div>\n        <div><dt>Use case</dt><dd>Cross-team coordination</dd></div></dl>\n      <a href=\"/stories\">More customer stories</a>\n    </aside>\n  </div>\n</article>",
+      "required_stylesheets": [
+        "syntyr.core.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
+      "id": "pricing-comparison",
+      "title": "Pricing and feature comparison",
+      "description": "Plan cards and a keyboard-scrollable semantic comparison table.",
+      "category": "Marketing",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-pricing-comparison-title\">\n  <header><p class=\"syn-eyebrow\">PLANS AND FEATURES</p><h2 id=\"syn-pricing-comparison-title\" class=\"syn-heading\">Choose what fits your team</h2>\n    <p class=\"syn-muted\">Illustrative monthly prices. Confirm final billing terms with your application.</p></header>\n  <div class=\"syn-grid\">\n    <article class=\"syn-panel\"><h3>Starter</h3><p class=\"syn-lede\">$29 <small>/ month</small></p>\n      <p>For individuals getting organized.</p><a class=\"syn-button syn-button--outline\" href=\"/checkout/starter\">Choose Starter</a></article>\n    <article class=\"syn-panel syn-surface--accent\"><h3>Team</h3><p class=\"syn-lede\">$79 <small>/ month</small></p>\n      <p>For growing teams collaborating daily.</p><a class=\"syn-button syn-button--primary\" href=\"/checkout/team\">Choose Team</a></article>\n    <article class=\"syn-panel\"><h3>Scale</h3><p class=\"syn-lede\">Custom</p>\n      <p>For organizations with broader needs.</p><a class=\"syn-button syn-button--outline\" href=\"/contact/sales\">Talk to sales</a></article>\n  </div>\n  <div class=\"syn-table-wrap\" role=\"region\" tabindex=\"0\" aria-label=\"Plan feature comparison, scroll horizontally for additional columns\">\n    <table class=\"syn-table syn-table--readable\">\n      <caption>Illustrative feature availability by plan</caption>\n      <thead><tr><th scope=\"col\">Capability</th><th scope=\"col\">Starter</th><th scope=\"col\">Team</th><th scope=\"col\">Scale</th></tr></thead>\n      <tbody>\n        <tr><th scope=\"row\">Projects</th><td>5</td><td>Unlimited</td><td>Unlimited</td></tr>\n        <tr><th scope=\"row\">Team members</th><td>1</td><td>10</td><td>Custom</td></tr>\n        <tr><th scope=\"row\">Audit history</th><td>Basic</td><td>Extended</td><td>Extended</td></tr>\n        <tr><th scope=\"row\">Support</th><td>Help center</td><td>Email</td><td>Dedicated</td></tr>\n      </tbody>\n    </table>\n  </div>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
+      "id": "auth-sign-up",
+      "title": "Account registration screen",
+      "description": "Native sign-up form and next-step guidance with real host routes.",
+      "category": "Applications",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-signup-title\">\n  <div class=\"syn-detail-layout\">\n    <div class=\"syn-detail-main syn-panel\">\n      <p class=\"syn-eyebrow\">CREATE YOUR ACCOUNT</p>\n      <h2 id=\"syn-signup-title\" class=\"syn-heading\">Start your workspace</h2>\n      <p class=\"syn-muted\">Use your work email to create an account. The server must validate identity and credentials.</p>\n      <form class=\"syn-form\" method=\"post\" action=\"/auth/register\">\n        <div class=\"syn-field\"><label class=\"syn-label\" for=\"syn-signup-name\">Full name</label>\n          <input class=\"syn-input\" id=\"syn-signup-name\" name=\"name\" autocomplete=\"name\" required></div>\n        <div class=\"syn-field\"><label class=\"syn-label\" for=\"syn-signup-email\">Work email</label>\n          <input class=\"syn-input\" id=\"syn-signup-email\" name=\"email\" type=\"email\" autocomplete=\"email\" required></div>\n        <div class=\"syn-field\"><label class=\"syn-label\" for=\"syn-signup-password\">Password</label>\n          <input class=\"syn-input\" id=\"syn-signup-password\" name=\"password\" type=\"password\" autocomplete=\"new-password\" minlength=\"12\" aria-describedby=\"syn-signup-password-help\" required>\n          <p id=\"syn-signup-password-help\" class=\"syn-help\">Use at least 12 characters. Configure rate limiting, secure sessions and CSRF protection server-side.</p></div>\n        <div class=\"syn-field\"><label><input type=\"checkbox\" name=\"accept_terms\" required> I agree to the <a href=\"/terms\">Terms</a> and <a href=\"/privacy\">Privacy Policy</a>.</label></div>\n        <button class=\"syn-button syn-button--primary\" type=\"submit\">Create account</button>\n      </form>\n      <p>Already have an account? <a href=\"/auth/sign-in\">Sign in</a></p>\n    </div>\n    <section class=\"syn-detail-aside syn-panel\" aria-labelledby=\"syn-signup-next-title\">\n      <h3 id=\"syn-signup-next-title\">What comes next</h3>\n      <ol><li>Verify your email.</li><li>Name your workspace.</li><li>Invite teammates when ready.</li></ol>\n      <p><a href=\"/auth/verify\">Email verification help</a></p>\n    </section>\n  </div>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
+      "id": "resource-crud",
+      "title": "Resource create and browse screen",
+      "description": "Filterable records, detail navigation and native create form.",
+      "category": "Applications",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-resource-crud-title\">\n  <header class=\"syn-page-header\">\n    <div><h2 id=\"syn-resource-crud-title\" class=\"syn-heading\">Manage resources</h2><p class=\"syn-muted\">Search, inspect and create records with native links and forms.</p></div>\n    <a class=\"syn-button syn-button--outline\" href=\"/resources/export\">Export records</a>\n  </header>\n  <div class=\"syn-detail-layout\">\n    <div class=\"syn-detail-main\">\n      <form class=\"syn-filter-bar\" method=\"get\" action=\"/resources\">\n        <div class=\"syn-filter-field syn-filter-field--query\"><label class=\"syn-label\" for=\"syn-resources-query\">Search resources</label>\n          <input id=\"syn-resources-query\" class=\"syn-input\" name=\"q\" type=\"search\" placeholder=\"Name or owner\"></div>\n        <div class=\"syn-filter-actions\"><button class=\"syn-button syn-button--outline\" type=\"submit\">Filter</button></div>\n      </form>\n      <div class=\"syn-table-wrap\" role=\"region\" tabindex=\"0\" aria-label=\"Resource records, scroll horizontally for more columns\">\n        <table class=\"syn-table syn-table--readable\"><caption>Illustrative resource inventory</caption>\n          <thead><tr><th scope=\"col\">Name</th><th scope=\"col\">Owner</th><th scope=\"col\">State</th><th scope=\"col\">Action</th></tr></thead>\n          <tbody><tr><th scope=\"row\">Campaign brief</th><td>Creative</td><td>Active</td><td><a href=\"/resources/brief\">Details</a></td></tr>\n            <tr><th scope=\"row\">Release plan</th><td>Engineering</td><td>Draft</td><td><a href=\"/resources/release-plan\">Details</a></td></tr></tbody>\n        </table>\n      </div>\n      <p class=\"syn-caption\">Editing and deletion are intentionally delegated to host-owned record routes.</p>\n    </div>\n    <section class=\"syn-detail-aside syn-panel\" aria-labelledby=\"syn-resource-add-title\">\n      <h3 id=\"syn-resource-add-title\">Create a resource</h3>\n      <form class=\"syn-form\" method=\"post\" action=\"/resources\">\n        <div class=\"syn-field\"><label class=\"syn-label\" for=\"syn-resource-name\">Name</label>\n          <input class=\"syn-input\" id=\"syn-resource-name\" name=\"name\" required maxlength=\"120\"></div>\n        <div class=\"syn-field\"><label class=\"syn-label\" for=\"syn-resource-type\">Type</label>\n          <select class=\"syn-input\" id=\"syn-resource-type\" name=\"type\" required>\n            <option value=\"document\">Document</option><option value=\"task\">Task</option><option value=\"asset\">Asset</option></select></div>\n        <button class=\"syn-button syn-button--primary\" type=\"submit\">Create resource</button>\n      </form>\n      <p class=\"syn-caption\">The backend owns validation, persistence, CSRF protection and permissions.</p>\n    </section>\n  </div>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
+      "id": "organization-members",
+      "title": "Team and invitation management",
+      "description": "Workspace roster, role information and a native invite form.",
+      "category": "Applications",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-org-members-title\">\n  <header class=\"syn-page-header\">\n    <div><p class=\"syn-eyebrow\">WORKSPACE SETTINGS</p><h2 id=\"syn-org-members-title\" class=\"syn-heading\">People and permissions</h2>\n      <p class=\"syn-muted\">Make membership and role assignments easy to inspect.</p></div>\n    <a class=\"syn-button syn-button--outline\" href=\"/settings/roles\">Role definitions</a>\n  </header>\n  <div class=\"syn-detail-layout\">\n    <div class=\"syn-detail-main\">\n      <div class=\"syn-table-wrap\" role=\"region\" tabindex=\"0\" aria-label=\"Workspace members, scroll for additional columns\">\n        <table class=\"syn-table syn-table--readable\"><caption>Example workspace membership</caption>\n          <thead><tr><th scope=\"col\">Member</th><th scope=\"col\">Email</th><th scope=\"col\">Role</th><th scope=\"col\">Status</th></tr></thead>\n          <tbody><tr><th scope=\"row\">Alex Morgan</th><td>alex@example.invalid</td><td>Owner</td><td>Active</td></tr>\n            <tr><th scope=\"row\">Jordan Lee</th><td>jordan@example.invalid</td><td>Editor</td><td>Invited</td></tr></tbody>\n        </table>\n      </div>\n      <p><a href=\"/settings/invitations\">Review pending invitations</a></p>\n    </div>\n    <section class=\"syn-detail-aside syn-panel\" aria-labelledby=\"syn-org-invite-title\">\n      <h3 id=\"syn-org-invite-title\">Invite someone</h3>\n      <form class=\"syn-form\" method=\"post\" action=\"/settings/invitations\">\n        <div class=\"syn-field\"><label class=\"syn-label\" for=\"syn-invite-email\">Email address</label>\n          <input id=\"syn-invite-email\" class=\"syn-input\" name=\"email\" type=\"email\" autocomplete=\"email\" required></div>\n        <div class=\"syn-field\"><label class=\"syn-label\" for=\"syn-invite-role\">Role</label>\n          <select class=\"syn-input\" id=\"syn-invite-role\" name=\"role\" required>\n            <option value=\"viewer\">Viewer</option><option value=\"editor\">Editor</option></select></div>\n        <button class=\"syn-button syn-button--primary\" type=\"submit\">Send invitation</button>\n      </form>\n      <p class=\"syn-caption\">Your backend must authorize invitations, enforce role limits and protect mutations against CSRF.</p>\n    </section>\n  </div>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
+      "id": "billing-usage",
+      "title": "Subscription and usage overview",
+      "description": "Plan details, native metering and invoice history.",
+      "category": "Applications",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-billing-usage-title\">\n  <header class=\"syn-page-header\">\n    <div><p class=\"syn-eyebrow\">WORKSPACE BILLING</p><h2 id=\"syn-billing-usage-title\" class=\"syn-heading\">Subscription and usage</h2>\n      <p class=\"syn-muted\">Illustrative billing data; payment operations belong to your billing provider and backend.</p></div>\n    <a class=\"syn-button syn-button--outline\" href=\"/billing/payment-method\">Payment methods</a>\n  </header>\n  <div class=\"syn-grid\">\n    <article class=\"syn-panel\" aria-labelledby=\"syn-usage-plan-title\">\n      <h3 id=\"syn-usage-plan-title\">Team plan</h3><p class=\"syn-lede\">$79 / month</p>\n      <p>Next scheduled renewal: <time datetime=\"2027-01-01\">January 1, 2027</time> (sample)</p>\n      <a href=\"/billing/plans\">Review plans</a>\n    </article>\n    <article class=\"syn-panel\" aria-labelledby=\"syn-usage-meter-title\">\n      <h3 id=\"syn-usage-meter-title\">Monthly quota</h3>\n      <p><label for=\"syn-usage-meter\">68 of 100 credits used</label></p>\n      <meter id=\"syn-usage-meter\" min=\"0\" max=\"100\" value=\"68\">68%</meter>\n      <p class=\"syn-caption\">Resets January 1 (example). The server calculates the authoritative usage.</p>\n      <a href=\"/billing/usage\">View usage details</a>\n    </article>\n  </div>\n  <div class=\"syn-table-wrap\" role=\"region\" tabindex=\"0\" aria-label=\"Billing invoices, scroll horizontally for more columns\">\n    <table class=\"syn-table syn-table--readable\"><caption>Example invoice history</caption>\n      <thead><tr><th scope=\"col\">Invoice</th><th scope=\"col\">Date</th><th scope=\"col\">Amount</th><th scope=\"col\">Status</th></tr></thead>\n      <tbody><tr><th scope=\"row\"><a href=\"/billing/invoices/inv-104\">INV-104</a></th><td><time datetime=\"2026-11-01\">Nov 1, 2026</time></td><td>$79</td><td>Paid</td></tr>\n        <tr><th scope=\"row\"><a href=\"/billing/invoices/inv-103\">INV-103</a></th><td><time datetime=\"2026-10-01\">Oct 1, 2026</time></td><td>$79</td><td>Paid</td></tr></tbody>\n    </table>\n  </div>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
+      "id": "integration-connection",
+      "title": "Integration connection states",
+      "description": "Connection directory with connected, disconnected and error examples.",
+      "category": "Applications",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-integrations-connect-title\">\n  <header class=\"syn-page-header\">\n    <div><h2 id=\"syn-integrations-connect-title\" class=\"syn-heading\">Connect your tools</h2>\n      <p class=\"syn-muted\">Connections, permissions and synchronization must be implemented by the host application.</p></div>\n    <a class=\"syn-button syn-button--outline\" href=\"/integrations/logs\">Connection events</a>\n  </header>\n  <div class=\"syn-grid\">\n    <article class=\"syn-panel\" aria-labelledby=\"syn-integration-calendar-title\">\n      <header class=\"syn-app-card-header\"><h3 id=\"syn-integration-calendar-title\">Calendar</h3><span class=\"syn-badge\">Not connected (sample)</span></header>\n      <p>Synchronize project milestones with a calendar provider.</p>\n      <form method=\"post\" action=\"/integrations/calendar/connect\">\n        <button type=\"submit\" class=\"syn-button syn-button--primary\">Connect calendar</button>\n      </form>\n    </article>\n    <article class=\"syn-panel\" aria-labelledby=\"syn-integration-storage-title\">\n      <header class=\"syn-app-card-header\"><h3 id=\"syn-integration-storage-title\">File storage</h3><span class=\"syn-badge\">Connected (sample)</span></header>\n      <p>Organize project files beside relevant records.</p>\n      <a class=\"syn-button syn-button--outline\" href=\"/integrations/storage\">Manage connection</a>\n    </article>\n    <article class=\"syn-panel\" aria-labelledby=\"syn-integration-crm-title\">\n      <header class=\"syn-app-card-header\"><h3 id=\"syn-integration-crm-title\">CRM</h3><span class=\"syn-badge\">Action required (sample)</span></header>\n      <p>Review the connection scope and any last synchronization failure.</p>\n      <a class=\"syn-button syn-button--outline\" href=\"/integrations/crm\">Review status</a>\n    </article>\n  </div>\n  <p class=\"syn-caption\">Consent screens, redirects, tokens and real statuses are not implemented by this HTML snippet.</p>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
+      "id": "developer-api-settings",
+      "title": "API key and webhook settings",
+      "description": "Masked API-key metadata, secure-endpoint form and documentation routes.",
+      "category": "Applications",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-developer-settings-title\">\n  <header class=\"syn-page-header\">\n    <div><p class=\"syn-eyebrow\">DEVELOPER WORKSPACE</p><h2 id=\"syn-developer-settings-title\" class=\"syn-heading\">API keys and webhooks</h2>\n      <p class=\"syn-muted\">Manage integration credentials and event delivery from your application.</p></div>\n    <a class=\"syn-button syn-button--outline\" href=\"/docs/api\">API documentation</a>\n  </header>\n  <div class=\"syn-detail-layout\">\n    <div class=\"syn-detail-main syn-panel\">\n      <h3>API keys</h3><p class=\"syn-caption\">Masked example identifiers only. Never render live secret values in this table.</p>\n      <div class=\"syn-table-wrap\" role=\"region\" tabindex=\"0\" aria-label=\"API key metadata, scroll for additional columns\">\n        <table class=\"syn-table syn-table--readable\"><caption>Example API key metadata</caption>\n          <thead><tr><th scope=\"col\">Name</th><th scope=\"col\">Identifier</th><th scope=\"col\">Scope</th><th scope=\"col\">Created</th></tr></thead>\n          <tbody><tr><th scope=\"row\">Production sync</th><td><code>key_…7c2a</code></td><td>Read only</td>\n            <td><time datetime=\"2026-10-15\">Oct 15, 2026</time></td></tr></tbody>\n        </table>\n      </div>\n      <p><a class=\"syn-button syn-button--primary\" href=\"/settings/api-keys/new\">Create API key</a></p>\n    </div>\n    <section class=\"syn-detail-aside syn-panel\" aria-labelledby=\"syn-webhook-new-title\">\n      <h3 id=\"syn-webhook-new-title\">New webhook endpoint</h3>\n      <form class=\"syn-form\" method=\"post\" action=\"/settings/webhooks\">\n        <div class=\"syn-field\"><label class=\"syn-label\" for=\"syn-webhook-url\">HTTPS endpoint URL</label>\n          <input class=\"syn-input\" id=\"syn-webhook-url\" name=\"url\" type=\"url\" placeholder=\"Enter an HTTPS endpoint\" pattern=\"https:&#47;&#47;.*\" required></div>\n        <div class=\"syn-field\"><label class=\"syn-label\" for=\"syn-webhook-event\">Event</label>\n          <select class=\"syn-input\" id=\"syn-webhook-event\" name=\"event\" required>\n            <option value=\"project.created\">project.created</option><option value=\"project.updated\">project.updated</option></select></div>\n        <button class=\"syn-button syn-button--primary\" type=\"submit\">Add endpoint</button>\n      </form>\n      <p class=\"syn-caption\">Implement SSRF protections, signing secrets, retries, CSRF defenses and delivery logs server-side.</p>\n      <a href=\"/settings/webhooks/deliveries\">Review delivery events</a>\n    </section>\n  </div>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
+      "id": "image-gallery",
+      "title": "Responsive image gallery",
+      "description": "Four original local illustrations in a CSS-only responsive gallery with native full-image links.",
+      "category": "Portfolio",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-gallery-heading\">\n  <p class=\"syn-eyebrow\">SELECTED IMAGES</p>\n  <h2 class=\"syn-heading\" id=\"syn-gallery-heading\">A closer look at the work</h2>\n  <p class=\"syn-muted\">Choose an image to view the full illustration. Replace these original samples with your own optimized photography.</p>\n  <div class=\"syn-image-gallery\">\n    <figure><a href=\"../assets/gallery-horizon.svg\" aria-label=\"View coastal horizon at full size\"><img src=\"../assets/gallery-horizon.svg\" alt=\"Layered coastal hills beneath a warm sunset\" width=\"960\" height=\"640\" loading=\"lazy\" decoding=\"async\"></a><figcaption>01 / Coastal horizon</figcaption></figure>\n    <figure><a href=\"../assets/gallery-architecture.svg\" aria-label=\"View architectural study at full size\"><img src=\"../assets/gallery-architecture.svg\" alt=\"Geometric arches on a sunlit modern building\" width=\"960\" height=\"640\" loading=\"lazy\" decoding=\"async\"></a><figcaption>02 / Architecture study</figcaption></figure>\n    <figure><a href=\"../assets/gallery-signal.svg\" aria-label=\"View night skyline at full size\"><img src=\"../assets/gallery-signal.svg\" alt=\"Illuminated windows in an abstract nighttime city skyline\" width=\"960\" height=\"640\" loading=\"lazy\" decoding=\"async\"></a><figcaption>03 / Night signals</figcaption></figure>\n    <figure><a href=\"../assets/gallery-botanical.svg\" aria-label=\"View botanical artwork at full size\"><img src=\"../assets/gallery-botanical.svg\" alt=\"Overlapping sage green leaves on a dark background\" width=\"960\" height=\"640\" loading=\"lazy\" decoding=\"async\"></a><figcaption>04 / Botanical study</figcaption></figure>\n  </div>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "image-story",
+      "title": "Image and story split",
+      "description": "A media-and-copy section with semantic figure, responsive image and action.",
+      "category": "Marketing",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-image-story-heading\">\n  <div class=\"syn-sidecar\">\n    <div>\n      <p class=\"syn-eyebrow\">ABOUT THE STUDIO</p>\n      <h2 class=\"syn-heading\" id=\"syn-image-story-heading\">Thoughtful design for everyday life.</h2>\n      <p class=\"syn-lede\">We pair clear structure with expressive visuals, so the finished work feels as useful as it looks.</p>\n      <p class=\"syn-muted\">Start with a narrative, show a real example, and give visitors a destination for more context.</p>\n      <a class=\"syn-button syn-button--primary\" href=\"/about\">Our approach</a>\n    </div>\n    <figure class=\"syn-media-figure\">\n      <img src=\"../assets/gallery-architecture.svg\" alt=\"Warm-toned architectural artwork with a pair of arched openings\" width=\"960\" height=\"640\" loading=\"lazy\" decoding=\"async\">\n      <figcaption>An original illustration; replace with your own project imagery.</figcaption>\n    </figure>\n  </div>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "testimonials-grid",
+      "title": "Testimonials grid",
+      "description": "Three sample quotation cards with clear demo-only attribution.",
+      "category": "Marketing",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-testimonials-heading\">\n  <p class=\"syn-eyebrow\">CUSTOMER STORIES / DEMONSTRATION</p>\n  <h2 class=\"syn-heading\" id=\"syn-testimonials-heading\">What working together can feel like</h2>\n  <p class=\"syn-muted\">Sample quotations for layout demonstration only. Use approved, verifiable customer feedback in production.</p>\n  <div class=\"syn-grid\">\n    <figure class=\"syn-panel\"><blockquote><p>“The handoff was clear and the final site was easy to maintain.”</p></blockquote><figcaption><cite>Illustrative quote A</cite> · Sample, not an endorsement</figcaption></figure>\n    <figure class=\"syn-panel\"><blockquote><p>“We could find the information we needed without extra steps.”</p></blockquote><figcaption><cite>Illustrative quote B</cite> · Sample, not an endorsement</figcaption></figure>\n    <figure class=\"syn-panel\"><blockquote><p>“Everything was documented, from the first review to launch.”</p></blockquote><figcaption><cite>Illustrative quote C</cite> · Sample, not an endorsement</figcaption></figure>\n  </div>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "milestone-timeline",
+      "title": "Company milestones timeline",
+      "description": "A chronological history using native dates and an ordered vertical sequence.",
+      "category": "Services",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-milestones-heading\">\n  <p class=\"syn-eyebrow\">OUR HISTORY / EXAMPLE DATES</p>\n  <h2 class=\"syn-heading\" id=\"syn-milestones-heading\">How the work evolved</h2>\n  <ol class=\"syn-steps syn-steps--vertical\">\n    <li class=\"syn-step\"><div><time datetime=\"2023\">2023</time><h3 class=\"syn-step-label\">Started with research</h3><p class=\"syn-step-detail\">A small team mapping practical needs and constraints.</p></div></li>\n    <li class=\"syn-step\"><div><time datetime=\"2024\">2024</time><h3 class=\"syn-step-label\">Built the first tools</h3><p class=\"syn-step-detail\">Shared design patterns and accessible front-end foundations.</p></div></li>\n    <li class=\"syn-step\"><div><time datetime=\"2025\">2025</time><h3 class=\"syn-step-label\">Expanded the practice</h3><p class=\"syn-step-detail\">More services, clearer documentation and repeatable delivery.</p></div></li>\n  </ol>\n  <p class=\"syn-caption\">Illustrative history; replace dates and claims before publishing.</p>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "event-agenda",
+      "title": "Event agenda",
+      "description": "A schedule of talks and sessions with native time elements.",
+      "category": "Services",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-agenda-heading\">\n  <p class=\"syn-eyebrow\">EVENT / EXAMPLE PROGRAM</p>\n  <h2 class=\"syn-heading\" id=\"syn-agenda-heading\">A day of ideas and practical workshops</h2>\n  <p class=\"syn-muted\">Example schedule for a fictional event; specify the actual time zone and dates when publishing.</p>\n  <ol class=\"syn-grid\">\n    <li class=\"syn-panel\"><p class=\"syn-eyebrow\"><time datetime=\"09:00\">09:00</time> – <time datetime=\"09:45\">09:45</time></p><h3>Opening session</h3><p>Introduction, context and what to expect.</p></li>\n    <li class=\"syn-panel\"><p class=\"syn-eyebrow\"><time datetime=\"10:00\">10:00</time> – <time datetime=\"11:30\">11:30</time></p><h3>Hands-on workshop</h3><p>Explore accessible interface patterns with real content.</p></li>\n    <li class=\"syn-panel\"><p class=\"syn-eyebrow\"><time datetime=\"13:00\">13:00</time> – <time datetime=\"14:00\">14:00</time></p><h3>Open questions</h3><p>Discuss practical constraints and the next steps.</p></li>\n  </ol>\n  <a class=\"syn-button syn-button--primary\" href=\"/events/register\">Event registration</a>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "company-story",
+      "title": "Company story and milestones",
+      "description": "An accessible company introduction with mission copy and an ordered story timeline.",
+      "category": "Company",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"company-story-heading\">\n  <p class=\"syn-eyebrow\">ABOUT / OUR STORY</p>\n  <div class=\"syn-sidecar\">\n    <div class=\"syn-stack\">\n      <h2 id=\"company-story-heading\" class=\"syn-heading\">Built around the work that matters.</h2>\n      <p class=\"syn-lede\">Explain why your organization exists, the people it serves, and what makes its approach distinct.</p>\n      <p class=\"syn-muted\">Replace this illustrative copy and milestones with your own verified history, mission, and values.</p>\n      <a class=\"syn-button syn-button--primary\" href=\"/about\">Meet the company</a>\n    </div>\n    <div class=\"syn-panel\">\n      <h3 class=\"syn-heading\">Our journey</h3>\n      <ol class=\"syn-stack\">\n        <li><strong>The beginning</strong><p class=\"syn-muted\">Describe the customer problem that motivated your team.</p></li>\n        <li><strong>The breakthrough</strong><p class=\"syn-muted\">Explain an actual product milestone or meaningful change.</p></li>\n        <li><strong>What comes next</strong><p class=\"syn-muted\">Share a concrete commitment to customers and partners.</p></li>\n      </ol>\n    </div>\n  </div>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "customer-reviews",
+      "title": "Customer review grid",
+      "description": "Original attributed review cards with an explicit sample-content disclosure.",
+      "category": "Marketing",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"customer-reviews-heading\">\n  <p class=\"syn-eyebrow\">CUSTOMER VOICES</p>\n  <h2 id=\"customer-reviews-heading\" class=\"syn-heading\">What customers are saying</h2>\n  <p class=\"syn-muted\">Illustrative feedback only. Replace with authentic, permission-based reviews and accurately attributed sources.</p>\n  <div class=\"syn-grid\">\n    <figure class=\"syn-panel\">\n      <blockquote><p>“The onboarding was clear, and the team knew what to do next.”</p></blockquote>\n      <figcaption class=\"syn-muted\">Illustrative review — Customer role, organization</figcaption>\n    </figure>\n    <figure class=\"syn-panel\">\n      <blockquote><p>“We have a much better view of projects and follow-ups.”</p></blockquote>\n      <figcaption class=\"syn-muted\">Illustrative review — Customer role, organization</figcaption>\n    </figure>\n    <figure class=\"syn-panel\">\n      <blockquote><p>“A simpler workflow made the handoffs easier to manage.”</p></blockquote>\n      <figcaption class=\"syn-muted\">Illustrative review — Customer role, organization</figcaption>\n    </figure>\n  </div>\n  <p><a class=\"syn-button\" href=\"/reviews\">Read customer stories</a></p>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "use-case-showcase",
+      "title": "Industry and use-case showcase",
+      "description": "Audience-specific benefits with real destination links and honest example content.",
+      "category": "Marketing",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"use-cases-heading\">\n  <p class=\"syn-eyebrow\">USE CASES / WHO IT HELPS</p>\n  <h2 id=\"use-cases-heading\" class=\"syn-heading\">One workspace, different ways of working.</h2>\n  <p class=\"syn-lede\">Show the specific problem each audience can solve without assuming one workflow fits everyone.</p>\n  <div class=\"syn-grid\">\n    <article class=\"syn-panel\">\n      <p class=\"syn-badge\">Operations</p>\n      <h3 class=\"syn-heading\">Coordinate delivery</h3>\n      <p>Keep ownership, deadlines, and project handoffs visible across the team.</p>\n      <a href=\"/solutions/operations\">Explore operations use cases</a>\n    </article>\n    <article class=\"syn-panel\">\n      <p class=\"syn-badge\">Sales</p>\n      <h3 class=\"syn-heading\">Follow the opportunity</h3>\n      <p>Organize prospects and next steps without losing account context.</p>\n      <a href=\"/solutions/sales\">Explore sales use cases</a>\n    </article>\n    <article class=\"syn-panel\">\n      <p class=\"syn-badge\">Customer teams</p>\n      <h3 class=\"syn-heading\">Serve customers clearly</h3>\n      <p>Provide a shared record of requests, decisions, and outstanding work.</p>\n      <a href=\"/solutions/customer-teams\">Explore customer team use cases</a>\n    </article>\n  </div>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "locations-hours",
+      "title": "Locations and opening hours",
+      "description": "Semantic multi-location contacts with structured hours and accessibility links.",
+      "category": "Services",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"locations-hours-heading\">\n  <p class=\"syn-eyebrow\">VISIT / CONTACT</p>\n  <h2 id=\"locations-hours-heading\" class=\"syn-heading\">Find a location near you.</h2>\n  <p class=\"syn-muted\">Example addresses and hours below are placeholders; publish only verified business details and local time zones.</p>\n  <div class=\"syn-grid\">\n    <article class=\"syn-panel\">\n      <h3 class=\"syn-heading\">Central office</h3>\n      <address>100 Example Street, Suite 100<br>Sample City, ST 00000</address>\n      <dl>\n        <dt>Monday–Friday</dt><dd>9:00 AM–5:00 PM (local time)</dd>\n        <dt>Saturday–Sunday</dt><dd>Closed</dd>\n      </dl>\n      <a href=\"/locations/central\">Directions and accessibility details</a>\n    </article>\n    <article class=\"syn-panel\">\n      <h3 class=\"syn-heading\">North office</h3>\n      <address>200 Sample Avenue<br>Sample City, ST 00000</address>\n      <dl>\n        <dt>Monday–Friday</dt><dd>10:00 AM–6:00 PM (local time)</dd>\n        <dt>Saturday–Sunday</dt><dd>Closed</dd>\n      </dl>\n      <a href=\"/locations/north\">Directions and accessibility details</a>\n    </article>\n  </div>\n  <p><a class=\"syn-button syn-button--primary\" href=\"/locations\">View all locations</a></p>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "careers-listings",
+      "title": "Careers and open positions",
+      "description": "Readable role summaries with clear application routes and example-data disclosure.",
+      "category": "Company",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"careers-heading\">\n  <p class=\"syn-eyebrow\">CAREERS / OPEN ROLES</p>\n  <h2 id=\"careers-heading\" class=\"syn-heading\">Do meaningful work with us.</h2>\n  <p class=\"syn-muted\">Illustrative roles only. Replace with actual openings, location or remote policy, and transparent employment details.</p>\n  <ul class=\"syn-stack\">\n    <li class=\"syn-panel\">\n      <div class=\"syn-sidecar\">\n        <div><h3 class=\"syn-heading\">Product designer</h3><p class=\"syn-muted\">Design · Remote eligible · Full-time</p></div>\n        <a class=\"syn-button\" href=\"/careers/product-designer\">View role details</a>\n      </div>\n    </li>\n    <li class=\"syn-panel\">\n      <div class=\"syn-sidecar\">\n        <div><h3 class=\"syn-heading\">Customer success specialist</h3><p class=\"syn-muted\">Customer success · Hybrid · Full-time</p></div>\n        <a class=\"syn-button\" href=\"/careers/customer-success-specialist\">View role details</a>\n      </div>\n    </li>\n    <li class=\"syn-panel\">\n      <div class=\"syn-sidecar\">\n        <div><h3 class=\"syn-heading\">Software engineer</h3><p class=\"syn-muted\">Engineering · Remote eligible · Full-time</p></div>\n        <a class=\"syn-button\" href=\"/careers/software-engineer\">View role details</a>\n      </div>\n    </li>\n  </ul>\n  <p><a href=\"/careers\">Browse all open positions</a></p>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "feature-disclosures",
+      "title": "Native feature switcher",
+      "description": "Exclusive browser-native disclosures for feature storytelling without a script.",
+      "category": "Marketing",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"feature-disclosures-heading\">\n  <p class=\"syn-eyebrow\">PRODUCT / CAPABILITIES</p>\n  <h2 id=\"feature-disclosures-heading\" class=\"syn-heading\">Explore what each feature does.</h2>\n  <p class=\"syn-muted\">Native, exclusive disclosures offer keyboard-accessible content switching without requiring JavaScript. This is an accordion, not an ARIA tabs widget.</p>\n  <div class=\"syn-stack\">\n    <details class=\"syn-details syn-panel\" name=\"syntyr-features\" open>\n      <summary><strong>Plan with clarity</strong></summary>\n      <p>Review scope, owners, and dependencies in one place before work begins.</p>\n      <p><a href=\"/features/planning\">Explore planning</a></p>\n    </details>\n    <details class=\"syn-details syn-panel\" name=\"syntyr-features\">\n      <summary><strong>Track progress</strong></summary>\n      <p>See what has been completed and what still requires attention.</p>\n      <p><a href=\"/features/progress\">Explore progress tracking</a></p>\n    </details>\n    <details class=\"syn-details syn-panel\" name=\"syntyr-features\">\n      <summary><strong>Share the outcome</strong></summary>\n      <p>Capture decisions and provide updates to the people who need them.</p>\n      <p><a href=\"/features/reporting\">Explore reporting</a></p>\n    </details>\n  </div>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "hero-photo",
+      "title": "Photographic hero section",
+      "description": "An image-led introduction with a meaningful action and figure caption.",
+      "category": "Marketing",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-photo-hero\">\n  <div class=\"syn-sidecar\">\n    <div>\n      <p class=\"syn-eyebrow\">A PLACE TO EXPLORE</p>\n      <h2 class=\"syn-heading\" id=\"syn-photo-hero\">A visual introduction worth exploring.</h2>\n      <p class=\"syn-lede\">Pair your main message with real photography or product imagery.</p>\n      <p class=\"syn-muted\">Responsive, semantic, and ready for your own story.</p>\n      <a class=\"syn-button syn-button--primary\" href=\"/explore\">Explore the collection</a>\n    </div>\n    <figure class=\"syn-media-figure\">\n      <img src=\"../assets/gallery-horizon.svg\" alt=\"Original illustration of layered coastal hills at sunset\" width=\"960\" height=\"640\" loading=\"lazy\" decoding=\"async\">\n      <figcaption>Example image; replace with your own licensed photography.</figcaption>\n    </figure>\n  </div>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "before-after",
+      "title": "Before and after image comparison",
+      "description": "Two semantic, responsive photos with accessible full-image links; no scripted comparison slider.",
+      "category": "Portfolio",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-compare-images\">\n  <p class=\"syn-eyebrow\">PROJECT COMPARISON</p>\n  <h2 class=\"syn-heading\" id=\"syn-compare-images\">See the change side by side.</h2>\n  <p class=\"syn-muted\">Use two real photos to show a process or transformation. These unrelated illustrations are layout placeholders, not a factual before-and-after claim.</p>\n  <div class=\"syn-image-gallery\">\n    <figure><a href=\"../assets/gallery-architecture.svg\" aria-label=\"View example before artwork\"><img src=\"../assets/gallery-architecture.svg\" alt=\"Warm building arches in an abstract illustration\" width=\"960\" height=\"640\" loading=\"lazy\" decoding=\"async\"></a><figcaption>Before / illustrative artwork</figcaption></figure>\n    <figure><a href=\"../assets/gallery-botanical.svg\" aria-label=\"View example after artwork\"><img src=\"../assets/gallery-botanical.svg\" alt=\"Abstract study of overlapping green leaves\" width=\"960\" height=\"640\" loading=\"lazy\" decoding=\"async\"></a><figcaption>After / illustrative artwork</figcaption></figure>\n  </div>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "resource-downloads",
+      "title": "Free resources and downloads",
+      "description": "Native download links to reusable illustrations in a flexible resource grid.",
+      "category": "Publishing",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-free-resources\">\n  <p class=\"syn-eyebrow\">FREE DOWNLOADS</p>\n  <h2 class=\"syn-heading\" id=\"syn-free-resources\">Useful resources to take with you.</h2>\n  <p class=\"syn-muted\">Example downloadable SVG artwork; replace these with your own guides, reports, templates or product downloads.</p>\n  <ul class=\"syn-grid\">\n    <li class=\"syn-panel\"><h3>Coastal illustration</h3><p>Original SVG artwork for layouts and prototypes.</p><a class=\"syn-button\" href=\"../assets/gallery-horizon.svg\" download=\"coastal-illustration.svg\">Download SVG</a></li>\n    <li class=\"syn-panel\"><h3>Architectural illustration</h3><p>A simple geometric artwork for a portfolio or landing page.</p><a class=\"syn-button\" href=\"../assets/gallery-architecture.svg\" download=\"architectural-illustration.svg\">Download SVG</a></li>\n    <li class=\"syn-panel\"><h3>Botanical illustration</h3><p>Lightweight visual art for editorial content.</p><a class=\"syn-button\" href=\"../assets/gallery-botanical.svg\" download=\"botanical-illustration.svg\">Download SVG</a></li>\n  </ul>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "press-highlights",
+      "title": "News and press highlights",
+      "description": "A dated editorial summary grid with descriptive story destinations.",
+      "category": "Marketing",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-press-highlights\">\n  <p class=\"syn-eyebrow\">FROM THE JOURNAL / EXAMPLES</p>\n  <h2 class=\"syn-heading\" id=\"syn-press-highlights\">Recent stories and announcements</h2>\n  <p class=\"syn-muted\">These are fictional editorial examples, not actual press mentions or endorsements.</p>\n  <div class=\"syn-grid\">\n    <article class=\"syn-panel\"><p class=\"syn-caption\"><time datetime=\"2026-09-15\">September 15, 2026</time></p><h3>Why readable layouts matter</h3><p>Practical notes on clarity, hierarchy and useful content.</p><a href=\"/news/layout-clarity\">Read sample story</a></article>\n    <article class=\"syn-panel\"><p class=\"syn-caption\"><time datetime=\"2026-10-02\">October 2, 2026</time></p><h3>Building better resource pages</h3><p>Make helpful information easy to discover and keep current.</p><a href=\"/news/resource-pages\">Read sample story</a></article>\n    <article class=\"syn-panel\"><p class=\"syn-caption\"><time datetime=\"2026-10-23\">October 23, 2026</time></p><h3>Creating an accessible launch</h3><p>Use native controls, tested navigation and clear feedback.</p><a href=\"/news/accessible-launch\">Read sample story</a></article>\n  </div>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "social-links",
+      "title": "Community and social links",
+      "description": "A semantic link directory for communities, updates and contact channels.",
+      "category": "Navigation",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-social-links\">\n  <p class=\"syn-eyebrow\">STAY CONNECTED</p>\n  <h2 class=\"syn-heading\" id=\"syn-social-links\">Find the right place to connect.</h2>\n  <p class=\"syn-muted\">Example destinations: replace these routes with your organization's actual public profiles.</p>\n  <nav aria-label=\"Example community destinations\">\n    <ul class=\"syn-grid\">\n      <li class=\"syn-panel\"><h3>Community</h3><p>Questions, conversation and shared ideas.</p><a href=\"/community\">Visit community</a></li>\n      <li class=\"syn-panel\"><h3>Updates</h3><p>Announcements and product notes.</p><a href=\"/updates\">Read updates</a></li>\n      <li class=\"syn-panel\"><h3>Contact</h3><p>Reach our team directly.</p><a href=\"/contact\">Get in touch</a></li>\n    </ul>\n  </nav>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "product-specifications",
+      "title": "Product specifications table",
+      "description": "Accessible product details in a named, keyboard-scrollable semantic table.",
+      "category": "Commerce",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-specs-heading\">\n  <p class=\"syn-eyebrow\">PRODUCT DETAILS / EXAMPLE</p>\n  <h2 class=\"syn-heading\" id=\"syn-specs-heading\">Specifications at a glance</h2>\n  <p class=\"syn-muted\">Illustrative specifications for a fictional desk notebook. Replace with verified product data.</p>\n  <div class=\"syn-table-wrap\" role=\"region\" tabindex=\"0\" aria-label=\"Example notebook specifications\">\n    <table class=\"syn-table\">\n      <caption>Example notebook specification table</caption>\n      <tbody>\n        <tr><th scope=\"row\">Size</th><td>A5 (148 × 210 mm)</td></tr>\n        <tr><th scope=\"row\">Pages</th><td>128</td></tr>\n        <tr><th scope=\"row\">Paper</th><td>Uncoated, blank</td></tr>\n        <tr><th scope=\"row\">Binding</th><td>Stitched</td></tr>\n      </tbody>\n    </table>\n  </div>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    }
+  ]
+}

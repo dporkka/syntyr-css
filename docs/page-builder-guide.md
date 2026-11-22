@@ -5,15 +5,40 @@ The [visual builder](page-builder.html) is a local-first, optional editing tool 
 ## What works
 
 - Add hero, feature-card, split-text, testimonial, FAQ, CTA, site header and footer sections from the palette.
+- Browse and search **85 copy-owned website/SaaS sections** from the generated canonical `metadata/section-composer.v1.json` library, filter by category, and edit their textual content and safe links. The library tracks the Blocks source manifest and snippets, so it does not maintain a second hand-edited section inventory.
 - Search and insert **gallery components** from the generated `metadata/component-gallery.v1.json` contract (16 curated examples in the current source candidate). Edit their visible text, placeholders and safe links; examples carry the CSS modules needed and can be repeated without duplicate input IDs.
 - The gallery is loaded from the same origin as the builder. If the JSON is missing, the original eight semantic page sections remain available; no external API or build service is required.
-- Select sections in the outline or preview, edit their text and links, reorder with buttons or drag-and-drop, and remove sections. Keyboard focus remains in the outline during reordering; native FAQ disclosures open in the preview.
+- Select sections in the outline or preview, edit text and safe links, reorder with keyboard-accessible **Up, Down, First, Last** buttons or drag-and-drop; duplicate or remove sections. Choose **Add after selected block** when inserting a new section in the middle of a page. Keyboard focus remains in the outline during reordering; native FAQ disclosures open in the preview.
 - Switch among themes available to the unreleased source candidate and preview true 1200px desktop, 760px tablet, and 390px mobile iframe viewports. Narrow canvases scroll rather than silently scaling the device viewport.
 - Undo and redo editing changes (limited in-memory history).
-- Export an HTML file and matching Syntyr CSS as separate files and host them alongside each other.
+- Download a **static website ZIP** with `index.html`, the matching `syntyr.all.css`, any self-hosted SVG image assets, the MIT license and a brief publishing README. The ZIP contains **no JavaScript**. Standalone HTML/CSS downloads remain available.
 - Download a JSON project and reopen that JSON to restore editability.
 
 The builder runs entirely in your browser. It does not upload projects or require a server account. Save the JSON file before closing the page: unsaved edits are not persisted.
+
+## Static-first export and assets
+
+The optional browser-based builder uses JavaScript **only as an authoring tool**.
+Its static ZIP output contains ordinary HTML/CSS and required local images,
+without a Syntyr script, framework or build step. Native `details` disclosures,
+image links, download links and visual layouts work without client JavaScript.
+Use the ZIP when composing image sections so assets stay alongside `index.html`.
+The standalone HTML download is only complete if you also supply the matching
+stylesheet and referenced images. Asset paths in the exported site are relative
+to the page, not to Syntyr's docs.
+
+For the generated section library, the manifest contains only reviewed,
+copy-owned canonical HTML. Imported projects contain **no executable HTML
+templates**; text and links are escaped and restricted to declared editable
+fields. Category search and section selection are optional editor behaviors,
+not dependencies in exported markup.
+
+Static exports deliberately **do not implement** authentication, commerce,
+newsletter subscriptions, server forms, real search/filter results or
+dynamic data. Those blocks are *presentational* and their form actions/routes
+must be wired to your own backend. Replace fictional examples and claims.
+Save the project JSON separately to continue editing; ZIP HTML is not a
+lossless project source file.
 
 ## Framework-independent output
 
@@ -46,12 +71,14 @@ This experimental tool is deliberately separate from the MIT CSS core. It uses o
 
 Run from repository root:
 
-    node --test tests/page_builder_model.test.mjs tests/page_builder_gallery.test.mjs
+    node --test tests/page_builder_model.test.mjs tests/page_builder_gallery.test.mjs tests/page_builder_sections.test.mjs tests/page_builder_zip.test.mjs
+    python3 scripts/build_section_composer.py --check
     python3 -m unittest tests.test_cloudflare_site -v
     python3 scripts/build_cloudflare_site.py --check
 
 For the optional browser smoke test:
 
     python3 tests/page_builder_browser.py
+    python3 tests/page_builder_sections_browser.py
 
 The browser smoke test requires Playwright and a local browser installation. Validate keyboard access, small screens, malicious imported JSON, and download/export before treating this as a stable product.

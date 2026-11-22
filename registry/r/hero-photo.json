@@ -1,0 +1,42 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "hero-photo",
+  "type": "registry:item",
+  "title": "Photographic hero section",
+  "description": "An image-led introduction with a meaningful action and figure caption.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://syntyr-css.pages.dev/registry/r/core.json"
+  ],
+  "files": [
+    {
+      "path": "blocks/snippets/hero-photo.html",
+      "type": "registry:file",
+      "target": "~/syntyr/blocks/hero-photo.html",
+      "content": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-photo-hero\">\n  <div class=\"syn-sidecar\">\n    <div>\n      <p class=\"syn-eyebrow\">A PLACE TO EXPLORE</p>\n      <h2 class=\"syn-heading\" id=\"syn-photo-hero\">A visual introduction worth exploring.</h2>\n      <p class=\"syn-lede\">Pair your main message with real photography or product imagery.</p>\n      <p class=\"syn-muted\">Responsive, semantic, and ready for your own story.</p>\n      <a class=\"syn-button syn-button--primary\" href=\"/explore\">Explore the collection</a>\n    </div>\n    <figure class=\"syn-media-figure\">\n      <img src=\"../assets/gallery-horizon.svg\" alt=\"Original illustration of layered coastal hills at sunset\" width=\"960\" height=\"640\" loading=\"lazy\" decoding=\"async\">\n      <figcaption>Example image; replace with your own licensed photography.</figcaption>\n    </figure>\n  </div>\n</section>\n"
+    },
+    {
+      "path": "assets/gallery-horizon.svg",
+      "type": "registry:file",
+      "target": "~/syntyr/assets/gallery-horizon.svg",
+      "content": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 960 640\" role=\"img\" aria-label=\"A coastal horizon with layered hills at dusk\"><defs><linearGradient id=\"sky\" x2=\"0\" y2=\"1\"><stop stop-color=\"#14283a\"/><stop offset=\"1\" stop-color=\"#f2a66a\"/></linearGradient></defs><rect width=\"960\" height=\"640\" fill=\"url(#sky)\"/><circle cx=\"730\" cy=\"135\" r=\"84\" fill=\"#f2a66a\"/><path d=\"M0 380 Q190 210 360 375 T960 320V640H0Z\" fill=\"#397187\"/><path d=\"M0 470 Q250 355 440 460 T960 410V640H0Z\" fill=\"#1b4258\"/><path d=\"M0 552 Q200 465 430 545 T960 475V640H0Z\" fill=\"#102c40\"/><path d=\"M0 38h960M0 602h960\" stroke=\"#6cbcc6\" stroke-opacity=\".28\" stroke-width=\"2\"/></svg>\n"
+    },
+    {
+      "path": "LICENSE",
+      "type": "registry:file",
+      "target": "~/syntyr/LICENSE",
+      "content": "MIT License\n\nCopyright (c) 2026 Syntyr CSS contributors\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n"
+    }
+  ],
+  "meta": {
+    "syntyrVersion": "0.3.0-alpha.5",
+    "source": "MIT source candidate",
+    "runtimeJavaScript": false,
+    "fileDigests": {
+      "~/syntyr/blocks/hero-photo.html": "83bfddbe583b5b46a683b53f5ec8601a23d72817ddceb5552ff19df22be3a17d",
+      "~/syntyr/assets/gallery-horizon.svg": "37627b59fae7e8eba58b6cf50e850b9898aef1ea17b2361387d6bd0b9a3b06a3",
+      "~/syntyr/LICENSE": "42f56369ac06362dbfe433d2d50b178bf74c369a55ea22337ab40fd9433521bf"
+    }
+  },
+  "docs": "Experimental source-candidate asset. Review exact version, HTML routes, keyboard behavior and integration before production use."
+}

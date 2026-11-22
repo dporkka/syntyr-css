@@ -69,7 +69,9 @@ const DEFINITIONS = {
 export const BLOCK_TYPES = Object.freeze(Object.keys(DEFINITIONS));
 export const BLOCK_DEFINITIONS = Object.freeze(DEFINITIONS);
 const GALLERY_PREFIX = "gallery:";
+const SECTION_PREFIX = "section:";
 let GALLERY_DEFINITIONS = new Map();
+let SECTION_DEFINITIONS = new Map();
 const MAX_BLOCKS = 50;
 const MAX_FIELD = 5000;
 // 50 blocks x at most seven 5,000-code-unit fields fit even when JSON escaping
@@ -86,8 +88,10 @@ function escapeHtml(value) {
   return String(value).replace(/&/g, "&amp;").replace(/</g, "&lt;")
     .replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
 }
-function safeHref(value) {
+function safeHref(value, allowedAssets = []) {
   const href = value.trim();
+  const asset = /^(?:\.\.\/)?assets\/([a-z0-9-]+\.svg)$/.exec(href);
+  if (asset && allowedAssets.includes(asset[1])) return "../assets/" + asset[1];
   if (/^#[a-zA-Z][a-zA-Z0-9_-]*$/.test(href)) return href;
   if (/^\/(?!\/)[a-zA-Z0-9_./#?&=%+-]*$/.test(href)) return href;
   if (/^https:\/\/[a-zA-Z0-9.-]+(?::[0-9]+)?(?:[/?#][^\s"'<>]*)?$/i.test(href)) return href;
@@ -159,10 +163,17 @@ function buildGalleryDefinition(entry) {
     }
   }
   if (!Object.keys(fields).length) throw new Error("Gallery example has no editable content");
+  // Only explicitly reviewed local SVG assets are exportable; user-project
+  // JSON cannot add asset paths or untrusted template markup.
+  const assetNames = [...new Set([...entry.html.matchAll(
+    /(?:src|href)="\.\.\/assets\/([a-z0-9-]+\.svg)"/g
+  )].map(match => match[1]))];
+  if (assetNames.some(name => !/^gallery-[a-z0-9-]+\.svg$/.test(name) && name !== "syntyr-mark.svg"))
+    throw new Error("Unexpected gallery asset");
   return {
     label: entry.title, description: entry.description,
     requiredStylesheets: [...entry.required_stylesheets],
-    fields, fieldKinds, chunks
+    fields, fieldKinds, chunks, assetNames
   };
 }
 
@@ -187,8 +198,33 @@ export function galleryBlockTypes() {
   return [...GALLERY_DEFINITIONS.keys()];
 }
 
+export function registerSectionManifest(manifest) {
+  if (!plainObject(manifest) || manifest.schema_version !== 1 ||
+      typeof manifest.source_version !== "string" ||
+      !Array.isArray(manifest.sections) || !manifest.sections.length ||
+      manifest.sections.length > 150)
+    throw new Error("Unsupported section manifest schema");
+  const next = new Map();
+  for (const entry of manifest.sections) {
+    if (typeof entry.category !== "string" ||
+        !/^[A-Za-z][A-Za-z ]{1,40}$/.test(entry.category))
+      throw new Error("Invalid section category");
+    const def = buildGalleryDefinition(entry);
+    const type = SECTION_PREFIX + entry.id;
+    if (next.has(type)) throw new Error("Duplicate section");
+    next.set(type, {...def, category: entry.category});
+  }
+  SECTION_DEFINITIONS = next;
+  return next.size;
+}
+
+export function sectionBlockTypes() {
+  return [...SECTION_DEFINITIONS.keys()];
+}
+
 export function getBlockDefinition(type) {
-  return own(DEFINITIONS, type) ? DEFINITIONS[type] : GALLERY_DEFINITIONS.get(type);
+  return own(DEFINITIONS, type) ? DEFINITIONS[type] :
+    (GALLERY_DEFINITIONS.get(type) || SECTION_DEFINITIONS.get(type));
 }
 
 function scopeGalleryIds(html, blockId) {
@@ -210,12 +246,22 @@ function scopeGalleryIds(html, blockId) {
     }
   ));
 }
-function renderGalleryBlock(block, def) {
-  const html = def.chunks.map(part => {
+function renderGalleryBlock(block, def, assetPrefix) {
+  let html = def.chunks.map(part => {
     if (typeof part === "string") return part;
     const value = block.props[part.field];
-    return escapeHtml(part.kind === "href" ? safeHref(value) : value);
+    return escapeHtml(part.kind === "href" ? safeHref(value, def.assetNames) : value);
   }).join("");
+  // Canonical snippets use ../assets from docs/blocks.html, while exported
+  // standalone pages keep all images alongside index.html in assets/.
+  // Only known first-party SVGs are rewritten, never arbitrary user URLs.
+  html = html.replace(/(\s(?:href|src))="\.\.\/assets\/([a-z0-9-]+\.svg)"/g,
+    (match, attribute, name) => def.assetNames.includes(name)
+      ? attribute + '="' + assetPrefix + name + '"' : match);
+  // Every copied snippet's Studio theme is a preview default, not an override
+  // of the composer-selected theme.
+  if (block.type.startsWith(SECTION_PREFIX))
+    html = html.replace(/\sdata-syn-theme="studio"/g, "");
   return '<section class="syn-region" data-syntyr-block-id="' + escapeHtml(block.id) +
     '" aria-label="' + escapeHtml(def.label) + '">' +
     scopeGalleryIds(html, block.id) + "</section>";
@@ -236,7 +282,7 @@ function paragraph(value) {
   return '<p class="syn-muted">' + escapeHtml(value) + "</p>";
 }
 
-export function createBlock(type, id = String(type).replace(/^gallery:/, "").slice(0, 42) + "-1") {
+export function createBlock(type, id = String(type).replace(/^(?:gallery|section):/, "").slice(0, 42) + "-1") {
   if (typeof type !== "string" || !getBlockDefinition(type))
     throw new Error("Unknown block: " + String(type));
   if (!/^[a-zA-Z0-9_-]{1,64}$/.test(id)) throw new Error("Invalid block id");
@@ -260,6 +306,11 @@ export function projectNeedsGalleryManifest(candidate) {
   return plainObject(candidate) && Array.isArray(candidate.blocks) &&
     candidate.blocks.some(block => plainObject(block) &&
       typeof block.type === "string" && block.type.startsWith(GALLERY_PREFIX));
+}
+export function projectNeedsSectionManifest(candidate) {
+  return plainObject(candidate) && Array.isArray(candidate.blocks) &&
+    candidate.blocks.some(block => plainObject(block) &&
+      typeof block.type === "string" && block.type.startsWith(SECTION_PREFIX));
 }
 
 export function parseDocument(input) {
@@ -315,10 +366,39 @@ export function moveBlock(page, from, to) {
   return normalized;
 }
 
-function renderBlock(block, anchor) {
+export function insertBlockAfter(page, afterId, block) {
+  const normalized = parseDocument(page);
+  if (afterId !== null && !normalized.blocks.some(existing => existing.id === afterId))
+    throw new Error("Unknown insertion position");
+  const index = afterId === null ? normalized.blocks.length :
+    normalized.blocks.findIndex(existing => existing.id === afterId) + 1;
+  normalized.blocks.splice(index, 0, block);
+  return parseDocument(normalized);
+}
+
+export function duplicateBlock(page, index, id) {
+  const normalized = parseDocument(page);
+  if (!Number.isInteger(index) || index < 0 || index >= normalized.blocks.length)
+    throw new Error("Duplicate source index out of range");
+  const block = normalized.blocks[index];
+  return insertBlockAfter(normalized, block.id, {
+    ...block, id, props: {...block.props}
+  });
+}
+
+export function requiredAssets(page) {
+  const names = new Set();
+  for (const block of parseDocument(page).blocks) {
+    const def = getBlockDefinition(block.type);
+    for (const asset of def.assetNames || []) names.add(asset);
+  }
+  return [...names].sort();
+}
+
+function renderBlock(block, anchor, assetPrefix) {
   const p = block.props;
-  const gallery = GALLERY_DEFINITIONS.get(block.type);
-  if (gallery) return renderGalleryBlock(block, gallery);
+  const template = GALLERY_DEFINITIONS.get(block.type) || SECTION_DEFINITIONS.get(block.type);
+  if (template) return renderGalleryBlock(block, template, assetPrefix);
   const id = ' data-syntyr-block-id="' + escapeHtml(block.id) + '"';
   const sectionAnchor = anchor ? ' id="' + escapeHtml(anchor) + '"' : "";
   switch (block.type) {
@@ -362,17 +442,18 @@ function renderBlock(block, anchor) {
   }
 }
 
-export function renderSections(page) {
+export function renderSections(page, {previewAssets = false} = {}) {
+  const assetPrefix = previewAssets === true ? "../assets/" : "assets/";
   const anchors = new Set();
   return parseDocument(page).blocks.map((block) => {
     const base = { hero: "top", features: "features", cta: "contact" }[block.type];
     const anchor = base ? (anchors.has(base) ? "section-" + block.id : base) : "";
     if (base) anchors.add(base);
-    return renderBlock(block, anchor);
+    return renderBlock(block, anchor, assetPrefix);
   }).join("\n");
 }
 
-export function exportHtml(page) {
+export function exportHtml(page, {previewAssets = false} = {}) {
   const normalized = parseDocument(page);
   return [
     "<!doctype html>",
@@ -382,7 +463,7 @@ export function exportHtml(page) {
     '<link rel="stylesheet" href="syntyr.all.css">',
     "</head>",
     '<body class="syn-root syn-page" data-syn-theme="' + escapeHtml(normalized.theme) + '">',
-    '<main class="syn-shell">' + renderSections(normalized) + "</main>",
+    '<main class="syn-shell">' + renderSections(normalized, {previewAssets}) + "</main>",
     "</body></html>"
   ].join("\n");
 }

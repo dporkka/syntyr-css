@@ -1,0 +1,49 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "before-after",
+  "type": "registry:item",
+  "title": "Before and after image comparison",
+  "description": "Two semantic, responsive photos with accessible full-image links; no scripted comparison slider.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://syntyr-css.pages.dev/registry/r/core.json"
+  ],
+  "files": [
+    {
+      "path": "blocks/snippets/before-after.html",
+      "type": "registry:file",
+      "target": "~/syntyr/blocks/before-after.html",
+      "content": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-compare-images\">\n  <p class=\"syn-eyebrow\">PROJECT COMPARISON</p>\n  <h2 class=\"syn-heading\" id=\"syn-compare-images\">See the change side by side.</h2>\n  <p class=\"syn-muted\">Use two real photos to show a process or transformation. These unrelated illustrations are layout placeholders, not a factual before-and-after claim.</p>\n  <div class=\"syn-image-gallery\">\n    <figure><a href=\"../assets/gallery-architecture.svg\" aria-label=\"View example before artwork\"><img src=\"../assets/gallery-architecture.svg\" alt=\"Warm building arches in an abstract illustration\" width=\"960\" height=\"640\" loading=\"lazy\" decoding=\"async\"></a><figcaption>Before / illustrative artwork</figcaption></figure>\n    <figure><a href=\"../assets/gallery-botanical.svg\" aria-label=\"View example after artwork\"><img src=\"../assets/gallery-botanical.svg\" alt=\"Abstract study of overlapping green leaves\" width=\"960\" height=\"640\" loading=\"lazy\" decoding=\"async\"></a><figcaption>After / illustrative artwork</figcaption></figure>\n  </div>\n</section>\n"
+    },
+    {
+      "path": "assets/gallery-architecture.svg",
+      "type": "registry:file",
+      "target": "~/syntyr/assets/gallery-architecture.svg",
+      "content": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 960 640\" role=\"img\" aria-label=\"An abstract modern building with arches and warm daylight\"><defs><linearGradient id=\"sky\" x2=\"0\" y2=\"1\"><stop stop-color=\"#23333c\"/><stop offset=\"1\" stop-color=\"#ca9b74\"/></linearGradient></defs><rect width=\"960\" height=\"640\" fill=\"url(#sky)\"/><rect x=\"120\" y=\"70\" width=\"710\" height=\"540\" rx=\"12\" fill=\"#cfac85\"/><path d=\"M180 570V280a115 115 0 0 1 230 0v290Z\" fill=\"#2d4c57\"/><path d=\"M460 570V230a145 145 0 0 1 290 0v340Z\" fill=\"#325767\"/><rect x=\"0\" y=\"545\" width=\"960\" height=\"95\" fill=\"#a67c64\"/><path d=\"M0 595H960\" stroke=\"#edc9a2\" stroke-width=\"9\"/><path d=\"M0 38h960M0 602h960\" stroke=\"#9dd0bc\" stroke-opacity=\".28\" stroke-width=\"2\"/></svg>\n"
+    },
+    {
+      "path": "assets/gallery-botanical.svg",
+      "type": "registry:file",
+      "target": "~/syntyr/assets/gallery-botanical.svg",
+      "content": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 960 640\" role=\"img\" aria-label=\"An abstract botanical study with overlapping leaves\"><defs><linearGradient id=\"sky\" x2=\"0\" y2=\"1\"><stop stop-color=\"#183a35\"/><stop offset=\"1\" stop-color=\"#b4d88a\"/></linearGradient></defs><rect width=\"960\" height=\"640\" fill=\"url(#sky)\"/><path d=\"M480 590V155\" stroke=\"#e2ebca\" stroke-width=\"18\" stroke-linecap=\"round\"/><path d=\"M470 440C170 420 145 180 185 90c200 0 305 175 285 350Z\" fill=\"#b4d88a\"/><path d=\"M490 380C750 405 850 180 775 80 590 85 490 220 490 380Z\" fill=\"#84b69b\"/><path d=\"M480 550C250 550 180 445 200 365c150-18 285 65 280 185Z\" fill=\"#7faea0\"/><path d=\"M490 530c190 0 275-90 270-170-165-15-265 70-270 170Z\" fill=\"#d1d89c\"/><path d=\"M480 585c-90 0-190 30-255 55h515c-100-35-170-55-260-55Z\" fill=\"#b28c70\"/><path d=\"M0 38h960M0 602h960\" stroke=\"#f4c891\" stroke-opacity=\".28\" stroke-width=\"2\"/></svg>\n"
+    },
+    {
+      "path": "LICENSE",
+      "type": "registry:file",
+      "target": "~/syntyr/LICENSE",
+      "content": "MIT License\n\nCopyright (c) 2026 Syntyr CSS contributors\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n"
+    }
+  ],
+  "meta": {
+    "syntyrVersion": "0.3.0-alpha.5",
+    "source": "MIT source candidate",
+    "runtimeJavaScript": false,
+    "fileDigests": {
+      "~/syntyr/blocks/before-after.html": "a124666b38ec37d360bcad3bc22fac997a9b97a75f8b2040b34893524a3cdd1a",
+      "~/syntyr/assets/gallery-architecture.svg": "9dc3945d9aa7bd01b32f10b2234b73497856a29cfc816231631fc491a78c1aa2",
+      "~/syntyr/assets/gallery-botanical.svg": "38007e2799c8d104cf7d573fcfe8ea1b373f77a7eaa82b16e20679e71c20362d",
+      "~/syntyr/LICENSE": "42f56369ac06362dbfe433d2d50b178bf74c369a55ea22337ab40fd9433521bf"
+    }
+  },
+  "docs": "Experimental source-candidate asset. Review exact version, HTML routes, keyboard behavior and integration before production use."
+}
