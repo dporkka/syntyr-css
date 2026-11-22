@@ -143,3 +143,30 @@ func TestLocalDemoRejectsNonLoopbackBindAddresses(t *testing.T) {
 		}
 	}
 }
+
+func TestEditRedirectKeepsRecordVisibleAfterSameDayUpdates(t *testing.T) {
+	h := newHandler("../../dist")
+	cookie, token := getEditor(t, h)
+	var lastLocation string
+	// Four rows now share the newest updated date; with a three-row page,
+	// the final row must be on page 2 rather than the default page 1.
+	for _, id := range []string{"RS-088", "RS-144", "RS-204", "RS-442"} {
+		rec := postEdit(h, cookie, url.Values{
+			"id": {id}, "owner": {"Updated Owner"}, "status": {"done"},
+			"theme": {"grid"}, "csrf_token": {token},
+		})
+		if rec.Code != http.StatusSeeOther {
+			t.Fatalf("%s: edit failed with %d: %s", id, rec.Code, rec.Body.String())
+		}
+		lastLocation = rec.Header().Get("Location")
+	}
+	if !strings.Contains(lastLocation, "page=2") || !strings.Contains(lastLocation, "id=RS-442") {
+		t.Fatalf("updated record needs page 2 after sorting: %s", lastLocation)
+	}
+	got := httptest.NewRecorder()
+	h.ServeHTTP(got, httptest.NewRequest(http.MethodGet, lastLocation, nil))
+	if got.Code != http.StatusOK || !strings.Contains(got.Body.String(), "Selected record: Transit Hub") ||
+		!strings.Contains(got.Body.String(), "<dd>Updated Owner</dd>") {
+		t.Fatalf("redirected inspector lost edited record: code=%d", got.Code)
+	}
+}

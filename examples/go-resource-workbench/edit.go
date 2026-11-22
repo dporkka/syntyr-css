@@ -7,6 +7,7 @@ import (
 	"encoding/hex"
 	"net/http"
 	"net/url"
+	"strconv"
 	"strings"
 	"sync"
 	"time"
@@ -172,6 +173,17 @@ func editHandler(state *resourceState, secret [32]byte) http.HandlerFunc {
 			return
 		}
 		values := url.Values{"id": {id}}
+		// The inspector only selects records visible on the current page.
+		// Find the record's page after updating its sort key, rather than
+		// redirecting blindly to page 1 (which can hide the saved record).
+		for index, item := range filterResources(state.snapshot(), "", "", "") {
+			if item.ID == id {
+				if page := index/rowsPerPage + 1; page > 1 {
+					values.Set("page", strconv.Itoa(page))
+				}
+				break
+			}
+		}
 		if theme != "" {
 			values.Set("theme", theme)
 		}
