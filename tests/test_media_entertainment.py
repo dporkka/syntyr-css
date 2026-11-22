@@ -76,7 +76,8 @@ class MediaEntertainmentTests(unittest.TestCase):
         self.assertNotIn('user-scalable=no', html)
         self.assertIn('../dist/syntyr.media.css', html)
         self.assertIn('class="syn-media-hero', html)
-        self.assertIn('class="syn-media-rail"', html)
+        self.assertTrue(any('syn-media-rail' in attrs.get('class', '').split()
+                            for _, attrs in parsed.nodes))
 
         headings = {attrs['id'] for tag, attrs in parsed.nodes if 'id' in attrs}
         self.assertEqual(len(headings), sum(1 for tag, attrs in parsed.nodes if 'id' in attrs))
@@ -86,7 +87,7 @@ class MediaEntertainmentTests(unittest.TestCase):
         self.assertGreaterEqual(len(navs), 2)
         self.assertTrue(all(attrs.get('aria-label') for attrs in navs))
         rails = [attrs for tag, attrs in parsed.nodes
-                 if attrs.get('class') == 'syn-media-rail']
+                 if 'syn-media-rail' in attrs.get('class', '').split()]
         self.assertGreaterEqual(len(rails), 1)
         self.assertTrue(all(attrs.get('tabindex') == '0' and
                             attrs.get('role') == 'region' and

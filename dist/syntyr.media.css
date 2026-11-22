@@ -158,6 +158,106 @@
     outline-offset: 2px;
   }
 
+  /* Generated scroll controls: opt-in, no script and no broken buttons in
+     browsers without CSS Overflow 5 + anchor positioning. The original
+     focusable Scroll Snap rail and visible scrollbar remain the fallback. */
+  @supports selector(::scroll-button(inline-start)) and (anchor-name: --syn-media-rail) {
+    :where(.syn-root) .syn-media-rail--controls {
+      anchor-name: --syn-media-rail;
+      scroll-snap-type: inline mandatory;
+    }
+    :where(.syn-root) .syn-media-rail--controls::scroll-button(*) {
+      position: absolute;
+      position-anchor: --syn-media-rail;
+      inset-block-start: calc(anchor(top) + .5rem);
+      display: grid;
+      place-items: center;
+      inline-size: 2.75rem;
+      block-size: 2.75rem;
+      padding: 0;
+      border: 1px solid var(--syn-border-floating);
+      border-radius: var(--syn-radius);
+      color: var(--syn-text);
+      background: var(--syn-surface-floating);
+      box-shadow: var(--syn-shadow-overlay);
+      font: 700 1.5rem/1 var(--syn-font-ui, system-ui);
+      cursor: pointer;
+    }
+    :where(.syn-root) .syn-media-rail--controls::scroll-button(inline-start) {
+      content: "‹" / "Scroll backward";
+      inset-inline-start: calc(anchor(self-start) + .5rem);
+    }
+    :where(.syn-root) .syn-media-rail--controls::scroll-button(inline-end) {
+      content: "›" / "Scroll forward";
+      inset-inline-end: calc(anchor(self-end) + .5rem);
+    }
+    :where(.syn-root) .syn-media-rail--controls:dir(rtl)::scroll-button(inline-start) {
+      content: "→" / "Scroll backward";
+    }
+    :where(.syn-root) .syn-media-rail--controls:dir(rtl)::scroll-button(inline-end) {
+      content: "←" / "Scroll forward";
+    }
+    :where(.syn-root) .syn-media-rail--controls::scroll-button(*):focus-visible {
+      outline: 3px solid var(--syn-focus-ring);
+      outline-offset: 3px;
+    }
+    :where(.syn-root) .syn-media-rail--controls::scroll-button(*):disabled {
+      opacity: .4;
+      cursor: default;
+    }
+  }
+
+  /* Markers are separate opt-in controls: every marked card needs a unique,
+     human-readable label on data-syn-scroll-label. No blank accessible names. */
+  @supports (scroll-marker-group: after) and (anchor-name: --syn-media-rail) {
+    :where(.syn-root) .syn-media-rail--markers {
+      anchor-name: --syn-media-rail;
+      scroll-marker-group: after;
+      margin-block-end: 3.5rem;
+    }
+    :where(.syn-root) .syn-media-rail--markers::scroll-marker-group {
+      position: absolute;
+      position-anchor: --syn-media-rail;
+      inset-block-start: calc(anchor(bottom) + .5rem);
+      justify-self: anchor-center;
+      display: flex;
+      /* Keep every marker reachable inside the rail, even for 30+ cards. */
+      justify-content: safe center;
+      box-sizing: border-box;
+      inline-size: max-content;
+      max-inline-size: min(100%, anchor-size(self-inline, 100%), 30rem);
+      gap: .5rem;
+      padding: .375rem;
+      overflow-x: auto;
+      overflow-y: hidden;
+      overscroll-behavior-inline: contain;
+      scrollbar-width: thin;
+      scrollbar-color: var(--syn-frame) transparent;
+    }
+    :where(.syn-root) .syn-media-rail--markers > [data-syn-scroll-label]::scroll-marker {
+      content: attr(data-syn-scroll-label);
+      box-sizing: border-box;
+      flex: 0 0 1rem;
+      inline-size: 1rem;
+      block-size: 1rem;
+      overflow: hidden;
+      white-space: nowrap;
+      text-indent: 2rem;
+      border: 2px solid var(--syn-frame);
+      border-radius: 50%;
+      background: var(--syn-surface);
+      cursor: pointer;
+    }
+    :where(.syn-root) .syn-media-rail--markers > [data-syn-scroll-label]::scroll-marker:target-current {
+      background: var(--syn-accent);
+      border-color: var(--syn-accent);
+    }
+    :where(.syn-root) .syn-media-rail--markers > [data-syn-scroll-label]::scroll-marker:focus-visible {
+      outline: 3px solid var(--syn-focus-ring);
+      outline-offset: 3px;
+    }
+  }
+
   :where(.syn-root) .syn-media-card {
     min-inline-size: 0;
     display: flex;
@@ -317,6 +417,21 @@
     }
     :where(.syn-root) .syn-media-hero::before { background: none; }
     :where(.syn-root) .syn-media-hero :where(.syn-media-hero__eyebrow, .syn-media-hero__description) { color: CanvasText; }
+    :where(.syn-root) .syn-media-rail--controls::scroll-button(*) {
+      forced-color-adjust: auto;
+      border-color: ButtonText;
+      color: ButtonText;
+      background: ButtonFace;
+      box-shadow: none;
+    }
+    :where(.syn-root) .syn-media-rail--markers > [data-syn-scroll-label]::scroll-marker {
+      border-color: ButtonText;
+      background: Canvas;
+    }
+    :where(.syn-root) .syn-media-rail--markers > [data-syn-scroll-label]::scroll-marker:target-current {
+      background: Highlight;
+      border-color: Highlight;
+    }
     :where(.syn-root) .syn-media-card__visual,
     :where(.syn-root) .syn-media-navigation__mobile,
     :where(.syn-root) .syn-media-card__action { border-color: CanvasText; }
