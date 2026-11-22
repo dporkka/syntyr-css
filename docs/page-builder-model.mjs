@@ -293,6 +293,8 @@ export function createDefaultDocument() {
   return {
     schema: SCHEMA_VERSION,
     title: "My Syntyr page",
+    description: "",
+    language: "en",
     theme: "studio",
     blocks: [
       createBlock("hero", "hero-1"),
@@ -326,6 +328,13 @@ export function parseDocument(input) {
   if (!plainObject(page)) throw new Error("Page must be an object");
   if (page.schema !== SCHEMA_VERSION) throw new Error("Unsupported page schema");
   if (typeof page.title !== "string" || page.title.length > 160) throw new Error("Invalid page title");
+  const description = page.description === undefined ? "" : page.description;
+  const language = page.language === undefined ? "en" : page.language;
+  if (typeof description !== "string" || description.length > 300)
+    throw new Error("Invalid page description");
+  if (typeof language !== "string" ||
+      !/^[A-Za-z]{2,3}(?:-[A-Za-z0-9]{2,8}){0,3}$/.test(language))
+    throw new Error("Invalid page language");
   if (!THEMES.includes(page.theme)) throw new Error("Unknown page theme");
   if (!Array.isArray(page.blocks) || page.blocks.length > MAX_BLOCKS)
     throw new Error("Page must contain at most 50 blocks");
@@ -353,7 +362,7 @@ export function parseDocument(input) {
       throw new Error("Unknown block property");
     return { id: block.id, type: block.type, props };
   });
-  return { schema: SCHEMA_VERSION, title: page.title, theme: page.theme, blocks };
+  return { schema: SCHEMA_VERSION, title: page.title, description, language, theme: page.theme, blocks };
 }
 
 export function moveBlock(page, from, to) {
@@ -457,9 +466,11 @@ export function exportHtml(page, {previewAssets = false} = {}) {
   const normalized = parseDocument(page);
   return [
     "<!doctype html>",
-    '<html lang="en"><head><meta charset="utf-8">',
+    '<html lang="' + escapeHtml(normalized.language) + '"><head><meta charset="utf-8">',
     '<meta name="viewport" content="width=device-width, initial-scale=1">',
     "<title>" + escapeHtml(normalized.title) + "</title>",
+    ...(normalized.description ? ['<meta name="description" content="' +
+      escapeHtml(normalized.description) + '">'] : []),
     '<link rel="stylesheet" href="syntyr.all.css">',
     "</head>",
     '<body class="syn-root syn-page" data-syn-theme="' + escapeHtml(normalized.theme) + '">',

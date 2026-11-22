@@ -791,6 +791,22 @@
       ]
     },
     {
+      "name": "syn-code-scroll",
+      "module": "components/data.css",
+      "description": "Code scroll presentation in the components/data.css module; use semantic HTML and consult its component example.",
+      "stylesheets": [
+        "components/data.css",
+        "presets/cinematic.css",
+        "presets/minimal.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.core.css",
+        "syntyr.css",
+        "syntyr.embed.css",
+        "syntyr.semantic-bundle.css"
+      ]
+    },
+    {
       "name": "syn-collection-actions",
       "module": "recipes.css",
       "description": "Collection actions presentation in the recipes.css module; use semantic HTML and consult its component example.",

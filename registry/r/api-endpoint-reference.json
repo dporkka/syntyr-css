@@ -13,7 +13,7 @@
       "path": "blocks/snippets/api-endpoint-reference.html",
       "type": "registry:file",
       "target": "~/syntyr/blocks/api-endpoint-reference.html",
-      "content": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"api-endpoint-heading\">\n  <p class=\"syn-eyebrow\">REFERENCE / ILLUSTRATIVE</p>\n  <h2 class=\"syn-heading\" id=\"api-endpoint-heading\">List example records</h2>\n  <p><code>GET /v1/records</code> · Sample contract, not a live endpoint.</p>\n  <h3 class=\"syn-heading\">Request</h3>\n  <pre><code>GET /v1/records?limit=10</code></pre>\n  <h3 class=\"syn-heading\">Example response</h3>\n  <pre><code>{\n  \"items\": [{\"id\": \"example-1\", \"status\": \"ready\"}],\n  \"next\": null\n}</code></pre>\n  <a href=\"/docs/api\">Full API reference</a>\n</section>\n"
+      "content": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"api-endpoint-heading\">\n  <p class=\"syn-eyebrow\">REFERENCE / ILLUSTRATIVE</p>\n  <h2 class=\"syn-heading\" id=\"api-endpoint-heading\">List example records</h2>\n  <p><code>GET /v1/records</code> · Sample contract, not a live endpoint.</p>\n  <h3 class=\"syn-heading\">Request</h3>\n  <pre class=\"syn-code-scroll\" tabindex=\"0\" role=\"region\" aria-label=\"Example API request\"><code>GET /v1/records?limit=10</code></pre>\n  <h3 class=\"syn-heading\">Example response</h3>\n  <pre class=\"syn-code-scroll\" tabindex=\"0\" role=\"region\" aria-label=\"Example JSON response\"><code>{\n  \"items\": [{\"id\": \"example-1\", \"status\": \"ready\"}],\n  \"next\": null\n}</code></pre>\n  <a href=\"/docs/api\">Full API reference</a>\n</section>\n"
     },
     {
       "path": "LICENSE",
@@ -27,7 +27,7 @@
     "source": "MIT source candidate",
     "runtimeJavaScript": false,
     "fileDigests": {
-      "~/syntyr/blocks/api-endpoint-reference.html": "81dd34827f458ca4e4873da5f497a5ede9aad300ca21b383e3d5bf4b41d765c8",
+      "~/syntyr/blocks/api-endpoint-reference.html": "d12d62a338f4eadbeeeea48f5ceaa8584c20e8567af5fb2b083914f85c58c8e0",
       "~/syntyr/LICENSE": "42f56369ac06362dbfe433d2d50b178bf74c369a55ea22337ab40fd9433521bf"
     }
   },

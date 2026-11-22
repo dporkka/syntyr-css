@@ -12,11 +12,17 @@ The [visual builder](page-builder.html) is a local-first, optional editing tool 
 - Switch among themes available to the unreleased source candidate and preview true 1200px desktop, 760px tablet, and 390px mobile iframe viewports. Narrow canvases scroll rather than silently scaling the device viewport.
 - Undo and redo editing changes (limited in-memory history).
 - Download a **static website ZIP** with `index.html`, the matching `syntyr.all.css`, any self-hosted SVG image assets, the MIT license and a brief publishing README. The ZIP contains **no JavaScript**. Standalone HTML/CSS downloads remain available.
+- Set the page title, optional search-result description (300-character limit), and HTML document language (including Portuguese for Brazil). The exported HTML contains escaped metadata and a correct `lang` attribute for accessibility and SEO. Existing `syntyr.page.v1` JSON projects without these optional settings still import.
 - Download a JSON project and reopen that JSON to restore editability.
 
 The builder runs entirely in your browser. It does not upload projects or require a server account. Save the JSON file before closing the page: unsaved edits are not persisted.
 
 ## Static-first export and assets
+
+Page descriptions are optional and do not guarantee a search-engine snippet.
+The builder currently exports a single HTML document, not a multipage site
+or sitemap. Language tags on the HTML element describe the document language,
+but do **not** translate your content automatically.
 
 The optional browser-based builder uses JavaScript **only as an authoring tool**.
 Its static ZIP output contains ordinary HTML/CSS and required local images,
@@ -52,7 +58,7 @@ placing saved strings in different locations. Preserve an exported HTML copy
 for long-term rendering when the optional source catalog changes. The manifest is an **unreleased alpha.5 source candidate**; these
 examples are not promised in the published alpha.4 release.
 
-The document schema is syntyr.page.v1, with schema, title, theme, and an ordered array of id, type, and props blocks. The canonical validation and renderer are in page-builder-model.mjs, a dependency-free ESM module with no browser globals.
+The document schema is syntyr.page.v1, with schema, title, theme, optional description and language, and an ordered array of id, type, and props blocks. The canonical validation and renderer are in page-builder-model.mjs, a dependency-free ESM module with no browser globals.
 
 The exported index.html uses ordinary HTML sections, anchors, buttons-styled links, native FAQ disclosures, and existing syn-* classes. The local syntyr.all.css stylesheet must be hosted next to it; the page does not contain React, a builder script, or Syntyr editor dependencies. You can instead load CSS modules required by your chosen components using the [distribution guide](distribution.md).
 
@@ -80,5 +86,6 @@ For the optional browser smoke test:
 
     python3 tests/page_builder_browser.py
     python3 tests/page_builder_sections_browser.py
+    python3 tests/static_sections_mobile_browser.py
 
 The browser smoke test requires Playwright and a local browser installation. Validate keyboard access, small screens, malicious imported JSON, and download/export before treating this as a stable product.

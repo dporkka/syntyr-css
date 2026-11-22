@@ -21,6 +21,8 @@ const preview = byId("builder-preview");
 const status = byId("builder-status");
 const theme = byId("builder-theme");
 const title = byId("builder-page-title");
+const description = byId("builder-page-description");
+const language = byId("builder-page-language");
 const viewport = byId("builder-viewport");
 const viewportFrame = byId("builder-viewport-frame");
 const undo = byId("builder-undo");
@@ -32,6 +34,7 @@ let selectedId = page.blocks[0].id;
 let sequence = 4;
 let draggingIndex = null;
 let titleEditing = false;
+let descriptionEditing = false;
 
 function notify(message) {
   status.textContent = message;
@@ -269,6 +272,14 @@ preview.addEventListener("load", () => {
 });
 function redraw() {
   title.value = page.title;
+  description.value = page.description;
+  // Imported projects may use a valid BCP-47 language not in the quick choices.
+  // Keep it visible/selectable instead of silently changing document metadata.
+  if (![...language.options].some(option => option.value === page.language)) {
+    const option = new Option(page.language, page.language);
+    language.add(option);
+  }
+  language.value = page.language;
   theme.value = page.theme;
   renderOutline();
   renderInspector();
@@ -391,6 +402,18 @@ title.addEventListener("input", () => {
   renderPreview();
 });
 title.addEventListener("blur", () => { titleEditing = false; });
+description.addEventListener("input", () => {
+  if (!descriptionEditing) { remember(); descriptionEditing = true; }
+  page.description = description.value;
+  renderPreview();
+});
+description.addEventListener("blur", () => { descriptionEditing = false; });
+language.addEventListener("change", () => {
+  if (language.value === page.language) return;
+  const next = structuredClone(page);
+  next.language = language.value;
+  commit(next, "Page language updated.");
+});
 theme.addEventListener("change", () => {
   if (!THEMES.includes(theme.value) || theme.value === page.theme) return;
   const next = structuredClone(page);

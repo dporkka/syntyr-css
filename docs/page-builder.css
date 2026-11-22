@@ -12,6 +12,9 @@
 }
 .builder-toolbar > .syn-label { flex: 1 1 140px; min-width: 0; }
 .builder-toolbar > .syn-label:first-child { flex: 2 1 210px; }
+.builder-toolbar > .syn-label:has(#builder-page-description) { flex: 2 1 260px; }
+.builder-toolbar textarea.syn-input { display: block; inline-size: 100%; min-block-size: 4rem; resize: vertical; margin-top: .4rem; }
+
 .builder-toolbar .syn-input, .builder-toolbar .syn-select { display: block; margin-top: .4rem; width: 100%; }
 .builder-export { display: flex; align-items: center; flex-wrap: wrap; gap: .45rem; }
 .builder-export .syn-button { white-space: nowrap; }

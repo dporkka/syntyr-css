@@ -60,6 +60,13 @@ def run():
                     assert "Image gallery" in page.locator('#builder-outline [data-index="0"]').inner_text() or \
                         "Responsive image gallery" in page.locator('#builder-outline [data-index="0"]').inner_text()
 
+                    page.locator("#builder-page-description").fill(
+                        'Static & accessible "gallery" in Portuguese')
+                    page.locator("#builder-page-language").select_option("pt-BR")
+                    expect(preview.locator("html")).to_have_attribute("lang", "pt-BR")
+                    expect(preview.locator('meta[name="description"]')).to_have_attribute(
+                        "content", 'Static & accessible "gallery" in Portuguese')
+
                     # The site's output contains all local assets, CSS, MIT license,
                     # and no framework or editor JavaScript.
                     with page.expect_download() as download_info:
@@ -80,6 +87,8 @@ def run():
                             html = archive.read("index.html").decode()
                             assert html.count("syn-image-gallery") >= 2
                             assert 'src="assets/gallery-horizon.svg"' in html
+                            assert '<html lang="pt-BR">' in html
+                            assert '<meta name="description" content="Static &amp; accessible &quot;gallery&quot; in Portuguese">' in html
                             assert "<script" not in html.lower()
                             assert "page-builder.js" not in html
                             assert 'href="syntyr.all.css"' in html

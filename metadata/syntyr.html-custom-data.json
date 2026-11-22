@@ -234,6 +234,10 @@
           "description": "Code figure presentation in the native-recipes.css module; use semantic HTML and consult its component example."
         },
         {
+          "name": "syn-code-scroll",
+          "description": "Code scroll presentation in the components/data.css module; use semantic HTML and consult its component example."
+        },
+        {
           "name": "syn-collection-actions",
           "description": "Collection actions presentation in the recipes.css module; use semantic HTML and consult its component example."
         },
