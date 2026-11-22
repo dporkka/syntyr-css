@@ -128,6 +128,15 @@ def _html_files(project: Path) -> list[Path]:
     return sorted(files)
 
 
+def _valid_agent_paths(skill: str, reference: str, *, path_cls=Path) -> bool:
+    """Match the installer POSIX metadata independent of host OS separators."""
+    if not isinstance(skill, str) or not isinstance(reference, str):
+        return False
+    allowed = {(path_cls(path) / 'SKILL.md').as_posix() for path in AGENT_PATHS.values()}
+    return (skill in allowed
+            and reference == (path_cls(skill).parent / 'references/api.json').as_posix())
+
+
 def info(args: argparse.Namespace, catalog: SyntyrCatalog) -> tuple[int, dict]:
     """Report only verified installation facts; never guess at host CSS imports."""
     project = _safe_project(Path(args.project))
@@ -147,13 +156,11 @@ def info(args: argparse.Namespace, catalog: SyntyrCatalog) -> tuple[int, dict]:
         raise ValueError('Unsupported configured Syntyr release')
     _planned, expected = _planned_files(project, release, 'generic', catalog)
     skill = config.get('agent_skill')
-    allowed_skills = {str(Path(path) / 'SKILL.md') for path in AGENT_PATHS.values()}
     if (config.get('schema_version') != 1
             or config.get('stylesheets') != list(DEFAULT_SHEETS)
             or config.get('assets_dir') != expected['assets_dir']
             or config.get('sha256') != expected['sha256']
-            or skill not in allowed_skills
-            or config.get('api_reference') != str(Path(skill).parent / 'references/api.json')):
+            or not _valid_agent_paths(skill, config.get('api_reference'))):
         raise ValueError('Invalid or inconsistent syntyr.agent.json; rerun init with a clean config')
 
     diagnostics = []

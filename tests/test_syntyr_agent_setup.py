@@ -161,6 +161,16 @@ class AgentSetupTests(unittest.TestCase):
             self.assertEqual(recipes.read_text(), 'changed')
             self.assertFalse(core.exists())
 
+    def test_info_agent_paths_are_valid_on_posix_and_windows(self):
+        from pathlib import PurePosixPath, PureWindowsPath
+        from scripts.syntyr_agent import _valid_agent_paths
+
+        skill = '.agents/skills/syntyr/SKILL.md'
+        reference = '.agents/skills/syntyr/references/api.json'
+        self.assertTrue(_valid_agent_paths(skill, reference, path_cls=PurePosixPath))
+        self.assertTrue(_valid_agent_paths(skill, reference, path_cls=PureWindowsPath))
+        self.assertFalse(_valid_agent_paths(skill, 'unexpected/api.json', path_cls=PureWindowsPath))
+
     def test_info_rejects_symlinked_assets(self):
         with TemporaryDirectory() as path:
             project = Path(path)
