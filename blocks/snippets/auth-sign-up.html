@@ -10,17 +10,17 @@
         <div class="syn-field"><label class="syn-label" for="syn-signup-email">Work email</label>
           <input class="syn-input" id="syn-signup-email" name="email" type="email" autocomplete="email" required></div>
         <div class="syn-field"><label class="syn-label" for="syn-signup-password">Password</label>
-          <input class="syn-input" id="syn-signup-password" name="password" type="password" autocomplete="new-password" minlength="12" required>
-          <p class="syn-help">Use at least 12 characters. Configure rate limiting, secure sessions and CSRF protection server-side.</p></div>
+          <input class="syn-input" id="syn-signup-password" name="password" type="password" autocomplete="new-password" minlength="12" aria-describedby="syn-signup-password-help" required>
+          <p id="syn-signup-password-help" class="syn-help">Use at least 12 characters. Configure rate limiting, secure sessions and CSRF protection server-side.</p></div>
         <div class="syn-field"><label><input type="checkbox" name="accept_terms" required> I agree to the <a href="/terms">Terms</a> and <a href="/privacy">Privacy Policy</a>.</label></div>
         <button class="syn-button syn-button--primary" type="submit">Create account</button>
       </form>
       <p>Already have an account? <a href="/auth/sign-in">Sign in</a></p>
     </div>
-    <aside class="syn-detail-aside syn-panel" aria-labelledby="syn-signup-next-title">
+    <section class="syn-detail-aside syn-panel" aria-labelledby="syn-signup-next-title">
       <h3 id="syn-signup-next-title">What comes next</h3>
       <ol><li>Verify your email.</li><li>Name your workspace.</li><li>Invite teammates when ready.</li></ol>
       <p><a href="/auth/verify">Email verification help</a></p>
-    </aside>
+    </section>
   </div>
 </section>

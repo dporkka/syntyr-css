@@ -109,5 +109,50 @@ class SaaSBusinessCollectionTests(unittest.TestCase):
         self.assertIn("value=", usage)
         self.assertIn("max=", usage)
 
+    def test_contextual_panels_do_not_create_nested_complementary_landmarks(self):
+        for ident in (
+            "auth-sign-up", "resource-crud", "organization-members",
+            "developer-api-settings",
+        ):
+            with self.subTest(block=ident):
+                source = (ROOT / "blocks/snippets" / f"{ident}.html").read_text()
+                self.assertNotIn('<aside class="syn-detail-aside', source)
+                self.assertIn('<section class="syn-detail-aside syn-panel"', source)
+
+    def test_dense_tables_have_scrollable_readable_minimum_width(self):
+        css = (ROOT / "src/recipes.css").read_text()
+        self.assertIn("&.syn-table--readable", css)
+        self.assertIn("min-inline-size: var(--syn-table-readable-min", css)
+        for ident in (
+            "hero-product-preview", "pricing-comparison", "resource-crud",
+            "organization-members", "billing-usage", "developer-api-settings",
+        ):
+            with self.subTest(block=ident):
+                markup = (ROOT / "blocks/snippets" / f"{ident}.html").read_text()
+                self.assertIn('class="syn-table syn-table--readable"', markup)
+                self.assertIn('class="syn-table-wrap"', markup)
+                self.assertIn('tabindex="0"', markup)
+
+    def test_spotlight_section_heading_precedes_illustration_heading(self):
+        source = (ROOT / "blocks/snippets/feature-spotlight.html").read_text()
+        self.assertLess(
+            source.index('id="syn-feature-spotlight-title"'),
+            source.index("<h3>Project detail</h3>"),
+            "The section h2 must precede the illustrative h3 in reading order",
+        )
+
+    def test_signup_password_help_has_programmatic_association(self):
+        source = (ROOT / "blocks/snippets/auth-sign-up.html").read_text()
+        parsed = Elements()
+        parsed.feed(source)
+        field = next(
+            attrs for tag, attrs in parsed.attrs
+            if tag == "input" and attrs.get("id") == "syn-signup-password"
+        )
+        description = field.get("aria-describedby")
+        self.assertEqual(description, "syn-signup-password-help")
+        self.assertIn(description, parsed.ids)
+        self.assertIn("Use at least 12 characters.", source)
+
 if __name__ == "__main__":
     unittest.main()

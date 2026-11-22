@@ -64,6 +64,7 @@ CLASS_DOCS = {
     "syn-scroll-rail": "Optional, keyboard-scrollable card rail with native scroll snapping; host owns any arrow controls or filtering.",
     "syn-bento-grid": "Optional container-aware card grid for responsive feature compositions.",
     "syn-bento-card--wide": "Span two bento tracks only when the parent container has enough room.",
+    "syn-table--readable": "Optional min-width table presentation; use inside a keyboard-focusable syn-table-wrap region for narrow screens.",
     "syn-stats": "Container-responsive metric composition.",
     "syn-semantic": "Opt-in styling of native HTML elements.",
     "syn-u-flex": "Opt-in flexbox layout utility.",

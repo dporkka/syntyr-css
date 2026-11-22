@@ -79,6 +79,11 @@ and `syn-feature-grid` remain available for equal-size cards. Reuse
 `syn-showcase` for split product storytelling rather than creating another
 split-layout API.
 
+Dense four-column tables in the SaaS screen examples opt into
+`syn-table--readable`. Place them inside an existing named, keyboard-focusable
+`syn-table-wrap` and customize `--syn-table-readable-min` (default 38rem) to
+preserve readable columns while allowing local horizontal scrolling.
+
 All example names, plan details, statuses and usage metrics are illustrative.
 Registration, authorization, invites, persistence, CSRF protection, OAuth,
 billing, webhook security and API key issuance are **host application** responsibilities.

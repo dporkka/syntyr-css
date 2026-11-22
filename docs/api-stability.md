@@ -198,3 +198,6 @@ and feature section layout. They are **source candidate only**, not part
 of the published alpha.4 contract. Existing `syn-media-rail`, `syn-grid`
 and `syn-showcase` remain unchanged. No runtime scripting, event handlers,
 authentication or persistence are introduced by these selectors.
+
+The optional `syn-table--readable` recipe provides table min-width
+without adding JavaScript or changing the base table styles.

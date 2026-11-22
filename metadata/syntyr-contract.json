@@ -4054,6 +4054,17 @@
       ]
     },
     {
+      "name": "syn-table--readable",
+      "module": "recipes.css",
+      "description": "Optional min-width table presentation; use inside a keyboard-focusable syn-table-wrap region for narrow screens.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
       "name": "syn-table--sticky",
       "module": "components/data.css",
       "description": "Sticky-header table presentation; check scroll and reflow behavior.",

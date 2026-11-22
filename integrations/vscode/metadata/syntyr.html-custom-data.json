@@ -1350,6 +1350,10 @@
           "description": "Compact-density native table variant."
         },
         {
+          "name": "syn-table--readable",
+          "description": "Optional min-width table presentation; use inside a keyboard-focusable syn-table-wrap region for narrow screens."
+        },
+        {
           "name": "syn-table--sticky",
           "description": "Sticky-header table presentation; check scroll and reflow behavior."
         },

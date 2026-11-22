@@ -168,6 +168,16 @@
     }
     /* Opt-in row density, never a global table override. */
     &.syn-table--compact :where(th, td) { padding-block: .375rem; padding-inline: .5rem; }
+    /* Keep dense columns readable in narrow embedded screens. Place inside a
+       named, keyboard-focusable syn-table-wrap so overflow stays local. */
+    &.syn-table--readable {
+      min-inline-size: var(--syn-table-readable-min, 38rem);
+    }
+    &.syn-table--readable :where(th, td) {
+      overflow-wrap: normal;
+      word-break: normal;
+    }
+
     &.syn-result-state {
       padding: clamp(1rem, 3vw, 2rem); min-inline-size: 0;
       border: 1px dashed var(--syn-border-default);

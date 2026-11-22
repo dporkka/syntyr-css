@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Status: Experimental alpha.5 source gallery, not an immutable release or published npm package.">
-  <meta name="syntyr-source-sha256" content="f39d4f6524a966ce0c63a8a50f229368ee0234114ae5973fc65ff6a048e7650a">
+  <meta name="syntyr-source-sha256" content="f58d4c560ad98fc507f05c74264617b7403bccb8ae2a1788cc7a59e5c51845f1">
   <meta name="theme-color" content="#f5f7fb">
   <title>Syntyr Blocks &amp; Assets — integration guide — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/blocks-guide">
@@ -97,6 +97,10 @@ determines when a wide card may span two columns. The previous <code>syn-grid</c
 and <code>syn-feature-grid</code> remain available for equal-size cards. Reuse
 <code>syn-showcase</code> for split product storytelling rather than creating another
 split-layout API.</p>
+<p>Dense four-column tables in the SaaS screen examples opt into
+<code>syn-table--readable</code>. Place them inside an existing named, keyboard-focusable
+<code>syn-table-wrap</code> and customize <code>--syn-table-readable-min</code> (default 38rem) to
+preserve readable columns while allowing local horizontal scrolling.</p>
 <p>All example names, plan details, statuses and usage metrics are illustrative.
 Registration, authorization, invites, persistence, CSRF protection, OAuth,
 billing, webhook security and API key issuance are <strong>host application</strong> responsibilities.

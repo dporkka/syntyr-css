@@ -11,7 +11,7 @@
         <div class="syn-filter-actions"><button class="syn-button syn-button--outline" type="submit">Filter</button></div>
       </form>
       <div class="syn-table-wrap" role="region" tabindex="0" aria-label="Resource records, scroll horizontally for more columns">
-        <table class="syn-table"><caption>Illustrative resource inventory</caption>
+        <table class="syn-table syn-table--readable"><caption>Illustrative resource inventory</caption>
           <thead><tr><th scope="col">Name</th><th scope="col">Owner</th><th scope="col">State</th><th scope="col">Action</th></tr></thead>
           <tbody><tr><th scope="row">Campaign brief</th><td>Creative</td><td>Active</td><td><a href="/resources/brief">Details</a></td></tr>
             <tr><th scope="row">Release plan</th><td>Engineering</td><td>Draft</td><td><a href="/resources/release-plan">Details</a></td></tr></tbody>
@@ -19,7 +19,7 @@
       </div>
       <p class="syn-caption">Editing and deletion are intentionally delegated to host-owned record routes.</p>
     </div>
-    <aside class="syn-detail-aside syn-panel" aria-labelledby="syn-resource-add-title">
+    <section class="syn-detail-aside syn-panel" aria-labelledby="syn-resource-add-title">
       <h3 id="syn-resource-add-title">Create a resource</h3>
       <form class="syn-form" method="post" action="/resources">
         <div class="syn-field"><label class="syn-label" for="syn-resource-name">Name</label>
@@ -30,6 +30,6 @@
         <button class="syn-button syn-button--primary" type="submit">Create resource</button>
       </form>
       <p class="syn-caption">The backend owns validation, persistence, CSRF protection and permissions.</p>
-    </aside>
+    </section>
   </div>
 </section>
