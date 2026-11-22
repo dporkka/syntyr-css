@@ -4,6 +4,8 @@
   const search = document.getElementById('catalog-search');
   const category = document.getElementById('catalog-category');
   const browserFilter = document.getElementById('catalog-browser-filter');
+  const moduleFilter = document.getElementById('catalog-module-filter');
+  const useCaseFilter = document.getElementById('catalog-use-case-filter');
   const controls = document.getElementById('catalog-controls');
   const results = document.getElementById('catalog-results');
   const feedback = document.getElementById("catalog-feedback");
@@ -11,12 +13,23 @@
   const cards = [...document.querySelectorAll('.catalog-card')];
   if (!search || !category || !controls || !results || !feedback || !empty || !cards.length) return;
 
-  const searchable = cards.map((card) => ({
-    card,
-    // Detect actual example markup; docs panels and compatibility prose do not count.
-    hasAdditionalNativeApi: !!card.querySelector('.catalog-preview [popover], .catalog-preview [popovertarget], .catalog-preview [commandfor], .catalog-preview details[name]'),
-    terms: `${card.querySelector('h2')?.textContent || ''} ${card.dataset.catalogKeywords || ''} ${card.querySelector('.syn-muted')?.textContent || ''}`.toLocaleLowerCase(),
-  }));
+  const searchable = cards.map((card) => {
+    // The catalog badge is the authored stylesheet contract; match that same
+    // contract in the published gallery manifest, not guesses from class names.
+    const requiredModules = new Set(
+      (card.querySelector('.catalog-card-top .syn-badge')?.textContent || '')
+        .split(' + ').map(name => name.trim()).filter(Boolean)
+    );
+    const useCases = new Set((card.dataset.catalogUseCases || '').split(/\s+/).filter(Boolean));
+    return {
+      card,
+      requiredModules,
+      useCases,
+      // Detect actual example markup; docs panels/compatibility notes do not count.
+      hasAdditionalNativeApi: !!card.querySelector('.catalog-preview [popover], .catalog-preview [popovertarget], .catalog-preview [commandfor], .catalog-preview details[name]'),
+      terms: `${card.querySelector('h2')?.textContent || ''} ${card.dataset.catalogKeywords || ''} ${card.querySelector('.syn-muted')?.textContent || ''}`.toLocaleLowerCase(),
+    };
+  });
 
   // Keep the index functional without JS: markup and links are present in HTML.
   // JavaScript only adds scroll-aware highlighting and filter-aware navigation.
@@ -71,6 +84,8 @@
         search.value = '';
         category.value = 'all';
         if (browserFilter) browserFilter.value = 'all';
+        if (moduleFilter) moduleFilter.value = 'all';
+        if (useCaseFilter) useCaseFilter.value = 'all';
         updateResults();
       });
     }
@@ -79,9 +94,17 @@
   function updateResults() {
     const terms = search.value.trim().toLocaleLowerCase().split(/\s+/).filter(Boolean);
     let count = 0;
-    for (const {card, terms: text, hasAdditionalNativeApi} of searchable) {
-      const feature = browserFilter?.value || 'all';
+    const feature = browserFilter?.value || 'all';
+    const module = moduleFilter?.value || 'all';
+    const useCase = useCaseFilter?.value || 'all';
+    for (const {card, terms: text, hasAdditionalNativeApi, requiredModules, useCases} of searchable) {
+      const matchesModule = module === 'all'
+        || (module === 'core-only'
+          ? requiredModules.size === 1 && requiredModules.has('syntyr.core.css')
+          : requiredModules.has(module));
       const match = (category.value === 'all' || card.dataset.catalogCategory === category.value)
+        && matchesModule
+        && (useCase === 'all' || useCases.has(useCase))
         && (feature === 'all' || (feature === 'native-advanced' ? hasAdditionalNativeApi : !hasAdditionalNativeApi))
         && terms.every((term) => text.includes(term));
       card.hidden = !match;
@@ -110,6 +133,8 @@
   search.addEventListener("input", updateResults);
   category.addEventListener("change", updateResults);
   browserFilter?.addEventListener("change", updateResults);
+  moduleFilter?.addEventListener("change", updateResults);
+  useCaseFilter?.addEventListener("change", updateResults);
   updateResults();
 
   // Docs-only: create an actual, version-local HTML document rather than

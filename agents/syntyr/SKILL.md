@@ -20,7 +20,15 @@ Syntyr server, JavaScript runtime, npm installation, or network access is requir
    installed. Determine the real CSS assets/imports first. The published immutable
    `0.3.0-alpha.4` supports `studio`, `grid`, `noir`; `0.3.0-alpha.5` is an
    *unreleased source candidate* and has additional APIs.
-4. For detailed public guidance, consult the [AI quickstart](https://syntyr-css.pages.dev/docs/ai-quickstart.md),
+4. In a verified **alpha.5 source checkout** only, inspect
+   `metadata/component-gallery.v1.json` for task-specific examples. Filter
+   `examples[].use_cases` and confirm every
+   `examples[].required_stylesheets` file is installed before selecting the
+   `html`. Open `catalog_url`/`playground_url` for the source pattern;
+   read `native_feature_requirements` and documented fallbacks. These fields
+   are curated discovery signals, not runtime compatibility or accessibility
+   certifications. Do not assume they exist in the pinned alpha.4 release.
+5. For detailed public guidance, consult the [AI quickstart](https://syntyr-css.pages.dev/docs/ai-quickstart.md),
    [component guide](https://syntyr-css.pages.dev/docs/components.md),
    [composition recipes](https://syntyr-css.pages.dev/docs/recipes.md) and
    [LLM documentation index](https://syntyr-css.pages.dev/llms.txt).

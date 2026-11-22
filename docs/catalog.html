@@ -208,6 +208,31 @@
           <option value="interactive">Interactive</option>
           <option value="marketing">Marketing</option>
         </select>
+        <div class="catalog-discovery-controls">
+          <div>
+            <label class="syn-label" for="catalog-module-filter">CSS required</label>
+            <select id="catalog-module-filter" class="syn-input" aria-controls="catalog-items">
+              <option value="all">Any CSS module</option>
+              <option value="core-only">Core CSS only</option>
+              <option value="syntyr.recipes.css">Requires Recipes CSS</option>
+              <option value="syntyr.semantic.css">Requires Semantic CSS</option>
+              <option value="syntyr.geometry.css">Requires Geometry CSS</option>
+              <option value="syntyr.viz.css">Requires Visualization CSS</option>
+            </select>
+          </div>
+          <div>
+            <label class="syn-label" for="catalog-use-case-filter">Build a</label>
+            <select id="catalog-use-case-filter" class="syn-input" aria-controls="catalog-items">
+              <option value="all">Any use case</option>
+              <option value="marketing-site">Marketing website</option>
+              <option value="saas-dashboard">SaaS dashboard</option>
+              <option value="forms-workflow">Form or onboarding workflow</option>
+              <option value="content-docs">Documentation or content site</option>
+              <option value="navigation">Navigation experience</option>
+            </select>
+          </div>
+        </div>
+        <p class="syn-caption">Use-case tags are curated suggestions, not suitability guarantees. The CSS filter checks only modules explicitly used by each example; load the required CSS files in order (Core, then optional modules), or use <code>syntyr.all.css</code> alone.</p>
         <div class="catalog-browser-controls">
           <label class="syn-label" for="catalog-browser-filter">Native browser features</label>
           <select id="catalog-browser-filter" class="syn-input" aria-controls="catalog-items">
@@ -239,12 +264,12 @@
           </div>
         </div>
       </div>
-      <p class="syn-caption">For editors and page builders, use the <a href="../metadata/component-gallery.v1.json">generated component and example JSON</a>. It includes per-example native feature requirements and documented fallbacks, derived from the exact copyable HTML. It describes an unreleased source candidate, not a browser-support certification.</p>
+      <p class="syn-caption">For editors and page builders, use the <a href="../metadata/component-gallery.v1.json">generated component and example JSON</a>. It includes curated use cases, required CSS modules and per-example native feature requirements with documented fallbacks, supporting static editors and AI-assisted component discovery. It describes an unreleased source candidate, not a browser-support certification.</p>
       <p id="catalog-results" class="syn-caption" role="status" aria-live="polite">49 examples available.</p>
       <p id="catalog-feedback" class="syn-caption" role="status" aria-live="polite" aria-atomic="true"></p>
       <p id="catalog-empty" class="syn-alert" hidden>No components match your search. Try a different term.</p>
       <div id="catalog-items" class="catalog-grid">
-        <article class="catalog-card syn-panel" data-catalog-category="interactive" data-catalog-keywords="actions controls primary outline" aria-labelledby="catalog-buttons-title">
+        <article class="catalog-card syn-panel" data-catalog-category="interactive" data-catalog-keywords="actions controls primary outline" aria-labelledby="catalog-buttons-title" data-catalog-use-cases="forms-workflow saas-dashboard">
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-buttons-title">Buttons</h2>
             <span class="syn-badge">syntyr.core.css</span>
@@ -273,7 +298,7 @@
             <a class="syn-button catalog-edit" href="playground.html#component=catalog-buttons-title">Edit in playground</a>
           </div>
         </article>
-        <article class="catalog-card syn-panel" data-catalog-category="forms" data-catalog-keywords="input text validation form accessibility" aria-labelledby="catalog-forms-title">
+        <article class="catalog-card syn-panel" data-catalog-category="forms" data-catalog-keywords="input text validation form accessibility" aria-labelledby="catalog-forms-title" data-catalog-use-cases="forms-workflow">
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-forms-title">Labeled fields</h2>
             <span class="syn-badge">syntyr.core.css</span>
@@ -302,7 +327,7 @@
             <a class="syn-button catalog-edit" href="playground.html#component=catalog-forms-title">Edit in playground</a>
           </div>
         </article>
-        <article class="catalog-card syn-panel" data-catalog-category="forms" data-catalog-keywords="native range file color slider upload chooser form" aria-labelledby="catalog-native-controls-title">
+        <article class="catalog-card syn-panel" data-catalog-category="forms" data-catalog-keywords="native range file color slider upload chooser form" aria-labelledby="catalog-native-controls-title" data-catalog-use-cases="forms-workflow">
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-native-controls-title">Native range, file and color</h2>
             <span class="syn-badge">syntyr.core.css</span>
@@ -337,7 +362,7 @@
             <a class="syn-button catalog-edit" href="playground.html#component=catalog-native-controls-title">Edit in playground</a>
           </div>
         </article>
-        <article class="catalog-card syn-panel" data-catalog-category="interactive" data-catalog-keywords="native accordion FAQ details summary exclusive disclosure" aria-labelledby="catalog-interaction-card-0">
+        <article class="catalog-card syn-panel" data-catalog-category="interactive" data-catalog-keywords="native accordion FAQ details summary exclusive disclosure" aria-labelledby="catalog-interaction-card-0" data-catalog-use-cases="content-docs marketing-site">
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-interaction-card-0">Exclusive accordion</h2>
             <span class="syn-badge">syntyr.core.css</span>
@@ -379,7 +404,7 @@
             <a class="syn-button catalog-edit" href="playground.html#component=catalog-interaction-card-0">Edit in playground</a>
           </div>
         </article>
-        <article class="catalog-card syn-panel" data-catalog-category="navigation" data-catalog-keywords="native search get landmark searchform filtering server" aria-labelledby="catalog-interaction-card-1">
+        <article class="catalog-card syn-panel" data-catalog-category="navigation" data-catalog-keywords="native search get landmark searchform filtering server" aria-labelledby="catalog-interaction-card-1" data-catalog-use-cases="forms-workflow navigation">
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-interaction-card-1">GET search form</h2>
             <span class="syn-badge">syntyr.core.css</span>
@@ -414,7 +439,7 @@
             <a class="syn-button catalog-edit" href="playground.html#component=catalog-interaction-card-1">Edit in playground</a>
           </div>
         </article>
-        <article class="catalog-card syn-panel" data-catalog-category="interactive" data-catalog-keywords="native dialog modal confirmation commandfor method dialog" aria-labelledby="catalog-interaction-card-2">
+        <article class="catalog-card syn-panel" data-catalog-category="interactive" data-catalog-keywords="native dialog modal confirmation commandfor method dialog" aria-labelledby="catalog-interaction-card-2" data-catalog-use-cases="forms-workflow saas-dashboard">
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-interaction-card-2">Confirmation dialog</h2>
             <span class="syn-badge">syntyr.core.css</span>
@@ -464,7 +489,7 @@
             <a class="syn-button catalog-edit" href="playground.html#component=catalog-interaction-card-2">Edit in playground</a>
           </div>
         </article>
-        <article class="catalog-card syn-panel" data-catalog-category="forms" data-catalog-keywords="native datalist suggestions autocomplete input optgroup" aria-labelledby="catalog-interaction-card-3">
+        <article class="catalog-card syn-panel" data-catalog-category="forms" data-catalog-keywords="native datalist suggestions autocomplete input optgroup" aria-labelledby="catalog-interaction-card-3" data-catalog-use-cases="forms-workflow">
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-interaction-card-3">Datalist suggestions</h2>
             <span class="syn-badge">syntyr.core.css</span>
@@ -503,7 +528,7 @@
             <a class="syn-button catalog-edit" href="playground.html#component=catalog-interaction-card-3">Edit in playground</a>
           </div>
         </article>
-        <article class="catalog-card syn-panel" data-catalog-category="data" data-catalog-keywords="native meter output capacity calculation progress gauge" aria-labelledby="catalog-interaction-card-4">
+        <article class="catalog-card syn-panel" data-catalog-category="data" data-catalog-keywords="native meter output capacity calculation progress gauge" aria-labelledby="catalog-interaction-card-4" data-catalog-use-cases="saas-dashboard">
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-interaction-card-4">Meter and output</h2>
             <span class="syn-badge">syntyr.core.css + syntyr.semantic.css</span>
@@ -536,7 +561,7 @@
             <a class="syn-button catalog-edit" href="playground.html#component=catalog-interaction-card-4">Edit in playground</a>
           </div>
         </article>
-        <article class="catalog-card syn-panel" data-catalog-category="layout" data-catalog-keywords="surface card border padding radius CSS variables" aria-labelledby="catalog-panels-title">
+        <article class="catalog-card syn-panel" data-catalog-category="layout" data-catalog-keywords="surface card border padding radius CSS variables" aria-labelledby="catalog-panels-title" data-catalog-use-cases="saas-dashboard marketing-site">
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-panels-title">Panels and token overrides</h2>
             <span class="syn-badge">syntyr.core.css</span>
@@ -563,7 +588,7 @@
             <a class="syn-button catalog-edit" href="playground.html#component=catalog-panels-title">Edit in playground</a>
           </div>
         </article>
-        <article class="catalog-card syn-panel" data-catalog-category="data" data-catalog-keywords="stats grid telemetry container query region" aria-labelledby="catalog-metrics-title">
+        <article class="catalog-card syn-panel" data-catalog-category="data" data-catalog-keywords="stats grid telemetry container query region" aria-labelledby="catalog-metrics-title" data-catalog-use-cases="saas-dashboard marketing-site">
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-metrics-title">Responsive metrics</h2>
             <span class="syn-badge">syntyr.core.css</span>
@@ -594,7 +619,7 @@
             <a class="syn-button catalog-edit" href="playground.html#component=catalog-metrics-title">Edit in playground</a>
           </div>
         </article>
-        <article class="catalog-card syn-panel" data-catalog-category="data" data-catalog-keywords="table tabular records scroll responsive data" aria-labelledby="catalog-tables-title">
+        <article class="catalog-card syn-panel" data-catalog-category="data" data-catalog-keywords="table tabular records scroll responsive data" aria-labelledby="catalog-tables-title" data-catalog-use-cases="saas-dashboard">
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-tables-title">Accessible data tables</h2>
             <span class="syn-badge">syntyr.core.css</span>
@@ -627,7 +652,7 @@
             <a class="syn-button catalog-edit" href="playground.html#component=catalog-tables-title">Edit in playground</a>
           </div>
         </article>
-        <article class="catalog-card syn-panel" data-catalog-category="interactive" data-catalog-keywords="error warning info status important notification" aria-labelledby="catalog-alerts-title">
+        <article class="catalog-card syn-panel" data-catalog-category="interactive" data-catalog-keywords="error warning info status important notification" aria-labelledby="catalog-alerts-title" data-catalog-use-cases="saas-dashboard forms-workflow">
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-alerts-title">Alerts</h2>
             <span class="syn-badge">syntyr.core.css</span>
@@ -650,7 +675,7 @@
             <a class="syn-button catalog-edit" href="playground.html#component=catalog-alerts-title">Edit in playground</a>
           </div>
         </article>
-        <article class="catalog-card syn-panel" data-catalog-category="interactive" data-catalog-keywords="details accordion faq expandable summary" aria-labelledby="catalog-disclosures-title">
+        <article class="catalog-card syn-panel" data-catalog-category="interactive" data-catalog-keywords="details accordion faq expandable summary" aria-labelledby="catalog-disclosures-title" data-catalog-use-cases="content-docs marketing-site">
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-disclosures-title">Native disclosure</h2>
             <span class="syn-badge">syntyr.core.css</span>
@@ -677,7 +702,7 @@
             <a class="syn-button catalog-edit" href="playground.html#component=catalog-disclosures-title">Edit in playground</a>
           </div>
         </article>
-        <article class="catalog-card syn-panel" data-catalog-category="navigation" data-catalog-keywords="nav pages route links aria current" aria-labelledby="catalog-breadcrumbs-title">
+        <article class="catalog-card syn-panel" data-catalog-category="navigation" data-catalog-keywords="nav pages route links aria current" aria-labelledby="catalog-breadcrumbs-title" data-catalog-use-cases="navigation content-docs">
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-breadcrumbs-title">Breadcrumb navigation</h2>
             <span class="syn-badge">syntyr.core.css</span>
@@ -708,7 +733,7 @@
             <a class="syn-button catalog-edit" href="playground.html#component=catalog-breadcrumbs-title">Edit in playground</a>
           </div>
         </article>
-        <article class="catalog-card syn-panel" data-catalog-category="data" data-catalog-keywords="meter native progress loading" aria-labelledby="catalog-progress-title">
+        <article class="catalog-card syn-panel" data-catalog-category="data" data-catalog-keywords="meter native progress loading" aria-labelledby="catalog-progress-title" data-catalog-use-cases="saas-dashboard forms-workflow">
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-progress-title">Progress indicator</h2>
             <span class="syn-badge">syntyr.core.css</span>
@@ -731,7 +756,7 @@
             <a class="syn-button catalog-edit" href="playground.html#component=catalog-progress-title">Edit in playground</a>
           </div>
         </article>
-        <article class="catalog-card syn-panel" data-catalog-category="marketing" data-catalog-keywords="plan subscriptions marketing grid featured" aria-labelledby="catalog-pricing-title">
+        <article class="catalog-card syn-panel" data-catalog-category="marketing" data-catalog-keywords="plan subscriptions marketing grid featured" aria-labelledby="catalog-pricing-title" data-catalog-use-cases="marketing-site">
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-pricing-title">Pricing cards</h2>
             <span class="syn-badge">syntyr.core.css</span>
@@ -762,7 +787,7 @@
             <a class="syn-button catalog-edit" href="playground.html#component=catalog-pricing-title">Edit in playground</a>
           </div>
         </article>
-        <article class="catalog-card syn-panel" data-catalog-category="typography" data-catalog-keywords="headings heading paragraph emphasis strong mark small" aria-labelledby="catalog-typography-and-inline-text-title">
+        <article class="catalog-card syn-panel" data-catalog-category="typography" data-catalog-keywords="headings heading paragraph emphasis strong mark small" aria-labelledby="catalog-typography-and-inline-text-title" data-catalog-use-cases="content-docs marketing-site">
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-typography-and-inline-text-title">Typography and inline text</h2>
             <span class="syn-badge">syntyr.core.css</span>
@@ -791,7 +816,7 @@
             <a class="syn-button catalog-edit" href="playground.html#component=catalog-typography-and-inline-text-title">Edit in playground</a>
           </div>
         </article>
-        <article class="catalog-card syn-panel" data-catalog-category="typography" data-catalog-keywords="code pre kbd developer shortcut snippet monospace" aria-labelledby="catalog-code-and-keyboard-input-title">
+        <article class="catalog-card syn-panel" data-catalog-category="typography" data-catalog-keywords="code pre kbd developer shortcut snippet monospace" aria-labelledby="catalog-code-and-keyboard-input-title" data-catalog-use-cases="content-docs">
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-code-and-keyboard-input-title">Code and keyboard input</h2>
             <span class="syn-badge">syntyr.core.css</span>
@@ -818,7 +843,7 @@
             <a class="syn-button catalog-edit" href="playground.html#component=catalog-code-and-keyboard-input-title">Edit in playground</a>
           </div>
         </article>
-        <article class="catalog-card syn-panel" data-catalog-category="typography" data-catalog-keywords="bullets list ol ul li content steps" aria-labelledby="catalog-ordered-and-unordered-lists-title">
+        <article class="catalog-card syn-panel" data-catalog-category="typography" data-catalog-keywords="bullets list ol ul li content steps" aria-labelledby="catalog-ordered-and-unordered-lists-title" data-catalog-use-cases="content-docs">
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-ordered-and-unordered-lists-title">Ordered and unordered lists</h2>
             <span class="syn-badge">syntyr.core.css</span>
@@ -845,7 +870,7 @@
             <a class="syn-button catalog-edit" href="playground.html#component=catalog-ordered-and-unordered-lists-title">Edit in playground</a>
           </div>
         </article>
-        <article class="catalog-card syn-panel" data-catalog-category="data" data-catalog-keywords="description terms dl dt dd metadata key value" aria-labelledby="catalog-definition-list-title">
+        <article class="catalog-card syn-panel" data-catalog-category="data" data-catalog-keywords="description terms dl dt dd metadata key value" aria-labelledby="catalog-definition-list-title" data-catalog-use-cases="content-docs">
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-definition-list-title">Definition list</h2>
             <span class="syn-badge">syntyr.core.css</span>
@@ -872,7 +897,7 @@
             <a class="syn-button catalog-edit" href="playground.html#component=catalog-definition-list-title">Edit in playground</a>
           </div>
         </article>
-        <article class="catalog-card syn-panel" data-catalog-category="layout" data-catalog-keywords="section article header footer landmark semantic blog" aria-labelledby="catalog-article-with-header-and-footer-title">
+        <article class="catalog-card syn-panel" data-catalog-category="layout" data-catalog-keywords="section article header footer landmark semantic blog" aria-labelledby="catalog-article-with-header-and-footer-title" data-catalog-use-cases="content-docs">
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-article-with-header-and-footer-title">Article with header and footer</h2>
             <span class="syn-badge">syntyr.core.css</span>
@@ -901,7 +926,7 @@
             <a class="syn-button catalog-edit" href="playground.html#component=catalog-article-with-header-and-footer-title">Edit in playground</a>
           </div>
         </article>
-        <article class="catalog-card syn-panel" data-catalog-category="forms" data-catalog-keywords="fieldset legend radio checkbox label choice form" aria-labelledby="catalog-fieldset-and-choice-inputs-title">
+        <article class="catalog-card syn-panel" data-catalog-category="forms" data-catalog-keywords="fieldset legend radio checkbox label choice form" aria-labelledby="catalog-fieldset-and-choice-inputs-title" data-catalog-use-cases="forms-workflow">
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-fieldset-and-choice-inputs-title">Fieldset and choice inputs</h2>
             <span class="syn-badge">syntyr.core.css</span>
@@ -938,7 +963,7 @@
             <a class="syn-button catalog-edit" href="playground.html#component=catalog-fieldset-and-choice-inputs-title">Edit in playground</a>
           </div>
         </article>
-        <article class="catalog-card syn-panel" data-catalog-category="forms" data-catalog-keywords="select option textarea label notes form dropdown" aria-labelledby="catalog-select-and-textarea-title">
+        <article class="catalog-card syn-panel" data-catalog-category="forms" data-catalog-keywords="select option textarea label notes form dropdown" aria-labelledby="catalog-select-and-textarea-title" data-catalog-use-cases="forms-workflow">
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-select-and-textarea-title">Select and textarea</h2>
             <span class="syn-badge">syntyr.core.css</span>
@@ -973,7 +998,7 @@
             <a class="syn-button catalog-edit" href="playground.html#component=catalog-select-and-textarea-title">Edit in playground</a>
           </div>
         </article>
-        <article class="catalog-card syn-panel" data-catalog-category="data" data-catalog-keywords="time datetime data value machine readable metadata" aria-labelledby="catalog-dates-and-structured-values-title">
+        <article class="catalog-card syn-panel" data-catalog-category="data" data-catalog-keywords="time datetime data value machine readable metadata" aria-labelledby="catalog-dates-and-structured-values-title" data-catalog-use-cases="saas-dashboard forms-workflow">
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-dates-and-structured-values-title">Dates and structured values</h2>
             <span class="syn-badge">syntyr.core.css</span>
@@ -1000,7 +1025,7 @@
             <a class="syn-button catalog-edit" href="playground.html#component=catalog-dates-and-structured-values-title">Edit in playground</a>
           </div>
         </article>
-        <article class="catalog-card syn-panel" data-catalog-category="media" data-catalog-keywords="figure figcaption img picture source responsive image art direction" aria-labelledby="catalog-responsive-image-with-caption-title">
+        <article class="catalog-card syn-panel" data-catalog-category="media" data-catalog-keywords="figure figcaption img picture source responsive image art direction" aria-labelledby="catalog-responsive-image-with-caption-title" data-catalog-use-cases="marketing-site content-docs">
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-responsive-image-with-caption-title">Responsive image with caption</h2>
             <span class="syn-badge">syntyr.core.css</span>
@@ -1033,7 +1058,7 @@
             <a class="syn-button catalog-edit" href="playground.html#component=catalog-responsive-image-with-caption-title">Edit in playground</a>
           </div>
         </article>
-        <article class="catalog-card syn-panel" data-catalog-category="typography" data-catalog-keywords="blockquote cite q quote citation figure attribution" aria-labelledby="catalog-quotation-and-source-title">
+        <article class="catalog-card syn-panel" data-catalog-category="typography" data-catalog-keywords="blockquote cite q quote citation figure attribution" aria-labelledby="catalog-quotation-and-source-title" data-catalog-use-cases="content-docs marketing-site">
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-quotation-and-source-title">Quotation and source</h2>
             <span class="syn-badge">syntyr.core.css</span>
@@ -1060,7 +1085,7 @@
             <a class="syn-button catalog-edit" href="playground.html#component=catalog-quotation-and-source-title">Edit in playground</a>
           </div>
         </article>
-        <article class="catalog-card syn-panel" data-catalog-category="interactive" data-catalog-keywords="popover popovertarget overlay help no javascript browser" aria-labelledby="catalog-native-popover-title">
+        <article class="catalog-card syn-panel" data-catalog-category="interactive" data-catalog-keywords="popover popovertarget overlay help no javascript browser" aria-labelledby="catalog-native-popover-title" data-catalog-use-cases="navigation saas-dashboard">
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-native-popover-title">Native popover</h2>
             <span class="syn-badge">syntyr.core.css</span>
@@ -1090,7 +1115,7 @@
             <a class="syn-button catalog-edit" href="playground.html#component=catalog-native-popover-title">Edit in playground</a>
           </div>
         </article>
-        <article class="catalog-card syn-panel" data-catalog-category="forms" data-catalog-keywords="form composition prefix addon connected input" aria-labelledby="catalog-input-group-title">
+        <article class="catalog-card syn-panel" data-catalog-category="forms" data-catalog-keywords="form composition prefix addon connected input" aria-labelledby="catalog-input-group-title" data-catalog-use-cases="forms-workflow">
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-input-group-title">Connected input groups</h2>
             <span class="syn-badge">syntyr.core.css</span>
@@ -1125,7 +1150,7 @@
             <a class="syn-button catalog-edit" href="playground.html#component=catalog-input-group-title">Edit in playground</a>
           </div>
         </article>
-        <article class="catalog-card syn-panel" data-catalog-category="forms" data-catalog-keywords="search crm filter bar stage records toolbar" aria-labelledby="catalog-crm-filters-title">
+        <article class="catalog-card syn-panel" data-catalog-category="forms" data-catalog-keywords="search crm filter bar stage records toolbar" aria-labelledby="catalog-crm-filters-title" data-catalog-use-cases="saas-dashboard forms-workflow">
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-crm-filters-title">CRM filter toolbar</h2>
             <span class="syn-badge">syntyr.recipes.css</span>
@@ -1168,7 +1193,7 @@
             <a class="syn-button catalog-edit" href="playground.html#component=catalog-crm-filters-title">Edit in playground</a>
           </div>
         </article>
-        <article class="catalog-card syn-panel" data-catalog-category="interactive" data-catalog-keywords="empty no results recovery error reset action" aria-labelledby="catalog-recovery-state-title">
+        <article class="catalog-card syn-panel" data-catalog-category="interactive" data-catalog-keywords="empty no results recovery error reset action" aria-labelledby="catalog-recovery-state-title" data-catalog-use-cases="saas-dashboard forms-workflow">
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-recovery-state-title">Empty and recovery state</h2>
             <span class="syn-badge">syntyr.recipes.css</span>
@@ -1197,7 +1222,7 @@
             <a class="syn-button catalog-edit" href="playground.html#component=catalog-recovery-state-title">Edit in playground</a>
           </div>
         </article>
-        <article class="catalog-card syn-panel" data-catalog-category="layout" data-catalog-keywords="decorative frame bracket accent geometry visual" aria-labelledby="catalog-geometry-frame-title">
+        <article class="catalog-card syn-panel" data-catalog-category="layout" data-catalog-keywords="decorative frame bracket accent geometry visual" aria-labelledby="catalog-geometry-frame-title" data-catalog-use-cases="marketing-site">
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-geometry-frame-title">Geometry frame</h2>
             <span class="syn-badge">syntyr.geometry.css</span>
@@ -1224,7 +1249,7 @@
             <a class="syn-button catalog-edit" href="playground.html#component=catalog-geometry-frame-title">Edit in playground</a>
           </div>
         </article>
-        <article class="catalog-card syn-panel" data-catalog-category="data" data-catalog-keywords="visualization graph chart ranked bars percentages data" aria-labelledby="catalog-viz-bars-title">
+        <article class="catalog-card syn-panel" data-catalog-category="data" data-catalog-keywords="visualization graph chart ranked bars percentages data" aria-labelledby="catalog-viz-bars-title" data-catalog-use-cases="saas-dashboard">
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-viz-bars-title">Accessible data bars</h2>
             <span class="syn-badge">syntyr.viz.css</span>
@@ -1263,7 +1288,7 @@
             <a class="syn-button catalog-edit" href="playground.html#component=catalog-viz-bars-title">Edit in playground</a>
           </div>
         </article>
-        <article class="catalog-card syn-panel" data-catalog-category="navigation" data-catalog-keywords="primary site navigation landmark active page aria-current list" aria-labelledby="catalog-primary-nav-title">
+        <article class="catalog-card syn-panel" data-catalog-category="navigation" data-catalog-keywords="primary site navigation landmark active page aria-current list" aria-labelledby="catalog-primary-nav-title" data-catalog-use-cases="navigation marketing-site">
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-primary-nav-title">Primary navigation</h2>
             <span class="syn-badge">syntyr.core.css</span>
@@ -1296,7 +1321,7 @@
             <a class="syn-button catalog-edit" href="playground.html#component=catalog-primary-nav-title">Edit in playground</a>
           </div>
         </article>
-        <article class="catalog-card syn-panel" data-catalog-category="navigation" data-catalog-keywords="table of contents jump links anchor section navigation same page" aria-labelledby="catalog-table-of-contents-title">
+        <article class="catalog-card syn-panel" data-catalog-category="navigation" data-catalog-keywords="table of contents jump links anchor section navigation same page" aria-labelledby="catalog-table-of-contents-title" data-catalog-use-cases="navigation content-docs">
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-table-of-contents-title">On-page table of contents</h2>
             <span class="syn-badge">syntyr.core.css</span>
@@ -1343,7 +1368,7 @@
             <a class="syn-button catalog-edit" href="playground.html#component=catalog-table-of-contents-title">Edit in playground</a>
           </div>
         </article>
-        <article class="catalog-card syn-panel" data-catalog-category="navigation" data-catalog-keywords="footer contentinfo navigation about legal links sitemap" aria-labelledby="catalog-footer-nav-title">
+        <article class="catalog-card syn-panel" data-catalog-category="navigation" data-catalog-keywords="footer contentinfo navigation about legal links sitemap" aria-labelledby="catalog-footer-nav-title" data-catalog-use-cases="navigation marketing-site">
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-footer-nav-title">Footer link groups</h2>
             <span class="syn-badge">syntyr.core.css</span>
@@ -1388,7 +1413,7 @@
             <a class="syn-button catalog-edit" href="playground.html#component=catalog-footer-nav-title">Edit in playground</a>
           </div>
         </article>
-        <article class="catalog-card syn-panel" data-catalog-category="navigation" data-catalog-keywords="pagination pages previous next rel prev next aria-current" aria-labelledby="catalog-pagination-title">
+        <article class="catalog-card syn-panel" data-catalog-category="navigation" data-catalog-keywords="pagination pages previous next rel prev next aria-current" aria-labelledby="catalog-pagination-title" data-catalog-use-cases="navigation saas-dashboard">
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-pagination-title">Pagination navigation</h2>
             <span class="syn-badge">syntyr.core.css</span>
@@ -1421,7 +1446,7 @@
             <a class="syn-button catalog-edit" href="playground.html#component=catalog-pagination-title">Edit in playground</a>
           </div>
         </article>
-        <article class="catalog-card syn-panel" data-catalog-category="layout" data-catalog-keywords="contact address email phone support organization details" aria-labelledby="catalog-contact-title">
+        <article class="catalog-card syn-panel" data-catalog-category="layout" data-catalog-keywords="contact address email phone support organization details" aria-labelledby="catalog-contact-title" data-catalog-use-cases="marketing-site content-docs">
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-contact-title">Contact details</h2>
             <span class="syn-badge">syntyr.core.css</span>
@@ -1458,7 +1483,7 @@
             <a class="syn-button catalog-edit" href="playground.html#component=catalog-contact-title">Edit in playground</a>
           </div>
         </article>
-        <article class="catalog-card syn-panel" data-catalog-category="layout" data-catalog-keywords="section sidebar complementary related resources aside landmark" aria-labelledby="catalog-aside-title">
+        <article class="catalog-card syn-panel" data-catalog-category="layout" data-catalog-keywords="section sidebar complementary related resources aside landmark" aria-labelledby="catalog-aside-title" data-catalog-use-cases="content-docs saas-dashboard">
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-aside-title">Section and complementary aside</h2>
             <span class="syn-badge">syntyr.core.css</span>
@@ -1497,7 +1522,7 @@
             <a class="syn-button catalog-edit" href="playground.html#component=catalog-aside-title">Edit in playground</a>
           </div>
         </article>
-        <article class="catalog-card syn-panel" data-catalog-category="typography" data-catalog-keywords="hgroup heading title subtitle introduction lede editorial" aria-labelledby="catalog-heading-group-title">
+        <article class="catalog-card syn-panel" data-catalog-category="typography" data-catalog-keywords="hgroup heading title subtitle introduction lede editorial" aria-labelledby="catalog-heading-group-title" data-catalog-use-cases="content-docs">
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-heading-group-title">Heading group</h2>
             <span class="syn-badge">syntyr.core.css</span>
@@ -1530,7 +1555,7 @@
             <a class="syn-button catalog-edit" href="playground.html#component=catalog-heading-group-title">Edit in playground</a>
           </div>
         </article>
-        <article class="catalog-card syn-panel" data-catalog-category="data" data-catalog-keywords="agenda schedule event time datetime ordered list sessions" aria-labelledby="catalog-event-agenda-title">
+        <article class="catalog-card syn-panel" data-catalog-category="data" data-catalog-keywords="agenda schedule event time datetime ordered list sessions" aria-labelledby="catalog-event-agenda-title" data-catalog-use-cases="content-docs">
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-event-agenda-title">Event agenda</h2>
             <span class="syn-badge">syntyr.core.css</span>
@@ -1565,7 +1590,7 @@
             <a class="syn-button catalog-edit" href="playground.html#component=catalog-event-agenda-title">Edit in playground</a>
           </div>
         </article>
-        <article class="catalog-card syn-panel" data-catalog-category="data" data-catalog-keywords="table caption summary tfoot total column scope numeric" aria-labelledby="catalog-table-totals-title">
+        <article class="catalog-card syn-panel" data-catalog-category="data" data-catalog-keywords="table caption summary tfoot total column scope numeric" aria-labelledby="catalog-table-totals-title" data-catalog-use-cases="saas-dashboard">
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-table-totals-title">Table with totals</h2>
             <span class="syn-badge">syntyr.core.css</span>
@@ -1606,7 +1631,7 @@
             <a class="syn-button catalog-edit" href="playground.html#component=catalog-table-totals-title">Edit in playground</a>
           </div>
         </article>
-        <article class="catalog-card syn-panel" data-catalog-category="typography" data-catalog-keywords="abbreviation definition edit insert delete ins del dfn datetime revisions" aria-labelledby="catalog-revisions-title">
+        <article class="catalog-card syn-panel" data-catalog-category="typography" data-catalog-keywords="abbreviation definition edit insert delete ins del dfn datetime revisions" aria-labelledby="catalog-revisions-title" data-catalog-use-cases="content-docs">
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-revisions-title">Revisions and abbreviations</h2>
             <span class="syn-badge">syntyr.core.css</span>
@@ -1639,7 +1664,7 @@
             <a class="syn-button catalog-edit" href="playground.html#component=catalog-revisions-title">Edit in playground</a>
           </div>
         </article>
-        <article class="catalog-card syn-panel" data-catalog-category="forms" data-catalog-keywords="form validation help required number range aria-describedby label" aria-labelledby="catalog-form-help-title">
+        <article class="catalog-card syn-panel" data-catalog-category="forms" data-catalog-keywords="form validation help required number range aria-describedby label" aria-labelledby="catalog-form-help-title" data-catalog-use-cases="forms-workflow">
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-form-help-title">Form help and validation</h2>
             <span class="syn-badge">syntyr.core.css</span>
@@ -1674,7 +1699,7 @@
             <a class="syn-button catalog-edit" href="playground.html#component=catalog-form-help-title">Edit in playground</a>
           </div>
         </article>
-        <article class="catalog-card syn-panel" data-catalog-category="navigation" data-catalog-keywords="skip content anchor keyboard accessible" aria-labelledby="catalog-skip-link-title">
+        <article class="catalog-card syn-panel" data-catalog-category="navigation" data-catalog-keywords="skip content anchor keyboard accessible" aria-labelledby="catalog-skip-link-title" data-catalog-use-cases="navigation content-docs">
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-skip-link-title">Skip navigation link</h2>
             <span class="syn-badge">syntyr.core.css</span>
@@ -1709,7 +1734,7 @@
             <a class="syn-button catalog-edit" href="playground.html#component=catalog-skip-link-title">Edit in playground</a>
           </div>
         </article>
-        <article class="catalog-card syn-panel" data-catalog-category="data" data-catalog-keywords="status list badges semantic state text" aria-labelledby="catalog-status-list-title">
+        <article class="catalog-card syn-panel" data-catalog-category="data" data-catalog-keywords="status list badges semantic state text" aria-labelledby="catalog-status-list-title" data-catalog-use-cases="saas-dashboard">
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-status-list-title">Status indicator list</h2>
             <span class="syn-badge">syntyr.core.css</span>
@@ -1744,7 +1769,7 @@
             <a class="syn-button catalog-edit" href="playground.html#component=catalog-status-list-title">Edit in playground</a>
           </div>
         </article>
-        <article class="catalog-card syn-panel" data-catalog-category="data" data-catalog-keywords="activity timeline events ordered time feed" aria-labelledby="catalog-activity-entry-title">
+        <article class="catalog-card syn-panel" data-catalog-category="data" data-catalog-keywords="activity timeline events ordered time feed" aria-labelledby="catalog-activity-entry-title" data-catalog-use-cases="saas-dashboard">
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-activity-entry-title">Activity timeline</h2>
             <span class="syn-badge">syntyr.core.css</span>
@@ -1777,7 +1802,7 @@
             <a class="syn-button catalog-edit" href="playground.html#component=catalog-activity-entry-title">Edit in playground</a>
           </div>
         </article>
-        <article class="catalog-card syn-panel" data-catalog-category="data" data-catalog-keywords="property key value details description list metadata" aria-labelledby="catalog-property-list-title">
+        <article class="catalog-card syn-panel" data-catalog-category="data" data-catalog-keywords="property key value details description list metadata" aria-labelledby="catalog-property-list-title" data-catalog-use-cases="saas-dashboard">
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-property-list-title">Key-value details</h2>
             <span class="syn-badge">syntyr.core.css</span>
@@ -1812,7 +1837,7 @@
             <a class="syn-button catalog-edit" href="playground.html#component=catalog-property-list-title">Edit in playground</a>
           </div>
         </article>
-        <article class="catalog-card syn-panel" data-catalog-category="layout" data-catalog-keywords="resource article card link description" aria-labelledby="catalog-link-card-title">
+        <article class="catalog-card syn-panel" data-catalog-category="layout" data-catalog-keywords="resource article card link description" aria-labelledby="catalog-link-card-title" data-catalog-use-cases="navigation content-docs">
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-link-card-title">Linked resource card</h2>
             <span class="syn-badge">syntyr.core.css</span>
@@ -1841,7 +1866,7 @@
             <a class="syn-button catalog-edit" href="playground.html#component=catalog-link-card-title">Edit in playground</a>
           </div>
         </article>
-        <article class="catalog-card syn-panel" data-catalog-category="layout" data-catalog-keywords="section header toolbar actions links responsive" aria-labelledby="catalog-section-actions-title">
+        <article class="catalog-card syn-panel" data-catalog-category="layout" data-catalog-keywords="section header toolbar actions links responsive" aria-labelledby="catalog-section-actions-title" data-catalog-use-cases="saas-dashboard">
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-section-actions-title">Section header with actions</h2>
             <span class="syn-badge">syntyr.core.css</span>

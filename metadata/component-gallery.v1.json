@@ -9,6 +9,39 @@
   },
   "scope": "syn-root",
   "runtime_requirement": "none",
+  "use_case_definitions": {
+    "marketing-site": {
+      "label": "Marketing website",
+      "description": "Landing-page, pricing, trust, and public-site compositions."
+    },
+    "saas-dashboard": {
+      "label": "SaaS dashboard",
+      "description": "Application surfaces, status, metrics, tables, and operations UI."
+    },
+    "forms-workflow": {
+      "label": "Forms and onboarding",
+      "description": "Data entry, search, feedback, and multistep form compositions."
+    },
+    "content-docs": {
+      "label": "Content and documentation",
+      "description": "Editorial content, help, semantic text, and documentation layouts."
+    },
+    "navigation": {
+      "label": "Navigation and discovery",
+      "description": "Site navigation, wayfinding, search, and pagination patterns."
+    }
+  },
+  "adoption_guidance": {
+    "framework_guide": "docs/framework-integrations.html",
+    "required_css_order": [
+      "syntyr.core.css",
+      "then optional files listed by each example's required_stylesheets"
+    ],
+    "stylesheet_rule": "Load required_stylesheets in their listed order; syntyr.all.css replaces, never accompanies, individual modules.",
+    "html_rule": "Place example HTML inside a stable .syn-root; copy IDs only once per document and replace demo links and form actions.",
+    "browser_rule": "Consult native_feature_requirements and native_browser_features fallbacks; an empty list does not guarantee compatibility.",
+    "release_rule": "Unreleased 0.3.0-alpha.5 source candidate; do not assume published alpha.4 includes these examples."
+  },
   "native_browser_features": {
     "details-name": {
       "name": "Exclusive details grouping",
@@ -626,6 +659,12 @@
         "outline"
       ],
       "category": "interactive",
+      "use_cases": [
+        "forms-workflow",
+        "saas-dashboard"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-buttons-title",
+      "playground_url": "docs/playground.html#component=catalog-buttons-title",
       "elements": [
         "button",
         "div"
@@ -655,6 +694,11 @@
         "accessibility"
       ],
       "category": "forms",
+      "use_cases": [
+        "forms-workflow"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-forms-title",
+      "playground_url": "docs/playground.html#component=catalog-forms-title",
       "elements": [
         "div",
         "input",
@@ -689,6 +733,11 @@
         "form"
       ],
       "category": "forms",
+      "use_cases": [
+        "forms-workflow"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-native-controls-title",
+      "playground_url": "docs/playground.html#component=catalog-native-controls-title",
       "elements": [
         "div",
         "input",
@@ -720,6 +769,12 @@
         "disclosure"
       ],
       "category": "interactive",
+      "use_cases": [
+        "content-docs",
+        "marketing-site"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-interaction-card-0",
+      "playground_url": "docs/playground.html#component=catalog-interaction-card-0",
       "elements": [
         "details",
         "h3",
@@ -753,6 +808,12 @@
         "server"
       ],
       "category": "navigation",
+      "use_cases": [
+        "forms-workflow",
+        "navigation"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-interaction-card-1",
+      "playground_url": "docs/playground.html#component=catalog-interaction-card-1",
       "elements": [
         "button",
         "form",
@@ -788,6 +849,12 @@
         "dialog"
       ],
       "category": "interactive",
+      "use_cases": [
+        "forms-workflow",
+        "saas-dashboard"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-interaction-card-2",
+      "playground_url": "docs/playground.html#component=catalog-interaction-card-2",
       "elements": [
         "button",
         "dialog",
@@ -825,6 +892,11 @@
         "optgroup"
       ],
       "category": "forms",
+      "use_cases": [
+        "forms-workflow"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-interaction-card-3",
+      "playground_url": "docs/playground.html#component=catalog-interaction-card-3",
       "elements": [
         "datalist",
         "div",
@@ -859,6 +931,11 @@
         "gauge"
       ],
       "category": "data",
+      "use_cases": [
+        "saas-dashboard"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-interaction-card-4",
+      "playground_url": "docs/playground.html#component=catalog-interaction-card-4",
       "elements": [
         "div",
         "label",
@@ -890,6 +967,12 @@
         "variables"
       ],
       "category": "layout",
+      "use_cases": [
+        "saas-dashboard",
+        "marketing-site"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-panels-title",
+      "playground_url": "docs/playground.html#component=catalog-panels-title",
       "elements": [
         "article",
         "h3",
@@ -919,6 +1002,12 @@
         "region"
       ],
       "category": "data",
+      "use_cases": [
+        "saas-dashboard",
+        "marketing-site"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-metrics-title",
+      "playground_url": "docs/playground.html#component=catalog-metrics-title",
       "elements": [
         "article",
         "div",
@@ -953,6 +1042,11 @@
         "data"
       ],
       "category": "data",
+      "use_cases": [
+        "saas-dashboard"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-tables-title",
+      "playground_url": "docs/playground.html#component=catalog-tables-title",
       "elements": [
         "caption",
         "div",
@@ -987,6 +1081,12 @@
         "notification"
       ],
       "category": "interactive",
+      "use_cases": [
+        "saas-dashboard",
+        "forms-workflow"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-alerts-title",
+      "playground_url": "docs/playground.html#component=catalog-alerts-title",
       "elements": [
         "div"
       ],
@@ -1013,6 +1113,12 @@
         "summary"
       ],
       "category": "interactive",
+      "use_cases": [
+        "content-docs",
+        "marketing-site"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-disclosures-title",
+      "playground_url": "docs/playground.html#component=catalog-disclosures-title",
       "elements": [
         "details",
         "p",
@@ -1041,6 +1147,12 @@
         "current"
       ],
       "category": "navigation",
+      "use_cases": [
+        "navigation",
+        "content-docs"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-breadcrumbs-title",
+      "playground_url": "docs/playground.html#component=catalog-breadcrumbs-title",
       "elements": [
         "a",
         "li",
@@ -1069,6 +1181,12 @@
         "loading"
       ],
       "category": "data",
+      "use_cases": [
+        "saas-dashboard",
+        "forms-workflow"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-progress-title",
+      "playground_url": "docs/playground.html#component=catalog-progress-title",
       "elements": [
         "label",
         "progress"
@@ -1096,6 +1214,11 @@
         "featured"
       ],
       "category": "marketing",
+      "use_cases": [
+        "marketing-site"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-pricing-title",
+      "playground_url": "docs/playground.html#component=catalog-pricing-title",
       "elements": [
         "a",
         "article",
@@ -1133,6 +1256,12 @@
         "small"
       ],
       "category": "typography",
+      "use_cases": [
+        "content-docs",
+        "marketing-site"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-typography-and-inline-text-title",
+      "playground_url": "docs/playground.html#component=catalog-typography-and-inline-text-title",
       "elements": [
         "em",
         "h2",
@@ -1166,6 +1295,11 @@
         "monospace"
       ],
       "category": "typography",
+      "use_cases": [
+        "content-docs"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-code-and-keyboard-input-title",
+      "playground_url": "docs/playground.html#component=catalog-code-and-keyboard-input-title",
       "elements": [
         "code",
         "kbd",
@@ -1195,6 +1329,11 @@
         "steps"
       ],
       "category": "typography",
+      "use_cases": [
+        "content-docs"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-ordered-and-unordered-lists-title",
+      "playground_url": "docs/playground.html#component=catalog-ordered-and-unordered-lists-title",
       "elements": [
         "div",
         "li",
@@ -1226,6 +1365,11 @@
         "value"
       ],
       "category": "data",
+      "use_cases": [
+        "content-docs"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-definition-list-title",
+      "playground_url": "docs/playground.html#component=catalog-definition-list-title",
       "elements": [
         "dd",
         "dl",
@@ -1253,6 +1397,11 @@
         "blog"
       ],
       "category": "layout",
+      "use_cases": [
+        "content-docs"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-article-with-header-and-footer-title",
+      "playground_url": "docs/playground.html#component=catalog-article-with-header-and-footer-title",
       "elements": [
         "article",
         "footer",
@@ -1285,6 +1434,11 @@
         "form"
       ],
       "category": "forms",
+      "use_cases": [
+        "forms-workflow"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-fieldset-and-choice-inputs-title",
+      "playground_url": "docs/playground.html#component=catalog-fieldset-and-choice-inputs-title",
       "elements": [
         "button",
         "fieldset",
@@ -1317,6 +1471,11 @@
         "dropdown"
       ],
       "category": "forms",
+      "use_cases": [
+        "forms-workflow"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-select-and-textarea-title",
+      "playground_url": "docs/playground.html#component=catalog-select-and-textarea-title",
       "elements": [
         "div",
         "label",
@@ -1350,6 +1509,12 @@
         "metadata"
       ],
       "category": "data",
+      "use_cases": [
+        "saas-dashboard",
+        "forms-workflow"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-dates-and-structured-values-title",
+      "playground_url": "docs/playground.html#component=catalog-dates-and-structured-values-title",
       "elements": [
         "data",
         "dd",
@@ -1381,6 +1546,12 @@
         "direction"
       ],
       "category": "media",
+      "use_cases": [
+        "marketing-site",
+        "content-docs"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-responsive-image-with-caption-title",
+      "playground_url": "docs/playground.html#component=catalog-responsive-image-with-caption-title",
       "elements": [
         "figcaption",
         "figure",
@@ -1410,6 +1581,12 @@
         "attribution"
       ],
       "category": "typography",
+      "use_cases": [
+        "content-docs",
+        "marketing-site"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-quotation-and-source-title",
+      "playground_url": "docs/playground.html#component=catalog-quotation-and-source-title",
       "elements": [
         "blockquote",
         "cite",
@@ -1439,6 +1616,12 @@
         "browser"
       ],
       "category": "interactive",
+      "use_cases": [
+        "navigation",
+        "saas-dashboard"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-native-popover-title",
+      "playground_url": "docs/playground.html#component=catalog-native-popover-title",
       "elements": [
         "button",
         "div",
@@ -1470,6 +1653,11 @@
         "input"
       ],
       "category": "forms",
+      "use_cases": [
+        "forms-workflow"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-input-group-title",
+      "playground_url": "docs/playground.html#component=catalog-input-group-title",
       "elements": [
         "div",
         "input",
@@ -1507,6 +1695,12 @@
         "toolbar"
       ],
       "category": "forms",
+      "use_cases": [
+        "saas-dashboard",
+        "forms-workflow"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-crm-filters-title",
+      "playground_url": "docs/playground.html#component=catalog-crm-filters-title",
       "elements": [
         "button",
         "div",
@@ -1549,6 +1743,12 @@
         "action"
       ],
       "category": "interactive",
+      "use_cases": [
+        "saas-dashboard",
+        "forms-workflow"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-recovery-state-title",
+      "playground_url": "docs/playground.html#component=catalog-recovery-state-title",
       "elements": [
         "a",
         "h3",
@@ -1581,6 +1781,11 @@
         "visual"
       ],
       "category": "layout",
+      "use_cases": [
+        "marketing-site"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-geometry-frame-title",
+      "playground_url": "docs/playground.html#component=catalog-geometry-frame-title",
       "elements": [
         "article",
         "h3",
@@ -1614,6 +1819,11 @@
         "data"
       ],
       "category": "data",
+      "use_cases": [
+        "saas-dashboard"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-viz-bars-title",
+      "playground_url": "docs/playground.html#component=catalog-viz-bars-title",
       "elements": [
         "data",
         "div",
@@ -1650,6 +1860,12 @@
         "list"
       ],
       "category": "navigation",
+      "use_cases": [
+        "navigation",
+        "marketing-site"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-primary-nav-title",
+      "playground_url": "docs/playground.html#component=catalog-primary-nav-title",
       "elements": [
         "a",
         "li",
@@ -1683,6 +1899,12 @@
         "page"
       ],
       "category": "navigation",
+      "use_cases": [
+        "navigation",
+        "content-docs"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-table-of-contents-title",
+      "playground_url": "docs/playground.html#component=catalog-table-of-contents-title",
       "elements": [
         "a",
         "h3",
@@ -1714,6 +1936,12 @@
         "sitemap"
       ],
       "category": "navigation",
+      "use_cases": [
+        "navigation",
+        "marketing-site"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-footer-nav-title",
+      "playground_url": "docs/playground.html#component=catalog-footer-nav-title",
       "elements": [
         "a",
         "footer",
@@ -1749,6 +1977,12 @@
         "aria-current"
       ],
       "category": "navigation",
+      "use_cases": [
+        "navigation",
+        "saas-dashboard"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-pagination-title",
+      "playground_url": "docs/playground.html#component=catalog-pagination-title",
       "elements": [
         "a",
         "nav",
@@ -1778,6 +2012,12 @@
         "details"
       ],
       "category": "layout",
+      "use_cases": [
+        "marketing-site",
+        "content-docs"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-contact-title",
+      "playground_url": "docs/playground.html#component=catalog-contact-title",
       "elements": [
         "a",
         "address",
@@ -1809,6 +2049,12 @@
         "landmark"
       ],
       "category": "layout",
+      "use_cases": [
+        "content-docs",
+        "saas-dashboard"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-aside-title",
+      "playground_url": "docs/playground.html#component=catalog-aside-title",
       "elements": [
         "a",
         "aside",
@@ -1843,6 +2089,11 @@
         "editorial"
       ],
       "category": "typography",
+      "use_cases": [
+        "content-docs"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-heading-group-title",
+      "playground_url": "docs/playground.html#component=catalog-heading-group-title",
       "elements": [
         "h3",
         "hgroup",
@@ -1874,6 +2125,11 @@
         "sessions"
       ],
       "category": "data",
+      "use_cases": [
+        "content-docs"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-event-agenda-title",
+      "playground_url": "docs/playground.html#component=catalog-event-agenda-title",
       "elements": [
         "h3",
         "li",
@@ -1906,6 +2162,11 @@
         "numeric"
       ],
       "category": "data",
+      "use_cases": [
+        "saas-dashboard"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-table-totals-title",
+      "playground_url": "docs/playground.html#component=catalog-table-totals-title",
       "elements": [
         "caption",
         "div",
@@ -1945,6 +2206,11 @@
         "revisions"
       ],
       "category": "typography",
+      "use_cases": [
+        "content-docs"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-revisions-title",
+      "playground_url": "docs/playground.html#component=catalog-revisions-title",
       "elements": [
         "abbr",
         "del",
@@ -1977,6 +2243,11 @@
         "label"
       ],
       "category": "forms",
+      "use_cases": [
+        "forms-workflow"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-form-help-title",
+      "playground_url": "docs/playground.html#component=catalog-form-help-title",
       "elements": [
         "button",
         "form",
@@ -2011,6 +2282,12 @@
         "accessible"
       ],
       "category": "navigation",
+      "use_cases": [
+        "navigation",
+        "content-docs"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-skip-link-title",
+      "playground_url": "docs/playground.html#component=catalog-skip-link-title",
       "elements": [
         "a",
         "div",
@@ -2042,6 +2319,11 @@
         "text"
       ],
       "category": "data",
+      "use_cases": [
+        "saas-dashboard"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-status-list-title",
+      "playground_url": "docs/playground.html#component=catalog-status-list-title",
       "elements": [
         "h3",
         "li",
@@ -2073,6 +2355,11 @@
         "feed"
       ],
       "category": "data",
+      "use_cases": [
+        "saas-dashboard"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-activity-entry-title",
+      "playground_url": "docs/playground.html#component=catalog-activity-entry-title",
       "elements": [
         "h3",
         "li",
@@ -2104,6 +2391,11 @@
         "metadata"
       ],
       "category": "data",
+      "use_cases": [
+        "saas-dashboard"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-property-list-title",
+      "playground_url": "docs/playground.html#component=catalog-property-list-title",
       "elements": [
         "dd",
         "dl",
@@ -2132,6 +2424,12 @@
         "description"
       ],
       "category": "layout",
+      "use_cases": [
+        "navigation",
+        "content-docs"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-link-card-title",
+      "playground_url": "docs/playground.html#component=catalog-link-card-title",
       "elements": [
         "a",
         "article",
@@ -2163,6 +2461,11 @@
         "responsive"
       ],
       "category": "layout",
+      "use_cases": [
+        "saas-dashboard"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-section-actions-title",
+      "playground_url": "docs/playground.html#component=catalog-section-actions-title",
       "elements": [
         "a",
         "h3",
