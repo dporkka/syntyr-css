@@ -70,6 +70,23 @@
     updatePreviewVisibility();
   }
 
+  // Back/Forward can restore a native category link's fragment while the
+  // previous filter hides its target. Reveal that card before scrolling.
+  function restoreCategoryFromHash() {
+    let id;
+    try { id = decodeURIComponent(window.location.hash.slice(1)); }
+    catch { return; }
+    if (!id.startsWith("block-title-")) return;
+    const target = document.getElementById(id);
+    const card = target?.closest("[data-block-id]");
+    if (!card || !card.hidden) return;
+    query.value = "";
+    category.value = card.dataset.blockCategory;
+    filter();
+    window.requestAnimationFrame(() => target.scrollIntoView({block: "start"}));
+  }
+  window.addEventListener("hashchange", restoreCategoryFromHash);
+
   function changeTheme() {
     for (const item of indexed) {
       if (item.preview) item.preview.setAttribute("data-syn-theme", theme.value);
