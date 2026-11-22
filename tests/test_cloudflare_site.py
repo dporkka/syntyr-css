@@ -81,6 +81,8 @@ class CloudflareSiteTests(unittest.TestCase):
             self.assertTrue((out / "docs/theme-editor.js").is_file())
             for name in ("page-builder.html", "page-builder.css", "page-builder.js", "page-builder-model.mjs", "page-builder-guide.md", "page-builder-guide.html"):
                 self.assertTrue((out / "docs" / name).is_file(), name)
+            for name in ("form-builder.html", "form-builder.css", "form-builder.js", "form-builder-model.mjs"):
+                self.assertTrue((out / "docs" / name).is_file(), name)
             # JSON-LD is inert data, not browser-executed JavaScript.
             self.assertFalse(any(
                 "<script" in re.sub(
@@ -89,9 +91,9 @@ class CloudflareSiteTests(unittest.TestCase):
                 ).lower()
                 for page in out.rglob("*.html")
                 if page.relative_to(out).as_posix() not in {
+                    "docs/form-builder.html", "docs/theme-editor.html", "docs/catalog.html",
                     "tools/color-contrast-checker.html", "tools/css-theme-generator.html",
                     "tools/css-clamp-generator.html", "tools/responsive-design-tester.html",
-                    "docs/theme-editor.html", "docs/catalog.html",
                     "docs/playground.html", "docs/page-builder.html", "docs/blocks.html",
                     "docs/how-to.html",  # Docs-only search, same CSP as the catalog.
                     "docs/starter-wizard.html",  # Docs-only generator, no runtime dependency.

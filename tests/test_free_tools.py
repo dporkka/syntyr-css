@@ -37,6 +37,11 @@ class FreeToolsTests(unittest.TestCase):
         self.assertIsNotNone(iframe_rule)
         self.assertIn('box-sizing:content-box', iframe_rule.group(1))
 
+    def test_form_customizer_is_discoverable_from_free_tools(self):
+        for name in PAGES:
+            html = self.files['tools/' + name].decode()
+            self.assertIn('href="../docs/form-builder.html"', html, name)
+
     def test_nested_theme_preview_is_not_full_height_page(self):
         html = self.files['tools/css-theme-generator.html'].decode()
         self.assertIn('id="theme-preview" class="syn-root tool-sample"', html)
