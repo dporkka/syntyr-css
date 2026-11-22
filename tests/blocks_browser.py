@@ -292,7 +292,12 @@ def progressive_checks(browser, engine, screenshots):
             "Accessibility: copy button lacks block context")
     require(f"{BLOCK_COUNT} of {BLOCK_COUNT}" in page.locator("#blocks-results").inner_text(), "JS: count wrong")
     page.locator("#blocks-search").fill("pricing")
-    require(page.locator("[data-block-id]:visible").count() == 1, "JS: search wrong")
+    expected_pricing = sum(
+        "pricing" in " ".join([block["title"], block["description"], *block["tags"]]).lower()
+        for block in json.loads((ROOT / "blocks/manifest.json").read_text())["blocks"]
+    )
+    require(page.locator("[data-block-id]:visible").count() == expected_pricing,
+            f"JS: search matched wrong blocks; expected {expected_pricing}")
     page.locator("#blocks-search").fill("no-results-can-match-XYZ")
     require(page.locator("#blocks-empty").is_visible(), "JS: empty state missing")
     page.locator("#blocks-search").fill("")

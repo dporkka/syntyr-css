@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Reference Syntyr CSS components, class names, design tokens, scopes, and semantic HTML patterns for lightweight application interfaces.">
-  <meta name="syntyr-source-sha256" content="deb900aef94301ad7a0355244f3f420d8fbbbacefac4225836c597dcd6c64576">
+  <meta name="syntyr-source-sha256" content="c2d096694a664ed0efd948f83754cbfba89f29a841c675b7f16e40238a17a964">
   <meta name="theme-color" content="#f5f7fb">
   <title>Syntyr CSS component and token contract — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/components">
@@ -157,6 +157,7 @@ the surrounding label should provide additional activation area.</p>
 </tr>
 </tbody>
 </table>
+<p>For layout composition, the shell defaults to a maximum width of 72rem and a total inline inset of 2rem (normally 1rem per side). Set <code>--syn-shell-max</code> and <code>--syn-shell-inline-inset</code> on the shell to customize these dimensions. The header supports <code>--syn-header-gap</code> and <code>--syn-header-padding-block</code>; navigation supports <code>--syn-nav-gap</code>. All controls are optional and preserve existing defaults.</p>
 <p>For wrapping action/filter clusters, use existing <code>.syn-inline</code> with optional
 <code>--syn-inline-align</code>, <code>--syn-inline-justify</code> and <code>--syn-inline-gap</code>.
 For a main region followed by an aside, <code>.syn-sidecar</code> wraps intrinsically
@@ -710,7 +711,8 @@ block start so vertical connectors do not cross the marker or its numeral.</p>
 reuses these steps with existing activity timelines and approval surfaces.
 These classes are not included in the published immutable alpha.4 release.</p>
         </article>
-        <aside class="docs-article-sidebar"><nav aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#loading-and-scoping">Loading and scoping</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#components">Components</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#optional-composition-utilities-and-component-overrides">Optional composition utilities and component overrides</a>
@@ -735,7 +737,37 @@ These classes are not included in the published immutable alpha.4 release.</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#visual-role-examples">Visual role examples</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#progressive-rendering-extensions">Progressive rendering extensions</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#workflow-steps-source-candidate-only">Workflow steps (source candidate only)</a>
-        </nav></aside>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#loading-and-scoping">Loading and scoping</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#components">Components</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#optional-composition-utilities-and-component-overrides">Optional composition utilities and component overrides</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#standard-low-entropy-component-inventory">Standard low-entropy component inventory</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#native-choices-filters-and-rich-list-rows-alpha5-source-candidate">Native choices, filters and rich list rows (alpha.5 source candidate)</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#choice-cards">Choice cards</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#validation-browser-and-server">Validation (browser and server)</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#native-filter-choices">Native filter choices</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#rich-collection-rows">Rich collection rows</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#neutral-first-visual-styling">Neutral-first visual styling</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#native-html-elements-optional-semantic-mode">Native HTML elements (optional semantic mode)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#additional-common-ui-elements-and-semantic-html">Additional common UI elements and semantic HTML</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#theme-tokens">Theme tokens</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#optional-charts-and-microvisualizations">Optional charts and microvisualizations</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#accessibility-and-performance-contracts">Accessibility and performance contracts</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#distribution-behavior">Distribution behavior</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#licensing-and-provenance">Licensing and provenance</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#embedded-versus-full-page-usage">Embedded versus full-page usage</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#v03-compositional-patterns-no-build-step">v0.3 compositional patterns (no build step)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#optional-saas-business-and-cli-compositions-development-branch">Optional SaaS, business and CLI compositions (development branch)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#minimalist-compositions-experimental">Minimalist compositions (experimental)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#visual-role-examples">Visual role examples</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#progressive-rendering-extensions">Progressive rendering extensions</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#workflow-steps-source-candidate-only">Workflow steps (source candidate only)</a>
+            </nav>
+          </details>
+        </aside>
       </div>
       <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="components.md">Markdown source</a></nav>
     </main>

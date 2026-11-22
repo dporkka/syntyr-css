@@ -3,6 +3,16 @@
 .syn-root .blocks-skip:focus-visible {inset-block-start:1rem}
 .syn-root .blocks-controls {display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,13rem),1fr));gap:.9rem;margin-block:1.5rem}
 .syn-root .blocks-controls>div {min-width:0}
+/* Category jumping works without JS; filtering is an optional enhancement. */
+.syn-root .blocks-category-nav {display:flex;align-items:center;flex-wrap:wrap;gap:.45rem .75rem;margin-block:1.25rem 1.5rem;min-width:0}
+.syn-root .blocks-category-nav .syn-caption {margin:0 .25rem 0 0}
+.syn-root .blocks-category-nav a {display:inline-flex;gap:.3rem;align-items:center;min-height:2.25rem;padding:.4rem .65rem;border:1px solid var(--syn-frame);border-radius:var(--syn-radius);background:var(--syn-surface);font-size:.85rem;text-decoration:none}
+.syn-root .blocks-category-nav a:hover,.syn-root .blocks-category-nav a:focus-visible {border-color:var(--syn-accent);text-decoration:underline}
+.syn-root .blocks-category-nav a span {color:var(--syn-muted)}
+.syn-root .blocks-card-heading h2 {scroll-margin-block-start:1.25rem}
+.syn-root .blocks-preview-actions {margin-block:.25rem .75rem}
+.syn-root .blocks-preview-disclosure {min-width:0}
+.syn-root .blocks-preview-disclosure > summary {display:none}
 .syn-root .blocks-grid {display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,30rem),1fr));gap:1.25rem;align-items:start}
 .syn-root .blocks-card {display:grid;gap:.9rem;min-width:0;align-content:start}
 .syn-root .blocks-card[hidden],.syn-root #blocks-empty[hidden],.syn-root #blocks-controls[hidden],.syn-root .blocks-copy[hidden] {display:none}
@@ -46,6 +56,15 @@
 .syn-root .blocks-type--reading {font-family:Georgia,serif;line-height:1.65}
 .syn-root .blocks-type--compact {font-family:system-ui,sans-serif;font-stretch:condensed;letter-spacing:-.035em}
 .syn-root .blocks-footer {display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;padding-block:2rem 4rem}
+@media (max-width:40rem) {
+ .syn-root .blocks-preview-disclosure > summary {display:flex;align-items:center;min-height:44px;padding:.65rem .8rem;cursor:pointer;border:1px solid var(--syn-frame);border-radius:var(--syn-radius);background:var(--syn-surface-recessed);font-weight:650}
+ .syn-root .blocks-preview-disclosure[open] > summary {margin-block-end:.65rem}
+ .syn-root .blocks-category-nav {gap:.4rem}
+ .syn-root .blocks-category-nav .syn-caption {flex-basis:100%}
+}
+@media (min-width:40.001rem) {
+ .syn-root .blocks-preview-actions {display:none}
+}
 @media (max-width:35rem) {
  .syn-root .blocks-card {padding:1rem}
  .syn-root .blocks-card-heading {display:grid}
