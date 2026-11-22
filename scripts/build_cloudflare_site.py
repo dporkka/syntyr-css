@@ -388,6 +388,10 @@ def source_files(site_url: str = SITE_URL, *, include_cloudflare_headers: bool =
         "grid-detail.webp",
         "noir-team.webp",
         "grid-sign-in.webp",
+        # Product-specific static marketing screenshots from private, original source.
+        # Screenshots are public; never distribute the premium HTML/CSS prototypes.
+        "pro-work-orders-studio.webp",
+        "studio-saas-home.webp",
     )
     paths.extend(ROOT / "docs/previews" / name for name in public_preview_images)
     paths.extend(ROOT / "examples" / name for name in public_examples)
