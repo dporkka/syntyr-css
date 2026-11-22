@@ -2,22 +2,22 @@
 
 **Status:** Experimental alpha.5 source gallery, not an immutable release or published npm package.
 
-[Browse 74 blocks](blocks.html) | [Component catalog](catalog.html) | [Themes](theme-customization.md) | [Accessibility](accessibility.md)
+[Browse 79 blocks](blocks.html) | [Component catalog](catalog.html) | [Themes](theme-customization.md) | [Accessibility](accessibility.md)
 
 ## Contract
 
-The 74 copy-owned HTML compositions cover marketing, application, services, portfolio, editorial, navigation, publishing, commerce and technical use
+The 79 copy-owned HTML compositions cover marketing, application, services, portfolio, editorial, navigation, publishing, commerce and technical use
 cases. Each contains its own Syntyr root, uses accessible native markup and requires
 no application JavaScript. The data, testimonials and prices are illustrative, not live.
 
 The gallery script powers optional documentation search, theme switching and copy
-buttons. Disable JavaScript and all 74 static previews remain visible, with
+buttons. Disable JavaScript and all 79 static previews remain visible, with
 selectable source under native disclosure elements. No scripts are included in
-application CSS, and the core Syntyr build is unchanged.
+application CSS; the added gallery rules remain CSS-only.
 
 ## Safe local registry installation (experimental alpha.5 source)
 
-The static [universal registry](../registry/registry.json) contains the 74 MIT
+The static [universal registry](../registry/registry.json) contains the 79 MIT
 HTML blocks and nine CSS module entries. Every item includes its exact
 source-tree version, SHA-256 content hashes, declared CSS dependencies, files,
 and destination paths. This is **not** a published immutable alpha.5 release.
@@ -88,6 +88,37 @@ All example names, plan details, statuses and usage metrics are illustrative.
 Registration, authorization, invites, persistence, CSRF protection, OAuth,
 billing, webhook security and API key issuance are **host application** responsibilities.
 Replace example routes and sample data before deploying.
+
+## Additional Core website sections (unreleased source)
+
+Six independent, framework-neutral website sections joined the collection
+from the latest Core catalog: a **company story**, **customer reviews**,
+**use case showcase**, **locations and opening hours**, **career listings**,
+and **native feature disclosures**. All use semantic HTML and CSS-first
+presentation; review sample content and replace example links before use.
+
+## Image gallery and reusable website sections (unreleased source)
+
+Five further sections expand the collection from 74 to 79:
+responsive **image gallery**, **image-and-copy story**, **multi-testimonial
+social proof**, **company milestones timeline**, and **event agenda**.
+They use native figures, captions, quotes, ordered lists, and machine-readable
+dates/times rather than introducing application JavaScript.
+
+The image gallery uses `syn-image-gallery` and the story uses
+`syn-media-figure`, both in `syntyr.core.css`. Every thumbnail in the copied HTML
+is a real anchor to its full-size original illustration, not a simulated
+JavaScript lightbox. Documentation previews keep links inert to prevent accidental navigation. Keyboard and screen-reader users can follow the same
+links. The media use intrinsic width and height and lazy loading to reduce
+layout shift and unnecessary downloads.
+
+The four SVG illustrations are original, self-hosted demo assets. The
+universal registry installs them to `syntyr/assets/` alongside the HTML,
+so relative example paths work immediately. When pasting a snippet directly
+into your own template, **replace the `../assets/gallery-*.svg` URLs with
+your own local, optimized images** and update descriptive alt text. Do not
+treat illustrative testimonials, company dates, or event times as factual.
+The agenda's example times require a real date and time zone in production.
 
 ## Native HTML and framework integration
 
@@ -205,7 +236,7 @@ copied into the public project. The separate private Console Kit is unaffected.
 ## Experimental shadcn universal-item registry
 
 The source candidate can generate a **copy-owned, framework-independent**
-shadcn-compatible universal-item registry from the same 74 MIT blocks and
+shadcn-compatible universal-item registry from the same 79 MIT blocks and
 checked-in CSS distributions. It neither replaces nor duplicates the native
 block installer from PR #104. Universal files use explicit project-relative
 targets, so no React, Tailwind, or Syntyr runtime JavaScript is required.
@@ -234,16 +265,3 @@ never reads private Console Kit assets or executes downloaded code. No dynamic
 service, telemetry, npm dependency, or customer license is introduced.
 Published alpha.4 assets remain immutable; registry payloads declare their
 source-candidate Syntyr version and must not be confused with a tagged release.
-
-
-## Company and customer experience sections (alpha.5 source candidate)
-
-Six additional free sections extend the catalog from 68 to 74: company story,
-customer review grid, use-case showcase, locations and hours, careers listings,
-and native feature disclosures. Copy each block as HTML and customize its
-placeholder content and real application destinations. Reviews, jobs, addresses,
-and hours are illustrative and must not be presented as verified facts.
-
-The feature switcher uses native `details name` exclusive disclosures. It is
-not an ARIA tabs widget: browsers without exclusive-details support can still
-read and open every feature. No application JavaScript is bundled.

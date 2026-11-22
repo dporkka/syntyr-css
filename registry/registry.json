@@ -1707,6 +1707,141 @@
       ]
     },
     {
+      "name": "image-gallery",
+      "type": "registry:item",
+      "title": "Responsive image gallery",
+      "description": "Four original local illustrations in a CSS-only responsive gallery with native full-image links.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://syntyr-css.pages.dev/registry/r/core.json"
+      ],
+      "files": [
+        {
+          "path": "blocks/snippets/image-gallery.html",
+          "type": "registry:file",
+          "target": "~/syntyr/blocks/image-gallery.html"
+        },
+        {
+          "path": "assets/gallery-architecture.svg",
+          "type": "registry:file",
+          "target": "~/syntyr/assets/gallery-architecture.svg"
+        },
+        {
+          "path": "assets/gallery-botanical.svg",
+          "type": "registry:file",
+          "target": "~/syntyr/assets/gallery-botanical.svg"
+        },
+        {
+          "path": "assets/gallery-horizon.svg",
+          "type": "registry:file",
+          "target": "~/syntyr/assets/gallery-horizon.svg"
+        },
+        {
+          "path": "assets/gallery-signal.svg",
+          "type": "registry:file",
+          "target": "~/syntyr/assets/gallery-signal.svg"
+        },
+        {
+          "path": "LICENSE",
+          "type": "registry:file",
+          "target": "~/syntyr/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "image-story",
+      "type": "registry:item",
+      "title": "Image and story split",
+      "description": "A media-and-copy section with semantic figure, responsive image and action.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://syntyr-css.pages.dev/registry/r/core.json"
+      ],
+      "files": [
+        {
+          "path": "blocks/snippets/image-story.html",
+          "type": "registry:file",
+          "target": "~/syntyr/blocks/image-story.html"
+        },
+        {
+          "path": "assets/gallery-architecture.svg",
+          "type": "registry:file",
+          "target": "~/syntyr/assets/gallery-architecture.svg"
+        },
+        {
+          "path": "LICENSE",
+          "type": "registry:file",
+          "target": "~/syntyr/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "testimonials-grid",
+      "type": "registry:item",
+      "title": "Testimonials grid",
+      "description": "Three sample quotation cards with clear demo-only attribution.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://syntyr-css.pages.dev/registry/r/core.json"
+      ],
+      "files": [
+        {
+          "path": "blocks/snippets/testimonials-grid.html",
+          "type": "registry:file",
+          "target": "~/syntyr/blocks/testimonials-grid.html"
+        },
+        {
+          "path": "LICENSE",
+          "type": "registry:file",
+          "target": "~/syntyr/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "milestone-timeline",
+      "type": "registry:item",
+      "title": "Company milestones timeline",
+      "description": "A chronological history using native dates and an ordered vertical sequence.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://syntyr-css.pages.dev/registry/r/core.json"
+      ],
+      "files": [
+        {
+          "path": "blocks/snippets/milestone-timeline.html",
+          "type": "registry:file",
+          "target": "~/syntyr/blocks/milestone-timeline.html"
+        },
+        {
+          "path": "LICENSE",
+          "type": "registry:file",
+          "target": "~/syntyr/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "event-agenda",
+      "type": "registry:item",
+      "title": "Event agenda",
+      "description": "A schedule of talks and sessions with native time elements.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://syntyr-css.pages.dev/registry/r/core.json"
+      ],
+      "files": [
+        {
+          "path": "blocks/snippets/event-agenda.html",
+          "type": "registry:file",
+          "target": "~/syntyr/blocks/event-agenda.html"
+        },
+        {
+          "path": "LICENSE",
+          "type": "registry:file",
+          "target": "~/syntyr/LICENSE"
+        }
+      ]
+    },
+    {
       "name": "company-story",
       "type": "registry:item",
       "title": "Company story and milestones",

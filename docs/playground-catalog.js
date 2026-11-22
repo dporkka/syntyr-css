@@ -1189,6 +1189,61 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
+    "id": "block-image-gallery",
+    "title": "Responsive image gallery",
+    "module": "syntyr.core.css",
+    "description": "Four original local illustrations in a CSS-only responsive gallery with native full-image links.",
+    "html": "\u003csection class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-gallery-heading\">\n  \u003cp class=\"syn-eyebrow\">SELECTED IMAGES\u003c/p>\n  \u003ch2 class=\"syn-heading\" id=\"syn-gallery-heading\">A closer look at the work\u003c/h2>\n  \u003cp class=\"syn-muted\">Choose an image to view the full illustration. Replace these original samples with your own optimized photography.\u003c/p>\n  \u003cdiv class=\"syn-image-gallery\">\n    \u003cfigure>\u003ca href=\"../assets/gallery-horizon.svg\" aria-label=\"View coastal horizon at full size\">\u003cimg src=\"../assets/gallery-horizon.svg\" alt=\"Layered coastal hills beneath a warm sunset\" width=\"960\" height=\"640\" loading=\"lazy\" decoding=\"async\">\u003c/a>\u003cfigcaption>01 / Coastal horizon\u003c/figcaption>\u003c/figure>\n    \u003cfigure>\u003ca href=\"../assets/gallery-architecture.svg\" aria-label=\"View architectural study at full size\">\u003cimg src=\"../assets/gallery-architecture.svg\" alt=\"Geometric arches on a sunlit modern building\" width=\"960\" height=\"640\" loading=\"lazy\" decoding=\"async\">\u003c/a>\u003cfigcaption>02 / Architecture study\u003c/figcaption>\u003c/figure>\n    \u003cfigure>\u003ca href=\"../assets/gallery-signal.svg\" aria-label=\"View night skyline at full size\">\u003cimg src=\"../assets/gallery-signal.svg\" alt=\"Illuminated windows in an abstract nighttime city skyline\" width=\"960\" height=\"640\" loading=\"lazy\" decoding=\"async\">\u003c/a>\u003cfigcaption>03 / Night signals\u003c/figcaption>\u003c/figure>\n    \u003cfigure>\u003ca href=\"../assets/gallery-botanical.svg\" aria-label=\"View botanical artwork at full size\">\u003cimg src=\"../assets/gallery-botanical.svg\" alt=\"Overlapping sage green leaves on a dark background\" width=\"960\" height=\"640\" loading=\"lazy\" decoding=\"async\">\u003c/a>\u003cfigcaption>04 / Botanical study\u003c/figcaption>\u003c/figure>\n  \u003c/div>\n\u003c/section>",
+    "keywords": "Responsive image gallery Four original local illustrations in a CSS-only responsive gallery with native full-image links. gallery images photography portfolio",
+    "kind": "block",
+    "category": "Portfolio",
+    "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
+  },
+  {
+    "id": "block-image-story",
+    "title": "Image and story split",
+    "module": "syntyr.core.css",
+    "description": "A media-and-copy section with semantic figure, responsive image and action.",
+    "html": "\u003csection class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-image-story-heading\">\n  \u003cdiv class=\"syn-sidecar\">\n    \u003cdiv>\n      \u003cp class=\"syn-eyebrow\">ABOUT THE STUDIO\u003c/p>\n      \u003ch2 class=\"syn-heading\" id=\"syn-image-story-heading\">Thoughtful design for everyday life.\u003c/h2>\n      \u003cp class=\"syn-lede\">We pair clear structure with expressive visuals, so the finished work feels as useful as it looks.\u003c/p>\n      \u003cp class=\"syn-muted\">Start with a narrative, show a real example, and give visitors a destination for more context.\u003c/p>\n      \u003ca class=\"syn-button syn-button--primary\" href=\"/about\">Our approach\u003c/a>\n    \u003c/div>\n    \u003cfigure class=\"syn-media-figure\">\n      \u003cimg src=\"../assets/gallery-architecture.svg\" alt=\"Warm-toned architectural artwork with a pair of arched openings\" width=\"960\" height=\"640\" loading=\"lazy\" decoding=\"async\">\n      \u003cfigcaption>An original illustration; replace with your own project imagery.\u003c/figcaption>\n    \u003c/figure>\n  \u003c/div>\n\u003c/section>",
+    "keywords": "Image and story split A media-and-copy section with semantic figure, responsive image and action. image story about feature",
+    "kind": "block",
+    "category": "Marketing",
+    "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
+  },
+  {
+    "id": "block-testimonials-grid",
+    "title": "Testimonials grid",
+    "module": "syntyr.core.css",
+    "description": "Three sample quotation cards with clear demo-only attribution.",
+    "html": "\u003csection class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-testimonials-heading\">\n  \u003cp class=\"syn-eyebrow\">CUSTOMER STORIES / DEMONSTRATION\u003c/p>\n  \u003ch2 class=\"syn-heading\" id=\"syn-testimonials-heading\">What working together can feel like\u003c/h2>\n  \u003cp class=\"syn-muted\">Sample quotations for layout demonstration only. Use approved, verifiable customer feedback in production.\u003c/p>\n  \u003cdiv class=\"syn-grid\">\n    \u003cfigure class=\"syn-panel\">\u003cblockquote>\u003cp>\u201cThe handoff was clear and the final site was easy to maintain.\u201d\u003c/p>\u003c/blockquote>\u003cfigcaption>\u003ccite>Illustrative quote A\u003c/cite> \u00b7 Sample, not an endorsement\u003c/figcaption>\u003c/figure>\n    \u003cfigure class=\"syn-panel\">\u003cblockquote>\u003cp>\u201cWe could find the information we needed without extra steps.\u201d\u003c/p>\u003c/blockquote>\u003cfigcaption>\u003ccite>Illustrative quote B\u003c/cite> \u00b7 Sample, not an endorsement\u003c/figcaption>\u003c/figure>\n    \u003cfigure class=\"syn-panel\">\u003cblockquote>\u003cp>\u201cEverything was documented, from the first review to launch.\u201d\u003c/p>\u003c/blockquote>\u003cfigcaption>\u003ccite>Illustrative quote C\u003c/cite> \u00b7 Sample, not an endorsement\u003c/figcaption>\u003c/figure>\n  \u003c/div>\n\u003c/section>",
+    "keywords": "Testimonials grid Three sample quotation cards with clear demo-only attribution. testimonials reviews social-proof",
+    "kind": "block",
+    "category": "Marketing",
+    "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
+  },
+  {
+    "id": "block-milestone-timeline",
+    "title": "Company milestones timeline",
+    "module": "syntyr.core.css",
+    "description": "A chronological history using native dates and an ordered vertical sequence.",
+    "html": "\u003csection class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-milestones-heading\">\n  \u003cp class=\"syn-eyebrow\">OUR HISTORY / EXAMPLE DATES\u003c/p>\n  \u003ch2 class=\"syn-heading\" id=\"syn-milestones-heading\">How the work evolved\u003c/h2>\n  \u003col class=\"syn-steps syn-steps--vertical\">\n    \u003cli class=\"syn-step\">\u003cdiv>\u003ctime datetime=\"2023\">2023\u003c/time>\u003ch3 class=\"syn-step-label\">Started with research\u003c/h3>\u003cp class=\"syn-step-detail\">A small team mapping practical needs and constraints.\u003c/p>\u003c/div>\u003c/li>\n    \u003cli class=\"syn-step\">\u003cdiv>\u003ctime datetime=\"2024\">2024\u003c/time>\u003ch3 class=\"syn-step-label\">Built the first tools\u003c/h3>\u003cp class=\"syn-step-detail\">Shared design patterns and accessible front-end foundations.\u003c/p>\u003c/div>\u003c/li>\n    \u003cli class=\"syn-step\">\u003cdiv>\u003ctime datetime=\"2025\">2025\u003c/time>\u003ch3 class=\"syn-step-label\">Expanded the practice\u003c/h3>\u003cp class=\"syn-step-detail\">More services, clearer documentation and repeatable delivery.\u003c/p>\u003c/div>\u003c/li>\n  \u003c/ol>\n  \u003cp class=\"syn-caption\">Illustrative history; replace dates and claims before publishing.\u003c/p>\n\u003c/section>",
+    "keywords": "Company milestones timeline A chronological history using native dates and an ordered vertical sequence. timeline history about milestones",
+    "kind": "block",
+    "category": "Services",
+    "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
+  },
+  {
+    "id": "block-event-agenda",
+    "title": "Event agenda",
+    "module": "syntyr.core.css",
+    "description": "A schedule of talks and sessions with native time elements.",
+    "html": "\u003csection class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-agenda-heading\">\n  \u003cp class=\"syn-eyebrow\">EVENT / EXAMPLE PROGRAM\u003c/p>\n  \u003ch2 class=\"syn-heading\" id=\"syn-agenda-heading\">A day of ideas and practical workshops\u003c/h2>\n  \u003cp class=\"syn-muted\">Example schedule for a fictional event; specify the actual time zone and dates when publishing.\u003c/p>\n  \u003col class=\"syn-grid\">\n    \u003cli class=\"syn-panel\">\u003cp class=\"syn-eyebrow\">\u003ctime datetime=\"09:00\">09:00\u003c/time> \u2013 \u003ctime datetime=\"09:45\">09:45\u003c/time>\u003c/p>\u003ch3>Opening session\u003c/h3>\u003cp>Introduction, context and what to expect.\u003c/p>\u003c/li>\n    \u003cli class=\"syn-panel\">\u003cp class=\"syn-eyebrow\">\u003ctime datetime=\"10:00\">10:00\u003c/time> \u2013 \u003ctime datetime=\"11:30\">11:30\u003c/time>\u003c/p>\u003ch3>Hands-on workshop\u003c/h3>\u003cp>Explore accessible interface patterns with real content.\u003c/p>\u003c/li>\n    \u003cli class=\"syn-panel\">\u003cp class=\"syn-eyebrow\">\u003ctime datetime=\"13:00\">13:00\u003c/time> \u2013 \u003ctime datetime=\"14:00\">14:00\u003c/time>\u003c/p>\u003ch3>Open questions\u003c/h3>\u003cp>Discuss practical constraints and the next steps.\u003c/p>\u003c/li>\n  \u003c/ol>\n  \u003ca class=\"syn-button syn-button--primary\" href=\"/events/register\">Event registration\u003c/a>\n\u003c/section>",
+    "keywords": "Event agenda A schedule of talks and sessions with native time elements. events agenda schedule conference",
+    "kind": "block",
+    "category": "Services",
+    "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
+  },
+  {
     "id": "block-company-story",
     "title": "Company story and milestones",
     "module": "syntyr.core.css",

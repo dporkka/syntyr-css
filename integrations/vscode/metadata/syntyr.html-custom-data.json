@@ -826,6 +826,10 @@
           "description": "Wiggle appearance variant of the icon component; see symbols.css for styles."
         },
         {
+          "name": "syn-image-gallery",
+          "description": "Image gallery presentation in the components/patterns.css module; use semantic HTML and consult its component example."
+        },
+        {
           "name": "syn-inline",
           "description": "Inline, wrapping layout for small groups of peers."
         },
@@ -928,6 +932,10 @@
         {
           "name": "syn-media-card__visual",
           "description": "Visual part of the media card component; see media.css for markup."
+        },
+        {
+          "name": "syn-media-figure",
+          "description": "Media figure presentation in the components/patterns.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-media-hero",

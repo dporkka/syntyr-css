@@ -1005,6 +1005,80 @@
       ]
     },
     {
+      "id": "image-gallery",
+      "category": "Portfolio",
+      "title": "Responsive image gallery",
+      "description": "Four original local illustrations in a CSS-only responsive gallery with native full-image links.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "gallery",
+        "images",
+        "photography",
+        "portfolio"
+      ]
+    },
+    {
+      "id": "image-story",
+      "category": "Marketing",
+      "title": "Image and story split",
+      "description": "A media-and-copy section with semantic figure, responsive image and action.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "image",
+        "story",
+        "about",
+        "feature"
+      ]
+    },
+    {
+      "id": "testimonials-grid",
+      "category": "Marketing",
+      "title": "Testimonials grid",
+      "description": "Three sample quotation cards with clear demo-only attribution.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "testimonials",
+        "reviews",
+        "social-proof"
+      ]
+    },
+    {
+      "id": "milestone-timeline",
+      "category": "Services",
+      "title": "Company milestones timeline",
+      "description": "A chronological history using native dates and an ordered vertical sequence.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "timeline",
+        "history",
+        "about",
+        "milestones"
+      ]
+    },
+    {
+      "id": "event-agenda",
+      "category": "Services",
+      "title": "Event agenda",
+      "description": "A schedule of talks and sessions with native time elements.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "events",
+        "agenda",
+        "schedule",
+        "conference"
+      ]
+    },
+    {
       "id": "company-story",
       "category": "Company",
       "title": "Company story and milestones",

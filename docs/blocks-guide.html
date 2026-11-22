@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Status: Experimental alpha.5 source gallery, not an immutable release or published npm package.">
-  <meta name="syntyr-source-sha256" content="b6262835d858c45f2a7e5a9ad2f9df15b3eeda37e08846b2c4e411c30a66cf4d">
+  <meta name="syntyr-source-sha256" content="8645bedaa51b2244acd12630557c47e75b3bc2af7de6743c232f9fac20dbf545">
   <meta name="theme-color" content="#f5f7fb">
   <title>Syntyr Blocks &amp; Assets — integration guide — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/blocks-guide">
@@ -36,17 +36,17 @@
         <article class="docs-prose" aria-label="Syntyr Blocks &amp; Assets — integration guide">
 <h1 id="syntyr-blocks-assets-integration-guide">Syntyr Blocks &amp; Assets — integration guide</h1>
 <p><strong>Status:</strong> Experimental alpha.5 source gallery, not an immutable release or published npm package.</p>
-<p><a href="blocks.html">Browse 74 blocks</a> | <a href="catalog.html">Component catalog</a> | <a href="theme-customization.html">Themes</a> | <a href="accessibility.html">Accessibility</a></p>
+<p><a href="blocks.html">Browse 79 blocks</a> | <a href="catalog.html">Component catalog</a> | <a href="theme-customization.html">Themes</a> | <a href="accessibility.html">Accessibility</a></p>
 <h2 id="contract">Contract</h2>
-<p>The 74 copy-owned HTML compositions cover marketing, application, services, portfolio, editorial, navigation, publishing, commerce and technical use
+<p>The 79 copy-owned HTML compositions cover marketing, application, services, portfolio, editorial, navigation, publishing, commerce and technical use
 cases. Each contains its own Syntyr root, uses accessible native markup and requires
 no application JavaScript. The data, testimonials and prices are illustrative, not live.</p>
 <p>The gallery script powers optional documentation search, theme switching and copy
-buttons. Disable JavaScript and all 74 static previews remain visible, with
+buttons. Disable JavaScript and all 79 static previews remain visible, with
 selectable source under native disclosure elements. No scripts are included in
-application CSS, and the core Syntyr build is unchanged.</p>
+application CSS; the added gallery rules remain CSS-only.</p>
 <h2 id="safe-local-registry-installation-experimental-alpha5-source">Safe local registry installation (experimental alpha.5 source)</h2>
-<p>The static <a href="../registry/registry.json">universal registry</a> contains the 74 MIT
+<p>The static <a href="../registry/registry.json">universal registry</a> contains the 79 MIT
 HTML blocks and nine CSS module entries. Every item includes its exact
 source-tree version, SHA-256 content hashes, declared CSS dependencies, files,
 and destination paths. This is <strong>not</strong> a published immutable alpha.5 release.</p>
@@ -105,6 +105,31 @@ preserve readable columns while allowing local horizontal scrolling.</p>
 Registration, authorization, invites, persistence, CSRF protection, OAuth,
 billing, webhook security and API key issuance are <strong>host application</strong> responsibilities.
 Replace example routes and sample data before deploying.</p>
+<h2 id="additional-core-website-sections-unreleased-source">Additional Core website sections (unreleased source)</h2>
+<p>Six independent, framework-neutral website sections joined the collection
+from the latest Core catalog: a <strong>company story</strong>, <strong>customer reviews</strong>,
+<strong>use case showcase</strong>, <strong>locations and opening hours</strong>, <strong>career listings</strong>,
+and <strong>native feature disclosures</strong>. All use semantic HTML and CSS-first
+presentation; review sample content and replace example links before use.</p>
+<h2 id="image-gallery-and-reusable-website-sections-unreleased-source">Image gallery and reusable website sections (unreleased source)</h2>
+<p>Five further sections expand the collection from 74 to 79:
+responsive <strong>image gallery</strong>, <strong>image-and-copy story</strong>, <strong>multi-testimonial
+social proof</strong>, <strong>company milestones timeline</strong>, and <strong>event agenda</strong>.
+They use native figures, captions, quotes, ordered lists, and machine-readable
+dates/times rather than introducing application JavaScript.</p>
+<p>The image gallery uses <code>syn-image-gallery</code> and the story uses
+<code>syn-media-figure</code>, both in <code>syntyr.core.css</code>. Every thumbnail in the copied HTML
+is a real anchor to its full-size original illustration, not a simulated
+JavaScript lightbox. Documentation previews keep links inert to prevent accidental navigation. Keyboard and screen-reader users can follow the same
+links. The media use intrinsic width and height and lazy loading to reduce
+layout shift and unnecessary downloads.</p>
+<p>The four SVG illustrations are original, self-hosted demo assets. The
+universal registry installs them to <code>syntyr/assets/</code> alongside the HTML,
+so relative example paths work immediately. When pasting a snippet directly
+into your own template, <strong>replace the <code>../assets/gallery-*.svg</code> URLs with
+your own local, optimized images</strong> and update descriptive alt text. Do not
+treat illustrative testimonials, company dates, or event times as factual.
+The agenda's example times require a real date and time zone in production.</p>
 <h2 id="native-html-and-framework-integration">Native HTML and framework integration</h2>
 <p>Load the specific CSS modules shown on each block, from the same pinned version.
 For example, blocks using both core and recipes:</p>
@@ -195,7 +220,7 @@ No premium Tailwind, commercial UI kit or third-party icon artwork has been
 copied into the public project. The separate private Console Kit is unaffected.</p>
 <h2 id="experimental-shadcn-universal-item-registry">Experimental shadcn universal-item registry</h2>
 <p>The source candidate can generate a <strong>copy-owned, framework-independent</strong>
-shadcn-compatible universal-item registry from the same 74 MIT blocks and
+shadcn-compatible universal-item registry from the same 79 MIT blocks and
 checked-in CSS distributions. It neither replaces nor duplicates the native
 block installer from PR #104. Universal files use explicit project-relative
 targets, so no React, Tailwind, or Syntyr runtime JavaScript is required.</p>
@@ -220,21 +245,14 @@ never reads private Console Kit assets or executes downloaded code. No dynamic
 service, telemetry, npm dependency, or customer license is introduced.
 Published alpha.4 assets remain immutable; registry payloads declare their
 source-candidate Syntyr version and must not be confused with a tagged release.</p>
-<h2 id="company-and-customer-experience-sections-alpha5-source-candidate">Company and customer experience sections (alpha.5 source candidate)</h2>
-<p>Six additional free sections extend the catalog from 68 to 74: company story,
-customer review grid, use-case showcase, locations and hours, careers listings,
-and native feature disclosures. Copy each block as HTML and customize its
-placeholder content and real application destinations. Reviews, jobs, addresses,
-and hours are illustrative and must not be presented as verified facts.</p>
-<p>The feature switcher uses native <code>details name</code> exclusive disclosures. It is
-not an ARIA tabs widget: browsers without exclusive-details support can still
-read and open every feature. No application JavaScript is bundled.</p>
         </article>
         <aside class="docs-article-sidebar">
           <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#contract">Contract</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#safe-local-registry-installation-experimental-alpha5-source">Safe local registry installation (experimental alpha.5 source)</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#saas-and-business-collection-experimental-alpha5-source">SaaS and business collection (experimental alpha.5 source)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#additional-core-website-sections-unreleased-source">Additional Core website sections (unreleased source)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#image-gallery-and-reusable-website-sections-unreleased-source">Image gallery and reusable website sections (unreleased source)</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#native-html-and-framework-integration">Native HTML and framework integration</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#optional-scroll-parallax-and-hover-effects">Optional scroll, parallax, and hover effects</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#12-original-optional-css-asset-recipes">12 original, optional CSS asset recipes</a>
@@ -242,7 +260,6 @@ read and open every feature. No application JavaScript is bundled.</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#source-build-and-maintenance">Source, build and maintenance</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#accessibility-fidelity-and-licensing">Accessibility, fidelity and licensing</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#experimental-shadcn-universal-item-registry">Experimental shadcn universal-item registry</a>
-<a class="docs-article-toc-link docs-article-toc-2" href="#company-and-customer-experience-sections-alpha5-source-candidate">Company and customer experience sections (alpha.5 source candidate)</a>
           </nav>
           <details class="docs-article-toc-mobile">
             <summary>On this page <span>Jump to section</span></summary>
@@ -250,6 +267,8 @@ read and open every feature. No application JavaScript is bundled.</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#contract">Contract</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#safe-local-registry-installation-experimental-alpha5-source">Safe local registry installation (experimental alpha.5 source)</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#saas-and-business-collection-experimental-alpha5-source">SaaS and business collection (experimental alpha.5 source)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#additional-core-website-sections-unreleased-source">Additional Core website sections (unreleased source)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#image-gallery-and-reusable-website-sections-unreleased-source">Image gallery and reusable website sections (unreleased source)</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#native-html-and-framework-integration">Native HTML and framework integration</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#optional-scroll-parallax-and-hover-effects">Optional scroll, parallax, and hover effects</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#12-original-optional-css-asset-recipes">12 original, optional CSS asset recipes</a>
@@ -257,7 +276,6 @@ read and open every feature. No application JavaScript is bundled.</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#source-build-and-maintenance">Source, build and maintenance</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#accessibility-fidelity-and-licensing">Accessibility, fidelity and licensing</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#experimental-shadcn-universal-item-registry">Experimental shadcn universal-item registry</a>
-<a class="docs-article-toc-link docs-article-toc-2" href="#company-and-customer-experience-sections-alpha5-source-candidate">Company and customer experience sections (alpha.5 source candidate)</a>
             </nav>
           </details>
         </aside>

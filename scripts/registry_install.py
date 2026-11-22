@@ -28,7 +28,7 @@ def _safe_destination(project: Path, target: str) -> Path:
     parts = Path(relative).parts
     if not parts or any(part in {".", ".."} for part in parts):
         raise RegistryError("Invalid registry target")
-    if not re.fullmatch(r"syntyr/(css|blocks)/[a-z0-9_.-]+|syntyr/LICENSE", relative):
+    if not re.fullmatch(r"syntyr/(css|blocks)/[a-z0-9_.-]+|syntyr/assets/gallery-[a-z0-9-]+\.svg|syntyr/LICENSE", relative):
         raise RegistryError("Unknown registry destination: " + relative)
     if project.is_symlink():
         raise RegistryError("Project directory must not be a symlink")
