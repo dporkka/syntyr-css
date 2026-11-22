@@ -105,11 +105,33 @@
   category.addEventListener("change", updateResults);
   updateResults();
 
+  // Docs-only: create an actual, version-local HTML document rather than
+  // implying that a partial component snippet includes its CSS dependencies.
+  const knownStylesheets = new Set([
+    'syntyr.core.css', 'syntyr.recipes.css', 'syntyr.geometry.css',
+    'syntyr.viz.css', 'syntyr.semantic.css', 'syntyr.utilities.css',
+  ]);
+  function standalonePage(card, markup) {
+    const badge = card.querySelector('.catalog-card-top .syn-badge');
+    const modules = (badge?.textContent || '').split(' + ').map(s => s.trim()).filter(Boolean);
+    const required = new Set(['syntyr.core.css']);
+    for (const name of modules) {
+      if (!knownStylesheets.has(name)) throw new Error('Unknown catalog stylesheet');
+      required.add(name);
+    }
+    const links = [...required].map(name => `<link rel="stylesheet" href="/dist/${name}">`).join('\n');
+    const heading = card.querySelector('h2')?.textContent || 'Syntyr example';
+    const title = heading.replace(/[&<>"']/g, ch => ({'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'}[ch]));
+    return `<!doctype html>\n<html lang="en">\n<head>\n  <meta charset="utf-8">\n  <meta name="viewport" content="width=device-width,initial-scale=1">\n  <title>${title} — Syntyr CSS</title>\n  <!-- Self-host matching unreleased alpha.5 CSS under /dist/ or adjust these paths. -->\n  ${links}\n</head>\n<body class="syn-root" data-syn-theme="studio">\n${markup}\n</body>\n</html>`;
+  }
+
   for (const card of cards) {
     const button = card.querySelector('[data-catalog-copy]');
+    const pageButton = card.querySelector('[data-catalog-copy-page]');
     const code = card.querySelector('.catalog-source code');
-    if (!button || !code) continue;
+    if (!button || !pageButton || !code) continue;
     button.hidden = false;
+    pageButton.hidden = false;
     button.addEventListener('click', async () => {
       const value = code.textContent.trim();
       try {
@@ -124,6 +146,40 @@
         selection?.removeAllRanges();
         selection?.addRange(range);
         feedback.textContent = 'HTML selected. Use your keyboard to copy it.';
+      }
+    });
+    pageButton.addEventListener('click', async () => {
+      const value = standalonePage(card, code.textContent.trim());
+      try {
+        if (!navigator.clipboard?.writeText) throw new Error('Clipboard API unavailable');
+        await navigator.clipboard.writeText(value);
+        feedback.textContent = `${card.querySelector('h2').textContent} full HTML page copied. Check asset paths and app endpoints.`;
+      } catch {
+        // Keep the entire generated page visible and keyboard selectable,
+        // even in local file:// previews where clipboard permissions fail.
+        let details = card.querySelector('[data-catalog-page-fallback]');
+        if (!details) {
+          details = document.createElement('details');
+          details.className = 'catalog-page-fallback';
+          details.dataset.catalogPageFallback = '';
+          const summary = document.createElement('summary');
+          summary.textContent = 'Standalone HTML (select to copy)';
+          const pre = document.createElement('pre');
+          pre.className = 'catalog-source';
+          const fallbackCode = document.createElement('code');
+          pre.append(fallbackCode);
+          details.append(summary, pre);
+          card.append(details);
+        }
+        const fallbackCode = details.querySelector('code');
+        fallbackCode.textContent = value;
+        details.open = true;
+        const selection = window.getSelection();
+        const range = document.createRange();
+        range.selectNodeContents(fallbackCode);
+        selection?.removeAllRanges();
+        selection?.addRange(range);
+        feedback.textContent = 'Complete page selected. Use your keyboard to copy it.';
       }
     });
   }

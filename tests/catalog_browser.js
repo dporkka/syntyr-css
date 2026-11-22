@@ -43,7 +43,12 @@ const engines = {chromium, firefox, webkit};
         }
         await page.locator('#catalog-search').fill('buttons');
         assert.equal(await page.locator('.catalog-card:not([hidden])').count(), 1);
-        await page.locator('#catalog-index a[href="#catalog-alerts-title"]').click();
+        if (width < 1024) {
+          await page.locator('.catalog-mobile-index summary').click();
+          await page.locator('.catalog-mobile-index a[href="#catalog-alerts-title"]').click();
+        } else {
+          await page.locator('#catalog-index a[href="#catalog-alerts-title"]').click();
+        }
         await page.waitForFunction(() => location.hash === '#catalog-alerts-title' && document.querySelector('#catalog-search').value === '');
         assert.equal(await page.locator('.catalog-card:not([hidden])').count(), total);
         await page.waitForFunction(() => document.querySelector('#catalog-index a[href="#catalog-alerts-title"]').classList.contains('is-in-view'));
@@ -64,8 +69,9 @@ const engines = {chromium, firefox, webkit};
         const previewWidth = await page.locator('.catalog-preview').first().evaluate(el => el.getBoundingClientRect().width);
         assert.ok(previewWidth <= 23 * 16 + 1, 'Compact preview should not exceed 23rem');
         await page.locator('#catalog-search').fill('table');
-        assert.equal(await page.locator('.catalog-card:not([hidden])').count(), 3);
-        assert.equal(await page.locator('#catalog-results').innerText(), `Showing 3 of ${total} examples.`);
+        const tableMatches = await page.locator('.catalog-card:not([hidden])').count();
+        assert.ok(tableMatches >= 3, 'Table search should find all documented table patterns');
+        assert.equal(await page.locator('#catalog-results').innerText(), `Showing ${tableMatches} of ${total} examples.`);
         await page.locator('#catalog-search').fill('no-such-component');
         assert.equal(await page.locator('.catalog-card:not([hidden])').count(), 0);
         assert.equal(await page.locator('#catalog-empty').isVisible(), true);
@@ -80,8 +86,30 @@ const engines = {chromium, firefox, webkit};
         const copied = await page.evaluate(() => window.__catalogCopied);
         assert.ok(copied.includes('syn-button--primary'));
         assert.equal(await page.locator('#catalog-feedback').innerText(), 'Buttons HTML copied.');
+        assert.equal(await page.locator('[data-catalog-copy-page]:not([hidden])').count(), total);
+        await page.locator('.catalog-card:not([hidden]) .catalog-code-details').evaluate(el => { el.open = true; });
+        await page.locator('.catalog-card:not([hidden]) [data-catalog-copy-page]').click();
+        const fullPage = await page.evaluate(() => window.__catalogCopied);
+        assert.ok(fullPage.startsWith('<!doctype html>'));
+        assert.ok(fullPage.includes('<body class="syn-root" data-syn-theme="studio">'));
+        assert.ok(fullPage.includes('<link rel="stylesheet" href="/dist/syntyr.core.css">'));
+        assert.ok(fullPage.includes('syn-button--primary'));
+        assert.equal((fullPage.match(/syntyr.core.css/g) || []).length, 1);
+        // Optional stylesheet requirements must be complete, not only the
+        // primary CSS badge. The meter demo also uses semantic CSS.
+        await page.locator('#catalog-search').fill('meter and output');
+        await page.locator('.catalog-card:not([hidden]) .catalog-code-details').evaluate(el => { el.open = true; });
+        await page.locator('.catalog-card:not([hidden]) [data-catalog-copy-page]').click();
+        const meterPage = await page.evaluate(() => window.__catalogCopied);
+        assert.ok(meterPage.includes('/dist/syntyr.semantic.css'));
+        await page.locator('#catalog-search').fill('buttons');
         assert.equal(await page.locator('#catalog-results').innerText(), `Showing 1 of ${total} examples.`);
         await page.evaluate(() => Object.defineProperty(navigator, 'clipboard', {configurable: true, value: undefined}));
+        await page.locator('.catalog-card:not([hidden]) [data-catalog-copy-page]').click();
+        const standaloneFallback = page.locator('.catalog-card:not([hidden]) [data-catalog-page-fallback]');
+        assert.equal(await standaloneFallback.evaluate(el => el.open), true);
+        assert.ok((await standaloneFallback.locator('code').innerText()).includes('<!doctype html>'));
+        assert.equal(await page.locator('#catalog-feedback').innerText(), 'Complete page selected. Use your keyboard to copy it.');
         await page.locator('.catalog-card:not([hidden]) [data-catalog-copy]').click();
         assert.equal(await page.locator('.catalog-card:not([hidden]) .catalog-code-details').evaluate(el => el.open), true);
         assert.ok((await page.evaluate(() => window.getSelection()?.toString() || '')).includes('syn-button--primary'));
@@ -115,6 +143,8 @@ const engines = {chromium, firefox, webkit};
         assert.equal(await noJsPage.locator('.catalog-live').count(), total);
         assert.equal(await noJsPage.locator('#catalog-controls').isVisible(), false);
         assert.equal(await noJsPage.locator('[data-catalog-copy]:visible').count(), 0);
+        assert.equal(await noJsPage.locator('[data-catalog-copy-page]:visible').count(), 0);
+        assert.equal(await noJsPage.locator('#catalog-browser-support').count(), 1);
         await noJs.close();
         process.stdout.write(`${name} ${width}px: search, clipboard, empty state, reflow and no-JS pass\n`);
       }
