@@ -30,6 +30,11 @@ class FreeToolsTests(unittest.TestCase):
         self.assertIn('href="tools/"', self.files['index.html'].decode())
         self.assertIn('href="../tools/"', self.files['docs/index.html'].decode())
 
+    def test_nested_theme_preview_is_not_full_height_page(self):
+        html = self.files['tools/css-theme-generator.html'].decode()
+        self.assertIn('id="theme-preview" class="syn-root tool-sample"', html)
+        self.assertNotIn('id="theme-preview" class="syn-root syn-page', html)
+
     def test_tools_are_isolated_and_have_strict_sandbox(self):
         html = self.files['tools/responsive-design-tester.html'].decode()
         self.assertIn('sandbox=""', html)
