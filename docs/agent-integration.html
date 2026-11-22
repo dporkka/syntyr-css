@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Syntyr works with ChatGPT, Codex, Claude Code, Cursor and other agents that generate HTML or framework markup. No Syntyr-specific service, account, MCP…">
-  <meta name="syntyr-source-sha256" content="3f62d7fb0729870fee041f35371a96fb3fa5a0a358f6cc6f6c24365cc65d2012">
+  <meta name="syntyr-source-sha256" content="3e7bf652078ea2473375dfd0006f2eea87df6899d6ed2bbfba0d72765d1d47a8">
   <meta name="theme-color" content="#f5f7fb">
   <title>Using Syntyr with coding agents — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/agent-integration">
@@ -101,7 +101,10 @@ valid theme/state values. Responses are constrained to the selected release's
 checked-in CSS rather than presenting candidate-only selectors as fixes.</p>
 <h2 id="documents-and-machine-readable-inventory">Documents and machine-readable inventory</h2>
 <ul>
-<li><a href="../llms.txt"><code>llms.txt</code></a>: small navigation file following the community <code>llms.txt</code> convention; it is useful when deliberately retrieved, but not a universal automatic-discovery protocol.</li>
+<li><a href="../llms.txt"><code>llms.txt</code></a>: compact navigation file following the community <code>llms.txt</code> convention; it is useful when deliberately retrieved, but not a universal automatic-discovery protocol.</li>
+<li><a href="../llms-components.txt"><code>llms-components.txt</code></a>: focused component, native pattern, theme, and composition links; source-candidate features are explicitly labeled.</li>
+<li><a href="../llms-frameworks.txt"><code>llms-frameworks.txt</code></a>: focused framework and platform integration links.</li>
+<li><a href="https://syntyr-css.pages.dev/v/0.3.0-alpha.4/llms.txt">Published alpha.4 index</a>: release-specific CSS paths, themes, and scoping, served at <code>/v/0.3.0-alpha.4/llms.txt</code>.</li>
 <li><a href="../llms-full.txt"><code>llms-full.txt</code></a>: generated, version-stamped concatenation of selected public technical docs, for tools that benefit from one context file.</li>
 <li><a href="../metadata/components.json"><code>metadata/components.json</code></a>: small <strong>curated, non-exhaustive</strong> inventory with the CSS modules required by the included classes. Do not infer that a class is unavailable solely because this catalog omits it.</li>
 <li><a href="../metadata/syntyr-contract.json"><code>metadata/syntyr-contract.json</code></a>: full source-discovered Syntyr classes, tokens, known stylesheet distributions, themes, literal state values and curated component recipes. This candidate-version manifest is suitable for LLM tooling and optional <a href="editor-integration.html#optional-static-html-diagnostics">static HTML checks</a>; it is not a compiler or an accessibility certification.</li>

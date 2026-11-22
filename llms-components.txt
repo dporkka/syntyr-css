@@ -1,0 +1,44 @@
+# Syntyr CSS — components and composition index
+
+> Source-tree reference for Syntyr 0.3.0-alpha.5 (unreleased candidate). Use the published 0.3.0-alpha.4 CSS API when building against the stable alpha.4 distribution. These docs may contain classes absent from alpha.4.
+
+Syntyr is CSS, not a JavaScript component framework. Load the required CSS modules, scope content with `.syn-root`, and preserve native HTML/ARIA semantics.
+
+## Start with the actual installed version
+
+- [Version-aware AI quickstart](https://syntyr-css.pages.dev/docs/ai-quickstart.md)
+- [Published alpha.4 contract](https://syntyr-css.pages.dev/v/0.3.0-alpha.4/llms.txt)
+- [Component reference](https://syntyr-css.pages.dev/docs/components.md): Class names, associated CSS modules and valid states.
+- [Curated component manifest](https://syntyr-css.pages.dev/metadata/components.json): Non-exhaustive components validated against current CSS.
+- [Complete source-discovered contract](https://syntyr-css.pages.dev/metadata/syntyr-contract.json): Source-candidate classes, tokens, themes, modules and recipes; not a published alpha.4 API.
+- [Accessibility and semantics](https://syntyr-css.pages.dev/docs/accessibility.md)
+
+## Forms and native controls
+
+- [Native HTML patterns](https://syntyr-css.pages.dev/docs/native-patterns.md)
+- [Component and form recipes](https://syntyr-css.pages.dev/docs/component-recipes.md): Source-candidate compositions.
+- [Semantic HTML components](https://syntyr-css.pages.dev/docs/semantic-components.md)
+- [Native dropdowns](https://syntyr-css.pages.dev/docs/dropdowns.md)
+- [Optional headless interactions](https://syntyr-css.pages.dev/docs/headless-interactions.md)
+- [Native browser interaction APIs](https://syntyr-css.pages.dev/docs/native-browser-apis.md)
+
+## Application compositions
+
+- [Composition recipes](https://syntyr-css.pages.dev/docs/recipes.md)
+- [Copy-owned block catalog](https://syntyr-css.pages.dev/docs/blocks-guide.md): Source candidate.
+- [Five native application screens](https://syntyr-css.pages.dev/docs/app-screens.md)
+- [Opt-in data grid](https://syntyr-css.pages.dev/docs/data-grid.md): Presentation only; host application owns behavior.
+- [Enterprise data tables](https://syntyr-css.pages.dev/docs/data-tables.md)
+- [Visualization](https://syntyr-css.pages.dev/docs/viz.md): Styling only, no chart renderer.
+- [Geospatial UI](https://syntyr-css.pages.dev/docs/geo.md): Styling only, no map renderer.
+- [Static HTML recipes](https://syntyr-css.pages.dev/docs/native-workflows.md)
+
+## Themes and optional effects
+
+- [Theme tokens](https://syntyr-css.pages.dev/docs/theme-customization.md)
+- [Visual intensity and restraint](https://syntyr-css.pages.dev/docs/visual-intensity.md)
+- [Geometry](https://syntyr-css.pages.dev/docs/geometry-terminal.md)
+- [Optional animations](https://syntyr-css.pages.dev/docs/animation.md)
+- [Optional symbols](https://syntyr-css.pages.dev/docs/symbols.md)
+
+Use only selectors present in your installed CSS; do not invent `syn-*` classes or imply CSS implements application logic.
