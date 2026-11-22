@@ -11,9 +11,8 @@ Syntyr server, JavaScript runtime, npm installation, or network access is requir
 
 ## Discover the installed contract first
 
-1. If the project contains `syntyr.agent.json`, read it before generating markup.
-   `release` is the explicit CSS version; `assets_dir` is the local CSS location;
-   `stylesheets` is the list installed by the optional offline setup tool.
+1. If the Syntyr source checkout is available, run `python3 scripts/syntyr_agent.py info --project /path/to/app --json` first. Its read-only JSON reports verified asset hashes, release status, installed stylesheet filenames, themes and agent reference paths. Exit 0 means healthy, 1 means invalid/degraded and 2 means unconfigured. It does **not** verify that the host actually loads the CSS.
+   Otherwise, if the project contains `syntyr.agent.json`, read it before generating markup. `release` is the explicit CSS version; `assets_dir` is the local CSS location; `stylesheets` is the list installed by the optional offline setup tool.
 2. Read `references/api.json` next to this Skill if it exists. Its `classes`
    and curated `components` are verified against that version, not the latest
    unreleased source. The `themes` list is also version-specific.

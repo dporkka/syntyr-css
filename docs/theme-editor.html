@@ -30,6 +30,12 @@
             <label class="syn-label" for="intensity">VISUAL INTENSITY
               <select class="syn-select" id="intensity" name="intensity"><option value="quiet">Quiet</option><option value="standard" selected>Standard</option><option value="cinematic">Cinematic</option></select>
             </label>
+            <label class="syn-label" for="density">CONTROL DENSITY
+              <select class="syn-select" id="density" name="density"><option value="comfortable" selected>Comfortable</option><option value="compact">Compact</option><option value="spacious">Spacious</option></select>
+            </label>
+            <label class="syn-label" for="radius">CORNER RADIUS
+              <select class="syn-select" id="radius" name="radius"><option value="default" selected>Theme default</option><option value="0">Square</option><option value="0.25rem">Subtle</option><option value="0.5rem">Rounded</option><option value="0.75rem">Soft</option></select>
+            </label>
             <label class="syn-label" for="accent">ACCENT / CONTROL BACKGROUND
               <input class="syn-input" id="accent" type="color" value="#76e7f7">
             </label>
@@ -52,6 +58,11 @@
         <h2 id="output-title" class="syn-heading">CSS output</h2>
         <p>Paste this unlayered override into your application CSS after <code>syntyr.core.css</code>. Test text and control contrast across the rest of your interface before deployment.</p>
         <pre class="docs-code"><code id="generated-css"></code></pre>
+        <h3 class="syn-heading">Shareable design preset (JSON)</h3>
+        <p>Copy these declarative settings into your project's design configuration. This is a portable token recipe, not a standalone stylesheet or executable code.</p>
+        <pre class="docs-code"><code id="generated-preset"></code></pre>
+        <button class="syn-button" type="button" id="copy-preset">Copy JSON preset</button>
+        <p id="preset-feedback" role="status" aria-live="polite"></p>
         <p class="syn-caption">The ratio checks only the foreground/background of the primary button. It does not certify the theme, other surfaces, focus states, or WCAG compliance.</p>
       </section>
     </section>

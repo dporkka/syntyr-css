@@ -80,7 +80,7 @@ stylesheets.
 - [AI / coding agent quickstart](docs/ai-quickstart.md) and [agent integration guide](docs/agent-integration.md) (includes optional offline `init`/`check` CLI for portable consumer Skills and version-pinned HTML validation)
 - [LLM documentation index](llms.txt), [full public reference](llms-full.txt), and [validated curated component manifest](metadata/components.json)
 - [Optional local read-only MCP server](agent_mcp/README.md) (separate Python SDK, no CSS runtime dependency)
-- [Portable Syntyr consumer Agent Skill](agents/syntyr/SKILL.md) (manual opt-in, not automatically installed)
+- [Portable Syntyr consumer Agent Skill](agents/syntyr/SKILL.md) (manual opt-in, not automatically installed); read-only project inventory via `python3 scripts/syntyr_agent.py info --project /path/to/app --json`
 - [Per-component CSS imports and native HTML patterns](docs/native-patterns.md), [static demo](examples/native-recipes.html)
 - [Optional keyboard command launcher](examples/command-launcher.html): existing command-panel CSS with native dialog, safe filtering, Ctrl/⌘ + K, and a script-free destination list (alpha.5 source candidate).
 - [Native interaction recipes](https://syntyr-css.pages.dev/examples/native-interactions.html): exclusive accordions, GET search, dialog confirmations, datalist, meter/output without application JavaScript

@@ -115,6 +115,68 @@ class AgentSetupTests(unittest.TestCase):
             self.assertEqual(result.returncode, 2)
             self.assertEqual(json.loads(result.stdout)['unchecked_files'], [str(page)])
 
+    def test_info_unconfigured_project_is_read_only_and_explicit(self):
+        with TemporaryDirectory() as path:
+            project = Path(path)
+            result = self.run_cli('info', '--project', project, '--json')
+            self.assertEqual(result.returncode, 2, result.stderr + result.stdout)
+            data = json.loads(result.stdout)
+            self.assertEqual(data['status'], 'unconfigured')
+            self.assertFalse(data['css_usage_verified'])
+            self.assertEqual(list(project.iterdir()), [])
+
+    def test_info_reports_exact_pinned_assets_and_release_aware_themes(self):
+        with TemporaryDirectory() as path:
+            project = Path(path)
+            self.assertEqual(self.run_cli('init', '--project', project).returncode, 0)
+            result = self.run_cli('info', '--project', project, '--json')
+            self.assertEqual(result.returncode, 0, result.stderr + result.stdout)
+            data = json.loads(result.stdout)
+            self.assertEqual(data['status'], 'healthy')
+            self.assertEqual(data['release'], '0.3.0-alpha.4')
+            self.assertEqual(data['release_status'], 'published')
+            self.assertEqual(data['themes'], ['grid', 'noir', 'studio'])
+            self.assertFalse(data['css_usage_verified'])
+            self.assertEqual({item['name'] for item in data['assets']}, {
+                'syntyr.core.css', 'syntyr.recipes.css'})
+            self.assertTrue(all(item['integrity'] == 'verified' for item in data['assets']))
+            self.assertEqual(data['agent_skill'], '.agents/skills/syntyr/SKILL.md')
+            self.assertEqual(data['diagnostics'], [])
+
+    def test_info_detects_missing_and_modified_assets_without_writes(self):
+        with TemporaryDirectory() as path:
+            project = Path(path)
+            self.assertEqual(self.run_cli('init', '--project', project).returncode, 0)
+            cfg = json.loads((project / 'syntyr.agent.json').read_text())
+            core = project / cfg['assets_dir'] / 'syntyr.core.css'
+            recipes = project / cfg['assets_dir'] / 'syntyr.recipes.css'
+            core.unlink()
+            recipes.write_text('changed')
+            result = self.run_cli('info', '--project', project, '--json')
+            self.assertEqual(result.returncode, 1, result.stderr + result.stdout)
+            data = json.loads(result.stdout)
+            self.assertEqual(data['status'], 'degraded')
+            self.assertEqual({item['integrity'] for item in data['assets']}, {'missing', 'modified'})
+            self.assertEqual({d['code'] for d in data['diagnostics']}, {'missing-asset', 'modified-asset'})
+            self.assertEqual(recipes.read_text(), 'changed')
+            self.assertFalse(core.exists())
+
+    def test_info_rejects_symlinked_assets(self):
+        with TemporaryDirectory() as path:
+            project = Path(path)
+            self.assertEqual(self.run_cli('init', '--project', project).returncode, 0)
+            cfg = json.loads((project / 'syntyr.agent.json').read_text())
+            core = project / cfg['assets_dir'] / 'syntyr.core.css'
+            core.unlink()
+            outside = project / 'outside.css'
+            outside.write_text('do not read')
+            core.symlink_to(outside)
+            result = self.run_cli('info', '--project', project, '--json')
+            self.assertEqual(result.returncode, 1, result.stderr + result.stdout)
+            data = json.loads(result.stdout)
+            self.assertIn('symlink-asset', [d['code'] for d in data['diagnostics']])
+            self.assertEqual(outside.read_text(), 'do not read')
+
 
 if __name__ == '__main__':
     unittest.main()

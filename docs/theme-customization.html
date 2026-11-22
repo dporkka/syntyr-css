@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Customize Syntyr CSS themes and design tokens for SaaS dashboards, accessible business applications, and futuristic interfaces.">
-  <meta name="syntyr-source-sha256" content="ebe4c8e29c8c45f8cae19b04345e27adf238b83f7f7dce183dbbdcfede739209">
+  <meta name="syntyr-source-sha256" content="f16aacef4035c4352a870ba51ceb062f7802963c72ac62d4fecef56d15e2d496">
   <meta name="theme-color" content="#f5f7fb">
   <title>Syntyr theme customization — copy, override, ship — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/theme-customization">
@@ -54,6 +54,18 @@ accessible focus styling and semantic element options.</p>
 </code></pre>
 <p>Use <code>data-syn-theme=&quot;noir&quot;</code> for warm amber. Native HTML features
 such as <code>details</code>, <code>dialog</code> and <code>popover</code> don't need framework JavaScript.</p>
+<h2 id="copyable-theme-presets-alpha5-documentation-tool">Copyable theme presets (alpha.5 documentation tool)</h2>
+<p>The <a href="theme-editor.html">theme editor</a> now previews independently selectable
+theme, visual intensity, control density, and radius, and generates both CSS
+overrides and a portable JSON preset. Copy the JSON into an application-owned
+design configuration or use the CSS immediately. The JSON is declarative
+metadata, not an executable preset installer, stylesheet, or published API.
+For density/intensity, apply the indicated <code>data-syn-density</code> and
+<code>data-syn-intensity</code> attributes on the Syntyr scope. A custom radius uses
+<code>--syn-radius</code> and <code>--syn-panel-radius</code>; the default option preserves each
+base theme's geometry. The documentation script and clipboard enhancement are
+not included in Syntyr's distributed CSS. Test the resulting palette and
+control contrast in the consuming application.</p>
 <h2 id="2-override-tokens-using-application-css">2. Override tokens using application CSS</h2>
 <p>Syntyr declares its defaults in named cascade layers. App CSS without a
 layer takes precedence over layered author rules regardless of selector specificity.
@@ -381,6 +393,7 @@ hover backgrounds against text across all palettes and browser engines.</p>
         </article>
         <aside class="docs-article-sidebar"><nav aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#1-choose-a-theme">1. Choose a theme</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#copyable-theme-presets-alpha5-documentation-tool">Copyable theme presets (alpha.5 documentation tool)</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#2-override-tokens-using-application-css">2. Override tokens using application CSS</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#3-independent-visual-intensity">3. Independent visual intensity</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#4-css-component-mode-versus-native-semantic-mode">4. CSS component mode versus native semantic mode</a>

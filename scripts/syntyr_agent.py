@@ -128,6 +128,71 @@ def _html_files(project: Path) -> list[Path]:
     return sorted(files)
 
 
+def info(args: argparse.Namespace, catalog: SyntyrCatalog) -> tuple[int, dict]:
+    """Report only verified installation facts; never guess at host CSS imports."""
+    project = _safe_project(Path(args.project))
+    config_file = project / 'syntyr.agent.json'
+    if config_file.is_symlink():
+        raise ValueError('Refusing symlinked Syntyr configuration')
+    if not config_file.is_file():
+        return 2, {
+            'schema_version': 1, 'status': 'unconfigured', 'css_usage_verified': False,
+            'diagnostics': [], 'next_step': 'Run syntyr-agent init in this project to pin a release.'
+        }
+    config = json.loads(config_file.read_text(encoding='utf-8'))
+    if not isinstance(config, dict):
+        raise ValueError('Syntyr configuration must be an object')
+    release = config.get('release')
+    if release not in RELEASES:
+        raise ValueError('Unsupported configured Syntyr release')
+    _planned, expected = _planned_files(project, release, 'generic', catalog)
+    skill = config.get('agent_skill')
+    allowed_skills = {str(Path(path) / 'SKILL.md') for path in AGENT_PATHS.values()}
+    if (config.get('schema_version') != 1
+            or config.get('stylesheets') != list(DEFAULT_SHEETS)
+            or config.get('assets_dir') != expected['assets_dir']
+            or config.get('sha256') != expected['sha256']
+            or skill not in allowed_skills
+            or config.get('api_reference') != str(Path(skill).parent / 'references/api.json')):
+        raise ValueError('Invalid or inconsistent syntyr.agent.json; rerun init with a clean config')
+
+    diagnostics = []
+    assets = []
+    for name in DEFAULT_SHEETS:
+        relative = Path(config['assets_dir']) / name
+        asset = project / relative
+        if asset.is_symlink() or any(p.is_symlink() for p in asset.parents if p != project):
+            integrity, code = 'unsafe', 'symlink-asset'
+        elif not asset.is_file():
+            integrity, code = 'missing', 'missing-asset'
+        elif _hash(asset.read_bytes()) != config['sha256'][name]:
+            integrity, code = 'modified', 'modified-asset'
+        else:
+            integrity, code = 'verified', None
+        assets.append({
+            'name': name, 'path': relative.as_posix(),
+            'sha256': config['sha256'][name], 'integrity': integrity,
+        })
+        if code:
+            diagnostics.append({'code': code, 'file': relative.as_posix(),
+                                'severity': 'error', 'message': f'{name}: {integrity}'})
+    for name, relative in [('agent-skill', skill), ('api-reference', config['api_reference'])]:
+        target = project / relative
+        if target.is_symlink() or any(p.is_symlink() for p in target.parents if p != project):
+            diagnostics.append({'code': 'symlink-'+name, 'file': relative, 'severity': 'error'})
+        elif not target.is_file():
+            diagnostics.append({'code': 'missing-'+name, 'file': relative, 'severity': 'error'})
+    return (1 if diagnostics else 0), {
+        'schema_version': 1, 'status': 'degraded' if diagnostics else 'healthy',
+        'release': release, 'release_status': expected['release_status'],
+        'stylesheets': list(DEFAULT_SHEETS), 'assets': assets,
+        'agent_skill': skill, 'api_reference': config['api_reference'],
+        'themes': catalog.get_theme_tokens(release=release)['themes'],
+        'css_usage_verified': False, 'diagnostics': diagnostics,
+        'limitations': 'Read-only inventory verifies pinned files, not CSS inclusion, application behavior, or accessibility.',
+    }
+
+
 def check(args: argparse.Namespace, catalog: SyntyrCatalog) -> tuple[int, dict]:
     project = _safe_project(Path(args.project))
     config_file = project / 'syntyr.agent.json'
@@ -178,10 +243,14 @@ def main(argv=None) -> int:
     verify.add_argument('--project', default='.')
     verify.add_argument('--json', action='store_true')
     verify.add_argument('files', nargs='*')
+    inspect = sub.add_parser('info', help='Read-only project inventory for agents and developers')
+    inspect.add_argument('--project', default='.')
+    inspect.add_argument('--json', action='store_true')
     args = parser.parse_args(argv)
     try:
         catalog = SyntyrCatalog()
-        code, payload = (initialize(args, catalog) if args.command == 'init' else check(args, catalog))
+        handlers = {'init': initialize, 'check': check, 'info': info}
+        code, payload = handlers[args.command](args, catalog)
     except (ValueError, OSError, KeyError, json.JSONDecodeError) as exc:
         code, payload = 1, {'error': str(exc)}
     if args.json:
