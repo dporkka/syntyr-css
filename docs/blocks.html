@@ -60,6 +60,10 @@
           </article>
         </div>
       </section>
+      <nav class="blocks-category-nav" aria-label="Browse blocks by category">
+        <span class="syn-caption">Jump to category</span>
+        <a href="#block-title-hero-product" data-block-category-link="Marketing">Marketing <span>(22)</span></a><a href="#block-title-metric-overview" data-block-category-link="Applications">Applications <span>(23)</span></a><a href="#block-title-terminal-session" data-block-category-link="Technical">Technical <span>(6)</span></a><a href="#block-title-process-steps" data-block-category-link="Services">Services <span>(5)</span></a><a href="#block-title-portfolio-grid" data-block-category-link="Portfolio">Portfolio <span>(2)</span></a><a href="#block-title-article-featured" data-block-category-link="Editorial">Editorial <span>(4)</span></a><a href="#block-title-site-header" data-block-category-link="Navigation">Navigation <span>(3)</span></a><a href="#block-title-content-collection" data-block-category-link="Publishing">Publishing <span>(1)</span></a><a href="#block-title-product-collection" data-block-category-link="Commerce">Commerce <span>(2)</span></a>
+      </nav>
       <div class="blocks-controls" id="blocks-controls" hidden>
         <div><label class="syn-label" for="blocks-search">Search blocks</label>
           <input class="syn-input" type="search" id="blocks-search" placeholder="Try pricing, settings, telemetry…" autocomplete="off"></div>
@@ -73,6 +77,9 @@
             <option value="terminal">Terminal</option><option value="corporate">Corporate</option>
             <option value="minimal">Minimal</option>
           </select></div>
+      </div>
+      <div class="blocks-preview-actions">
+        <button type="button" id="blocks-preview-toggle" class="syn-button" aria-controls="blocks-grid" aria-pressed="false" hidden>Show all previews</button>
       </div>
       <p id="blocks-results" class="syn-caption" role="status" aria-live="polite">68 blocks available.</p>
       <p id="blocks-feedback" class="syn-caption" role="status" aria-live="polite" aria-atomic="true"></p>
@@ -88,7 +95,9 @@
           <span class="syn-badge">syntyr.core.css + syntyr.recipes.css</span>
         </div>
         <p class="syn-muted">A concise product introduction with real calls to action.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Product launch hero</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-hero-product">
   <div class="syn-site-hero">
     <p class="syn-eyebrow">ANALYTICS / WITHOUT FRICTION</p>
@@ -100,7 +109,8 @@
     </div>
   </div>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Product launch hero</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-hero-product&quot;&gt;
@@ -128,7 +138,9 @@
           <span class="syn-badge">syntyr.core.css + syntyr.recipes.css</span>
         </div>
         <p class="syn-muted">A restrained security product hero with an explicit trust message.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Security-first hero</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-hero-security">
   <div class="syn-site-hero">
     <span class="syn-badge">SECURITY BY DESIGN</span>
@@ -138,7 +150,8 @@
     <p class="syn-caption">Self-hosting and access controls are supplied by your application, not by CSS.</p>
   </div>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Security-first hero</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-hero-security&quot;&gt;
@@ -164,7 +177,9 @@
           <span class="syn-badge">syntyr.core.css + syntyr.recipes.css</span>
         </div>
         <p class="syn-muted">Responsive feature cards based on a fluid CSS grid.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Three-feature grid</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-feature-heading">
   <h2 id="syn-feature-heading" class="syn-heading">Everything in one place</h2>
   <div class="syn-feature-grid">
@@ -173,7 +188,8 @@
     <article class="syn-feature-card"><h3>Keep moving</h3><p>Turn insights into actionable workflows.</p></article>
   </div>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Three-feature grid</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-feature-heading&quot;&gt;
@@ -198,7 +214,9 @@
           <span class="syn-badge">syntyr.core.css + syntyr.recipes.css</span>
         </div>
         <p class="syn-muted">A short benefits section with native list semantics.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Benefits checklist</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-checklist-heading">
   <div class="syn-panel">
     <p class="syn-eyebrow">WHY TEAMS SWITCH</p>
@@ -210,7 +228,8 @@
     </ul>
   </div>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Benefits checklist</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-checklist-heading&quot;&gt;
@@ -238,7 +257,9 @@
           <span class="syn-badge">syntyr.core.css</span>
         </div>
         <p class="syn-muted">Three responsive pricing cards with a featured plan.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Three-tier pricing</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-pricing-heading">
   <h2 id="syn-pricing-heading" class="syn-heading">Plans that scale</h2>
   <div class="syn-pricing">
@@ -248,7 +269,8 @@
   </div>
   <p class="syn-caption">Example prices only; replace plan data and checkout routes.</p>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Three-tier pricing</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-pricing-heading&quot;&gt;
@@ -274,14 +296,17 @@
           <span class="syn-badge">syntyr.core.css</span>
         </div>
         <p class="syn-muted">Readable social proof with explicit quotation attribution.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Customer testimonial</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-label="Customer testimonial">
   <figure class="syn-panel">
     <blockquote><p class="syn-lede">“Our team finally has a shared view of the work that matters.”</p></blockquote>
     <figcaption class="syn-muted">Illustrative quote — replace with permission-based customer feedback.</figcaption>
   </figure>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Customer testimonial</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-label=&quot;Customer testimonial&quot;&gt;
@@ -304,14 +329,17 @@
           <span class="syn-badge">syntyr.core.css</span>
         </div>
         <p class="syn-muted">Keyboard-accessible native disclosures without a script.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Frequently asked questions</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-faq-heading">
   <h2 id="syn-faq-heading" class="syn-heading">Frequently asked questions</h2>
   <details class="syn-details"><summary>Can I use my own hosting?</summary><p>Yes. This example is plain HTML and CSS.</p></details>
   <details class="syn-details"><summary>Do I need JavaScript?</summary><p>Not for this native disclosure interface.</p></details>
   <details class="syn-details"><summary>Can I customize the theme?</summary><p>Override the documented CSS custom properties.</p></details>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Frequently asked questions</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-faq-heading&quot;&gt;
@@ -334,14 +362,17 @@
           <span class="syn-badge">syntyr.core.css + syntyr.recipes.css</span>
         </div>
         <p class="syn-muted">A compact conversion section with clear hierarchy.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Call-to-action band</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-cta-heading">
   <div class="syn-cta-band">
     <div><h2 id="syn-cta-heading" class="syn-heading">Ready to explore?</h2><p>Start with a workflow that works for your team.</p></div>
     <a class="syn-button syn-button--primary">Talk to us</a>
   </div>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Call-to-action band</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-cta-heading&quot;&gt;
@@ -364,7 +395,9 @@
           <span class="syn-badge">syntyr.core.css</span>
         </div>
         <p class="syn-muted">Container-aware operational metrics with text labels.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview KPI overview</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-kpi-heading">
   <h2 id="syn-kpi-heading" class="syn-heading">Operations snapshot</h2>
   <div class="syn-stats">
@@ -373,7 +406,8 @@
     <article class="syn-stat"><p class="syn-stat-label">Completion</p><p class="syn-stat-value">94%</p></article>
   </div>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for KPI overview</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-kpi-heading&quot;&gt;
@@ -398,7 +432,9 @@
           <span class="syn-badge">syntyr.core.css + syntyr.recipes.css</span>
         </div>
         <p class="syn-muted">A compact activity feed in a reusable application card.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Recent activity</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-activity-heading">
   <div class="syn-app-card">
     <header class="syn-app-card-header"><h2 id="syn-activity-heading" class="syn-heading">Recent activity</h2><span class="syn-badge">Today</span></header>
@@ -409,7 +445,8 @@
     </ol>
   </div>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Recent activity</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-activity-heading&quot;&gt;
@@ -436,7 +473,9 @@
           <span class="syn-badge">syntyr.core.css</span>
         </div>
         <p class="syn-muted">Semantic, scrollable table with caption and column scopes.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Records table</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-table-heading">
   <h2 id="syn-table-heading" class="syn-heading">Active requests</h2>
   <div class="syn-table-wrap">
@@ -450,7 +489,8 @@
     </table>
   </div>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Records table</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-table-heading&quot;&gt;
@@ -480,7 +520,9 @@
           <span class="syn-badge">syntyr.core.css</span>
         </div>
         <p class="syn-muted">Server-ready GET filters that preserve native form semantics.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Search and filter form</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-filter-heading">
   <h2 id="syn-filter-heading" class="syn-heading">Find a request</h2>
   <form class="syn-panel syn-form" method="get" action="/requests"><fieldset class="blocks-preview-disabled" disabled>
@@ -493,7 +535,8 @@
     <button class="syn-button syn-button--primary" type="submit">Apply filters</button>
   </fieldset></form>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Search and filter form</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-filter-heading&quot;&gt;
@@ -522,7 +565,9 @@
           <span class="syn-badge">syntyr.core.css</span>
         </div>
         <p class="syn-muted">Labeled settings form for server-backed applications.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Account settings</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-settings-heading">
   <h2 id="syn-settings-heading" class="syn-heading">Workspace settings</h2>
   <form class="syn-panel syn-form" method="post" action="/settings"><fieldset class="blocks-preview-disabled" disabled>
@@ -534,7 +579,8 @@
     <button class="syn-button syn-button--primary" type="submit">Save settings</button>
   </fieldset></form>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Account settings</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-settings-heading&quot;&gt;
@@ -562,7 +608,9 @@
           <span class="syn-badge">syntyr.core.css + syntyr.recipes.css</span>
         </div>
         <p class="syn-muted">Simple list of people and roles with descriptive content.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Team directory</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-team-heading">
   <div class="syn-app-card">
     <header class="syn-app-card-header"><h2 id="syn-team-heading" class="syn-heading">Team members</h2><span class="syn-badge">3 members</span></header>
@@ -573,7 +621,8 @@
     </ul>
   </div>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Team directory</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-team-heading&quot;&gt;
@@ -600,7 +649,9 @@
           <span class="syn-badge">syntyr.core.css + syntyr.recipes.css</span>
         </div>
         <p class="syn-muted">A compact, readable subscription overview.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Billing summary</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-billing-heading">
   <article class="syn-app-card">
     <header class="syn-app-card-header"><h2 id="syn-billing-heading" class="syn-heading">Subscription</h2><span class="syn-status syn-status--success">Active</span></header>
@@ -610,7 +661,8 @@
     <a class="syn-button">Manage billing</a>
   </article>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Billing summary</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-billing-heading&quot;&gt;
@@ -636,7 +688,9 @@
           <span class="syn-badge">syntyr.core.css + syntyr.recipes.css</span>
         </div>
         <p class="syn-muted">A short onboarding progression conveyed without color-only state.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Onboarding checklist</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-onboarding-heading">
   <div class="syn-panel">
     <h2 id="syn-onboarding-heading" class="syn-heading">Complete your setup</h2>
@@ -648,7 +702,8 @@
     <a class="syn-button syn-button--primary">Continue setup</a>
   </div>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Onboarding checklist</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-onboarding-heading&quot;&gt;
@@ -676,7 +731,9 @@
           <span class="syn-badge">syntyr.core.css + syntyr.recipes.css</span>
         </div>
         <p class="syn-muted">A static terminal presentation, not an interactive shell.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Terminal output</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-terminal-heading">
   <h2 id="syn-terminal-heading" class="syn-heading">Deploy preview</h2>
   <div class="syn-terminal" role="group" aria-label="Illustrative deployment output">
@@ -687,7 +744,8 @@
 <span class="syn-terminal-muted">Preview is ready</span></code></pre>
   </div>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Terminal output</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-terminal-heading&quot;&gt;
@@ -714,7 +772,9 @@
           <span class="syn-badge">syntyr.core.css</span>
         </div>
         <p class="syn-muted">Status notice with actionable text and honest semantics.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Service incident notice</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-incident-heading">
   <div class="syn-alert syn-alert--danger">
     <h2 id="syn-incident-heading" class="syn-heading">Degraded API performance</h2>
@@ -722,7 +782,8 @@
     <a>View status history</a>
   </div>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Service incident notice</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-incident-heading&quot;&gt;
@@ -746,7 +807,9 @@
           <span class="syn-badge">syntyr.core.css</span>
         </div>
         <p class="syn-muted">Readable service status with native progress indicators.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Telemetry panel</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-telemetry-heading">
   <div class="syn-panel">
     <p class="syn-eyebrow">SYSTEM TELEMETRY</p>
@@ -756,7 +819,8 @@
     <p class="syn-caption">Illustrative values; connect to real monitoring data.</p>
   </div>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Telemetry panel</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-telemetry-heading&quot;&gt;
@@ -782,7 +846,9 @@
           <span class="syn-badge">syntyr.core.css</span>
         </div>
         <p class="syn-muted">Compact changelog entry with a machine-readable date.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Release notes</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-release-heading">
   <article class="syn-panel">
     <p class="syn-eyebrow"><time datetime="2026-11-15">NOV 15, 2026</time> / RELEASE</p>
@@ -794,7 +860,8 @@
     <a>View all releases</a>
   </article>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Release notes</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-release-heading&quot;&gt;
@@ -822,7 +889,9 @@
           <span class="syn-badge">syntyr.core.css + syntyr.recipes.css</span>
         </div>
         <p class="syn-muted">Server-ready resource search, record table, pagination and empty state.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Resource management workspace</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-resource-workspace-heading">
   <header class="syn-collection-toolbar">
     <div>
@@ -882,7 +951,8 @@
     </div>
   </details>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Resource management workspace</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-resource-workspace-heading&quot;&gt;
@@ -958,7 +1028,9 @@
           <span class="syn-badge">syntyr.core.css + syntyr.recipes.css</span>
         </div>
         <p class="syn-muted">Accessible native deal stages, filters and links with no drag runtime.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview CRM pipeline workspace</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-crm-workspace-heading">
   <header class="syn-collection-toolbar">
     <div>
@@ -1003,7 +1075,8 @@
   </div>
   <p class="syn-help">Stages are presentation only. Changing a deal's stage needs an authorized server operation; there is no drag-and-drop JavaScript.</p>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for CRM pipeline workspace</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-crm-workspace-heading&quot;&gt;
@@ -1064,7 +1137,9 @@
           <span class="syn-badge">syntyr.core.css + syntyr.recipes.css</span>
         </div>
         <p class="syn-muted">Subscription details, invoice history and a server-owned billing contact form.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Billing and settings workspace</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-billing-workspace-heading">
   <header class="syn-collection-toolbar">
     <div>
@@ -1110,7 +1185,8 @@
     </div>
   </section>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Billing and settings workspace</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-billing-workspace-heading&quot;&gt;
@@ -1172,7 +1248,9 @@
           <span class="syn-badge">syntyr.core.css</span>
         </div>
         <p class="syn-muted">Native authentication form with accessible labels and recovery link.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Sign-in form</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-signin-heading">
   <div class="syn-panel">
     <h2 class="syn-heading" id="syn-signin-heading">Sign in to Northstar</h2>
@@ -1187,7 +1265,8 @@
     <p class="syn-caption"><a>Forgot password?</a> · <a>Create account</a></p>
   </div>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Sign-in form</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-signin-heading&quot;&gt;
@@ -1218,7 +1297,9 @@
           <span class="syn-badge">syntyr.core.css</span>
         </div>
         <p class="syn-muted">Email recovery request presentation with security integration notes.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Account recovery</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-recovery-heading">
   <div class="syn-panel">
     <h2 class="syn-heading" id="syn-recovery-heading">Recover account access</h2>
@@ -1232,7 +1313,8 @@
     <a>Return to sign in</a>
   </div>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Account recovery</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-recovery-heading&quot;&gt;
@@ -1262,7 +1344,9 @@
           <span class="syn-badge">syntyr.core.css</span>
         </div>
         <p class="syn-muted">Actionable error state without fake success or client-side retry.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Error recovery view</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-error-heading">
   <div class="syn-panel">
     <p class="syn-eyebrow">Unable to load / 503</p>
@@ -1272,7 +1356,8 @@
     <p class="syn-help">The server must return the correct HTTP error status and provide a working retry route if available.</p>
   </div>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Error recovery view</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-error-heading&quot;&gt;
@@ -1298,7 +1383,9 @@
           <span class="syn-badge">syntyr.core.css</span>
         </div>
         <p class="syn-muted">Clear primary action and filter recovery guidance.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Empty collection state</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-empty-heading">
   <div class="syn-panel syn-empty">
     <h2 id="syn-empty-heading" class="syn-heading">No projects yet</h2>
@@ -1307,7 +1394,8 @@
     <p class="syn-caption">Try clearing your filters if you expected existing projects.</p>
   </div>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Empty collection state</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-empty-heading&quot;&gt;
@@ -1332,7 +1420,9 @@
           <span class="syn-badge">syntyr.core.css</span>
         </div>
         <p class="syn-muted">A semantic comparison matrix that can scroll within narrow containers.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Features comparison table</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-compare">
   <h2 id="syn-compare" class="syn-heading">Compare plan capabilities</h2>
   <div class="syn-table-wrap" role="region" aria-label="Plan capabilities; scroll horizontally to view all columns" tabindex="0">
@@ -1348,7 +1438,8 @@
   </div>
   <p class="syn-caption">Replace sample capabilities with real product entitlements.</p>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Features comparison table</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-compare&quot;&gt;
@@ -1380,7 +1471,9 @@
           <span class="syn-badge">syntyr.core.css</span>
         </div>
         <p class="syn-muted">A grid of documented integration entry points and benefits.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Integration directory grid</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-integrations">
   <h2 id="syn-integrations" class="syn-heading">Works with your workflow</h2>
   <div class="syn-grid">
@@ -1390,7 +1483,8 @@
   </div>
   <p class="syn-caption">Example capabilities only. Connect these application-owned /integrations/ routes before publishing.</p>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Integration directory grid</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-integrations&quot;&gt;
@@ -1416,7 +1510,9 @@
           <span class="syn-badge">syntyr.core.css</span>
         </div>
         <p class="syn-muted">An accessible subscription form with a native server-backed fallback.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Newsletter signup panel</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-newsletter">
   <div class="syn-panel">
     <p class="syn-eyebrow">STAY IN THE LOOP</p><h2 id="syn-newsletter" class="syn-heading">A useful note, once a month</h2>
@@ -1429,7 +1525,8 @@
     <p class="syn-caption">Connect a real consent-aware endpoint, CSRF protection and confirmation flow before publishing.</p>
   </div>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Newsletter signup panel</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-newsletter&quot;&gt;
@@ -1458,7 +1555,9 @@
           <span class="syn-badge">syntyr.core.css</span>
         </div>
         <p class="syn-muted">A lightweight product or event announcement with a contextual destination.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Site announcement strip</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-announcement">
   <div class="syn-panel">
     <p class="syn-eyebrow">PRODUCT UPDATE</p>
@@ -1467,7 +1566,8 @@
     <a class="syn-button syn-button--outline">Read the update</a>
   </div>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Site announcement strip</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-announcement&quot;&gt;
@@ -1492,7 +1592,9 @@
           <span class="syn-badge">syntyr.core.css</span>
         </div>
         <p class="syn-muted">A compact text-only partner strip with no unlicensed logos.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Partner logo text wall</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-partners">
   <h2 id="syn-partners" class="syn-heading">Compatible with your tools</h2>
   <p class="syn-muted">Example technology categories, not customer endorsements.</p>
@@ -1502,7 +1604,8 @@
     <li class="syn-panel"><strong>Web components</strong></li>
   </ul>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Partner logo text wall</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-partners&quot;&gt;
@@ -1528,7 +1631,9 @@
           <span class="syn-badge">syntyr.core.css</span>
         </div>
         <p class="syn-muted">An ordered and accessible sequence for explaining a service.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview How it works steps</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-process">
   <h2 id="syn-process" class="syn-heading">A straightforward process</h2>
   <ol class="syn-grid">
@@ -1537,7 +1642,8 @@
     <li class="syn-panel"><h3>Deliver</h3><p>Ship, document and prepare for ongoing maintenance.</p></li>
   </ol>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for How it works steps</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-process&quot;&gt;
@@ -1562,7 +1668,9 @@
           <span class="syn-badge">syntyr.core.css</span>
         </div>
         <p class="syn-muted">A services section with clear descriptions and destination links.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Service offerings grid</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-services">
   <p class="syn-eyebrow">WHAT WE DO</p><h2 id="syn-services" class="syn-heading">Services built around your goals</h2>
   <div class="syn-grid">
@@ -1571,7 +1679,8 @@
     <article class="syn-panel"><h3>Ongoing care</h3><p>Maintenance, performance and accessibility reviews.</p><a>Explore ongoing care</a></article>
   </div>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Service offerings grid</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-services&quot;&gt;
@@ -1596,7 +1705,9 @@
           <span class="syn-badge">syntyr.core.css</span>
         </div>
         <p class="syn-muted">A service-area section suitable for local and regional businesses.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Service coverage cards</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-coverage">
   <h2 id="syn-coverage" class="syn-heading">Where we work</h2>
   <p class="syn-lede">Remote collaboration with optional on-site project sessions.</p>
@@ -1605,7 +1716,8 @@
     <article class="syn-panel"><h3>Remote teams</h3><p>Structured online reviews, delivery and documentation.</p><a>Plan a remote project</a></article>
   </div>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Service coverage cards</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-coverage&quot;&gt;
@@ -1630,7 +1742,9 @@
           <span class="syn-badge">syntyr.core.css</span>
         </div>
         <p class="syn-muted">An accessible project gallery without fragile image dependencies.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Selected work grid</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-portfolio">
   <h2 id="syn-portfolio" class="syn-heading">Selected projects</h2>
   <div class="syn-grid">
@@ -1639,7 +1753,8 @@
     <article class="syn-panel"><p class="syn-eyebrow">COMMERCE</p><h3>Specialty storefront</h3><p>Products presented with clarity and accessible browsing.</p><a>View storefront project</a></article>
   </div>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Selected work grid</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-portfolio&quot;&gt;
@@ -1664,7 +1779,9 @@
           <span class="syn-badge">syntyr.core.css</span>
         </div>
         <p class="syn-muted">A team directory section without invented portraits or credentials.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Team introduction cards</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-team">
   <h2 id="syn-team" class="syn-heading">Meet the team</h2>
   <div class="syn-grid">
@@ -1673,7 +1790,8 @@
   </div>
   <p class="syn-caption">Role-based sample content; add actual people only with permission.</p>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Team introduction cards</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-team&quot;&gt;
@@ -1698,7 +1816,9 @@
           <span class="syn-badge">syntyr.core.css</span>
         </div>
         <p class="syn-muted">A labeled contact form with appropriate native inputs and privacy guidance.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Project inquiry form</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-inquiry">
   <h2 id="syn-inquiry" class="syn-heading">Tell us about your project</h2>
   <form class="syn-panel syn-form" action="/contact/request" method="post"><fieldset class="blocks-preview-disabled" disabled>
@@ -1712,7 +1832,8 @@
   </fieldset></form>
   <p class="syn-caption">Sample form only. Add consent, anti-spam, CSRF and server validation in your application.</p>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Project inquiry form</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-inquiry&quot;&gt;
@@ -1742,7 +1863,9 @@
           <span class="syn-badge">syntyr.core.css</span>
         </div>
         <p class="syn-muted">A prominent lead article with an accessible summary and a real reading link.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Featured editorial story</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-featured-story">
   <p class="syn-eyebrow">FROM THE JOURNAL</p>
   <div class="syn-split">
@@ -1758,7 +1881,8 @@
     </aside>
   </div>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Featured editorial story</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-featured-story&quot;&gt;
@@ -1790,7 +1914,9 @@
           <span class="syn-badge">syntyr.core.css</span>
         </div>
         <p class="syn-muted">A responsive collection of dated articles with titles and excerpts.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Article and news grid</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-journal-grid">
   <h2 id="syn-journal-grid" class="syn-heading">Latest from the journal</h2>
   <div class="syn-grid">
@@ -1800,7 +1926,8 @@
   </div>
   <p><a>All articles</a></p>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Article and news grid</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-journal-grid&quot;&gt;
@@ -1826,7 +1953,9 @@
           <span class="syn-badge">syntyr.core.css</span>
         </div>
         <p class="syn-muted">A semantic article header, readable paragraphs and related links.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Long-form article layout</summary>
+          <div class="blocks-preview">
 <article class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-article-title">
   <header>
     <p class="syn-eyebrow">FIELD NOTES</p>
@@ -1842,7 +1971,8 @@
   </section>
   <footer><p><a>Back to all articles</a></p></footer>
 </article>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Long-form article layout</summary>
           <pre class="blocks-source"><code>&lt;article class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-article-title&quot;&gt;
@@ -1874,7 +2004,9 @@
           <span class="syn-badge">syntyr.core.css</span>
         </div>
         <p class="syn-muted">A concise author introduction with a clearly labeled profile link.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Author bio card</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-author-name">
   <div class="syn-panel">
     <p class="syn-eyebrow">ABOUT THE AUTHOR</p>
@@ -1883,7 +2015,8 @@
     <a>View all articles by the editorial team</a>
   </div>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Author bio card</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-author-name&quot;&gt;
@@ -1908,7 +2041,9 @@
           <span class="syn-badge">syntyr.core.css</span>
         </div>
         <p class="syn-muted">A project outcome summary with challenges, solution and next action.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Case-study teaser</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-case-study">
   <div class="syn-split">
     <div>
@@ -1923,7 +2058,8 @@
     </dl>
   </div>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Case-study teaser</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-case-study&quot;&gt;
@@ -1954,7 +2090,9 @@
           <span class="syn-badge">syntyr.core.css</span>
         </div>
         <p class="syn-muted">A compact brand, navigation and call-to-action header with native links.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Responsive site header</summary>
+          <div class="blocks-preview">
 <header class="syn-root syn-header syn-region" data-syn-theme="studio" aria-label="Example site header">
   <a class="syn-logo syn-list-row">Northstar Studio</a>
   <nav class="syn-nav" aria-label="Primary navigation">
@@ -1962,7 +2100,8 @@
   </nav>
   <a class="syn-button syn-button--primary">Start a project</a>
 </header>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Responsive site header</summary>
           <pre class="blocks-source"><code>&lt;header class=&quot;syn-root syn-header syn-region&quot; data-syn-theme=&quot;studio&quot; aria-label=&quot;Example site header&quot;&gt;
@@ -1986,7 +2125,9 @@
           <span class="syn-badge">syntyr.core.css</span>
         </div>
         <p class="syn-muted">A reusable footer with separate navigation groups and business information.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Multi-column site footer</summary>
+          <div class="blocks-preview">
 <footer class="syn-root syn-region" data-syn-theme="studio" aria-label="Example site footer">
   <div class="syn-grid">
     <section class="syn-panel" aria-labelledby="syn-footer-brand">
@@ -2004,7 +2145,8 @@
   </div>
   <p class="syn-caption">Example footer. Replace brand details and links before publishing.</p>
 </footer>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Multi-column site footer</summary>
           <pre class="blocks-source"><code>&lt;footer class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-label=&quot;Example site footer&quot;&gt;
@@ -2038,7 +2180,9 @@
           <span class="syn-badge">syntyr.core.css + syntyr.recipes.css</span>
         </div>
         <p class="syn-muted">Keyboard-friendly disclosure with grouped destination links and no menu runtime.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Native expandable mega menu</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-label="Expandable website navigation example">
   <nav aria-label="Products and resources" class="syn-stack">
     <div class="syn-inline" style="--syn-inline-justify:space-between">
@@ -2069,7 +2213,8 @@
     </details>
   </nav>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Native expandable mega menu</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-label=&quot;Expandable website navigation example&quot;&gt;
@@ -2116,7 +2261,9 @@
           <span class="syn-badge">syntyr.core.css</span>
         </div>
         <p class="syn-muted">Documentation navigation, breadcrumb and article content.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Documentation page</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-shell" data-syn-theme="studio" aria-labelledby="syn-docs-heading">
   <nav class="syn-breadcrumbs" aria-label="Breadcrumb"><ol><li><a>Docs</a></li><li aria-current="page">Getting started</li></ol></nav>
   <div class="syn-sidecar">
@@ -2135,7 +2282,8 @@
     </nav>
   </div>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Documentation page</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-shell&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-docs-heading&quot;&gt;
@@ -2170,7 +2318,9 @@
           <span class="syn-badge">syntyr.core.css + syntyr.recipes.css</span>
         </div>
         <p class="syn-muted">Loop-style article cards with real GET search, taxonomy selection and pagination.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Filterable content collection</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region syn-stack" data-syn-theme="studio" aria-labelledby="syn-collection-heading">
   <header class="syn-stack">
     <p class="syn-eyebrow">THE JOURNAL</p>
@@ -2218,7 +2368,8 @@
     <a class="syn-page-link" aria-label="Next page">Next</a>
   </nav>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Filterable content collection</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region syn-stack&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-collection-heading&quot;&gt;
@@ -2282,7 +2433,9 @@
           <span class="syn-badge">syntyr.core.css</span>
         </div>
         <p class="syn-muted">Product catalog cards with explicit price and detail links.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Product collection cards</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-collection">
   <h2 id="syn-collection" class="syn-heading">Featured collection</h2>
   <div class="syn-grid">
@@ -2292,7 +2445,8 @@
   </div>
   <p class="syn-caption">Fictional products and prices; no checkout behavior is provided.</p>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Product collection cards</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-collection&quot;&gt;
@@ -2318,7 +2472,9 @@
           <span class="syn-badge">syntyr.core.css</span>
         </div>
         <p class="syn-muted">A merchandise category section with links instead of fabricated checkout controls.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Shop category highlights</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-shop-categories">
   <h2 id="syn-shop-categories" class="syn-heading">Explore the collection</h2>
   <div class="syn-grid">
@@ -2326,7 +2482,8 @@
     <article class="syn-panel"><p class="syn-eyebrow">02</p><h3>Desk essentials</h3><p>Simple products for daily work.</p><a>Browse desk essentials</a></article>
   </div>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Shop category highlights</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-shop-categories&quot;&gt;
@@ -2350,7 +2507,9 @@
           <span class="syn-badge">syntyr.core.css</span>
         </div>
         <p class="syn-muted">An editorial split section with a concrete feature benefit and a complementary product detail.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Feature spotlight</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="feature-spotlight-heading">
   <div class="syn-sidecar">
     <div>
@@ -2367,7 +2526,8 @@
     </aside>
   </div>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Feature spotlight</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;feature-spotlight-heading&quot;&gt;
@@ -2400,7 +2560,9 @@
           <span class="syn-badge">syntyr.core.css</span>
         </div>
         <p class="syn-muted">Transparent questions to ask about security, reliability, and data handling; not certification claims.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Trust and assurance section</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="trust-assurance-heading">
   <h2 class="syn-heading" id="trust-assurance-heading">Trust needs evidence.</h2>
   <p>Replace these sample prompts with verified policies and public documentation.</p>
@@ -2411,7 +2573,8 @@
   </ul>
   <a>Read our documented practices</a>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Trust and assurance section</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;trust-assurance-heading&quot;&gt;
@@ -2438,7 +2601,9 @@
           <span class="syn-badge">syntyr.core.css</span>
         </div>
         <p class="syn-muted">An agenda and accessible native signup form; your server must implement registration.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Event registration section</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="event-registration-heading">
   <h2 class="syn-heading" id="event-registration-heading">Join a product workshop</h2>
   <p><time datetime="2026-12-03T14:00:00Z">December 3, 2026 at 14:00 UTC</time> · Online</p>
@@ -2450,7 +2615,8 @@
     <button class="syn-button syn-button--primary" type="submit">Request a seat</button>
   </fieldset></form>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Event registration section</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;event-registration-heading&quot;&gt;
@@ -2478,7 +2644,9 @@
           <span class="syn-badge">syntyr.core.css</span>
         </div>
         <p class="syn-muted">A searchable-looking help index built from real navigation links, not a fake search control.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Help center landing</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="help-center-heading">
   <h2 class="syn-heading" id="help-center-heading">How can we help?</h2>
   <p class="syn-muted">Start with the topic that matches your question.</p>
@@ -2490,7 +2658,8 @@
     </ul>
   </nav>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Help center landing</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;help-center-heading&quot;&gt;
@@ -2518,7 +2687,9 @@
           <span class="syn-badge">syntyr.core.css</span>
         </div>
         <p class="syn-muted">Time-ordered notifications with visible status labels and real detail destinations.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Notification center</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="notification-center-heading">
   <h2 class="syn-heading" id="notification-center-heading">Recent notifications</h2>
   <ol class="syn-stack">
@@ -2534,7 +2705,8 @@
     </li>
   </ol>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Notification center</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;notification-center-heading&quot;&gt;
@@ -2566,7 +2738,9 @@
           <span class="syn-badge">syntyr.core.css</span>
         </div>
         <p class="syn-muted">Readable example request and response, with method, route, and JSON; your API owns behavior.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview API endpoint reference</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="api-endpoint-heading">
   <p class="syn-eyebrow">REFERENCE / ILLUSTRATIVE</p>
   <h2 class="syn-heading" id="api-endpoint-heading">List example records</h2>
@@ -2580,7 +2754,8 @@
 }</code></pre>
   <a>Full API reference</a>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for API endpoint reference</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;api-endpoint-heading&quot;&gt;
@@ -2610,7 +2785,9 @@
           <span class="syn-badge">syntyr.core.css + syntyr.recipes.css</span>
         </div>
         <p class="syn-muted">An accessible, CSS-only horizontal collection for feature, portfolio or editorial cards.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Scrollable product card rail</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-scroll-collection-title">
   <header class="syn-page-header">
     <div><p class="syn-eyebrow">EXPLORE THE PLATFORM</p><h2 id="syn-scroll-collection-title" class="syn-heading">Built for the whole team</h2>
@@ -2640,7 +2817,8 @@
     </article>
   </div>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Scrollable product card rail</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-scroll-collection-title&quot;&gt;
@@ -2686,7 +2864,9 @@
           <span class="syn-badge">syntyr.core.css + syntyr.recipes.css</span>
         </div>
         <p class="syn-muted">A container-aware asymmetric feature section using composable cards.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Responsive bento feature grid</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-bento-title">
   <header><p class="syn-eyebrow">WHY TEAMS CHOOSE US</p><h2 id="syn-bento-title" class="syn-heading">One clear place to get work done</h2>
     <p class="syn-muted">A container-aware bento layout built from ordinary semantic cards.</p></header>
@@ -2706,7 +2886,8 @@
       <p>Prepare actionable summaries that make sense to every stakeholder.</p><a>Explore analytics</a></article>
   </div>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Responsive bento feature grid</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-bento-title&quot;&gt;
@@ -2742,7 +2923,9 @@
           <span class="syn-badge">syntyr.core.css + syntyr.recipes.css</span>
         </div>
         <p class="syn-muted">Split-screen product hero with semantic CSS-only mock dashboard content.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Product screenshot hero</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-hero-preview-title">
   <div class="syn-showcase">
     <div class="syn-showcase-copy">
@@ -2771,7 +2954,8 @@
     </div>
   </div>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Product screenshot hero</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-hero-preview-title&quot;&gt;
@@ -2816,7 +3000,9 @@
           <span class="syn-badge">syntyr.core.css + syntyr.recipes.css</span>
         </div>
         <p class="syn-muted">Full split section with illustration, record details and activity timeline.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Split feature detail spotlight</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-feature-spotlight-title">
   <div class="syn-showcase">
     <div class="syn-showcase-copy">
@@ -2842,7 +3028,8 @@
     </div>
   </div>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Split feature detail spotlight</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-feature-spotlight-title&quot;&gt;
@@ -2884,7 +3071,9 @@
           <span class="syn-badge">syntyr.core.css + syntyr.recipes.css</span>
         </div>
         <p class="syn-muted">A complete editorial case-study layout with honest illustrative metrics.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Customer case study detail</summary>
+          <div class="blocks-preview">
 <article class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-case-study-title">
   <header class="syn-site-hero">
     <p class="syn-eyebrow">CUSTOMER STORY / ILLUSTRATIVE EXAMPLE</p>
@@ -2915,7 +3104,8 @@
     </aside>
   </div>
 </article>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Customer case study detail</summary>
           <pre class="blocks-source"><code>&lt;article class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-case-study-title&quot;&gt;
@@ -2962,7 +3152,9 @@
           <span class="syn-badge">syntyr.core.css + syntyr.recipes.css</span>
         </div>
         <p class="syn-muted">Plan cards and a keyboard-scrollable semantic comparison table.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Pricing and feature comparison</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-pricing-comparison-title">
   <header><p class="syn-eyebrow">PLANS AND FEATURES</p><h2 id="syn-pricing-comparison-title" class="syn-heading">Choose what fits your team</h2>
     <p class="syn-muted">Illustrative monthly prices. Confirm final billing terms with your application.</p></header>
@@ -2987,7 +3179,8 @@
     </table>
   </div>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Pricing and feature comparison</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-pricing-comparison-title&quot;&gt;
@@ -3028,7 +3221,9 @@
           <span class="syn-badge">syntyr.core.css + syntyr.recipes.css</span>
         </div>
         <p class="syn-muted">Native sign-up form and next-step guidance with real host routes.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Account registration screen</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-signup-title">
   <div class="syn-detail-layout">
     <div class="syn-detail-main syn-panel">
@@ -3055,7 +3250,8 @@
     </section>
   </div>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Account registration screen</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-signup-title&quot;&gt;
@@ -3098,7 +3294,9 @@
           <span class="syn-badge">syntyr.core.css + syntyr.recipes.css</span>
         </div>
         <p class="syn-muted">Filterable records, detail navigation and native create form.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Resource create and browse screen</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-resource-crud-title">
   <header class="syn-page-header">
     <div><h2 id="syn-resource-crud-title" class="syn-heading">Manage resources</h2><p class="syn-muted">Search, inspect and create records with native links and forms.</p></div>
@@ -3134,7 +3332,8 @@
     </section>
   </div>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Resource create and browse screen</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-resource-crud-title&quot;&gt;
@@ -3186,7 +3385,9 @@
           <span class="syn-badge">syntyr.core.css + syntyr.recipes.css</span>
         </div>
         <p class="syn-muted">Workspace roster, role information and a native invite form.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Team and invitation management</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-org-members-title">
   <header class="syn-page-header">
     <div><p class="syn-eyebrow">WORKSPACE SETTINGS</p><h2 id="syn-org-members-title" class="syn-heading">People and permissions</h2>
@@ -3218,7 +3419,8 @@
     </section>
   </div>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Team and invitation management</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-org-members-title&quot;&gt;
@@ -3266,7 +3468,9 @@
           <span class="syn-badge">syntyr.core.css + syntyr.recipes.css</span>
         </div>
         <p class="syn-muted">Plan details, native metering and invoice history.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Subscription and usage overview</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-billing-usage-title">
   <header class="syn-page-header">
     <div><p class="syn-eyebrow">WORKSPACE BILLING</p><h2 id="syn-billing-usage-title" class="syn-heading">Subscription and usage</h2>
@@ -3295,7 +3499,8 @@
     </table>
   </div>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Subscription and usage overview</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-billing-usage-title&quot;&gt;
@@ -3340,7 +3545,9 @@
           <span class="syn-badge">syntyr.core.css + syntyr.recipes.css</span>
         </div>
         <p class="syn-muted">Connection directory with connected, disconnected and error examples.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Integration connection states</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-integrations-connect-title">
   <header class="syn-page-header">
     <div><h2 id="syn-integrations-connect-title" class="syn-heading">Connect your tools</h2>
@@ -3368,7 +3575,8 @@
   </div>
   <p class="syn-caption">Consent screens, redirects, tokens and real statuses are not implemented by this HTML snippet.</p>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for Integration connection states</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-integrations-connect-title&quot;&gt;
@@ -3412,7 +3620,9 @@
           <span class="syn-badge">syntyr.core.css + syntyr.recipes.css</span>
         </div>
         <p class="syn-muted">Masked API-key metadata, secure-endpoint form and documentation routes.</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview API key and webhook settings</summary>
+          <div class="blocks-preview">
 <section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-developer-settings-title">
   <header class="syn-page-header">
     <div><p class="syn-eyebrow">DEVELOPER WORKSPACE</p><h2 id="syn-developer-settings-title" class="syn-heading">API keys and webhooks</h2>
@@ -3446,7 +3656,8 @@
     </section>
   </div>
 </section>
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for API key and webhook settings</summary>
           <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-developer-settings-title&quot;&gt;

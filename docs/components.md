@@ -67,6 +67,9 @@ For optional effects, load `syntyr.effects.css`. `syntyr.css` is the convenient 
 | Loading | `.syn-skeleton`, `.syn-skeleton--short` | decorative placeholders; announce status separately |
 | Effects (optional) | `.syn-grid-effect`, `.syn-glow`, `.syn-scanlines` | none |
 
+For layout composition, the shell defaults to a maximum width of 72rem and a total inline inset of 2rem (normally 1rem per side). Set `--syn-shell-max` and `--syn-shell-inline-inset` on the shell to customize these dimensions. The header supports `--syn-header-gap` and `--syn-header-padding-block`; navigation supports `--syn-nav-gap`. All controls are optional and preserve existing defaults.
+
+
 For wrapping action/filter clusters, use existing `.syn-inline` with optional
 `--syn-inline-align`, `--syn-inline-justify` and `--syn-inline-gap`.
 For a main region followed by an aside, `.syn-sidecar` wraps intrinsically

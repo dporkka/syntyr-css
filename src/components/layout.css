@@ -1,9 +1,9 @@
 @layer syn.components {
   /* All component rules match the root itself or a descendant, never a host sibling. */
   :where(.syn-root, .syn-root *) {
-    &.syn-shell { width: min(100% - 2rem, 72rem); margin-inline: auto; }
-    &.syn-header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; padding-block: 2rem; }
-    &.syn-nav { display: flex; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    &.syn-shell { width: min(100% - var(--syn-shell-inline-inset, 2rem), var(--syn-shell-max, 72rem)); margin-inline: auto; }
+    &.syn-header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--syn-header-gap, 1rem); padding-block: var(--syn-header-padding-block, 2rem); }
+    &.syn-nav { display: flex; align-items: center; flex-wrap: wrap; gap: var(--syn-nav-gap, 1rem); }
     &.syn-nav a { color: var(--syn-muted); text-decoration: none; font: 600 var(--syn-type-sm) var(--syn-font-ui); }
     &.syn-nav a:hover, &.syn-nav a[aria-current] { color: var(--syn-accent); }
     &.syn-stage {
