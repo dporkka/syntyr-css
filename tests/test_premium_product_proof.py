@@ -34,6 +34,18 @@ class PremiumProductProofTests(unittest.TestCase):
                 self.assertIn("not for sale", page.lower())
                 self.assertNotIn("application/ld+json", page)
 
+    def test_agent_index_identifies_available_static_proof_without_promising_sales(self):
+        index = (ROOT / "llms.txt").read_text(encoding="utf-8")
+        for product, filename, _ in PROOFS:
+            with self.subTest(product=product):
+                item = next(line for line in index.splitlines()
+                            if f"[Syntyr {product.title()} concept]" in line)
+                self.assertIn("static screenshot", item.lower())
+                self.assertIn("fictional", item.lower())
+                self.assertIn(filename, item)
+                self.assertIn("not for sale", item.lower())
+                self.assertIn("no premium source", item.lower())
+
     def test_approved_raster_allowlist_is_exact_and_private_source_excluded(self):
         published = source_files()
         original = {
