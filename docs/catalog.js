@@ -3,6 +3,7 @@
   'use strict';
   const search = document.getElementById('catalog-search');
   const category = document.getElementById('catalog-category');
+  const browserFilter = document.getElementById('catalog-browser-filter');
   const controls = document.getElementById('catalog-controls');
   const results = document.getElementById('catalog-results');
   const feedback = document.getElementById("catalog-feedback");
@@ -12,6 +13,8 @@
 
   const searchable = cards.map((card) => ({
     card,
+    // Detect actual example markup; docs panels and compatibility prose do not count.
+    hasAdditionalNativeApi: !!card.querySelector('.catalog-preview [popover], .catalog-preview [popovertarget], .catalog-preview [commandfor], .catalog-preview details[name]'),
     terms: `${card.querySelector('h2')?.textContent || ''} ${card.dataset.catalogKeywords || ''} ${card.querySelector('.syn-muted')?.textContent || ''}`.toLocaleLowerCase(),
   }));
 
@@ -67,6 +70,7 @@
         if (!card.hidden) return;
         search.value = '';
         category.value = 'all';
+        if (browserFilter) browserFilter.value = 'all';
         updateResults();
       });
     }
@@ -75,8 +79,10 @@
   function updateResults() {
     const terms = search.value.trim().toLocaleLowerCase().split(/\s+/).filter(Boolean);
     let count = 0;
-    for (const {card, terms: text} of searchable) {
+    for (const {card, terms: text, hasAdditionalNativeApi} of searchable) {
+      const feature = browserFilter?.value || 'all';
       const match = (category.value === 'all' || card.dataset.catalogCategory === category.value)
+        && (feature === 'all' || (feature === 'native-advanced' ? hasAdditionalNativeApi : !hasAdditionalNativeApi))
         && terms.every((term) => text.includes(term));
       card.hidden = !match;
       if (match) count += 1;
@@ -103,6 +109,7 @@
   controls.hidden = false;
   search.addEventListener("input", updateResults);
   category.addEventListener("change", updateResults);
+  browserFilter?.addEventListener("change", updateResults);
   updateResults();
 
   // Docs-only: create an actual, version-local HTML document rather than

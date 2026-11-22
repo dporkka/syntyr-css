@@ -33,6 +33,22 @@ const engines = {chromium, firefox, webkit};
         assert.equal(await links.count(), total);
         const labels = (await links.allTextContents()).map((label) => label.trim());
         assert.deepEqual(labels, [...labels].sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase())));
+        // Filter only native interactions with documented feature-specific fallbacks.
+        await page.locator('#catalog-browser-filter').selectOption('native-advanced');
+        assert.equal(await page.locator('.catalog-card:not([hidden])').count(), 3);
+        const advancedIds = await page.locator('.catalog-card:not([hidden])').evaluateAll(
+          cards => cards.map(card => card.getAttribute('aria-labelledby')).sort()
+        );
+        assert.deepEqual(advancedIds, [
+          'catalog-interaction-card-0', 'catalog-interaction-card-2', 'catalog-native-popover-title'
+        ]);
+        await page.locator('#catalog-category').selectOption('layout');
+        assert.equal(await page.locator('.catalog-card:not([hidden])').count(), 0);
+        await page.locator('#catalog-category').selectOption('all');
+        await page.locator('#catalog-browser-filter').selectOption('without-advanced');
+        assert.equal(await page.locator('.catalog-card:not([hidden])').count(), total - 3);
+        await page.locator('#catalog-browser-filter').selectOption('all');
+        assert.equal(await page.locator('.catalog-card:not([hidden])').count(), total);
         assert.equal(await page.locator('.catalog-actions').count(), total);
         assert.equal(await page.locator('.catalog-live').count(), total);
         assert.equal(await page.locator('.catalog-actions').first().evaluate(el => getComputedStyle(el).display), 'flex');
@@ -142,6 +158,7 @@ const engines = {chromium, firefox, webkit};
         assert.equal(await noJsPage.locator('#catalog-index a').count(), total);
         assert.equal(await noJsPage.locator('.catalog-live').count(), total);
         assert.equal(await noJsPage.locator('#catalog-controls').isVisible(), false);
+        assert.equal(await noJsPage.locator('#catalog-browser-filter').count(), 1);
         assert.equal(await noJsPage.locator('[data-catalog-copy]:visible').count(), 0);
         assert.equal(await noJsPage.locator('[data-catalog-copy-page]:visible').count(), 0);
         assert.equal(await noJsPage.locator('#catalog-browser-support').count(), 1);

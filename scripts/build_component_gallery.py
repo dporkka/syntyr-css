@@ -27,12 +27,33 @@ MODULE = re.compile(r'<span class="syn-badge">([^<]+)</span>')
 DESCRIPTION = re.compile(r'<p class="syn-muted">(.*?)</p>', re.S)
 IDENTIFIER = re.compile(r'^[a-z][a-z0-9-]+$')
 
+# Document feature dependencies, not a blanket browser support guarantee.
+# An example's requirements are detected from its parsed native HTML.
+NATIVE_BROWSER_FEATURES = {
+    "details-name": {
+        "name": "Exclusive details grouping",
+        "documentation_url": "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details",
+        "fallback": "Individual disclosures work but multiple answers may remain open.",
+    },
+    "invoker-commands": {
+        "name": "HTML Invoker Commands",
+        "documentation_url": "https://developer.mozilla.org/en-US/docs/Web/API/Invoker_Commands_API",
+        "fallback": "Provide an accessible link or host-owned dialog opener when commandfor is unsupported.",
+    },
+    "popover": {
+        "name": "HTML Popover API",
+        "documentation_url": "https://developer.mozilla.org/en-US/docs/Web/API/Popover_API",
+        "fallback": "Provide important content through a normal link or disclosure when popovers are unsupported.",
+    },
+}
+
 
 class ExampleHTML(HTMLParser):
     def __init__(self) -> None:
         super().__init__(convert_charrefs=True)
         self.elements: set[str] = set()
         self.classes: set[str] = set()
+        self.native_features: set[str] = set()
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         if tag in {"script", "iframe", "object", "embed"}:
@@ -42,6 +63,13 @@ class ExampleHTML(HTMLParser):
                 raise ValueError(f"Event handler forbidden in catalog example: {key}")
             if key.lower() in {"href", "src", "action"} and value and value.strip().lower().startswith("javascript:"):
                 raise ValueError("JavaScript URL forbidden in catalog example")
+        attributes = {key.lower(): value for key, value in attrs}
+        if tag == "details" and "name" in attributes:
+            self.native_features.add("details-name")
+        if "commandfor" in attributes:
+            self.native_features.add("invoker-commands")
+        if "popover" in attributes or "popovertarget" in attributes:
+            self.native_features.add("popover")
         self.elements.add(tag)
         for key, value in attrs:
             if key == "class" and value:
@@ -135,6 +163,7 @@ def build_manifest() -> dict:
             "category": category[1] if category else "uncategorized",
             "elements": sorted(parser.elements),
             "classes": sorted(parser.classes),
+            "native_feature_requirements": sorted(parser.native_features),
             "html": raw_html,
         })
     return {
@@ -148,6 +177,7 @@ def build_manifest() -> dict:
         },
         "scope": "syn-root",
         "runtime_requirement": "none",
+        "native_browser_features": NATIVE_BROWSER_FEATURES,
         "note": "Unreleased source-tree candidate, not a guarantee of published alpha.4 availability. Host applications own behavior, data and validation.",
         "components": curated["components"],
         "recipes": curated["recipes"],
