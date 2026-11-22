@@ -221,9 +221,19 @@
       inset-block-start: calc(anchor(bottom) + .5rem);
       justify-self: anchor-center;
       display: flex;
-      justify-content: center;
-      max-inline-size: min(100%, 30rem);
+      /* A 30+ item rail must not push native markers off-screen.
+         Make the marker group itself horizontally scrollable. */
+      box-sizing: border-box;
+      inline-size: min(calc(100vw - 2rem), 30rem);
+      max-inline-size: 100%;
+      justify-content: flex-start;
       gap: .5rem;
+      padding: .35rem .5rem .6rem;
+      overflow-x: auto;
+      overflow-y: hidden;
+      overscroll-behavior-inline: contain;
+      scrollbar-width: thin;
+      scrollbar-color: var(--syn-frame) transparent;
     }
     :where(.syn-root) .syn-media-rail--markers > [data-syn-scroll-label]::scroll-marker {
       content: attr(data-syn-scroll-label);
