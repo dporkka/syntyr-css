@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Try real HTMX search, sorting and pagination backed by a read-only Cloudflare Pages Function, styled with Syntyr CSS.">
+  <meta name="theme-color" content="#f5f7fb">
+  <meta name="robots" content="noindex,follow">
+  <meta name="htmx-config" content='{"includeIndicatorStyles":false,"historyRestoreAsHxRequest":false}'>
+  <title>Live HTMX component playground — Syntyr CSS</title>
+  <link rel="icon" href="../assets/syntyr-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="../integrations/htmx/syntyr.htmx.css">
+  <link rel="stylesheet" href="docs.css">
+  <!-- Self-hosted, pinned HTMX: https://cdn.jsdelivr.net/npm/htmx.org@2.0.11/dist/htmx.min.js
+       Original HTMX is 0BSD-licensed; license at vendor/htmx-LICENSE.txt. -->
+  <script defer src="vendor/htmx-2.0.11.min.js"
+          integrity="sha384-2OatzQy1H+Zd/IIrjr1TcuDGqLXeHhbooAyJY1KdQMKnr4LZ22k31GBLdYKHmVjg"
+          crossorigin="anonymous"></script>
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <a class="syn-button docs-skip" href="#demo-main">Skip to the playground</a>
+  <div class="syn-shell">
+    <header class="syn-header docs-header">
+      <a class="syn-logo" href="../index.html">SYNTYR / CSS</a>
+      <nav class="syn-nav" aria-label="Documentation">
+        <a href="index.html">Overview</a>
+        <a href="catalog.html">Components</a>
+        <a href="htmx-components.html">HTMX recipes</a>
+        <a href="reference.html">All docs</a>
+      </nav>
+      <details class="site-mobile-menu">
+        <summary>Menu</summary>
+        <nav aria-label="Mobile navigation">
+          <a href="index.html">Overview</a>
+          <a href="htmx-components.html">HTMX recipes</a>
+          <a href="reference.html">All docs</a>
+        </nav>
+      </details>
+    </header>
+    <main class="docs-article-page" id="demo-main">
+      <nav class="syn-breadcrumbs" aria-label="Breadcrumb">
+        <ol>
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="htmx-components.html">HTMX components</a></li>
+          <li aria-current="page">Live playground</li>
+        </ol>
+      </nav>
+      <header class="docs-article-heading">
+        <p class="syn-eyebrow">SYNTYR / OPTIONAL HTMX / SERVER HTML</p>
+        <h1 class="syn-title">Try real server-driven components.</h1>
+        <p class="syn-lede">Type to search, change sorting, or follow page links. These controls make real GET requests to a Cloudflare Pages Function. No database, authentication or account is involved.</p>
+        <p class="syn-caption">Demonstration only: read-only, fictional OOH customer data. This example uses the unreleased alpha.5 Syntyr source candidate and a separate, self-hosted HTMX 2.0.11 script. Neither is a required Syntyr dependency.</p>
+      </header>
+      <div class="docs-article-layout">
+        <div class="docs-prose">
+          <section class="syn-stack" aria-labelledby="interactive-title">
+            <h2 id="interactive-title">Live customer explorer</h2>
+            <form id="customer-search" class="syn-panel syn-stack"
+                  action="/api/htmx-demo/customers" method="get" role="search"
+                  hx-get="/api/htmx-demo/customers"
+                  hx-target="#customer-results" hx-swap="outerHTML"
+                  hx-trigger="submit, input changed delay:350ms from:#demo-query, change from:#demo-sort"
+                  hx-push-url="true" hx-indicator="#demo-search-indicator">
+              <label for="demo-query">Search fictional customers</label>
+              <input class="syn-input" type="search" id="demo-query" name="q" maxlength="80"
+                     placeholder="Try Acme, Media or Chicago" autocomplete="off">
+              <label for="demo-sort">Sort by customer name</label>
+              <select class="syn-input" id="demo-sort" name="sort">
+                <option value="name_asc">A–Z</option>
+                <option value="name_desc">Z–A</option>
+              </select>
+              <div class="syn-inline">
+                <button class="syn-button syn-button--primary" type="submit">Search</button>
+                <span id="demo-search-indicator" class="syn-htmx-indicator" role="status">Loading results…</span>
+              </div>
+            </form>
+            <section id="customer-results" class="syn-panel syn-stack"
+                     aria-label="Customer results" aria-live="polite" data-syn-htmx-transition>
+              <p>Submit a search to load the fictional customer records from the server.</p>
+              <p class="syn-caption">Without JavaScript, the form still navigates to a complete, server-rendered results page.</p>
+            </section>
+          </section>
+          <section class="syn-stack" aria-labelledby="contract-title">
+            <h2 id="contract-title">See what the server returns</h2>
+            <p>A normal GET returns a full HTML document. The same endpoint returns only the results fragment when it receives <code>HX-Request: true</code>, including new table rows, sort state and pagination links. HTMX history restoration always receives a complete document.</p>
+            <p><a href="/api/htmx-demo/customers">Open the complete server-rendered results page</a> ·
+               <a href="htmx-components.html">See all 12 copyable HTMX recipes</a> ·
+               <a href="https://github.com/dporkka/syntyr-css/tree/main/functions/api/htmx-demo">Read the Pages Function source</a></p>
+            <pre tabindex="0"><code>GET /api/htmx-demo/customers?q=media&amp;sort=name_desc&amp;page=1
+HX-Request: true
+→ 200 text/html (one #customer-results section)</code></pre>
+          </section>
+        </div>
+        <aside class="docs-toc" aria-label="Demo capabilities">
+          <p class="syn-eyebrow">WORKING SERVER PATTERNS</p>
+          <ul>
+            <li>Debounced customer search</li>
+            <li>Server-owned sorting</li>
+            <li>Query-preserving pagination</li>
+            <li>Native GET fallback</li>
+            <li>Safe escaped HTML fragments</li>
+          </ul>
+          <p class="syn-caption">No writes, cookies, storage, accounts or user uploads. The live API is specific to the documentation site, not part of the CSS package.</p>
+        </aside>
+      </div>
+    </main>
+    <footer class="syn-header">
+      <span class="syn-caption">SYNTYR CSS · MIT CORE · EXPERIMENTAL</span>
+      <a href="htmx-components.html">HTMX recipes</a>
+    </footer>
+  </div>
+</body>
+</html>

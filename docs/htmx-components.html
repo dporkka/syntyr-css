@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Copy 12 HTMX component patterns for search, tables, forms, dialogs, infinite scroll and server-rendered SaaS interfaces with optional Syntyr CSS.">
-  <meta name="syntyr-source-sha256" content="f63cef19a1df31c04d7deaac847edba265a480cad3738a9643d787cc9164a18c">
+  <meta name="syntyr-source-sha256" content="05502e98c62b03d7e37b7b60afc0b2a08449b9335cd8db2e83362f32ab32b171">
   <meta name="theme-color" content="#f5f7fb">
   <title>HTMX Components &amp; Patterns | Syntyr CSS</title>
   <meta property="og:type" content="article">
@@ -42,6 +42,7 @@
         <article class="docs-prose" aria-label="HTMX components and server-rendered UI patterns">
 <h1 id="htmx-components-and-server-rendered-ui-patterns">HTMX components and server-rendered UI patterns</h1>
 <p>Use Syntyr's existing CSS components with <strong>HTMX as an optional enhancement</strong> for server-rendered HTML. These are <strong>12 copy-owned recipes</strong>, not a JavaScript widget runtime or prebuilt backend. Each code sample assumes an application endpoint that returns complete documents on ordinary requests and an appropriate fragment on HTMX requests.</p>
+<p><strong>Try the <a href="htmx-playground.html">live HTMX playground</a>:</strong> it uses a read-only Cloudflare Pages Function for real search, sorting and pagination, with working native GET fallback. The example is specific to the website; no application backend ships with the CSS library.</p>
 <p><strong>Availability:</strong> This page describes the <strong>unreleased 0.3.0-alpha.5 source candidate</strong>, not the published alpha.4 release. Core CSS works independently of HTMX; the optional adapter only styles request indicators and opt-in swap transitions.</p>
 <h2 id="install-and-compatibility">Install and compatibility</h2>
 <p>Self-host pinned copies of your chosen Syntyr release and HTMX. Add the optional adapter <em>after</em> core CSS, if you want its states. Do not bundle HTMX or load it automatically as part of Syntyr.</p>

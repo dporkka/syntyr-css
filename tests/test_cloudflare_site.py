@@ -95,6 +95,7 @@ class CloudflareSiteTests(unittest.TestCase):
                     "tools/color-contrast-checker.html", "tools/css-theme-generator.html",
                     "tools/css-clamp-generator.html", "tools/responsive-design-tester.html",
                     "docs/playground.html", "docs/page-builder.html", "docs/blocks.html",
+                    "docs/htmx-playground.html",  # Explicit first-party HTMX demo with vendored JS.
                     "docs/how-to.html",  # Docs-only search, same CSP as the catalog.
                     "docs/starter-wizard.html",  # Docs-only generator, no runtime dependency.
                     "examples/animation.html", "examples/copy.html",

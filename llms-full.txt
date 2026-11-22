@@ -3579,7 +3579,7 @@ For accessible advanced menus, comboboxes and toasts, see the [optional headless
 
 ## HTMX: progressive enhancement
 
-For a dedicated collection of 12 copy-owned patterns (tables, search, forms, dialogs, polling and loading feedback), see the [HTMX components guide](htmx-components.html). These recipes reuse existing Syntyr classes and an independently removable, CSS-only request-state adapter.
+For a dedicated collection of 12 copy-owned patterns (tables, search, forms, dialogs, polling and loading feedback), see the [HTMX components guide](htmx-components.html) and [live server-backed playground](htmx-playground.html). These recipes reuse existing Syntyr classes and an independently removable, CSS-only request-state adapter.
 
 For a **Go standard-library runnable starter** with no third-party Go modules,
 see [examples/go-htmx](https://github.com/dporkka/syntyr-css/tree/main/examples/go-htmx). The default server runs

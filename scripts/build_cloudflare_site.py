@@ -48,6 +48,7 @@ NOINDEX_HTML = frozenset({
     "examples/app-integrations.html", "examples/app-security.html",
     "examples/design-benchmarks/marketing.html", "examples/design-benchmarks/crm.html",
     "examples/design-benchmarks/documentation.html",
+    "docs/htmx-playground.html",  # Interactive app demo, not an SEO landing page.
 })
 CANONICAL_LINK = re.compile(r'<link\s+rel="canonical"[^>]*>', re.IGNORECASE)
 ROBOTS_META = re.compile(r'<meta\s+name="robots"[^>]*>', re.IGNORECASE)
@@ -293,7 +294,7 @@ PUBLIC_DOCS = (
     "faq.md", "compare.md", "compare-tailwind.md", "compare-bootstrap.md", "compare-shadcn.md",
     "compare-daisyui.md", "compare-pico.md", "compare-native-css.md",
     "distribution.md", "native-patterns.md", "native-workflows.md", "semantic-components.md", "composition-adoption.md", "from-pico.md", "package-managers.md", "docs.css", "guides.html", "how-to.html", "how-to.css", "how-to.js", "starter-wizard.html", "starter-wizard.mjs", "catalog.html", "catalog.css", "catalog.js",
-    "blocks.html", "blocks.css", "blocks.js", "blocks-assets.css", "blocks-guide.md", "headless-interactions.md", "framework-integrations.md", "htmx-components.md", "mobile-frameworks.md",
+    "blocks.html", "blocks.css", "blocks.js", "blocks-assets.css", "blocks-guide.md", "headless-interactions.md", "framework-integrations.md", "htmx-components.md", "htmx-playground.html", "mobile-frameworks.md",
     "geometry-terminal.md", "native-browser-apis.md", "dropdowns.md", "radix-integration.md", "visual-intensity.md", "performance-and-polish.md",
     "performance-validation.md", "progressive-enhancement.md", "progressive-loading.md", "live-performance-audit.md",
     "index.html", "design-resources.html", "animation.md", "clipboard.md", "lit-integration.md", "playground.html", "playground.css", "playground.js", "playground-catalog.js", "playground-snippet.js", "playground-editor.js", "playground-editor.licenses.txt", "page-builder-guide.md", "page-builder.html",  "page-builder.css", "page-builder.js", "page-builder-model.mjs", "page-builder-zip.mjs",
@@ -387,6 +388,9 @@ def source_files(site_url: str = SITE_URL, *, include_cloudflare_headers: bool =
         "site.css", "logic.mjs", "site.mjs",
     )
     paths.extend(ROOT / "tools" / name for name in public_tools)
+    # Self-hosted, exact-version HTMX; docs-only, excluded from npm and core bundles.
+    paths.extend(ROOT / "docs/vendor" / name for name in
+                 ("htmx-2.0.11.min.js", "htmx-LICENSE.txt"))
     paths.extend(ROOT / "docs" / name for name in PUBLIC_DOCS)
     paths.extend(ROOT / "docs" / (name.removesuffix(".md") + ".html")
                  for name in PUBLIC_DOCS if name.endswith(".md"))
@@ -467,6 +471,10 @@ def source_files(site_url: str = SITE_URL, *, include_cloudflare_headers: bool =
     files["robots.txt"] = (f"User-agent: *\nAllow: /\n\nSitemap: {site_url}/sitemap.xml\n").encode("utf-8")
     immutable_site_css(files)
     if include_cloudflare_headers:
+        # Only the live demo API invokes Pages Functions. Keep static traffic free.
+        files["_routes.json"] = (json.dumps({"version": 1, "include":
+                                        ["/api/htmx-demo/*"], "exclude": []},
+                                        separators=(",", ":")) + "\n").encode("utf-8")
         files["_headers"] = HEADERS.encode("utf-8")
     return files
 
