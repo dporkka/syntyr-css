@@ -49,6 +49,32 @@ const engines = {chromium, firefox, webkit};
         assert.equal(await page.locator('.catalog-card:not([hidden])').count(), total - 3);
         await page.locator('#catalog-browser-filter').selectOption('all');
         assert.equal(await page.locator('.catalog-card:not([hidden])').count(), total);
+        // Module and use-case filters must compose with search, category and
+        // native feature requirements without removing no-JS source markup.
+        await page.locator('#catalog-module-filter').selectOption('core-only');
+        assert.equal(await page.locator('.catalog-card:not([hidden])').count(), 44);
+        await page.locator('#catalog-module-filter').selectOption('syntyr.recipes.css');
+        assert.equal(await page.locator('.catalog-card:not([hidden])').count(), 2);
+        await page.locator('#catalog-use-case-filter').selectOption('saas-dashboard');
+        assert.equal(await page.locator('.catalog-card:not([hidden])').count(), 2);
+        await page.locator('#catalog-use-case-filter').selectOption('marketing-site');
+        assert.equal(await page.locator('.catalog-card:not([hidden])').count(), 0);
+        await page.locator('#catalog-use-case-filter').selectOption('all');
+        for (const filename of ['syntyr.geometry.css', 'syntyr.viz.css', 'syntyr.semantic.css']) {
+          await page.locator('#catalog-module-filter').selectOption(filename);
+          assert.equal(await page.locator('.catalog-card:not([hidden])').count(), 1, filename);
+        }
+        await page.locator('#catalog-module-filter').selectOption('all');
+        await page.locator('#catalog-use-case-filter').selectOption('marketing-site');
+        assert.equal(await page.locator('.catalog-card[aria-labelledby="catalog-pricing-title"]:not([hidden])').count(), 1);
+        assert.equal(await page.locator('.catalog-card[aria-labelledby="catalog-crm-filters-title"]:not([hidden])').count(), 0);
+        await page.locator('#catalog-use-case-filter').selectOption('navigation');
+        await page.locator('#catalog-browser-filter').selectOption('native-advanced');
+        assert.equal(await page.locator('.catalog-card:not([hidden])').count(), 1);
+        assert.equal(await page.locator('.catalog-card[aria-labelledby="catalog-native-popover-title"]:not([hidden])').count(), 1);
+        await page.locator('#catalog-browser-filter').selectOption('all');
+        await page.locator('#catalog-use-case-filter').selectOption('all');
+        assert.equal(await page.locator('.catalog-card:not([hidden])').count(), total);
         assert.equal(await page.locator('.catalog-actions').count(), total);
         assert.equal(await page.locator('.catalog-live').count(), total);
         assert.equal(await page.locator('.catalog-actions').first().evaluate(el => getComputedStyle(el).display), 'flex');
@@ -58,7 +84,9 @@ const engines = {chromium, firefox, webkit};
           assert.equal(await page.locator('.catalog-sidebar').evaluate(el => getComputedStyle(el).position), 'sticky');
         }
         await page.locator('#catalog-search').fill('buttons');
-        assert.equal(await page.locator('.catalog-card:not([hidden])').count(), 1);
+        await page.locator('#catalog-module-filter').selectOption('syntyr.recipes.css');
+        await page.locator('#catalog-use-case-filter').selectOption('saas-dashboard');
+        assert.equal(await page.locator('.catalog-card:not([hidden])').count(), 0);
         if (width < 1024) {
           await page.locator('.catalog-mobile-index summary').click();
           await page.locator('.catalog-mobile-index a[href="#catalog-alerts-title"]').click();
@@ -67,6 +95,8 @@ const engines = {chromium, firefox, webkit};
         }
         await page.waitForFunction(() => location.hash === '#catalog-alerts-title' && document.querySelector('#catalog-search').value === '');
         assert.equal(await page.locator('.catalog-card:not([hidden])').count(), total);
+        assert.equal(await page.locator('#catalog-module-filter').inputValue(), 'all');
+        assert.equal(await page.locator('#catalog-use-case-filter').inputValue(), 'all');
         await page.waitForFunction(() => document.querySelector('#catalog-index a[href="#catalog-alerts-title"]').classList.contains('is-in-view'));
         assert.equal(await page.locator('.catalog-card:not([hidden])').count(), total);
         assert.equal(await page.locator('.catalog-copy:not([hidden])').count(), total);
@@ -159,6 +189,8 @@ const engines = {chromium, firefox, webkit};
         assert.equal(await noJsPage.locator('.catalog-live').count(), total);
         assert.equal(await noJsPage.locator('#catalog-controls').isVisible(), false);
         assert.equal(await noJsPage.locator('#catalog-browser-filter').count(), 1);
+        assert.equal(await noJsPage.locator('#catalog-module-filter').count(), 1);
+        assert.equal(await noJsPage.locator('#catalog-use-case-filter').count(), 1);
         assert.equal(await noJsPage.locator('[data-catalog-copy]:visible').count(), 0);
         assert.equal(await noJsPage.locator('[data-catalog-copy-page]:visible').count(), 0);
         assert.equal(await noJsPage.locator('#catalog-browser-support').count(), 1);

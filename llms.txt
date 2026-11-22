@@ -31,7 +31,7 @@ For browser readers, use the [human-readable HTML documentation directory](https
 - [Native business workflow example](https://syntyr-css.pages.dev/examples/native-workflows.html)
 - [Task-based HTML How-To guides](https://syntyr-css.pages.dev/docs/how-to.html)
 - [Interactive component playground](https://syntyr-css.pages.dev/docs/playground.html)
-- [Portable component gallery manifest](https://syntyr-css.pages.dev/metadata/component-gallery.v1.json): Generated examples, CSS-module requirements and native interaction/fallback metadata (unreleased alpha.5).
+- [Portable component gallery manifest](https://syntyr-css.pages.dev/metadata/component-gallery.v1.json): Generated examples with curated use cases, CSS-module requirements, catalog links, and native interaction/fallback metadata (unreleased alpha.5).
 - [WordPress](https://syntyr-css.pages.dev/docs/wordpress.md), [Shopify](https://syntyr-css.pages.dev/docs/shopify.md), [Wix](https://syntyr-css.pages.dev/docs/wix.md), [Webflow](https://syntyr-css.pages.dev/docs/webflow.md), [Framer](https://syntyr-css.pages.dev/docs/framer.md)
 - [CMS/site-builder integration](https://syntyr-css.pages.dev/docs/site-builders.md)
 - [Consumer agent skill](https://syntyr-css.pages.dev/agents/syntyr/SKILL.md)
