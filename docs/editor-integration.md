@@ -110,6 +110,18 @@ keywords, native HTML, semantic element names, actual `syn-*` classes, and
 semantic CSS module; loading `syntyr.core.css` alone is not always sufficient.
 The `module` field preserves the primary stylesheet shown in the gallery.
 
+The additive `native_feature_requirements` array on each example records only
+three *detectable native HTML interaction contracts*: `popover`,
+`invoker-commands`, and `details-name`. These are derived from the example's
+parsed HTML, not its title or CSS theme. The companion
+`native_browser_features` dictionary supplies a short fallback description
+and an MDN documentation URL for each feature. Empty requirements mean **none
+of these three detected features**, not universal browser compatibility.
+The metadata intentionally omits unsupported browser-version guarantees, CSS
+feature detection, and false claims that application behaviors are complete.
+The optional gallery filter uses the same native element/attribute criteria,
+without JavaScript dependencies for consuming Syntyr CSS.
+
 From a source checkout, regenerate and verify with:
 
 ```sh

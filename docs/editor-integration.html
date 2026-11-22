@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Syntyr&#x27;s editor integration is optional . Applications still consume ordinary prebuilt CSS, HTML, and custom properties without Node, JavaScript, or a…">
-  <meta name="syntyr-source-sha256" content="134eda0d35e845c5dcbce6bc39cefe66cbccb5114e0dd3b13164354e46390cb4">
+  <meta name="syntyr-source-sha256" content="f7d488bb5b286a46d76317ddedf974375b49ce109a5f8f30fff29da25a816e50">
   <meta name="theme-color" content="#f5f7fb">
   <title>Syntyr editor autocomplete and metadata — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/editor-integration">
@@ -121,6 +121,17 @@ keywords, native HTML, semantic element names, actual <code>syn-*</code> classes
 <code>required_stylesheets</code>. The stylesheet list can include the separately opt-in
 semantic CSS module; loading <code>syntyr.core.css</code> alone is not always sufficient.
 The <code>module</code> field preserves the primary stylesheet shown in the gallery.</p>
+<p>The additive <code>native_feature_requirements</code> array on each example records only
+three <em>detectable native HTML interaction contracts</em>: <code>popover</code>,
+<code>invoker-commands</code>, and <code>details-name</code>. These are derived from the example's
+parsed HTML, not its title or CSS theme. The companion
+<code>native_browser_features</code> dictionary supplies a short fallback description
+and an MDN documentation URL for each feature. Empty requirements mean <strong>none
+of these three detected features</strong>, not universal browser compatibility.
+The metadata intentionally omits unsupported browser-version guarantees, CSS
+feature detection, and false claims that application behaviors are complete.
+The optional gallery filter uses the same native element/attribute criteria,
+without JavaScript dependencies for consuming Syntyr CSS.</p>
 <p>From a source checkout, regenerate and verify with:</p>
 <pre tabindex="0"><code class="language-sh">python3 scripts/build_component_gallery.py
 python3 scripts/build_component_gallery.py --check

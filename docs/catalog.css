@@ -2,6 +2,8 @@
 @layer docs {
   .catalog-controls { display: grid; gap: .4rem; max-width: 40rem; margin-block: 1.5rem 1rem; }
   .catalog-controls :where(input, select) { width: 100%; min-width: 0; }
+  .catalog-browser-controls { display: grid; gap: .4rem; margin-block: .5rem; }
+  .catalog-browser-controls .syn-caption { margin: 0; }
   .catalog-preview-controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr)); gap: .75rem; margin-block-start: .75rem; }
   .catalog-preview-controls > div { min-width: 0; }
   .catalog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 27rem), 1fr)); align-items: start; gap: 1rem; }

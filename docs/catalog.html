@@ -208,6 +208,15 @@
           <option value="interactive">Interactive</option>
           <option value="marketing">Marketing</option>
         </select>
+        <div class="catalog-browser-controls">
+          <label class="syn-label" for="catalog-browser-filter">Native browser features</label>
+          <select id="catalog-browser-filter" class="syn-input" aria-controls="catalog-items">
+            <option value="all">All examples</option>
+            <option value="without-advanced">No extra native interaction API in example</option>
+            <option value="native-advanced">Uses an additional native interaction API</option>
+          </select>
+          <p class="syn-caption">This filters three documented HTML patterns (popover, invoker commands, named details). It does not certify compatibility with any particular browser. <a href="#catalog-browser-support">Check feature fallbacks</a>.</p>
+        </div>
         <div class="catalog-preview-controls">
           <div>
             <label class="syn-label" for="catalog-theme">Preview theme</label>
@@ -230,7 +239,7 @@
           </div>
         </div>
       </div>
-      <p class="syn-caption">For editors and page builders, use the <a href="../metadata/component-gallery.v1.json">generated component and example JSON</a>. It is sourced from these copyable previews and the curated component contract, and describes an unreleased source candidate.</p>
+      <p class="syn-caption">For editors and page builders, use the <a href="../metadata/component-gallery.v1.json">generated component and example JSON</a>. It includes per-example native feature requirements and documented fallbacks, derived from the exact copyable HTML. It describes an unreleased source candidate, not a browser-support certification.</p>
       <p id="catalog-results" class="syn-caption" role="status" aria-live="polite">49 examples available.</p>
       <p id="catalog-feedback" class="syn-caption" role="status" aria-live="polite" aria-atomic="true"></p>
       <p id="catalog-empty" class="syn-alert" hidden>No components match your search. Try a different term.</p>
