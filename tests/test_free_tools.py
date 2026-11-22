@@ -30,6 +30,13 @@ class FreeToolsTests(unittest.TestCase):
         self.assertIn('href="tools/"', self.files['index.html'].decode())
         self.assertIn('href="../tools/"', self.files['docs/index.html'].decode())
 
+    def test_responsive_preview_iframe_uses_true_content_width(self):
+        css = self.files['tools/site.css'].decode()
+        import re
+        iframe_rule = re.search(r'\.tool-stage iframe\s*\{([^}]*)\}', css)
+        self.assertIsNotNone(iframe_rule)
+        self.assertIn('box-sizing:content-box', iframe_rule.group(1))
+
     def test_nested_theme_preview_is_not_full_height_page(self):
         html = self.files['tools/css-theme-generator.html'].decode()
         self.assertIn('id="theme-preview" class="syn-root tool-sample"', html)

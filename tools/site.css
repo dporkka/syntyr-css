@@ -55,7 +55,7 @@
 .tool-sample h3 { margin:0; font-size:1.5rem; }
 .tool-sample p { margin:0; line-height:1.5; }
 .tool-stage { overflow:auto; padding:1rem; min-height:31rem; background:var(--syn-bg); border-radius:.6rem; }
-.tool-stage iframe { display:block; max-width:none; width:375px; height:480px; border:1px solid var(--syn-border-subtle,var(--syn-frame)); background:#fff; margin:0 auto; }
+.tool-stage iframe { display:block; box-sizing:content-box; max-width:none; width:375px; height:480px; border:1px solid var(--syn-border-subtle,var(--syn-frame)); background:#fff; margin:0 auto; }
 .tool-help { font-size:.83rem; color:var(--syn-muted); }
 .tool-field textarea { min-height:10rem; resize:vertical; font-family:var(--syn-mono,ui-monospace,monospace); font-size:.86rem; }
 .tool-card > :first-child { margin-block-start:0; }
