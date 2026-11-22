@@ -69,6 +69,7 @@ class NpmTarballAuditTests(unittest.TestCase):
         package_files = expected_files(ROOT)
         for path in (
             "package/integrations/headless/interactions.css",
+            "package/integrations/htmx/syntyr.htmx.css",
             "package/integrations/dropdown/menu.mjs",
             "package/metadata/css-contract.v1.json",
             "package/metadata/component-gallery.v1.json",
@@ -78,6 +79,10 @@ class NpmTarballAuditTests(unittest.TestCase):
             "package/dist/syntyr.copy.d.mts",
         ):
             self.assertIn(path, package_files)
+
+    def test_rejects_missing_optional_htmx_stylesheet(self):
+        errors = self.check(archive_with(changes={"package/integrations/htmx/syntyr.htmx.css": None}))
+        self.assertTrue(any("missing" in err.lower() and "syntyr.htmx.css" in err for err in errors), errors)
 
     def test_rejects_missing_conditional_js_export(self):
         errors = self.check(archive_with(changes={"package/dist/syntyr.animate.mjs": None}))
