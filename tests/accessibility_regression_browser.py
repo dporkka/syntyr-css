@@ -144,7 +144,7 @@ def check(browser, engine):
             page.close()
 
     for path, selectors in [
-        ('index.html', ['.site-brand', '.site-nav a', '.site-tertiary-link',
+        ('index.html', ['.site-brand', '.site-nav a', '.site-hero-resources a',
                         '.site-showcase-card > .site-secondary-link', '.site-footer a']),
         ('docs/index.html', ['.docs-header .syn-logo', '.docs-flagship-links a', 'footer.syn-header a']),
     ]:
