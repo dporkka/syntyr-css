@@ -170,9 +170,20 @@ export function moveField(input, fromIndex, toIndex) {
   return { ...form, fields };
 }
 
-function renderField(item) {
-  const id = "syn-field-" + item.id;
-  const helpId = "syn-help-" + item.id;
+// Scope IDs to the form instance, including across separately opened editors.
+const formNamespaces = new WeakMap();
+
+function namespaceFor(input) {
+  if (!formNamespaces.has(input)) {
+    const bytes = globalThis.crypto.getRandomValues(new Uint8Array(12));
+    formNamespaces.set(input, Array.from(bytes, byte => byte.toString(16).padStart(2, "0")).join(""));
+  }
+  return formNamespaces.get(input);
+}
+
+function renderField(item, namespace) {
+  const id = "syn-field-" + namespace + "-" + item.id;
+  const helpId = "syn-help-" + namespace + "-" + item.id;
   const help = item.help
     ? '<p class="syn-help" id="' + helpId + '">' + escapeHtml(item.help) + "</p>"
     : "";
@@ -213,6 +224,10 @@ function renderField(item) {
 
 export function renderForm(input) {
   const form = validateForm(input);
+  return renderValidatedForm(form, namespaceFor(input));
+}
+
+function renderValidatedForm(form, namespace) {
   const multipart = form.fields.some(item => item.type === "file")
     ? ' enctype="multipart/form-data"' : "";
   const description = form.description
@@ -221,7 +236,7 @@ export function renderForm(input) {
     '<form class="syn-form" action="' + escapeHtml(form.action) +
     '" method="' + form.method + '"' + multipart + '>' +
     '<h2 class="syn-heading">' + escapeHtml(form.title) + "</h2>" +
-    description + form.fields.map(renderField).join("\n") +
+    description + form.fields.map(item => renderField(item, namespace)).join("\n") +
     '<button class="syn-button syn-button--primary" type="submit">' +
     escapeHtml(form.submitLabel) + "</button></form></section>";
 }
@@ -233,6 +248,6 @@ export function exportStandalone(input) {
     "  <title>" + escapeHtml(form.title) + "</title>\n" +
     '  <link rel="stylesheet" href="syntyr.core.css">\n</head>\n' +
     '<body class="syn-root syn-page" data-syn-theme="' + form.theme + '">\n' +
-    '  <main class="syn-shell">\n' + renderForm(form) +
+    '  <main class="syn-shell">\n' + renderValidatedForm(form, namespaceFor(input)) +
     "\n  </main>\n</body>\n</html>\n";
 }

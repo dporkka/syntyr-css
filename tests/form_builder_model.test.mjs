@@ -29,6 +29,27 @@ test("renders help, native constraints and an accessible textarea", () => {
   assert.match(html, /Tell us what you need/);
 });
 
+test("scopes control and help IDs to each exported form", () => {
+  const ids = new Set();
+  for (const template of ["contact", "newsletter", "contact"]) {
+    const form = createForm(template);
+    form.fields.find(item => item.name === "email").help = "Use your work email";
+    const html = renderForm(form);
+    assert.ok(exportStandalone(form).includes(html));
+    const localIds = new Set(Array.from(html.matchAll(/ id="([^"]+)"/g), match => match[1]));
+    for (const id of localIds) {
+      assert.ok(!ids.has(id), "Duplicate ID across forms: " + id);
+      ids.add(id);
+    }
+    const email = html.match(/<input[^>]+name="email"[^>]*>/)[0];
+    const [, controlId] = email.match(/ id="([^"]+)"/);
+    const [, helpId] = email.match(/ aria-describedby="([^"]+)"/);
+    assert.ok(html.includes('for="' + controlId + '"'));
+    assert.ok(html.includes('<p class="syn-help" id="' + helpId + '"'));
+    assert.ok(localIds.has(controlId) && localIds.has(helpId));
+  }
+});
+
 test("escapes hostile text and rejects unsafe endpoint protocols", () => {
   const form = createForm("contact");
   form.title = '<img src=x onerror="alert(1)">';

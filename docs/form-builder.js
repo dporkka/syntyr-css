@@ -75,7 +75,7 @@ function makeTextField(item, key, title, { wide = false, multiline = false } = {
   return wrapper;
 }
 
-function makeTypeField(item) {
+function makeTypeField(item, index) {
   const select = document.createElement("select");
   select.className = "syn-select";
   for (const type of FIELD_TYPES) {
@@ -92,10 +92,10 @@ function makeTypeField(item) {
       currentForm.method = "post";
       $("form-method").value = "post";
     }
-    drawFields();
+    drawFields(index, "type");
     updateOutput();
   });
-  return inputLabel("INPUT TYPE", select);
+  return select;
 }
 
 function makeRequiredField(item) {
@@ -115,9 +115,10 @@ function makeRequiredField(item) {
   return label;
 }
 
-function drawFields() {
+function drawFields(focusIndex, focusControl) {
   const list = $("form-field-list");
   list.replaceChildren();
+  let focusTarget;
   currentForm.fields.forEach((item, index) => {
     const card = document.createElement("li");
     card.className = "form-builder-field";
@@ -127,6 +128,7 @@ function drawFields() {
     title.textContent = (index + 1) + ". " + item.label;
     const actions = document.createElement("div");
     actions.className = "form-builder-field-actions";
+    const moveButtons = new Map();
     for (const [text, hint, offset] of [
       ["↑", "Move field up", -1], ["↓", "Move field down", 1]
     ]) {
@@ -140,10 +142,11 @@ function drawFields() {
       button.addEventListener("click", () => {
         try {
           currentForm = moveField(currentForm, index, index + offset);
-          drawFields();
+          drawFields(index + offset, offset);
           updateOutput();
         } catch (error) { setStatus(error.message, true); }
       });
+      moveButtons.set(offset, button);
       actions.append(button);
     }
     const remove = document.createElement("button");
@@ -153,7 +156,7 @@ function drawFields() {
     remove.setAttribute("aria-label", "Remove field: " + item.label);
     remove.addEventListener("click", () => {
       currentForm.fields.splice(index, 1);
-      drawFields();
+      drawFields(Math.min(index, currentForm.fields.length - 1), "remove");
       updateOutput();
     });
     actions.append(remove);
@@ -161,7 +164,8 @@ function drawFields() {
 
     const controls = document.createElement("div");
     controls.className = "form-builder-field-controls";
-    controls.append(makeTypeField(item));
+    const type = makeTypeField(item, index);
+    controls.append(inputLabel("INPUT TYPE", type));
     controls.append(makeTextField(item, "name", "SUBMISSION NAME"));
     controls.append(makeTextField(item, "label", "VISIBLE LABEL", { wide: true }));
     if (item.type !== "checkbox" && item.type !== "radio" && item.type !== "file") {
@@ -184,13 +188,20 @@ function drawFields() {
     controls.append(makeRequiredField(item));
     card.append(heading, controls);
     list.append(card);
+    if (index === focusIndex) {
+      const move = moveButtons.get(focusControl);
+      focusTarget = move ? (move.disabled ? moveButtons.get(-focusControl) : move)
+        : focusControl === "remove" ? remove : type;
+    }
   });
   if (!currentForm.fields.length) {
     const empty = document.createElement("li");
     empty.className = "syn-caption";
     empty.textContent = "No fields yet. Choose a field type and select Add field.";
     list.append(empty);
+    if (focusControl === "remove") focusTarget = $("form-add-field");
   }
+  focusTarget?.focus();
 }
 
 function syncSettings() {
