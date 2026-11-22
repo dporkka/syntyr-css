@@ -104,7 +104,7 @@ def layout_check(browser, engine, width, scale):
             # Small text must not inherit the muted token against decorative radar rings.
             radar = page.locator(".syn-block-asset--radar")
             require(radar.count() == 1, f"{engine}: radar preview missing")
-            for theme in ("studio", "grid", "noir", "industrial", "terminal", "corporate", "minimal"):
+            for theme in ("studio", "grid", "noir", "industrial", "terminal", "corporate", "minimal", "graphite", "midnight", "dim", "obsidian", "amethyst"):
                 page.locator("body.syn-root").evaluate("(e, value) => e.setAttribute('data-syn-theme', value)", theme)
                 fg = radar.locator("span").evaluate("e => getComputedStyle(e).color")
                 label = radar.locator("strong").evaluate("e => getComputedStyle(e).color")

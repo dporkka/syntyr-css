@@ -1,5 +1,7 @@
 ## Unreleased — v0.3.0-alpha.5 candidate
 
+- Add five original accessible dark SaaS palettes (Graphite, Midnight, Dim, Obsidian and Amethyst) across scoped CSS, gallery, optional theme editor and generated mobile/Figma adapters. Switch experimental automatic dark mode from technical Grid to neutral Graphite; keep published alpha.4 unchanged.
+
 - Keep classless native file inputs within 320px semantic fieldsets by using a shrinkable CSS Grid track and wrapping the native file-picker button; add cross-browser and enlarged-text reflow regression coverage.
 
 - Make the PR progressive-enhancement browser gate independent of PyPI access by

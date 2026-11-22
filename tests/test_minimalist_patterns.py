@@ -14,14 +14,14 @@ class MinimalistPatternsContract(unittest.TestCase):
         self.assertIn('light-dark(', css)
         self.assertIn('@supports (color: light-dark(', css)
 
-    def test_auto_palette_remains_in_sync_with_named_studio_and_grid(self):
+    def test_auto_palette_remains_in_sync_with_named_studio_and_graphite(self):
         import re
         from test_theme_utility_contract import theme_rules
         css = (ROOT / "src/tokens.css").read_text()
         start = css.index('.syn-root[data-syn-theme="auto"]')
         auto = css[css.index("{", start) + 1:css.index("}", start)]
         studio = theme_rules(css, "studio")
-        grid = theme_rules(css, "grid")
+        graphite = theme_rules(css, "graphite")
         tokens = ("bg", "surface", "surface-hi", "text", "muted", "accent",
                   "accent-2", "on-accent", "frame", "frame-strong",
                   "danger", "success", "warning")
@@ -31,11 +31,11 @@ class MinimalistPatternsContract(unittest.TestCase):
                 match = re.search(re.escape(name) + r": light-dark\((.*?), (.*?)\);", auto)
                 self.assertIsNotNone(match)
                 self.assertEqual(match.group(1), studio[name])
-                self.assertEqual(match.group(2), grid[name])
+                self.assertEqual(match.group(2), graphite[name])
         # The alpha is theme-specific and the tint tracks CSS token overrides.
         self.assertIn(
             '--syn-accent-soft: light-dark(' + studio['--syn-accent-soft']
-            + ', ' + grid['--syn-accent-soft'] + ');', auto,
+            + ', ' + graphite['--syn-accent-soft'] + ');', auto,
         )
 
     def test_intrinsic_layouts_and_fluid_tokens_are_recipes_only(self):

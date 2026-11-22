@@ -6657,23 +6657,33 @@
     }
   ],
   "themes": [
+    "amethyst",
     "auto",
     "corporate",
+    "dim",
+    "graphite",
     "grid",
     "industrial",
+    "midnight",
     "minimal",
     "noir",
+    "obsidian",
     "studio",
     "terminal"
   ],
   "attributes": {
     "data-syn-theme": [
+      "amethyst",
       "auto",
       "corporate",
+      "dim",
+      "graphite",
       "grid",
       "industrial",
+      "midnight",
       "minimal",
       "noir",
+      "obsidian",
       "studio",
       "terminal"
     ],

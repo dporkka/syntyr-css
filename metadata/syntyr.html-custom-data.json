@@ -1604,10 +1604,19 @@
       "description": "Syntyr theme selector (on syn-root or a nested region).",
       "values": [
         {
+          "name": "amethyst"
+        },
+        {
           "name": "auto"
         },
         {
           "name": "corporate"
+        },
+        {
+          "name": "dim"
+        },
+        {
+          "name": "graphite"
         },
         {
           "name": "grid"
@@ -1616,10 +1625,16 @@
           "name": "industrial"
         },
         {
+          "name": "midnight"
+        },
+        {
           "name": "minimal"
         },
         {
           "name": "noir"
+        },
+        {
+          "name": "obsidian"
         },
         {
           "name": "studio"

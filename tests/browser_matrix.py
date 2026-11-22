@@ -321,6 +321,11 @@ def assert_page(browser, name: str, viewport: int) -> None:
             "terminal": ("#65e8a0", "dark"),
             "corporate": ("#155ac8", "light"),
             "minimal": ("#313a45", "light"),
+            "graphite": ("#83B6FF", "dark"),
+            "midnight": ("#89B4FF", "dark"),
+            "dim": ("#B3A5FF", "dark"),
+            "obsidian": ("#A1C9FF", "dark"),
+            "amethyst": ("#C4A4FF", "dark"),
         }
         assert page.locator(".theme-tile").count() == len(expected)
         for theme, (accent, scheme) in expected.items():

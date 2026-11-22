@@ -1,6 +1,6 @@
 /* Docs-only editor model. No dependency on a framework, editor engine or browser API. */
 export const SCHEMA_VERSION = "syntyr.page.v1";
-export const THEMES = Object.freeze(["studio", "grid", "noir", "industrial", "terminal", "corporate", "minimal", "auto"]);
+export const THEMES = Object.freeze(["studio", "grid", "noir", "industrial", "terminal", "corporate", "minimal", "graphite", "midnight", "dim", "obsidian", "amethyst", "auto"]);
 
 const DEFINITIONS = {
   hero: {

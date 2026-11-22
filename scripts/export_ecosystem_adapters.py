@@ -16,7 +16,8 @@ else:
     from export_api_metadata import outputs as api_outputs
 
 ROOT = Path(__file__).resolve().parents[1]
-PALETTES = ("studio", "grid", "noir", "industrial", "terminal", "corporate", "minimal")
+PALETTES = ("studio", "grid", "noir", "industrial", "terminal", "corporate", "minimal",
+            "graphite", "midnight", "dim", "obsidian", "amethyst")
 COLORS = ("bg", "surface", "surface-hi", "text", "muted", "accent", "accent-2",
           "on-accent", "frame", "frame-strong", "danger", "success", "warning")
 DIMENSIONS = ("radius", "cut")

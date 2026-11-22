@@ -18,14 +18,14 @@
     <section class="docs-section" aria-labelledby="editor-title">
       <p class="syn-eyebrow">DESIGN SYSTEM / OPTIONAL DOCUMENTATION TOOL</p>
       <h1 id="editor-title">Theme editor</h1>
-      <p class="syn-lede">Preview seven SYNTYR palettes with independent quiet, standard or cinematic effect intensity. Generate copyable CSS-variable overrides without adding JavaScript to your application.</p>
+      <p class="syn-lede">Preview twelve SYNTYR palettes with independent quiet, standard or cinematic effect intensity. Generate copyable CSS-variable overrides without adding JavaScript to your application.</p>
       <p class="syn-caption">To see intensity changes in the live preview, the effect stylesheet is loaded; only the documentation editor uses a script.</p>
       <div class="docs-two">
         <section class="syn-panel" aria-labelledby="controls-title">
           <h2 id="controls-title" class="syn-heading">Palette controls</h2>
           <div class="syn-form">
             <label class="syn-label" for="theme">BASE THEME
-              <select class="syn-select" id="theme" name="theme"><option value="grid">Grid</option><option value="noir">Noir</option><option value="studio">Studio</option><option value="industrial">Industrial</option><option value="terminal">Terminal</option><option value="corporate">Corporate</option><option value="minimal">Minimal</option></select>
+              <select class="syn-select" id="theme" name="theme"><option value="grid">Grid</option><option value="noir">Noir</option><option value="studio">Studio</option><option value="industrial">Industrial</option><option value="terminal">Terminal</option><option value="corporate">Corporate</option><option value="minimal">Minimal</option><option value="graphite">Graphite</option><option value="midnight">Midnight</option><option value="dim">Dim</option><option value="obsidian">Obsidian</option><option value="amethyst">Amethyst</option></select>
             </label>
             <label class="syn-label" for="intensity">VISUAL INTENSITY
               <select class="syn-select" id="intensity" name="intensity"><option value="quiet">Quiet</option><option value="standard" selected>Standard</option><option value="cinematic">Cinematic</option></select>
@@ -45,6 +45,13 @@
           <h2 id="preview-title" class="syn-heading">System overview</h2>
           <p class="syn-lede">Colors change instantly without altering any CSS distribution files.</p>
           <div class="syn-actions"><button class="syn-button syn-button--primary" type="button">PRIMARY ACTION</button><a class="syn-button" href="index.html">GALLERY</a></div>
+          <div class="syn-form">
+            <span class="syn-badge">Active</span>
+            <label class="syn-label" for="editor-search">Search records</label>
+            <input class="syn-input" id="editor-search" type="search" placeholder="Search items">
+            <table class="syn-table"><thead><tr><th scope="col">Record</th><th scope="col">Status</th></tr></thead>
+              <tbody><tr><th scope="row">Campaign</th><td>Ready</td></tr></tbody></table>
+          </div>
           <p class="syn-caption">Only the preview area is customized. The surrounding documentation retains its own Studio palette.</p>
         </section>
       </div>

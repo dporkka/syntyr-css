@@ -55,7 +55,7 @@ canvas, web fonts or animations:
 - `syn-surface--lift` adds a modest hover/focus treatment on capable pointers,
   without transforms or persistent `will-change`. Use sparingly, mainly where
   cards contain interactive elements. It does not make a card clickable.
-- The visual system adapts to any of the seven theme palettes; forced-colors
+- The visual system adapts to any of the twelve theme palettes; forced-colors
   mode uses a visible border instead of relying on shadows.
 - These are optional recipes, **not baseline component appearance changes**.
 

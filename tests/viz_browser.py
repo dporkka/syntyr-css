@@ -10,7 +10,7 @@ from playwright.sync_api import sync_playwright
 
 ROOT = Path(__file__).resolve().parents[1]
 URL = (ROOT / "examples/viz.html").as_uri()
-THEMES = ("grid", "noir", "studio", "industrial", "terminal", "corporate", "minimal")
+THEMES = ("grid", "noir", "studio", "industrial", "terminal", "corporate", "minimal", "graphite", "midnight", "dim", "obsidian", "amethyst")
 
 
 def check_browser(browser, engine):

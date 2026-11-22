@@ -240,25 +240,122 @@
   }
 
 
-  /* Opt-in system palette: Studio in light mode, Grid in dark mode.
+  /* Calm dark SaaS palettes; shared component API and independent effect intensity. */
+  :where(.syn-root[data-syn-theme="graphite"], .syn-root [data-syn-theme="graphite"]) {
+    color-scheme: dark;
+    --syn-bg: #101216;
+    --syn-surface: #191D23;
+    --syn-surface-hi: #242A33;
+    --syn-text: #EEF2F7;
+    --syn-muted: #B6C0CE;
+    --syn-accent: #83B6FF;
+    --syn-accent-2: #9EDEC7;
+    --syn-on-accent: #101923;
+    --syn-frame: #606D7E;
+    --syn-frame-strong: #92A0B4;
+    --syn-danger: #FF9EA8;
+    --syn-success: #85E0B2;
+    --syn-warning: #FFD18D;
+    --syn-accent-soft: color-mix(in srgb, var(--syn-accent) 10%, transparent);
+    --syn-radius: .375rem;
+    --syn-cut: 0;
+  }
+  :where(.syn-root[data-syn-theme="midnight"], .syn-root [data-syn-theme="midnight"]) {
+    color-scheme: dark;
+    --syn-bg: #0A1020;
+    --syn-surface: #111B2D;
+    --syn-surface-hi: #1C2A42;
+    --syn-text: #E9F1FF;
+    --syn-muted: #B2C2DF;
+    --syn-accent: #89B4FF;
+    --syn-accent-2: #87DAD1;
+    --syn-on-accent: #08152C;
+    --syn-frame: #586D95;
+    --syn-frame-strong: #93A5C7;
+    --syn-danger: #FFACBA;
+    --syn-success: #8BE6C4;
+    --syn-warning: #FFD28B;
+    --syn-accent-soft: color-mix(in srgb, var(--syn-accent) 10%, transparent);
+    --syn-radius: .375rem;
+    --syn-cut: 0;
+  }
+  :where(.syn-root[data-syn-theme="dim"], .syn-root [data-syn-theme="dim"]) {
+    color-scheme: dark;
+    --syn-bg: #23252D;
+    --syn-surface: #2C303A;
+    --syn-surface-hi: #373C47;
+    --syn-text: #F1F2F5;
+    --syn-muted: #CED3DC;
+    --syn-accent: #B3A5FF;
+    --syn-accent-2: #94E3D2;
+    --syn-on-accent: #201F30;
+    --syn-frame: #728099;
+    --syn-frame-strong: #A2ADC0;
+    --syn-danger: #FFAFBA;
+    --syn-success: #91E0B8;
+    --syn-warning: #FFD28C;
+    --syn-accent-soft: color-mix(in srgb, var(--syn-accent) 10%, transparent);
+    --syn-radius: .375rem;
+    --syn-cut: 0;
+  }
+  :where(.syn-root[data-syn-theme="obsidian"], .syn-root [data-syn-theme="obsidian"]) {
+    color-scheme: dark;
+    --syn-bg: #000000;
+    --syn-surface: #0F1012;
+    --syn-surface-hi: #1B1C20;
+    --syn-text: #F2F4F7;
+    --syn-muted: #BBC3CE;
+    --syn-accent: #A1C9FF;
+    --syn-accent-2: #91E5D9;
+    --syn-on-accent: #031726;
+    --syn-frame: #606C7C;
+    --syn-frame-strong: #899AB0;
+    --syn-danger: #FFABAF;
+    --syn-success: #98E3C1;
+    --syn-warning: #FFD391;
+    --syn-accent-soft: color-mix(in srgb, var(--syn-accent) 10%, transparent);
+    --syn-radius: .375rem;
+    --syn-cut: 0;
+  }
+  :where(.syn-root[data-syn-theme="amethyst"], .syn-root [data-syn-theme="amethyst"]) {
+    color-scheme: dark;
+    --syn-bg: #171521;
+    --syn-surface: #211D2E;
+    --syn-surface-hi: #2E2940;
+    --syn-text: #F1EFFB;
+    --syn-muted: #CAC4DA;
+    --syn-accent: #C4A4FF;
+    --syn-accent-2: #89DBCF;
+    --syn-on-accent: #20112E;
+    --syn-frame: #675B84;
+    --syn-frame-strong: #A99BCD;
+    --syn-danger: #FFB2C2;
+    --syn-success: #98E8BD;
+    --syn-warning: #F7CD8C;
+    --syn-accent-soft: color-mix(in srgb, var(--syn-accent) 10%, transparent);
+    --syn-radius: .375rem;
+    --syn-cut: 0;
+  }
+
+  /* Opt-in system palette: Studio in light mode, Graphite in dark mode.
      Engines without light-dark() fall back to the neutral Studio palette. */
   @supports (color: light-dark(white, black)) {
     :where(.syn-root[data-syn-theme="auto"], .syn-root [data-syn-theme="auto"]) {
       color-scheme: light dark;
-      --syn-bg: light-dark(#f5f7fb, #080f19);
-      --syn-surface: light-dark(#ffffff, #111f2c);
-      --syn-surface-hi: light-dark(#eaf0f8, #172a3b);
-      --syn-text: light-dark(#15233a, #edf9ff);
-      --syn-muted: light-dark(#4b5d76, #adbfca);
-      --syn-accent: light-dark(#2458c6, #76e7f7);
-      --syn-accent-2: light-dark(#176b80, #f7b06c);
-      --syn-on-accent: light-dark(#ffffff, #07121a);
-      --syn-frame: light-dark(#b8c6d8, #345569);
-      --syn-frame-strong: light-dark(#6685b2, #5086a0);
-      --syn-danger: light-dark(#ad2637, #ffaaa4);
-      --syn-success: light-dark(#17694b, #8ce6bb);
-      --syn-warning: light-dark(#92500a, #ffd08b);
-      --syn-accent-soft: light-dark(color-mix(in srgb, var(--syn-accent) 9%, transparent), color-mix(in srgb, var(--syn-accent) 11%, transparent));
+      --syn-bg: light-dark(#f5f7fb, #101216);
+      --syn-surface: light-dark(#ffffff, #191D23);
+      --syn-surface-hi: light-dark(#eaf0f8, #242A33);
+      --syn-text: light-dark(#15233a, #EEF2F7);
+      --syn-muted: light-dark(#4b5d76, #B6C0CE);
+      --syn-accent: light-dark(#2458c6, #83B6FF);
+      --syn-accent-2: light-dark(#176b80, #9EDEC7);
+      --syn-on-accent: light-dark(#ffffff, #101923);
+      --syn-frame: light-dark(#b8c6d8, #606D7E);
+      --syn-frame-strong: light-dark(#6685b2, #92A0B4);
+      --syn-danger: light-dark(#ad2637, #FF9EA8);
+      --syn-success: light-dark(#17694b, #85E0B2);
+      --syn-warning: light-dark(#92500a, #FFD18D);
+      --syn-accent-soft: light-dark(color-mix(in srgb, var(--syn-accent) 9%, transparent), color-mix(in srgb, var(--syn-accent) 10%, transparent));
       --syn-radius: .25rem;
       --syn-cut: .9rem;
     }

@@ -138,9 +138,9 @@ high-contrast/forced-colors, and relevant screen readers in the target app.
 live data, and server-side form handling are intentionally application
 responsibilities; optional advanced widgets are outside the CSS core.
 
-## Seven theme palettes (unreleased alpha.5 candidate)
+## Twelve theme palettes (unreleased alpha.5 candidate)
 
-The published alpha.4 tag offers Grid, Noir and Studio. This candidate adds Industrial, Terminal, Corporate and Minimal. Use the same HTML and change only the theme attribute:
+The published alpha.4 tag offers Grid, Noir and Studio. This candidate adds Industrial, Terminal, Corporate, Minimal, Graphite, Midnight, Dim, Obsidian and Amethyst. Use the same HTML and change only the theme attribute:
 
 - `data-syn-theme="grid"`
 - `data-syn-theme="noir"`
@@ -149,6 +149,11 @@ The published alpha.4 tag offers Grid, Noir and Studio. This candidate adds Indu
 - `data-syn-theme="terminal"`
 - `data-syn-theme="corporate"`
 - `data-syn-theme="minimal"`
+- `data-syn-theme="amethyst"`
+- `data-syn-theme="obsidian"`
+- `data-syn-theme="dim"`
+- `data-syn-theme="midnight"`
+- `data-syn-theme="graphite"`
 
 To use finite opt-in layout utilities, load `syntyr.utilities.css` after `syntyr.core.css` (or use the all bundle). Utilities include `.syn-u-flex`, `.syn-u-grid`, `.syn-u-between`, spacing helpers and a visually hidden helper. No compiler or runtime JavaScript is required.
 
@@ -156,7 +161,7 @@ To use finite opt-in layout utilities, load `syntyr.utilities.css` after `syntyr
 ## System palette, no JavaScript (experimental)
 
 `data-syn-theme="auto"` on `.syn-root` or a nested themed region
-uses Studio colors for light system preference and Grid colors for dark
+uses Studio colors for light system preference and Graphite colors for dark
 system preference. It relies on native `color-scheme: light dark` and
 CSS `light-dark()`, supported by current Chromium, Firefox and WebKit.
 Older engines that lack `light-dark()` retain the inherited/default

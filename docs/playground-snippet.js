@@ -24,7 +24,7 @@
   ]);
   const THEMES = new Set([
     "studio", "grid", "noir", "industrial", "terminal",
-    "corporate", "minimal", "auto"
+    "corporate", "minimal", "graphite", "midnight", "dim", "obsidian", "amethyst", "auto"
   ]);
 
   function requiredStylesheets(moduleDescription = "syntyr.core.css") {

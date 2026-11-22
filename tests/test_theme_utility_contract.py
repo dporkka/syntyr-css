@@ -7,7 +7,7 @@ import unittest
 from test_contract import contrast
 
 ROOT = Path(__file__).resolve().parents[1]
-THEMES = ("grid", "noir", "studio", "industrial", "terminal", "corporate", "minimal")
+THEMES = ("grid", "noir", "studio", "industrial", "terminal", "corporate", "minimal", "graphite", "midnight", "dim", "obsidian", "amethyst")
 REQUIRED_TOKENS = (
     "--syn-bg", "--syn-surface", "--syn-surface-hi", "--syn-text",
     "--syn-muted", "--syn-accent", "--syn-on-accent", "--syn-frame",
@@ -43,7 +43,7 @@ class ThemeParser(HTMLParser):
 
 
 class ThemeAndUtilitiesContract(unittest.TestCase):
-    def test_seven_palettes_define_complete_accessible_tokens(self):
+    def test_twelve_palettes_define_complete_accessible_tokens(self):
         source = (ROOT / "src/tokens.css").read_text()
         for name in THEMES:
             with self.subTest(theme=name):
@@ -97,7 +97,7 @@ class ThemeAndUtilitiesContract(unittest.TestCase):
         from scripts.package_release import FILES
         self.assertIn("dist/syntyr.utilities.css", FILES)
 
-    def test_seven_theme_gallery_is_static_accessible_and_discoverable(self):
+    def test_twelve_theme_gallery_is_static_accessible_and_discoverable(self):
         demo = (ROOT / "examples/themes.html").read_text()
         parser = ThemeParser()
         parser.feed(demo)
@@ -106,7 +106,7 @@ class ThemeAndUtilitiesContract(unittest.TestCase):
         self.assertIn("syntyr.utilities.css", demo)
         self.assertNotIn('class="syn-grid" aria-label=', demo, "unroled div should not have an aria-label")
         self.assertNotIn('<button type="button"', demo, "gallery controls must perform navigation")
-        self.assertEqual(demo.count('href="../docs/#components"'), 7)
+        self.assertEqual(demo.count('href="../docs/#components"'), 12)
         self.assertIn('href="../examples/themes.html"', (ROOT / "docs/index.html").read_text())
         guide = (ROOT / "docs/theme-customization.md").read_text()
         for theme in THEMES:

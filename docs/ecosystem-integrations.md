@@ -85,7 +85,7 @@ Source: https://code.visualstudio.com/api/extension-guides/custom-data-extension
 ## Figma: importable tokens, not a component library yet
 
 `metadata/figma/syntyr-<theme>.tokens.json` contains an independent DTCG
-design-token mode for each of **seven alpha.5 source themes**. These exports
+design-token mode for each of **twelve alpha.5 source themes**. These exports
 are generated from literal CSS palette values; each file has the same
 color and dimension token names and types.
 

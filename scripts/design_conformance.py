@@ -1,4 +1,4 @@
-"""Validate core semantic-color pairs across Syntyr's seven built-in palettes.
+"""Validate core semantic-color pairs across Syntyr's twelve built-in palettes.
 
 This source-token audit does not measure computed gradients, authored theme
 overrides, rendered state interactions, assistive technology or WCAG conformance.

@@ -92,7 +92,7 @@ For cross-design-system conventions, component-state expectations, native compos
 - **Studio** (`data-syn-theme="studio"`, also the default): low-noise professional SaaS surfaces, readable body type, clear primary action, subdued secondary emphasis. The generated YAML above captures its static baseline.
 - **Grid** (`data-syn-theme="grid"`): dark technical dashboards with high-contrast cyan accents. Apply precision graphics sparingly.
 - **Noir** (`data-syn-theme="noir"`): warm cinematic/editorial presentations with amber accent, not a universal default.
-- **Industrial, Terminal, Corporate, Minimal**: additional candidate palettes in unreleased alpha.5; do not promise them in the published alpha.4 release. Follow actual source and tagged release availability.
+- **Industrial, Terminal, Corporate, Minimal, Graphite, Midnight, Dim, Obsidian, Amethyst**: additional candidate palettes in unreleased alpha.5; do not promise them in the published alpha.4 release. Follow actual source and tagged release availability.
 - **Auto** (`data-syn-theme="auto"`): experimental native system color-scheme path; confirm both scheme outcomes and nested theme boundaries before deployment.
 
 Use `--syn-bg` for page, `--syn-surface` for cards, `--syn-surface-hi` for more prominent surfaces, `--syn-frame` for standard borders, `--syn-frame-strong` for structural emphasis, `--syn-text` for primary content, and `--syn-muted` for secondary content. Where available, prefer derived semantic roles `--syn-surface-raised`, `--syn-border-subtle`, `--syn-border-focus`, and `--syn-focus-ring` over manually mixed colors.

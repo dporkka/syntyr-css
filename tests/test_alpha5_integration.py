@@ -1,4 +1,4 @@
-"""Alpha.5 integration contracts: SYNTYR-only seven themes and optional utilities."""
+"""Alpha.5 integration contracts: SYNTYR-only twelve themes and optional utilities."""
 from pathlib import Path
 import ast
 import unittest

@@ -81,7 +81,7 @@ async function run(engine, name) {
       return [getComputedStyle(label).gridRowStart, getComputedStyle(input).gridRowStart];
     });
     assert.deepEqual(layout, ["1", "2"]);
-    for (const theme of ["studio", "grid", "noir", "industrial", "terminal", "corporate", "minimal"]) {
+    for (const theme of ["studio", "grid", "noir", "industrial", "terminal", "corporate", "minimal", "graphite", "midnight", "dim", "obsidian", "amethyst"]) {
       await page.locator("body").evaluate((el, t) => { el.dataset.synTheme = t; }, theme);
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth),
         false, theme + " overflow at 360px");
