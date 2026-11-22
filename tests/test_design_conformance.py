@@ -16,7 +16,7 @@ class DesignConformanceTest(unittest.TestCase):
     def test_all_seven_named_palettes_pass_accessible_semantic_pairs(self):
         report = design_conformance.audit(SOURCE.read_text(encoding="utf-8"))
         self.assertEqual(set(report["palettes"]), {
-            "studio", "grid", "noir", "industrial", "terminal", "corporate", "minimal"
+            "studio", "grid", "noir", "industrial", "terminal", "corporate", "minimal", "graphite", "midnight", "dim", "obsidian", "amethyst"
         })
         self.assertTrue(report["ok"], report["failures"])
         for palette in report["palettes"].values():

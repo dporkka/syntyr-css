@@ -149,6 +149,101 @@
       },
       "radius": 6,
       "cut": 0
+    },
+    "graphite": {
+      "colors": {
+        "bg": "#101216",
+        "surface": "#191D23",
+        "surface-hi": "#242A33",
+        "text": "#EEF2F7",
+        "muted": "#B6C0CE",
+        "accent": "#83B6FF",
+        "accent-2": "#9EDEC7",
+        "on-accent": "#101923",
+        "frame": "#606D7E",
+        "frame-strong": "#92A0B4",
+        "danger": "#FF9EA8",
+        "success": "#85E0B2",
+        "warning": "#FFD18D"
+      },
+      "radius": 6,
+      "cut": 0
+    },
+    "midnight": {
+      "colors": {
+        "bg": "#0A1020",
+        "surface": "#111B2D",
+        "surface-hi": "#1C2A42",
+        "text": "#E9F1FF",
+        "muted": "#B2C2DF",
+        "accent": "#89B4FF",
+        "accent-2": "#87DAD1",
+        "on-accent": "#08152C",
+        "frame": "#586D95",
+        "frame-strong": "#93A5C7",
+        "danger": "#FFACBA",
+        "success": "#8BE6C4",
+        "warning": "#FFD28B"
+      },
+      "radius": 6,
+      "cut": 0
+    },
+    "dim": {
+      "colors": {
+        "bg": "#23252D",
+        "surface": "#2C303A",
+        "surface-hi": "#373C47",
+        "text": "#F1F2F5",
+        "muted": "#CED3DC",
+        "accent": "#B3A5FF",
+        "accent-2": "#94E3D2",
+        "on-accent": "#201F30",
+        "frame": "#728099",
+        "frame-strong": "#A2ADC0",
+        "danger": "#FFAFBA",
+        "success": "#91E0B8",
+        "warning": "#FFD28C"
+      },
+      "radius": 6,
+      "cut": 0
+    },
+    "obsidian": {
+      "colors": {
+        "bg": "#000000",
+        "surface": "#0F1012",
+        "surface-hi": "#1B1C20",
+        "text": "#F2F4F7",
+        "muted": "#BBC3CE",
+        "accent": "#A1C9FF",
+        "accent-2": "#91E5D9",
+        "on-accent": "#031726",
+        "frame": "#606C7C",
+        "frame-strong": "#899AB0",
+        "danger": "#FFABAF",
+        "success": "#98E3C1",
+        "warning": "#FFD391"
+      },
+      "radius": 6,
+      "cut": 0
+    },
+    "amethyst": {
+      "colors": {
+        "bg": "#171521",
+        "surface": "#211D2E",
+        "surface-hi": "#2E2940",
+        "text": "#F1EFFB",
+        "muted": "#CAC4DA",
+        "accent": "#C4A4FF",
+        "accent-2": "#89DBCF",
+        "on-accent": "#20112E",
+        "frame": "#675B84",
+        "frame-strong": "#A99BCD",
+        "danger": "#FFB2C2",
+        "success": "#98E8BD",
+        "warning": "#F7CD8C"
+      },
+      "radius": 6,
+      "cut": 0
     }
   }
 }

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Customize Syntyr CSS themes and design tokens for SaaS dashboards, accessible business applications, and futuristic interfaces.">
-  <meta name="syntyr-source-sha256" content="ebe4c8e29c8c45f8cae19b04345e27adf238b83f7f7dce183dbbdcfede739209">
+  <meta name="syntyr-source-sha256" content="3f5675711559383881c12f4bdaa8c831213e88cc8c4f50dd22e74ac7cbf10366">
   <meta name="theme-color" content="#f5f7fb">
   <title>Syntyr theme customization — copy, override, ship — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/theme-customization">
@@ -209,8 +209,8 @@ high-contrast/forced-colors, and relevant screen readers in the target app.</p>
 <p><strong>No runtime JavaScript is required for styling.</strong> Search, authentication,
 live data, and server-side form handling are intentionally application
 responsibilities; optional advanced widgets are outside the CSS core.</p>
-<h2 id="seven-theme-palettes-unreleased-alpha5-candidate">Seven theme palettes (unreleased alpha.5 candidate)</h2>
-<p>The published alpha.4 tag offers Grid, Noir and Studio. This candidate adds Industrial, Terminal, Corporate and Minimal. Use the same HTML and change only the theme attribute:</p>
+<h2 id="twelve-theme-palettes-unreleased-alpha5-candidate">Twelve theme palettes (unreleased alpha.5 candidate)</h2>
+<p>The published alpha.4 tag offers Grid, Noir and Studio. This candidate adds Industrial, Terminal, Corporate, Minimal, Graphite, Midnight, Dim, Obsidian and Amethyst. Use the same HTML and change only the theme attribute:</p>
 <ul>
 <li><code>data-syn-theme=&quot;grid&quot;</code></li>
 <li><code>data-syn-theme=&quot;noir&quot;</code></li>
@@ -219,11 +219,16 @@ responsibilities; optional advanced widgets are outside the CSS core.</p>
 <li><code>data-syn-theme=&quot;terminal&quot;</code></li>
 <li><code>data-syn-theme=&quot;corporate&quot;</code></li>
 <li><code>data-syn-theme=&quot;minimal&quot;</code></li>
+<li><code>data-syn-theme=&quot;amethyst&quot;</code></li>
+<li><code>data-syn-theme=&quot;obsidian&quot;</code></li>
+<li><code>data-syn-theme=&quot;dim&quot;</code></li>
+<li><code>data-syn-theme=&quot;midnight&quot;</code></li>
+<li><code>data-syn-theme=&quot;graphite&quot;</code></li>
 </ul>
 <p>To use finite opt-in layout utilities, load <code>syntyr.utilities.css</code> after <code>syntyr.core.css</code> (or use the all bundle). Utilities include <code>.syn-u-flex</code>, <code>.syn-u-grid</code>, <code>.syn-u-between</code>, spacing helpers and a visually hidden helper. No compiler or runtime JavaScript is required.</p>
 <h2 id="system-palette-no-javascript-experimental">System palette, no JavaScript (experimental)</h2>
 <p><code>data-syn-theme=&quot;auto&quot;</code> on <code>.syn-root</code> or a nested themed region
-uses Studio colors for light system preference and Grid colors for dark
+uses Studio colors for light system preference and Graphite colors for dark
 system preference. It relies on native <code>color-scheme: light dark</code> and
 CSS <code>light-dark()</code>, supported by current Chromium, Firefox and WebKit.
 Older engines that lack <code>light-dark()</code> retain the inherited/default
@@ -385,7 +390,7 @@ hover backgrounds against text across all palettes and browser engines.</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#3-independent-visual-intensity">3. Independent visual intensity</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#4-css-component-mode-versus-native-semantic-mode">4. CSS component mode versus native semantic mode</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#5-responsive-applications-and-accessibility">5. Responsive applications and accessibility</a>
-<a class="docs-article-toc-link docs-article-toc-2" href="#seven-theme-palettes-unreleased-alpha5-candidate">Seven theme palettes (unreleased alpha.5 candidate)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#twelve-theme-palettes-unreleased-alpha5-candidate">Twelve theme palettes (unreleased alpha.5 candidate)</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#system-palette-no-javascript-experimental">System palette, no JavaScript (experimental)</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#typography-density-and-quiet-surfaces">Typography, density, and quiet surfaces</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#semantic-roles-states-and-content-rhythm">Semantic roles, states, and content rhythm</a>

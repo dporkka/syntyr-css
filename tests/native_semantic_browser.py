@@ -5,7 +5,7 @@ from playwright.sync_api import sync_playwright
 
 ROOT = Path(__file__).resolve().parents[1]
 URL = (ROOT / "examples/native-elements.html").as_uri()
-PALETTES = ("grid", "noir", "studio", "industrial", "terminal", "corporate", "minimal")
+PALETTES = ("grid", "noir", "studio", "industrial", "terminal", "corporate", "minimal", "graphite", "midnight", "dim", "obsidian", "amethyst")
 
 
 def rgb(value):

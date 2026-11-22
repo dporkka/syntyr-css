@@ -116,7 +116,7 @@ class GalleryManifestTests(unittest.TestCase):
         self.assertIn('id="catalog-theme"', page)
         self.assertIn('id="catalog-preview-size"', page)
         self.assertIn('id="catalog-controls" class="catalog-controls" hidden', page)
-        for theme in ("studio", "grid", "noir", "industrial", "terminal", "corporate", "minimal"):
+        for theme in ("studio", "grid", "noir", "industrial", "terminal", "corporate", "minimal", "graphite", "midnight", "dim", "obsidian", "amethyst"):
             self.assertIn(f'<option value="{theme}"', page)
             self.assertIn(f'data-syn-theme="{theme}"', (ROOT / "src/tokens.css").read_text())
         self.assertIn('addEventListener("change"', script)

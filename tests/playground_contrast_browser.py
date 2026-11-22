@@ -9,7 +9,7 @@ from pathlib import Path
 from playwright.sync_api import sync_playwright
 
 ROOT = Path(__file__).resolve().parents[1]
-THEMES = ("studio", "grid", "noir", "industrial", "terminal", "corporate", "minimal")
+THEMES = ("studio", "grid", "noir", "industrial", "terminal", "corporate", "minimal", "graphite", "midnight", "dim", "obsidian", "amethyst")
 
 
 def run(browser, engine, axe_file: Path):

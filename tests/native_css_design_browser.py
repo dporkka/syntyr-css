@@ -7,7 +7,7 @@ import sys
 from playwright.sync_api import sync_playwright
 
 ROOT = Path(__file__).resolve().parents[1]
-THEMES = ("studio", "grid", "noir", "industrial", "terminal", "corporate", "minimal")
+THEMES = ("studio", "grid", "noir", "industrial", "terminal", "corporate", "minimal", "graphite", "midnight", "dim", "obsidian", "amethyst")
 
 def luminance(rgb):
     values = [float(c) / 255 for c in re.findall(r"[\d.]+", rgb)[:3]]
@@ -74,7 +74,7 @@ def verify(browser_name, browser, css):
     assert computed(page, "#nested", "--syn-glow-alpha") == "0%", "cinematic glow not suppressed"
     assert computed(page, "#nested-horizon", "background-image") == "none", "horizon fade remains at higher contrast"
     page.close()
-    print(f"PASS {browser_name}: seven-theme hover contrast, scoped styles, flow, heading, shadows, nested contrast")
+    print(f"PASS {browser_name}: twelve-theme hover contrast, scoped styles, flow, heading, shadows, nested contrast")
 
 def main():
     css = (ROOT / "dist/syntyr.all.css").read_text(encoding="utf-8")

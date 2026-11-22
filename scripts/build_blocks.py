@@ -261,6 +261,9 @@ def build() -> str:
             <option value="noir">Noir</option><option value="industrial">Industrial</option>
             <option value="terminal">Terminal</option><option value="corporate">Corporate</option>
             <option value="minimal">Minimal</option>
+            <option value="graphite">Graphite</option><option value="midnight">Midnight</option>
+            <option value="dim">Dim</option><option value="obsidian">Obsidian</option>
+            <option value="amethyst">Amethyst</option>
           </select></div>
       </div>
       <p id="blocks-results" class="syn-caption" role="status" aria-live="polite">{count} blocks available.</p>

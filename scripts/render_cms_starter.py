@@ -16,7 +16,8 @@ from urllib.parse import urlsplit
 ROOT = Path(__file__).resolve().parents[1]
 STARTER = ROOT / "examples/cms-starter"
 DESTINATION = STARTER / "_site"
-THEMES = frozenset(("studio", "grid", "noir", "industrial", "terminal", "corporate", "minimal"))
+THEMES = frozenset(("studio", "grid", "noir", "industrial", "terminal", "corporate", "minimal",
+                   "graphite", "midnight", "dim", "obsidian", "amethyst"))
 SECTION_FIELDS = {
     "hero": {"type", "id", "eyebrow", "heading", "description", "button"},
     "features": {"type", "id", "heading", "items"},

@@ -63,9 +63,9 @@ class BrowserCoverageContract(unittest.TestCase):
         self.assertIn("dataset.synTheme", source)
         self.assertNotIn("dataset.cyTheme", source)
 
-    def test_theme_matrix_checks_all_seven_palettes_and_color_schemes(self):
+    def test_theme_matrix_checks_all_twelve_palettes_and_color_schemes(self):
         source = (ROOT / "tests/browser_matrix.py").read_text(encoding="utf-8")
-        for theme in ("grid", "noir", "studio", "industrial", "terminal", "corporate", "minimal"):
+        for theme in ("grid", "noir", "studio", "industrial", "terminal", "corporate", "minimal", "graphite", "midnight", "dim", "obsidian", "amethyst"):
             self.assertIn(f'"{theme}"', source)
         self.assertIn('colorScheme', source)
 

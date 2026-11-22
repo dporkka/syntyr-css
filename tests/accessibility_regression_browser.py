@@ -14,7 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 def check(browser, engine):
     # All shipping palettes, including focus/filled states. Test 2x/4x root text
     # enlargement rather than claiming to emulate browser-UI zoom.
-    for theme in ('studio', 'grid', 'noir', 'industrial', 'terminal', 'corporate', 'minimal'):
+    for theme in ('studio', 'grid', 'noir', 'industrial', 'terminal', 'corporate', 'minimal', 'graphite', 'midnight', 'dim', 'obsidian', 'amethyst'):
         for size in (32, 64):
             page = browser.new_page(viewport={"width": 320, "height": 800})
             try:
@@ -166,7 +166,7 @@ def check(browser, engine):
         try:
             page.goto((ROOT / "docs/blocks.html").as_uri())
             for theme in ('studio', 'grid', 'noir', 'industrial',
-                          'terminal', 'corporate', 'minimal'):
+                          'terminal', 'corporate', 'minimal', 'graphite', 'midnight', 'dim', 'obsidian', 'amethyst'):
                 page.locator('body').evaluate(
                     '(e, theme) => e.setAttribute("data-syn-theme", theme)', theme)
                 caption = page.locator('.syn-block-asset--fine-grid > span')

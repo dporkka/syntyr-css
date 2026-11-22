@@ -28,7 +28,7 @@ python3 -m unittest discover -s tests -p test_mobile_adapters.py -v
 
 The generated files are:
 
-- `metadata/mobile/syntyr.tokens.json`: all seven named Syntyr palettes,
+- `metadata/mobile/syntyr.tokens.json`: all twelve named Syntyr palettes,
   with 13 literal SRGB color roles each, per-palette `radius`/`cut`,
   shared spacing `1–5`, font sizes `xs/sm/base`, and control height.
 - `integrations/react-native/tokens.ts`: the **same values** as a standalone

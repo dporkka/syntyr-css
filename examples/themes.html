@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Seven original SYNTYR CSS themes, from cinematic interfaces to accessible business UI, in semantic HTML with no runtime JavaScript.">
-  <title>SYNTYR CSS — Seven Theme Gallery</title>
+  <meta name="description" content="Twelve original SYNTYR CSS themes, from cinematic interfaces to accessible business UI, in semantic HTML with no runtime JavaScript.">
+  <title>SYNTYR CSS — Twelve Theme Gallery</title>
   <link rel="stylesheet" href="../dist/syntyr.core.css">
   <link rel="stylesheet" href="../dist/syntyr.utilities.css">
   <style>
@@ -16,6 +16,10 @@
     .theme-tile .syn-stat { padding: var(--syn-space-2); }
     .theme-tile .syn-stat-value { font-size: clamp(1.3rem, 3vw, 2rem); }
     .theme-tile .theme-code { color: var(--syn-muted); font: .7rem/1.5 var(--syn-mono); overflow-wrap: anywhere; }
+    .theme-tile .syn-table { width: 100%; font-size: .8rem; }
+    .theme-tile .syn-input { width: 100%; min-width: 0; }
+    .theme-tile .theme-controls { display: grid; gap: .5rem; }
+    .theme-tile .syn-label { font-size: .8rem; }
   </style>
 </head>
 <body class="syn-root syn-page" data-syn-theme="minimal">
@@ -23,7 +27,7 @@
     <a href="../docs/" class="syn-button syn-button--outline">Back to documentation</a>
     <header class="syn-u-stack syn-u-mt-3">
       <span class="syn-eyebrow">SYNTYR / ORIGINAL MIT THEMES</span>
-      <h1>One component API. Seven visual identities.</h1>
+      <h1>One component API. Twelve visual identities.</h1>
       <p class="syn-lede">The same HTML works in cinematic dark themes and restrained light business themes. Every palette is CSS custom properties. No JavaScript, hosted fonts, or build tools required.</p>
     </header>
     <div class="syn-grid">
@@ -31,48 +35,115 @@
         <span class="syn-eyebrow">01 / SIGNAL BLUE</span><h2 id="grid-title">Grid</h2>
         <p class="theme-code">data-syn-theme="grid"</p>
         <article class="syn-stat"><span class="syn-stat-label">NETWORK HEALTH</span><p class="syn-stat-value">99.8%</p></article>
+        <div class="theme-controls"><span class="syn-badge">Active</span><label class="syn-label" for="theme-query-grid">Search records</label><input class="syn-input" id="theme-query-grid" type="search" placeholder="Search items"><table class="syn-table"><thead><tr><th scope="col">Record</th><th scope="col">Status</th></tr></thead><tbody><tr><th scope="row">Campaign</th><td>Ready</td></tr></tbody></table></div>
         <a class="syn-button syn-button--primary" href="../docs/#components">Explore components</a>
       </section>
       <section class="syn-panel theme-tile" data-syn-theme="noir" aria-labelledby="noir-title">
         <span class="syn-eyebrow">02 / TUNGSTEN</span><h2 id="noir-title">Noir</h2>
         <p class="theme-code">data-syn-theme="noir"</p>
         <article class="syn-stat"><span class="syn-stat-label">ARCHIVE STATUS</span><p class="syn-stat-value">ONLINE</p></article>
+        <div class="theme-controls"><span class="syn-badge">Active</span><label class="syn-label" for="theme-query-noir">Search records</label><input class="syn-input" id="theme-query-noir" type="search" placeholder="Search items"><table class="syn-table"><thead><tr><th scope="col">Record</th><th scope="col">Status</th></tr></thead><tbody><tr><th scope="row">Campaign</th><td>Ready</td></tr></tbody></table></div>
         <a class="syn-button syn-button--primary" href="../docs/#components">Explore components</a>
       </section>
       <section class="syn-panel theme-tile" data-syn-theme="studio" aria-labelledby="studio-title">
         <span class="syn-eyebrow">03 / PROFESSIONAL LIGHT</span><h2 id="studio-title">Studio</h2>
         <p class="theme-code">data-syn-theme="studio"</p>
         <article class="syn-stat"><span class="syn-stat-label">SERVICE RELIABILITY</span><p class="syn-stat-value">99.9%</p></article>
+        <div class="theme-controls"><span class="syn-badge">Active</span><label class="syn-label" for="theme-query-studio">Search records</label><input class="syn-input" id="theme-query-studio" type="search" placeholder="Search items"><table class="syn-table"><thead><tr><th scope="col">Record</th><th scope="col">Status</th></tr></thead><tbody><tr><th scope="row">Campaign</th><td>Ready</td></tr></tbody></table></div>
         <a class="syn-button syn-button--primary" href="../docs/#components">Explore components</a>
       </section>
       <section class="syn-panel theme-tile" data-syn-theme="industrial" aria-labelledby="industrial-title">
         <span class="syn-eyebrow">04 / MACHINE AMBER</span><h2 id="industrial-title">Industrial</h2>
         <p class="theme-code">data-syn-theme="industrial"</p>
         <article class="syn-stat"><span class="syn-stat-label">SYSTEM LOAD</span><p class="syn-stat-value">42.1%</p></article>
+        <div class="theme-controls"><span class="syn-badge">Active</span><label class="syn-label" for="theme-query-industrial">Search records</label><input class="syn-input" id="theme-query-industrial" type="search" placeholder="Search items"><table class="syn-table"><thead><tr><th scope="col">Record</th><th scope="col">Status</th></tr></thead><tbody><tr><th scope="row">Campaign</th><td>Ready</td></tr></tbody></table></div>
         <a class="syn-button syn-button--primary" href="../docs/#components">Explore components</a>
       </section>
       <section class="syn-panel theme-tile" data-syn-theme="terminal" aria-labelledby="terminal-title">
         <span class="syn-eyebrow">05 / PHOSPHOR GREEN</span><h2 id="terminal-title">Terminal</h2>
         <p class="theme-code">data-syn-theme="terminal"</p>
         <article class="syn-stat"><span class="syn-stat-label">ACTIVE SESSIONS</span><p class="syn-stat-value">016</p></article>
+        <div class="theme-controls"><span class="syn-badge">Active</span><label class="syn-label" for="theme-query-terminal">Search records</label><input class="syn-input" id="theme-query-terminal" type="search" placeholder="Search items"><table class="syn-table"><thead><tr><th scope="col">Record</th><th scope="col">Status</th></tr></thead><tbody><tr><th scope="row">Campaign</th><td>Ready</td></tr></tbody></table></div>
         <a class="syn-button syn-button--primary" href="../docs/#components">Explore components</a>
       </section>
       <section class="syn-panel theme-tile" data-syn-theme="corporate" aria-labelledby="corporate-title">
         <span class="syn-eyebrow">06 / TRUSTED BLUE</span><h2 id="corporate-title">Corporate</h2>
         <p class="theme-code">data-syn-theme="corporate"</p>
         <article class="syn-stat"><span class="syn-stat-label">QUARTERLY REVENUE</span><p class="syn-stat-value">$128.4k</p></article>
+        <div class="theme-controls"><span class="syn-badge">Active</span><label class="syn-label" for="theme-query-corporate">Search records</label><input class="syn-input" id="theme-query-corporate" type="search" placeholder="Search items"><table class="syn-table"><thead><tr><th scope="col">Record</th><th scope="col">Status</th></tr></thead><tbody><tr><th scope="row">Campaign</th><td>Ready</td></tr></tbody></table></div>
         <a class="syn-button syn-button--primary" href="../docs/#components">Explore components</a>
       </section>
       <section class="syn-panel theme-tile" data-syn-theme="minimal" aria-labelledby="minimal-title">
         <span class="syn-eyebrow">07 / NEUTRAL</span><h2 id="minimal-title">Minimal</h2>
         <p class="theme-code">data-syn-theme="minimal"</p>
         <article class="syn-stat"><span class="syn-stat-label">ACTIVE WORKSPACES</span><p class="syn-stat-value">24</p></article>
+        <div class="theme-controls"><span class="syn-badge">Active</span><label class="syn-label" for="theme-query-minimal">Search records</label><input class="syn-input" id="theme-query-minimal" type="search" placeholder="Search items"><table class="syn-table"><thead><tr><th scope="col">Record</th><th scope="col">Status</th></tr></thead><tbody><tr><th scope="row">Campaign</th><td>Ready</td></tr></tbody></table></div>
+        <a class="syn-button syn-button--primary" href="../docs/#components">Explore components</a>
+      </section>
+      <section class="syn-panel theme-tile" data-syn-theme="graphite" aria-labelledby="graphite-title">
+        <span class="syn-eyebrow">08 / NEUTRAL CHARCOAL</span><h2 id="graphite-title">Graphite</h2>
+        <p class="theme-code">data-syn-theme="graphite"</p>
+        <article class="syn-stat"><span class="syn-stat-label">ACTIVE WORKFLOWS</span><p class="syn-stat-value">42</p></article>
+        <div class="theme-controls">
+          <span class="syn-badge">Active</span>
+          <label class="syn-label" for="theme-query-graphite">Search records</label>
+          <input class="syn-input" id="theme-query-graphite" type="search" placeholder="Search items">
+          <table class="syn-table"><thead><tr><th scope="col">Record</th><th scope="col">Status</th></tr></thead><tbody><tr><th scope="row">Campaign</th><td>Ready</td></tr></tbody></table>
+        </div>
+        <a class="syn-button syn-button--primary" href="../docs/#components">Explore components</a>
+      </section>
+      <section class="syn-panel theme-tile" data-syn-theme="midnight" aria-labelledby="midnight-title">
+        <span class="syn-eyebrow">09 / DEEP NAVY</span><h2 id="midnight-title">Midnight</h2>
+        <p class="theme-code">data-syn-theme="midnight"</p>
+        <article class="syn-stat"><span class="syn-stat-label">ACTIVE WORKFLOWS</span><p class="syn-stat-value">98.6%</p></article>
+        <div class="theme-controls">
+          <span class="syn-badge">Active</span>
+          <label class="syn-label" for="theme-query-midnight">Search records</label>
+          <input class="syn-input" id="theme-query-midnight" type="search" placeholder="Search items">
+          <table class="syn-table"><thead><tr><th scope="col">Record</th><th scope="col">Status</th></tr></thead><tbody><tr><th scope="row">Campaign</th><td>Ready</td></tr></tbody></table>
+        </div>
+        <a class="syn-button syn-button--primary" href="../docs/#components">Explore components</a>
+      </section>
+      <section class="syn-panel theme-tile" data-syn-theme="dim" aria-labelledby="dim-title">
+        <span class="syn-eyebrow">10 / LOW-GLARE SLATE</span><h2 id="dim-title">Dim</h2>
+        <p class="theme-code">data-syn-theme="dim"</p>
+        <article class="syn-stat"><span class="syn-stat-label">ACTIVE WORKFLOWS</span><p class="syn-stat-value">12</p></article>
+        <div class="theme-controls">
+          <span class="syn-badge">Active</span>
+          <label class="syn-label" for="theme-query-dim">Search records</label>
+          <input class="syn-input" id="theme-query-dim" type="search" placeholder="Search items">
+          <table class="syn-table"><thead><tr><th scope="col">Record</th><th scope="col">Status</th></tr></thead><tbody><tr><th scope="row">Campaign</th><td>Ready</td></tr></tbody></table>
+        </div>
+        <a class="syn-button syn-button--primary" href="../docs/#components">Explore components</a>
+      </section>
+      <section class="syn-panel theme-tile" data-syn-theme="obsidian" aria-labelledby="obsidian-title">
+        <span class="syn-eyebrow">11 / TRUE BLACK</span><h2 id="obsidian-title">Obsidian</h2>
+        <p class="theme-code">data-syn-theme="obsidian"</p>
+        <article class="syn-stat"><span class="syn-stat-label">ACTIVE WORKFLOWS</span><p class="syn-stat-value">64</p></article>
+        <div class="theme-controls">
+          <span class="syn-badge">Active</span>
+          <label class="syn-label" for="theme-query-obsidian">Search records</label>
+          <input class="syn-input" id="theme-query-obsidian" type="search" placeholder="Search items">
+          <table class="syn-table"><thead><tr><th scope="col">Record</th><th scope="col">Status</th></tr></thead><tbody><tr><th scope="row">Campaign</th><td>Ready</td></tr></tbody></table>
+        </div>
+        <a class="syn-button syn-button--primary" href="../docs/#components">Explore components</a>
+      </section>
+      <section class="syn-panel theme-tile" data-syn-theme="amethyst" aria-labelledby="amethyst-title">
+        <span class="syn-eyebrow">12 / SOFT VIOLET</span><h2 id="amethyst-title">Amethyst</h2>
+        <p class="theme-code">data-syn-theme="amethyst"</p>
+        <article class="syn-stat"><span class="syn-stat-label">ACTIVE WORKFLOWS</span><p class="syn-stat-value">31</p></article>
+        <div class="theme-controls">
+          <span class="syn-badge">Active</span>
+          <label class="syn-label" for="theme-query-amethyst">Search records</label>
+          <input class="syn-input" id="theme-query-amethyst" type="search" placeholder="Search items">
+          <table class="syn-table"><thead><tr><th scope="col">Record</th><th scope="col">Status</th></tr></thead><tbody><tr><th scope="row">Campaign</th><td>Ready</td></tr></tbody></table>
+        </div>
         <a class="syn-button syn-button--primary" href="../docs/#components">Explore components</a>
       </section>
     </div>
     <section class="syn-u-stack" aria-labelledby="usage-title">
       <h2 id="usage-title">Use any theme without changing markup</h2>
-      <p>Apply <code>data-syn-theme</code> to a <code>.syn-root</code> or any nested region. The component classes and semantic HTML remain identical across all seven palettes.</p>
+      <p>Apply <code>data-syn-theme</code> to a <code>.syn-root</code> or any nested region. The component classes and semantic HTML remain identical across all twelve palettes.</p>
       <p class="syn-muted">Examples are illustrative and static; no simulated metric is live application data.</p>
       <a href="../docs/theme-customization.md">Read the token and utility guide</a>
     </section>

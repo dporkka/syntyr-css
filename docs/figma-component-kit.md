@@ -80,7 +80,7 @@ The existing native kit, including its known defects, was not modified.
 
 1. Repair the invalid input preview width and accurate focus-visible rings.
 2. Add full spacing/typography roles and component-level semantic token aliases.
-3. Validate color and layout against browser screenshots at all seven themes,
+3. Validate color and layout against browser screenshots at all twelve themes,
    both default and high contrast / disabled states.
 4. Add form label/error/description relationships, responsive tables and
    navigation variants; audit accessibility semantics during handoff.

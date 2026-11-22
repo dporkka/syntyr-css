@@ -49,7 +49,7 @@ stylesheets.
 - **0 JavaScript / 0 runtime dependencies / 0 network assets.** Works with server-rendered HTML, React, HTMX, Go templates, Astro, and other HTML renderers.
 - **Compositional layouts:** native container-query responsive telemetry, empty states and pricing layouts. State styles use ARIA when semantic and data attributes otherwise.
 - **Modern, plain CSS.** Native HTML primitives, cascade layers, color-mix, responsive Grid, accessible contrast targets and scoped theme tokens.
-- **Neutral Studio palette by default:** opt into Grid, Noir, Industrial, Terminal, Corporate, or Minimal with `data-syn-theme`. Seven palettes are in the unreleased alpha.5 candidate; published alpha.4 provides Grid, Noir, and Studio.
+- **Neutral Studio palette by default:** opt into Grid, Noir, Industrial, Terminal, Corporate, Minimal, Graphite, Midnight, Dim, Obsidian, or Amethyst with `data-syn-theme`. Twelve palettes are in the unreleased alpha.5 candidate; published alpha.4 provides Grid, Noir, and Studio.
 - **Quiet component surfaces by default:** use `.syn-surface--accent` from optional recipes and `.syn-badge--accent` for deliberate visual emphasis.
 - **Independent visual intensity:** optional `data-syn-intensity="quiet|standard|cinematic"` controls decorative effects without changing the theme, component semantics or runtime JavaScript contract.
 - **Two modes:** explicit component classes, and a Pico-like *optional* `.syn-semantic` mode.
@@ -228,7 +228,7 @@ For a smaller two-file installation, add `syntyr.semantic.css` **after** core:
 </div>
 ```
 
-`syn-semantic` styles unclassed semantic elements inside that subtree. Add `data-syn-semantic` to an element that will receive transient framework classes (for example, HTMX's `htmx-request`) so its appearance survives updates. Elements outside the subtree are unaffected. Core component classes do not rely on semantic mode. Switch `data-syn-theme` among all seven palettes in the unreleased alpha.5 candidate, including nested themed areas.
+`syn-semantic` styles unclassed semantic elements inside that subtree. Add `data-syn-semantic` to an element that will receive transient framework classes (for example, HTMX's `htmx-request`) so its appearance survives updates. Elements outside the subtree are unaffected. Core component classes do not rely on semantic mode. Switch `data-syn-theme` among all twelve palettes in the unreleased alpha.5 candidate, including nested themed areas.
 
 ## Standalone, low-maintenance CSS presets (alpha.5 source candidate)
 

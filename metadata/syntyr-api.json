@@ -2720,12 +2720,17 @@
     }
   ],
   "themes": [
+    "amethyst",
     "auto",
     "corporate",
+    "dim",
+    "graphite",
     "grid",
     "industrial",
+    "midnight",
     "minimal",
     "noir",
+    "obsidian",
     "studio",
     "terminal"
   ]
