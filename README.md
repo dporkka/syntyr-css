@@ -74,6 +74,7 @@ stylesheets.
 - [Practical installation, integration and performance guides](https://syntyr-css.pages.dev/docs/guides.html)
 - [Task-based How-To tutorials](docs/how-to.html): search 10 native HTML workflows and edit 20 existing MIT blocks in the sandboxed CodeMirror playground (unreleased alpha.5 source candidate)
 - [Searchable, copyable component catalog](docs/catalog.html) with theme and width previews; [generated, portable gallery manifest](metadata/component-gallery.v1.json) for visual builders
+- [Scrollable card rails](examples/card-rails.html): optional, CSS-only horizontally scrolling content sections for marketing, media, editorial and SaaS cards ([recipe guide](docs/recipes.md)).
 - [Media & Entertainment collection](docs/media-entertainment.md) and [original CSS-only example](examples/media-entertainment.html)
 - [Shared design principles, component-state matrix and native composition patterns](docs/design-principles.md) ([dependency-free 84-pair contrast audit](scripts/design_conformance.py)).
 - [Canonical DESIGN.md contract](DESIGN.md): Google-compatible Studio tokens generated from CSS, component states, accessibility rules, and AI implementation guidance ([sync/check tool](scripts/sync_design_md.py)).

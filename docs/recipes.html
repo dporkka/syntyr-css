@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Build MIT-licensed interface compositions with Syntyr CSS, including forms, layout flows, responsive sections, and SaaS presentation patterns.">
-  <meta name="syntyr-source-sha256" content="7a73b51e5387dde2f055dc8d786bbc74c0a72a60fb1840b680b6ed0e5f958d38">
+  <meta name="syntyr-source-sha256" content="969bf355b9760f16aba8127013261961c5e60345e8037a308bf8ea8e19e9139f">
   <meta name="theme-color" content="#f5f7fb">
   <title>MIT-licensed composition recipes — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/recipes">
@@ -38,6 +38,52 @@
 <p>For copyable input groups, labeled fields, container-responsive settings forms and optional headless UI styling, see <a href="component-recipes.html">form composition recipes</a> and the <a href="radix-integration.html">Radix adapter</a>. For layered depth, incident-detail layouts, command presentation, timelines, and editorial product sections, see <a href="premium-compositions.html">premium compositions</a>.</p>
 <p>For native file uploads, multi-action forms, and nested resource navigation, see <a href="native-workflows.html">native business workflows</a> and the <a href="../examples/native-workflows.html">script-free example</a>. These compose the existing error-summary and detail-layout patterns without introducing a JavaScript dependency.</p>
 <p>These original Syntyr recipes are free to copy, edit, commercialize, and distribute under MIT. No Tailwind Plus source or premium assets were copied. For live examples see <a href="index.html">the gallery</a>, the <a href="../examples/console.html">Grid console</a>, and the <a href="../examples/pricing.html">Noir pricing layout</a>.</p>
+<h2 id="scrollable-card-rails-alpha5-source-candidate">Scrollable card rails (alpha.5 source candidate)</h2>
+<p>Use the optional `syntyr.recipes.css` alongside `syntyr.core.css` for a
+horizontal, category-based collection without a carousel runtime. The
+`.syn-card-rail` wrapper is presentation-only: use any existing card class
+inside an `ul.syn-card-rail__track` or `ol.syn-card-rail__track`. Scrolling
+uses browser-native pointer, keyboard and touch input; proximity scroll snap
+aligns cards without trapping the user in a slide. One partial card remains
+visible at narrow widths as an overflow cue.</p>
+<p><a href="../examples/card-rails.html">Explore three card rail variants</a>: landscape,
+compact operations and portrait editorial cards, all with original locally
+rendered illustrations and no JavaScript or external images.</p>
+<p>```html
+&lt;section class=&quot;syn-root syn-card-rail&quot; data-syn-theme=&quot;studio&quot;
+aria-labelledby=&quot;recent-title&quot;&gt;
+&lt;div class=&quot;syn-card-rail__header&quot;&gt;
+&lt;h2 id=&quot;recent-title&quot; class=&quot;syn-card-rail__heading&quot;&gt;Recently added&lt;/h2&gt;
+&lt;a href=&quot;/library&quot;&gt;View all&lt;/a&gt;
+&lt;/div&gt;
+&lt;ul class=&quot;syn-card-rail__track&quot; role=&quot;list&quot; tabindex=&quot;0&quot;
+aria-labelledby=&quot;recent-title&quot;&gt;
+&lt;li class=&quot;syn-feature-card&quot;&gt;
+&lt;h3&gt;First resource&lt;/h3&gt;
+&lt;p&gt;Summary of this resource.&lt;/p&gt;
+&lt;a href=&quot;/library/first&quot;&gt;Open resource&lt;/a&gt;
+&lt;/li&gt;
+&lt;li class=&quot;syn-feature-card&quot;&gt;
+&lt;h3&gt;Second resource&lt;/h3&gt;
+&lt;p&gt;Summary of the next resource.&lt;/p&gt;
+&lt;a href=&quot;/library/second&quot;&gt;Open resource&lt;/a&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/section&gt;
+```</p>
+<p>Set `--syn-card-rail-width` (default `clamp(13rem, 24vw, 19rem)`) and
+`--syn-card-rail-gap` (default `var(--syn-space-2)`) on the wrapper to
+tune card density. The track reserves space for focus outlines, shows a thin
+scrollbar on browsers that support that styling, and caps card width at 82%
+of the track to retain a visible next-item cue. Scrollbars may have
+platform-defined visibility. Add a meaningful heading and a named
+`tabindex=&quot;0&quot;` scroll region; preserve list semantics and real item links.
+Avoid nested interactive elements and do not hide focus outlines.
+There is no automatic sliding or media autoplay; add optional controls in
+your application only when they actually operate the track, and respect
+reduced-motion preferences. For entertainment-specific cards, the separate
+`syntyr.media.css` module already provides `.syn-media-rail` and poster
+styles. Do not load the media module just to build an ordinary card rail.</p>
 <h2 id="optional-vertical-flow">Optional vertical flow</h2>
 <p>Use <code>.syn-flow</code> from <code>syntyr.recipes.css</code> on a content group to add
 consistent gaps between adjacent <strong>direct children</strong>. The flex-column
@@ -492,6 +538,7 @@ in browser storage, or claim accessibility compliance without manual testing.</l
 not a JavaScript permissions widget or a substitute for authorization.</p>
         </article>
         <aside class="docs-article-sidebar"><nav aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+<a class="docs-article-toc-link docs-article-toc-2" href="#scrollable-card-rails-alpha5-source-candidate">Scrollable card rails (alpha.5 source candidate)</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#optional-vertical-flow">Optional vertical flow</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#1-responsive-telemetry-cards">1. Responsive telemetry cards</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#2-accessible-empty-state">2. Accessible empty state</a>

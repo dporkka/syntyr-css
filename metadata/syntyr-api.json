@@ -182,6 +182,26 @@
       "description": "Secondary caption text for supporting context."
     },
     {
+      "name": "syn-card-rail",
+      "module": "recipes.css",
+      "description": "Card rail presentation in the recipes.css module; use semantic HTML and consult its component example."
+    },
+    {
+      "name": "syn-card-rail__header",
+      "module": "recipes.css",
+      "description": "Header part of the card rail component; see recipes.css for markup."
+    },
+    {
+      "name": "syn-card-rail__heading",
+      "module": "recipes.css",
+      "description": "Heading part of the card rail component; see recipes.css for markup."
+    },
+    {
+      "name": "syn-card-rail__track",
+      "module": "recipes.css",
+      "description": "Track part of the card rail component; see recipes.css for markup."
+    },
+    {
       "name": "syn-cell--nowrap",
       "module": "components/data.css",
       "description": "Nowrap appearance variant of the cell component; see components/data.css for styles."
@@ -2072,6 +2092,16 @@
       "name": "--syn-card-padding",
       "module": "tokens.css",
       "description": "Card padding design token from tokens.css; override in the appropriate Syntyr scope when needed."
+    },
+    {
+      "name": "--syn-card-rail-gap",
+      "module": "recipes.css",
+      "description": "Card rail gap design token from recipes.css; override in the appropriate Syntyr scope when needed."
+    },
+    {
+      "name": "--syn-card-rail-width",
+      "module": "recipes.css",
+      "description": "Card rail width design token from recipes.css; override in the appropriate Syntyr scope when needed."
     },
     {
       "name": "--syn-chart-1",

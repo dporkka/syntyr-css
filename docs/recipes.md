@@ -6,6 +6,57 @@ For native file uploads, multi-action forms, and nested resource navigation, see
 
 These original Syntyr recipes are free to copy, edit, commercialize, and distribute under MIT. No Tailwind Plus source or premium assets were copied. For live examples see [the gallery](index.html), the [Grid console](../examples/console.html), and the [Noir pricing layout](../examples/pricing.html).
 
+## Scrollable card rails (alpha.5 source candidate)
+
+Use the optional \`syntyr.recipes.css\` alongside \`syntyr.core.css\` for a
+horizontal, category-based collection without a carousel runtime. The
+\`.syn-card-rail\` wrapper is presentation-only: use any existing card class
+inside an \`ul.syn-card-rail__track\` or \`ol.syn-card-rail__track\`. Scrolling
+uses browser-native pointer, keyboard and touch input; proximity scroll snap
+aligns cards without trapping the user in a slide. One partial card remains
+visible at narrow widths as an overflow cue.
+
+[Explore three card rail variants](../examples/card-rails.html): landscape,
+compact operations and portrait editorial cards, all with original locally
+rendered illustrations and no JavaScript or external images.
+
+\`\`\`html
+<section class="syn-root syn-card-rail" data-syn-theme="studio"
+         aria-labelledby="recent-title">
+  <div class="syn-card-rail__header">
+    <h2 id="recent-title" class="syn-card-rail__heading">Recently added</h2>
+    <a href="/library">View all</a>
+  </div>
+  <ul class="syn-card-rail__track" role="list" tabindex="0"
+      aria-labelledby="recent-title">
+    <li class="syn-feature-card">
+      <h3>First resource</h3>
+      <p>Summary of this resource.</p>
+      <a href="/library/first">Open resource</a>
+    </li>
+    <li class="syn-feature-card">
+      <h3>Second resource</h3>
+      <p>Summary of the next resource.</p>
+      <a href="/library/second">Open resource</a>
+    </li>
+  </ul>
+</section>
+\`\`\`
+
+Set \`--syn-card-rail-width\` (default \`clamp(13rem, 24vw, 19rem)\`) and
+\`--syn-card-rail-gap\` (default \`var(--syn-space-2)\`) on the wrapper to
+tune card density. The track reserves space for focus outlines, shows a thin
+scrollbar on browsers that support that styling, and caps card width at 82%
+of the track to retain a visible next-item cue. Scrollbars may have
+platform-defined visibility. Add a meaningful heading and a named
+\`tabindex="0"\` scroll region; preserve list semantics and real item links.
+Avoid nested interactive elements and do not hide focus outlines.
+There is no automatic sliding or media autoplay; add optional controls in
+your application only when they actually operate the track, and respect
+reduced-motion preferences. For entertainment-specific cards, the separate
+\`syntyr.media.css\` module already provides \`.syn-media-rail\` and poster
+styles. Do not load the media module just to build an ordinary card rail.
+
 ## Optional vertical flow
 
 Use `.syn-flow` from `syntyr.recipes.css` on a content group to add
