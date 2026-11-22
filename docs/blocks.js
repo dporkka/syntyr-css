@@ -44,9 +44,7 @@
   }
   for (const batch of blockBatches) {
     if (batch.tagName === "DETAILS") {
-      batch.addEventListener("toggle", () => {
-        if (!blockFiltering) updateBlockResults();
-      });
+      batch.addEventListener("toggle", updateBlockResults);
     }
   }
 
@@ -177,9 +175,7 @@
     }
     for (const batch of iconBatches) {
       if (batch.tagName === "DETAILS") {
-        batch.addEventListener("toggle", () => {
-          if (!iconFiltering) updateIconResults();
-        });
+        batch.addEventListener("toggle", updateIconResults);
       }
     }
     iconControls.hidden = false;

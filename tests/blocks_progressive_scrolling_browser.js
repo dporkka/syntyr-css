@@ -10,6 +10,19 @@ const href = pathToFileURL(path.join(root, "docs", "blocks.html")).href;
 const blocks = JSON.parse(fs.readFileSync(path.join(root, "blocks", "manifest.json"), "utf8")).blocks;
 const iconCount = JSON.parse(fs.readFileSync(path.join(root, "blocks", "icons.json"), "utf8")).icons.length;
 
+async function checkFilteredBatchCount(page, batch, items, results, total, noun) {
+  const summary = batch.locator(":scope > summary");
+  assert.notEqual(await batch.getAttribute("open"), null, "Filtering should open the matching batch");
+  for (const open of [false, true]) {
+    await summary.click();
+    assert.equal((await batch.getAttribute("open")) !== null, open);
+    const visible = await page.locator(items + ":visible").count();
+    const expected = `Showing ${visible} of ${total} ${noun}.`;
+    await page.waitForFunction(({results, expected}) =>
+      document.querySelector(results).textContent === expected, {results, expected}, {timeout: 2000});
+  }
+}
+
 (async () => {
   for (const engine of [chromium, ...((process.argv.includes("--firefox")) ? [firefox] : [])]) {
     const executable = engine === chromium
@@ -59,6 +72,7 @@ const iconCount = JSON.parse(fs.readFileSync(path.join(root, "blocks", "icons.js
           await page.goto(href, {waitUntil: "load"});
           await page.locator("#blocks-category").selectOption("Applications");
           assert.equal(await page.locator("[data-block-id]:visible").count(), blocks.filter(b => b.category === "Applications").length);
+          await checkFilteredBatchCount(page, firstLater, "[data-block-id]", "#blocks-results", blocks.length, "blocks");
           await page.locator("#blocks-category").selectOption("all");
           assert.equal(await page.locator("[data-block-id]:visible").count(), 12);
           await page.locator("#blocks-search").fill("pricing");
@@ -67,6 +81,8 @@ const iconCount = JSON.parse(fs.readFileSync(path.join(root, "blocks", "icons.js
           assert.equal(await page.locator("[data-block-id]:visible").count(), 12);
           await page.locator("#blocks-icon-search").fill("moon");
           assert.equal(await page.locator("[data-icon-id]:visible").count(), 1);
+          const moonBatch = page.locator('details[data-icon-batch]').filter({has: page.locator('[data-icon-id="moon"]')});
+          await checkFilteredBatchCount(page, moonBatch, "[data-icon-id]", "#blocks-icon-results", iconCount, "icons");
           await page.locator("#blocks-icon-search").fill("");
           assert.equal(await page.locator("[data-icon-id]:visible").count(), 30);
           const categories = page.locator(".blocks-category-nav");
