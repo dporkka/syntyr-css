@@ -73,6 +73,21 @@ class ThemeEditorContract(unittest.TestCase):
         # The preview is a nested data-syn-theme element; generated overrides must work there.
         self.assertIn('.syn-root [data-syn-theme=', js)
 
+    def test_editor_exports_composable_preset_with_density_and_radius(self):
+        html = (ROOT / 'docs/theme-editor.html').read_text()
+        js = (ROOT / 'docs/theme-editor.js').read_text()
+        parser = EditorMarkup()
+        parser.feed(html)
+        for key in ('density', 'radius', 'generated-preset', 'copy-preset', 'preset-feedback'):
+            self.assertIn(key, parser.ids)
+        for name in ('compact', 'comfortable', 'spacious'):
+            self.assertIn(f'<option value="{name}"', html)
+        self.assertIn('data-syn-density', js)
+        self.assertIn('--syn-radius', js)
+        self.assertIn('JSON.stringify', js)
+        self.assertIn('navigator.clipboard', js)
+        self.assertNotIn('eval(', js)
+
 
 if __name__ == '__main__':
     unittest.main()

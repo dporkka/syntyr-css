@@ -26,6 +26,20 @@ Load the published `syntyr.core.css` in your application and use regular HTML:
 Use `data-syn-theme="noir"` for warm amber. Native HTML features
 such as `details`, `dialog` and `popover` don't need framework JavaScript.
 
+## Copyable theme presets (alpha.5 documentation tool)
+
+The [theme editor](theme-editor.html) now previews independently selectable
+theme, visual intensity, control density, and radius, and generates both CSS
+overrides and a portable JSON preset. Copy the JSON into an application-owned
+design configuration or use the CSS immediately. The JSON is declarative
+metadata, not an executable preset installer, stylesheet, or published API.
+For density/intensity, apply the indicated `data-syn-density` and
+`data-syn-intensity` attributes on the Syntyr scope. A custom radius uses
+`--syn-radius` and `--syn-panel-radius`; the default option preserves each
+base theme's geometry. The documentation script and clipboard enhancement are
+not included in Syntyr's distributed CSS. Test the resulting palette and
+control contrast in the consuming application.
+
 ## 2. Override tokens using application CSS
 
 Syntyr declares its defaults in named cascade layers. App CSS without a
