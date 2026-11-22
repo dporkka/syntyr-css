@@ -75,7 +75,7 @@ Do not infer visitors, conversion rate or revenue from GitHub stars. Never claim
 
 ## Reproducible preview provenance
 
-The eight images under `docs/previews/` were captured from the independently authored private Console Kit prototype using an installed Chromium headless browser (1360×850 viewport), then resized to 1120×700 WebP. The five additional marketing captures use private repository `dporkka/syntyr-console-kit` commit `35a3b4c`; no private HTML, CSS or build artifacts are in the public-site allowlist. Source compositions remain private. Images intentionally show **synthetic** application data and no actual payment or authentication operations. The public site allowlists exactly these three images and no private CSS, HTML or package archives.
+The original eight Console Kit captures under `docs/previews/` were made from independently authored private source using an installed headless Chromium browser (1360×850 viewport), then resized to 1120×700 WebP. The original marketing captures used private repository `dporkka/syntyr-console-kit` source at commit `35a3b4c`. Source compositions remain private. All captures intentionally contain **synthetic** application data and no real payment or authentication operations. See the dated note below for the two newer, separately approved Pro/Studio screenshots; the public allowlist now permits exactly ten still images and no premium HTML, CSS or package archives.
 
 Existing free HTML examples are MIT and usable immediately. Publishing promotional screenshots under the public repository's MIT license does **not** convert the separately maintained private source layouts into a free source package.
 
@@ -87,3 +87,8 @@ Existing free HTML examples are MIT and usable immediately. Publishing promotion
 - A bespoke implementation quote route is distinct from the $59 research offer. No prices for bespoke services are binding without a written quote.
 - No event analytics, delivery rate, qualified conversion, user count, or email response rate is verified by this source change. Replace mailto with a reviewed, consent-aware form and spam controls only after demand warrants an operated backend.
 - Do not present the prototype screenshots as shipping functional authentication, billing, filtering, or backends. No production checkout exists.
+
+
+### Product-specific premium proof captures (2026-11-22)
+
+The public Pro and Studio research pages now also show **one** genuine static screenshot each from private `dporkka/syntyr-console-kit` source commit `9ae6040`: Studio-theme Pro work-order queue and Studio-theme fictional B2B SaaS homepage. Captured using locally installed headless Chromium at 1360×850, resized to 1120×700 WebP. The screenshots do not include premium CSS/HTML source, buyer data, credentials or real customer accounts. They have synthetic content and convey **no** live features, entitlement or purchase availability. The public allowlist deliberately includes only those two marketing images plus the eight previously approved Console Kit screenshots. This capture record documents image provenance, not trademark, screen-reader, commercial licensing or launch approval.
