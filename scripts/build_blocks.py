@@ -142,6 +142,12 @@ def build() -> str:
         f'<option value="{escape(category, quote=True)}">{escape(category)}</option>'
         for category in categories
     )
+    category_nav = "".join(
+        f'<a href="#block-title-{escape(next(block["id"] for block in blocks if block["category"] == category))}" '
+        f'data-block-category-link="{escape(category, quote=True)}">{escape(category)}'
+        f' <span>({sum(block["category"] == category for block in blocks)})</span></a>'
+        for category in categories
+    )
     cards = []
     for block in blocks:
         ident = block["id"]
@@ -162,9 +168,12 @@ def build() -> str:
           <span class="syn-badge">{escape(modules)}</span>
         </div>
         <p class="syn-muted">{escape(block['description'])}</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview {escape(block['title'])}</summary>
+          <div class="blocks-preview">
 {preview}
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for {escape(block['title'])}</summary>
           <pre class="blocks-source"><code>{escape(snippet)}</code></pre>
@@ -223,7 +232,7 @@ def build() -> str:
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="description" content="{count} original HTML/CSS blocks, 12 visual assets, and {icon_count} SVG icon examples for Syntyr. View, filter, and copy without a framework.">
-  <title>Free HTML/CSS Blocks and UI Assets — Syntyr CSS</title>
+  <title>Free HTML/CSS Blocks for SaaS and Websites — Syntyr CSS</title>
   <link rel="stylesheet" href="../dist/syntyr.all.css">
   <link rel="stylesheet" href="docs.css">
   <link rel="stylesheet" href="blocks.css">
@@ -243,7 +252,7 @@ def build() -> str:
   <main class="syn-shell" id="blocks-main">
     <section class="docs-section">
       <p class="syn-eyebrow">COPY-OWNED / FRAMEWORK-INDEPENDENT</p>
-      <h1 class="syn-title">{count} production-shaped blocks.</h1>
+      <h1 class="syn-title">{count} free HTML and CSS UI blocks for websites and SaaS.</h1>
       <p class="syn-lede">Build faster with original HTML compositions styled by Syntyr.
       Every preview renders without JavaScript. Search, theme switching, and copying
       are documentation-only enhancements, not dependencies for your application.</p>
@@ -274,10 +283,15 @@ def build() -> str:
           <article class="syn-panel">
             <p class="syn-eyebrow">PRODUCT RESEARCH</p>
             <h3 class="syn-heading"><a href="products.html">Products and future Premium layouts</a></h3>
+            <p><a href="pro.html">Pro SaaS templates concept</a> · <a href="studio.html">Studio website templates concept</a>.</p>
             <p>See proposed paid section and application packs. No Premium products are available for purchase.</p>
           </article>
         </div>
       </section>
+      <nav class="blocks-category-nav" aria-label="Browse blocks by category">
+        <span class="syn-caption">Jump to category</span>
+        {category_nav}
+      </nav>
       <div class="blocks-controls" id="blocks-controls" hidden>
         <div><label class="syn-label" for="blocks-search">Search blocks</label>
           <input class="syn-input" type="search" id="blocks-search" placeholder="Try pricing, settings, telemetry…" autocomplete="off"></div>
@@ -291,6 +305,9 @@ def build() -> str:
             <option value="terminal">Terminal</option><option value="corporate">Corporate</option>
             <option value="minimal">Minimal</option>
           </select></div>
+      </div>
+      <div class="blocks-preview-actions">
+        <button type="button" id="blocks-preview-toggle" class="syn-button" aria-controls="blocks-grid" aria-pressed="false" hidden>Show all previews</button>
       </div>
       <p id="blocks-results" class="syn-caption" role="status" aria-live="polite">{count} blocks available.</p>
       <p id="blocks-feedback" class="syn-caption" role="status" aria-live="polite" aria-atomic="true"></p>

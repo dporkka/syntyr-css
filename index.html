@@ -4,13 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light dark">
-  <meta name="description" content="MIT-licensed CSS framework for SaaS dashboards, business websites and futuristic interfaces. Semantic HTML, no required JavaScript runtime or build step.">
-  <title>Syntyr CSS — Lightweight CSS Framework for SaaS Dashboards</title>
+  <meta name="description" content="Build accessible SaaS dashboards and websites with Syntyr CSS. Free MIT-licensed components, themes and blocks, with no required JavaScript runtime or build step.">
+  <title>Syntyr CSS | Lightweight CSS Framework for Semantic HTML</title>
   <link rel="icon" href="assets/syntyr-mark.svg" type="image/svg+xml">
   <link rel="canonical" href="https://syntyr-css.pages.dev/">
   <meta property="og:url" content="https://syntyr-css.pages.dev/">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Syntyr CSS — Lightweight CSS Framework for SaaS Dashboards">
+  <meta property="og:title" content="Syntyr CSS | Lightweight CSS Framework for Semantic HTML">
   <meta property="og:description" content="Build SaaS dashboards and modern websites with Syntyr CSS: lightweight, MIT-licensed, framework-neutral styles for native HTML.">
   <meta property="og:image" content="https://syntyr-css.pages.dev/assets/og-syntyr.png">
   <meta property="og:image:width" content="1200">
@@ -32,7 +32,7 @@
     .site-nav a:hover, .site-nav a:focus-visible { color: var(--syn-text); }
     .site-nav a:last-child { color: var(--syn-accent); }
     .site-tertiary-link { display: inline-flex; align-items: center; min-block-size: 2rem; align-self: center; color: var(--syn-muted); text-underline-offset: .2em; font-size: .9rem; }
-    .site-mobile-menu { display: block; position: relative; margin-inline-start: auto; }
+    .site-mobile-menu { display: none; position: relative; margin-inline-start: auto; }
     .site-mobile-menu summary { cursor: pointer; display: flex; align-items: center; justify-content: center; min-height: 44px; min-width: 5rem; padding: .55rem .85rem; border: 1px solid var(--syn-border-subtle); border-radius: .4rem; background: var(--syn-surface); list-style: none; color: var(--syn-text); font-weight: 650; }
     .site-mobile-menu summary::-webkit-details-marker { display: none; }
     .site-mobile-menu summary::after { content: "⌄"; margin-inline-start: .65rem; }
@@ -48,7 +48,7 @@
     .site-lede { max-inline-size: 52ch; color: var(--syn-muted); font-size: clamp(1rem, 1rem + .2vw, 1.15rem); line-height: 1.5; }
     .site-hero .syn-actions { margin-block: 1rem .7rem; }
     .site-hero-resources { display: flex; flex-wrap: wrap; gap: .25rem 1rem; align-items: center; margin: 0 0 .65rem; font: 600 .85rem/1.5 var(--syn-font-ui); }
-    .site-hero-resources a { color: var(--syn-accent); text-underline-offset: .2em; }
+    .site-hero-resources a { display: inline-flex; align-items: center; min-block-size: 2rem; color: var(--syn-accent); text-underline-offset: .2em; }
     .site-trust { display: flex; flex-wrap: wrap; gap: .6rem 1.25rem; padding: 0; list-style: none; color: var(--syn-muted); font-size: .85rem; }
     .site-trust li { display: flex; align-items: center; gap: .4rem; }
     .site-trust li::before { content: ""; inline-size: .4rem; block-size: .4rem; border-radius: 100%; background: var(--syn-success); }
@@ -103,6 +103,7 @@
     .site-showcase-card > .syn-button { align-self: flex-start; margin-block-start: auto; }
     .site-showcase-card > .site-secondary-link { display: inline-flex; align-items: center; min-block-size: 2rem; align-self: flex-start; color: var(--syn-accent); font: 600 .83rem/1.5 var(--syn-font-ui); text-underline-offset: .2em; }
     .site-section-links { display: flex; align-items: center; flex-wrap: wrap; gap: .7rem 1.2rem; }
+    .site-section-links a { min-inline-size: 0; overflow-wrap: anywhere; }
     .site-preview { margin-block: .5rem 1rem; border: 1px solid var(--syn-border-subtle); border-radius: .45rem; min-width: 0; min-height: 10rem; padding: 1.1rem; background: var(--syn-bg); display: grid; align-content: center; gap: .6rem; overflow: hidden; }
     .site-preview-title { font-size: .8rem; color: var(--syn-muted); }
     .site-preview-number { font: 680 2.3rem/1.1 var(--syn-font-display); letter-spacing: -.06em; }
@@ -111,7 +112,7 @@
     .site-preview-bars span:last-child { opacity: 1; }
     .site-business-headline { font: 500 clamp(1.4rem, 2.5vw, 2rem)/1.1 ui-serif, Georgia, serif; letter-spacing: -.045em; max-inline-size: 15ch; }
     .site-preview-rule { inline-size: 2.8rem; block-size: 3px; background: var(--syn-accent); }
-    .site-console-line { font: .78rem/1.8 var(--syn-mono); white-space: nowrap; }
+    .site-console-line { min-inline-size: 0; font: .78rem/1.8 var(--syn-mono); white-space: normal; overflow-wrap: anywhere; }
     .site-console-line strong { color: var(--syn-accent); font-weight: 700; }
     .site-theme-comparison { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; margin-block: 1.7rem 1.25rem; }
     .site-compare-card { min-width: 0; padding: 1rem; border: 1px solid var(--syn-frame); border-radius: .7rem; background: var(--syn-bg); color: var(--syn-text); }
@@ -126,6 +127,7 @@
     .site-theme-swatch { display: grid; gap: .7rem; padding: .8rem; border: 1px solid var(--syn-frame); background: var(--syn-bg); color: var(--syn-text); border-radius: .45rem; font: 650 .85rem/1.3 var(--syn-font-ui); }
     .site-theme-swatch::before { content: ""; display: block; block-size: 2.4rem; border-radius: .2rem; background: linear-gradient(110deg, var(--syn-surface) 0 60%, var(--syn-accent) 60%); border: 1px solid var(--syn-frame); }
     .site-foundation { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); gap: 1.5rem; }
+    .site-foundation > * { min-inline-size: 0; overflow-wrap: anywhere; }
     .site-foundation h3 { font-size: 1.07rem; margin-block: .65rem; }
     .site-foundation p { color: var(--syn-muted); }
     .site-quickstart { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: clamp(1.5rem, 5vw, 4rem); align-items: center; }
@@ -145,7 +147,7 @@
     .site-footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; padding-block: 2rem 3rem; border-block-start: 1px solid var(--syn-border-subtle); }
     .site-footer nav { display: flex; flex-wrap: wrap; gap: .75rem 1.5rem; }
     .site-footer a { display: inline-flex; align-items: center; min-block-size: 2rem; color: var(--syn-muted); font-size: var(--syn-type-sm); }
-    @media (max-width: 70rem) { .site-nav { display: none; } }
+    @media (max-width: 70rem) { .site-nav { display: none; } .site-mobile-menu { display: block; } }
     @media (max-width: 45rem) {
       .site-nav { display: none; }
       .site-mobile-menu { display: block; }
@@ -157,7 +159,9 @@
       .site-preview-board { max-inline-size: 38rem; }
     }
     @media (max-width: 32rem) {
-      .site-header { align-items: flex-start; }
+      /* Enlarged text can make the brand and menu wider than a phone.
+         Allow a second header row instead of clipping the menu control. */
+      .site-header { flex-wrap: wrap; align-items: flex-start; }
       .site-hero { padding-block: 1.5rem 2rem; }
       .site-hero h1 { font-size: clamp(2.25rem, 10vw, 3.4rem); }
       .site-lede { font-size: 1rem; line-height: 1.5; }
@@ -189,6 +193,7 @@
         <a href="tools/">Free tools</a>
         <a href="#themes">Themes</a>
         <a href="docs/console-kit.html">Console Kit</a>
+        <a href="docs/products.html">Products</a>
         <a href="examples/semantic-starter.html">Semantic starter</a>
         <a href="https://github.com/dporkka/syntyr-css">GitHub</a>
       </nav>
@@ -219,8 +224,8 @@
       <section class="site-hero" aria-labelledby="hero-title">
         <div>
           <span class="site-kicker">Native HTML. Intentional design.</span>
-          <h1 id="hero-title">Modern CSS. <em>Less machinery.</em></h1>
-          <p class="site-lede">Beautiful, customizable interfaces for SaaS, business sites and futuristic consoles. Use semantic HTML with any framework—or none. No required runtime JavaScript.</p>
+          <h1 id="hero-title">Lightweight CSS. <em>Less machinery.</em></h1>
+          <p class="site-lede">A lightweight CSS framework for accessible SaaS dashboards, business websites and semantic HTML components. Use it with any framework—or none. No required runtime JavaScript.</p>
           <div class="syn-actions">
             <a class="syn-button syn-button--primary" href="#quickstart">Get started</a>
             <a class="syn-button syn-button--outline" href="docs/catalog.html">Explore components</a>
@@ -228,6 +233,7 @@
           <p class="site-hero-resources">
             <a href="docs/#install">Installation guide</a>
             <a href="docs/console-kit.html">Console Kit concept</a>
+            <a href="docs/products.html#which-premium">Compare Pro &amp; Studio research</a>
           </p>
           <p class="syn-caption">Considering a switch? <a href="docs/tailwind-alternative.html">Compare Syntyr, Tailwind and plain CSS</a> before choosing.</p>
           <ul class="site-trust" aria-label="Library characteristics">
@@ -320,9 +326,10 @@
           <div class="site-kit-copy">
             <span class="site-kicker">Separate commercial product research</span>
             <h2 class="site-section-title" id="console-kit-title">A complete console, not just components.</h2>
-            <p class="site-section-intro">Syntyr Console Kit is a PRIVATE PROTOTYPE: eight original static SaaS screen layouts in Studio, Grid and Noir. Built for developers integrating server-rendered HTML, Go templates, HTMX, Astro or other backends.</p>
+            <p class="site-section-intro">Syntyr Console Kit is a PRIVATE PROTOTYPE: 12 current static SaaS screen types across Studio, Grid and Noir, with eight approved public screenshots. Built for developers integrating server-rendered HTML, Go templates, HTMX, Astro or other backends.</p>
             <p class="site-kit-meta">NOT FOR SALE · $59 introductory price hypothesis · no checkout or preorder</p>
             <a class="syn-button syn-button--primary" href="docs/console-kit.html">See the Console Kit concept</a>
+            <a class="site-tertiary-link" href="docs/products.html#which-premium">Which is right for me? Pro vs Studio</a>
             <p class="syn-caption">All current Syntyr CSS, free themes, components and examples remain MIT licensed. The proposed kit is separately authored and not available for purchase.</p>
           </div>
         </div>
@@ -417,6 +424,10 @@
           <div><span class="syn-eyebrow">02 / Presentation</span><h3>Theme with tokens</h3><p>Color roles, responsive layouts and optional geometry work together without compiling styles in the consumer app.</p></div>
           <div><span class="syn-eyebrow">03 / Interaction</span><h3>Keep native behavior</h3><p>Dialogs, disclosures and popovers use browser features. Provide progressive fallbacks for newer invoker commands.</p></div>
         </div>
+        <p class="site-section-links">
+          <a href="docs/semantic-components.html">Explore semantic HTML recipes</a>
+          <a href="examples/semantic-compositions.html">Browse the semantic HTML gallery</a>
+        </p>
         <div class="site-try">
           <div>
             <h3 class="syn-section-heading">Start with a stylesheet.</h3>
@@ -492,6 +503,8 @@
         <a href="docs/catalog.html">Component catalog</a>
         <a href="docs/how-to.html">How-To guides</a>
         <a href="docs/products.html">Products &amp; roadmap</a>
+        <a href="docs/pro.html">Pro templates research</a>
+        <a href="docs/studio.html">Studio website templates research</a>
         <a href="docs/design-resources.html">Design resources</a>
         <a href="blog/">Blog &amp; articles</a>
         <a href="docs/faq.html">FAQ</a>

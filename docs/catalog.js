@@ -17,27 +17,35 @@
 
   // Keep the index functional without JS: markup and links are present in HTML.
   // JavaScript only adds scroll-aware highlighting and filter-aware navigation.
-  const indexLinks = [...document.querySelectorAll('#catalog-index .catalog-index-link')];
-  const linksById = new Map(indexLinks.map((link) => [link.getAttribute('href').slice(1), link]));
+  const indexLinks = [...document.querySelectorAll('#catalog-index .catalog-index-link, .catalog-mobile-index .catalog-mobile-index-link')];
+  const linksById = new Map();
+  for (const link of indexLinks) {
+    const id = link.getAttribute('href').slice(1);
+    if (!linksById.has(id)) linksById.set(id, []);
+    linksById.get(id).push(link);
+  }
   const indexedCards = cards.map((card) => ({
     card,
-    link: linksById.get(card.getAttribute('aria-labelledby')),
-  })).filter(({link}) => Boolean(link));
+    links: linksById.get(card.getAttribute('aria-labelledby')) || [],
+  })).filter(({links}) => links.length);
 
   function updateActiveIndex() {
     const viewportTop = window.innerHeight * 0.08;
     const viewportBottom = window.innerHeight * 0.85;
     const intersecting = [];
-    for (const {card, link} of indexedCards) {
+    for (const {card, links} of indexedCards) {
       const bounds = card.getBoundingClientRect();
       const inView = !card.hidden && bounds.top < viewportBottom && bounds.bottom > viewportTop;
-      link.classList.toggle('is-in-view', inView);
-      link.removeAttribute('aria-current');
-      if (inView) intersecting.push({link, top: bounds.top});
+      for (const link of links) {
+        link.classList.toggle('is-in-view', inView);
+        link.removeAttribute('aria-current');
+      }
+      if (inView) intersecting.push({links, top: bounds.top});
     }
-    // One current location for assistive tech; all visible components are highlighted.
+    // Only the visible navigation receives aria-current; hidden landmarks stay silent.
     intersecting.sort((a, b) => a.top - b.top);
-    intersecting[0]?.link.setAttribute('aria-current', 'location');
+    const current = intersecting[0]?.links.find(link => link.getClientRects().length);
+    current?.setAttribute('aria-current', 'location');
   }
 
   let indexUpdateQueued = false;
@@ -52,14 +60,16 @@
   window.addEventListener('scroll', scheduleIndexUpdate, {passive: true});
   window.addEventListener('resize', scheduleIndexUpdate);
   window.addEventListener('hashchange', scheduleIndexUpdate);
-  for (const {card, link} of indexedCards) {
-    link.addEventListener('click', () => {
-      // Selecting a component outside the active filter must still reach it.
-      if (!card.hidden) return;
-      search.value = '';
-      category.value = 'all';
-      updateResults();
-    });
+  for (const {card, links} of indexedCards) {
+    for (const link of links) {
+      link.addEventListener('click', () => {
+        // Selecting a component outside the active filter must still reach it.
+        if (!card.hidden) return;
+        search.value = '';
+        category.value = 'all';
+        updateResults();
+      });
+    }
   }
 
   function updateResults() {

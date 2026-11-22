@@ -293,7 +293,7 @@ PUBLIC_DOCS = (
     "performance-validation.md", "progressive-enhancement.md", "progressive-loading.md", "live-performance-audit.md",
     "index.html", "design-resources.html", "animation.md", "clipboard.md", "lit-integration.md", "playground.html", "playground.css", "playground.js", "playground-catalog.js", "playground-snippet.js", "playground-editor.js", "playground-editor.licenses.txt", "page-builder-guide.md", "page-builder.html", "page-builder.css", "page-builder.js", "page-builder-model.mjs",
     "form-builder.html", "form-builder.css", "form-builder.js", "form-builder-model.mjs",
-    "editor-integration.md", "recipes.md", "saas-cli-business.md", "products.html",
+    "editor-integration.md", "recipes.md", "saas-cli-business.md", "products.html", "pro.html", "studio.html",
     "cms-integration.md", "site-generator-decision.md", "static-site-generators.md", "site-builders.md", "tailwind-research.md", "tailwind-alternative.html",
     "wordpress.md", "shopify.md", "wix.md", "webflow.md", "framer.md", "squarespace.md", "ghost.md", "hubspot.md", "drupal.md", "joomla.md", "carrd.md", "duda.md", "tilda.md",
     "theme-customization.md", "theme-editor.html", "theme-editor.js", "symbols.md",
@@ -388,6 +388,10 @@ def source_files(site_url: str = SITE_URL, *, include_cloudflare_headers: bool =
         "grid-detail.webp",
         "noir-team.webp",
         "grid-sign-in.webp",
+        # Product-specific static marketing screenshots from private, original source.
+        # Screenshots are public; never distribute the premium HTML/CSS prototypes.
+        "pro-work-orders-studio.webp",
+        "studio-saas-home.webp",
     )
     paths.extend(ROOT / "docs/previews" / name for name in public_preview_images)
     paths.extend(ROOT / "examples" / name for name in public_examples)

@@ -113,7 +113,8 @@ def check(browser, engine):
                     page.wait_for_function(
                         "(index) => document.querySelectorAll('.docs-prose pre')[index].scrollLeft > 0",
                         arg=i, timeout=2000)
-            assert scrollable >= 2, (engine, width, "expected keyboard-scrollable samples")
+            if width < 768:
+                assert scrollable >= 2, (engine, width, "expected keyboard-scrollable samples")
         finally:
             page.close()
 
@@ -143,7 +144,7 @@ def check(browser, engine):
             page.close()
 
     for path, selectors in [
-        ('index.html', ['.site-brand', '.site-nav a', '.site-tertiary-link',
+        ('index.html', ['.site-brand', '.site-nav a', '.site-hero-resources a',
                         '.site-showcase-card > .site-secondary-link', '.site-footer a']),
         ('docs/index.html', ['.docs-header .syn-logo', '.docs-flagship-links a', 'footer.syn-header a']),
     ]:

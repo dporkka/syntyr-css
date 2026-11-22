@@ -9,11 +9,12 @@
   <link rel="icon" href="../assets/syntyr-mark.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../dist/syntyr.core.css">
   <link rel="stylesheet" href="docs.css">
-  <title>Products and commercial roadmap — Syntyr CSS</title>
+  <title>Syntyr Core, Pro &amp; Studio | Products and Roadmap</title>
   <style>
-    .offers-hero { padding-block: clamp(2.5rem, 7vw, 5.5rem) 2.25rem; max-width: 70rem; }
-    .offers-hero h1 { font-size: clamp(2.7rem, 6vw, 5rem); line-height: 1.05; letter-spacing: -.045em; max-width: 18ch; }
+    .offers-hero { padding-block: clamp(1.5rem, 4vw, 3rem) 1.5rem; max-width: 70rem; }
+    .offers-hero h1 { font-size: clamp(2.35rem, 5.4vw, 4.5rem); line-height: 1.08; letter-spacing: -.045em; max-width: 19ch; }
     .offers-hero p { max-width: 70ch; }
+    .offers-hero > .syn-caption { margin-block-start:1rem; }
     .offers-status { display:inline-flex; align-items:center; border:1px solid var(--syn-frame); padding:.4rem .7rem; font:600 .77rem var(--syn-mono); letter-spacing:.02em; margin-block:1rem; }
     .offers-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,19rem),1fr)); gap:1rem; margin-block:1.75rem 3.5rem; }
     .offers-card { display:flex; flex-direction:column; min-width:0; gap:.8rem; padding:clamp(1.25rem,2.5vw,2rem); }
@@ -35,6 +36,14 @@
     .offers-matrix tbody th { font-weight:650; min-width:12rem; }
     .offers-matrix tbody tr:nth-child(even) { background:var(--syn-surface-hi); }
     .offers-matrix td { min-width:8rem; }
+    .offers-choice-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,21rem),1fr)); gap:1rem; margin-block:1.5rem; }
+    .offers-choice { padding:clamp(1.2rem,2.5vw,1.8rem); display:flex; flex-direction:column; align-items:flex-start; gap:.7rem; min-width:0; }
+    .offers-choice h3 { font-size:clamp(1.25rem,2.5vw,1.7rem); margin:0; }
+    .offers-choice p { margin:0; }
+    .offers-choice .syn-button { margin-block-start:auto; }
+    .offers-choice ul { margin:.25rem 0 .75rem; padding-inline-start:1.25rem; }
+    .offers-choice li { margin-block:.45rem; }
+    .offers-choice[id], .offers-card[id] { scroll-margin-block-start:2rem; }
     .offers-faq { max-width:65rem; }
     .offers-faq details { padding:1rem 0; border-block-end:1px solid var(--syn-frame); }
     .offers-faq summary { cursor:pointer; font-weight:650; }
@@ -64,18 +73,49 @@
     <main id="offers-main">
       <section class="offers-hero" aria-labelledby="offers-title">
         <span class="syn-eyebrow">SYNTYR / PRODUCTS &amp; ROADMAP</span>
-        <h1 id="offers-title">Great interfaces, without the lock-in.</h1>
-        <p class="syn-lede">A free MIT CSS foundation today. Original, portable premium website and application templates are being researched for the future.</p>
+        <h1 id="offers-title">Great interfaces. Less lock-in.</h1>
+        <p class="syn-lede">Use Syntyr Core free today. Exploring application-screen kits for developers (Pro) and complete website templates for agencies (Studio). Neither premium concept is for sale.</p>
         <p class="offers-status">CORE AVAILABLE / PREMIUM NOT FOR SALE</p>
-        <p class="syn-muted"><strong>Only Syntyr Core is available.</strong> All premium prices below are proposed research hypotheses, not purchase offers or preorders. No payment is accepted; no paid assets, delivery date, production support, or final commercial license are promised.</p>
+        <p class="syn-muted"><strong>Free Syntyr Core is available now.</strong> Pro and Studio are private research concepts, not purchase offers. All prices are hypotheses; there is no preorder, payment, guaranteed delivery date or final commercial license.</p>
         <div class="syn-actions">
           <a class="syn-button syn-button--primary" href="distribution.html">Get the free MIT core</a>
-          <a class="syn-button syn-button--outline" href="console-kit.html">Inspect private prototype previews</a>
+          <a class="syn-button syn-button--outline" href="#which-premium">Compare Pro &amp; Studio</a>
         </div>
+        <p class="syn-caption">Want proof of the visual direction first? <a href="console-kit.html">Inspect eight real Console Kit prototype screenshots</a> using fictional data.</p>
+      </section>
+      <section class="offers-section" id="which-premium" aria-labelledby="which-premium-title">
+        <span class="syn-eyebrow">FIND YOUR FIT / PREMIUM RESEARCH</span>
+        <h2 id="which-premium-title">Building an application or shipping websites?</h2>
+        <p class="syn-muted">Choose based on the deliverable you would actually use, not a component count. These are private source concepts—not released products.</p>
+        <div class="offers-choice-grid">
+          <article class="syn-panel offers-choice" aria-labelledby="choose-pro-title">
+            <span class="syn-eyebrow">B2B SAAS / INTERNAL TOOLS</span>
+            <h3 id="choose-pro-title">Choose Pro for application workflows</h3>
+            <p>For a developer building a CRM, operations console or developer tool that needs coherent pages—not a collection of disconnected buttons.</p>
+            <ul>
+              <li>Records, work orders, governance and revenue-intelligence screen previews</li>
+              <li>HTML/CSS-first compositions with an illustrative local Go reference workflow</li>
+              <li>You integrate authentication, persistence and business logic</li>
+            </ul>
+            <a class="syn-button syn-button--outline" href="#pro">Review Pro scope &amp; price hypothesis</a>
+          </article>
+          <article class="syn-panel offers-choice" aria-labelledby="choose-studio-title">
+            <span class="syn-eyebrow">AGENCIES / PRODUCT LAUNCHES</span>
+            <h3 id="choose-studio-title">Choose Studio for multi-page websites</h3>
+            <p>For an agency or founder producing a coherent B2B SaaS, services or ecommerce site from portable templates rather than a hosted builder.</p>
+            <ul>
+              <li>All Pro prototype screens plus three original multi-page website concepts</li>
+              <li>Fifteen kit pages and two standalone previews; static ecommerce examples</li>
+              <li>Not a visual editor, hosted CMS, or working payment system</li>
+            </ul>
+            <a class="syn-button syn-button--outline" href="#studio">Review Studio scope &amp; price hypothesis</a>
+          </article>
+        </div>
+        <p class="offers-note"><strong>The Studio theme is free</strong> within the MIT-licensed Syntyr CSS core. The separate proposed Syntyr Studio commercial tier refers to private template compositions, not the existing free color palette.</p>
       </section>
       <section class="offers-section" aria-labelledby="offers-compare-title">
         <h2 id="offers-compare-title">Available now vs. proposed</h2>
-        <p class="syn-muted">Build on the free foundation. Help determine whether a paid template collection is worth producing.</p>
+        <p class="syn-muted">Build on the free foundation. Explore individual <a href="pro.html">Pro</a> and <a href="studio.html">Studio</a> research pages, and help determine whether a paid template collection is worth producing.</p>
         <div class="offers-grid">
           <article class="syn-panel offers-card" data-product-id="core">
             <span class="syn-eyebrow">AVAILABLE / MIT</span><h3>Syntyr Core</h3>
@@ -90,19 +130,21 @@
             <ul><li>Original HTML/CSS-first dashboard, CRM and approval compositions</li><li>Eight public screenshots; additional screens remain private</li><li>License and support not yet finalized</li></ul>
             <a class="syn-button syn-button--outline" href="console-kit.html">See prototype previews</a>
           </article>
-          <article class="syn-panel offers-card" data-product-id="pro">
+          <article class="syn-panel offers-card" data-product-id="pro" id="pro">
             <span class="syn-eyebrow">CONCEPT / RESEARCH</span><h3>Syntyr Pro</h3>
             <p class="offers-price">$149 one-time</p><p class="offers-term syn-muted">Proposed price; not for sale.</p>
             <p>A private source candidate extends Console Kit to 25 screen types and 75 static variants, including operations, governance and developer workflows.</p>
             <ul><li>Work order and dispatch scheduling previews</li><li>Revenue intelligence screens; no live data connectors</li><li>Local-only Go reference workflow with real form validation, no authentication or persistence</li><li>Portable HTML/CSS; no final customer license</li></ul>
-            <a class="syn-button syn-button--outline" href="https://github.com/dporkka/syntyr-css/issues/new?template=commercial-product-feedback.yml">Share what you would buy</a>
+            <a class="syn-button syn-button--outline" data-research-tier="pro" href="mailto:davidporkka@gmail.com?subject=Syntyr+Pro+private+research+inquiry&amp;body=Stack%3A%0ACurrent+project%3A%0AMost+valuable+pages%3A%0ABiggest+blocker%3A%0APrevious+paid+UI+kit+purchase+%28optional%29%3A%0AWould+you+participate+in+a+15-minute+research+discussion%3F%0A">Request Pro preview discussion</a>
+            <p class="syn-caption"><a href="pro.html">Details of the Syntyr Pro private prototype and design-partner inquiry</a></p>
           </article>
-          <article class="syn-panel offers-card" data-product-id="studio">
+          <article class="syn-panel offers-card" data-product-id="studio" id="studio">
             <span class="syn-eyebrow">CONCEPT / RESEARCH</span><h3>Syntyr Studio</h3>
             <p class="offers-price">$299 one-time</p><p class="offers-term syn-muted">Proposed price; not for sale.</p>
             <p>A private source candidate extends Pro to 42 screen types and 126 static variants: 25 application screens plus 17 website previews. The website set includes three original website kits: a six-page B2B SaaS site, a five-page professional-services site, and a four-page ecommerce storefront, plus two standalone product/checkout previews.</p>
             <ul><li>All Pro source, including a local-only Go workflow reference</li><li>Fifteen original website pages across three independent fictional brands, not hosted services</li><li>Static ecommerce product, collection, and cart reviews; no live checkout, payments, inventory, or orders</li><li>Original HTML/CSS templates; no hosted builder</li><li>Pricing, license and delivery under review</li></ul>
-            <a class="syn-button syn-button--outline" href="https://github.com/dporkka/syntyr-css/issues/new?template=commercial-product-feedback.yml">Influence the roadmap</a>
+            <a class="syn-button syn-button--outline" data-research-tier="studio" href="mailto:davidporkka@gmail.com?subject=Syntyr+Studio+private+research+inquiry&amp;body=Stack%3A%0ACurrent+project%3A%0AMost+valuable+pages%3A%0ABiggest+blocker%3A%0APrevious+paid+UI+kit+purchase+%28optional%29%3A%0AWould+you+participate+in+a+15-minute+research+discussion%3F%0A">Request Studio preview discussion</a>
+            <p class="syn-caption"><a href="studio.html">Details of the Syntyr Studio private prototype and design-partner inquiry</a></p>
           </article>
           <article class="syn-panel offers-card" data-product-id="agency">
             <span class="syn-eyebrow">CONCEPT / RESEARCH</span><h3>Syntyr Agency</h3>
@@ -112,6 +154,7 @@
             <a class="syn-button syn-button--outline" href="https://github.com/dporkka/syntyr-css/issues/new?template=commercial-product-feedback.yml">Describe agency needs</a>
           </article>
         </div>
+        <p class="syn-caption">The private inquiry opens your email app and does not send any information to this site. Share only what you choose; it is not a waitlist signup, preorder or order. If you prefer an open discussion, the <a href="https://github.com/dporkka/syntyr-css/issues/new?template=commercial-product-feedback.yml">GitHub issue is public</a>, so do not include private details.</p>
       </section>
       <section class="offers-section" aria-labelledby="matrix-title" id="offer-feature-matrix">
         <h2 id="matrix-title">Compare the actual prototype scope</h2>
@@ -146,6 +189,7 @@
         <h2 id="offers-faq-title">Questions before a paid launch</h2>
         <details><summary>Can I use the free core for commercial projects?</summary><p>Yes. Syntyr Core is MIT-licensed, including commercial use. Review the <a href="../LICENSE">license</a> and <a href="distribution.html">published release boundaries</a>.</p></details>
         <details><summary>Can I purchase Pro, Studio or Console Kit now?</summary><p>No. They are research concepts or private prototypes. There is no payment, preorder, customer download or guaranteed launch date.</p></details>
+        <details><summary>Is the free Studio color theme part of the paid Studio tier?</summary><p>No. The Studio theme is included in the MIT core. The proposed paid Studio tier describes additional, separately authored website and application templates; no commercial bundle is available yet.</p></details>
         <details><summary>Will Syntyr require React, Tailwind or hosted services?</summary><p>No required framework or service is planned. Proposed assets would use native HTML and CSS and work with supported backend or frontend stacks. Complex application behavior remains the responsibility of your code.</p></details>
         <details><summary>Can I inspect the work before expressing interest?</summary><p>Yes. The <a href="console-kit.html">Console Kit research page</a> contains genuine static screenshots with synthetic data; <a href="../examples/console.html">free public examples</a> demonstrate the existing MIT library.</p></details>
       </section>

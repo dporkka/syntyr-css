@@ -432,6 +432,9 @@ For optional effects, load `syntyr.effects.css`. `syntyr.css` is the convenient 
 | Loading | `.syn-skeleton`, `.syn-skeleton--short` | decorative placeholders; announce status separately |
 | Effects (optional) | `.syn-grid-effect`, `.syn-glow`, `.syn-scanlines` | none |
 
+For layout composition, the shell defaults to a maximum width of 72rem and a total inline inset of 2rem (normally 1rem per side). Set `--syn-shell-max` and `--syn-shell-inline-inset` on the shell to customize these dimensions. The header supports `--syn-header-gap` and `--syn-header-padding-block`; navigation supports `--syn-nav-gap`. All controls are optional and preserve existing defaults.
+
+
 For wrapping action/filter clusters, use existing `.syn-inline` with optional
 `--syn-inline-align`, `--syn-inline-justify` and `--syn-inline-gap`.
 For a main region followed by an aside, `.syn-sidecar` wraps intrinsically
@@ -4619,6 +4622,20 @@ Load the published `syntyr.core.css` in your application and use regular HTML:
 Use `data-syn-theme="noir"` for warm amber. Native HTML features
 such as `details`, `dialog` and `popover` don't need framework JavaScript.
 
+## Copyable theme presets (alpha.5 documentation tool)
+
+The [theme editor](theme-editor.html) now previews independently selectable
+theme, visual intensity, control density, and radius, and generates both CSS
+overrides and a portable JSON preset. Copy the JSON into an application-owned
+design configuration or use the CSS immediately. The JSON is declarative
+metadata, not an executable preset installer, stylesheet, or published API.
+For density/intensity, apply the indicated `data-syn-density` and
+`data-syn-intensity` attributes on the Syntyr scope. A custom radius uses
+`--syn-radius` and `--syn-panel-radius`; the default option preserves each
+base theme's geometry. The documentation script and clipboard enhancement are
+not included in Syntyr's distributed CSS. Test the resulting palette and
+control contrast in the consuming application.
+
 ## 2. Override tokens using application CSS
 
 Syntyr declares its defaults in named cascade layers. App CSS without a
@@ -5921,6 +5938,7 @@ runtime dependencies, connect to services, or publish a package:
 
 ```sh
 python3 scripts/syntyr_agent.py init --project /path/to/my-app --json
+python3 scripts/syntyr_agent.py info --project /path/to/my-app --json
 python3 scripts/syntyr_agent.py check --project /path/to/my-app --json /path/to/my-app/page.html
 ```
 
@@ -5939,8 +5957,16 @@ Choose `--release 0.3.0-alpha.5` only when deliberately testing the
 actually present in the selected CSS files; source-only selectors cannot
 appear in an alpha.4 reference.
 
-`check` validates the installed CSS asset hashes and literal `.html` files
-against that project's pinned release, returning structured, source-located
+`info` is read-only project discovery for coding agents. It reports the configured
+release (published or source candidate), its actual pinned CSS asset hashes and
+integrity statuses, supported themes, and portable Skill/reference paths. Exit
+code **0** means the pinned installation is healthy, **1** means degraded or
+invalid, and **2** means the project was not initialized. Do not infer active
+stylesheet imports or framework support from this inventory: the host
+application must still load and test the appropriate CSS. The command does
+not scan application code or need application dependencies.
+
+`check` validates the installed CSS asset hashes and literal `.html` files\nagainst that project's pinned release, returning structured, source-located
 JSON diagnostics. Its exit codes are **0** for checked and error-free HTML,
 **1** for errors, and **2** for incomplete coverage (for example, JSX/TSX or
 no HTML files). It is not a React/Vue/Svelte parser or a browser accessibility

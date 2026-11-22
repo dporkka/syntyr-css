@@ -28,6 +28,14 @@
   .catalog-pathways .syn-panel > :where(h3, p) { margin: 0; }
   .catalog-pathways .syn-panel a { overflow-wrap: anywhere; }
   /* Static anchor index, with documentation-only scrollspy enhancement. */
+  .catalog-mobile-index { display: none; }
+  .catalog-mobile-index summary { cursor: pointer; min-height: 44px; padding: .65rem .75rem; display: flex; align-items: center; flex-wrap: wrap; justify-content: space-between; gap: .5rem; background: var(--syn-surface); border: 1px solid var(--syn-frame); border-radius: var(--syn-radius); font-weight: 650; }
+  .catalog-mobile-index summary span { color: var(--syn-muted); font-weight: 400; font-size: .8rem; }
+  .catalog-mobile-index[open] summary { border-end-start-radius: 0; border-end-end-radius: 0; }
+  .catalog-mobile-index-list { list-style: none; margin: 0; padding: .5rem; display: grid; gap: .125rem; max-block-size: min(50vh, 22rem); overflow-y: auto; border: 1px solid var(--syn-frame); border-block-start: 0; background: var(--syn-surface); }
+  .catalog-mobile-index-link { display: block; padding: .55rem .75rem; text-decoration: none; line-height: 1.35; overflow-wrap: anywhere; border-inline-start: 3px solid transparent; }
+  .catalog-mobile-index-link:is(:hover, :focus-visible), .catalog-mobile-index-link.is-in-view { background: var(--syn-surface-recessed); }
+  .catalog-mobile-index-link[aria-current="location"] { border-inline-start-color: currentColor; font-weight: 700; }
   .catalog-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.5rem; align-items: start; }
   .catalog-layout > .catalog-content { min-width: 0; }
   .catalog-sidebar { min-width: 0; border-block-end: 1px solid var(--syn-border-subtle); padding-block: 1rem; }
@@ -43,6 +51,11 @@
   .catalog-card-top h2 { scroll-margin-block-start: 1.25rem; }
   .catalog-actions { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; min-width: 0; }
   .catalog-actions > .syn-button { --syn-button-padding-inline: .75rem; margin: 0; flex: 0 0 auto; }
+  @media (max-width: 63.999rem) {
+    .catalog-sidebar { padding-block: .5rem; }
+    .catalog-sidebar > .catalog-index-heading, .catalog-sidebar > #catalog-index { display: none; }
+    .catalog-mobile-index { display: block; }
+  }
   @media (min-width: 64rem) {
     .catalog-layout { grid-template-columns: minmax(12.5rem, 15rem) minmax(0, 1fr); }
     .catalog-sidebar { position: sticky; inset-block-start: 1rem; max-block-size: calc(100vh - 2rem); overflow-y: auto; border-block-end: 0; border-inline-end: 1px solid var(--syn-border-subtle); padding-block: 1rem; padding-inline-end: .5rem; scrollbar-width: thin; }

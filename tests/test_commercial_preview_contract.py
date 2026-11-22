@@ -31,11 +31,15 @@ class CommercialPreviewTests(unittest.TestCase):
         self.assertIn('loading="lazy"', page)
         self.assertIn("STATIC / SAMPLE DATA", page)
 
-    def test_only_eight_approved_public_previews_are_distributed(self):
+    def test_only_original_console_and_two_premium_approved_previews_are_distributed(self):
         site = source_files()
         published = sorted(p for p in site if p.startswith("docs/previews/"))
+        # The Console gallery remains exactly eight approved captures. Two
+        # additional premium *marketing screenshots* have separate product pages.
+        approved_premium_proofs = ("pro-work-orders-studio.webp", "studio-saas-home.webp")
         expected = sorted("docs/previews/" + filename for filename, _ in PREVIEWS)
-        self.assertEqual(published, expected)
+        expected += ["docs/previews/" + filename for filename in approved_premium_proofs]
+        self.assertEqual(published, sorted(expected))
         self.assertFalse(any(p.startswith("business/") for p in site))
         self.assertFalse(any(p.startswith("private/") for p in site))
 

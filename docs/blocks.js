@@ -21,6 +21,41 @@
   }));
   for (const item of indexed) item.words = item.words.toLocaleLowerCase();
 
+  // Without JS every preview remains open; progressive enhancement creates
+  // a concise mobile gallery using native, keyboard-accessible disclosures.
+  const compactViewport = window.matchMedia("(max-width: 40rem)");
+  const previewToggle = document.getElementById("blocks-preview-toggle");
+  let showAllPreviews = false;
+
+  function updatePreviewVisibility() {
+    const featured = indexed.filter(item => !item.card.hidden).slice(0, 2);
+    for (const item of indexed) {
+      const disclosure = item.card.querySelector(".blocks-preview-disclosure");
+      if (!disclosure) continue;
+      disclosure.open = !compactViewport.matches || showAllPreviews || featured.includes(item);
+    }
+    if (previewToggle) {
+      previewToggle.hidden = !compactViewport.matches;
+      previewToggle.textContent = showAllPreviews ? "Collapse previews" : "Show all previews";
+      previewToggle.setAttribute("aria-pressed", String(showAllPreviews));
+    }
+  }
+
+  if (previewToggle) {
+    previewToggle.addEventListener("click", () => {
+      showAllPreviews = !showAllPreviews;
+      updatePreviewVisibility();
+    });
+  }
+  compactViewport.addEventListener("change", updatePreviewVisibility);
+  for (const link of document.querySelectorAll("[data-block-category-link]")) {
+    link.addEventListener("click", () => {
+      query.value = "";
+      category.value = link.dataset.blockCategoryLink;
+      filter();
+    });
+  }
+
   function filter() {
     const terms = query.value.trim().toLocaleLowerCase().split(/\s+/).filter(Boolean);
     const selected = category.value;
@@ -32,7 +67,25 @@
     }
     empty.hidden = visible !== 0;
     results.textContent = "Showing " + visible + " of " + indexed.length + " blocks.";
+    updatePreviewVisibility();
   }
+
+  // Back/Forward can restore a native category link's fragment while the
+  // previous filter hides its target. Reveal that card before scrolling.
+  function restoreCategoryFromHash() {
+    let id;
+    try { id = decodeURIComponent(window.location.hash.slice(1)); }
+    catch { return; }
+    if (!id.startsWith("block-title-")) return;
+    const target = document.getElementById(id);
+    const card = target?.closest("[data-block-id]");
+    if (!card || !card.hidden) return;
+    query.value = "";
+    category.value = card.dataset.blockCategory;
+    filter();
+    window.requestAnimationFrame(() => target.scrollIntoView({block: "start"}));
+  }
+  window.addEventListener("hashchange", restoreCategoryFromHash);
 
   function changeTheme() {
     for (const item of indexed) {
