@@ -1,0 +1,31 @@
+<section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-org-members-title">
+  <header class="syn-page-header">
+    <div><p class="syn-eyebrow">WORKSPACE SETTINGS</p><h2 id="syn-org-members-title" class="syn-heading">People and permissions</h2>
+      <p class="syn-muted">Make membership and role assignments easy to inspect.</p></div>
+    <a class="syn-button syn-button--outline" href="/settings/roles">Role definitions</a>
+  </header>
+  <div class="syn-detail-layout">
+    <div class="syn-detail-main">
+      <div class="syn-table-wrap" role="region" tabindex="0" aria-label="Workspace members, scroll for additional columns">
+        <table class="syn-table"><caption>Example workspace membership</caption>
+          <thead><tr><th scope="col">Member</th><th scope="col">Email</th><th scope="col">Role</th><th scope="col">Status</th></tr></thead>
+          <tbody><tr><th scope="row">Alex Morgan</th><td>alex@example.invalid</td><td>Owner</td><td>Active</td></tr>
+            <tr><th scope="row">Jordan Lee</th><td>jordan@example.invalid</td><td>Editor</td><td>Invited</td></tr></tbody>
+        </table>
+      </div>
+      <p><a href="/settings/invitations">Review pending invitations</a></p>
+    </div>
+    <aside class="syn-detail-aside syn-panel" aria-labelledby="syn-org-invite-title">
+      <h3 id="syn-org-invite-title">Invite someone</h3>
+      <form class="syn-form" method="post" action="/settings/invitations">
+        <div class="syn-field"><label class="syn-label" for="syn-invite-email">Email address</label>
+          <input id="syn-invite-email" class="syn-input" name="email" type="email" autocomplete="email" required></div>
+        <div class="syn-field"><label class="syn-label" for="syn-invite-role">Role</label>
+          <select class="syn-input" id="syn-invite-role" name="role" required>
+            <option value="viewer">Viewer</option><option value="editor">Editor</option></select></div>
+        <button class="syn-button syn-button--primary" type="submit">Send invitation</button>
+      </form>
+      <p class="syn-caption">Your backend must authorize invitations, enforce role limits and protect mutations against CSRF.</p>
+    </aside>
+  </div>
+</section>

@@ -355,6 +355,28 @@
       ]
     },
     {
+      "name": "syn-bento-card--wide",
+      "module": "recipes.css",
+      "description": "Span two bento tracks only when the parent container has enough room.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
+      "name": "syn-bento-grid",
+      "module": "recipes.css",
+      "description": "Optional container-aware card grid for responsive feature compositions.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
       "name": "syn-body",
       "module": "components/typography.css",
       "description": "Body presentation in the components/typography.css module; use semantic HTML and consult its component example.",
@@ -3377,6 +3399,17 @@
         "syntyr.all.css",
         "syntyr.css",
         "syntyr.effects.css"
+      ]
+    },
+    {
+      "name": "syn-scroll-rail",
+      "module": "recipes.css",
+      "description": "Optional, keyboard-scrollable card rail with native scroll snapping; host owns any arrow controls or filtering.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.recipes.css"
       ]
     },
     {
@@ -7040,6 +7073,31 @@
         "syn-select--enhanced"
       ],
       "notes": "Scriptless action panels use Tab/Escape. Optional @syntyr/css/menu.mjs adds ARIA menu keyboard behavior only when explicitly initialized; see docs/dropdowns.md."
+    },
+    {
+      "name": "Scrollable card rail",
+      "module": "syntyr.recipes.css",
+      "elements": [
+        "div",
+        "section"
+      ],
+      "classes": [
+        "syn-scroll-rail"
+      ],
+      "notes": "Experimental alpha.5. Use a named, keyboard-focusable overflow region. Cards are direct children; native snap without mandatory JS. Configure --syn-scroll-rail-card-width locally."
+    },
+    {
+      "name": "Bento feature grid",
+      "module": "syntyr.recipes.css",
+      "elements": [
+        "div",
+        "article"
+      ],
+      "classes": [
+        "syn-bento-grid",
+        "syn-bento-card--wide"
+      ],
+      "notes": "Experimental alpha.5. Container-aware wide card spans; use meaningful article headings and syn-feature-card for surfaces."
     }
   ],
   "recipes": [

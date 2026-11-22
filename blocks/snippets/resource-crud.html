@@ -1,0 +1,35 @@
+<section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-resource-crud-title">
+  <header class="syn-page-header">
+    <div><h2 id="syn-resource-crud-title" class="syn-heading">Manage resources</h2><p class="syn-muted">Search, inspect and create records with native links and forms.</p></div>
+    <a class="syn-button syn-button--outline" href="/resources/export">Export records</a>
+  </header>
+  <div class="syn-detail-layout">
+    <div class="syn-detail-main">
+      <form class="syn-filter-bar" method="get" action="/resources">
+        <div class="syn-filter-field syn-filter-field--query"><label class="syn-label" for="syn-resources-query">Search resources</label>
+          <input id="syn-resources-query" class="syn-input" name="q" type="search" placeholder="Name or owner"></div>
+        <div class="syn-filter-actions"><button class="syn-button syn-button--outline" type="submit">Filter</button></div>
+      </form>
+      <div class="syn-table-wrap" role="region" tabindex="0" aria-label="Resource records, scroll horizontally for more columns">
+        <table class="syn-table"><caption>Illustrative resource inventory</caption>
+          <thead><tr><th scope="col">Name</th><th scope="col">Owner</th><th scope="col">State</th><th scope="col">Action</th></tr></thead>
+          <tbody><tr><th scope="row">Campaign brief</th><td>Creative</td><td>Active</td><td><a href="/resources/brief">Details</a></td></tr>
+            <tr><th scope="row">Release plan</th><td>Engineering</td><td>Draft</td><td><a href="/resources/release-plan">Details</a></td></tr></tbody>
+        </table>
+      </div>
+      <p class="syn-caption">Editing and deletion are intentionally delegated to host-owned record routes.</p>
+    </div>
+    <aside class="syn-detail-aside syn-panel" aria-labelledby="syn-resource-add-title">
+      <h3 id="syn-resource-add-title">Create a resource</h3>
+      <form class="syn-form" method="post" action="/resources">
+        <div class="syn-field"><label class="syn-label" for="syn-resource-name">Name</label>
+          <input class="syn-input" id="syn-resource-name" name="name" required maxlength="120"></div>
+        <div class="syn-field"><label class="syn-label" for="syn-resource-type">Type</label>
+          <select class="syn-input" id="syn-resource-type" name="type" required>
+            <option value="document">Document</option><option value="task">Task</option><option value="asset">Asset</option></select></div>
+        <button class="syn-button syn-button--primary" type="submit">Create resource</button>
+      </form>
+      <p class="syn-caption">The backend owns validation, persistence, CSRF protection and permissions.</p>
+    </aside>
+  </div>
+</section>

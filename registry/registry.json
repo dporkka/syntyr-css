@@ -1297,6 +1297,282 @@
           "target": "~/syntyr/LICENSE"
         }
       ]
+    },
+    {
+      "name": "scrollable-card-rail",
+      "type": "registry:item",
+      "title": "Scrollable product card rail",
+      "description": "An accessible, CSS-only horizontal collection for feature, portfolio or editorial cards.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://syntyr-css.pages.dev/registry/r/core.json",
+        "https://syntyr-css.pages.dev/registry/r/recipes.json"
+      ],
+      "files": [
+        {
+          "path": "blocks/snippets/scrollable-card-rail.html",
+          "type": "registry:file",
+          "target": "~/syntyr/blocks/scrollable-card-rail.html"
+        },
+        {
+          "path": "LICENSE",
+          "type": "registry:file",
+          "target": "~/syntyr/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "bento-feature-grid",
+      "type": "registry:item",
+      "title": "Responsive bento feature grid",
+      "description": "A container-aware asymmetric feature section using composable cards.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://syntyr-css.pages.dev/registry/r/core.json",
+        "https://syntyr-css.pages.dev/registry/r/recipes.json"
+      ],
+      "files": [
+        {
+          "path": "blocks/snippets/bento-feature-grid.html",
+          "type": "registry:file",
+          "target": "~/syntyr/blocks/bento-feature-grid.html"
+        },
+        {
+          "path": "LICENSE",
+          "type": "registry:file",
+          "target": "~/syntyr/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "hero-product-preview",
+      "type": "registry:item",
+      "title": "Product screenshot hero",
+      "description": "Split-screen product hero with semantic CSS-only mock dashboard content.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://syntyr-css.pages.dev/registry/r/core.json",
+        "https://syntyr-css.pages.dev/registry/r/recipes.json"
+      ],
+      "files": [
+        {
+          "path": "blocks/snippets/hero-product-preview.html",
+          "type": "registry:file",
+          "target": "~/syntyr/blocks/hero-product-preview.html"
+        },
+        {
+          "path": "LICENSE",
+          "type": "registry:file",
+          "target": "~/syntyr/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "feature-spotlight",
+      "type": "registry:item",
+      "title": "Product feature spotlight",
+      "description": "Alternating product detail section with a structured UI illustration.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://syntyr-css.pages.dev/registry/r/core.json",
+        "https://syntyr-css.pages.dev/registry/r/recipes.json"
+      ],
+      "files": [
+        {
+          "path": "blocks/snippets/feature-spotlight.html",
+          "type": "registry:file",
+          "target": "~/syntyr/blocks/feature-spotlight.html"
+        },
+        {
+          "path": "LICENSE",
+          "type": "registry:file",
+          "target": "~/syntyr/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "customer-case-study",
+      "type": "registry:item",
+      "title": "Customer case study detail",
+      "description": "A complete editorial case-study layout with honest illustrative metrics.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://syntyr-css.pages.dev/registry/r/core.json",
+        "https://syntyr-css.pages.dev/registry/r/recipes.json"
+      ],
+      "files": [
+        {
+          "path": "blocks/snippets/customer-case-study.html",
+          "type": "registry:file",
+          "target": "~/syntyr/blocks/customer-case-study.html"
+        },
+        {
+          "path": "LICENSE",
+          "type": "registry:file",
+          "target": "~/syntyr/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "pricing-comparison",
+      "type": "registry:item",
+      "title": "Pricing and feature comparison",
+      "description": "Plan cards and a keyboard-scrollable semantic comparison table.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://syntyr-css.pages.dev/registry/r/core.json",
+        "https://syntyr-css.pages.dev/registry/r/recipes.json"
+      ],
+      "files": [
+        {
+          "path": "blocks/snippets/pricing-comparison.html",
+          "type": "registry:file",
+          "target": "~/syntyr/blocks/pricing-comparison.html"
+        },
+        {
+          "path": "LICENSE",
+          "type": "registry:file",
+          "target": "~/syntyr/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "auth-sign-up",
+      "type": "registry:item",
+      "title": "Account registration screen",
+      "description": "Native sign-up form and next-step guidance with real host routes.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://syntyr-css.pages.dev/registry/r/core.json",
+        "https://syntyr-css.pages.dev/registry/r/recipes.json"
+      ],
+      "files": [
+        {
+          "path": "blocks/snippets/auth-sign-up.html",
+          "type": "registry:file",
+          "target": "~/syntyr/blocks/auth-sign-up.html"
+        },
+        {
+          "path": "LICENSE",
+          "type": "registry:file",
+          "target": "~/syntyr/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "resource-crud",
+      "type": "registry:item",
+      "title": "Resource create and browse screen",
+      "description": "Filterable records, detail navigation and native create form.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://syntyr-css.pages.dev/registry/r/core.json",
+        "https://syntyr-css.pages.dev/registry/r/recipes.json"
+      ],
+      "files": [
+        {
+          "path": "blocks/snippets/resource-crud.html",
+          "type": "registry:file",
+          "target": "~/syntyr/blocks/resource-crud.html"
+        },
+        {
+          "path": "LICENSE",
+          "type": "registry:file",
+          "target": "~/syntyr/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "organization-members",
+      "type": "registry:item",
+      "title": "Team and invitation management",
+      "description": "Workspace roster, role information and a native invite form.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://syntyr-css.pages.dev/registry/r/core.json",
+        "https://syntyr-css.pages.dev/registry/r/recipes.json"
+      ],
+      "files": [
+        {
+          "path": "blocks/snippets/organization-members.html",
+          "type": "registry:file",
+          "target": "~/syntyr/blocks/organization-members.html"
+        },
+        {
+          "path": "LICENSE",
+          "type": "registry:file",
+          "target": "~/syntyr/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "billing-usage",
+      "type": "registry:item",
+      "title": "Subscription and usage overview",
+      "description": "Plan details, native metering and invoice history.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://syntyr-css.pages.dev/registry/r/core.json",
+        "https://syntyr-css.pages.dev/registry/r/recipes.json"
+      ],
+      "files": [
+        {
+          "path": "blocks/snippets/billing-usage.html",
+          "type": "registry:file",
+          "target": "~/syntyr/blocks/billing-usage.html"
+        },
+        {
+          "path": "LICENSE",
+          "type": "registry:file",
+          "target": "~/syntyr/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "integration-connection",
+      "type": "registry:item",
+      "title": "Integration connection states",
+      "description": "Connection directory with connected, disconnected and error examples.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://syntyr-css.pages.dev/registry/r/core.json",
+        "https://syntyr-css.pages.dev/registry/r/recipes.json"
+      ],
+      "files": [
+        {
+          "path": "blocks/snippets/integration-connection.html",
+          "type": "registry:file",
+          "target": "~/syntyr/blocks/integration-connection.html"
+        },
+        {
+          "path": "LICENSE",
+          "type": "registry:file",
+          "target": "~/syntyr/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "developer-api-settings",
+      "type": "registry:item",
+      "title": "API key and webhook settings",
+      "description": "Masked API-key metadata, secure-endpoint form and documentation routes.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://syntyr-css.pages.dev/registry/r/core.json",
+        "https://syntyr-css.pages.dev/registry/r/recipes.json"
+      ],
+      "files": [
+        {
+          "path": "blocks/snippets/developer-api-settings.html",
+          "type": "registry:file",
+          "target": "~/syntyr/blocks/developer-api-settings.html"
+        },
+        {
+          "path": "LICENSE",
+          "type": "registry:file",
+          "target": "~/syntyr/LICENSE"
+        }
+      ]
     }
   ]
 }

@@ -3297,6 +3297,16 @@ CSS selectors, not part of the immutable alpha.4 package and not a guarantee
 of application-level selection, dialog focus management, image verification
 or review workflows. See [recipe contracts](recipes.md).
 
+
+## Experimental alpha.5 copy-owned composition additions
+
+The optional recipes stylesheet now provides `syn-scroll-rail`,
+`syn-bento-grid`, and `syn-bento-card--wide` for generic card collections
+and feature section layout. They are **source candidate only**, not part
+of the published alpha.4 contract. Existing `syn-media-rail`, `syn-grid`
+and `syn-showcase` remain unchanged. No runtime scripting, event handlers,
+authentication or persistence are introduced by these selectors.
+
 ---
 
 ## Source: docs/framework-integrations.md

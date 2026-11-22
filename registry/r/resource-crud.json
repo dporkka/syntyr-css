@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "resource-crud",
+  "type": "registry:item",
+  "title": "Resource create and browse screen",
+  "description": "Filterable records, detail navigation and native create form.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://syntyr-css.pages.dev/registry/r/core.json",
+    "https://syntyr-css.pages.dev/registry/r/recipes.json"
+  ],
+  "files": [
+    {
+      "path": "blocks/snippets/resource-crud.html",
+      "type": "registry:file",
+      "target": "~/syntyr/blocks/resource-crud.html",
+      "content": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-resource-crud-title\">\n  <header class=\"syn-page-header\">\n    <div><h2 id=\"syn-resource-crud-title\" class=\"syn-heading\">Manage resources</h2><p class=\"syn-muted\">Search, inspect and create records with native links and forms.</p></div>\n    <a class=\"syn-button syn-button--outline\" href=\"/resources/export\">Export records</a>\n  </header>\n  <div class=\"syn-detail-layout\">\n    <div class=\"syn-detail-main\">\n      <form class=\"syn-filter-bar\" method=\"get\" action=\"/resources\">\n        <div class=\"syn-filter-field syn-filter-field--query\"><label class=\"syn-label\" for=\"syn-resources-query\">Search resources</label>\n          <input id=\"syn-resources-query\" class=\"syn-input\" name=\"q\" type=\"search\" placeholder=\"Name or owner\"></div>\n        <div class=\"syn-filter-actions\"><button class=\"syn-button syn-button--outline\" type=\"submit\">Filter</button></div>\n      </form>\n      <div class=\"syn-table-wrap\" role=\"region\" tabindex=\"0\" aria-label=\"Resource records, scroll horizontally for more columns\">\n        <table class=\"syn-table\"><caption>Illustrative resource inventory</caption>\n          <thead><tr><th scope=\"col\">Name</th><th scope=\"col\">Owner</th><th scope=\"col\">State</th><th scope=\"col\">Action</th></tr></thead>\n          <tbody><tr><th scope=\"row\">Campaign brief</th><td>Creative</td><td>Active</td><td><a href=\"/resources/brief\">Details</a></td></tr>\n            <tr><th scope=\"row\">Release plan</th><td>Engineering</td><td>Draft</td><td><a href=\"/resources/release-plan\">Details</a></td></tr></tbody>\n        </table>\n      </div>\n      <p class=\"syn-caption\">Editing and deletion are intentionally delegated to host-owned record routes.</p>\n    </div>\n    <aside class=\"syn-detail-aside syn-panel\" aria-labelledby=\"syn-resource-add-title\">\n      <h3 id=\"syn-resource-add-title\">Create a resource</h3>\n      <form class=\"syn-form\" method=\"post\" action=\"/resources\">\n        <div class=\"syn-field\"><label class=\"syn-label\" for=\"syn-resource-name\">Name</label>\n          <input class=\"syn-input\" id=\"syn-resource-name\" name=\"name\" required maxlength=\"120\"></div>\n        <div class=\"syn-field\"><label class=\"syn-label\" for=\"syn-resource-type\">Type</label>\n          <select class=\"syn-input\" id=\"syn-resource-type\" name=\"type\" required>\n            <option value=\"document\">Document</option><option value=\"task\">Task</option><option value=\"asset\">Asset</option></select></div>\n        <button class=\"syn-button syn-button--primary\" type=\"submit\">Create resource</button>\n      </form>\n      <p class=\"syn-caption\">The backend owns validation, persistence, CSRF protection and permissions.</p>\n    </aside>\n  </div>\n</section>\n"
+    },
+    {
+      "path": "LICENSE",
+      "type": "registry:file",
+      "target": "~/syntyr/LICENSE",
+      "content": "MIT License\n\nCopyright (c) 2026 Syntyr CSS contributors\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n"
+    }
+  ],
+  "meta": {
+    "syntyrVersion": "0.3.0-alpha.5",
+    "source": "MIT source candidate",
+    "runtimeJavaScript": false,
+    "fileDigests": {
+      "~/syntyr/blocks/resource-crud.html": "07e7098d065b08dd1fff72ba5bed406c3b314356bae404dda44d52e0cd184d41",
+      "~/syntyr/LICENSE": "42f56369ac06362dbfe433d2d50b178bf74c369a55ea22337ab40fd9433521bf"
+    }
+  },
+  "docs": "Experimental source-candidate asset. Review exact version, HTML routes, keyboard behavior and integration before production use."
+}

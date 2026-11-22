@@ -1,0 +1,33 @@
+<section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-developer-settings-title">
+  <header class="syn-page-header">
+    <div><p class="syn-eyebrow">DEVELOPER WORKSPACE</p><h2 id="syn-developer-settings-title" class="syn-heading">API keys and webhooks</h2>
+      <p class="syn-muted">Manage integration credentials and event delivery from your application.</p></div>
+    <a class="syn-button syn-button--outline" href="/docs/api">API documentation</a>
+  </header>
+  <div class="syn-detail-layout">
+    <div class="syn-detail-main syn-panel">
+      <h3>API keys</h3><p class="syn-caption">Masked example identifiers only. Never render live secret values in this table.</p>
+      <div class="syn-table-wrap" role="region" tabindex="0" aria-label="API key metadata, scroll for additional columns">
+        <table class="syn-table"><caption>Example API key metadata</caption>
+          <thead><tr><th scope="col">Name</th><th scope="col">Identifier</th><th scope="col">Scope</th><th scope="col">Created</th></tr></thead>
+          <tbody><tr><th scope="row">Production sync</th><td><code>key_…7c2a</code></td><td>Read only</td>
+            <td><time datetime="2026-10-15">Oct 15, 2026</time></td></tr></tbody>
+        </table>
+      </div>
+      <p><a class="syn-button syn-button--primary" href="/settings/api-keys/new">Create API key</a></p>
+    </div>
+    <aside class="syn-detail-aside syn-panel" aria-labelledby="syn-webhook-new-title">
+      <h3 id="syn-webhook-new-title">New webhook endpoint</h3>
+      <form class="syn-form" method="post" action="/settings/webhooks">
+        <div class="syn-field"><label class="syn-label" for="syn-webhook-url">HTTPS endpoint URL</label>
+          <input class="syn-input" id="syn-webhook-url" name="url" type="url" placeholder="Enter an HTTPS endpoint" pattern="https:&#47;&#47;.*" required></div>
+        <div class="syn-field"><label class="syn-label" for="syn-webhook-event">Event</label>
+          <select class="syn-input" id="syn-webhook-event" name="event" required>
+            <option value="project.created">project.created</option><option value="project.updated">project.updated</option></select></div>
+        <button class="syn-button syn-button--primary" type="submit">Add endpoint</button>
+      </form>
+      <p class="syn-caption">Implement SSRF protections, signing secrets, retries, CSRF defenses and delivery logs server-side.</p>
+      <a href="/settings/webhooks/deliveries">Review delivery events</a>
+    </aside>
+  </div>
+</section>

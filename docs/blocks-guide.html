@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Status: Experimental alpha.5 source gallery, not an immutable release or published npm package.">
-  <meta name="syntyr-source-sha256" content="c3c3645b83af56ef180846c39c556060211ec5d6a022fe35c0944235f418ee30">
+  <meta name="syntyr-source-sha256" content="f39d4f6524a966ce0c63a8a50f229368ee0234114ae5973fc65ff6a048e7650a">
   <meta name="theme-color" content="#f5f7fb">
   <title>Syntyr Blocks &amp; Assets — integration guide — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/blocks-guide">
@@ -36,17 +36,17 @@
         <article class="docs-prose" aria-label="Syntyr Blocks &amp; Assets — integration guide">
 <h1 id="syntyr-blocks-assets-integration-guide">Syntyr Blocks &amp; Assets — integration guide</h1>
 <p><strong>Status:</strong> Experimental alpha.5 source gallery, not an immutable release or published npm package.</p>
-<p><a href="blocks.html">Browse 50 blocks</a> | <a href="catalog.html">Component catalog</a> | <a href="theme-customization.html">Themes</a> | <a href="accessibility.html">Accessibility</a></p>
+<p><a href="blocks.html">Browse 62 blocks</a> | <a href="catalog.html">Component catalog</a> | <a href="theme-customization.html">Themes</a> | <a href="accessibility.html">Accessibility</a></p>
 <h2 id="contract">Contract</h2>
-<p>The 50 copy-owned HTML compositions cover marketing, application, services, portfolio, editorial, navigation, publishing, commerce and technical use
+<p>The 62 copy-owned HTML compositions cover marketing, application, services, portfolio, editorial, navigation, publishing, commerce and technical use
 cases. Each contains its own Syntyr root, uses accessible native markup and requires
 no application JavaScript. The data, testimonials and prices are illustrative, not live.</p>
 <p>The gallery script powers optional documentation search, theme switching and copy
-buttons. Disable JavaScript and all 50 static previews remain visible, with
+buttons. Disable JavaScript and all 62 static previews remain visible, with
 selectable source under native disclosure elements. No scripts are included in
 application CSS, and the core Syntyr build is unchanged.</p>
 <h2 id="safe-local-registry-installation-experimental-alpha5-source">Safe local registry installation (experimental alpha.5 source)</h2>
-<p>The static <a href="../registry/registry.json">universal registry</a> contains the 50 MIT
+<p>The static <a href="../registry/registry.json">universal registry</a> contains the 62 MIT
 HTML blocks and nine CSS module entries. Every item includes its exact
 source-tree version, SHA-256 content hashes, declared CSS dependencies, files,
 and destination paths. This is <strong>not</strong> a published immutable alpha.5 release.</p>
@@ -78,6 +78,29 @@ manual keyboard, screen-reader or actual browser zoom review.</p>
 contain <strong>illustrative data and placeholder host routes</strong>. Their host
 application must supply authorization, data queries, CSRF protection,
 validation and persistence. See <a href="component-recipes.html">form state contracts</a>.</p>
+<h2 id="saas-and-business-collection-experimental-alpha5-source">SaaS and business collection (experimental alpha.5 source)</h2>
+<p>Twelve additional copy-owned compositions expand the collection from 50 to 62:
+six marketing sections (scrollable card rail, bento features, product preview hero,
+feature spotlight, full example case study, pricing comparison) and six SaaS
+workspaces (sign-up, resource management, workspace invitations, billing usage,
+integration connection states, API keys and webhooks).</p>
+<p>For generic horizontal collections, load <code>syntyr.recipes.css</code> and use
+<code>syn-scroll-rail</code> on a named, focusable <code>role=&quot;region&quot;</code> wrapper. Each direct
+child is an independent card. Customize <code>--syn-scroll-rail-card-width</code> and
+<code>--syn-scroll-rail-gap</code> locally. Native overflow and scroll snapping work
+without JavaScript; this does <strong>not</strong> add carousel buttons, autoplay or a new
+interaction runtime. The existing <code>syn-media-rail</code> remains unchanged and
+better suited to media/poster catalogs.</p>
+<p>For asymmetric feature cards, use <code>syn-bento-grid</code> and opt-in
+<code>syn-bento-card--wide</code> on an individual card. The grid's own container width
+determines when a wide card may span two columns. The previous <code>syn-grid</code>
+and <code>syn-feature-grid</code> remain available for equal-size cards. Reuse
+<code>syn-showcase</code> for split product storytelling rather than creating another
+split-layout API.</p>
+<p>All example names, plan details, statuses and usage metrics are illustrative.
+Registration, authorization, invites, persistence, CSRF protection, OAuth,
+billing, webhook security and API key issuance are <strong>host application</strong> responsibilities.
+Replace example routes and sample data before deploying.</p>
 <h2 id="native-html-and-framework-integration">Native HTML and framework integration</h2>
 <p>Load the specific CSS modules shown on each block, from the same pinned version.
 For example, blocks using both core and recipes:</p>
@@ -168,7 +191,7 @@ No premium Tailwind, commercial UI kit or third-party icon artwork has been
 copied into the public project. The separate private Console Kit is unaffected.</p>
 <h2 id="experimental-shadcn-universal-item-registry">Experimental shadcn universal-item registry</h2>
 <p>The source candidate can generate a <strong>copy-owned, framework-independent</strong>
-shadcn-compatible universal-item registry from the same 50 MIT blocks and
+shadcn-compatible universal-item registry from the same 62 MIT blocks and
 checked-in CSS distributions. It neither replaces nor duplicates the native
 block installer from PR #104. Universal files use explicit project-relative
 targets, so no React, Tailwind, or Syntyr runtime JavaScript is required.</p>
@@ -197,6 +220,7 @@ source-candidate Syntyr version and must not be confused with a tagged release.<
         <aside class="docs-article-sidebar"><nav aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#contract">Contract</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#safe-local-registry-installation-experimental-alpha5-source">Safe local registry installation (experimental alpha.5 source)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#saas-and-business-collection-experimental-alpha5-source">SaaS and business collection (experimental alpha.5 source)</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#native-html-and-framework-integration">Native HTML and framework integration</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#optional-scroll-parallax-and-hover-effects">Optional scroll, parallax, and hover effects</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#12-original-optional-css-asset-recipes">12 original, optional CSS asset recipes</a>

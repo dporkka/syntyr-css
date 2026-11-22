@@ -725,6 +725,187 @@
         "categories",
         "merchandising"
       ]
+    },
+    {
+      "id": "scrollable-card-rail",
+      "category": "Marketing",
+      "title": "Scrollable product card rail",
+      "description": "An accessible, CSS-only horizontal collection for feature, portfolio or editorial cards.",
+      "modules": [
+        "core",
+        "recipes"
+      ],
+      "tags": [
+        "carousel",
+        "scroll",
+        "cards",
+        "features"
+      ]
+    },
+    {
+      "id": "bento-feature-grid",
+      "category": "Marketing",
+      "title": "Responsive bento feature grid",
+      "description": "A container-aware asymmetric feature section using composable cards.",
+      "modules": [
+        "core",
+        "recipes"
+      ],
+      "tags": [
+        "bento",
+        "features",
+        "grid"
+      ]
+    },
+    {
+      "id": "hero-product-preview",
+      "category": "Marketing",
+      "title": "Product screenshot hero",
+      "description": "Split-screen product hero with semantic CSS-only mock dashboard content.",
+      "modules": [
+        "core",
+        "recipes"
+      ],
+      "tags": [
+        "hero",
+        "product",
+        "showcase"
+      ]
+    },
+    {
+      "id": "feature-spotlight",
+      "category": "Marketing",
+      "title": "Product feature spotlight",
+      "description": "Alternating product detail section with a structured UI illustration.",
+      "modules": [
+        "core",
+        "recipes"
+      ],
+      "tags": [
+        "features",
+        "showcase",
+        "split"
+      ]
+    },
+    {
+      "id": "customer-case-study",
+      "category": "Marketing",
+      "title": "Customer case study detail",
+      "description": "A complete editorial case-study layout with honest illustrative metrics.",
+      "modules": [
+        "core",
+        "recipes"
+      ],
+      "tags": [
+        "case-study",
+        "story",
+        "social-proof"
+      ]
+    },
+    {
+      "id": "pricing-comparison",
+      "category": "Marketing",
+      "title": "Pricing and feature comparison",
+      "description": "Plan cards and a keyboard-scrollable semantic comparison table.",
+      "modules": [
+        "core",
+        "recipes"
+      ],
+      "tags": [
+        "pricing",
+        "comparison",
+        "plans"
+      ]
+    },
+    {
+      "id": "auth-sign-up",
+      "category": "Applications",
+      "title": "Account registration screen",
+      "description": "Native sign-up form and next-step guidance with real host routes.",
+      "modules": [
+        "core",
+        "recipes"
+      ],
+      "tags": [
+        "auth",
+        "sign-up",
+        "forms"
+      ]
+    },
+    {
+      "id": "resource-crud",
+      "category": "Applications",
+      "title": "Resource create and browse screen",
+      "description": "Filterable records, detail navigation and native create form.",
+      "modules": [
+        "core",
+        "recipes"
+      ],
+      "tags": [
+        "crud",
+        "resources",
+        "table"
+      ]
+    },
+    {
+      "id": "organization-members",
+      "category": "Applications",
+      "title": "Team and invitation management",
+      "description": "Workspace roster, role information and a native invite form.",
+      "modules": [
+        "core",
+        "recipes"
+      ],
+      "tags": [
+        "organization",
+        "team",
+        "roles"
+      ]
+    },
+    {
+      "id": "billing-usage",
+      "category": "Applications",
+      "title": "Subscription and usage overview",
+      "description": "Plan details, native metering and invoice history.",
+      "modules": [
+        "core",
+        "recipes"
+      ],
+      "tags": [
+        "billing",
+        "usage",
+        "subscription"
+      ]
+    },
+    {
+      "id": "integration-connection",
+      "category": "Applications",
+      "title": "Integration connection states",
+      "description": "Connection directory with connected, disconnected and error examples.",
+      "modules": [
+        "core",
+        "recipes"
+      ],
+      "tags": [
+        "integrations",
+        "connections",
+        "status"
+      ]
+    },
+    {
+      "id": "developer-api-settings",
+      "category": "Applications",
+      "title": "API key and webhook settings",
+      "description": "Masked API-key metadata, secure-endpoint form and documentation routes.",
+      "modules": [
+        "core",
+        "recipes"
+      ],
+      "tags": [
+        "api-keys",
+        "webhooks",
+        "developer"
+      ]
     }
   ]
 }

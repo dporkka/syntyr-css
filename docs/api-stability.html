@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Status: experimental 0.3.0-alpha.5 candidate; no v1 stability promise. This document names the intended public contracts so that changes can be reviewed…">
-  <meta name="syntyr-source-sha256" content="a1545e101535c50d4fa654a78c9dae59eb1ce7d59026b8e7a2d23d1218c7516a">
+  <meta name="syntyr-source-sha256" content="ffe48e25695f090b06f13ae6574777650a365475aa816f3766c88b230b320bcb">
   <meta name="theme-color" content="#f5f7fb">
   <title>SYNTYR CSS public API and prerelease stability — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/api-stability">
@@ -313,6 +313,13 @@ runtime dependency.</p>
 CSS selectors, not part of the immutable alpha.4 package and not a guarantee
 of application-level selection, dialog focus management, image verification
 or review workflows. See <a href="recipes.html">recipe contracts</a>.</p>
+<h2 id="experimental-alpha5-copy-owned-composition-additions">Experimental alpha.5 copy-owned composition additions</h2>
+<p>The optional recipes stylesheet now provides <code>syn-scroll-rail</code>,
+<code>syn-bento-grid</code>, and <code>syn-bento-card--wide</code> for generic card collections
+and feature section layout. They are <strong>source candidate only</strong>, not part
+of the published alpha.4 contract. Existing <code>syn-media-rail</code>, <code>syn-grid</code>
+and <code>syn-showcase</code> remain unchanged. No runtime scripting, event handlers,
+authentication or persistence are introduced by these selectors.</p>
         </article>
         <aside class="docs-article-sidebar"><nav aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#public-surface-and-intended-v1-boundaries">Public surface and intended v1 boundaries</a>
@@ -326,6 +333,7 @@ or review workflows. See <a href="recipes.html">recipe contracts</a>.</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#compatibility-and-version-policy">Compatibility and version policy</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#pre-10-release-checklist">Pre-1.0 release checklist</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#enterprise-presentation-recipes-unreleased-alpha5">Enterprise presentation recipes (unreleased alpha.5)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#experimental-alpha5-copy-owned-composition-additions">Experimental alpha.5 copy-owned composition additions</a>
         </nav></aside>
       </div>
       <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="api-stability.md">Markdown source</a></nav>
