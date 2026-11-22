@@ -13,6 +13,14 @@
 .syn-root .blocks-preview-actions {margin-block:.25rem .75rem}
 .syn-root .blocks-preview-disclosure {min-width:0}
 .syn-root .blocks-preview-disclosure > summary {display:flex;align-items:center;min-height:44px;padding:.65rem .8rem;cursor:pointer;border:1px solid var(--syn-frame);border-radius:var(--syn-radius);background:var(--syn-surface-recessed);font-weight:650}
+/* Native batches keep every block/icon in the document with no fetching or JS. */
+.syn-root .blocks-pages,.syn-root .blocks-icons-pages {display:grid;gap:1.15rem;min-inline-size:0}
+.syn-root .blocks-batch,.syn-root .blocks-icons-batch {min-inline-size:0}
+.syn-root .blocks-batch[hidden],.syn-root .blocks-icons-batch[hidden] {display:none}
+.syn-root .blocks-batch > summary,.syn-root .blocks-icons-batch > summary {cursor:pointer;min-block-size:44px;padding:.8rem 1rem;border:1px solid var(--syn-frame);border-radius:var(--syn-radius);background:var(--syn-surface);font-weight:650;overflow-wrap:anywhere}
+.syn-root .blocks-batch > summary span,.syn-root .blocks-icons-batch > summary span {margin-inline-start:.5rem;color:var(--syn-muted);font-weight:400;font-size:.85em}
+.syn-root .blocks-batch[open] > summary,.syn-root .blocks-icons-batch[open] > summary {margin-block-end:1.15rem}
+.syn-root .blocks-batch > summary:is(:focus-visible,:hover),.syn-root .blocks-icons-batch > summary:is(:focus-visible,:hover) {border-color:var(--syn-accent)}
 .syn-root .blocks-grid {display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,30rem),1fr));gap:1.25rem;align-items:start}
 .syn-root .blocks-card {display:grid;gap:.9rem;min-width:0;align-content:start}
 .syn-root .blocks-card[hidden],.syn-root #blocks-empty[hidden],.syn-root #blocks-controls[hidden],.syn-root .blocks-copy[hidden] {display:none}
@@ -58,8 +66,10 @@
 .syn-root .blocks-footer {display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;padding-block:2rem 4rem}
 @media (max-width:40rem) {
  .syn-root .blocks-preview-disclosure[open] > summary {margin-block-end:.65rem}
- .syn-root .blocks-category-nav {gap:.4rem}
- .syn-root .blocks-category-nav .syn-caption {flex-basis:100%}
+ /* Scroll snap lets category links be swiped without replacing native anchors. */
+ .syn-root .blocks-category-nav {flex-wrap:nowrap;gap:.5rem;overflow-x:auto;scroll-snap-type:inline proximity;scroll-padding-inline:.75rem;overscroll-behavior-inline:contain;scrollbar-width:thin;padding-block:.25rem .8rem}
+ .syn-root .blocks-category-nav > a {flex:0 0 auto;scroll-snap-align:start;white-space:nowrap}
+ .syn-root .blocks-category-nav .syn-caption {flex:0 0 auto;white-space:nowrap}
 }
 @media (min-width:40.001rem) {
  .syn-root .blocks-preview-disclosure[open] > summary {display:none}
