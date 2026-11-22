@@ -15,6 +15,53 @@
     terms: `${card.querySelector('h2')?.textContent || ''} ${card.dataset.catalogKeywords || ''} ${card.querySelector('.syn-muted')?.textContent || ''}`.toLocaleLowerCase(),
   }));
 
+  // Keep the index functional without JS: markup and links are present in HTML.
+  // JavaScript only adds scroll-aware highlighting and filter-aware navigation.
+  const indexLinks = [...document.querySelectorAll('#catalog-index .catalog-index-link')];
+  const linksById = new Map(indexLinks.map((link) => [link.getAttribute('href').slice(1), link]));
+  const indexedCards = cards.map((card) => ({
+    card,
+    link: linksById.get(card.getAttribute('aria-labelledby')),
+  })).filter(({link}) => Boolean(link));
+
+  function updateActiveIndex() {
+    const viewportTop = window.innerHeight * 0.08;
+    const viewportBottom = window.innerHeight * 0.85;
+    const intersecting = [];
+    for (const {card, link} of indexedCards) {
+      const bounds = card.getBoundingClientRect();
+      const inView = !card.hidden && bounds.top < viewportBottom && bounds.bottom > viewportTop;
+      link.classList.toggle('is-in-view', inView);
+      link.removeAttribute('aria-current');
+      if (inView) intersecting.push({link, top: bounds.top});
+    }
+    // One current location for assistive tech; all visible components are highlighted.
+    intersecting.sort((a, b) => a.top - b.top);
+    intersecting[0]?.link.setAttribute('aria-current', 'location');
+  }
+
+  let indexUpdateQueued = false;
+  function scheduleIndexUpdate() {
+    if (indexUpdateQueued) return;
+    indexUpdateQueued = true;
+    window.requestAnimationFrame(() => {
+      indexUpdateQueued = false;
+      updateActiveIndex();
+    });
+  }
+  window.addEventListener('scroll', scheduleIndexUpdate, {passive: true});
+  window.addEventListener('resize', scheduleIndexUpdate);
+  window.addEventListener('hashchange', scheduleIndexUpdate);
+  for (const {card, link} of indexedCards) {
+    link.addEventListener('click', () => {
+      // Selecting a component outside the active filter must still reach it.
+      if (!card.hidden) return;
+      search.value = '';
+      category.value = 'all';
+      updateResults();
+    });
+  }
+
   function updateResults() {
     const terms = search.value.trim().toLocaleLowerCase().split(/\s+/).filter(Boolean);
     let count = 0;
@@ -26,6 +73,7 @@
     }
     empty.hidden = count !== 0;
     results.textContent = `Showing ${count} of ${cards.length} examples.`;
+    scheduleIndexUpdate();
   }
 
   const theme = document.getElementById('catalog-theme');
@@ -51,11 +99,6 @@
     const button = card.querySelector('[data-catalog-copy]');
     const code = card.querySelector('.catalog-source code');
     if (!button || !code) continue;
-    const edit = document.createElement("a");
-    edit.className = "syn-button catalog-edit";
-    edit.href = `playground.html#component=${encodeURIComponent(card.getAttribute("aria-labelledby") || "")}`;
-    edit.textContent = "Edit in playground";
-    button.insertAdjacentElement("afterend", edit);
     button.hidden = false;
     button.addEventListener('click', async () => {
       const value = code.textContent.trim();

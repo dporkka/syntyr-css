@@ -29,6 +29,24 @@ const engines = {chromium, firefox, webkit};
           assert.equal(await page.locator(`.catalog-card[aria-labelledby="${id}"]`).count(), 1);
         }
         assert.equal(await page.locator(".catalog-edit").count(), total);
+        const links = page.locator('#catalog-index .catalog-index-link');
+        assert.equal(await links.count(), total);
+        const labels = (await links.allTextContents()).map((label) => label.trim());
+        assert.deepEqual(labels, [...labels].sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase())));
+        assert.equal(await page.locator('.catalog-actions').count(), total);
+        assert.equal(await page.locator('.catalog-live').count(), total);
+        assert.equal(await page.locator('.catalog-actions').first().evaluate(el => getComputedStyle(el).display), 'flex');
+        if (width === 1280) {
+          const positions = await page.locator('.catalog-actions').first().evaluate(el => [...el.children].map(child => child.getBoundingClientRect().top));
+          assert.ok(positions.every(top => Math.abs(top - positions[0]) < 2), `Actions should be inline at desktop width: ${positions}`);
+          assert.equal(await page.locator('.catalog-sidebar').evaluate(el => getComputedStyle(el).position), 'sticky');
+        }
+        await page.locator('#catalog-search').fill('buttons');
+        assert.equal(await page.locator('.catalog-card:not([hidden])').count(), 1);
+        await page.locator('#catalog-index a[href="#catalog-alerts-title"]').click();
+        await page.waitForFunction(() => location.hash === '#catalog-alerts-title' && document.querySelector('#catalog-search').value === '');
+        assert.equal(await page.locator('.catalog-card:not([hidden])').count(), total);
+        await page.waitForFunction(() => document.querySelector('#catalog-index a[href="#catalog-alerts-title"]').classList.contains('is-in-view'));
         assert.equal(await page.locator('.catalog-card:not([hidden])').count(), total);
         assert.equal(await page.locator('.catalog-copy:not([hidden])').count(), total);
         await page.locator('#catalog-category').selectOption('media');
@@ -93,6 +111,8 @@ const engines = {chromium, firefox, webkit};
         assert.equal(await noJsPage.locator('.catalog-card:not([hidden])').count(), total);
         assert.equal(await noJsPage.locator('#catalog-results').innerText(), `${total} examples available.`);
         assert.equal(await noJsPage.locator('.catalog-source code').count(), total);
+        assert.equal(await noJsPage.locator('#catalog-index a').count(), total);
+        assert.equal(await noJsPage.locator('.catalog-live').count(), total);
         assert.equal(await noJsPage.locator('#catalog-controls').isVisible(), false);
         assert.equal(await noJsPage.locator('[data-catalog-copy]:visible').count(), 0);
         await noJs.close();
