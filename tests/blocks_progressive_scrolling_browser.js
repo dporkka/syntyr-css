@@ -32,6 +32,13 @@ const iconCount = JSON.parse(fs.readFileSync(path.join(root, "blocks", "icons.js
         assert.equal(await page.locator("details[data-block-batch][open]").count(), 0);
         assert.equal(await page.locator("details[data-icon-batch][open]").count(), 0);
 
+        // The scroll-snap strip must remain navigable by keyboard without JS.
+        const rail = page.locator(".blocks-category-nav");
+        await rail.evaluate(e => { e.scrollLeft = 0; });
+        await rail.locator("a").last().focus();
+        assert.ok((await rail.evaluate(e => e.scrollLeft)) > 0,
+          "Focus should reveal the last category in the horizontal strip");
+
         const firstLater = page.locator('details[data-block-batch]').first();
         await firstLater.locator(":scope > summary").click();
         assert.equal(await page.locator("[data-block-id]:visible").count(), 24);
