@@ -42,6 +42,8 @@ FILES = (
     "examples/query-review.html",  # Native server-rendered filter/review composition.
     "examples/resizable-workspace.html",
     "examples/resizable-workspace.mjs",
+    "examples/developer-workspace.html",
+    "examples/developer-workspace.css",
     "examples/animation.html",
     "examples/animation-demo.mjs",  # One local CSS file per named preset.
     "examples/copy.html",

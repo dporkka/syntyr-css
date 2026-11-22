@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Syntyr developer workspace: a portable, zero-JavaScript IDE and deployment-console composition.">
+  <title>Developer workspace — Syntyr CSS</title>
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="../dist/syntyr.recipes.css">
+  <link rel="stylesheet" href="developer-workspace.css">
+</head>
+<body class="syn-root dev-workspace" data-syn-theme="studio" data-syn-density="compact" data-syn-intensity="quiet">
+  <a class="syn-button dev-skip" href="#workspace">Skip to workspace</a>
+  <div class="syn-app-shell dev-shell">
+    <aside class="syn-app-rail dev-rail" aria-label="Project navigation">
+      <header class="dev-brand">
+        <a href="../docs/index.html" class="dev-brand__link">SYNTYR <span> / DEV</span></a>
+        <span class="dev-kicker">WORKSPACE REFERENCE</span>
+      </header>
+      <p class="dev-rail-label">Example project</p>
+      <div class="dev-project">
+        <span class="dev-project__icon" aria-hidden="true">S</span>
+        <span><strong>Northstar Console</strong><small>Static design preview</small></span>
+      </div>
+      <nav class="syn-app-nav dev-nav" aria-label="Workspace sections">
+        <a href="#overview" aria-current="page">Overview</a>
+        <a href="#editor">Source files</a>
+        <a href="#preview">App preview</a>
+        <a href="#logs">Build history</a>
+        <a href="#inspector">Design tokens</a>
+      </nav>
+      <div class="dev-rail-footer">
+        <span class="syn-badge">LOCAL EXAMPLE</span>
+        <p class="dev-muted">Illustrative content. No live deployment, editing, or backend connection.</p>
+        <a href="../docs/app-screens.html">Browse app screens</a>
+      </div>
+    </aside>
+
+    <main class="syn-workspace dev-main" id="workspace">
+      <header class="dev-page-header" id="overview">
+        <div class="dev-page-heading">
+          <p class="dev-kicker">PROJECT / NORTHSTAR CONSOLE</p>
+          <h1>Build workspace</h1>
+          <p class="dev-muted">An original IDE-style layout composed from native HTML and Syntyr CSS.</p>
+        </div>
+        <div class="dev-header-actions">
+          <span class="dev-pill dev-pill--neutral">Preview only</span>
+          <a class="syn-button syn-button--outline" href="../docs/theme-customization.html">Theme tokens</a>
+        </div>
+      </header>
+
+      <section class="dev-overview" aria-label="Example workspace overview">
+        <article class="dev-stat">
+          <span class="dev-stat__label">VERSION</span>
+          <strong>0.3.0-alpha.5</strong>
+          <span class="dev-muted">Source candidate</span>
+        </article>
+        <article class="dev-stat">
+          <span class="dev-stat__label">RENDER MODE</span>
+          <strong>Static HTML</strong>
+          <span class="dev-muted">No runtime JavaScript</span>
+        </article>
+        <article class="dev-stat">
+          <span class="dev-stat__label">STYLESHEETS</span>
+          <strong>3 loaded</strong>
+          <span class="dev-muted">Core, recipes, workspace</span>
+        </article>
+      </section>
+
+      <div class="dev-layout">
+        <section class="dev-panel dev-source" id="editor" aria-labelledby="editor-heading">
+          <header class="dev-panel-head">
+            <div>
+              <p class="dev-kicker">EDITOR / READ-ONLY</p>
+              <h2 id="editor-heading">Project files</h2>
+            </div>
+            <span class="dev-pill">HTML + CSS</span>
+          </header>
+          <div class="dev-code-layout">
+            <nav class="dev-files" aria-label="Project files">
+              <p class="dev-files__title">NORTHSTAR / SRC</p>
+              <a href="#file-markup" aria-current="location"><span aria-hidden="true">◇</span> index.html</a>
+              <a href="#file-styles"><span aria-hidden="true">#</span> theme.css</a>
+              <a href="#preview"><span aria-hidden="true">▣</span> Preview</a>
+              <div class="dev-files__footer">Two illustrative source excerpts, not an executable editor.</div>
+            </nav>
+            <div class="dev-code-content">
+              <details class="dev-code-file" id="file-markup" open>
+                <summary><span>index.html</span><small>HTML · example</small></summary>
+                <pre tabindex="0" aria-label="Illustrative HTML source"><code>&lt;main class="syn-root" data-syn-theme="studio"&gt;
+  &lt;section class="syn-panel"&gt;
+    &lt;p class="syn-eyebrow"&gt;Your product&lt;/p&gt;
+    &lt;h2&gt;Make work clearer.&lt;/h2&gt;
+    &lt;p&gt;An interface built for focus.&lt;/p&gt;
+  &lt;/section&gt;
+&lt;/main&gt;</code></pre>
+              </details>
+              <details class="dev-code-file" id="file-styles">
+                <summary><span>theme.css</span><small>CSS · example</small></summary>
+                <pre tabindex="0" aria-label="Illustrative theme override"><code>.syn-root {
+  --syn-accent: #2458c6;
+  --syn-on-accent: #ffffff;
+  --syn-radius: .65rem;
+}
+/* Verify contrast after theme changes. */</code></pre>
+              </details>
+            </div>
+          </div>
+        </section>
+
+        <section class="dev-panel dev-preview" id="preview" aria-labelledby="preview-heading">
+          <header class="dev-panel-head">
+            <div>
+              <p class="dev-kicker">CANVAS / RESPONSIVE</p>
+              <h2 id="preview-heading">Application preview</h2>
+            </div>
+            <span class="dev-pill dev-pill--neutral">Not a live app</span>
+          </header>
+          <div class="dev-preview-window">
+            <div class="dev-browser-bar">
+              <span class="dev-browser-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span class="dev-browser-address">northstar.example / overview</span>
+              <span class="dev-browser-mode">DESKTOP</span>
+            </div>
+            <div class="dev-canvas">
+              <div class="dev-canvas__intro">
+                <span class="dev-kicker">OVERVIEW / DESIGN MOCKUP</span>
+                <h3>Make work clearer.</h3>
+                <p>One place for projects, activity, and decisions.</p>
+              </div>
+              <div class="dev-canvas__cards">
+                <article class="dev-canvas-card">
+                  <span>Projects</span><strong>12</strong><small>In this example</small>
+                </article>
+                <article class="dev-canvas-card">
+                  <span>Reviews</span><strong>04</strong><small>Illustrative queue</small>
+                </article>
+                <article class="dev-canvas-card">
+                  <span>Updates</span><strong>08</strong><small>Illustrative activity</small>
+                </article>
+              </div>
+              <div class="dev-canvas__feature">
+                <div><span class="dev-kicker">DESIGN SYSTEM</span><h4>Compose with confidence.</h4><p>Tokens, accessible structure, and a predictable CSS contract.</p></div>
+                <span class="dev-canvas__graphic" aria-hidden="true"><span></span><span></span><span></span></span>
+              </div>
+            </div>
+          </div>
+          <p class="dev-helper">Resize the browser to inspect the layout. No simulation of actual deploy, editing, or preview state.</p>
+        </section>
+
+        <section class="dev-panel dev-logs" id="logs" aria-labelledby="logs-heading">
+          <header class="dev-panel-head">
+            <div><p class="dev-kicker">HISTORY / FIXTURE</p><h2 id="logs-heading">Example build history</h2></div>
+            <span class="dev-pill dev-pill--success">Sample passed</span>
+          </header>
+          <ol class="dev-timeline">
+            <li><span class="dev-timeline__mark" aria-hidden="true"></span><div><strong>Accessibility review</strong><p>Keyboard and contrast checks are part of the release protocol.</p></div><time datetime="2026-11-22T10:10:00">10:10</time></li>
+            <li><span class="dev-timeline__mark" aria-hidden="true"></span><div><strong>Static HTML generated</strong><p>No framework runtime is required to render the example.</p></div><time datetime="2026-11-22T10:05:00">10:05</time></li>
+            <li><span class="dev-timeline__mark" aria-hidden="true"></span><div><strong>Tokens resolved</strong><p>Studio palette and compact density selected.</p></div><time datetime="2026-11-22T10:02:00">10:02</time></li>
+          </ol>
+        </section>
+
+        <aside class="dev-panel dev-inspector" id="inspector" aria-labelledby="inspector-heading">
+          <header class="dev-panel-head">
+            <div><p class="dev-kicker">INSPECTOR / REFERENCE</p><h2 id="inspector-heading">Design tokens</h2></div>
+          </header>
+          <div class="dev-token-row"><span>Accent</span><span class="dev-token-value"><i class="dev-swatch dev-swatch--accent" aria-hidden="true"></i> --syn-accent</span></div>
+          <div class="dev-token-row"><span>Surface</span><span class="dev-token-value"><i class="dev-swatch dev-swatch--surface" aria-hidden="true"></i> --syn-surface</span></div>
+          <div class="dev-token-row"><span>Border</span><span class="dev-token-value"><i class="dev-swatch dev-swatch--border" aria-hidden="true"></i> --syn-border-default</span></div>
+          <div class="dev-token-row"><span>Density</span><strong>Compact</strong></div>
+          <div class="dev-token-row"><span>Theme</span><strong>Studio</strong></div>
+          <div class="dev-inspector-note">
+            <strong>One source of truth</strong>
+            <p>Customize CSS variables in the host application. These are token references, not editable controls.</p>
+            <a href="../docs/theme-editor.html">Open the separate theme editor</a>
+          </div>
+        </aside>
+      </div>
+      <footer class="dev-footer">SYNTYR CSS · MIT example composition · All project data is illustrative.</footer>
+    </main>
+  </div>
+</body>
+</html>

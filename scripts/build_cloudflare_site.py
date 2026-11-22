@@ -44,6 +44,7 @@ NOINDEX_HTML = frozenset({
     "examples/settings-billing.html",
     "examples/app-onboarding.html", "examples/app-team.html", "examples/app-notifications.html",
     "examples/app-integrations.html", "examples/app-security.html",
+    "examples/developer-workspace.html",
     "examples/design-benchmarks/marketing.html", "examples/design-benchmarks/crm.html",
     "examples/design-benchmarks/documentation.html",
 })
@@ -349,7 +350,7 @@ def source_files(site_url: str = SITE_URL, *, include_cloudflare_headers: bool =
         "business.html", "form-state-contracts.html",
         "media-entertainment.html", "email.html", "common-ui.html", "platform-embed.html", "console.html", "form-composition.html", "geometry-terminal.html", "intensity-geometry.html", "landing.html", "semantic-starter.html",
         "minimalist-patterns.html", "design-states.html", "native-elements.html", "semantic-compositions.html", "native-interactions.html", "native-recipes.html", "resource-outline.html", "query-review.html", "command-launcher.html", "command-launcher.mjs", "native-choice-filter-list.html", "composition-adoption.html", "native-apis.html", "dropdowns.html", "performance-first.html",
-        "operations-console.css", "operations-console.html", "pricing.html", "workflow-steps.html", "settings-billing.html", "settings-billing.css",
+        "operations-console.css", "operations-console.html", "developer-workspace.css", "developer-workspace.html", "pricing.html", "workflow-steps.html", "settings-billing.html", "settings-billing.css",
         "app-screens.css", "app-onboarding.html", "app-team.html", "app-notifications.html",
         "app-integrations.html", "app-security.html",
         "flagship.css", "flagship-studio.html", "flagship-noir.html", "flagship-grid.html",
