@@ -82,9 +82,11 @@ async function main() {
 
     // Stress-test generated marker groups: 30 markers must fit a 320px screen
     // without overflowing the page, and remain reachable by local scrolling.
-    if (initial.supports && CSS_SUPPORT_MARKERS) {
+    if (CSS_SUPPORT_MARKERS) {
       await page.setViewportSize({ width: 320, height: 700 });
       await rail.evaluate(el => {
+        // The marker group should follow a narrow container, not just the viewport.
+        el.style.inlineSize = "180px";
         const existing = el.querySelector("article");
         for (let i = el.children.length; i < 30; i++) {
           const card = existing.cloneNode(true);
@@ -94,11 +96,15 @@ async function main() {
       });
       const markerLayout = await rail.evaluate(el => {
         const style = getComputedStyle(el, "::scroll-marker-group");
-        return { width: parseFloat(style.width), overflowX: style.overflowX,
+        return { width: parseFloat(style.width), display: style.display,
+          railWidth: el.getBoundingClientRect().width, overflowX: style.overflowX,
           viewport: innerWidth, pageWidth: document.documentElement.scrollWidth,
           groupContent: 30 * 16 + 29 * 8 };
       });
-      assert.ok(markerLayout.width <= markerLayout.viewport - 8, JSON.stringify(markerLayout));
+      assert.equal(markerLayout.display, "flex", "supported marker group must render");
+      assert.ok(markerLayout.railWidth < markerLayout.viewport,
+        "stress rail must be narrower than viewport");
+      assert.ok(markerLayout.width <= markerLayout.railWidth + 1, JSON.stringify(markerLayout));
       assert.equal(markerLayout.overflowX, "auto", JSON.stringify(markerLayout));
       assert.ok(markerLayout.groupContent > markerLayout.width, "stress markers exceed group width");
       assert.ok(markerLayout.pageWidth <= markerLayout.viewport + 1, JSON.stringify(markerLayout));
@@ -138,7 +144,10 @@ async function main() {
     }
 
     await page.reload();
-    if (await rail.evaluate(el => getComputedStyle(el, "::scroll-marker-group").display === "flex")) {
+    if (CSS_SUPPORT_MARKERS) {
+      assert.equal(await rail.evaluate(el =>
+        getComputedStyle(el, "::scroll-marker-group").display), "flex",
+        "browser supports marker group but CSS did not generate it");
       await rail.evaluate(el => {
         for (let i = el.children.length; i < 30; i++) {
           const card = document.createElement("article");
