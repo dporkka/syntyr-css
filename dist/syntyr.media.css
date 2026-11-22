@@ -185,11 +185,17 @@
     }
     :where(.syn-root) .syn-media-rail--controls::scroll-button(inline-start) {
       content: "‹" / "Scroll backward";
-      inset-inline-start: calc(anchor(left) + .5rem);
+      inset-inline-start: calc(anchor(self-start) + .5rem);
     }
     :where(.syn-root) .syn-media-rail--controls::scroll-button(inline-end) {
       content: "›" / "Scroll forward";
-      inset-inline-end: calc(anchor(right) + .5rem);
+      inset-inline-end: calc(anchor(self-end) + .5rem);
+    }
+    :where(.syn-root) .syn-media-rail--controls:dir(rtl)::scroll-button(inline-start) {
+      content: "→" / "Scroll backward";
+    }
+    :where(.syn-root) .syn-media-rail--controls:dir(rtl)::scroll-button(inline-end) {
+      content: "←" / "Scroll forward";
     }
     :where(.syn-root) .syn-media-rail--controls::scroll-button(*):focus-visible {
       outline: 3px solid var(--syn-focus-ring);

@@ -48,6 +48,27 @@ async function main() {
     assert.ok(await rail.evaluate(el => el.scrollLeft) > 0,
       "keyboard scrolling works with JavaScript disabled");
     console.log("PASS accessible scrollbar and keyboard fallback (JavaScript disabled)");
+
+    if (initial.supports) {
+      await page.reload();
+      await rail.evaluate(el => el.parentElement.setAttribute("dir", "rtl"));
+      await rail.scrollIntoViewIfNeeded();
+      const bounds = await rail.boundingBox();
+      assert.ok(bounds, "RTL rail exists");
+      const clickForward = bounds.x + 27;
+      const clickBackward = bounds.x + bounds.width - 27;
+      const buttonY = bounds.y + 26;
+      await page.mouse.click(clickForward, buttonY);
+      await page.waitForFunction(el => el.scrollLeft < 0, await rail.elementHandle(), { timeout: 2000 });
+      const advanced = await rail.evaluate(el => el.scrollLeft);
+      await page.mouse.click(clickBackward, buttonY);
+      await page.waitForFunction(({ el, advanced }) => el.scrollLeft > advanced,
+        { el: await rail.elementHandle(), advanced }, { timeout: 2000 });
+      const labels = await rail.evaluate(el => ["inline-start", "inline-end"].map(side =>
+        getComputedStyle(el, `::scroll-button(${side})`).content));
+      assert.deepEqual(labels, ['"→" / "Scroll backward"', '"←" / "Scroll forward"']);
+      console.log("PASS RTL buttons advance left and return right within the rail");
+    }
   } finally {
     await browser.close();
   }
