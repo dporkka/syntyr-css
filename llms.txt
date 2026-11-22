@@ -13,6 +13,8 @@ For browser readers, use the [human-readable HTML documentation directory](https
 - [Canonical DESIGN.md contract](https://syntyr-css.pages.dev/DESIGN.md): Agent-readable design rationale and Studio token snapshot generated from source CSS; other themes remain in CSS.
 - [AI quickstart](https://syntyr-css.pages.dev/docs/ai-quickstart.md): Version-aware CSS installation and valid HTML examples.
 - [Complete curated reference](https://syntyr-css.pages.dev/llms-full.txt): Concatenated public technical guides, generated from source.
+- [Syntyr Pro concept](https://syntyr-css.pages.dev/docs/pro): Proposed HTML/CSS SaaS, CRM, operations and developer-screen templates; private source candidate, not for sale.
+- [Syntyr Studio concept](https://syntyr-css.pages.dev/docs/studio): Proposed complete website and application templates; private research, no checkout, preorder or final license.
 - [Free CSS developer tools](https://syntyr-css.pages.dev/tools/): Client-side WCAG text contrast checker, accessible CSS theme token generator, fluid typography clamp() calculator and sandboxed responsive HTML preview. Tool scripts are docs-only; the distributed Syntyr CSS has no runtime JavaScript requirement.
 - [Curated web design resources and Syntyr research priorities](https://syntyr-css.pages.dev/docs/design-resources.html): Standalone HTML page with 82 curated directories, tools, design systems and libraries, descriptions, links and Syntyr research priorities.
 - [Syntyr vs Tailwind vs plain CSS decision guide](https://syntyr-css.pages.dev/docs/tailwind-alternative.html): Source-aware comparison of HTML-first styling, explicit reasons to keep Tailwind or native CSS, and free adoption examples (alpha.5 source preview).
