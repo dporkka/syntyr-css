@@ -41,6 +41,8 @@ class IntegrationServicesFunnelTests(unittest.TestCase):
                             for link in inquiries))
         self.assertIn('href="distribution.html"', page)
         self.assertIn('href="products.html"', page)
+        self.assertIn('class="site-mobile-menu"', page)
+        self.assertIn('aria-label="Mobile services navigation"', page)
 
     def test_services_have_contextual_discovery_links(self):
         for page_name, expected in (
