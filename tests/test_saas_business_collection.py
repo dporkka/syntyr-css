@@ -34,7 +34,7 @@ class SaaSBusinessCollectionTests(unittest.TestCase):
     def test_manifest_has_twelve_new_blocks_without_losing_prior_library(self):
         blocks = json.loads((ROOT / "blocks/manifest.json").read_text())["blocks"]
         by_id = {b["id"]: b for b in blocks}
-        self.assertEqual(len(blocks), 91)
+        self.assertEqual(len(blocks), 99)
         self.assertEqual(len(by_id), len(blocks))
         for ident in MARKETING:
             self.assertEqual(by_id[ident]["category"], "Marketing")

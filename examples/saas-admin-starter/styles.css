@@ -1,0 +1,53 @@
+/* Standalone example layout. Syntyr components and tokens remain canonical. */
+.starter-shell {display:grid;grid-template-columns:minmax(13rem,16rem) minmax(0,1fr);min-height:100svh}
+.starter-sidebar {display:flex;flex-direction:column;gap:1.25rem;min-width:0;padding:clamp(1rem,2vw,1.8rem);background:var(--syn-surface);border-inline-end:1px solid var(--syn-frame)}
+.starter-brand {display:flex;align-items:center;gap:.65rem;font-weight:800;letter-spacing:.05em;color:inherit;text-decoration:none}
+.starter-logo {display:grid;place-items:center;inline-size:2.2rem;block-size:2.2rem;border-radius:.55rem;background:var(--syn-accent);color:var(--syn-bg,#14171d);font-size:1.3rem}
+.starter-nav {display:grid;gap:.35rem}
+.starter-nav a {display:block;padding:.75rem 1rem;border-radius:.55rem;text-decoration:none;font-weight:600}
+.starter-nav a[aria-current="page"] {color:var(--syn-accent);background:var(--syn-accent-soft)}
+.starter-sidebar-footer {margin-top:auto;padding-top:1rem;border-top:1px solid var(--syn-frame)}
+.starter-main {min-width:0;padding:clamp(1rem,3vw,2.5rem)}
+.starter-topbar {display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-block-end:1.7rem}
+.starter-topbar h1 {font-size:clamp(1.75rem,3vw,2.5rem);line-height:1.15;margin:.25rem 0}
+.starter-topbar p:last-child {margin:0}
+.starter-avatar {flex:none;display:grid;place-items:center;width:2.6rem;height:2.6rem;border-radius:999px;background:var(--syn-accent-soft);border:1px solid var(--syn-frame);color:var(--syn-accent);font-weight:700}
+.starter-metrics {margin-block-end:1.25rem}
+.starter-columns {display:grid;grid-template-columns:minmax(0,1.6fr) minmax(16rem,1fr);gap:1.25rem;margin-block-end:1.25rem}
+.starter-section-head {display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-block-end:1rem}
+.starter-section-head h2,.starter-section-head .syn-eyebrow {margin:0}
+.starter-caption {color:var(--syn-muted);font-size:.8rem;text-align:start;padding:.5rem 0 .85rem}
+.starter-number,.starter-deal {font-variant-numeric:tabular-nums;white-space:nowrap}
+.starter-callout,.starter-intro {display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.starter-footer {margin-block-start:2.5rem;padding-block-start:1rem;border-block-start:1px solid var(--syn-frame)}
+.starter-pipeline {margin-block:1.25rem}
+.starter-pipeline .syn-pipeline-lane {min-width:min(17rem,75vw)}
+.starter-pipeline .syn-pipeline-list {min-height:12rem}
+.starter-deal {font-weight:700;font-size:1.15rem}
+.starter-filters {margin-block-start:1rem}
+.starter-actions {display:flex;align-items:end;flex-wrap:wrap;gap:.5rem}
+.starter-table-card {margin-block-start:1.25rem}
+.starter-billing {grid-template-columns:repeat(2,minmax(0,1fr))}
+.starter-plan {font-size:1.3rem;font-weight:700}
+.starter-period {font-size:.85rem;font-weight:500;color:var(--syn-muted)}
+.starter-facts {display:grid;gap:.6rem;margin-block-start:1.3rem}
+.starter-facts div {display:flex;justify-content:space-between;gap:1rem;border-block-end:1px solid var(--syn-frame);padding-block:.45rem}
+.starter-facts dt {color:var(--syn-muted)}
+.starter-facts dd {font-weight:700;margin:0}
+.starter-skip {position:absolute;top:-12rem;left:1rem;z-index:10}
+.starter-skip:focus {top:1rem}
+.starter-page :focus-visible {outline:2px solid var(--syn-accent);outline-offset:3px}
+.starter-page [id^="customer-"]:target {outline:2px solid var(--syn-accent);outline-offset:-2px}
+@media(max-width:70rem) {.starter-columns{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:50rem) {
+  .starter-shell{grid-template-columns:minmax(0,1fr)}
+  .starter-sidebar{border-inline-end:0;border-block-end:1px solid var(--syn-frame);padding:1rem;gap:.65rem}
+  .starter-sidebar-footer,.starter-sidebar>p{display:none}
+  .starter-nav{display:flex;gap:.2rem;overflow-x:auto}
+  .starter-nav a{white-space:nowrap}
+  .starter-main{padding:1rem}
+  .starter-billing{grid-template-columns:minmax(0,1fr)}
+}
+@media(max-width:30rem) {.starter-avatar{display:none}}
+@media(forced-colors:active) {.starter-logo,.starter-nav a[aria-current="page"]{border:1px solid CanvasText}.starter-page :focus-visible{outline-color:Highlight}}
+@media(prefers-reduced-motion:reduce) {.starter-page *{scroll-behavior:auto}}

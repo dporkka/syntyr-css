@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Preview original SYNTYR themes and generate CSS-only color overrides, with an immediate WCAG text contrast check.">
+  <meta name="description" content="Configure Syntyr theme colors, typography and spacing; preview full-page styles and export portable CSS and JSON.">
   <title>Theme editor — SYNTYR CSS</title>
   <link rel="stylesheet" href="../dist/syntyr.core.css">
   <link rel="stylesheet" href="../dist/syntyr.effects.css">
@@ -18,7 +18,7 @@
     <section class="docs-section" aria-labelledby="editor-title">
       <p class="syn-eyebrow">DESIGN SYSTEM / OPTIONAL DOCUMENTATION TOOL</p>
       <h1 id="editor-title">Theme editor</h1>
-      <p class="syn-lede">Preview seven SYNTYR palettes with independent quiet, standard or cinematic effect intensity. Generate copyable CSS-variable overrides without adding JavaScript to your application.</p>
+      <p class="syn-lede">Customize seven palettes with coordinated site colors, system-font typography and spacing rhythms. Preview the result across common page sections and export CSS variables without a runtime dependency.</p>
       <p class="syn-caption">To see intensity changes in the live preview, the effect stylesheet is loaded; only the documentation editor uses a script.</p>
       <div class="docs-two">
         <section class="syn-panel" aria-labelledby="controls-title">
@@ -36,22 +36,68 @@
             <label class="syn-label" for="radius">CORNER RADIUS
               <select class="syn-select" id="radius" name="radius"><option value="default" selected>Theme default</option><option value="0">Square</option><option value="0.25rem">Subtle</option><option value="0.5rem">Rounded</option><option value="0.75rem">Soft</option></select>
             </label>
+            <label class="syn-label" for="typography">TYPOGRAPHY PAIRING
+              <select class="syn-select" id="typography" name="typography">
+                <option value="system" selected>System default</option>
+                <option value="editorial">Editorial / serif headings</option>
+                <option value="technical">Technical / monospace</option>
+              </select>
+            </label>
+            <label class="syn-label" for="spacing">SITE SPACING RHYTHM
+              <select class="syn-select" id="spacing" name="spacing">
+                <option value="balanced" selected>Balanced (default)</option>
+                <option value="tight">Tight</option>
+                <option value="airy">Airy</option>
+              </select>
+            </label>
             <label class="syn-label" for="accent">ACCENT / CONTROL BACKGROUND
               <input class="syn-input" id="accent" type="color" value="#76e7f7">
             </label>
             <label class="syn-label" for="on-accent">ON-ACCENT / CONTROL TEXT
               <input class="syn-input" id="on-accent" type="color" value="#07121a">
             </label>
+            <label class="syn-label" for="page-bg">PAGE BACKGROUND
+              <input class="syn-input" id="page-bg" type="color" value="#080f19">
+            </label>
+            <label class="syn-label" for="surface">CARD SURFACE
+              <input class="syn-input" id="surface" type="color" value="#111f2c">
+            </label>
+            <label class="syn-label" for="body-text">PRIMARY TEXT
+              <input class="syn-input" id="body-text" type="color" value="#edf9ff">
+            </label>
+            <label class="syn-label" for="muted-text">SECONDARY TEXT
+              <input class="syn-input" id="muted-text" type="color" value="#adbfca">
+            </label>
             <p id="contrast-result" role="status" aria-live="polite">Calculating contrast…</p>
-            <button class="syn-button" id="reset-theme" type="button">RESET SELECTED PALETTE</button>
+            <p id="contrast-background-result" role="status" aria-live="polite">Checking page background contrast…</p>
+            <p id="contrast-surface-result" role="status" aria-live="polite">Checking surface contrast…</p>
+            <p id="contrast-muted-result" role="status" aria-live="polite">Checking secondary-text contrast…</p>
+            <button class="syn-button" id="reset-theme" type="button">RESET PALETTE COLORS</button>
           </div>
         </section>
-        <section class="syn-panel syn-glow syn-gradient-wash" id="preview" data-syn-theme="grid" data-syn-intensity="standard" aria-labelledby="preview-title">
-          <span class="syn-eyebrow">LIVE / LOCAL PREVIEW</span>
-          <h2 id="preview-title" class="syn-heading">System overview</h2>
-          <p class="syn-lede">Colors change instantly without altering any CSS distribution files.</p>
-          <div class="syn-actions"><button class="syn-button syn-button--primary" type="button">PRIMARY ACTION</button><a class="syn-button" href="index.html">GALLERY</a></div>
-          <p class="syn-caption">Only the preview area is customized. The surrounding documentation retains its own Studio palette.</p>
+        <section class="syn-panel" id="preview" data-syn-theme="grid" data-syn-intensity="standard" aria-labelledby="preview-title"
+          style="background:var(--syn-bg);color:var(--syn-text);font-family:var(--syn-font)">
+          <div class="syn-stack">
+            <header class="syn-panel">
+              <p class="syn-eyebrow">SITE PREVIEW / HEADER</p>
+              <h2 id="preview-title" class="syn-heading">Your product website</h2>
+              <p class="syn-lede">Preview your design system across a header, feature card, form and action.</p>
+              <div class="syn-actions"><button class="syn-button syn-button--primary" type="button">GET STARTED</button><a class="syn-button" href="index.html">EXPLORE</a></div>
+            </header>
+            <article class="syn-panel syn-glow syn-gradient-wash">
+              <p class="syn-eyebrow">FEATURES</p>
+              <h3 class="syn-heading">A flexible design foundation</h3>
+              <p class="syn-body">Typography and spacing are shared across every section.</p>
+              <p class="syn-muted">Muted text and panels use your coordinated color roles.</p>
+            </article>
+            <div class="syn-panel">
+              <label class="syn-label" for="preview-email">CONTACT FORM EXAMPLE
+                <input class="syn-input" type="email" id="preview-email" placeholder="you@example.com" autocomplete="off">
+              </label>
+              <p class="syn-caption">This is a visual example; it never sends form submissions.</p>
+            </div>
+            <footer class="syn-caption">Changes stay inside this site preview. The editor retains its Studio theme.</footer>
+          </div>
         </section>
       </div>
       <section class="syn-panel" aria-labelledby="output-title" style="margin-block-start:1.5rem">
@@ -63,7 +109,7 @@
         <pre class="docs-code"><code id="generated-preset"></code></pre>
         <button class="syn-button" type="button" id="copy-preset">Copy JSON preset</button>
         <p id="preset-feedback" role="status" aria-live="polite"></p>
-        <p class="syn-caption">The ratio checks only the foreground/background of the primary button. It does not certify the theme, other surfaces, focus states, or WCAG compliance.</p>
+        <p class="syn-caption">Contrast checks compare button text, body text against page/surface, and secondary text against surface. Check focus states, links, disabled states, non-text graphics and all other color combinations separately. No WCAG conformance is certified.</p>
       </section>
     </section>
   </main>

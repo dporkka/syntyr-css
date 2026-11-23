@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Syntyr SaaS Admin Starter: responsive, dependency-free HTML template with example data.">
+  <title>Workspace overview | Syntyr SaaS Admin</title>
+  <link rel="stylesheet" href="../../dist/syntyr.core.css">
+  <link rel="stylesheet" href="../../dist/syntyr.recipes.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="syn-root syn-page starter-page" data-syn-theme="studio">
+  <a class="syn-button starter-skip" href="#main">Skip to content</a>
+  <div class="starter-shell">
+    <aside class="starter-sidebar" aria-label="Workspace sidebar">
+      <a class="starter-brand" href="index.html"><span class="starter-logo">S</span>SYNTYR <span class="syn-muted">/ ATLAS</span></a>
+      <p class="syn-caption">EXAMPLE WORKSPACE • DEMO</p>
+      <nav class="syn-app-nav starter-nav" aria-label="Primary navigation">
+        <a href="index.html" aria-current="page">Overview</a>
+        <a href="pipeline.html">Pipeline</a>
+        <a href="customers.html">Customers</a>
+        <a href="billing.html">Billing</a>
+      </nav>
+      <div class="starter-sidebar-footer"><p class="syn-eyebrow">STATIC STARTER</p><p class="syn-caption">Illustrative data only. No backend, authentication, or persistence.</p><a href="README.md">Implementation notes</a></div>
+    </aside>
+    <main id="main" class="starter-main">
+      <header class="starter-topbar"><div><p class="syn-eyebrow">ATLAS / OVERVIEW</p><h1>Workspace overview</h1><p class="syn-muted">Sample metrics and activity for a subscription software workspace.</p></div><span class="starter-avatar" aria-label="Demo account">AT</span></header>
+
+      <section class="syn-kpi-grid starter-metrics" aria-label="Illustrative workspace metrics">
+        <article class="syn-app-card"><p class="syn-stat-label">MONTHLY RECURRING REVENUE</p><p class="syn-stat-value">$28,450</p><p class="syn-caption">Illustrative · +8.2% month over month</p></article>
+        <article class="syn-app-card"><p class="syn-stat-label">ACTIVE CUSTOMERS</p><p class="syn-stat-value">142</p><p class="syn-caption">Illustrative · 12 annual subscribers</p></article>
+        <article class="syn-app-card"><p class="syn-stat-label">OPEN OPPORTUNITIES</p><p class="syn-stat-value">24</p><p class="syn-caption">Illustrative · 5 follow-ups pending</p></article>
+        <article class="syn-app-card"><p class="syn-stat-label">NET RETENTION</p><p class="syn-stat-value">108%</p><p class="syn-caption">Illustrative · trailing twelve months</p></article>
+      </section>
+      <div class="starter-columns">
+        <section class="syn-app-card" aria-labelledby="accounts-heading">
+          <div class="starter-section-head"><div><p class="syn-eyebrow">CUSTOMERS</p><h2 id="accounts-heading" class="syn-heading">Accounts to watch</h2></div><a class="syn-button syn-button--outline" href="customers.html">All customers</a></div>
+          <div class="syn-table-wrap"><table class="syn-table">
+            <caption class="starter-caption">Illustrative account health and subscription value</caption>
+            <thead><tr><th scope="col">Account</th><th scope="col">Plan</th><th scope="col">MRR</th><th scope="col">Health</th></tr></thead>
+            <tbody>
+              <tr><th scope="row"><a href="customers.html#customer-northstar">Northstar Labs</a></th><td>Growth</td><td class="starter-number">$890</td><td><span class="syn-status syn-status--success">Healthy</span></td></tr>
+              <tr><th scope="row"><a href="customers.html#customer-cedar">Cedar Systems</a></th><td>Scale</td><td class="starter-number">$2,400</td><td><span class="syn-status syn-status--warning">Review</span></td></tr>
+              <tr><th scope="row"><a href="customers.html#customer-river">Riverstone</a></th><td>Growth</td><td class="starter-number">$890</td><td><span class="syn-status syn-status--success">Healthy</span></td></tr>
+            </tbody>
+          </table></div>
+        </section>
+        <section class="syn-app-card" aria-labelledby="activity-heading">
+          <div class="starter-section-head"><div><p class="syn-eyebrow">LATEST UPDATES</p><h2 id="activity-heading" class="syn-heading">Recent activity</h2></div></div>
+          <ul class="syn-activity-list">
+            <li><span>Northstar upgraded to Growth</span><span class="syn-caption">2h ago</span></li>
+            <li><span>Proposal sent to Cedar Systems</span><span class="syn-caption">Yesterday</span></li>
+            <li><span>Invoice marked paid</span><span class="syn-caption">Monday</span></li>
+          </ul>
+          <p><a href="pipeline.html">Review opportunities</a></p>
+        </section>
+      </div>
+      <section class="syn-app-card starter-callout" aria-labelledby="next-heading"><div><p class="syn-eyebrow">NEXT STEP</p><h2 id="next-heading" class="syn-heading">From opportunity to customer</h2><p class="syn-muted">This preview has no CRM state or live data. Connect a server before production.</p></div><a class="syn-button syn-button--primary" href="pipeline.html">Open pipeline</a></section>
+
+      <footer class="syn-caption starter-footer">Syntyr SaaS Admin Starter · MIT · HTML + CSS, zero runtime JavaScript</footer>
+    </main>
+  </div>
+</body>
+</html>

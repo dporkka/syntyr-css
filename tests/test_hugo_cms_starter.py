@@ -174,7 +174,10 @@ class HugoCmsStarterTests(unittest.TestCase):
 
     def test_hugo_template_covers_all_portable_block_types(self):
         source = (ROOT / "examples/hugo-cms/layouts/home.html").read_text()
-        self.assertIn("hugo.Data.home", source)
+        # .Site.Data works on Cloudflare Pages' preinstalled Hugo 0.147.7
+        # and newer Hugo. The 'hugo' namespace has no Data property there.
+        self.assertIn(".Site.Data.home", source)
+        self.assertNotIn("hugo.Data.home", source)
         for kind in ("hero", "features", "pricing", "faq", "cta"):
             with self.subTest(kind=kind):
                 self.assertIn('eq $block.type "' + kind + '"', source)

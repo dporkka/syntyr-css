@@ -610,6 +610,36 @@
       ]
     },
     {
+      "id": "editorial-intro-split",
+      "category": "Editorial",
+      "title": "Editorial intro with context panel",
+      "description": "An editorial introduction with primary actions and a contextual checklist beside it.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "intro",
+        "split",
+        "editorial",
+        "landing"
+      ]
+    },
+    {
+      "id": "article-toc",
+      "category": "Editorial",
+      "title": "Article with contents sidebar",
+      "description": "A long-form article and real anchor-linked table of contents in a wrapping sidecar.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "article",
+        "contents",
+        "sidebar",
+        "reading"
+      ]
+    },
+    {
       "id": "case-study-preview",
       "category": "Portfolio",
       "title": "Case-study teaser",
@@ -1228,6 +1258,36 @@
       ]
     },
     {
+      "id": "decision-guide",
+      "category": "Services",
+      "title": "Three-path decision guide",
+      "description": "A responsive choice of three service approaches with visible criteria and tradeoffs.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "decision",
+        "comparison",
+        "services",
+        "paths"
+      ]
+    },
+    {
+      "id": "faq-sidecar",
+      "category": "Services",
+      "title": "FAQs with a contact sidebar",
+      "description": "Native expandable answers alongside a clear contact path.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "faq",
+        "questions",
+        "sidebar",
+        "contact"
+      ]
+    },
+    {
       "id": "careers-listings",
       "category": "Company",
       "title": "Careers and open positions",
@@ -1240,6 +1300,21 @@
         "jobs",
         "recruiting",
         "hiring"
+      ]
+    },
+    {
+      "id": "principles-columns",
+      "category": "Company",
+      "title": "Three-column principles section",
+      "description": "Organizational principles with concrete explanations in a responsive grid.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "principles",
+        "values",
+        "company",
+        "columns"
       ]
     },
     {
@@ -1303,6 +1378,21 @@
       ]
     },
     {
+      "id": "resource-index",
+      "category": "Publishing",
+      "title": "Grouped resource topic index",
+      "description": "A documentation and resource hub with grouped descriptive navigation links.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "resources",
+        "index",
+        "documentation",
+        "navigation"
+      ]
+    },
+    {
       "id": "press-highlights",
       "category": "Marketing",
       "title": "News and press highlights",
@@ -1315,6 +1405,36 @@
         "mentions",
         "news",
         "announcements"
+      ]
+    },
+    {
+      "id": "feature-rows",
+      "category": "Marketing",
+      "title": "Stacked feature story rows",
+      "description": "Two narrative feature rows with contextual detail cards and destination links.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "features",
+        "story",
+        "rows",
+        "content"
+      ]
+    },
+    {
+      "id": "impact-narrative",
+      "category": "Marketing",
+      "title": "Metrics with explanatory narrative",
+      "description": "Contextualized illustrative metrics paired with interpretation and source guidance.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "metrics",
+        "story",
+        "stats",
+        "explanation"
       ]
     },
     {

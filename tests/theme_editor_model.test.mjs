@@ -9,7 +9,9 @@ const source = readFileSync(new URL('../docs/theme-editor.js', import.meta.url),
 function createEditor({clipboardAvailable = true} = {}) {
   const ids = ['theme', 'intensity', 'density', 'radius', 'accent', 'on-accent',
     'preview', 'contrast-result', 'generated-css', 'generated-preset',
-    'copy-preset', 'preset-feedback', 'reset-theme'];
+    'copy-preset', 'preset-feedback', 'reset-theme', 'typography', 'spacing',
+    'page-bg', 'surface', 'body-text', 'muted-text',
+    'contrast-background-result', 'contrast-surface-result', 'contrast-muted-result'];
   const elements = Object.fromEntries(ids.map(id => [id, {
     id, value: '', textContent: '', dataset: {}, listeners: {},
     addEventListener(event, fn) { this.listeners[event] = fn; },
@@ -18,6 +20,8 @@ function createEditor({clipboardAvailable = true} = {}) {
   Object.assign(elements.intensity, {value: 'standard'});
   Object.assign(elements.density, {value: 'comfortable'});
   Object.assign(elements.radius, {value: 'default'});
+  Object.assign(elements.typography, {value: 'system'});
+  Object.assign(elements.spacing, {value: 'balanced'});
   Object.assign(elements.accent, {value: '#76e7f7'});
   Object.assign(elements['on-accent'], {value: '#07121a'});
   const styles = new Map();
@@ -38,7 +42,9 @@ function createEditor({clipboardAvailable = true} = {}) {
     document, navigator, window: {getSelection() { return selection; }},
     getComputedStyle() {
       return {getPropertyValue(name) {
-        return name === '--syn-accent' ? '#76e7f7' : '#07121a';
+        return ({'--syn-accent': '#76e7f7', '--syn-on-accent': '#07121a',
+          '--syn-bg':'#080f19', '--syn-surface':'#111f2c',
+          '--syn-text':'#edf9ff', '--syn-muted':'#adbfca'})[name] || '#07121a';
       }};
     },
   });
@@ -88,4 +94,60 @@ test('copy button selects JSON for manual copying when clipboard is unavailable'
   await elements['copy-preset'].listeners.click();
   assert.equal(selection.selected, true);
   assert.match(elements['preset-feedback'].textContent, /keyboard to copy/);
+});
+
+
+test('semantic page colors update preview, JSON and all scoped CSS output', () => {
+  const {elements, styles} = createEditor();
+  const cases = [
+    ['page-bg', '--syn-bg', '#101820'],
+    ['surface', '--syn-surface', '#253247'],
+    ['body-text', '--syn-text', '#ffffff'],
+    ['muted-text', '--syn-muted', '#eeeeee'],
+  ];
+  for (const [id, token, color] of cases) {
+    elements[id].value = color;
+    elements[id].listeners.input();
+    assert.equal(styles.get(token), color);
+    assert.equal(JSON.parse(elements['generated-preset'].textContent).tokens[token], color);
+    assert.ok(elements['generated-css'].textContent.includes(token + ': ' + color));
+  }
+  assert.equal(elements['contrast-background-result'].dataset.result, 'pass');
+  assert.equal(elements['contrast-surface-result'].dataset.result, 'pass');
+  assert.equal(elements['contrast-muted-result'].dataset.result, 'pass');
+  elements['body-text'].value = '#253247';
+  elements['body-text'].listeners.input();
+  assert.equal(elements['contrast-surface-result'].dataset.result, 'fail');
+  elements['page-bg'].value = '#253247';
+  elements['page-bg'].listeners.input();
+  assert.equal(elements['contrast-background-result'].dataset.result, 'fail');
+  assert.match(elements['contrast-surface-result'].textContent, /1\.00:1/);
+
+  elements.theme.value = 'noir';
+  elements.theme.listeners.change();
+  assert.notEqual(elements['surface'].value, '#253247', 'Theme switch restores the new palette defaults');
+});
+
+test('typography and spacing presets export token-only overrides without external fonts', () => {
+  const {elements, styles} = createEditor();
+  elements.typography.value = 'editorial';
+  elements.typography.listeners.change();
+  elements.spacing.value = 'airy';
+  elements.spacing.listeners.change();
+  const preset = JSON.parse(elements['generated-preset'].textContent);
+  assert.equal(preset.typography, 'editorial');
+  assert.equal(preset.spacing, 'airy');
+  assert.match(preset.tokens['--syn-font-display'], /Georgia/);
+  assert.match(preset.tokens['--syn-font'], /system-ui/);
+  assert.equal(preset.tokens['--syn-space-3'], '1.5rem');
+  assert.equal(styles.get('--syn-space-3'), '1.5rem');
+  assert.ok(elements['generated-css'].textContent.includes('--syn-font-display: Georgia'));
+  assert.ok(elements['generated-css'].textContent.includes('--syn-space-3: 1.5rem'));
+  assert.doesNotMatch(elements['generated-css'].textContent, /@import|url\(/);
+  elements.spacing.value = 'balanced';
+  elements.spacing.listeners.change();
+  assert.equal(styles.has('--syn-space-3'), false, 'Balanced spacing defers to the base theme');
+  elements.typography.value = 'system';
+  elements.typography.listeners.change();
+  assert.equal(styles.has('--syn-font-display'), false);
 });
