@@ -31,10 +31,11 @@ def check(browser, viewport):
     assert page.locator('script').count() == 1
     assert preview.get_attribute('data-syn-theme') == 'grid'
     assert preview.get_attribute('data-syn-intensity') == 'standard'
-    default_shadow = preview.evaluate("e => getComputedStyle(e).boxShadow")
+    feature_card = preview.locator('.syn-glow')
+    default_shadow = feature_card.evaluate("e => getComputedStyle(e).boxShadow")
     page.locator('#intensity').select_option('quiet')
     assert preview.get_attribute('data-syn-intensity') == 'quiet'
-    quiet_shadow = preview.evaluate("e => getComputedStyle(e).boxShadow")
+    quiet_shadow = feature_card.evaluate("e => getComputedStyle(e).boxShadow")
     assert default_shadow != quiet_shadow, (default_shadow, quiet_shadow)
     page.locator('#intensity').select_option('cinematic')
     assert preview.get_attribute('data-syn-intensity') == 'cinematic'
@@ -50,6 +51,7 @@ def check(browser, viewport):
         assert page.locator('#contrast-result').get_attribute('data-result') == 'pass'
 
     # The full-page sample must apply typography, rhythm and semantic colors.
+    page.locator('#theme').select_option('grid')
     assert page.locator('#surface').input_value() == '#111f2c'
     assert page.locator('#body-text').input_value() == '#edf9ff'
     page.locator('#typography').select_option('editorial')
