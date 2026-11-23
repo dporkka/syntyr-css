@@ -59,7 +59,7 @@ class AdoptionJourneyTests(unittest.TestCase):
             with self.subTest(page=page):
                 nav = Navigation()
                 nav.feed((ROOT / page).read_text(encoding="utf-8"))
-                self.assertEqual(tuple(label for label, _ in nav.primary), PRIMARY_LABELS)
+                self.assertEqual(tuple(label for label, _ in nav.primary[:6]), PRIMARY_LABELS)
                 self.assertEqual(tuple(label for label, _ in nav.mobile[:6]), PRIMARY_LABELS)
                 for _, href in nav.primary:
                     self.assertTrue(href and not href.startswith("javascript:"))

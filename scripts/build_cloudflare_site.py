@@ -22,6 +22,7 @@ if __package__:
     from .build_playground_catalog import generate as playground_catalog
     from .build_blocks import build as blocks_gallery
     from .build_section_composer import build as section_catalog
+    from .build_catalog_release import build_release_matrix, render_release_matrix, verify_catalog_annotations
     from .static_deploy import validate_site_url
 else:
     from build import all_distributions, javascript_distributions
@@ -29,6 +30,7 @@ else:
     from build_playground_catalog import generate as playground_catalog
     from build_blocks import build as blocks_gallery
     from build_section_composer import build as section_catalog
+    from build_catalog_release import build_release_matrix, render_release_matrix, verify_catalog_annotations
     from static_deploy import validate_site_url
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -314,6 +316,12 @@ def source_files(site_url: str = SITE_URL, *, include_cloudflare_headers: bool =
         raise ValueError("Stale blocks gallery: run scripts/build_blocks.py")
     if (ROOT / "metadata/section-composer.v1.json").read_bytes() != section_catalog():
         raise ValueError("Stale section composer library: run scripts/build_section_composer.py")
+    # Published-release copy targets must be backed by the frozen CSS snapshot.
+    release_matrix = build_release_matrix()
+    if ((ROOT / "metadata/catalog-release-compatibility.v1.json").read_text(encoding="utf-8")
+            != render_release_matrix(release_matrix)
+            or not verify_catalog_annotations(release_matrix)):
+        raise ValueError("Stale release coverage: run scripts/build_catalog_release.py")
     # Fail closed if either gallery changes without updating the playground.
     if (ROOT / "docs/playground-catalog.js").read_text(encoding="utf-8") != playground_catalog():
         raise ValueError("Stale playground examples: run scripts/build_playground_catalog.py")
@@ -336,6 +344,7 @@ def source_files(site_url: str = SITE_URL, *, include_cloudflare_headers: bool =
         ROOT / "llms-full.txt",
         ROOT / "metadata/components.json",
         ROOT / "metadata/component-gallery.v1.json",
+        ROOT / "metadata/catalog-release-compatibility.v1.json",
         ROOT / "metadata/section-composer.v1.json",
         # Public, generated, dependency-free mobile design tokens and copy-owned source.
         ROOT / "metadata/mobile/syntyr.tokens.json",
