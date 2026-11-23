@@ -11,15 +11,29 @@
   <script defer src="catalog.js"></script>
 </head>
 <body class="syn-root syn-page" data-syn-theme="studio" id="catalog-top">
-  <header class="syn-header syn-shell">
+  <header class="syn-header syn-shell docs-header">
     <a class="syn-logo" href="index.html">SYNTYR / COMPONENT CATALOG</a>
-    <nav class="syn-nav" aria-label="Documentation">
-      <a href="index.html">Gallery</a>
-      <a href="theme-editor.html">Themes</a>
-      <a href="components.html">API reference</a>
-      <a href="blocks.html">Sections &amp; layouts</a>
-      <a href="console-kit.html">Premium previews</a>
+    <nav class="syn-nav" aria-label="Main navigation">
+      <a href="index.html#install">Get started</a>
+      <a href="catalog.html">Components</a>
+      <a href="blocks.html">Blocks</a>
+      <a href="../tools/">Free tools</a>
+      <a href="index.html">Docs</a>
+      <a href="https://github.com/dporkka/syntyr-css">GitHub</a>
     </nav>
+    <details class="site-mobile-menu">
+      <summary>Menu</summary>
+      <nav aria-label="Mobile navigation">
+        <a href="index.html#install">Get started</a>
+        <a href="catalog.html">Components</a>
+        <a href="blocks.html">Blocks</a>
+        <a href="../tools/">Free tools</a>
+        <a href="index.html">Docs</a>
+        <a href="https://github.com/dporkka/syntyr-css">GitHub</a>
+        <a href="theme-editor.html">Theme editor</a>
+        <a href="components.html">API reference</a>
+      </nav>
+    </details>
   </header>
   <main class="syn-shell catalog-layout">
     <aside class="catalog-sidebar" aria-labelledby="catalog-index-heading">
@@ -138,6 +152,15 @@
       <p class="syn-eyebrow">NATIVE HTML / COPY AND CUSTOMIZE</p>
       <h1 class="syn-title" id="catalog-title">Free HTML and CSS component catalog</h1>
       <p class="syn-lede">Browse common HTML elements by category, inspect their source, and copy into any Syntyr-styled page. Every preview and HTML snippet works without JavaScript; optional search and clipboard controls enhance this documentation page only.</p>
+      <aside class="syn-panel catalog-release-scope" id="catalog-release-scope" aria-labelledby="catalog-release-title">
+        <p class="syn-eyebrow">SOURCE PREVIEW / NOT A PUBLISHED RELEASE</p>
+        <h2 class="syn-heading" id="catalog-release-title">Unreleased alpha.5 component examples</h2>
+        <p class="syn-muted">All component previews and full-page copies below target the experimental alpha.5 source CSS, not the published v0.3.0-alpha.4 download. Do not assume a showcased class, recipe, or palette works with alpha.4. The published release is the safer starting point for production projects.</p>
+        <div class="syn-actions">
+          <a class="syn-button syn-button--primary" href="index.html#install">Install published alpha.4</a>
+          <a class="syn-button syn-button--outline" href="distribution.html">Read release compatibility guidance</a>
+        </div>
+      </aside>
       <p class="syn-caption">Load <code>syntyr.core.css</code> and place components within a <code>syn-root</code> scope. The examples below use the existing component API—no hydration or framework wrappers. Optional recipe, geometry and visualization examples require the named CSS module after core, or the all-in-one stylesheet.</p>
       <p class="syn-caption">For larger tables and enterprise-style interfaces, compare the <a href="../examples/data-grid.html">read-only data grid example</a>, <a href="../examples/data-tables.html">accessible data tables</a> and <a href="data-grid.html">data grid integration guidance</a>. These examples do not implement application sorting, virtualization or persistence.</p>
       <p class="syn-caption">For responsive layout patterns, see the <a href="composition-adoption.html">intrinsic layout cookbook</a>: fluid spacing, stacks, wrapping clusters, sidecars and grids, all with copyable HTML.</p>
@@ -273,6 +296,7 @@
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-buttons-title">Buttons</h2>
             <span class="syn-badge">syntyr.core.css</span>
+            <span class="catalog-release-label" title="Unreleased alpha.5 source preview">alpha.5 preview</span>
           </div>
           <p class="syn-muted">Use native buttons for actions; variants change appearance only.</p>
           <span class="catalog-preview-anchor" id="catalog-buttons-title-preview" aria-hidden="true"></span>
@@ -302,6 +326,7 @@
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-forms-title">Labeled fields</h2>
             <span class="syn-badge">syntyr.core.css</span>
+            <span class="catalog-release-label" title="Unreleased alpha.5 source preview">alpha.5 preview</span>
           </div>
           <p class="syn-muted">Use real labels and native validation; form submission belongs to your app.</p>
           <span class="catalog-preview-anchor" id="catalog-forms-title-preview" aria-hidden="true"></span>
@@ -331,6 +356,7 @@
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-native-controls-title">Native range, file and color</h2>
             <span class="syn-badge">syntyr.core.css</span>
+            <span class="catalog-release-label" title="Unreleased alpha.5 source preview">alpha.5 preview</span>
           </div>
           <p class="syn-muted">One existing input class; native keyboard, picker and file selection behavior.</p>
           <span class="catalog-preview-anchor" id="catalog-native-controls-title-preview" aria-hidden="true"></span>
@@ -366,6 +392,7 @@
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-interaction-card-0">Exclusive accordion</h2>
             <span class="syn-badge">syntyr.core.css</span>
+            <span class="catalog-release-label" title="Unreleased alpha.5 source preview">alpha.5 preview</span>
           </div>
           <p class="syn-muted">Related disclosures use native <code>details name</code>; no script or custom roles.</p>
           <p class="syn-caption catalog-feature-note"><strong>Browser note:</strong> If exclusive <code>details name</code> grouping is unavailable, each disclosure remains independently usable; multiple answers may stay open. <a href="#catalog-browser-support">Compatibility and fallbacks</a>.</p>
@@ -408,6 +435,7 @@
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-interaction-card-1">GET search form</h2>
             <span class="syn-badge">syntyr.core.css</span>
+            <span class="catalog-release-label" title="Unreleased alpha.5 source preview">alpha.5 preview</span>
           </div>
           <p class="syn-muted">Real search landmark and GET submission; the static destination does not filter results.</p>
           <span class="catalog-preview-anchor" id="catalog-interaction-card-1-preview" aria-hidden="true"></span>
@@ -443,6 +471,7 @@
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-interaction-card-2">Confirmation dialog</h2>
             <span class="syn-badge">syntyr.core.css</span>
+            <span class="catalog-release-label" title="Unreleased alpha.5 source preview">alpha.5 preview</span>
           </div>
           <p class="syn-muted">Native modal command and dialog-only choices; confirming this preview does not persist changes.</p>
           <p class="syn-caption catalog-feature-note"><strong>Browser note:</strong> Dialog opening through <code>commandfor</code> needs native invoker support. Production flows must supply an accessible review-page or host-owned fallback. <a href="#catalog-browser-support">Compatibility and fallbacks</a>.</p>
@@ -493,6 +522,7 @@
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-interaction-card-3">Datalist suggestions</h2>
             <span class="syn-badge">syntyr.core.css</span>
+            <span class="catalog-release-label" title="Unreleased alpha.5 source preview">alpha.5 preview</span>
           </div>
           <p class="syn-muted">Browser suggestions for a free-text input; not a searchable select or combobox implementation.</p>
           <span class="catalog-preview-anchor" id="catalog-interaction-card-3-preview" aria-hidden="true"></span>
@@ -532,6 +562,7 @@
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-interaction-card-4">Meter and output</h2>
             <span class="syn-badge">syntyr.core.css + syntyr.semantic.css</span>
+            <span class="catalog-release-label" title="Unreleased alpha.5 source preview">alpha.5 preview</span>
           </div>
           <p class="syn-muted">Native bounded measurements and static server result; calculations belong to the host.</p>
           <span class="catalog-preview-anchor" id="catalog-interaction-card-4-preview" aria-hidden="true"></span>
@@ -565,6 +596,7 @@
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-panels-title">Panels and token overrides</h2>
             <span class="syn-badge">syntyr.core.css</span>
+            <span class="catalog-release-label" title="Unreleased alpha.5 source preview">alpha.5 preview</span>
           </div>
           <p class="syn-muted">Override component tokens locally without rebuilding the stylesheet.</p>
           <span class="catalog-preview-anchor" id="catalog-panels-title-preview" aria-hidden="true"></span>
@@ -592,6 +624,7 @@
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-metrics-title">Responsive metrics</h2>
             <span class="syn-badge">syntyr.core.css</span>
+            <span class="catalog-release-label" title="Unreleased alpha.5 source preview">alpha.5 preview</span>
           </div>
           <p class="syn-muted">A named container lets metrics respond to their parent, not the viewport.</p>
           <span class="catalog-preview-anchor" id="catalog-metrics-title-preview" aria-hidden="true"></span>
@@ -623,6 +656,7 @@
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-tables-title">Accessible data tables</h2>
             <span class="syn-badge">syntyr.core.css</span>
+            <span class="catalog-release-label" title="Unreleased alpha.5 source preview">alpha.5 preview</span>
           </div>
           <p class="syn-muted">Keep semantic table markup and provide scrolling on narrow screens.</p>
           <span class="catalog-preview-anchor" id="catalog-tables-title-preview" aria-hidden="true"></span>
@@ -656,6 +690,7 @@
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-alerts-title">Alerts</h2>
             <span class="syn-badge">syntyr.core.css</span>
+            <span class="catalog-release-label" title="Unreleased alpha.5 source preview">alpha.5 preview</span>
           </div>
           <p class="syn-muted">Use visible text and semantic status only for real application updates.</p>
           <span class="catalog-preview-anchor" id="catalog-alerts-title-preview" aria-hidden="true"></span>
@@ -679,6 +714,7 @@
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-disclosures-title">Native disclosure</h2>
             <span class="syn-badge">syntyr.core.css</span>
+            <span class="catalog-release-label" title="Unreleased alpha.5 source preview">alpha.5 preview</span>
           </div>
           <p class="syn-muted">Browser-native disclosure works without custom JavaScript.</p>
           <span class="catalog-preview-anchor" id="catalog-disclosures-title-preview" aria-hidden="true"></span>
@@ -706,6 +742,7 @@
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-breadcrumbs-title">Breadcrumb navigation</h2>
             <span class="syn-badge">syntyr.core.css</span>
+            <span class="catalog-release-label" title="Unreleased alpha.5 source preview">alpha.5 preview</span>
           </div>
           <p class="syn-muted">Use a real navigation landmark and mark the current page.</p>
           <span class="catalog-preview-anchor" id="catalog-breadcrumbs-title-preview" aria-hidden="true"></span>
@@ -737,6 +774,7 @@
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-progress-title">Progress indicator</h2>
             <span class="syn-badge">syntyr.core.css</span>
+            <span class="catalog-release-label" title="Unreleased alpha.5 source preview">alpha.5 preview</span>
           </div>
           <p class="syn-muted">Native progress exposes a meaningful value to assistive technology.</p>
           <span class="catalog-preview-anchor" id="catalog-progress-title-preview" aria-hidden="true"></span>
@@ -760,6 +798,7 @@
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-pricing-title">Pricing cards</h2>
             <span class="syn-badge">syntyr.core.css</span>
+            <span class="catalog-release-label" title="Unreleased alpha.5 source preview">alpha.5 preview</span>
           </div>
           <p class="syn-muted">Container-responsive pricing, with no client-side layout logic.</p>
           <span class="catalog-preview-anchor" id="catalog-pricing-title-preview" aria-hidden="true"></span>
@@ -791,6 +830,7 @@
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-typography-and-inline-text-title">Typography and inline text</h2>
             <span class="syn-badge">syntyr.core.css</span>
+            <span class="catalog-release-label" title="Unreleased alpha.5 source preview">alpha.5 preview</span>
           </div>
           <p class="syn-muted">Use heading hierarchy for meaning, not visual size; mark highlights relevance.</p>
           <span class="catalog-preview-anchor" id="catalog-typography-and-inline-text-title-preview" aria-hidden="true"></span>
@@ -820,6 +860,7 @@
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-code-and-keyboard-input-title">Code and keyboard input</h2>
             <span class="syn-badge">syntyr.core.css</span>
+            <span class="catalog-release-label" title="Unreleased alpha.5 source preview">alpha.5 preview</span>
           </div>
           <p class="syn-muted">Use code for tokens, pre for blocks, and kbd for user input.</p>
           <span class="catalog-preview-anchor" id="catalog-code-and-keyboard-input-title-preview" aria-hidden="true"></span>
@@ -847,6 +888,7 @@
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-ordered-and-unordered-lists-title">Ordered and unordered lists</h2>
             <span class="syn-badge">syntyr.core.css</span>
+            <span class="catalog-release-label" title="Unreleased alpha.5 source preview">alpha.5 preview</span>
           </div>
           <p class="syn-muted">Use ordered steps for sequences and unordered lists for collections.</p>
           <span class="catalog-preview-anchor" id="catalog-ordered-and-unordered-lists-title-preview" aria-hidden="true"></span>
@@ -874,6 +916,7 @@
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-definition-list-title">Definition list</h2>
             <span class="syn-badge">syntyr.core.css</span>
+            <span class="catalog-release-label" title="Unreleased alpha.5 source preview">alpha.5 preview</span>
           </div>
           <p class="syn-muted">A definition list preserves the association between terms and values.</p>
           <span class="catalog-preview-anchor" id="catalog-definition-list-title-preview" aria-hidden="true"></span>
@@ -901,6 +944,7 @@
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-article-with-header-and-footer-title">Article with header and footer</h2>
             <span class="syn-badge">syntyr.core.css</span>
+            <span class="catalog-release-label" title="Unreleased alpha.5 source preview">alpha.5 preview</span>
           </div>
           <p class="syn-muted">Use a self-contained article for independently meaningful content.</p>
           <span class="catalog-preview-anchor" id="catalog-article-with-header-and-footer-title-preview" aria-hidden="true"></span>
@@ -930,6 +974,7 @@
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-fieldset-and-choice-inputs-title">Fieldset and choice inputs</h2>
             <span class="syn-badge">syntyr.core.css</span>
+            <span class="catalog-release-label" title="Unreleased alpha.5 source preview">alpha.5 preview</span>
           </div>
           <p class="syn-muted">A fieldset and legend give related inputs an accessible group name.</p>
           <span class="catalog-preview-anchor" id="catalog-fieldset-and-choice-inputs-title-preview" aria-hidden="true"></span>
@@ -967,6 +1012,7 @@
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-select-and-textarea-title">Select and textarea</h2>
             <span class="syn-badge">syntyr.core.css</span>
+            <span class="catalog-release-label" title="Unreleased alpha.5 source preview">alpha.5 preview</span>
           </div>
           <p class="syn-muted">Use native select and textarea before introducing custom widgets.</p>
           <span class="catalog-preview-anchor" id="catalog-select-and-textarea-title-preview" aria-hidden="true"></span>
@@ -1002,6 +1048,7 @@
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-dates-and-structured-values-title">Dates and structured values</h2>
             <span class="syn-badge">syntyr.core.css</span>
+            <span class="catalog-release-label" title="Unreleased alpha.5 source preview">alpha.5 preview</span>
           </div>
           <p class="syn-muted">Encode dates and values for machines while keeping text readable.</p>
           <span class="catalog-preview-anchor" id="catalog-dates-and-structured-values-title-preview" aria-hidden="true"></span>
@@ -1029,6 +1076,7 @@
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-responsive-image-with-caption-title">Responsive image with caption</h2>
             <span class="syn-badge">syntyr.core.css</span>
+            <span class="catalog-release-label" title="Unreleased alpha.5 source preview">alpha.5 preview</span>
           </div>
           <p class="syn-muted">A picture provides art-direction sources; the img provides the fallback and alt text.</p>
           <span class="catalog-preview-anchor" id="catalog-responsive-image-with-caption-title-preview" aria-hidden="true"></span>
@@ -1062,6 +1110,7 @@
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-quotation-and-source-title">Quotation and source</h2>
             <span class="syn-badge">syntyr.core.css</span>
+            <span class="catalog-release-label" title="Unreleased alpha.5 source preview">alpha.5 preview</span>
           </div>
           <p class="syn-muted">Use blockquote for quoted passages and cite for the title of a work.</p>
           <span class="catalog-preview-anchor" id="catalog-quotation-and-source-title-preview" aria-hidden="true"></span>
@@ -1089,6 +1138,7 @@
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-native-popover-title">Native popover</h2>
             <span class="syn-badge">syntyr.core.css</span>
+            <span class="catalog-release-label" title="Unreleased alpha.5 source preview">alpha.5 preview</span>
           </div>
           <p class="syn-muted">Native popovers preserve browser-managed opening, dismissal, and focus behavior.</p>
           <p class="syn-caption catalog-feature-note"><strong>Browser note:</strong> Native <code>popovertarget</code> needs Popover API support. Provide critical information through an ordinary link or disclosure in older browsers. <a href="#catalog-browser-support">Compatibility and fallbacks</a>.</p>
@@ -1119,6 +1169,7 @@
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-input-group-title">Connected input groups</h2>
             <span class="syn-badge">syntyr.core.css</span>
+            <span class="catalog-release-label" title="Unreleased alpha.5 source preview">alpha.5 preview</span>
           </div>
           <p class="syn-muted">Native text input with a connected visual prefix and an accessible field label.</p>
           <span class="catalog-preview-anchor" id="catalog-input-group-title-preview" aria-hidden="true"></span>
@@ -1154,6 +1205,7 @@
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-crm-filters-title">CRM filter toolbar</h2>
             <span class="syn-badge">syntyr.recipes.css</span>
+            <span class="catalog-release-label" title="Unreleased alpha.5 source preview">alpha.5 preview</span>
           </div>
           <p class="syn-muted">Optional responsive filter layout. The linked static demo does not implement server-side filtering.</p>
           <span class="catalog-preview-anchor" id="catalog-crm-filters-title-preview" aria-hidden="true"></span>
@@ -1197,6 +1249,7 @@
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-recovery-state-title">Empty and recovery state</h2>
             <span class="syn-badge">syntyr.recipes.css</span>
+            <span class="catalog-release-label" title="Unreleased alpha.5 source preview">alpha.5 preview</span>
           </div>
           <p class="syn-muted">Optional app-state composition. Provide a working destination for any recovery action.</p>
           <span class="catalog-preview-anchor" id="catalog-recovery-state-title-preview" aria-hidden="true"></span>
@@ -1226,6 +1279,7 @@
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-geometry-frame-title">Geometry frame</h2>
             <span class="syn-badge">syntyr.geometry.css</span>
+            <span class="catalog-release-label" title="Unreleased alpha.5 source preview">alpha.5 preview</span>
           </div>
           <p class="syn-muted">An optional decorative bracket frame; content stays semantic HTML.</p>
           <span class="catalog-preview-anchor" id="catalog-geometry-frame-title-preview" aria-hidden="true"></span>
@@ -1253,6 +1307,7 @@
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-viz-bars-title">Accessible data bars</h2>
             <span class="syn-badge">syntyr.viz.css</span>
+            <span class="catalog-release-label" title="Unreleased alpha.5 source preview">alpha.5 preview</span>
           </div>
           <p class="syn-muted">Optional CSS-only bars with visible values; your app supplies real measurements.</p>
           <span class="catalog-preview-anchor" id="catalog-viz-bars-title-preview" aria-hidden="true"></span>
@@ -1292,6 +1347,7 @@
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-primary-nav-title">Primary navigation</h2>
             <span class="syn-badge">syntyr.core.css</span>
+            <span class="catalog-release-label" title="Unreleased alpha.5 source preview">alpha.5 preview</span>
           </div>
           <p class="syn-muted">A named navigation landmark with a list of real destinations and one current-page indicator.</p>
           <span class="catalog-preview-anchor" id="catalog-primary-nav-title-preview" aria-hidden="true"></span>
@@ -1325,6 +1381,7 @@
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-table-of-contents-title">On-page table of contents</h2>
             <span class="syn-badge">syntyr.core.css</span>
+            <span class="catalog-release-label" title="Unreleased alpha.5 source preview">alpha.5 preview</span>
           </div>
           <p class="syn-muted">Real fragment links point to heading IDs in the same example; no scroll handler is necessary.</p>
           <span class="catalog-preview-anchor" id="catalog-table-of-contents-title-preview" aria-hidden="true"></span>
@@ -1372,6 +1429,7 @@
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-footer-nav-title">Footer link groups</h2>
             <span class="syn-badge">syntyr.core.css</span>
+            <span class="catalog-release-label" title="Unreleased alpha.5 source preview">alpha.5 preview</span>
           </div>
           <p class="syn-muted">Place a footer within its owning section and name each navigation landmark.</p>
           <span class="catalog-preview-anchor" id="catalog-footer-nav-title-preview" aria-hidden="true"></span>
@@ -1417,6 +1475,7 @@
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-pagination-title">Pagination navigation</h2>
             <span class="syn-badge">syntyr.core.css</span>
+            <span class="catalog-release-label" title="Unreleased alpha.5 source preview">alpha.5 preview</span>
           </div>
           <p class="syn-muted">Numbered navigation with a clearly identified current page; replace demo query URLs with real routes.</p>
           <span class="catalog-preview-anchor" id="catalog-pagination-title-preview" aria-hidden="true"></span>
@@ -1450,6 +1509,7 @@
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-contact-title">Contact details</h2>
             <span class="syn-badge">syntyr.core.css</span>
+            <span class="catalog-release-label" title="Unreleased alpha.5 source preview">alpha.5 preview</span>
           </div>
           <p class="syn-muted">Use address for the nearest article or section contact; sample contacts are placeholders.</p>
           <span class="catalog-preview-anchor" id="catalog-contact-title-preview" aria-hidden="true"></span>
@@ -1487,6 +1547,7 @@
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-aside-title">Section and complementary aside</h2>
             <span class="syn-badge">syntyr.core.css</span>
+            <span class="catalog-release-label" title="Unreleased alpha.5 source preview">alpha.5 preview</span>
           </div>
           <p class="syn-muted">Keep a named content section and related complementary material distinct; sidecar layout is optional.</p>
           <span class="catalog-preview-anchor" id="catalog-aside-title-preview" aria-hidden="true"></span>
@@ -1526,6 +1587,7 @@
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-heading-group-title">Heading group</h2>
             <span class="syn-badge">syntyr.core.css</span>
+            <span class="catalog-release-label" title="Unreleased alpha.5 source preview">alpha.5 preview</span>
           </div>
           <p class="syn-muted">Group a title and supporting subtitle without inserting fake heading levels.</p>
           <span class="catalog-preview-anchor" id="catalog-heading-group-title-preview" aria-hidden="true"></span>
@@ -1559,6 +1621,7 @@
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-event-agenda-title">Event agenda</h2>
             <span class="syn-badge">syntyr.core.css</span>
+            <span class="catalog-release-label" title="Unreleased alpha.5 source preview">alpha.5 preview</span>
           </div>
           <p class="syn-muted">Machine-readable times in an ordered agenda; the display time zone is explicit.</p>
           <span class="catalog-preview-anchor" id="catalog-event-agenda-title-preview" aria-hidden="true"></span>
@@ -1594,6 +1657,7 @@
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-table-totals-title">Table with totals</h2>
             <span class="syn-badge">syntyr.core.css</span>
+            <span class="catalog-release-label" title="Unreleased alpha.5 source preview">alpha.5 preview</span>
           </div>
           <p class="syn-muted">Use caption, scoped column headings and a real table footer for aggregated values.</p>
           <span class="catalog-preview-anchor" id="catalog-table-totals-title-preview" aria-hidden="true"></span>
@@ -1635,6 +1699,7 @@
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-revisions-title">Revisions and abbreviations</h2>
             <span class="syn-badge">syntyr.core.css</span>
+            <span class="catalog-release-label" title="Unreleased alpha.5 source preview">alpha.5 preview</span>
           </div>
           <p class="syn-muted">Give abbreviations definitions and mark edits with native insertion and deletion elements.</p>
           <span class="catalog-preview-anchor" id="catalog-revisions-title-preview" aria-hidden="true"></span>
@@ -1668,6 +1733,7 @@
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-form-help-title">Form help and validation</h2>
             <span class="syn-badge">syntyr.core.css</span>
+            <span class="catalog-release-label" title="Unreleased alpha.5 source preview">alpha.5 preview</span>
           </div>
           <p class="syn-muted">Built-in constraint validation with a visible description; adapt the example GET endpoint.</p>
           <span class="catalog-preview-anchor" id="catalog-form-help-title-preview" aria-hidden="true"></span>
@@ -1703,6 +1769,7 @@
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-skip-link-title">Skip navigation link</h2>
             <span class="syn-badge">syntyr.core.css</span>
+            <span class="catalog-release-label" title="Unreleased alpha.5 source preview">alpha.5 preview</span>
           </div>
           <p class="syn-muted">A working skip link moves to real content in the same example.</p>
           <span class="catalog-preview-anchor" id="catalog-skip-link-title-preview" aria-hidden="true"></span>
@@ -1738,6 +1805,7 @@
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-status-list-title">Status indicator list</h2>
             <span class="syn-badge">syntyr.core.css</span>
+            <span class="catalog-release-label" title="Unreleased alpha.5 source preview">alpha.5 preview</span>
           </div>
           <p class="syn-muted">Use textual status labels that stay understandable without color.</p>
           <span class="catalog-preview-anchor" id="catalog-status-list-title-preview" aria-hidden="true"></span>
@@ -1773,6 +1841,7 @@
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-activity-entry-title">Activity timeline</h2>
             <span class="syn-badge">syntyr.core.css</span>
+            <span class="catalog-release-label" title="Unreleased alpha.5 source preview">alpha.5 preview</span>
           </div>
           <p class="syn-muted">Use an ordered list with machine-readable timestamps for an activity feed.</p>
           <span class="catalog-preview-anchor" id="catalog-activity-entry-title-preview" aria-hidden="true"></span>
@@ -1806,6 +1875,7 @@
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-property-list-title">Key-value details</h2>
             <span class="syn-badge">syntyr.core.css</span>
+            <span class="catalog-release-label" title="Unreleased alpha.5 source preview">alpha.5 preview</span>
           </div>
           <p class="syn-muted">A definition list for record attributes, not a faux two-column table.</p>
           <span class="catalog-preview-anchor" id="catalog-property-list-title-preview" aria-hidden="true"></span>
@@ -1841,6 +1911,7 @@
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-link-card-title">Linked resource card</h2>
             <span class="syn-badge">syntyr.core.css</span>
+            <span class="catalog-release-label" title="Unreleased alpha.5 source preview">alpha.5 preview</span>
           </div>
           <p class="syn-muted">A card with one real destination and a meaningful accessible link name.</p>
           <span class="catalog-preview-anchor" id="catalog-link-card-title-preview" aria-hidden="true"></span>
@@ -1870,6 +1941,7 @@
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-section-actions-title">Section header with actions</h2>
             <span class="syn-badge">syntyr.core.css</span>
+            <span class="catalog-release-label" title="Unreleased alpha.5 source preview">alpha.5 preview</span>
           </div>
           <p class="syn-muted">A labeled section with actions kept in normal document order.</p>
           <span class="catalog-preview-anchor" id="catalog-section-actions-title-preview" aria-hidden="true"></span>
