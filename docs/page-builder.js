@@ -9,7 +9,9 @@ import {
 } from "./page-builder-model.mjs";
 import {
   SITE_SCHEMA_VERSION, createSiteProject, parseSiteProject, addSitePage,
-  removeSitePage, setSharedLayout, exportSitePages
+  removeSitePage, setSharedLayout, exportSitePages, saveSyncedComponent,
+  insertSyncedComponent, updateSyncedComponent, setSyncedOverride,
+  detachSyncedInstance
 } from "./site-builder-model.mjs";
 import { createStoredZip, SITE_ZIP_MAX_ENTRIES } from "./page-builder-zip.mjs";
 import {STARTER_PAGES, createStarterPage} from "./page-builder-starters.mjs";
@@ -54,6 +56,10 @@ function siteWithPage(proposedPage) {
   const current = candidate.pages.find(entry => entry.slug === activeSlug);
   if (!current) throw new Error("Current site page is missing");
   current.document = parseDocument(proposedPage);
+  // Explicit local deletes/type replacements unhook their former reusable links.
+  candidate.instances = candidate.instances.filter(instance => instance.slug !== activeSlug ||
+    current.document.blocks.some(block => block.id === instance.blockId &&
+      block.type === candidate.components.find(item => item.id === instance.componentId)?.block.type));
   return parseSiteProject(candidate);
 }
 function currentSite() {
@@ -93,7 +99,7 @@ function updateHistoryButtons() {
 }
 function commit(next, message) {
   const normalized = parseDocument(next);
-  // Validate the whole proposed site before changing page or undo history.
+  // Validate the entire proposed site before mutating page or undo history.
   const proposedSite = site ? siteWithPage(normalized) : null;
   remember();
   site = proposedSite;
@@ -138,7 +144,69 @@ function renderSiteControls() {
       field.value = block?.props[field.dataset.layoutField] ?? defaults[field.dataset.layoutField];
     }
   }
+  renderReusableControls();
 }
+const reusableTypes = new Set(["hero", "features", "split", "quote", "faq", "cta"]);
+function selectedPlacement() {
+  return site?.instances.find(item => item.slug === activeSlug && item.blockId === selectedId) ?? null;
+}
+function renderReusableControls() {
+  const select = byId("builder-reusable-select");
+  const previous = select.value;
+  select.replaceChildren(new Option("Choose a component", ""));
+  for (const component of site?.components || [])
+    select.add(new Option(component.name + " (" + component.block.type + ")", component.id));
+  if (site?.components.some(item => item.id === previous)) select.value = previous;
+  const block = page.blocks.find(item => item.id === selectedId);
+  const linked = selectedPlacement();
+  byId("builder-reusable-save").disabled = !block || !reusableTypes.has(block.type) || Boolean(linked) || Boolean(site && site.components.length >= 20);
+  byId("builder-reusable-insert").disabled = !select.value || page.blocks.length >= 50;
+  byId("builder-reusable-detach").disabled = !linked;
+  byId("builder-reusable-hint").textContent = linked
+    ? "This block uses " + site.components.find(item => item.id === linked.componentId)?.name + ". Unchecked fields change every instance; checked fields change this page only."
+    : "Select a native section to save it or insert a component from the library.";
+}
+byId("builder-reusable-select").addEventListener("change", renderReusableControls);
+byId("builder-reusable-save").addEventListener("click", () => {
+  try {
+    const block = page.blocks.find(item => item.id === selectedId);
+    if (!block || !reusableTypes.has(block.type)) throw new Error("Select a supported native section");
+    const name = byId("builder-reusable-name").value.trim() || getBlockDefinition(block.type).label;
+    const base = name.toLowerCase().replace(/[^a-z0-9-]+/g, "-").replace(/^-+|-+$/g, "").slice(0,32);
+    const stem = /^[a-z]/.test(base) ? base : "component";
+    const used = new Set(site?.components.map(item => item.id) || []);
+    let id = stem, suffix = 2;
+    while (used.has(id)) id = stem.slice(0, 30) + "-" + suffix++;
+    const existing = selectedId;
+    const next = saveSyncedComponent(currentSite() || createSiteProject(page), {id, name, slug:activeSlug, blockId:existing});
+    applySite(next, activeSlug, "Reusable component saved. Editing an un-overridden field updates every linked instance.");
+    selectedId = existing;
+    byId("builder-reusable-name").value = "";
+    redraw();
+  } catch (error) { notify("Cannot save component: " + error.message); }
+});
+byId("builder-reusable-insert").addEventListener("click", () => {
+  try {
+    const id = byId("builder-reusable-select").value;
+    const source = site?.components.find(item => item.id === id);
+    if (!source) throw new Error("Choose a reusable component");
+    const blockId = nextBlockId(source.block.type);
+    const next = insertSyncedComponent(currentSite(), activeSlug, id, blockId);
+    applySite(next, activeSlug, "Reusable component added to this page.");
+    selectedId = blockId;
+    redraw();
+  } catch (error) { notify("Cannot insert reusable component: " + error.message); }
+});
+byId("builder-reusable-detach").addEventListener("click", () => {
+  try {
+    const originalId = selectedId;
+    const next = detachSyncedInstance(currentSite(), activeSlug, originalId);
+    applySite(next, activeSlug, "Component detached. Its current content remains on this page.");
+    selectedId = originalId;
+    redraw();
+  } catch (error) { notify("Cannot detach reusable component: " + error.message); }
+});
+
 function showSitePage(slug) {
   if (!site) return;
   site = currentSite();
@@ -319,7 +387,8 @@ function renderOutline() {
     item.dataset.index = String(index);
     item.dataset.blockId = block.id;
     item.dataset.selected = String(block.id === selectedId);
-    const name = makeButton((index + 1) + ". " + getBlockDefinition(block.type).label, "select");
+    const isLinked = site?.instances.some(item => item.slug === activeSlug && item.blockId === block.id);
+    const name = makeButton((index + 1) + ". " + getBlockDefinition(block.type).label + (isLinked ? " · synced" : ""), "select");
     name.className = "builder-outline-select";
     name.setAttribute("aria-label", "Edit " + getBlockDefinition(block.type).label + ", block " + (index + 1));
     const actions = makeElement("div", null, "builder-outline-actions");
@@ -356,7 +425,10 @@ function renderInspector() {
   }
   const def = getBlockDefinition(block.type);
   byId("builder-inspector-help").textContent = def.description;
-  inspector.append(makeElement("p", def.label, "builder-block-name"));
+  const linked = selectedPlacement();
+  const blockName = makeElement("p", def.label + (linked ? " · synced" : ""), "builder-block-name");
+  blockName.dataset.synced = String(Boolean(linked));
+  inspector.append(blockName);
   for (const name of Object.keys(def.fields)) {
     const label = makeElement("label", null, "syn-label");
     const fieldKind = def.fieldKinds?.[name];
@@ -395,7 +467,8 @@ function renderInspector() {
             reader.onerror = () => reject(new Error("Cannot read image"));
             reader.readAsDataURL(selected);
           });
-          // Async file reads may finish after navigation or importing another site.
+          // Async hashing/reading may finish after navigation or project import.
+          // Reject stale completion rather than applying to a similarly named block elsewhere.
           if (page !== owningPage || site !== owningSite || activeSlug !== owningSlug)
             throw new Error("The page changed during image processing; retry the upload on its original page");
           const updated = replaceBlockImage(owningPage, editingBlock, name, {filename, dataURL});
@@ -431,15 +504,53 @@ function renderInspector() {
     control.autocomplete = "off";
     let editing = false;
     control.addEventListener("input", () => {
-      if (!editing) { remember(); editing = true; }
-      const current = page.blocks.find(item => item.id === selectedId);
+      const current = page.blocks.find(item => item.id === block.id);
       if (!current) return;
-      current.props[name] = control.value;
-      renderPreview();
-      notify("Block content updated. Save project JSON to keep it editable.");
+      try {
+        if (!editing) { remember(); editing = true; }
+        if (linked) {
+          const active = currentSite();
+          const instance = active.instances.find(item => item.slug === activeSlug && item.blockId === block.id);
+          if (!instance) throw new Error("Reusable component link missing");
+          if (Object.hasOwn(instance.overrides, name)) {
+            site = setSyncedOverride(active, activeSlug, block.id, name, control.value);
+          } else {
+            const master = active.components.find(item => item.id === instance.componentId);
+            site = updateSyncedComponent(active, instance.componentId, {...master.block.props, [name]:control.value});
+          }
+          page = structuredClone(site.pages.find(item => item.slug === activeSlug).document);
+          renderPreview();
+          notify("Reusable content updated. Save site JSON to persist changes.");
+        } else {
+          current.props[name] = control.value;
+          renderPreview();
+          notify("Block content updated. Save project JSON to keep it editable.");
+        }
+      } catch (error) { notify("Cannot edit block: " + error.message); }
     });
     control.addEventListener("blur", () => { editing = false; });
     label.append(control);
+    if (linked) {
+      const toggle = makeElement("label", null, "builder-synced-label");
+      const checkbox = makeElement("input");
+      checkbox.type = "checkbox";
+      checkbox.dataset.overrideField = name;
+      checkbox.checked = Object.hasOwn(linked.overrides, name);
+      toggle.append(checkbox, document.createTextNode("Override on this page"));
+      checkbox.addEventListener("change", () => {
+        try {
+          const updated = setSyncedOverride(currentSite(), activeSlug, block.id, name,
+            checkbox.checked ? control.value : null);
+          remember();
+          site = updated;
+          page = structuredClone(site.pages.find(item => item.slug === activeSlug).document);
+          control.value = page.blocks.find(item => item.id === block.id).props[name];
+          renderPreview();
+          notify(checkbox.checked ? "Local override enabled." : "Field now follows the shared master.");
+        } catch (error) { notify("Cannot change override: " + error.message); }
+      });
+      label.append(toggle);
+    }
     inspector.append(label);
   }
 }
@@ -474,6 +585,7 @@ preview.addEventListener("load", () => {
         selectedId = block.dataset.syntyrBlockId;
         renderOutline();
         renderInspector();
+        renderReusableControls();
         // Do not replace the iframe: that would close native FAQ disclosures.
         highlightPreviewSelection(frameDoc);
       }

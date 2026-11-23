@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="The visual builder is a local-first, optional editing tool in the public Syntyr documentation. It assembles a small set of existing Syntyr CSS/HTML…">
-  <meta name="syntyr-source-sha256" content="0ea1bbc8d29a9f1bbdd5191be35a8ff1a7451d6664b83929608a61184318fcee">
+  <meta name="syntyr-source-sha256" content="1d6bde074db03c0045c0edd7d12251228c4f9304508d3850334241c59c42c0c9">
   <meta name="theme-color" content="#f5f7fb">
   <title>Syntyr visual page builder (experimental) — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/page-builder-guide">
@@ -48,10 +48,12 @@
 <li>Switch among themes available to the unreleased source candidate and preview true 1200px desktop, 760px tablet, and 390px mobile iframe viewports. Narrow canvases scroll rather than silently scaling the device viewport.</li>
 <li>Undo and redo editing changes (limited in-memory history).</li>
 <li>Optionally create up to <strong>10 pages</strong> with safe one-segment slugs (such as <code>about</code>), switch between them, and edit a synchronized shared native header/footer. The <code>syntyr.site.v1</code> JSON project preserves all editable page documents and the shared layout. Removing an inner page does not remove the home page.</li>
+<li>Save a native <strong>Hero, Features, Split, Testimonial, FAQ, or CTA</strong> section as a reusable component, insert it on another page, and update every instance by editing an un-overridden field. Per-instance <strong>Override on this page</strong> toggles are field-specific; detach a section to keep its current content while unlinking it. This is a <em>content-linked section</em> pilot, not arbitrary nested HTML or a CSS class/component designer. Up to 20 masters and 200 references are allowed across a site. Existing <code>syntyr.site.v1</code> documents without <code>components</code> / <code>instances</code> import as empty libraries.</li>
 <li>Download a <strong>static website ZIP</strong> with <code>index.html</code>, optional <code>about/index.html</code>-style routes, the matching <code>syntyr.all.css</code>, any self-hosted SVG image assets, the MIT license and a brief publishing README. Every nested page uses relative CSS/image paths and the ZIP contains <strong>no JavaScript</strong>. Standalone HTML/CSS downloads remain available.</li>
 <li>Set the page title, optional search-result description (300-character limit), and HTML document language (including Portuguese for Brazil). The exported HTML contains escaped metadata and a correct <code>lang</code> attribute for accessibility and SEO. Existing <code>syntyr.page.v1</code> JSON projects without these optional settings still import.</li>
 <li>Download a JSON project and reopen that JSON to restore editability.</li>
 </ul>
+<p>Shared reusable components are portable JSON declarations containing a validated native block master and references to existing page sections. Export resolves each reference into ordinary HTML with escaped text and sanitized links; no browser JavaScript is emitted. Editing a master preserves explicit page overrides. Imported references to unknown components, missing blocks, mismatched types, duplicate placements, or undeclared override fields fail validation. Deleting a referenced section in the editor detaches that reference. Deleting a page removes references on that page, but keeps the shared component available elsewhere.</p>
 <p>The builder runs entirely in your browser. It does not upload projects or require a server account. Save the JSON file before closing the page: unsaved edits are not persisted.</p>
 <h2 id="static-first-export-and-assets">Static-first export and assets</h2>
 <p>Page descriptions are optional and do not guarantee a search-engine snippet.
@@ -127,7 +129,7 @@ are normalized to local anchors/paths or HTTPS. Every user-controlled text value
 <p>This experimental tool is deliberately separate from the MIT CSS core. It uses only small first-party documentation scripts; adopting a heavyweight editor engine such as GrapesJS should be justified through comparative testing, not as a mandatory dependency.</p>
 <h2 id="maintainer-verification">Maintainer verification</h2>
 <p>Run from repository root:</p>
-<pre tabindex="0"><code>node --test tests/page_builder_model.test.mjs tests/page_builder_gallery.test.mjs tests/page_builder_sections.test.mjs tests/page_builder_zip.test.mjs tests/page_builder_custom_media.test.mjs tests/page_builder_starters.test.mjs tests/site_builder_model.test.mjs
+<pre tabindex="0"><code>node --test tests/page_builder_model.test.mjs tests/page_builder_gallery.test.mjs tests/page_builder_sections.test.mjs tests/page_builder_zip.test.mjs tests/page_builder_custom_media.test.mjs tests/page_builder_starters.test.mjs tests/site_builder_model.test.mjs tests/synced_components.test.mjs tests/site_builder_model.test.mjs
 python3 scripts/build_section_composer.py --check
 python3 -m unittest tests.test_cloudflare_site -v
 python3 scripts/build_cloudflare_site.py --check
@@ -135,6 +137,8 @@ python3 scripts/build_cloudflare_site.py --check
 <p>For the optional browser smoke test:</p>
 <pre tabindex="0"><code>python3 tests/page_builder_browser.py
 python3 tests/site_builder_browser.py
+python3 tests/site_builder_upload_race_browser.py
+python3 tests/synced_components_browser.py
 python3 tests/page_builder_sections_browser.py
 python3 tests/page_builder_starter_media_browser.py
 python3 tests/static_sections_mobile_browser.py
