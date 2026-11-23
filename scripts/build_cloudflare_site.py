@@ -41,6 +41,8 @@ SITE_URL = "https://syntyr-css.pages.dev"
 # landing pages. Their HTML remains publicly available and linkable.
 NOINDEX_HTML = frozenset({
     "404.html", "examples/crm.html", "examples/saas.html", "examples/pricing.html", "examples/preset-preview.html",
+    "examples/saas-admin-starter/index.html", "examples/saas-admin-starter/pipeline.html",
+    "examples/saas-admin-starter/customers.html", "examples/saas-admin-starter/billing.html",
     "examples/resource-workspace.html", "examples/form-state-contracts.html", "examples/geo.html",
     "examples/permission-matrix.html",
     "examples/query-review.html",
@@ -389,7 +391,10 @@ def source_files(site_url: str = SITE_URL, *, include_cloudflare_headers: bool =
         "app-screens.css", "app-onboarding.html", "app-team.html", "app-notifications.html",
         "app-integrations.html", "app-security.html",
         "flagship.css", "flagship-studio.html", "flagship-noir.html", "flagship-grid.html",
-        "rust-axum/README.md", "resources.html", "data-tables.html", "saas.html", "preset-preview.html", "saas-workflows.html", "enterprise-compositions.html", "permission-matrix.html", "permission-matrix.css", "crm.html", "resource-workspace.html", "native-workflows.html", "file-lifecycle.html", "resizable-workspace.html", "operation-revisions.html", "saas-workflows.css", "workflow-operations.html", "workflow-operations.css", "premium-compositions.html",
+        "rust-axum/README.md", "resources.html", "data-tables.html", "saas.html", "preset-preview.html", "saas-workflows.html",
+        "saas-admin-starter/index.html", "saas-admin-starter/pipeline.html",
+        "saas-admin-starter/customers.html", "saas-admin-starter/billing.html",
+        "saas-admin-starter/styles.css", "saas-admin-starter/README.md", "enterprise-compositions.html", "permission-matrix.html", "permission-matrix.css", "crm.html", "resource-workspace.html", "native-workflows.html", "file-lifecycle.html", "resizable-workspace.html", "operation-revisions.html", "saas-workflows.css", "workflow-operations.html", "workflow-operations.css", "premium-compositions.html",
         "terminal.html", "themes.html", "vertigo-admin.html", "vertigo-resource-workflow.html", "vertigo-resource-workflow.css", "symbols.html",
         "viz.html", "geo.html", "data-grid.html", "animation.html", "copy.html",
         "design-benchmarks/marketing.html", "design-benchmarks/crm.html",
