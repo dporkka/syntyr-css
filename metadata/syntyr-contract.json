@@ -2553,9 +2553,57 @@
       ]
     },
     {
+      "name": "syn-list",
+      "module": "components/typography.css",
+      "description": "Scoped native bullet or numbered list for core-only consumers.",
+      "stylesheets": [
+        "components/typography.css",
+        "presets/cinematic.css",
+        "presets/minimal.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.core.css",
+        "syntyr.css",
+        "syntyr.embed.css",
+        "syntyr.semantic-bundle.css"
+      ]
+    },
+    {
+      "name": "syn-list--accent",
+      "module": "components/typography.css",
+      "description": "Accent-colored top-level list markers; native numbering preserved.",
+      "stylesheets": [
+        "components/typography.css",
+        "presets/cinematic.css",
+        "presets/minimal.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.core.css",
+        "syntyr.css",
+        "syntyr.embed.css",
+        "syntyr.semantic-bundle.css"
+      ]
+    },
+    {
+      "name": "syn-list--compact",
+      "module": "components/typography.css",
+      "description": "Reduced vertical item rhythm for native list content.",
+      "stylesheets": [
+        "components/typography.css",
+        "presets/cinematic.css",
+        "presets/minimal.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.core.css",
+        "syntyr.css",
+        "syntyr.embed.css",
+        "syntyr.semantic-bundle.css"
+      ]
+    },
+    {
       "name": "syn-list-group",
       "module": "components/patterns.css",
-      "description": "Grouped list presentation; preserve semantic list markup.",
+      "description": "Grouped markerless navigation or collection list; keep list semantics.",
       "stylesheets": [
         "components/patterns.css",
         "presets/cinematic.css",
@@ -5953,6 +6001,22 @@
       ]
     },
     {
+      "name": "--syn-list-item-gap",
+      "module": "components/typography.css",
+      "description": "List item gap design token from components/typography.css; override in the appropriate Syntyr scope when needed.",
+      "stylesheets": [
+        "components/typography.css",
+        "presets/cinematic.css",
+        "presets/minimal.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.core.css",
+        "syntyr.css",
+        "syntyr.embed.css",
+        "syntyr.semantic-bundle.css"
+      ]
+    },
+    {
       "name": "--syn-media-card-ratio",
       "module": "media.css",
       "description": "Media card ratio design token from media.css; override in the appropriate Syntyr scope when needed.",
@@ -6911,6 +6975,20 @@
         "syn-panel--cut"
       ],
       "notes": "Choose native headings and accessible labels."
+    },
+    {
+      "name": "Content list",
+      "module": "syntyr.core.css",
+      "elements": [
+        "ul",
+        "ol"
+      ],
+      "classes": [
+        "syn-list",
+        "syn-list--compact",
+        "syn-list--accent"
+      ],
+      "notes": "Native list markers and order preserved. Use in core-only scopes; semantic mode handles unclassed lists."
     },
     {
       "name": "Form fields",

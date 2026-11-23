@@ -1,0 +1,5 @@
+baseURL = 'https://example.com/syntyr-hugo/'
+locale = 'en-US'
+title = 'Syntyr Hugo CMS starter'
+disableKinds = ['taxonomy', 'term', 'RSS', 'sitemap']
+enableRobotsTXT = false

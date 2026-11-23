@@ -1,0 +1,73 @@
+{{- $page := .Site.Data.home -}}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{{ $page.description }}">
+  <title>{{ $page.title }}</title>
+  <link rel="stylesheet" href="{{ "assets/syntyr.core.css" | relURL }}">
+  <link rel="stylesheet" href="{{ "assets/syntyr.recipes.css" | relURL }}">
+</head>
+<body class="syn-root" data-syn-theme="{{ $page.theme }}">
+  <a href="#content">Skip to content</a>
+  <header class="syn-region"><nav aria-label="Primary"><a href="{{ "" | relURL }}">Home</a></nav></header>
+  <main id="content" class="syn-shell">
+  {{- range $index, $block := $page.sections }}
+    {{- $anchor := printf "section-%s" $block.id }}
+    {{- if eq $block.type "hero" }}
+    <section class="syn-region" aria-labelledby="{{ $anchor }}">
+      <div class="syn-site-hero">
+        <p class="syn-eyebrow">{{ $block.eyebrow }}</p>
+        {{- if eq $index 0 }}
+        <h1 id="{{ $anchor }}" class="syn-site-heading">{{ $block.heading }}</h1>
+        {{- else }}
+        <h2 id="{{ $anchor }}" class="syn-site-heading">{{ $block.heading }}</h2>
+        {{- end }}
+        <p class="syn-lede">{{ $block.description }}</p>
+        <div class="syn-actions"><a class="syn-button syn-button--primary" href="{{ partial "action-url.html" $block.button.url }}">{{ $block.button.label }}</a></div>
+      </div>
+    </section>
+    {{- else if eq $block.type "features" }}
+    <section class="syn-region" aria-labelledby="{{ $anchor }}">
+      <h2 class="syn-heading" id="{{ $anchor }}">{{ $block.heading }}</h2>
+      <div class="syn-feature-grid">
+      {{- range $block.items }}
+        <article class="syn-feature-card"><h3>{{ .title }}</h3><p>{{ .description }}</p></article>
+      {{- end }}
+      </div>
+    </section>
+    {{- else if eq $block.type "pricing" }}
+    <section class="syn-region" aria-labelledby="{{ $anchor }}">
+      <h2 class="syn-heading" id="{{ $anchor }}">{{ $block.heading }}</h2>
+      <div class="syn-pricing">
+      {{- range $block.plans }}
+        <article class="syn-price-card">
+          <h3>{{ .name }}</h3><p class="syn-price-value">{{ .price }}</p>
+          <ul class="syn-feature-list">{{ range .features }}<li>{{ . }}</li>{{ end }}</ul>
+          <a class="syn-button syn-button--primary" href="{{ partial "action-url.html" .button.url }}">{{ .button.label }}</a>
+        </article>
+      {{- end }}
+      </div>
+    </section>
+    {{- else if eq $block.type "faq" }}
+    <section class="syn-region" aria-labelledby="{{ $anchor }}">
+      <h2 class="syn-heading" id="{{ $anchor }}">{{ $block.heading }}</h2>
+      <div class="syn-stack">
+      {{- range $block.items }}
+        <details class="syn-panel"><summary>{{ .question }}</summary><p>{{ .answer }}</p></details>
+      {{- end }}
+      </div>
+    </section>
+    {{- else if eq $block.type "cta" }}
+    <section class="syn-region syn-panel" aria-labelledby="{{ $anchor }}">
+      <h2 class="syn-heading" id="{{ $anchor }}">{{ $block.heading }}</h2>
+      <p class="syn-lede">{{ $block.description }}</p>
+      <a class="syn-button syn-button--primary" href="{{ partial "action-url.html" $block.button.url }}">{{ $block.button.label }}</a>
+    </section>
+    {{- end }}
+  {{- end }}
+  </main>
+  <footer class="syn-region"><p class="syn-muted">{{ $page.title }}</p></footer>
+</body>
+</html>

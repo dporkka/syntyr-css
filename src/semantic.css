@@ -170,8 +170,17 @@
     max-inline-size: 100%;
   }
   :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(li:not([class]), li[data-syn-semantic])) {
-    margin-block: .25rem;
+    margin-block: var(--syn-list-item-gap, .25rem);
     overflow-wrap: anywhere;
+  }
+  /* Nested lists retain their browser-native disc/circle/square and decimal
+     hierarchy. Only their local vertical rhythm is reduced; no marker reset. */
+  :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(
+    :is(ul:not([class]), ol:not([class]), menu:not([class]), ul[data-syn-semantic], ol[data-syn-semantic], menu[data-syn-semantic])
+    :is(ul:not([class]), ol:not([class]), menu:not([class]), ul[data-syn-semantic], ol[data-syn-semantic], menu[data-syn-semantic])
+  ) {
+    margin-block: var(--syn-space-1);
+    padding-inline-start: 1.5rem;
   }
   :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(dl:not([class]), dl[data-syn-semantic])) {
     margin-block: var(--syn-space-2);

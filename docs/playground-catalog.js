@@ -319,7 +319,7 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "title": "Pagination navigation",
     "module": "syntyr.core.css",
     "description": "Numbered navigation with a clearly identified current page; replace demo query URLs with real routes.",
-    "html": "\u003cnav class=\"syn-pagination\" aria-label=\"Example result pages\">\n  \u003ca href=\"catalog.html?page=1\" rel=\"prev\">Previous\u003c/a>\n  \u003ca href=\"catalog.html?page=1\">1\u003c/a>\n  \u003cspan aria-current=\"page\">2\u003c/span>\n  \u003ca href=\"catalog.html?page=3\">3\u003c/a>\n  \u003ca href=\"catalog.html?page=3\" rel=\"next\">Next\u003c/a>\n\u003c/nav>",
+    "html": "\u003cnav class=\"syn-pagination\" aria-label=\"Example result pages\">\n  \u003ca class=\"syn-page-link\" href=\"catalog.html?page=1\" rel=\"prev\">Previous\u003c/a>\n  \u003ca class=\"syn-page-link\" href=\"catalog.html?page=1\">1\u003c/a>\n  \u003cspan class=\"syn-page-link\" aria-current=\"page\">2\u003c/span>\n  \u003ca class=\"syn-page-link\" href=\"catalog.html?page=3\">3\u003c/a>\n  \u003ca class=\"syn-page-link\" href=\"catalog.html?page=3\" rel=\"next\">Next\u003c/a>\n\u003c/nav>",
     "keywords": "pagination pages previous next rel prev next aria-current",
     "guidance": "Real links and aria-current only for the actual current page."
   },
@@ -903,6 +903,28 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
+    "id": "block-editorial-intro-split",
+    "title": "Editorial intro with context panel",
+    "module": "syntyr.core.css",
+    "description": "An editorial introduction with primary actions and a contextual checklist beside it.",
+    "html": "\u003csection class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-layout-intro-heading\">\n  \u003cdiv class=\"syn-sidecar\">\n    \u003cdiv class=\"syn-stack\">\n      \u003cp class=\"syn-eyebrow\">A CLEARER APPROACH\u003c/p>\n      \u003ch2 class=\"syn-heading\" id=\"syn-layout-intro-heading\">Start with the problem, not the platform.\u003c/h2>\n      \u003cp class=\"syn-lede\">Design work becomes easier when the people, constraints and desired outcomes are visible from the beginning.\u003c/p>\n      \u003cdiv class=\"syn-inline\">\n        \u003ca class=\"syn-button syn-button--primary\" href=\"/approach\">Explore our approach\u003c/a>\n        \u003ca class=\"syn-button syn-button--outline\" href=\"/work\">See example projects\u003c/a>\n      \u003c/div>\n    \u003c/div>\n    \u003caside class=\"syn-panel syn-stack\" aria-label=\"What to expect\">\n      \u003cp class=\"syn-eyebrow\">AT A GLANCE\u003c/p>\n      \u003ch3 class=\"syn-heading\">Focus on what matters\u003c/h3>\n      \u003cul class=\"syn-feature-list\">\n        \u003cli>Understand the audience\u003c/li>\n        \u003cli>Choose measurable goals\u003c/li>\n        \u003cli>Keep decisions documented\u003c/li>\n      \u003c/ul>\n    \u003c/aside>\n  \u003c/div>\n\u003c/section>",
+    "keywords": "Editorial intro with context panel An editorial introduction with primary actions and a contextual checklist beside it. intro split editorial landing",
+    "kind": "block",
+    "category": "Editorial",
+    "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
+  },
+  {
+    "id": "block-article-toc",
+    "title": "Article with contents sidebar",
+    "module": "syntyr.core.css",
+    "description": "A long-form article and real anchor-linked table of contents in a wrapping sidecar.",
+    "html": "\u003csection class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-layout-article-heading\">\n  \u003cp class=\"syn-eyebrow\">PRACTICAL GUIDE\u003c/p>\n  \u003ch2 class=\"syn-heading\" id=\"syn-layout-article-heading\">A practical way to write clearer product pages\u003c/h2>\n  \u003cp class=\"syn-lede\">An article and an in-page contents list that reflow without a JavaScript scroll handler.\u003c/p>\n  \u003cdiv class=\"syn-sidecar\">\n    \u003carticle class=\"syn-stack\" aria-label=\"Guide content\">\n      \u003csection class=\"syn-stack\" aria-labelledby=\"syn-layout-article-summary\">\n        \u003ch3 id=\"syn-layout-article-summary\">Begin with one question\u003c/h3>\n        \u003cp>What does a reader need to understand or accomplish here? Put the answer near the beginning, using familiar language and a meaningful heading.\u003c/p>\n        \u003cp>Provide context without burying the action beneath decorative content.\u003c/p>\n      \u003c/section>\n      \u003csection class=\"syn-stack\" aria-labelledby=\"syn-layout-article-practices\">\n        \u003ch3 id=\"syn-layout-article-practices\">Make the next step obvious\u003c/h3>\n        \u003cp>Group related material, keep link names descriptive, and prefer short paragraphs when scanning is likely.\u003c/p>\n        \u003cul class=\"syn-feature-list\">\u003cli>Use one heading per idea.\u003c/li>\u003cli>Explain unfamiliar terminology.\u003c/li>\u003cli>Offer a clear path forward.\u003c/li>\u003c/ul>\n        \u003cp>\u003ca href=\"/guides/content\">Read the full content guide\u003c/a>\u003c/p>\n      \u003c/section>\n    \u003c/article>\n    \u003caside class=\"syn-panel syn-stack\">\n      \u003cnav aria-label=\"On this page\">\n        \u003cstrong>On this page\u003c/strong>\n        \u003col class=\"syn-stack\">\n          \u003cli>\u003ca href=\"#syn-layout-article-summary\">Begin with one question\u003c/a>\u003c/li>\n          \u003cli>\u003ca href=\"#syn-layout-article-practices\">Make the next step obvious\u003c/a>\u003c/li>\n        \u003c/ol>\n      \u003c/nav>\n      \u003cp class=\"syn-caption\">The in-page links target real headings; adjust IDs when copying more than once.\u003c/p>\n    \u003c/aside>\n  \u003c/div>\n\u003c/section>",
+    "keywords": "Article with contents sidebar A long-form article and real anchor-linked table of contents in a wrapping sidecar. article contents sidebar reading",
+    "kind": "block",
+    "category": "Editorial",
+    "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
+  },
+  {
     "id": "block-case-study-preview",
     "title": "Case-study teaser",
     "module": "syntyr.core.css",
@@ -936,6 +958,72 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
+    "id": "block-header-centered",
+    "title": "Centered editorial header",
+    "module": "syntyr.core.css",
+    "description": "Centered brand, horizontal links, and a secondary call to action.",
+    "html": "\u003cheader class=\"syn-root syn-region syn-stack\" data-syn-theme=\"studio\" aria-label=\"Example centered site header\">\n  \u003cdiv class=\"syn-inline\" style=\"--syn-inline-justify:center\">\n    \u003ca class=\"syn-logo\" href=\"/home\">Mosaic Collective\u003c/a>\n  \u003c/div>\n  \u003cnav class=\"syn-nav syn-inline\" style=\"--syn-inline-justify:center\" aria-label=\"Primary navigation\">\n    \u003ca href=\"/work\">Our work\u003c/a>\n    \u003ca href=\"/approach\">Approach\u003c/a>\n    \u003ca href=\"/team\">Team\u003c/a>\n    \u003ca href=\"/journal\">Journal\u003c/a>\n  \u003c/nav>\n  \u003cdiv class=\"syn-inline\" style=\"--syn-inline-justify:center\">\n    \u003ca class=\"syn-button syn-button--outline\" href=\"/contact\">Let's talk\u003c/a>\n  \u003c/div>\n\u003c/header>",
+    "keywords": "Centered editorial header Centered brand, horizontal links, and a secondary call to action. header centered editorial navigation",
+    "kind": "block",
+    "category": "Navigation",
+    "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
+  },
+  {
+    "id": "block-header-split",
+    "title": "Two-row product header",
+    "module": "syntyr.core.css",
+    "description": "Separate utility and product navigation with a prominent action.",
+    "html": "\u003cheader class=\"syn-root syn-region syn-stack\" data-syn-theme=\"studio\" aria-label=\"Example two-row site header\">\n  \u003cdiv class=\"syn-inline\" style=\"--syn-inline-justify:space-between\">\n    \u003ca class=\"syn-logo\" href=\"/home\">Atlas Platform\u003c/a>\n    \u003cnav class=\"syn-inline\" aria-label=\"Utility navigation\">\n      \u003ca class=\"syn-list-row\" href=\"/help\">Help\u003c/a>\n      \u003ca class=\"syn-list-row\" href=\"/login\">Sign in\u003c/a>\n    \u003c/nav>\n  \u003c/div>\n  \u003cdiv class=\"syn-header\" style=\"--syn-header-padding-block:0.5rem\">\n    \u003cnav class=\"syn-nav\" aria-label=\"Primary navigation\">\n      \u003ca href=\"/product\">Product\u003c/a>\n      \u003ca href=\"/solutions\">Solutions\u003c/a>\n      \u003ca href=\"/pricing\">Pricing\u003c/a>\n      \u003ca href=\"/docs\">Docs\u003c/a>\n    \u003c/nav>\n    \u003ca class=\"syn-button syn-button--primary\" href=\"/start\">Start free\u003c/a>\n  \u003c/div>\n\u003c/header>",
+    "keywords": "Two-row product header Separate utility and product navigation with a prominent action. header utility two-row saas",
+    "kind": "block",
+    "category": "Navigation",
+    "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
+  },
+  {
+    "id": "block-header-disclosure",
+    "title": "Native disclosure header",
+    "module": "syntyr.core.css",
+    "description": "Compact brand and expandable keyboard-accessible menu without JavaScript.",
+    "html": "\u003cheader class=\"syn-root syn-region syn-stack\" data-syn-theme=\"studio\" aria-label=\"Example disclosure site header\">\n  \u003cdiv class=\"syn-inline\" style=\"--syn-inline-justify:space-between\">\n    \u003ca class=\"syn-logo\" href=\"/home\">Northstar Journal\u003c/a>\n    \u003ca class=\"syn-button syn-button--outline\" href=\"/subscribe\">Subscribe\u003c/a>\n  \u003c/div>\n  \u003cdetails class=\"syn-details\">\n    \u003csummary>Explore the site\u003c/summary>\n    \u003cnav class=\"syn-nav\" aria-label=\"Primary navigation\">\n      \u003ca href=\"/stories\">Stories\u003c/a>\n      \u003ca href=\"/topics\">Topics\u003c/a>\n      \u003ca href=\"/about\">About\u003c/a>\n      \u003ca href=\"/contact\">Contact\u003c/a>\n    \u003c/nav>\n  \u003c/details>\n\u003c/header>",
+    "keywords": "Native disclosure header Compact brand and expandable keyboard-accessible menu without JavaScript. header details mobile disclosure",
+    "kind": "block",
+    "category": "Navigation",
+    "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
+  },
+  {
+    "id": "block-footer-compact",
+    "title": "Compact single-row footer",
+    "module": "syntyr.core.css",
+    "description": "Space-saving brand, legal links and disclosure in a wrapping row.",
+    "html": "\u003cfooter class=\"syn-root syn-region syn-stack\" data-syn-theme=\"studio\" aria-label=\"Example compact site footer\">\n  \u003cdiv class=\"syn-inline\" style=\"--syn-inline-justify:space-between\">\n    \u003ca class=\"syn-logo\" href=\"/home\">Northstar Studio\u003c/a>\n    \u003cnav class=\"syn-inline\" aria-label=\"Footer navigation\">\n      \u003ca class=\"syn-list-row\" href=\"/work\">Work\u003c/a>\n      \u003ca class=\"syn-list-row\" href=\"/contact\">Contact\u003c/a>\n      \u003ca class=\"syn-list-row\" href=\"/privacy\">Privacy\u003c/a>\n    \u003c/nav>\n  \u003c/div>\n  \u003cp class=\"syn-caption\">Example company information. Replace links and legal details before publishing.\u003c/p>\n\u003c/footer>",
+    "keywords": "Compact single-row footer Space-saving brand, legal links and disclosure in a wrapping row. footer compact minimal legal",
+    "kind": "block",
+    "category": "Navigation",
+    "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
+  },
+  {
+    "id": "block-footer-sitemap",
+    "title": "Four-column sitemap footer",
+    "module": "syntyr.core.css",
+    "description": "Responsive product, resource, company and legal navigation groups.",
+    "html": "\u003cfooter class=\"syn-root syn-region syn-stack\" data-syn-theme=\"studio\" aria-label=\"Example sitemap site footer\">\n  \u003cdiv class=\"syn-grid\" style=\"--syn-grid-min:12rem\">\n    \u003csection aria-labelledby=\"syn-sitemap-about\">\n      \u003ch2 class=\"syn-heading\" id=\"syn-sitemap-about\">Atlas Platform\u003c/h2>\n      \u003cp class=\"syn-muted\">A clearer way to manage your work.\u003c/p>\n    \u003c/section>\n    \u003cnav class=\"syn-stack\" aria-label=\"Product links\">\n      \u003cstrong>Product\u003c/strong>\n      \u003ca class=\"syn-list-row\" href=\"/features\">Features\u003c/a>\n      \u003ca class=\"syn-list-row\" href=\"/pricing\">Pricing\u003c/a>\n      \u003ca class=\"syn-list-row\" href=\"/integrations\">Integrations\u003c/a>\n    \u003c/nav>\n    \u003cnav class=\"syn-stack\" aria-label=\"Resources links\">\n      \u003cstrong>Resources\u003c/strong>\n      \u003ca class=\"syn-list-row\" href=\"/docs\">Documentation\u003c/a>\n      \u003ca class=\"syn-list-row\" href=\"/guides\">Guides\u003c/a>\n      \u003ca class=\"syn-list-row\" href=\"/support\">Support\u003c/a>\n    \u003c/nav>\n    \u003cnav class=\"syn-stack\" aria-label=\"Company and legal links\">\n      \u003cstrong>Company\u003c/strong>\n      \u003ca class=\"syn-list-row\" href=\"/about\">About\u003c/a>\n      \u003ca class=\"syn-list-row\" href=\"/privacy\">Privacy\u003c/a>\n      \u003ca class=\"syn-list-row\" href=\"/terms\">Terms\u003c/a>\n    \u003c/nav>\n  \u003c/div>\n  \u003cp class=\"syn-caption\">Example links and company details; replace before publishing.\u003c/p>\n\u003c/footer>",
+    "keywords": "Four-column sitemap footer Responsive product, resource, company and legal navigation groups. footer sitemap columns links",
+    "kind": "block",
+    "category": "Navigation",
+    "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
+  },
+  {
+    "id": "block-footer-newsletter",
+    "title": "Newsletter and links footer",
+    "module": "syntyr.core.css",
+    "description": "Email subscription example beside site links; requires a host-owned backend.",
+    "html": "\u003cfooter class=\"syn-root syn-region syn-stack\" data-syn-theme=\"studio\" aria-label=\"Example newsletter site footer\">\n  \u003cdiv class=\"syn-grid\">\n    \u003csection class=\"syn-stack\" aria-labelledby=\"syn-newsletter-footer-title\">\n      \u003ch2 class=\"syn-heading\" id=\"syn-newsletter-footer-title\">The Field Notes\u003c/h2>\n      \u003cp class=\"syn-muted\">Occasional ideas for more thoughtful digital products.\u003c/p>\n      \u003cform class=\"syn-stack\" action=\"/newsletter/subscribe\" method=\"post\">\n        \u003clabel class=\"syn-label\" for=\"syn-footer-newsletter-email\">Email address\u003c/label>\n        \u003cdiv class=\"syn-inline\">\n          \u003cinput class=\"syn-input\" id=\"syn-footer-newsletter-email\" name=\"email\" type=\"email\" autocomplete=\"email\" required>\n          \u003cbutton class=\"syn-button syn-button--primary\" type=\"submit\">Subscribe\u003c/button>\n        \u003c/div>\n        \u003cp class=\"syn-caption\">Example form only. Connect server validation, consent, CSRF protection and unsubscribe handling.\u003c/p>\n      \u003c/form>\n    \u003c/section>\n    \u003cnav class=\"syn-stack\" aria-label=\"Footer navigation\">\n      \u003cstrong>Explore\u003c/strong>\n      \u003ca class=\"syn-list-row\" href=\"/articles\">Articles\u003c/a>\n      \u003ca class=\"syn-list-row\" href=\"/about\">About\u003c/a>\n      \u003ca class=\"syn-list-row\" href=\"/contact\">Contact\u003c/a>\n      \u003ca class=\"syn-list-row\" href=\"/privacy\">Privacy\u003c/a>\n    \u003c/nav>\n  \u003c/div>\n  \u003cp class=\"syn-caption\">Illustrative business and subscription details; replace before publishing.\u003c/p>\n\u003c/footer>",
+    "keywords": "Newsletter and links footer Email subscription example beside site links; requires a host-owned backend. footer newsletter subscription form",
+    "kind": "block",
+    "category": "Navigation",
+    "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
+  },
+  {
     "id": "block-mega-navigation",
     "title": "Native expandable mega menu",
     "module": "syntyr.core.css + syntyr.recipes.css",
@@ -951,7 +1039,7 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "title": "Documentation page",
     "module": "syntyr.core.css",
     "description": "Documentation navigation, breadcrumb and article content.",
-    "html": "\u003csection class=\"syn-root syn-shell\" data-syn-theme=\"studio\" aria-labelledby=\"syn-docs-heading\">\n  \u003cnav class=\"syn-breadcrumbs\" aria-label=\"Breadcrumb\">\u003col>\u003cli>\u003ca href=\"/docs\">Docs\u003c/a>\u003c/li>\u003cli aria-current=\"page\">Getting started\u003c/li>\u003c/ol>\u003c/nav>\n  \u003cdiv class=\"syn-sidecar\">\n    \u003carticle>\u003ch2 class=\"syn-title\" id=\"syn-docs-heading\">Getting started\u003c/h2>\n      \u003cp>Import the version-pinned stylesheet and wrap your application in a Syntyr root.\u003c/p>\n      \u003cpre class=\"syn-code\">\u003ccode>&lt;main class=\"syn-root\"&gt;Hello world&lt;/main&gt;\u003c/code>\u003c/pre>\n      \u003ch3 id=\"syn-docs-next\">Next steps\u003c/h3>\u003cp>Explore composable components and semantic forms.\u003c/p>\n      \u003ca href=\"/docs/components\">Browse components\u003c/a>\n    \u003c/article>\n    \u003cnav class=\"syn-panel\" aria-label=\"Documentation sections\">\u003ch2 class=\"syn-heading\">Guides\u003c/h2>\n      \u003cul class=\"syn-list-group\">\n        \u003cli>\u003ca class=\"syn-list-row\" href=\"/docs/start\" aria-current=\"page\">Getting started\u003c/a>\u003c/li>\n        \u003cli>\u003ca class=\"syn-list-row\" href=\"/docs/components\">Components\u003c/a>\u003c/li>\n        \u003cli>\u003ca class=\"syn-list-row\" href=\"/docs/themes\">Themes\u003c/a>\u003c/li>\n      \u003c/ul>\n    \u003c/nav>\n  \u003c/div>\n\u003c/section>",
+    "html": "\u003csection class=\"syn-root syn-shell\" data-syn-theme=\"studio\" aria-labelledby=\"syn-docs-heading\">\n  \u003cnav class=\"syn-breadcrumbs\" aria-label=\"Breadcrumb\">\u003col>\u003cli>\u003ca href=\"/docs\">Docs\u003c/a>\u003c/li>\u003cli aria-current=\"page\">Getting started\u003c/li>\u003c/ol>\u003c/nav>\n  \u003cdiv class=\"syn-sidecar\">\n    \u003carticle>\u003ch2 class=\"syn-title\" id=\"syn-docs-heading\">Getting started\u003c/h2>\n      \u003cp>Import the version-pinned stylesheet and wrap your application in a Syntyr root.\u003c/p>\n      \u003cpre class=\"syn-code\">\u003ccode>&lt;main class=\"syn-root\"&gt;Hello world&lt;/main&gt;\u003c/code>\u003c/pre>\n      \u003ch3 id=\"syn-docs-next\">Next steps\u003c/h3>\u003cp>Explore composable components and semantic forms.\u003c/p>\n      \u003ca href=\"/docs/components\">Browse components\u003c/a>\n    \u003c/article>\n    \u003cnav class=\"syn-panel\" aria-label=\"Documentation sections\">\u003ch2 class=\"syn-heading\">Guides\u003c/h2>\n      \u003cul class=\"syn-list-group\" role=\"list\">\n        \u003cli>\u003ca class=\"syn-list-row\" href=\"/docs/start\" aria-current=\"page\">Getting started\u003c/a>\u003c/li>\n        \u003cli>\u003ca class=\"syn-list-row\" href=\"/docs/components\">Components\u003c/a>\u003c/li>\n        \u003cli>\u003ca class=\"syn-list-row\" href=\"/docs/themes\">Themes\u003c/a>\u003c/li>\n      \u003c/ul>\n    \u003c/nav>\n  \u003c/div>\n\u003c/section>",
     "keywords": "Documentation page Documentation navigation, breadcrumb and article content. documentation sidebar technical",
     "kind": "block",
     "category": "Technical",
@@ -1226,7 +1314,7 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "title": "Company milestones timeline",
     "module": "syntyr.core.css",
     "description": "A chronological history using native dates and an ordered vertical sequence.",
-    "html": "\u003csection class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-milestones-heading\">\n  \u003cp class=\"syn-eyebrow\">OUR HISTORY / EXAMPLE DATES\u003c/p>\n  \u003ch2 class=\"syn-heading\" id=\"syn-milestones-heading\">How the work evolved\u003c/h2>\n  \u003col class=\"syn-steps syn-steps--vertical\">\n    \u003cli class=\"syn-step\">\u003cdiv>\u003ctime datetime=\"2023\">2023\u003c/time>\u003ch3 class=\"syn-step-label\">Started with research\u003c/h3>\u003cp class=\"syn-step-detail\">A small team mapping practical needs and constraints.\u003c/p>\u003c/div>\u003c/li>\n    \u003cli class=\"syn-step\">\u003cdiv>\u003ctime datetime=\"2024\">2024\u003c/time>\u003ch3 class=\"syn-step-label\">Built the first tools\u003c/h3>\u003cp class=\"syn-step-detail\">Shared design patterns and accessible front-end foundations.\u003c/p>\u003c/div>\u003c/li>\n    \u003cli class=\"syn-step\">\u003cdiv>\u003ctime datetime=\"2025\">2025\u003c/time>\u003ch3 class=\"syn-step-label\">Expanded the practice\u003c/h3>\u003cp class=\"syn-step-detail\">More services, clearer documentation and repeatable delivery.\u003c/p>\u003c/div>\u003c/li>\n  \u003c/ol>\n  \u003cp class=\"syn-caption\">Illustrative history; replace dates and claims before publishing.\u003c/p>\n\u003c/section>",
+    "html": "\u003csection class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-milestones-heading\">\n  \u003cp class=\"syn-eyebrow\">OUR HISTORY / EXAMPLE DATES\u003c/p>\n  \u003ch2 class=\"syn-heading\" id=\"syn-milestones-heading\">How the work evolved\u003c/h2>\n  \u003col class=\"syn-steps syn-steps--vertical\" role=\"list\">\n    \u003cli class=\"syn-step\">\u003cdiv>\u003ctime datetime=\"2023\">2023\u003c/time>\u003ch3 class=\"syn-step-label\">Started with research\u003c/h3>\u003cp class=\"syn-step-detail\">A small team mapping practical needs and constraints.\u003c/p>\u003c/div>\u003c/li>\n    \u003cli class=\"syn-step\">\u003cdiv>\u003ctime datetime=\"2024\">2024\u003c/time>\u003ch3 class=\"syn-step-label\">Built the first tools\u003c/h3>\u003cp class=\"syn-step-detail\">Shared design patterns and accessible front-end foundations.\u003c/p>\u003c/div>\u003c/li>\n    \u003cli class=\"syn-step\">\u003cdiv>\u003ctime datetime=\"2025\">2025\u003c/time>\u003ch3 class=\"syn-step-label\">Expanded the practice\u003c/h3>\u003cp class=\"syn-step-detail\">More services, clearer documentation and repeatable delivery.\u003c/p>\u003c/div>\u003c/li>\n  \u003c/ol>\n  \u003cp class=\"syn-caption\">Illustrative history; replace dates and claims before publishing.\u003c/p>\n\u003c/section>",
     "keywords": "Company milestones timeline A chronological history using native dates and an ordered vertical sequence. timeline history about milestones",
     "kind": "block",
     "category": "Services",
@@ -1288,12 +1376,45 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
+    "id": "block-decision-guide",
+    "title": "Three-path decision guide",
+    "module": "syntyr.core.css",
+    "description": "A responsive choice of three service approaches with visible criteria and tradeoffs.",
+    "html": "\u003csection class=\"syn-root syn-region syn-stack\" data-syn-theme=\"studio\" aria-labelledby=\"syn-layout-decision-heading\">\n  \u003cp class=\"syn-eyebrow\">FIND YOUR STARTING POINT\u003c/p>\n  \u003ch2 class=\"syn-heading\" id=\"syn-layout-decision-heading\">Choose the approach that fits your next goal.\u003c/h2>\n  \u003cp class=\"syn-lede\">Three paths with explicit tradeoffs, not a simulated selector.\u003c/p>\n  \u003cdiv class=\"syn-grid\" style=\"--syn-grid-min:15rem\">\n    \u003carticle class=\"syn-panel syn-stack\">\n      \u003ch3 class=\"syn-heading\">Explore\u003c/h3>\n      \u003cp>Useful when requirements are still changing and you need to test an idea.\u003c/p>\n      \u003cul class=\"syn-feature-list\">\u003cli>Small initial scope\u003c/li>\u003cli>Room to learn\u003c/li>\u003c/ul>\n      \u003ca class=\"syn-button syn-button--outline\" href=\"/services/discovery\">Discovery details\u003c/a>\n    \u003c/article>\n    \u003carticle class=\"syn-panel syn-stack\">\n      \u003ch3 class=\"syn-heading\">Build\u003c/h3>\n      \u003cp>Useful when the problem is understood and the workflow is ready to implement.\u003c/p>\n      \u003cul class=\"syn-feature-list\">\u003cli>Defined milestones\u003c/li>\u003cli>Reviewable deliverables\u003c/li>\u003c/ul>\n      \u003ca class=\"syn-button syn-button--outline\" href=\"/services/build\">Build details\u003c/a>\n    \u003c/article>\n    \u003carticle class=\"syn-panel syn-stack\">\n      \u003ch3 class=\"syn-heading\">Improve\u003c/h3>\n      \u003cp>Useful when an existing service needs fewer bottlenecks and clearer feedback.\u003c/p>\n      \u003cul class=\"syn-feature-list\">\u003cli>Baseline first\u003c/li>\u003cli>Measured iteration\u003c/li>\u003c/ul>\n      \u003ca class=\"syn-button syn-button--outline\" href=\"/services/improve\">Improvement details\u003c/a>\n    \u003c/article>\n  \u003c/div>\n\u003c/section>",
+    "keywords": "Three-path decision guide A responsive choice of three service approaches with visible criteria and tradeoffs. decision comparison services paths",
+    "kind": "block",
+    "category": "Services",
+    "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
+  },
+  {
+    "id": "block-faq-sidecar",
+    "title": "FAQs with a contact sidebar",
+    "module": "syntyr.core.css",
+    "description": "Native expandable answers alongside a clear contact path.",
+    "html": "\u003csection class=\"syn-root syn-region syn-stack\" data-syn-theme=\"studio\" aria-labelledby=\"syn-layout-faq-heading\">\n  \u003cp class=\"syn-eyebrow\">COMMON QUESTIONS\u003c/p>\n  \u003ch2 class=\"syn-heading\" id=\"syn-layout-faq-heading\">Answers, with a direct way to ask more.\u003c/h2>\n  \u003cdiv class=\"syn-sidecar\">\n    \u003cdiv class=\"syn-stack\">\n      \u003cdetails class=\"syn-details\">\n        \u003csummary>What belongs in the initial brief?\u003c/summary>\n        \u003cp>A concise description of the audience, the problem, constraints and a useful definition of success.\u003c/p>\n      \u003c/details>\n      \u003cdetails class=\"syn-details\">\n        \u003csummary>Can we begin with a small scope?\u003c/summary>\n        \u003cp>A narrowly defined first step can make assumptions easier to verify. Agree on boundaries before implementation.\u003c/p>\n      \u003c/details>\n      \u003cdetails class=\"syn-details\">\n        \u003csummary>How should progress be communicated?\u003c/summary>\n        \u003cp>Use a predictable review rhythm, explicit owners and documented decisions so context is not lost.\u003c/p>\n      \u003c/details>\n    \u003c/div>\n    \u003caside class=\"syn-panel syn-stack\" aria-labelledby=\"syn-layout-faq-contact\">\n      \u003ch3 class=\"syn-heading\" id=\"syn-layout-faq-contact\">Still have a question?\u003c/h3>\n      \u003cp>Share the outcome you need and the constraints that matter most.\u003c/p>\n      \u003ca class=\"syn-button syn-button--primary\" href=\"/contact\">Contact the team\u003c/a>\n      \u003cp class=\"syn-caption\">Replace the example contact route before publishing.\u003c/p>\n    \u003c/aside>\n  \u003c/div>\n\u003c/section>",
+    "keywords": "FAQs with a contact sidebar Native expandable answers alongside a clear contact path. faq questions sidebar contact",
+    "kind": "block",
+    "category": "Services",
+    "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
+  },
+  {
     "id": "block-careers-listings",
     "title": "Careers and open positions",
     "module": "syntyr.core.css",
     "description": "Readable role summaries with clear application routes and example-data disclosure.",
     "html": "\u003csection class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"careers-heading\">\n  \u003cp class=\"syn-eyebrow\">CAREERS / OPEN ROLES\u003c/p>\n  \u003ch2 id=\"careers-heading\" class=\"syn-heading\">Do meaningful work with us.\u003c/h2>\n  \u003cp class=\"syn-muted\">Illustrative roles only. Replace with actual openings, location or remote policy, and transparent employment details.\u003c/p>\n  \u003cul class=\"syn-stack\">\n    \u003cli class=\"syn-panel\">\n      \u003cdiv class=\"syn-sidecar\">\n        \u003cdiv>\u003ch3 class=\"syn-heading\">Product designer\u003c/h3>\u003cp class=\"syn-muted\">Design \u00b7 Remote eligible \u00b7 Full-time\u003c/p>\u003c/div>\n        \u003ca class=\"syn-button\" href=\"/careers/product-designer\">View role details\u003c/a>\n      \u003c/div>\n    \u003c/li>\n    \u003cli class=\"syn-panel\">\n      \u003cdiv class=\"syn-sidecar\">\n        \u003cdiv>\u003ch3 class=\"syn-heading\">Customer success specialist\u003c/h3>\u003cp class=\"syn-muted\">Customer success \u00b7 Hybrid \u00b7 Full-time\u003c/p>\u003c/div>\n        \u003ca class=\"syn-button\" href=\"/careers/customer-success-specialist\">View role details\u003c/a>\n      \u003c/div>\n    \u003c/li>\n    \u003cli class=\"syn-panel\">\n      \u003cdiv class=\"syn-sidecar\">\n        \u003cdiv>\u003ch3 class=\"syn-heading\">Software engineer\u003c/h3>\u003cp class=\"syn-muted\">Engineering \u00b7 Remote eligible \u00b7 Full-time\u003c/p>\u003c/div>\n        \u003ca class=\"syn-button\" href=\"/careers/software-engineer\">View role details\u003c/a>\n      \u003c/div>\n    \u003c/li>\n  \u003c/ul>\n  \u003cp>\u003ca href=\"/careers\">Browse all open positions\u003c/a>\u003c/p>\n\u003c/section>",
     "keywords": "Careers and open positions Readable role summaries with clear application routes and example-data disclosure. careers jobs recruiting hiring",
+    "kind": "block",
+    "category": "Company",
+    "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
+  },
+  {
+    "id": "block-principles-columns",
+    "title": "Three-column principles section",
+    "module": "syntyr.core.css",
+    "description": "Organizational principles with concrete explanations in a responsive grid.",
+    "html": "\u003csection class=\"syn-root syn-region syn-stack\" data-syn-theme=\"studio\" aria-labelledby=\"syn-layout-principles-heading\">\n  \u003cp class=\"syn-eyebrow\">WHAT GUIDES OUR WORK\u003c/p>\n  \u003ch2 class=\"syn-heading\" id=\"syn-layout-principles-heading\">Three principles, one consistent standard.\u003c/h2>\n  \u003cp class=\"syn-lede\">Give organizational values substance with practical descriptions, not abstract slogans.\u003c/p>\n  \u003col class=\"syn-grid\" style=\"--syn-grid-min:16rem\">\n    \u003cli class=\"syn-panel syn-stack\">\n      \u003ch3 class=\"syn-heading\">Understand first\u003c/h3>\n      \u003cp>Map the real problem, constraints and affected people before committing to a solution.\u003c/p>\n    \u003c/li>\n    \u003cli class=\"syn-panel syn-stack\">\n      \u003ch3 class=\"syn-heading\">Favor clear systems\u003c/h3>\n      \u003cp>Choose accessible interfaces and maintainable components over short-lived decoration.\u003c/p>\n    \u003c/li>\n    \u003cli class=\"syn-panel syn-stack\">\n      \u003ch3 class=\"syn-heading\">Improve deliberately\u003c/h3>\n      \u003cp>Document outcomes and change direction when evidence suggests a better approach.\u003c/p>\n    \u003c/li>\n  \u003c/ol>\n  \u003cdiv class=\"syn-inline\">\n    \u003ca class=\"syn-button syn-button--outline\" href=\"/company/about\">More about the company\u003c/a>\n    \u003ca class=\"syn-button\" href=\"/company/team\">Meet the team\u003c/a>\n  \u003c/div>\n\u003c/section>",
+    "keywords": "Three-column principles section Organizational principles with concrete explanations in a responsive grid. principles values company columns",
     "kind": "block",
     "category": "Company",
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
@@ -1343,12 +1464,45 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
+    "id": "block-resource-index",
+    "title": "Grouped resource topic index",
+    "module": "syntyr.core.css",
+    "description": "A documentation and resource hub with grouped descriptive navigation links.",
+    "html": "\u003csection class=\"syn-root syn-region syn-stack\" data-syn-theme=\"studio\" aria-labelledby=\"syn-layout-resource-heading\">\n  \u003cp class=\"syn-eyebrow\">LEARN AT YOUR PACE\u003c/p>\n  \u003ch2 class=\"syn-heading\" id=\"syn-layout-resource-heading\">Resources organized by what you want to do.\u003c/h2>\n  \u003cp class=\"syn-lede\">A grouped topic index using real links, without a pretend search box or client-side filtering.\u003c/p>\n  \u003cdiv class=\"syn-grid\" style=\"--syn-grid-min:16rem\">\n    \u003cnav class=\"syn-panel syn-stack\" aria-label=\"Getting started resources\">\n      \u003ch3 class=\"syn-heading\">Get started\u003c/h3>\n      \u003cp>Start with the fundamentals and the quickest path to a first result.\u003c/p>\n      \u003ca class=\"syn-list-row\" href=\"/guides/quickstart\">Quickstart guide\u003c/a>\n      \u003ca class=\"syn-list-row\" href=\"/guides/basics\">Core concepts\u003c/a>\n      \u003ca class=\"syn-list-row\" href=\"/guides/checklist\">Launch checklist\u003c/a>\n    \u003c/nav>\n    \u003cnav class=\"syn-panel syn-stack\" aria-label=\"Best practice resources\">\n      \u003ch3 class=\"syn-heading\">Go deeper\u003c/h3>\n      \u003cp>Patterns for teams ready to refine existing workflows.\u003c/p>\n      \u003ca class=\"syn-list-row\" href=\"/guides/accessibility\">Accessibility practices\u003c/a>\n      \u003ca class=\"syn-list-row\" href=\"/guides/performance\">Performance guide\u003c/a>\n      \u003ca class=\"syn-list-row\" href=\"/guides/maintenance\">Maintenance notes\u003c/a>\n    \u003c/nav>\n    \u003cnav class=\"syn-panel syn-stack\" aria-label=\"Support resources\">\n      \u003ch3 class=\"syn-heading\">Find help\u003c/h3>\n      \u003cp>Get unblocked using real documentation or a human support path.\u003c/p>\n      \u003ca class=\"syn-list-row\" href=\"/support/questions\">Common questions\u003c/a>\n      \u003ca class=\"syn-list-row\" href=\"/support/contact\">Contact support\u003c/a>\n      \u003ca class=\"syn-list-row\" href=\"/updates\">Product updates\u003c/a>\n    \u003c/nav>\n  \u003c/div>\n\u003c/section>",
+    "keywords": "Grouped resource topic index A documentation and resource hub with grouped descriptive navigation links. resources index documentation navigation",
+    "kind": "block",
+    "category": "Publishing",
+    "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
+  },
+  {
     "id": "block-press-highlights",
     "title": "News and press highlights",
     "module": "syntyr.core.css",
     "description": "A dated editorial summary grid with descriptive story destinations.",
     "html": "\u003csection class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-press-highlights\">\n  \u003cp class=\"syn-eyebrow\">FROM THE JOURNAL / EXAMPLES\u003c/p>\n  \u003ch2 class=\"syn-heading\" id=\"syn-press-highlights\">Recent stories and announcements\u003c/h2>\n  \u003cp class=\"syn-muted\">These are fictional editorial examples, not actual press mentions or endorsements.\u003c/p>\n  \u003cdiv class=\"syn-grid\">\n    \u003carticle class=\"syn-panel\">\u003cp class=\"syn-caption\">\u003ctime datetime=\"2026-09-15\">September 15, 2026\u003c/time>\u003c/p>\u003ch3>Why readable layouts matter\u003c/h3>\u003cp>Practical notes on clarity, hierarchy and useful content.\u003c/p>\u003ca href=\"/news/layout-clarity\">Read sample story\u003c/a>\u003c/article>\n    \u003carticle class=\"syn-panel\">\u003cp class=\"syn-caption\">\u003ctime datetime=\"2026-10-02\">October 2, 2026\u003c/time>\u003c/p>\u003ch3>Building better resource pages\u003c/h3>\u003cp>Make helpful information easy to discover and keep current.\u003c/p>\u003ca href=\"/news/resource-pages\">Read sample story\u003c/a>\u003c/article>\n    \u003carticle class=\"syn-panel\">\u003cp class=\"syn-caption\">\u003ctime datetime=\"2026-10-23\">October 23, 2026\u003c/time>\u003c/p>\u003ch3>Creating an accessible launch\u003c/h3>\u003cp>Use native controls, tested navigation and clear feedback.\u003c/p>\u003ca href=\"/news/accessible-launch\">Read sample story\u003c/a>\u003c/article>\n  \u003c/div>\n\u003c/section>",
     "keywords": "News and press highlights A dated editorial summary grid with descriptive story destinations. press mentions news announcements",
+    "kind": "block",
+    "category": "Marketing",
+    "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
+  },
+  {
+    "id": "block-feature-rows",
+    "title": "Stacked feature story rows",
+    "module": "syntyr.core.css",
+    "description": "Two narrative feature rows with contextual detail cards and destination links.",
+    "html": "\u003csection class=\"syn-root syn-region syn-stack\" data-syn-theme=\"studio\" aria-labelledby=\"syn-layout-feature-rows-heading\">\n  \u003cp class=\"syn-eyebrow\">HOW THE WORK FLOWS\u003c/p>\n  \u003ch2 class=\"syn-heading\" id=\"syn-layout-feature-rows-heading\">One story, two complementary capabilities\u003c/h2>\n  \u003cdiv class=\"syn-stack\">\n    \u003carticle class=\"syn-sidecar\">\n      \u003cdiv class=\"syn-stack\">\n        \u003ch3 class=\"syn-heading\">01 / Plan with context\u003c/h3>\n        \u003cp>Bring the brief, relevant decisions and open questions together before work begins.\u003c/p>\n        \u003ca href=\"/features/planning\">Explore planning features\u003c/a>\n      \u003c/div>\n      \u003cdiv class=\"syn-panel syn-stack\">\n        \u003cstrong>Planning checklist\u003c/strong>\n        \u003cul class=\"syn-feature-list\">\u003cli>Define the outcome\u003c/li>\u003cli>Capture requirements\u003c/li>\u003cli>Assign next steps\u003c/li>\u003c/ul>\n      \u003c/div>\n    \u003c/article>\n    \u003carticle class=\"syn-sidecar\">\n      \u003cdiv class=\"syn-stack\">\n        \u003ch3 class=\"syn-heading\">02 / Report what changed\u003c/h3>\n        \u003cp>Present progress as a readable narrative, with evidence and next actions close at hand.\u003c/p>\n        \u003ca href=\"/features/reporting\">Explore reporting features\u003c/a>\n      \u003c/div>\n      \u003cdiv class=\"syn-panel syn-stack\">\n        \u003cstrong>Update summary\u003c/strong>\n        \u003cul class=\"syn-feature-list\">\n          \u003cli>Progress: example review\u003c/li>\n          \u003cli>Next step: share findings\u003c/li>\n        \u003c/ul>\n      \u003c/div>\n    \u003c/article>\n  \u003c/div>\n  \u003cp class=\"syn-caption\">Illustrative workflow and sample labels; connect real data where appropriate.\u003c/p>\n\u003c/section>",
+    "keywords": "Stacked feature story rows Two narrative feature rows with contextual detail cards and destination links. features story rows content",
+    "kind": "block",
+    "category": "Marketing",
+    "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
+  },
+  {
+    "id": "block-impact-narrative",
+    "title": "Metrics with explanatory narrative",
+    "module": "syntyr.core.css",
+    "description": "Contextualized illustrative metrics paired with interpretation and source guidance.",
+    "html": "\u003csection class=\"syn-root syn-region syn-stack\" data-syn-theme=\"studio\" aria-labelledby=\"syn-layout-impact-heading\">\n  \u003cp class=\"syn-eyebrow\">MEASURING IMPACT\u003c/p>\n  \u003ch2 class=\"syn-heading\" id=\"syn-layout-impact-heading\">Put numbers next to their meaning.\u003c/h2>\n  \u003cdiv class=\"syn-sidecar\">\n    \u003cdiv class=\"syn-stack\">\n      \u003ch3 class=\"syn-heading\">From observation to a useful decision\u003c/h3>\n      \u003cp>Strong reporting combines a small set of measures with the context needed to interpret them. Explain the source, the time period and what happens next.\u003c/p>\n      \u003cp class=\"syn-muted\">The figures in this demo are hypothetical; they are not customer results or product performance claims.\u003c/p>\n      \u003ca class=\"syn-button syn-button--outline\" href=\"/methods\">Learn about measurement\u003c/a>\n    \u003c/div>\n    \u003cdiv class=\"syn-panel syn-stack\">\n      \u003cdiv class=\"syn-grid\" style=\"--syn-grid-min:9rem\">\n        \u003cdiv class=\"syn-stat\">\u003cp class=\"syn-stat-label\">Example tasks\u003c/p>\u003cp class=\"syn-stat-value\">24\u003c/p>\u003c/div>\n        \u003cdiv class=\"syn-stat\">\u003cp class=\"syn-stat-label\">Example reviewed\u003c/p>\u003cp class=\"syn-stat-value\">18\u003c/p>\u003c/div>\n        \u003cdiv class=\"syn-stat\">\u003cp class=\"syn-stat-label\">Example remaining\u003c/p>\u003cp class=\"syn-stat-value\">6\u003c/p>\u003c/div>\n      \u003c/div>\n      \u003cp class=\"syn-caption\">Illustrative numbers only. Replace with sourced, dated data.\u003c/p>\n    \u003c/div>\n  \u003c/div>\n\u003c/section>",
+    "keywords": "Metrics with explanatory narrative Contextualized illustrative metrics paired with interpretation and source guidance. metrics story stats explanation",
     "kind": "block",
     "category": "Marketing",
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."

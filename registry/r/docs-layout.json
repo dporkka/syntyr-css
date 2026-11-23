@@ -13,7 +13,7 @@
       "path": "blocks/snippets/docs-layout.html",
       "type": "registry:file",
       "target": "~/syntyr/blocks/docs-layout.html",
-      "content": "<section class=\"syn-root syn-shell\" data-syn-theme=\"studio\" aria-labelledby=\"syn-docs-heading\">\n  <nav class=\"syn-breadcrumbs\" aria-label=\"Breadcrumb\"><ol><li><a href=\"/docs\">Docs</a></li><li aria-current=\"page\">Getting started</li></ol></nav>\n  <div class=\"syn-sidecar\">\n    <article><h2 class=\"syn-title\" id=\"syn-docs-heading\">Getting started</h2>\n      <p>Import the version-pinned stylesheet and wrap your application in a Syntyr root.</p>\n      <pre class=\"syn-code\"><code>&lt;main class=\"syn-root\"&gt;Hello world&lt;/main&gt;</code></pre>\n      <h3 id=\"syn-docs-next\">Next steps</h3><p>Explore composable components and semantic forms.</p>\n      <a href=\"/docs/components\">Browse components</a>\n    </article>\n    <nav class=\"syn-panel\" aria-label=\"Documentation sections\"><h2 class=\"syn-heading\">Guides</h2>\n      <ul class=\"syn-list-group\">\n        <li><a class=\"syn-list-row\" href=\"/docs/start\" aria-current=\"page\">Getting started</a></li>\n        <li><a class=\"syn-list-row\" href=\"/docs/components\">Components</a></li>\n        <li><a class=\"syn-list-row\" href=\"/docs/themes\">Themes</a></li>\n      </ul>\n    </nav>\n  </div>\n</section>\n"
+      "content": "<section class=\"syn-root syn-shell\" data-syn-theme=\"studio\" aria-labelledby=\"syn-docs-heading\">\n  <nav class=\"syn-breadcrumbs\" aria-label=\"Breadcrumb\"><ol><li><a href=\"/docs\">Docs</a></li><li aria-current=\"page\">Getting started</li></ol></nav>\n  <div class=\"syn-sidecar\">\n    <article><h2 class=\"syn-title\" id=\"syn-docs-heading\">Getting started</h2>\n      <p>Import the version-pinned stylesheet and wrap your application in a Syntyr root.</p>\n      <pre class=\"syn-code\"><code>&lt;main class=\"syn-root\"&gt;Hello world&lt;/main&gt;</code></pre>\n      <h3 id=\"syn-docs-next\">Next steps</h3><p>Explore composable components and semantic forms.</p>\n      <a href=\"/docs/components\">Browse components</a>\n    </article>\n    <nav class=\"syn-panel\" aria-label=\"Documentation sections\"><h2 class=\"syn-heading\">Guides</h2>\n      <ul class=\"syn-list-group\" role=\"list\">\n        <li><a class=\"syn-list-row\" href=\"/docs/start\" aria-current=\"page\">Getting started</a></li>\n        <li><a class=\"syn-list-row\" href=\"/docs/components\">Components</a></li>\n        <li><a class=\"syn-list-row\" href=\"/docs/themes\">Themes</a></li>\n      </ul>\n    </nav>\n  </div>\n</section>\n"
     },
     {
       "path": "LICENSE",
@@ -27,7 +27,7 @@
     "source": "MIT source candidate",
     "runtimeJavaScript": false,
     "fileDigests": {
-      "~/syntyr/blocks/docs-layout.html": "88e21c6f100ab654132ddf08b784c0a7b76db5a8f7f110c7f0cd6f27c74af918",
+      "~/syntyr/blocks/docs-layout.html": "2ff194a3534f4a9f7d8cf943c134d0b29e52186cb851501f11cf769498d2ab9a",
       "~/syntyr/LICENSE": "42f56369ac06362dbfe433d2d50b178bf74c369a55ea22337ab40fd9433521bf"
     }
   },

@@ -24,6 +24,15 @@ const engines = {chromium, firefox, webkit};
         await page.waitForFunction(() => document.getElementById('catalog-controls').hidden === false);
         const total = await page.locator('.catalog-card').count();
         assert.ok(total >= 32);
+        assert.equal(await page.locator('#catalog-release-filter').inputValue(), 'published-alpha4');
+        assert.equal((await page.locator('#catalog-release-title').innerText()).trim(), 'Published alpha.4 CSS-covered examples');
+        assert.equal(await page.locator('#catalog-release-control').isVisible(), true);
+        assert.equal(await page.locator('.catalog-card:not([hidden])').count(), 42);
+        assert.equal(await page.locator('.catalog-card[aria-labelledby="catalog-viz-bars-title"]:not([hidden])').count(), 0);
+        assert.ok((await page.locator('#catalog-framework-stylesheet').getAttribute('href')).includes('site-releases/0.3.0-alpha.4/'));
+        await page.locator('#catalog-release-filter').selectOption('source-alpha5');
+        assert.equal((await page.locator('#catalog-release-title').innerText()).trim(), 'Unreleased alpha.5 component examples');
+        assert.equal(await page.locator('.catalog-card:not([hidden])').count(), total);
         for (const id of ['catalog-input-group-title', 'catalog-crm-filters-title',
           'catalog-recovery-state-title', 'catalog-geometry-frame-title', 'catalog-viz-bars-title']) {
           assert.equal(await page.locator(`.catalog-card[aria-labelledby="${id}"]`).count(), 1);
@@ -141,6 +150,13 @@ const engines = {chromium, firefox, webkit};
         assert.ok(fullPage.includes('<link rel="stylesheet" href="/dist/syntyr.core.css">'));
         assert.ok(fullPage.includes('syn-button--primary'));
         assert.equal((fullPage.match(/syntyr.core.css/g) || []).length, 1);
+        await page.locator('#catalog-release-filter').selectOption('published-alpha4');
+        await page.locator('.catalog-card:not([hidden]) .catalog-code-details').first().evaluate(el => {el.open = true;});
+        await page.locator('.catalog-card:not([hidden]) [data-catalog-copy-page]').first().click();
+        const pinnedPage = await page.evaluate(() => window.__catalogCopied);
+        assert.ok(pinnedPage.includes('https://syntyr-css.pages.dev/v/0.3.0-alpha.4/syntyr.core.css'));
+        assert.ok(!pinnedPage.includes('href="/dist/syntyr.core.css"'));
+        await page.locator('#catalog-release-filter').selectOption('source-alpha5');
         // Optional stylesheet requirements must be complete, not only the
         // primary CSS badge. The meter demo also uses semantic CSS.
         await page.locator('#catalog-search').fill('meter and output');
@@ -196,6 +212,24 @@ const engines = {chromium, firefox, webkit};
         assert.equal(await noJsPage.locator('#catalog-browser-support').count(), 1);
         await noJs.close();
         process.stdout.write(`${name} ${width}px: search, clipboard, empty state, reflow and no-JS pass\n`);
+      }
+      // A deep link to an experimental-only example must not disappear behind
+      // the default published-release filter. Covered examples stay published.
+      for (const [targetId, expectedMode] of [
+        ['catalog-viz-bars-title', 'source-alpha5'],
+        ['catalog-buttons-title', 'published-alpha4']
+      ]) {
+        const linked = await browser.newPage({viewport: {width: 390, height: 800}});
+        await linked.goto(catalog + '#' + targetId, {waitUntil: 'load'});
+        await linked.waitForFunction(() => !document.querySelector('#catalog-controls').hidden);
+        await linked.waitForFunction(({targetId, expectedMode}) =>
+          document.getElementById('catalog-release-filter').value === expectedMode &&
+          !document.getElementById(targetId).closest('.catalog-card').hidden,
+          {targetId, expectedMode}
+        );
+        const pos = await linked.locator('#' + targetId).boundingBox();
+        assert.ok(pos && pos.y >= -10 && pos.y <= 790, 'Unreachable deep link: ' + targetId);
+        await linked.close();
       }
     } finally { await browser.close(); }
   }

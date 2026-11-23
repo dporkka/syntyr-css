@@ -28,7 +28,7 @@ class CoreSectionExpansionTests(unittest.TestCase):
     def test_sections_are_available_as_independent_copyable_blocks(self):
         blocks = json.loads((ROOT / "blocks/manifest.json").read_text())["blocks"]
         by_id = {block["id"]: block for block in blocks}
-        self.assertEqual(len(blocks), 85)
+        self.assertEqual(len(blocks), 99)
         for name, (category, required) in EXPECTED.items():
             with self.subTest(section=name):
                 self.assertIn(name, by_id)

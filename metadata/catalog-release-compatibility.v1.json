@@ -1,0 +1,328 @@
+{
+  "schema_version": 1,
+  "published_release": "0.3.0-alpha.4",
+  "source_candidate": "0.3.0-alpha.5",
+  "method": "Conservative frozen alpha.4 stylesheet and CSS class-selector coverage; not visual or behavioral certification.",
+  "examples": [
+    {
+      "id": "catalog-buttons-title",
+      "published_css_covered": true,
+      "missing_stylesheets": [],
+      "missing_classes": []
+    },
+    {
+      "id": "catalog-forms-title",
+      "published_css_covered": true,
+      "missing_stylesheets": [],
+      "missing_classes": []
+    },
+    {
+      "id": "catalog-native-controls-title",
+      "published_css_covered": true,
+      "missing_stylesheets": [],
+      "missing_classes": []
+    },
+    {
+      "id": "catalog-interaction-card-0",
+      "published_css_covered": true,
+      "missing_stylesheets": [],
+      "missing_classes": []
+    },
+    {
+      "id": "catalog-interaction-card-1",
+      "published_css_covered": true,
+      "missing_stylesheets": [],
+      "missing_classes": []
+    },
+    {
+      "id": "catalog-interaction-card-2",
+      "published_css_covered": true,
+      "missing_stylesheets": [],
+      "missing_classes": []
+    },
+    {
+      "id": "catalog-interaction-card-3",
+      "published_css_covered": true,
+      "missing_stylesheets": [],
+      "missing_classes": []
+    },
+    {
+      "id": "catalog-interaction-card-4",
+      "published_css_covered": true,
+      "missing_stylesheets": [],
+      "missing_classes": []
+    },
+    {
+      "id": "catalog-panels-title",
+      "published_css_covered": true,
+      "missing_stylesheets": [],
+      "missing_classes": []
+    },
+    {
+      "id": "catalog-metrics-title",
+      "published_css_covered": true,
+      "missing_stylesheets": [],
+      "missing_classes": []
+    },
+    {
+      "id": "catalog-tables-title",
+      "published_css_covered": true,
+      "missing_stylesheets": [],
+      "missing_classes": []
+    },
+    {
+      "id": "catalog-alerts-title",
+      "published_css_covered": true,
+      "missing_stylesheets": [],
+      "missing_classes": []
+    },
+    {
+      "id": "catalog-disclosures-title",
+      "published_css_covered": true,
+      "missing_stylesheets": [],
+      "missing_classes": []
+    },
+    {
+      "id": "catalog-breadcrumbs-title",
+      "published_css_covered": false,
+      "missing_stylesheets": [],
+      "missing_classes": [
+        "syn-breadcrumbs"
+      ]
+    },
+    {
+      "id": "catalog-progress-title",
+      "published_css_covered": true,
+      "missing_stylesheets": [],
+      "missing_classes": []
+    },
+    {
+      "id": "catalog-pricing-title",
+      "published_css_covered": true,
+      "missing_stylesheets": [],
+      "missing_classes": []
+    },
+    {
+      "id": "catalog-typography-and-inline-text-title",
+      "published_css_covered": true,
+      "missing_stylesheets": [],
+      "missing_classes": []
+    },
+    {
+      "id": "catalog-code-and-keyboard-input-title",
+      "published_css_covered": true,
+      "missing_stylesheets": [],
+      "missing_classes": []
+    },
+    {
+      "id": "catalog-ordered-and-unordered-lists-title",
+      "published_css_covered": true,
+      "missing_stylesheets": [],
+      "missing_classes": []
+    },
+    {
+      "id": "catalog-definition-list-title",
+      "published_css_covered": true,
+      "missing_stylesheets": [],
+      "missing_classes": []
+    },
+    {
+      "id": "catalog-article-with-header-and-footer-title",
+      "published_css_covered": true,
+      "missing_stylesheets": [],
+      "missing_classes": []
+    },
+    {
+      "id": "catalog-fieldset-and-choice-inputs-title",
+      "published_css_covered": true,
+      "missing_stylesheets": [],
+      "missing_classes": []
+    },
+    {
+      "id": "catalog-select-and-textarea-title",
+      "published_css_covered": true,
+      "missing_stylesheets": [],
+      "missing_classes": []
+    },
+    {
+      "id": "catalog-dates-and-structured-values-title",
+      "published_css_covered": true,
+      "missing_stylesheets": [],
+      "missing_classes": []
+    },
+    {
+      "id": "catalog-responsive-image-with-caption-title",
+      "published_css_covered": true,
+      "missing_stylesheets": [],
+      "missing_classes": []
+    },
+    {
+      "id": "catalog-quotation-and-source-title",
+      "published_css_covered": true,
+      "missing_stylesheets": [],
+      "missing_classes": []
+    },
+    {
+      "id": "catalog-native-popover-title",
+      "published_css_covered": true,
+      "missing_stylesheets": [],
+      "missing_classes": []
+    },
+    {
+      "id": "catalog-input-group-title",
+      "published_css_covered": false,
+      "missing_stylesheets": [],
+      "missing_classes": [
+        "syn-field",
+        "syn-input-addon",
+        "syn-input-group"
+      ]
+    },
+    {
+      "id": "catalog-crm-filters-title",
+      "published_css_covered": false,
+      "missing_stylesheets": [],
+      "missing_classes": [
+        "syn-filter-actions",
+        "syn-filter-bar",
+        "syn-filter-field",
+        "syn-filter-field--query"
+      ]
+    },
+    {
+      "id": "catalog-recovery-state-title",
+      "published_css_covered": false,
+      "missing_stylesheets": [],
+      "missing_classes": [
+        "syn-result-state"
+      ]
+    },
+    {
+      "id": "catalog-geometry-frame-title",
+      "published_css_covered": true,
+      "missing_stylesheets": [],
+      "missing_classes": []
+    },
+    {
+      "id": "catalog-viz-bars-title",
+      "published_css_covered": false,
+      "missing_stylesheets": [
+        "syntyr.viz.css"
+      ],
+      "missing_classes": [
+        "syn-viz-bar",
+        "syn-viz-bar-fill",
+        "syn-viz-bar-label",
+        "syn-viz-bar-track",
+        "syn-viz-bars"
+      ]
+    },
+    {
+      "id": "catalog-primary-nav-title",
+      "published_css_covered": true,
+      "missing_stylesheets": [],
+      "missing_classes": []
+    },
+    {
+      "id": "catalog-table-of-contents-title",
+      "published_css_covered": true,
+      "missing_stylesheets": [],
+      "missing_classes": []
+    },
+    {
+      "id": "catalog-footer-nav-title",
+      "published_css_covered": true,
+      "missing_stylesheets": [],
+      "missing_classes": []
+    },
+    {
+      "id": "catalog-pagination-title",
+      "published_css_covered": false,
+      "missing_stylesheets": [],
+      "missing_classes": [
+        "syn-page-link",
+        "syn-pagination"
+      ]
+    },
+    {
+      "id": "catalog-contact-title",
+      "published_css_covered": true,
+      "missing_stylesheets": [],
+      "missing_classes": []
+    },
+    {
+      "id": "catalog-aside-title",
+      "published_css_covered": false,
+      "missing_stylesheets": [],
+      "missing_classes": [
+        "syn-sidecar"
+      ]
+    },
+    {
+      "id": "catalog-heading-group-title",
+      "published_css_covered": true,
+      "missing_stylesheets": [],
+      "missing_classes": []
+    },
+    {
+      "id": "catalog-event-agenda-title",
+      "published_css_covered": true,
+      "missing_stylesheets": [],
+      "missing_classes": []
+    },
+    {
+      "id": "catalog-table-totals-title",
+      "published_css_covered": true,
+      "missing_stylesheets": [],
+      "missing_classes": []
+    },
+    {
+      "id": "catalog-revisions-title",
+      "published_css_covered": true,
+      "missing_stylesheets": [],
+      "missing_classes": []
+    },
+    {
+      "id": "catalog-form-help-title",
+      "published_css_covered": true,
+      "missing_stylesheets": [],
+      "missing_classes": []
+    },
+    {
+      "id": "catalog-skip-link-title",
+      "published_css_covered": true,
+      "missing_stylesheets": [],
+      "missing_classes": []
+    },
+    {
+      "id": "catalog-status-list-title",
+      "published_css_covered": true,
+      "missing_stylesheets": [],
+      "missing_classes": []
+    },
+    {
+      "id": "catalog-activity-entry-title",
+      "published_css_covered": true,
+      "missing_stylesheets": [],
+      "missing_classes": []
+    },
+    {
+      "id": "catalog-property-list-title",
+      "published_css_covered": true,
+      "missing_stylesheets": [],
+      "missing_classes": []
+    },
+    {
+      "id": "catalog-link-card-title",
+      "published_css_covered": true,
+      "missing_stylesheets": [],
+      "missing_classes": []
+    },
+    {
+      "id": "catalog-section-actions-title",
+      "published_css_covered": true,
+      "missing_stylesheets": [],
+      "missing_classes": []
+    }
+  ]
+}
