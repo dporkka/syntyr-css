@@ -8,6 +8,7 @@ previews/
 
 release/
 .cloudflare-public/
+.saas-admin-public/
 
 # The Hugo documentation proof never checks in its generated output.
 experiments/hugo/public/

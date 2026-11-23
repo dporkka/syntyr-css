@@ -319,7 +319,7 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "title": "Pagination navigation",
     "module": "syntyr.core.css",
     "description": "Numbered navigation with a clearly identified current page; replace demo query URLs with real routes.",
-    "html": "\u003cnav class=\"syn-pagination\" aria-label=\"Example result pages\">\n  \u003ca href=\"catalog.html?page=1\" rel=\"prev\">Previous\u003c/a>\n  \u003ca href=\"catalog.html?page=1\">1\u003c/a>\n  \u003cspan aria-current=\"page\">2\u003c/span>\n  \u003ca href=\"catalog.html?page=3\">3\u003c/a>\n  \u003ca href=\"catalog.html?page=3\" rel=\"next\">Next\u003c/a>\n\u003c/nav>",
+    "html": "\u003cnav class=\"syn-pagination\" aria-label=\"Example result pages\">\n  \u003ca class=\"syn-page-link\" href=\"catalog.html?page=1\" rel=\"prev\">Previous\u003c/a>\n  \u003ca class=\"syn-page-link\" href=\"catalog.html?page=1\">1\u003c/a>\n  \u003cspan class=\"syn-page-link\" aria-current=\"page\">2\u003c/span>\n  \u003ca class=\"syn-page-link\" href=\"catalog.html?page=3\">3\u003c/a>\n  \u003ca class=\"syn-page-link\" href=\"catalog.html?page=3\" rel=\"next\">Next\u003c/a>\n\u003c/nav>",
     "keywords": "pagination pages previous next rel prev next aria-current",
     "guidance": "Real links and aria-current only for the actual current page."
   },

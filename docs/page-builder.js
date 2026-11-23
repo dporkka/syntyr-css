@@ -7,8 +7,15 @@ import {
   replaceBlockImage, restoreBlockImage, getImageAssetBytes,
   projectNeedsGalleryManifest, projectNeedsSectionManifest
 } from "./page-builder-model.mjs";
-import { createStoredZip } from "./page-builder-zip.mjs";
+import {
+  SITE_SCHEMA_VERSION, createSiteProject, parseSiteProject, addSitePage,
+  removeSitePage, setSharedLayout, exportSitePages, saveSyncedComponent,
+  insertSyncedComponent, updateSyncedComponent, setSyncedOverride,
+  detachSyncedInstance
+} from "./site-builder-model.mjs";
+import { createStoredZip, SITE_ZIP_MAX_ENTRIES } from "./page-builder-zip.mjs";
 import {STARTER_PAGES, createStarterPage} from "./page-builder-starters.mjs";
+import {STARTER_SITE_KITS, createStarterSite} from "./page-builder-site-kits.mjs";
 
 const byId = (id) => document.getElementById(id);
 const palette = byId("builder-palette");
@@ -19,6 +26,8 @@ const sectionSearch = byId("builder-section-search");
 const sectionCategory = byId("builder-section-category");
 const starterSelect = byId("builder-starter");
 const starterButton = byId("builder-apply-starter");
+const siteKitSelect = byId("builder-site-kit-select");
+const siteKitButton = byId("builder-apply-site-kit");
 const outline = byId("builder-outline");
 const inspector = byId("builder-inspector");
 const preview = byId("builder-preview");
@@ -34,6 +43,8 @@ const redo = byId("builder-redo");
 const history = [];
 const future = [];
 let page = createDefaultDocument();
+let site = null; // Opt-in; single-page projects retain syntyr.page.v1 format.
+let activeSlug = "";
 let selectedId = page.blocks[0].id;
 let sequence = 4;
 let draggingIndex = null;
@@ -43,8 +54,39 @@ let descriptionEditing = false;
 function notify(message) {
   status.textContent = message;
 }
-function remember(snapshot = JSON.stringify(page)) {
-  history.push(snapshot);
+function siteWithPage(proposedPage) {
+  const candidate = structuredClone(site);
+  const current = candidate.pages.find(entry => entry.slug === activeSlug);
+  if (!current) throw new Error("Current site page is missing");
+  current.document = parseDocument(proposedPage);
+  // Explicit local deletes/type replacements unhook their former reusable links.
+  candidate.instances = candidate.instances.filter(instance => instance.slug !== activeSlug ||
+    current.document.blocks.some(block => block.id === instance.blockId &&
+      block.type === candidate.components.find(item => item.id === instance.componentId)?.block.type));
+  return parseSiteProject(candidate);
+}
+function currentSite() {
+  return site ? siteWithPage(page) : null;
+}
+function snapshot() {
+  return JSON.stringify(site ? {mode: "site", activeSlug, site: currentSite()} : {mode: "page", page});
+}
+function restoreSnapshot(serialized) {
+  const state = JSON.parse(serialized);
+  if (state.mode === "site") {
+    site = parseSiteProject(state.site);
+    activeSlug = state.activeSlug;
+    const entry = site.pages.find(item => item.slug === activeSlug);
+    if (!entry) throw new Error("Invalid saved editor page");
+    page = structuredClone(entry.document);
+  } else if (state.mode === "page") {
+    site = null;
+    activeSlug = "";
+    page = parseDocument(state.page);
+  } else throw new Error("Unknown editor snapshot");
+}
+function remember(saved = snapshot()) {
+  history.push(saved);
   // Uploaded photos are embedded in project snapshots. Bound undo history by
   // total retained bytes rather than only the number of edits.
   let size = history.reduce((sum, entry) => sum + entry.length, 0);
@@ -60,8 +102,13 @@ function updateHistoryButtons() {
 }
 function commit(next, message) {
   const normalized = parseDocument(next);
+  // Validate the entire proposed site before mutating page or undo history.
+  const proposedSite = site ? siteWithPage(normalized) : null;
   remember();
-  page = normalized;
+  site = proposedSite;
+  page = proposedSite
+    ? structuredClone(proposedSite.pages.find(entry => entry.slug === activeSlug).document)
+    : normalized;
   if (!page.blocks.some(block => block.id === selectedId)) selectedId = page.blocks[0]?.id || null;
   redraw();
   notify(message);
@@ -78,6 +125,152 @@ function makeButton(label, action, disabled = false) {
   element.dataset.action = action;
   element.disabled = disabled;
   return element;
+}
+
+function renderSiteControls() {
+  const select = byId("builder-site-page-select");
+  select.replaceChildren();
+  for (const item of site?.pages || [{slug: "", document: page}]) {
+    const option = makeElement("option", item.slug ? "/" + item.slug + "/" : "Home /");
+    option.value = item.slug;
+    select.append(option);
+  }
+  select.value = activeSlug;
+  byId("builder-site-remove-page").disabled = !site || activeSlug === "";
+  byId("builder-site-add-page").disabled = Boolean(site && site.pages.length >= 10);
+  for (const part of ["header", "footer"]) {
+    const block = site?.shared[part];
+    byId("builder-site-" + part + "-enabled").checked = Boolean(block);
+    const defaults = createBlock(part, "site-" + part).props;
+    for (const field of document.querySelectorAll('[data-layout-part="' + part + '"]')) {
+      field.disabled = !block;
+      field.value = block?.props[field.dataset.layoutField] ?? defaults[field.dataset.layoutField];
+    }
+  }
+  renderReusableControls();
+}
+const reusableTypes = new Set(["hero", "features", "split", "quote", "faq", "cta"]);
+function selectedPlacement() {
+  return site?.instances.find(item => item.slug === activeSlug && item.blockId === selectedId) ?? null;
+}
+function renderReusableControls() {
+  const select = byId("builder-reusable-select");
+  const previous = select.value;
+  select.replaceChildren(new Option("Choose a component", ""));
+  for (const component of site?.components || [])
+    select.add(new Option(component.name + " (" + component.block.type + ")", component.id));
+  if (site?.components.some(item => item.id === previous)) select.value = previous;
+  const block = page.blocks.find(item => item.id === selectedId);
+  const linked = selectedPlacement();
+  byId("builder-reusable-save").disabled = !block || !reusableTypes.has(block.type) || Boolean(linked) || Boolean(site && site.components.length >= 20);
+  byId("builder-reusable-insert").disabled = !select.value || page.blocks.length >= 50;
+  byId("builder-reusable-detach").disabled = !linked;
+  byId("builder-reusable-hint").textContent = linked
+    ? "This block uses " + site.components.find(item => item.id === linked.componentId)?.name + ". Unchecked fields change every instance; checked fields change this page only."
+    : "Select a native section to save it or insert a component from the library.";
+}
+byId("builder-reusable-select").addEventListener("change", renderReusableControls);
+byId("builder-reusable-save").addEventListener("click", () => {
+  try {
+    const block = page.blocks.find(item => item.id === selectedId);
+    if (!block || !reusableTypes.has(block.type)) throw new Error("Select a supported native section");
+    const name = byId("builder-reusable-name").value.trim() || getBlockDefinition(block.type).label;
+    const base = name.toLowerCase().replace(/[^a-z0-9-]+/g, "-").replace(/^-+|-+$/g, "").slice(0,32);
+    const stem = /^[a-z]/.test(base) ? base : "component";
+    const used = new Set(site?.components.map(item => item.id) || []);
+    let id = stem, suffix = 2;
+    while (used.has(id)) id = stem.slice(0, 30) + "-" + suffix++;
+    const existing = selectedId;
+    const next = saveSyncedComponent(currentSite() || createSiteProject(page), {id, name, slug:activeSlug, blockId:existing});
+    applySite(next, activeSlug, "Reusable component saved. Editing an un-overridden field updates every linked instance.");
+    selectedId = existing;
+    byId("builder-reusable-name").value = "";
+    redraw();
+  } catch (error) { notify("Cannot save component: " + error.message); }
+});
+byId("builder-reusable-insert").addEventListener("click", () => {
+  try {
+    const id = byId("builder-reusable-select").value;
+    const source = site?.components.find(item => item.id === id);
+    if (!source) throw new Error("Choose a reusable component");
+    const blockId = nextBlockId(source.block.type);
+    const next = insertSyncedComponent(currentSite(), activeSlug, id, blockId);
+    applySite(next, activeSlug, "Reusable component added to this page.");
+    selectedId = blockId;
+    redraw();
+  } catch (error) { notify("Cannot insert reusable component: " + error.message); }
+});
+byId("builder-reusable-detach").addEventListener("click", () => {
+  try {
+    const originalId = selectedId;
+    const next = detachSyncedInstance(currentSite(), activeSlug, originalId);
+    applySite(next, activeSlug, "Component detached. Its current content remains on this page.");
+    selectedId = originalId;
+    redraw();
+  } catch (error) { notify("Cannot detach reusable component: " + error.message); }
+});
+
+function showSitePage(slug) {
+  if (!site) return;
+  site = currentSite();
+  const entry = site.pages.find(item => item.slug === slug);
+  if (!entry) throw new Error("Unknown site page");
+  activeSlug = slug;
+  page = structuredClone(entry.document);
+  selectedId = page.blocks[0]?.id ?? null;
+  redraw();
+}
+function applySite(next, slug, message) {
+  const parsed = parseSiteProject(next);
+  const entry = parsed.pages.find(item => item.slug === slug);
+  if (!entry) throw new Error("Unknown site page");
+  remember();
+  site = parsed;
+  activeSlug = slug;
+  page = structuredClone(entry.document);
+  selectedId = page.blocks[0]?.id ?? null;
+  redraw();
+  notify(message);
+}
+byId("builder-site-page-select").addEventListener("change", event => {
+  try { showSitePage(event.target.value); }
+  catch (error) { notify("Cannot change page: " + error.message); redraw(); }
+});
+byId("builder-site-add-page").addEventListener("click", () => {
+  try {
+    const slug = byId("builder-site-new-slug").value.trim();
+    const next = addSitePage(currentSite() || createSiteProject(page), slug);
+    applySite(next, slug, "Page /" + slug + "/ added. Export ZIP to publish every page.");
+    byId("builder-site-new-slug").value = "";
+  } catch (error) { notify("Cannot add page: " + error.message); }
+});
+byId("builder-site-remove-page").addEventListener("click", () => {
+  try {
+    if (activeSlug === "") return;
+    const next = removeSitePage(currentSite(), activeSlug);
+    applySite(next, "", "Page removed. The home page is preserved.");
+  } catch (error) { notify("Cannot remove page: " + error.message); }
+});
+function updateShared(part) {
+  try {
+    const next = currentSite() || createSiteProject(page);
+    const enabled = byId("builder-site-" + part + "-enabled").checked;
+    const block = enabled ? (next.shared[part] || createBlock(part, "site-" + part)) : null;
+    if (block) for (const field of document.querySelectorAll('[data-layout-part="' + part + '"]'))
+      block.props[field.dataset.layoutField] = field.value;
+    applySite(setSharedLayout(next, part, block), activeSlug, "Shared " + part + " updated for all site pages.");
+  } catch (error) { notify("Cannot edit shared layout: " + error.message); redraw(); }
+}
+for (const part of ["header", "footer"]) {
+  byId("builder-site-" + part + "-enabled").addEventListener("change", () => updateShared(part));
+  for (const field of document.querySelectorAll('[data-layout-part="' + part + '"]'))
+    field.addEventListener("change", () => updateShared(part));
+}
+function currentPageHtml(previewAssets = false) {
+  return exportHtml(page, {
+    previewAssets, sharedHeader: site?.shared.header ?? null,
+    sharedFooter: site?.shared.footer ?? null
+  });
 }
 
 function appendPaletteButton(target, type) {
@@ -152,12 +345,37 @@ async function loadSections() {
     }
     renderSectionPalette();
     starterButton.disabled = false;
+    siteKitButton.disabled = false;
     notify(count + " copy-owned sections available for static page composition.");
   } catch {
     byId("builder-section-count").textContent = "Website sections unavailable; basic blocks still work.";
     notify("Section manifest unavailable. The basic page composer remains usable.");
   }
 }
+
+for (const kit of STARTER_SITE_KITS) {
+  const option = makeElement("option", kit.label + " (" + kit.pages + " pages)");
+  option.value = kit.id;
+  siteKitSelect.append(option);
+}
+siteKitSelect.addEventListener("change", () => {
+  const kit = STARTER_SITE_KITS.find(item => item.id === siteKitSelect.value);
+  byId("builder-site-kit-help").textContent = kit
+    ? kit.description + " Replaces the whole project; save your current project first."
+    : "Choose a complete, editable multi-page example with a shared header and footer.";
+});
+siteKitButton.addEventListener("click", () => {
+  if (!siteKitSelect.value || !sectionBlockTypes().length) return;
+  if (!window.confirm("Replace the entire current project with this example website kit? Save your current project first if needed."))
+    return;
+  try {
+    const created = createStarterSite(siteKitSelect.value);
+    applySite(created, "", "Site kit applied: " +
+      siteKitSelect.options[siteKitSelect.selectedIndex].text +
+      ". Save site JSON to continue later; export ZIP to publish.");
+    sequence = Math.max(sequence, ...created.pages.map(entry => entry.document.blocks.length + 5));
+  } catch (error) { notify("Site kit failed: " + error.message); }
+});
 
 for (const starter of STARTER_PAGES) {
   const option = makeElement("option", starter.label);
@@ -197,7 +415,8 @@ function renderOutline() {
     item.dataset.index = String(index);
     item.dataset.blockId = block.id;
     item.dataset.selected = String(block.id === selectedId);
-    const name = makeButton((index + 1) + ". " + getBlockDefinition(block.type).label, "select");
+    const isLinked = site?.instances.some(item => item.slug === activeSlug && item.blockId === block.id);
+    const name = makeButton((index + 1) + ". " + getBlockDefinition(block.type).label + (isLinked ? " · synced" : ""), "select");
     name.className = "builder-outline-select";
     name.setAttribute("aria-label", "Edit " + getBlockDefinition(block.type).label + ", block " + (index + 1));
     const actions = makeElement("div", null, "builder-outline-actions");
@@ -234,7 +453,10 @@ function renderInspector() {
   }
   const def = getBlockDefinition(block.type);
   byId("builder-inspector-help").textContent = def.description;
-  inspector.append(makeElement("p", def.label, "builder-block-name"));
+  const linked = selectedPlacement();
+  const blockName = makeElement("p", def.label + (linked ? " · synced" : ""), "builder-block-name");
+  blockName.dataset.synced = String(Boolean(linked));
+  inspector.append(blockName);
   for (const name of Object.keys(def.fields)) {
     const label = makeElement("label", null, "syn-label");
     const fieldKind = def.fieldKinds?.[name];
@@ -255,6 +477,9 @@ function renderInspector() {
         const selected = file.files?.[0];
         if (!selected) return;
         const editingBlock = block.id;
+        const owningPage = page;
+        const owningSite = site;
+        const owningSlug = activeSlug;
         try {
           const mime = {"image/png": "png", "image/jpeg": "jpg", "image/webp": "webp"}[selected.type];
           if (!mime) throw new Error("Only PNG, JPEG and WebP images are supported");
@@ -270,7 +495,11 @@ function renderInspector() {
             reader.onerror = () => reject(new Error("Cannot read image"));
             reader.readAsDataURL(selected);
           });
-          const updated = replaceBlockImage(page, editingBlock, name, {filename, dataURL});
+          // Async hashing/reading may finish after navigation or project import.
+          // Reject stale completion rather than applying to a similarly named block elsewhere.
+          if (page !== owningPage || site !== owningSite || activeSlug !== owningSlug)
+            throw new Error("The page changed during image processing; retry the upload on its original page");
+          const updated = replaceBlockImage(owningPage, editingBlock, name, {filename, dataURL});
           commit(updated, "Image bundled into project and static export. Update its alt text to describe the photo.");
           selectedId = editingBlock;
           redraw();
@@ -303,15 +532,53 @@ function renderInspector() {
     control.autocomplete = "off";
     let editing = false;
     control.addEventListener("input", () => {
-      if (!editing) { remember(); editing = true; }
-      const current = page.blocks.find(item => item.id === selectedId);
+      const current = page.blocks.find(item => item.id === block.id);
       if (!current) return;
-      current.props[name] = control.value;
-      renderPreview();
-      notify("Block content updated. Save project JSON to keep it editable.");
+      try {
+        if (!editing) { remember(); editing = true; }
+        if (linked) {
+          const active = currentSite();
+          const instance = active.instances.find(item => item.slug === activeSlug && item.blockId === block.id);
+          if (!instance) throw new Error("Reusable component link missing");
+          if (Object.hasOwn(instance.overrides, name)) {
+            site = setSyncedOverride(active, activeSlug, block.id, name, control.value);
+          } else {
+            const master = active.components.find(item => item.id === instance.componentId);
+            site = updateSyncedComponent(active, instance.componentId, {...master.block.props, [name]:control.value});
+          }
+          page = structuredClone(site.pages.find(item => item.slug === activeSlug).document);
+          renderPreview();
+          notify("Reusable content updated. Save site JSON to persist changes.");
+        } else {
+          current.props[name] = control.value;
+          renderPreview();
+          notify("Block content updated. Save project JSON to keep it editable.");
+        }
+      } catch (error) { notify("Cannot edit block: " + error.message); }
     });
     control.addEventListener("blur", () => { editing = false; });
     label.append(control);
+    if (linked) {
+      const toggle = makeElement("label", null, "builder-synced-label");
+      const checkbox = makeElement("input");
+      checkbox.type = "checkbox";
+      checkbox.dataset.overrideField = name;
+      checkbox.checked = Object.hasOwn(linked.overrides, name);
+      toggle.append(checkbox, document.createTextNode("Override on this page"));
+      checkbox.addEventListener("change", () => {
+        try {
+          const updated = setSyncedOverride(currentSite(), activeSlug, block.id, name,
+            checkbox.checked ? control.value : null);
+          remember();
+          site = updated;
+          page = structuredClone(site.pages.find(item => item.slug === activeSlug).document);
+          control.value = page.blocks.find(item => item.id === block.id).props[name];
+          renderPreview();
+          notify(checkbox.checked ? "Local override enabled." : "Field now follows the shared master.");
+        } catch (error) { notify("Cannot change override: " + error.message); }
+      });
+      label.append(toggle);
+    }
     inspector.append(label);
   }
 }
@@ -322,7 +589,7 @@ function renderPreview() {
   const styleOrigin = /^https?:$/.test(location.protocol) ? location.origin : "'self'";
   const csp = '<meta http-equiv="Content-Security-Policy" content="default-src \'none\'; style-src \'self\' \'unsafe-inline\' ' +
     styleOrigin + '; img-src \'self\' data:; base-uri \'none\'; form-action \'none\'">';
-  preview.srcdoc = exportHtml(page, {previewAssets: true})
+  preview.srcdoc = currentPageHtml(true)
     .replace('href="syntyr.all.css"', 'href="../dist/syntyr.all.css"')
     .replace("</head>", csp + "</head>");
 }
@@ -342,10 +609,11 @@ preview.addEventListener("load", () => {
       // Prevent navigation; preserve details/summary native disclosure behavior.
       if (event.target.closest("a[href]")) event.preventDefault();
       const block = event.target.closest("[data-syntyr-block-id]");
-      if (block && block.dataset.syntyrBlockId !== selectedId) {
+      if (block && page.blocks.some(item => item.id === block.dataset.syntyrBlockId) && block.dataset.syntyrBlockId !== selectedId) {
         selectedId = block.dataset.syntyrBlockId;
         renderOutline();
         renderInspector();
+        renderReusableControls();
         // Do not replace the iframe: that would close native FAQ disclosures.
         highlightPreviewSelection(frameDoc);
       }
@@ -355,6 +623,7 @@ preview.addEventListener("load", () => {
   }
 });
 function redraw() {
+  renderSiteControls();
   title.value = page.title;
   description.value = page.description;
   // Imported projects may use a valid BCP-47 language not in the quick choices.
@@ -452,16 +721,16 @@ outline.addEventListener("dragend", () => { draggingIndex = null; });
 
 function stepBack() {
   if (!history.length) return;
-  future.push(JSON.stringify(page));
-  page = parseDocument(history.pop());
+  future.push(snapshot());
+  restoreSnapshot(history.pop());
   if (!page.blocks.some(item => item.id === selectedId)) selectedId = page.blocks[0]?.id || null;
   redraw();
   notify("Change undone.");
 }
 function stepForward() {
   if (!future.length) return;
-  history.push(JSON.stringify(page));
-  page = parseDocument(future.pop());
+  history.push(snapshot());
+  restoreSnapshot(future.pop());
   if (!page.blocks.some(item => item.id === selectedId)) selectedId = page.blocks[0]?.id || null;
   redraw();
   notify("Change restored.");
@@ -521,7 +790,7 @@ function download(filename, data, type) {
   setTimeout(() => URL.revokeObjectURL(url), 30000);
 }
 byId("builder-export-html").addEventListener("click", () => {
-  download("index.html", exportHtml(page), "text/html;charset=utf-8");
+  download("index.html", currentPageHtml(), "text/html;charset=utf-8");
   notify("HTML downloaded. Add syntyr.all.css and referenced images, or use the complete static-site ZIP.");
 });
 byId("builder-export-zip").addEventListener("click", async () => {
@@ -532,13 +801,19 @@ byId("builder-export-zip").addEventListener("click", async () => {
     const cssResponse = await fetch(new URL("../dist/syntyr.all.css", import.meta.url),
       {credentials: "same-origin"});
     if (!cssResponse.ok) throw new Error("Syntyr stylesheet unavailable");
+    const project = currentSite();
+    const sitePages = project ? project.pages.map(entry => entry.document) : [page];
     const entries = [
-      {name: "index.html", content: exportHtml(page)},
+      ...(project ? exportSitePages(project) : [{name: "index.html", content: currentPageHtml()}]),
       {name: "syntyr.all.css", content: await cssResponse.text()}
     ];
-    for (const name of requiredAssets(page)) {
-      if (Object.prototype.hasOwnProperty.call(page.media, name)) {
-        entries.push({name: "assets/" + name, content: getImageAssetBytes(page, name)});
+    const assets = new Map();
+    for (const document of sitePages)
+      for (const name of requiredAssets(document))
+        if (!assets.has(name)) assets.set(name, document);
+    for (const [name, sourcePage] of assets) {
+      if (Object.prototype.hasOwnProperty.call(sourcePage.media, name)) {
+        entries.push({name: "assets/" + name, content: getImageAssetBytes(sourcePage, name)});
         continue;
       }
       const url = new URL("../assets/" + name, import.meta.url);
@@ -553,17 +828,18 @@ byId("builder-export-zip").addEventListener("click", async () => {
     entries.push({name: "README.txt", content: [
       "Syntyr static website export",
       "",
-      "Upload index.html, syntyr.all.css, and any assets/ folder together.",
+      "Upload index.html, optional page-slug/index.html folders, syntyr.all.css, and assets/ together.",
       "No JavaScript or build step is necessary for static layout and native details/links.",
       "Forms, checkout, authentication, search, filtering and live data need an application backend.",
       "Replace demo routes, fictional claims and examples with your own verified content.",
-      "Save your syntyr-page.json project separately to continue editing.",
+      "Save your syntyr-page.json or syntyr-site.json project separately to continue editing.",
       "The original Syntyr CSS and HTML source is MIT-licensed.",
       "https://github.com/dporkka/syntyr-css/blob/main/LICENSE"
     ].join("\n") + "\n"});
-    const archive = createStoredZip(entries);
+    // A site may contain 10 routes with up to 20 uploaded images each.
+    const archive = createStoredZip(entries, project ? {maxEntries: SITE_ZIP_MAX_ENTRIES} : undefined);
     download("syntyr-static-site.zip", archive, "application/zip");
-    notify("Static-site ZIP downloaded: HTML, CSS and " + requiredAssets(page).length + " local images; no JavaScript.");
+    notify("Static-site ZIP downloaded: " + sitePages.length + " page(s), CSS and " + assets.size + " local images; no JavaScript.");
   } catch (error) {
     notify("Static export failed: " + error.message);
   } finally {
@@ -572,10 +848,10 @@ byId("builder-export-zip").addEventListener("click", async () => {
 });
 byId("builder-export-json").addEventListener("click", () => {
   try {
-    const content = JSON.stringify(parseDocument(page), null, 2) + "\n";
+    const content = JSON.stringify(site ? currentSite() : parseDocument(page), null, 2) + "\n";
     if (new TextEncoder().encode(content).length > MAX_PROJECT_BYTES)
       throw new Error("Project exceeds 32 MiB; remove images or shorten content");
-    download("syntyr-page.json", content, "application/json");
+    download(site ? "syntyr-site.json" : "syntyr-page.json", content, "application/json");
     notify("Editable JSON project downloaded, including any embedded photos.");
   } catch (error) { notify("Cannot save project: " + error.message); }
 });
@@ -591,7 +867,9 @@ byId("builder-import").addEventListener("change", async (event) => {
     let candidate;
     try { candidate = JSON.parse(text); }
     catch { throw new Error("Invalid project JSON"); }
-    if (projectNeedsGalleryManifest(candidate)) {
+    const candidatePages = candidate?.schema === SITE_SCHEMA_VERSION && Array.isArray(candidate.pages)
+      ? candidate.pages.map(entry => entry?.document) : [candidate];
+    if (candidatePages.some(projectNeedsGalleryManifest)) {
       // Native projects import immediately even if the optional manifest
       // request has failed or stalled. Gallery imports wait only briefly.
       let timeout;
@@ -606,7 +884,7 @@ byId("builder-import").addEventListener("change", async (event) => {
       if (!galleryBlockTypes().length)
         throw new Error("Gallery definitions unavailable. Try again after the gallery loads.");
     }
-    if (projectNeedsSectionManifest(candidate)) {
+    if (candidatePages.some(projectNeedsSectionManifest)) {
       let timeout;
       try {
         await Promise.race([
@@ -620,9 +898,21 @@ byId("builder-import").addEventListener("change", async (event) => {
     // A previously selected gallery project may finish after a newer native
     // file has already been imported. Never let stale async work overwrite it.
     if (generation !== importGeneration) return;
-    const imported = parseDocument(candidate);
-    commit(imported, "Project opened.");
-    sequence = Math.max(sequence, imported.blocks.length + 5);
+    if (candidate?.schema === SITE_SCHEMA_VERSION) {
+      const imported = parseSiteProject(candidate);
+      applySite(imported, "", "Site project opened.");
+      sequence = Math.max(sequence, ...imported.pages.map(entry => entry.document.blocks.length + 5));
+    } else {
+      const imported = parseDocument(candidate);
+      remember();
+      site = null;
+      activeSlug = "";
+      page = imported;
+      selectedId = page.blocks[0]?.id ?? null;
+      redraw();
+      notify("Project opened.");
+      sequence = Math.max(sequence, imported.blocks.length + 5);
+    }
   } catch (error) {
     if (generation === importGeneration)
       notify("Cannot open project: " + error.message);

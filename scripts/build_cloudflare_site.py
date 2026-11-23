@@ -41,6 +41,8 @@ SITE_URL = "https://syntyr-css.pages.dev"
 # landing pages. Their HTML remains publicly available and linkable.
 NOINDEX_HTML = frozenset({
     "404.html", "examples/crm.html", "examples/saas.html", "examples/pricing.html", "examples/preset-preview.html",
+    "examples/saas-admin-starter/index.html", "examples/saas-admin-starter/pipeline.html",
+    "examples/saas-admin-starter/customers.html", "examples/saas-admin-starter/billing.html",
     "examples/resource-workspace.html", "examples/form-state-contracts.html", "examples/geo.html",
     "examples/permission-matrix.html",
     "examples/query-review.html",
@@ -50,6 +52,14 @@ NOINDEX_HTML = frozenset({
     "examples/app-integrations.html", "examples/app-security.html",
     "examples/design-benchmarks/marketing.html", "examples/design-benchmarks/crm.html",
     "examples/design-benchmarks/documentation.html",
+    "examples/industry-sites/index.html",
+    "examples/industry-sites/field-service/index.html",
+    "examples/industry-sites/field-service/services.html",
+    "examples/industry-sites/professional-practice/index.html",
+    "examples/industry-sites/professional-practice/services.html",
+    "examples/industry-sites/saas-developer/index.html",
+    "examples/industry-sites/saas-developer/pricing.html",
+    "examples/industry-sites/saas-developer/docs.html",
     "docs/htmx-playground.html",  # Interactive app demo, not an SEO landing page.
 })
 CANONICAL_LINK = re.compile(r'<link\s+rel="canonical"[^>]*>', re.IGNORECASE)
@@ -299,7 +309,7 @@ PUBLIC_DOCS = (
     "blocks.html", "blocks.css", "blocks.js", "blocks-assets.css", "blocks-guide.md", "headless-interactions.md", "framework-integrations.md", "htmx-components.md", "htmx-playground.html", "mobile-frameworks.md",
     "geometry-terminal.md", "native-browser-apis.md", "dropdowns.md", "radix-integration.md", "visual-intensity.md", "performance-and-polish.md",
     "performance-validation.md", "progressive-enhancement.md", "progressive-loading.md", "live-performance-audit.md",
-    "index.html", "design-resources.html", "animation.md", "clipboard.md", "lit-integration.md", "playground.html", "playground.css", "playground.js", "playground-catalog.js", "playground-snippet.js", "playground-editor.js", "playground-editor.licenses.txt", "page-builder-guide.md", "page-builder.html",  "page-builder.css", "page-builder.js", "page-builder-model.mjs", "page-builder-zip.mjs", "page-builder-starters.mjs",
+    "index.html", "design-resources.html", "animation.md", "clipboard.md", "lit-integration.md", "playground.html", "playground.css", "playground.js", "playground-catalog.js", "playground-snippet.js", "playground-editor.js", "playground-editor.licenses.txt", "page-builder-guide.md", "page-builder.html",  "page-builder.css", "page-builder.js", "page-builder-model.mjs", "site-builder-model.mjs", "page-builder-zip.mjs", "page-builder-starters.mjs", "page-builder-site-kits.mjs",
     "form-builder.html", "form-builder.css", "form-builder.js", "form-builder-model.mjs",
     "editor-integration.md", "recipes.md", "saas-cli-business.md", "products.html", "pro.html", "studio.html", "integration-services.html",
     "cms-integration.md", "site-generator-decision.md", "static-site-generators.md", "site-builders.md", "tailwind-research.md", "tailwind-alternative.html",
@@ -381,11 +391,20 @@ def source_files(site_url: str = SITE_URL, *, include_cloudflare_headers: bool =
         "app-screens.css", "app-onboarding.html", "app-team.html", "app-notifications.html",
         "app-integrations.html", "app-security.html",
         "flagship.css", "flagship-studio.html", "flagship-noir.html", "flagship-grid.html",
-        "rust-axum/README.md", "resources.html", "data-tables.html", "saas.html", "preset-preview.html", "saas-workflows.html", "enterprise-compositions.html", "permission-matrix.html", "permission-matrix.css", "crm.html", "resource-workspace.html", "native-workflows.html", "file-lifecycle.html", "resizable-workspace.html", "operation-revisions.html", "saas-workflows.css", "workflow-operations.html", "workflow-operations.css", "premium-compositions.html",
+        "rust-axum/README.md", "resources.html", "data-tables.html", "saas.html", "preset-preview.html", "saas-workflows.html",
+        "saas-admin-starter/index.html", "saas-admin-starter/pipeline.html",
+        "saas-admin-starter/customers.html", "saas-admin-starter/billing.html",
+        "saas-admin-starter/styles.css", "saas-admin-starter/README.md", "enterprise-compositions.html", "permission-matrix.html", "permission-matrix.css", "crm.html", "resource-workspace.html", "native-workflows.html", "file-lifecycle.html", "resizable-workspace.html", "operation-revisions.html", "saas-workflows.css", "workflow-operations.html", "workflow-operations.css", "premium-compositions.html",
         "terminal.html", "themes.html", "vertigo-admin.html", "vertigo-resource-workflow.html", "vertigo-resource-workflow.css", "symbols.html",
         "viz.html", "geo.html", "data-grid.html", "animation.html", "copy.html",
         "design-benchmarks/marketing.html", "design-benchmarks/crm.html",
         "design-benchmarks/documentation.html", "design-benchmarks/benchmark.css",
+        # Reviewed MIT site starters only; do not scan arbitrary template directories.
+        "industry-sites/index.html", "industry-sites/site.css",
+        "industry-sites/field-service/index.html", "industry-sites/field-service/services.html",
+        "industry-sites/professional-practice/index.html", "industry-sites/professional-practice/services.html",
+        "industry-sites/saas-developer/index.html", "industry-sites/saas-developer/pricing.html",
+        "industry-sites/saas-developer/docs.html",
     )
     # Import the canonical distribution registry rather than maintaining
     # a second list that can silently omit new CSS entrypoints.
