@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Syntyr SaaS Admin Starter: responsive, dependency-free HTML template with example data.">
+  <title>Customers | Syntyr SaaS Admin</title>
+  <link rel="stylesheet" href="../../dist/syntyr.core.css">
+  <link rel="stylesheet" href="../../dist/syntyr.recipes.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="syn-root syn-page starter-page" data-syn-theme="studio">
+  <a class="syn-button starter-skip" href="#main">Skip to content</a>
+  <div class="starter-shell">
+    <aside class="starter-sidebar" aria-label="Workspace sidebar">
+      <a class="starter-brand" href="index.html"><span class="starter-logo">S</span>SYNTYR <span class="syn-muted">/ ATLAS</span></a>
+      <p class="syn-caption">EXAMPLE WORKSPACE • DEMO</p>
+      <nav class="syn-app-nav starter-nav" aria-label="Primary navigation">
+        <a href="index.html">Overview</a>
+        <a href="pipeline.html">Pipeline</a>
+        <a href="customers.html" aria-current="page">Customers</a>
+        <a href="billing.html">Billing</a>
+      </nav>
+      <div class="starter-sidebar-footer"><p class="syn-eyebrow">STATIC STARTER</p><p class="syn-caption">Illustrative data only. No backend, authentication, or persistence.</p><a href="README.md">Implementation notes</a></div>
+    </aside>
+    <main id="main" class="starter-main">
+      <header class="starter-topbar"><div><p class="syn-eyebrow">ACCOUNTS / DIRECTORY</p><h1>Customers</h1><p class="syn-muted">Search and inspect accounts using server-ready, accessible HTML.</p></div><span class="starter-avatar" aria-label="Demo account">AT</span></header>
+
+      <section class="syn-app-card" aria-labelledby="search-heading">
+        <div class="starter-section-head"><div><p class="syn-eyebrow">ACCOUNT DIRECTORY</p><h2 id="search-heading" class="syn-heading">Find customers</h2></div></div>
+        <p id="filter-help" class="syn-caption">This static demo does not filter results. Implement GET search, escaping, pagination and authorization on your server.</p>
+        <search aria-label="Customer search"><form class="syn-filter-bar starter-filters" method="get" action="customers.html" aria-describedby="filter-help">
+          <label class="syn-label syn-filter-field syn-filter-field--query" for="query">Search
+            <input class="syn-input" id="query" type="search" name="query" placeholder="Account or contact">
+          </label>
+          <label class="syn-label syn-filter-field" for="status">Status
+            <select class="syn-select" id="status" name="status"><option value="">All statuses</option><option value="active">Active</option><option value="review">Needs review</option></select>
+          </label>
+          <div class="starter-actions"><button class="syn-button syn-button--primary" type="submit">Submit search</button><a class="syn-button syn-button--outline" href="customers.html">Clear</a></div>
+        </form></search>
+      </section>
+      <section class="syn-app-card starter-table-card" aria-labelledby="directory-heading">
+        <div class="starter-section-head"><div><p class="syn-eyebrow">CUSTOMERS</p><h2 id="directory-heading" class="syn-heading">Customer accounts</h2></div><span class="syn-caption">4 sample records</span></div>
+        <div class="syn-table-wrap" role="region" aria-label="Customer directory, scroll horizontally for more columns" tabindex="0"><table class="syn-table">
+          <caption class="starter-caption">Illustrative accounts; amounts are not real billing records</caption>
+          <thead><tr><th scope="col">Account</th><th scope="col">Contact</th><th scope="col">Plan</th><th scope="col">MRR</th><th scope="col">Status</th></tr></thead>
+          <tbody>
+            <tr id="customer-northstar"><th scope="row">Northstar Labs</th><td>Jordan Lee</td><td>Growth</td><td class="starter-number">$890</td><td><span class="syn-status syn-status--success">Active</span></td></tr>
+            <tr id="customer-cedar"><th scope="row">Cedar Systems</th><td>Sam Rivera</td><td>Scale</td><td class="starter-number">$2,400</td><td><span class="syn-status syn-status--warning">Review</span></td></tr>
+            <tr id="customer-river"><th scope="row">Riverstone</th><td>Casey Park</td><td>Growth</td><td class="starter-number">$890</td><td><span class="syn-status syn-status--success">Active</span></td></tr>
+            <tr id="customer-bay"><th scope="row">Bayline Group</th><td>Morgan Chen</td><td>Starter</td><td class="starter-number">$290</td><td><span class="syn-status syn-status--success">Active</span></td></tr>
+          </tbody>
+        </table></div>
+      </section>
+      <section class="syn-app-card starter-table-card" aria-labelledby="security-heading"><h2 id="security-heading" class="syn-heading">Production security</h2><p class="syn-muted">Filter by authorized tenant, validate parameters, escape output and paginate on the server. The sample is presentation only.</p></section>
+
+      <footer class="syn-caption starter-footer">Syntyr SaaS Admin Starter · MIT · HTML + CSS, zero runtime JavaScript</footer>
+    </main>
+  </div>
+</body>
+</html>

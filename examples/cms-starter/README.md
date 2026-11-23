@@ -1,9 +1,8 @@
 # Syntyr portable CMS starter (experimental alpha.5)
 
-A working **static HTML + CSS** landing page with two optional Git-backed editors.
-The source of truth is [content/pages/home.json](content/pages/home.json). Both
-[Sveltia CMS](https://sveltiacms.app/) and [Pages CMS](https://pagescms.org/)
-edit the same file. Neither becomes a dependency of Syntyr's MIT CSS core.
+A working **static HTML + CSS** landing page with optional Git-backed editors.
+The source of truth is [content/pages/home.json](content/pages/home.json). [Sveltia CMS](https://sveltiacms.app/), [Pages CMS](https://pagescms.org/) and the optional
+[Decap CMS configuration](decap/) edit the same file. None becomes a dependency of Syntyr's MIT CSS core.
 
 This is an example template, not an installed CMS on syntyr-css.pages.dev.
 It demonstrates five semantic, reusable section types: hero, features, pricing,
@@ -49,7 +48,7 @@ and deployment; the editor does **not** deploy changes itself.
 
 Section IDs in `content/pages/home.json` are required, stable lowercase slugs.
 Keep them unchanged when moving blocks, so links like `/#section-features`
-remain valid; duplicate IDs or unsafe slugs fail validation. Both editor
+remain valid; duplicate IDs or unsafe slugs fail validation. All editor
 configurations expose this field.
 
 ## Choose an optional editor
@@ -92,8 +91,21 @@ to the editor as appropriate.
 purpose, to avoid changing the configuration of the Syntyr library itself.
 When moved to a standalone site it becomes effective at the site repo root.
 
-**Do not run both editors simultaneously against the same file** without
+**Do not run multiple editors simultaneously against the same file** without
 coordinating edits; use normal Git review to resolve concurrent updates.
+
+**Decap CMS (optional third editor)**
+
+The [Decap configuration](decap/config.yml) and [editor shell](decap/index.html)
+use the same five block types, the same `type` discriminator and the same
+`content/pages/home.json` document. To use it, copy those two files to
+`admin/config.yml` and `admin/index.html` in the **standalone site's**
+repository, replacing the Sveltia versions; replace
+`REPLACE_OWNER/REPLACE_REPO` and configure GitHub OAuth separately.
+The editor's JavaScript is pinned to Decap 3.18.0 and is **admin-only**.
+The default build does not publish Decap; review CDN/CSP and authentication
+requirements before deployment. For a Hugo front end, see the
+[runnable Hugo CMS fixture](../hugo-cms/README.md).
 
 ## Portable contract and safety
 

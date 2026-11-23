@@ -63,6 +63,9 @@ stylesheets.
 
 ## Live gallery and installation
 
+* [Three-page SaaS marketing site starter](examples/site-starters/saas-marketing/README.md): original responsive hero, features, workflow, pricing, about and native FAQs; [live source preview](https://syntyr-css.pages.dev/examples/site-starters/saas-marketing/) and dependency-free offline export with `scripts/export_site_starter.py`. Illustrative alpha.5 source, not a commercial SaaS product.
+
+
 - [Live website on Cloudflare](https://syntyr-css.pages.dev/)
 - [Tailwind alternative decision guide](docs/tailwind-alternative.html): honest tradeoffs against Tailwind v4 and plain CSS, free SaaS demos, and HTML-first adoption guidance.
 - [Server-rendered validation states](examples/form-state-contracts.html) and [dependency-aware, collision-safe local registry planner](docs/blocks-guide.md) (unreleased alpha.5 candidate).
@@ -155,6 +158,7 @@ stylesheets.
 - [Three flagship visual compositions](docs/visual-composition.md): [Studio operations](examples/flagship-studio.html), [Noir editorial](examples/flagship-noir.html), and [Grid control](examples/flagship-grid.html); original, static, zero-JavaScript showcases.
 - [Free production-shaped operations console](examples/operations-console.html): responsive SaaS dashboard composed from existing CSS modules; no backend or runtime JS
 - [Search, filtering, settings and pagination SaaS workflow demonstration](examples/saas-workflows.html): server-ready semantic HTML, static illustrative data, zero JavaScript
+- [SaaS Admin Starter](examples/saas-admin-starter/index.html): four linked, responsive HTML pages for overview, pipeline, customers and billing; read-only sample data, no runtime JavaScript
 - [Role-permissions review matrix](examples/permission-matrix.html): accessible native checkbox/table composition for enterprise authorization UIs; local preview only, no real permissions or JavaScript
 - [Workflow operations compositions](examples/workflow-operations.html): progress steps, expandable activity diagnostics, and human approval queue using existing Syntyr classes; no backend or JavaScript
 - [Operation feedback and revision comparison recipes](examples/operation-revisions.html): five host-owned states and semantic before/after record values using the existing definition-list layout (unreleased alpha.5 source)

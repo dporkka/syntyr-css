@@ -12,13 +12,33 @@ assets are different. Do not claim `npm install @syntyr/css` will fetch
 alpha.5 from the registry; use an actual published, pinned version, a local
 package archive, or a self-hosted versioned CSS file.
 
+## Runnable zero-JavaScript marketing site starter
+
+The [Waypoint SaaS marketing starter](https://github.com/dporkka/syntyr-css/blob/6a6c63c6c7de0fcd1b6382d9184f912f548d7f45/examples/site-starters/saas-marketing/README.md)
+demonstrates how one Syntyr stylesheet can serve a **complete three-page site**:
+a home page with hero, dashboard illustration, feature grid, workflow steps
+and native FAQ; a pricing page; and an about page. All content is explicitly
+fictional. Unlike a source-only snippet, it includes an offline exporter:
+
+```sh
+python3 scripts/export_site_starter.py --output /tmp/waypoint-static
+python3 -m http.server 8000 --directory /tmp/waypoint-static
+```
+
+Open `http://localhost:8000/`. The export contains its own pinned
+`assets/syntyr.core.css`, works offline, and uses **no browser JavaScript**.
+The [public preview](https://syntyr-css.pages.dev/examples/site-starters/saas-marketing/)
+is available only after the corresponding source change is published.
+It is a starting point for Astro, Hugo or Eleventy composition, **not** a
+prebuilt adapter for any generator. The source candidate remains unreleased.
+
 ## Integration matrix
 
 | Generator | Recommended CSS delivery | Base path / deployment concern | Example |
 | --- | --- | --- | --- |
 | **Astro** | `import '@syntyr/css/core.css'` in an Astro page/layout (local archive or published package) | Astro `base` controls generated asset paths; prefer imported CSS to hardcoded root URLs | [Runnable Astro fixture](https://github.com/dporkka/syntyr-css/tree/main/examples/astro/) |
 | **Eleventy (11ty)** | Copy `dist/syntyr.core.css` through `addPassthroughCopy` | Use `pathPrefix` and Eleventy's `url` filter | [Runnable Eleventy fixture](https://github.com/dporkka/syntyr-css/tree/main/examples/eleventy/) |
-| **Hugo** | Serve prebuilt CSS from `static/` or a Hugo filesystem mount | Use `relURL` for assets, not a bare `/css/` URL on project subpaths | [Isolated Hugo proof](https://github.com/dporkka/syntyr-css/tree/main/experiments/hugo/) |
+| **Hugo** | Serve prebuilt CSS from `static/` or a Hugo filesystem mount | Use `relURL` for assets, not a bare `/css/` URL on project subpaths | [Runnable CMS-driven Hugo starter](https://github.com/dporkka/syntyr-css/tree/main/examples/hugo-cms/); [isolated docs proof](https://github.com/dporkka/syntyr-css/tree/main/experiments/hugo/) |
 | **Jekyll** | Copy prebuilt CSS into `assets/css/`; do not process it as Sass | Use Liquid `relative_url` and configure `baseurl` for GitHub project pages | Snippet below |
 | **Zola** | Copy prebuilt CSS into `static/assets/` | Use `get_url` and a correctly configured `base_url` | Snippet below |
 | **Next.js static export** | Import package CSS once in `app/layout.tsx` or host CSS in `public/` | Configure `output: 'export'` and `basePath` for project subpaths | Notes below |
@@ -79,6 +99,20 @@ layout:
 ```
 
 Do not use an unprefixed `/assets/...` URL for GitHub Pages project sites.
+For an independent, CMS-driven landing page, the
+[runnable Hugo fixture](https://github.com/dporkka/syntyr-css/tree/main/examples/hugo-cms/) renders the **same**
+`content/pages/home.json` as the Git-backed CMS starter, with five native
+semantic HTML blocks and no browser script:
+
+```sh
+python3 scripts/build.py
+python3 scripts/build_hugo_cms_starter.py --hugo hugo --output /tmp/syntyr-hugo-site
+```
+
+It verifies generated CSS and page URLs under `/syntyr-hugo/` and supports
+`--base-url https://example.com/my-project/`. Hugo is a build-time tool,
+not a requirement of the Syntyr CSS package.
+
 Hugo's own preview script validates its existing rendered Markdown pages
 and local links:
 

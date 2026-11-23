@@ -1,0 +1,15 @@
+# Root-level Git deployment builds ONLY the portable SaaS Admin Starter.
+[build]
+command = "python3 scripts/build_saas_admin_starter.py"
+publish = ".saas-admin-public"
+
+[build.environment]
+PYTHON_VERSION = "3.12"
+
+[[headers]]
+for = "/*"
+[headers.values]
+X-Content-Type-Options = "nosniff"
+X-Frame-Options = "DENY"
+Referrer-Policy = "strict-origin-when-cross-origin"
+Permissions-Policy = "camera=(), microphone=(), geolocation=()"

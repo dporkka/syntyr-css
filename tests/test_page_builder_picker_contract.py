@@ -28,7 +28,8 @@ class VisualSectionPickerContractTests(unittest.TestCase):
         self.assertNotIn("innerHTML", picker)
         self.assertNotIn("<script", picker)
         export_model = (ROOT / "docs/page-builder-model.mjs").read_text()
-        self.assertIn('href="syntyr.all.css"', export_model)
+        self.assertIn('stylesheetHref = "syntyr.all.css"', export_model)
+        self.assertIn('"../syntyr.all.css"', export_model)
         self.assertNotIn("page-builder-section-picker", export_model)
         self.assertNotIn("page-builder-section-picker", (ROOT / "package.json").read_text())
 
