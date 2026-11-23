@@ -2,22 +2,22 @@
 
 **Status:** Experimental alpha.5 source gallery, not an immutable release or published npm package.
 
-[Browse 85 blocks](blocks.html) | [Component catalog](catalog.html) | [Themes](theme-customization.md) | [Accessibility](accessibility.md)
+[Browse 91 blocks](blocks.html) | [Component catalog](catalog.html) | [Themes](theme-customization.md) | [Accessibility](accessibility.md)
 
 ## Contract
 
-The 85 copy-owned HTML compositions cover marketing, application, services, portfolio, editorial, navigation, publishing, commerce and technical use
+The 91 copy-owned HTML compositions cover marketing, application, services, portfolio, editorial, navigation, publishing, commerce and technical use
 cases. Each contains its own Syntyr root, uses accessible native markup and requires
 no application JavaScript. The data, testimonials and prices are illustrative, not live.
 
 The gallery script powers optional documentation search, theme switching and copy
-buttons. Disable JavaScript and all 85 static previews remain visible, with
+buttons. Disable JavaScript and all 91 static previews remain visible, with
 selectable source under native disclosure elements. No scripts are included in
 application CSS; the added gallery rules remain CSS-only.
 
 ## Safe local registry installation (experimental alpha.5 source)
 
-The static [universal registry](../registry/registry.json) contains the 85 MIT
+The static [universal registry](../registry/registry.json) contains the 91 MIT
 HTML blocks and nine CSS module entries. Every item includes its exact
 source-tree version, SHA-256 content hashes, declared CSS dependencies, files,
 and destination paths. This is **not** a published immutable alpha.5 release.
@@ -132,6 +132,29 @@ The images reuse original local SVG files in `assets/`. The comparison uses
 two distinct illustrative artworks (not evidence of a real transformation).
 Replace all example text, fictional products and host-owned routes with verified
 production content.
+
+## CSS-only header and footer layouts (unreleased source)
+
+Six additional copyable Navigation blocks extend the library to **91 sections**.
+The headers offer a **centered editorial** composition (`header-centered`), a
+**two-row utility and product** navigation (`header-split`), and a **native
+disclosure** menu (`header-disclosure`). The footers offer a **compact brand
+and links** treatment (`footer-compact`), a **responsive multi-column
+sitemap** (`footer-sitemap`), and a **newsletter with navigation**
+(`footer-newsletter`). The original `site-header` and `site-footer`
+remain available, so the collection now has four header and four footer styles.
+
+All six are composed exclusively from existing `syntyr.core.css` primitives.
+`syn-inline` wraps on narrow viewports, `syn-grid` reflows columns without
+media-query-specific markup, and the disclosure header uses native
+`<details>` and `<summary>`. No extra CSS bundle or JavaScript is needed.
+
+The newsletter footer contains an illustrative POST form, not a working
+subscription service. Before production, implement consent, server-side
+validation, CSRF protection, confirmation and unsubscribe handling. Replace
+all sample brands, links and legal details. Each snippet is included in
+[the Blocks gallery](blocks.html), the offline registry and the page builder,
+where it remains reorderable and exportable as static HTML/CSS.
 
 ## Long code examples on mobile
 
@@ -257,7 +280,7 @@ copied into the public project. The separate private Console Kit is unaffected.
 ## Experimental shadcn universal-item registry
 
 The source candidate can generate a **copy-owned, framework-independent**
-shadcn-compatible universal-item registry from the same 85 MIT blocks and
+shadcn-compatible universal-item registry from the same 91 MIT blocks and
 checked-in CSS distributions. It neither replaces nor duplicates the native
 block installer from PR #104. Universal files use explicit project-relative
 targets, so no React, Tailwind, or Syntyr runtime JavaScript is required.

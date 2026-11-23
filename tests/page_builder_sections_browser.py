@@ -38,10 +38,10 @@ def run():
                     page.on("pageerror", lambda err: errors.append(str(err)))
                     page.goto(f"http://127.0.0.1:{server.server_port}/docs/page-builder.html")
                     expect(page.locator("#builder-section-count")).to_have_text(
-                        "85 of 85 copy-owned sections.")
+                        "91 of 91 copy-owned sections.")
                     page.locator("#builder-section-search").fill("image gallery")
                     expect(page.locator("#builder-section-count")).to_have_text(
-                        "2 of 85 copy-owned sections.")
+                        "2 of 91 copy-owned sections.")
                     page.locator("#builder-section-category").select_option("Portfolio")
                     page.locator('[data-block-type="section:image-gallery"]').click()
                     expect(page.locator("#builder-outline > li")).to_have_count(4)

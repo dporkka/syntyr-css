@@ -34,7 +34,7 @@ def main():
                     errors=[]
                     page.on("pageerror",lambda error: errors.append(str(error)))
                     page.goto(f"http://127.0.0.1:{server.server_port}/docs/page-builder.html",wait_until="load")
-                    expect(page.locator("#builder-section-count")).to_have_text("85 of 85 copy-owned sections.")
+                    expect(page.locator("#builder-section-count")).to_have_text("91 of 91 copy-owned sections.")
                     page.locator("#builder-starter").select_option("portfolio")
                     page.once("dialog",lambda dialog: dialog.accept())
                     page.locator("#builder-apply-starter").click()
