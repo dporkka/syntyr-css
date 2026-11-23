@@ -5,7 +5,7 @@ The [visual builder](page-builder.html) is a local-first, optional editing tool 
 ## What works
 
 - Add hero, feature-card, split-text, testimonial, FAQ, CTA, site header and footer sections from the palette.
-- Start with one of four **complete, editable website layouts**: creative portfolio, agency website, SaaS landing page, or local business. The optional builder loads vetted sections from its canonical manifest; applying a starter asks before replacing the current page. Save your editable JSON first.
+- Start with one of four **complete, editable single-page layouts**: creative portfolio, agency website, SaaS landing page, or local business. Or select a **multi-page website kit**: the same four categories include distinct interior pages and synchronized native site header/footer. Both import only validated, copy-owned blocks. Applying a kit replaces the *entire project* after a confirmation; save your editable JSON first.
 - Replace individual images in image gallery, image-story, hero-photo and other image-based sections with optimized **PNG/JPEG/WebP uploads** (up to 2 MiB each). Captions, link destinations and descriptive alt text remain editable. Uploaded photos and matching full-size links export as local assets, never as long-lived blob URLs.
 - Browse and search **85 copy-owned website/SaaS sections** from the generated canonical `metadata/section-composer.v1.json` library, filter by category, and edit their textual content and safe links. The library tracks the Blocks source manifest and snippets, so it does not maintain a second hand-edited section inventory.
 - Search and insert **gallery components** from the generated `metadata/component-gallery.v1.json` contract (16 curated examples in the current source candidate). Edit their visible text, placeholders and safe links; examples carry the CSS modules needed and can be repeated without duplicate input IDs.
@@ -22,6 +22,21 @@ The [visual builder](page-builder.html) is a local-first, optional editing tool 
 Shared reusable components are portable JSON declarations containing a validated native block master and references to existing page sections. Export resolves each reference into ordinary HTML with escaped text and sanitized links; no browser JavaScript is emitted. Editing a master preserves explicit page overrides. Imported references to unknown components, missing blocks, mismatched types, duplicate placements, or undeclared override fields fail validation. Deleting a referenced section in the editor detaches that reference. Deleting a page removes references on that page, but keeps the shared component available elsewhere.
 
 The builder runs entirely in your browser. It does not upload projects or require a server account. Save the JSON file before closing the page: unsaved edits are not persisted.
+
+### Multi-page website kits (experimental alpha.5 source)
+
+Choose **Website kit** in the builder to import a complete portfolio, agency, SaaS,
+or local-business example with 3–4 editable pages. Each uses a shared native
+header/footer and page-specific content, and exports via the existing
+`syntyr.site.v1` JSON and static-site ZIP path. A plain single-page starter
+remains available separately; selecting a website kit replaces your entire
+unsaved editor project after confirmation. Use **Save Project** before switching.
+
+Pages contain illustrative service offerings, projects, prices and hours, not
+verified business information. Links to internal pages work in the exported
+directory structure; forms and checkout require the consuming site's backend.
+The kit generator and selection UI exist only in documentation tooling, not
+in distributed Syntyr CSS or the downloaded website.
 
 ## Static-first export and assets
 

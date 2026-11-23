@@ -71,6 +71,35 @@ def verify(browser, url):
     })
     expect(page.locator("#builder-status")).to_contain_text("Site project opened")
     expect(page.locator("#builder-site-page-select option")).to_have_count(2)
+
+    # Astra-style multi-page kits import into the same validated site project.
+    expect(page.locator("#builder-apply-site-kit")).to_be_enabled(timeout=10000)
+    page.locator("#builder-site-kit-select").select_option("saas")
+    page.once("dialog", lambda dialog: dialog.dismiss())
+    page.locator("#builder-apply-site-kit").click()
+    expect(page.locator("#builder-site-page-select option")).to_have_count(2)
+    page.once("dialog", lambda dialog: dialog.accept())
+    page.locator("#builder-apply-site-kit").click()
+    expect(page.locator("#builder-site-page-select option")).to_have_count(4)
+    expect(page.locator("#builder-site-header-brand")).to_have_value("Your SaaS product")
+    expect(page.locator("#builder-site-header-link-href")).to_have_value("/pricing/")
+    expect(preview.locator(".syn-stage h1")).to_have_text("Show the value of your software.")
+    page.locator("#builder-site-page-select").select_option("pricing")
+    expect(preview.locator(".syn-stage h1")).to_have_text("Make your pricing easy to understand.")
+    with page.expect_download() as info:
+        page.locator("#builder-export-json").click()
+    assert info.value.suggested_filename == "syntyr-site.json"
+    kit = json.loads(page.evaluate("async () => await window.__lastSiteBlob.text()"))
+    assert [entry["slug"] for entry in kit["pages"]] == ["", "features", "pricing", "contact"]
+    with page.expect_download() as info:
+        page.locator("#builder-export-zip").click()
+    assert info.value.suggested_filename == "syntyr-static-site.zip"
+    names = page.evaluate("""async () => {
+      const data = new TextDecoder().decode(await window.__lastSiteBlob.arrayBuffer());
+      return ['index.html','features/index.html','pricing/index.html',
+        'contact/index.html','syntyr.all.css'].every(name => data.includes(name));
+    }""")
+    assert names, "Website kit ZIP omitted required page files"
     assert not errors, errors
     context.close()
 
