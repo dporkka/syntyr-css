@@ -102,3 +102,16 @@ The host applications provide editing and authorization; Syntyr validates
 and renders the resulting content during a static build. See
 [the CMS integration guide](cms-integration.md) for conversion commands and
 security boundaries.
+
+## Astro + Keystatic static website
+
+[Runnable source](https://github.com/dporkka/syntyr-css/tree/main/examples/astro-keystatic/)
+— an Astro marketing site that consumes the exact portable CMS JSON exported
+from a Keystatic homepage singleton. Build verification checks base-prefixed
+local CSS and browser scripts; its fixture-specific verifier additionally
+rejects extra HTML pages, any Keystatic/admin/API artifacts, and JavaScript files.
+
+The Keystatic editor is explicitly opted into **local development only**.
+Content changes can be reviewed through Git pull requests and deployed via a
+hosting provider's Git integration. No public editor server, GitHub Actions
+workflow, or new CSS-core dependency is required.
