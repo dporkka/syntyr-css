@@ -16,6 +16,9 @@ import {
 import { createStoredZip, SITE_ZIP_MAX_ENTRIES } from "./page-builder-zip.mjs";
 import {STARTER_PAGES, createStarterPage} from "./page-builder-starters.mjs";
 import {STARTER_SITE_KITS, createStarterSite} from "./page-builder-site-kits.mjs";
+import {
+  SECTION_USE_CASES, filterSections, sectionThumbnailPattern
+} from "./page-builder-section-picker.mjs";
 
 const byId = (id) => document.getElementById(id);
 const palette = byId("builder-palette");
@@ -24,6 +27,9 @@ const gallerySearch = byId("builder-gallery-search");
 const sectionPalette = byId("builder-section-palette");
 const sectionSearch = byId("builder-section-search");
 const sectionCategory = byId("builder-section-category");
+const sectionUseCase = byId("builder-section-use-case");
+const sectionPreviewDialog = byId("builder-section-preview-dialog");
+const sectionPreviewFrame = byId("builder-section-preview-frame");
 const starterSelect = byId("builder-starter");
 const starterButton = byId("builder-apply-starter");
 const siteKitSelect = byId("builder-site-kit-select");
@@ -50,6 +56,8 @@ let sequence = 4;
 let draggingIndex = null;
 let titleEditing = false;
 let descriptionEditing = false;
+let previewedSectionType = null;
+let previewReturnFocus = null;
 
 function notify(message) {
   status.textContent = message;
@@ -313,24 +321,59 @@ async function loadGallery() {
     notify("Optional gallery could not load. The basic page composer remains usable.");
   }
 }
+function createSectionSketch(type) {
+  const sketch = makeElement("div", null, "builder-section-thumbnail");
+  sketch.dataset.layout = sectionThumbnailPattern(type);
+  sketch.setAttribute("aria-hidden", "true");
+  for (let i = 0; i < 4; i += 1) sketch.append(makeElement("span"));
+  return sketch;
+}
+function appendSectionCard(type) {
+  const def = getBlockDefinition(type);
+  const card = makeElement("article", null, "builder-section-card");
+  card.append(createSectionSketch(type));
+  const copy = makeElement("div", null, "builder-section-card-copy");
+  copy.append(makeElement("strong", def.label), makeElement("small", def.description));
+  const actions = makeElement("div", null, "builder-section-card-actions");
+  const previewButton = makeElement("button", "Preview", "syn-button");
+  previewButton.type = "button";
+  previewButton.dataset.sectionPreview = type;
+  previewButton.setAttribute("aria-label", "Preview " + def.label);
+  previewButton.setAttribute("aria-haspopup", "dialog");
+  previewButton.setAttribute("aria-controls", "builder-section-preview-dialog");
+  const addButton = makeElement("button", "Add", "syn-button syn-button--primary");
+  addButton.type = "button";
+  addButton.dataset.blockType = type; // Existing insert semantics, including insert-after.
+  addButton.setAttribute("aria-label", "Add " + def.label + " to page");
+  actions.append(previewButton, addButton);
+  card.append(copy, actions);
+  sectionPalette.append(card);
+}
 function renderSectionPalette() {
   sectionPalette.replaceChildren();
-  const terms = sectionSearch.value.trim().toLocaleLowerCase().split(/\s+/).filter(Boolean);
-  const category = sectionCategory.value;
-  let count = 0;
-  for (const type of sectionBlockTypes()) {
-    const def = getBlockDefinition(type);
-    if (category !== "all" && def.category !== category) continue;
-    const searchable = (def.label + " " + def.description + " " + def.category + " " + type).toLocaleLowerCase();
-    if (!terms.every(term => searchable.includes(term))) continue;
-    appendPaletteButton(sectionPalette, type);
-    count++;
-  }
+  const types = filterSections(sectionBlockTypes(), getBlockDefinition, {
+    query: sectionSearch.value,
+    category: sectionCategory.value,
+    useCase: sectionUseCase.value
+  });
+  for (const type of types) appendSectionCard(type);
   byId("builder-section-count").textContent =
-    count + " of " + sectionBlockTypes().length + " copy-owned sections.";
+    types.length + " of " + sectionBlockTypes().length + " copy-owned sections.";
 }
 sectionSearch.addEventListener("input", renderSectionPalette);
 sectionCategory.addEventListener("change", renderSectionPalette);
+for (const entry of SECTION_USE_CASES.slice(1)) {
+  const option = makeElement("option", entry.label);
+  option.value = entry.id;
+  sectionUseCase.append(option);
+}
+sectionUseCase.addEventListener("change", () => {
+  const useCase = SECTION_USE_CASES.find(item => item.id === sectionUseCase.value);
+  byId("builder-section-use-case-help").textContent = useCase?.description || "";
+  // A new use case should not be hidden by a stale category filter.
+  sectionCategory.value = "all";
+  renderSectionPalette();
+});
 async function loadSections() {
   try {
     const url = new URL("../metadata/section-composer.v1.json", import.meta.url);
@@ -583,15 +626,17 @@ function renderInspector() {
   }
 }
 
-function renderPreview() {
-  // Imported content is validated and every user string escaped by exportHtml.
-  // The iframe cannot run scripts or submit forms, including pasted hostile content.
+function sandboxedPreviewHtml(exampleDoc = null) {
+  // Validated, escaped content. No scripts or form submissions; self-hosted styles/images only.
   const styleOrigin = /^https?:$/.test(location.protocol) ? location.origin : "'self'";
   const csp = '<meta http-equiv="Content-Security-Policy" content="default-src \'none\'; style-src \'self\' \'unsafe-inline\' ' +
     styleOrigin + '; img-src \'self\' data:; base-uri \'none\'; form-action \'none\'">';
-  preview.srcdoc = currentPageHtml(true)
+  return (exampleDoc === null ? currentPageHtml(true) : exportHtml(exampleDoc, {previewAssets: true}))
     .replace('href="syntyr.all.css"', 'href="../dist/syntyr.all.css"')
     .replace("</head>", csp + "</head>");
+}
+function renderPreview() {
+  preview.srcdoc = sandboxedPreviewHtml();
 }
 function highlightPreviewSelection(frameDoc) {
   for (const block of frameDoc.querySelectorAll("[data-syntyr-block-id]")) {
@@ -621,6 +666,49 @@ preview.addEventListener("load", () => {
   } catch {
     notify("The sandbox prevented preview selection. Edit using the page outline.");
   }
+});
+function openSectionPreview(type, opener) {
+  if (!sectionBlockTypes().includes(type)) return;
+  const def = getBlockDefinition(type);
+  const example = createDefaultDocument();
+  example.title = def.label;
+  example.theme = page.theme;
+  example.blocks = [createBlock(type, "section-picker-preview")];
+  previewedSectionType = type;
+  previewReturnFocus = opener;
+  byId("builder-section-preview-title").textContent = def.label;
+  byId("builder-section-preview-description").textContent = def.description;
+  sectionPreviewDialog.showModal();
+  sectionPreviewFrame.srcdoc = sandboxedPreviewHtml(example);
+}
+sectionPalette.addEventListener("click", event => {
+  const button = event.target.closest("button[data-section-preview]");
+  if (button) openSectionPreview(button.dataset.sectionPreview, button);
+});
+sectionPreviewFrame.addEventListener("load", () => {
+  // Keep example links inert even when a section is inspected in the dialog.
+  try {
+    const frameDoc = sectionPreviewFrame.contentDocument;
+    frameDoc?.addEventListener("click", event => {
+      if (event.target.closest("a[href]")) event.preventDefault();
+    });
+    frameDoc?.addEventListener("submit", event => event.preventDefault());
+    // Keyboard focus can remain inside the preview iframe; Escape does not
+    // reach the outer dialog's native cancel handler from a nested document.
+    frameDoc?.addEventListener("keydown", event => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        sectionPreviewDialog.close();
+      }
+    });
+  } catch { /* sandbox policy is authoritative */ }
+});
+byId("builder-section-preview-close").addEventListener("click", () => sectionPreviewDialog.close());
+sectionPreviewDialog.addEventListener("close", () => {
+  previewedSectionType = null;
+  sectionPreviewFrame.srcdoc = "";
+  if (previewReturnFocus?.isConnected) previewReturnFocus.focus();
+  previewReturnFocus = null;
 });
 function redraw() {
   renderSiteControls();
@@ -652,11 +740,9 @@ function shift(from, to) {
   renderOutline();
   renderInspector();
 }
-function addFromPalette(event) {
-  const button = event.target.closest("[data-block-type]");
-  if (!button) return;
+function addBlockType(type) {
   try {
-    const block = createBlock(button.dataset.blockType, nextBlockId(button.dataset.blockType));
+    const block = createBlock(type, nextBlockId(type));
     const next = structuredClone(page);
     if (byId("builder-insert-after").checked && selectedId)
       next.blocks = insertBlockAfter(next, selectedId, block).blocks;
@@ -664,10 +750,19 @@ function addFromPalette(event) {
     commit(next, getBlockDefinition(block.type).label + " added.");
     selectedId = block.id;
     redraw();
+    return true;
   } catch (error) {
     notify(error.message);
+    return false;
   }
 }
+function addFromPalette(event) {
+  const button = event.target.closest("button[data-block-type]");
+  if (button) addBlockType(button.dataset.blockType);
+}
+byId("builder-section-preview-add").addEventListener("click", () => {
+  if (previewedSectionType && addBlockType(previewedSectionType)) sectionPreviewDialog.close();
+});
 palette.addEventListener("click", addFromPalette);
 galleryPalette.addEventListener("click", addFromPalette);
 sectionPalette.addEventListener("click", addFromPalette);
