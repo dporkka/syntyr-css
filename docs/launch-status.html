@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Decision record reviewed November 23, 2026. This is an orientation page, not a live CI status board, a legal finding, or a release approval. Evidence…">
+  <meta name="syntyr-source-sha256" content="2ad0453479caf450960b1d50ef8f318a26fa31af56407230e3d00760337ecb88">
+  <meta name="theme-color" content="#f5f7fb">
+  <title>Syntyr release and commercial readiness — Syntyr CSS docs</title>
+  <link rel="canonical" href="https://syntyr-css.pages.dev/docs/launch-status">
+  <link rel="alternate" type="text/markdown" href="launch-status.md" title="Markdown source">
+  <link rel="icon" href="../assets/syntyr-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="docs.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <a class="syn-button docs-skip" href="#doc-main">Skip to guide</a>
+  <div class="syn-shell">
+    <header class="syn-header docs-header">
+      <a class="syn-logo" href="../index.html">SYNTYR / CSS</a>
+      <nav class="syn-nav" aria-label="Documentation navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav>
+      <details class="site-mobile-menu"><summary>Menu</summary><nav aria-label="Mobile navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav></details>
+    </header>
+    <main id="doc-main" class="docs-article-page">
+      <nav class="syn-breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="reference.html">Documentation</a></li><li aria-current="page">Syntyr release and commercial readiness</li></ol></nav>
+      <header class="docs-article-heading">
+        <p class="syn-eyebrow">SYNTYR / DOCUMENTATION</p>
+        <p class="syn-muted">Current source documentation may describe unreleased alpha.5 features. <a href="distribution.html">Check released version compatibility.</a></p>
+        <p class="syn-caption">Prefer a machine-readable version? <a href="launch-status.md">Markdown source</a> · <a href="../llms.txt">LLM index</a></p>
+      </header>
+      <div class="docs-article-layout">
+        <article class="docs-prose" aria-label="Syntyr release and commercial readiness">
+<h1 id="syntyr-release-and-commercial-readiness">Syntyr release and commercial readiness</h1>
+<p><strong>Decision record reviewed November 23, 2026.</strong> This is an orientation page, <strong>not</strong> a live CI status board, a legal finding, or a release approval. Evidence always belongs to an <strong>exact source commit</strong>. Recheck the relevant upstream issue, CI run, registry or approval record before changing any row.</p>
+<h2 id="what-is-available-today">What is available today?</h2>
+<table>
+<thead>
+<tr>
+<th>Channel</th>
+<th>Evidence-supported status</th>
+<th>Safe action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Free CSS v0.3.0-alpha.4</td>
+<td><a href="https://github.com/dporkka/syntyr-css/releases/tag/v0.3.0-alpha.4">Published immutable GitHub prerelease</a></td>
+<td>Download, pin and self-host the versioned CSS. MIT terms apply.</td>
+</tr>
+<tr>
+<td>v0.3.0-alpha.5 CSS and site previews</td>
+<td><strong>Unreleased source candidate</strong>; does not have an approved immutable tag</td>
+<td>Evaluate from a verified source checkout, clearly labeled as experimental. Do not mix with alpha.4 CSS.</td>
+</tr>
+<tr>
+<td><code>@syntyr/css</code> on npm</td>
+<td>Prepared in source; public publication is <strong>unverified/not claimed</strong></td>
+<td>Use a local audited tarball or the published alpha.4 CSS until actual registry ownership, approved tag and public package are independently verified.</td>
+</tr>
+<tr>
+<td>Console Kit, Pro, Studio</td>
+<td>Private prototypes, <strong>not for sale</strong></td>
+<td>Review original screenshots or request a qualified research conversation. Do not accept payment, issue customer licenses or promise delivery.</td>
+</tr>
+<tr>
+<td>Syntyr Studio visual editor</td>
+<td>Separate local-first experimental repository; not a hosted SaaS</td>
+<td>Use only its documented local preview/export workflows and pinned compatible CSS.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="alpha5-release-blockers">Alpha.5 release blockers</h2>
+<p>The detailed <strong>technical process and exact-SHA review</strong> live in <a href="release-freeze.html">release-freeze.md</a>. This page only summarizes gates; it cannot attest that any reviewer has completed them.</p>
+<table>
+<thead>
+<tr>
+<th>Gate</th>
+<th>Present status / evidence needed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Final source, packaging and regression tests</td>
+<td>New exact-head test/build/browser results after the approved PR set is frozen; earlier passing results do not transfer to a different SHA</td>
+</tr>
+<tr>
+<td>Automated contrast triage</td>
+<td><a href="accessibility-alpha5-review.html">Historical November 18 report</a> had 165 axe-incomplete elements on 37 pages; <strong>rerun for the frozen SHA</strong> and manually adjudicate each current target</td>
+</tr>
+<tr>
+<td>Assistive technologies</td>
+<td>Manual keyboard and named screen-reader/browser workflows, real 200% and 400% zoom, and native OS forced-colors evidence remain unsigned</td>
+</tr>
+<tr>
+<td>Supported browser matrix</td>
+<td>Independently approved browser versions and real-browser checks, not only Playwright emulation</td>
+</tr>
+<tr>
+<td>Brand clearance</td>
+<td><a href="https://github.com/dporkka/syntyr-css/issues/4">Issue #4</a>: appropriate trademark/name review is unresolved</td>
+</tr>
+<tr>
+<td>Release owner authorization</td>
+<td>Exact-SHA, version-matched evidence and reviewer approval recorded via <a href="release-freeze.html">release-freeze procedure</a>, not inferred from green automated checks</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Fail closed:</strong> Do not freeze the alpha.5 CDN directory, tag/publish it, or claim accessibility certification just because a test suite passes. The package-manager flow has a separate ownership and tarball audit in <a href="package-managers.html">package-managers.md</a>.</p>
+<h2 id="commercial-readiness-is-independent">Commercial readiness is independent</h2>
+<p>The <a href="https://github.com/dporkka/syntyr-css/blob/main/business/commercial-launch-gates.md">commercial launch gates</a> and private kit's <a href="https://github.com/dporkka/syntyr-console-kit/issues/51">commercial readiness issue #51</a> cover license rights, manual accessibility, tax/refund/support terms, verified checkout, entitlement-controlled delivery, and end-to-end purchase/refund evidence. No order or buyer commitment should be inferred from a demo, a mailto click, a screenshot or GitHub engagement.</p>
+<p><strong>Next commercial experiment:</strong> ten qualified developer/agency conversations with code-level integration feedback and documented, separate purchase intent; use the <a href="https://github.com/dporkka/syntyr-css/blob/main/business/design-partner-pilot.md">design-partner research plan</a>. These interviews guide investment but do not replace legal, payment or release requirements.</p>
+<h2 id="change-control-sequence">Change-control sequence</h2>
+<ol>
+<li>Prioritize overlap removal and low-risk work in <a href="https://github.com/dporkka/syntyr-css/pulls">open pull requests</a> before selecting one release-candidate SHA. Do not merge a stale stacked branch merely because similar functionality already exists on main.</li>
+<li>Run <code>python3 -m unittest discover -s tests -q</code>, <code>python3 scripts/build.py --check</code>, and <code>python3 scripts/build_cloudflare_site.py --check</code> on that SHA, then the full browser/reflow/axe matrix.</li>
+<li>Complete all manual accessibility and brand reviews; store their evidence separately with the exact SHA. A historical numerical result is <strong>never</strong> a release-pass flag.</li>
+<li>Follow <a href="release-freeze.html">release-freeze.md</a> and verify the frozen assets and HTTP cache/content hashes before public prerelease announcement.</li>
+<li>Only then evaluate npm distribution; paid products must separately clear their own commercial gates.</li>
+</ol>
+<p>Related: <a href="distribution.html">published distribution guide</a>, <a href="https://github.com/dporkka/syntyr-css/blob/main/business/pro-studio-conversion-plan.md">commercial conversion hypothesis</a>, <a href="https://github.com/dporkka/syntyr-css/issues/24">a11y gate issue #24</a>, <a href="https://github.com/dporkka/syntyr-css/issues/26">quality gate issue #26</a>.</p>
+        </article>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+<a class="docs-article-toc-link docs-article-toc-2" href="#what-is-available-today">What is available today?</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#alpha5-release-blockers">Alpha.5 release blockers</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#commercial-readiness-is-independent">Commercial readiness is independent</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#change-control-sequence">Change-control sequence</a>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#what-is-available-today">What is available today?</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#alpha5-release-blockers">Alpha.5 release blockers</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#commercial-readiness-is-independent">Commercial readiness is independent</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#change-control-sequence">Change-control sequence</a>
+            </nav>
+          </details>
+        </aside>
+      </div>
+      <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="launch-status.md">Markdown source</a></nav>
+    </main>
+    <footer class="syn-header"><span class="syn-caption">SYNTYR CSS · MIT CORE · EXPERIMENTAL</span><a href="../index.html">Home</a></footer>
+  </div>
+</body>
+</html>
