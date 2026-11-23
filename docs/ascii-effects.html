@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Source candidate only (alpha.5); not available in published alpha.4. Load core, symbols, then ASCII effects. For an npm package built from this candidate:">
-  <meta name="syntyr-source-sha256" content="eedb6b9618080e50ceb98b02d9779a63eba7116596b18e7ed303815037b3bcb6">
+  <meta name="syntyr-source-sha256" content="d0c7a966be8655c6745dce6bf3cfb9666cf675c2d95b3ee5402c90b2188f312d">
   <meta name="theme-color" content="#f5f7fb">
   <title>ASCII effects (optional) — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/ascii-effects">
@@ -40,12 +40,12 @@
 &lt;link rel=&quot;stylesheet&quot; href=&quot;dist/syntyr.symbols.css&quot;&gt;
 &lt;link rel=&quot;stylesheet&quot; href=&quot;dist/syntyr.ascii.css&quot;&gt;
 </code></pre>
-<p>Or import <code>@syntyr/css/ascii.css</code> alongside core and symbols. The selective build accepts <code>--modules symbols,ascii</code>. The all bundle includes both; core and cinematic preset remain unchanged.</p>
+<p>For a plain HTML site, copy the installed CSS files from the package’s <code>node_modules/@syntyr/css/dist/</code> directory into the served <code>dist/</code> directory (or adjust the URLs to your public asset path). npm installation does not serve files automatically. In a bundler, import the package CSS instead. Or import <code>@syntyr/css/ascii.css</code> alongside core and symbols. The selective build accepts <code>--modules symbols,ascii</code>. The all bundle includes both; core and cinematic preset remain unchanged.</p>
 <p><a href="../tools/ascii-playground.html">Open the interactive generator and image converter</a> (optional site-only JavaScript; exports are static). <a href="../examples/ascii.html">Open the ASCII effects lab</a> for original, copyable character art. CSS only styles literal DOM text; it does not generate random characters, calculate a chart, perform real typing, decode text, or convert media. Use existing symbols for geometry and native progress or textual equivalents for status.</p>
 <pre tabindex="0"><code class="language-html">&lt;div class=&quot;syn-root&quot; data-syn-theme=&quot;grid&quot;&gt;
   &lt;p&gt;System online&lt;/p&gt;
   &lt;pre class=&quot;syn-ascii syn-ascii--compact syn-ascii--phosphor syn-ascii--scan&quot;
-       aria-hidden=&quot;true&quot;&gt;[#####.....] 50%&lt;/pre&gt;
+       aria-hidden=&quot;true&quot; tabindex=&quot;-1&quot;&gt;[#####.....] 50%&lt;/pre&gt;
   &lt;p&gt;Example completion: 50%&lt;/p&gt;
 &lt;/div&gt;
 </code></pre>
