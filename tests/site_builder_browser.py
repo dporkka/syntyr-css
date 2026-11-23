@@ -4,6 +4,7 @@ Run: python3 tests/site_builder_browser.py
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from threading import Thread
+from zipfile import ZipFile
 import json
 from playwright.sync_api import sync_playwright, expect
 
@@ -71,6 +72,38 @@ def verify(browser, url):
     })
     expect(page.locator("#builder-status")).to_contain_text("Site project opened")
     expect(page.locator("#builder-site-page-select option")).to_have_count(2)
+    # A valid ten-page import can reference more files than a single-page ZIP.
+    saved["pages"] = page.evaluate("""async (base) => {
+      const {createBlock} = await import('/docs/page-builder-model.mjs');
+      const png = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9WlJnE8AAAAASUVORK5CYII=';
+      return Array.from({length: 10}, (_, i) => {
+        const document = structuredClone(base);
+        document.media = {};
+        document.blocks = Array.from({length: 12}, (_, j) => {
+          const block = createBlock('section:image-gallery', 'gallery-' + j);
+          const name = 'custom-' + (i * 12 + j).toString(16).padStart(64, '0') + '.png';
+          document.media[name] = png;
+          block.props.src1 = 'assets/' + name;
+          return block;
+        });
+        return {slug: i ? 'page-' + i : '', document};
+      });
+    }""", saved["pages"][0]["document"])
+    page.locator("#builder-import").set_input_files({
+        "name": "large-site.json",
+        "mimeType": "application/json",
+        "buffer": json.dumps(saved).encode(),
+    })
+    expect(page.locator("#builder-site-page-select option")).to_have_count(10)
+    with page.expect_download() as info:
+        page.locator("#builder-export-zip").click()
+        expect(page.locator("#builder-status")).to_contain_text("Static-site ZIP downloaded")
+    with ZipFile(info.value.path()) as archive:
+        names = archive.namelist()
+        assert len(names) > 128
+        assert "page-9/index.html" in names
+        assert sum(name.startswith("assets/custom-") for name in names) == 120
+        assert archive.testzip() is None
     assert not errors, errors
     context.close()
 
