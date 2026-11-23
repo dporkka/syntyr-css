@@ -425,6 +425,14 @@ sectionPreviewFrame.addEventListener("load", () => {
       if (event.target.closest("a[href]")) event.preventDefault();
     });
     frameDoc?.addEventListener("submit", event => event.preventDefault());
+    // Keyboard focus can remain inside the preview iframe; Escape does not
+    // reach the outer dialog's native cancel handler from a nested document.
+    frameDoc?.addEventListener("keydown", event => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        sectionPreviewDialog.close();
+      }
+    });
   } catch { /* sandbox policy is authoritative */ }
 });
 byId("builder-section-preview-close").addEventListener("click", () => sectionPreviewDialog.close());
