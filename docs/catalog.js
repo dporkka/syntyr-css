@@ -199,7 +199,7 @@
     if (published && card.dataset.catalogAlpha4 !== 'true') {
       throw new Error('This example is not covered by the published CSS release');
     }
-    const prefix = published ? '/v/0.3.0-alpha.4/' : '/dist/';
+    const prefix = published ? 'https://syntyr-css.pages.dev/v/0.3.0-alpha.4/' : '/dist/';
     const releaseComment = published
       ? 'Self-host the pinned 0.3.0-alpha.4 stylesheets in production; class coverage is not an accessibility or behavior guarantee.'
       : 'Self-host matching unreleased alpha.5 CSS under /dist/ or adjust these paths.';
