@@ -21,6 +21,8 @@ npm run build
 npm run verify
 ```
 
+The `npm run verify` command additionally rejects any generated CMS/API route, non-index HTML page, or browser JavaScript asset; the generic SSG verifier by itself does not enforce those fixture-specific checks.
+
 The build automatically runs `scripts/export_cms_adapter.py keystatic`
 against `content/pages/home.json`, validates the exact Syntyr CMS v1
 contract (Hero, Features, Pricing, FAQ and CTA), and generates a temporary
@@ -41,7 +43,7 @@ unchanged to a root-only site; its assets would load from the wrong URL.
 npm run dev:editor
 ```
 
-Visit `http://127.0.0.1:4321/keystatic` on the same machine. Both the
+Visit `http://127.0.0.1:4321/syntyr-astro-keystatic/keystatic` on the same machine. Both the
 Keystatic admin and its dev API are available **only when**
 `SYNTYR_ENABLE_LOCAL_EDITOR=1` and `NODE_ENV=development`. Astro binds
 to `127.0.0.1` (loopback), not a public network interface. The editor uses

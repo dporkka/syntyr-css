@@ -2,9 +2,11 @@
 from __future__ import annotations
 import json
 from pathlib import Path
+import shutil
+from tempfile import TemporaryDirectory
 import unittest
 
-from scripts.verify_static_generators import verify_static_site
+from scripts.verify_astro_keystatic import verify_public_site
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / "examples/astro-keystatic"
@@ -56,11 +58,40 @@ class AstroKeystaticSiteTests(unittest.TestCase):
         self.assertIn("aria-labelledby", content)
         self.assertNotIn("set:html", content)
 
+    def test_verifier_rejects_extra_editor_route_even_when_script_free(self):
+        if not (SITE / "dist").is_dir():
+            self.skipTest("Run npm run build to exercise a copied real output")
+        with TemporaryDirectory() as tmp:
+            output = Path(tmp) / "dist"
+            shutil.copytree(SITE / "dist", output)
+            (output / "keystatic").mkdir()
+            (output / "keystatic/index.html").write_text(
+                (output / "index.html").read_text(encoding="utf-8"),
+                encoding="utf-8",
+            )
+            with self.assertRaisesRegex(AssertionError, "unexpected HTML route"):
+                verify_public_site(output)
+
+    def test_verifier_rejects_editor_asset_or_browser_javascript(self):
+        if not (SITE / "dist").is_dir():
+            self.skipTest("Run npm run build to exercise a copied real output")
+        with TemporaryDirectory() as tmp:
+            output = Path(tmp) / "dist"
+            shutil.copytree(SITE / "dist", output)
+            (output / "api/keystatic").mkdir(parents=True)
+            (output / "api/keystatic/route.txt").write_text("editor API")
+            with self.assertRaisesRegex(AssertionError, "editor route"):
+                verify_public_site(output)
+            shutil.rmtree(output / "api")
+            (output / "client.mjs").write_text("console.log('unexpected')")
+            with self.assertRaisesRegex(AssertionError, "JavaScript asset"):
+                verify_public_site(output)
+
     def test_generated_output_is_zero_js_and_safe_under_deployment_base(self):
         if not (SITE / "dist").is_dir():
             self.skipTest("Run npm run build to exercise real Astro output")
         self.assertEqual(
-            verify_static_site(SITE / "dist", base_path="/syntyr-astro-keystatic/"), 1
+            verify_public_site(SITE / "dist"), 1
         )
         html = (SITE / "dist/index.html").read_text()
         self.assertEqual(html.count("<h1"), 1)
