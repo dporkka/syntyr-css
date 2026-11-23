@@ -471,6 +471,66 @@
       ]
     },
     {
+      "id": "header-centered",
+      "title": "Centered editorial header",
+      "description": "Centered brand, horizontal links, and a secondary call to action.",
+      "category": "Navigation",
+      "html": "<header class=\"syn-root syn-region syn-stack\" data-syn-theme=\"studio\" aria-label=\"Example centered site header\">\n  <div class=\"syn-inline\" style=\"--syn-inline-justify:center\">\n    <a class=\"syn-logo\" href=\"/home\">Mosaic Collective</a>\n  </div>\n  <nav class=\"syn-nav syn-inline\" style=\"--syn-inline-justify:center\" aria-label=\"Primary navigation\">\n    <a href=\"/work\">Our work</a>\n    <a href=\"/approach\">Approach</a>\n    <a href=\"/team\">Team</a>\n    <a href=\"/journal\">Journal</a>\n  </nav>\n  <div class=\"syn-inline\" style=\"--syn-inline-justify:center\">\n    <a class=\"syn-button syn-button--outline\" href=\"/contact\">Let's talk</a>\n  </div>\n</header>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "header-split",
+      "title": "Two-row product header",
+      "description": "Separate utility and product navigation with a prominent action.",
+      "category": "Navigation",
+      "html": "<header class=\"syn-root syn-region syn-stack\" data-syn-theme=\"studio\" aria-label=\"Example two-row site header\">\n  <div class=\"syn-inline\" style=\"--syn-inline-justify:space-between\">\n    <a class=\"syn-logo\" href=\"/home\">Atlas Platform</a>\n    <nav class=\"syn-inline\" aria-label=\"Utility navigation\">\n      <a class=\"syn-list-row\" href=\"/help\">Help</a>\n      <a class=\"syn-list-row\" href=\"/login\">Sign in</a>\n    </nav>\n  </div>\n  <div class=\"syn-header\" style=\"--syn-header-padding-block:0.5rem\">\n    <nav class=\"syn-nav\" aria-label=\"Primary navigation\">\n      <a href=\"/product\">Product</a>\n      <a href=\"/solutions\">Solutions</a>\n      <a href=\"/pricing\">Pricing</a>\n      <a href=\"/docs\">Docs</a>\n    </nav>\n    <a class=\"syn-button syn-button--primary\" href=\"/start\">Start free</a>\n  </div>\n</header>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "header-disclosure",
+      "title": "Native disclosure header",
+      "description": "Compact brand and expandable keyboard-accessible menu without JavaScript.",
+      "category": "Navigation",
+      "html": "<header class=\"syn-root syn-region syn-stack\" data-syn-theme=\"studio\" aria-label=\"Example disclosure site header\">\n  <div class=\"syn-inline\" style=\"--syn-inline-justify:space-between\">\n    <a class=\"syn-logo\" href=\"/home\">Northstar Journal</a>\n    <a class=\"syn-button syn-button--outline\" href=\"/subscribe\">Subscribe</a>\n  </div>\n  <details class=\"syn-details\">\n    <summary>Explore the site</summary>\n    <nav class=\"syn-nav\" aria-label=\"Primary navigation\">\n      <a href=\"/stories\">Stories</a>\n      <a href=\"/topics\">Topics</a>\n      <a href=\"/about\">About</a>\n      <a href=\"/contact\">Contact</a>\n    </nav>\n  </details>\n</header>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "footer-compact",
+      "title": "Compact single-row footer",
+      "description": "Space-saving brand, legal links and disclosure in a wrapping row.",
+      "category": "Navigation",
+      "html": "<footer class=\"syn-root syn-region syn-stack\" data-syn-theme=\"studio\" aria-label=\"Example compact site footer\">\n  <div class=\"syn-inline\" style=\"--syn-inline-justify:space-between\">\n    <a class=\"syn-logo\" href=\"/home\">Northstar Studio</a>\n    <nav class=\"syn-inline\" aria-label=\"Footer navigation\">\n      <a class=\"syn-list-row\" href=\"/work\">Work</a>\n      <a class=\"syn-list-row\" href=\"/contact\">Contact</a>\n      <a class=\"syn-list-row\" href=\"/privacy\">Privacy</a>\n    </nav>\n  </div>\n  <p class=\"syn-caption\">Example company information. Replace links and legal details before publishing.</p>\n</footer>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "footer-sitemap",
+      "title": "Four-column sitemap footer",
+      "description": "Responsive product, resource, company and legal navigation groups.",
+      "category": "Navigation",
+      "html": "<footer class=\"syn-root syn-region syn-stack\" data-syn-theme=\"studio\" aria-label=\"Example sitemap site footer\">\n  <div class=\"syn-grid\" style=\"--syn-grid-min:12rem\">\n    <section aria-labelledby=\"syn-sitemap-about\">\n      <h2 class=\"syn-heading\" id=\"syn-sitemap-about\">Atlas Platform</h2>\n      <p class=\"syn-muted\">A clearer way to manage your work.</p>\n    </section>\n    <nav class=\"syn-stack\" aria-label=\"Product links\">\n      <strong>Product</strong>\n      <a class=\"syn-list-row\" href=\"/features\">Features</a>\n      <a class=\"syn-list-row\" href=\"/pricing\">Pricing</a>\n      <a class=\"syn-list-row\" href=\"/integrations\">Integrations</a>\n    </nav>\n    <nav class=\"syn-stack\" aria-label=\"Resources links\">\n      <strong>Resources</strong>\n      <a class=\"syn-list-row\" href=\"/docs\">Documentation</a>\n      <a class=\"syn-list-row\" href=\"/guides\">Guides</a>\n      <a class=\"syn-list-row\" href=\"/support\">Support</a>\n    </nav>\n    <nav class=\"syn-stack\" aria-label=\"Company and legal links\">\n      <strong>Company</strong>\n      <a class=\"syn-list-row\" href=\"/about\">About</a>\n      <a class=\"syn-list-row\" href=\"/privacy\">Privacy</a>\n      <a class=\"syn-list-row\" href=\"/terms\">Terms</a>\n    </nav>\n  </div>\n  <p class=\"syn-caption\">Example links and company details; replace before publishing.</p>\n</footer>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "footer-newsletter",
+      "title": "Newsletter and links footer",
+      "description": "Email subscription example beside site links; requires a host-owned backend.",
+      "category": "Navigation",
+      "html": "<footer class=\"syn-root syn-region syn-stack\" data-syn-theme=\"studio\" aria-label=\"Example newsletter site footer\">\n  <div class=\"syn-grid\">\n    <section class=\"syn-stack\" aria-labelledby=\"syn-newsletter-footer-title\">\n      <h2 class=\"syn-heading\" id=\"syn-newsletter-footer-title\">The Field Notes</h2>\n      <p class=\"syn-muted\">Occasional ideas for more thoughtful digital products.</p>\n      <form class=\"syn-stack\" action=\"/newsletter/subscribe\" method=\"post\">\n        <label class=\"syn-label\" for=\"syn-footer-newsletter-email\">Email address</label>\n        <div class=\"syn-inline\">\n          <input class=\"syn-input\" id=\"syn-footer-newsletter-email\" name=\"email\" type=\"email\" autocomplete=\"email\" required>\n          <button class=\"syn-button syn-button--primary\" type=\"submit\">Subscribe</button>\n        </div>\n        <p class=\"syn-caption\">Example form only. Connect server validation, consent, CSRF protection and unsubscribe handling.</p>\n      </form>\n    </section>\n    <nav class=\"syn-stack\" aria-label=\"Footer navigation\">\n      <strong>Explore</strong>\n      <a class=\"syn-list-row\" href=\"/articles\">Articles</a>\n      <a class=\"syn-list-row\" href=\"/about\">About</a>\n      <a class=\"syn-list-row\" href=\"/contact\">Contact</a>\n      <a class=\"syn-list-row\" href=\"/privacy\">Privacy</a>\n    </nav>\n  </div>\n  <p class=\"syn-caption\">Illustrative business and subscription details; replace before publishing.</p>\n</footer>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
       "id": "mega-navigation",
       "title": "Native expandable mega menu",
       "description": "Keyboard-friendly disclosure with grouped destination links and no menu runtime.",

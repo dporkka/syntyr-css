@@ -1187,6 +1187,138 @@
       ]
     },
     {
+      "name": "header-centered",
+      "type": "registry:item",
+      "title": "Centered editorial header",
+      "description": "Centered brand, horizontal links, and a secondary call to action.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://syntyr-css.pages.dev/registry/r/core.json"
+      ],
+      "files": [
+        {
+          "path": "blocks/snippets/header-centered.html",
+          "type": "registry:file",
+          "target": "~/syntyr/blocks/header-centered.html"
+        },
+        {
+          "path": "LICENSE",
+          "type": "registry:file",
+          "target": "~/syntyr/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "header-split",
+      "type": "registry:item",
+      "title": "Two-row product header",
+      "description": "Separate utility and product navigation with a prominent action.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://syntyr-css.pages.dev/registry/r/core.json"
+      ],
+      "files": [
+        {
+          "path": "blocks/snippets/header-split.html",
+          "type": "registry:file",
+          "target": "~/syntyr/blocks/header-split.html"
+        },
+        {
+          "path": "LICENSE",
+          "type": "registry:file",
+          "target": "~/syntyr/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "header-disclosure",
+      "type": "registry:item",
+      "title": "Native disclosure header",
+      "description": "Compact brand and expandable keyboard-accessible menu without JavaScript.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://syntyr-css.pages.dev/registry/r/core.json"
+      ],
+      "files": [
+        {
+          "path": "blocks/snippets/header-disclosure.html",
+          "type": "registry:file",
+          "target": "~/syntyr/blocks/header-disclosure.html"
+        },
+        {
+          "path": "LICENSE",
+          "type": "registry:file",
+          "target": "~/syntyr/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "footer-compact",
+      "type": "registry:item",
+      "title": "Compact single-row footer",
+      "description": "Space-saving brand, legal links and disclosure in a wrapping row.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://syntyr-css.pages.dev/registry/r/core.json"
+      ],
+      "files": [
+        {
+          "path": "blocks/snippets/footer-compact.html",
+          "type": "registry:file",
+          "target": "~/syntyr/blocks/footer-compact.html"
+        },
+        {
+          "path": "LICENSE",
+          "type": "registry:file",
+          "target": "~/syntyr/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "footer-sitemap",
+      "type": "registry:item",
+      "title": "Four-column sitemap footer",
+      "description": "Responsive product, resource, company and legal navigation groups.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://syntyr-css.pages.dev/registry/r/core.json"
+      ],
+      "files": [
+        {
+          "path": "blocks/snippets/footer-sitemap.html",
+          "type": "registry:file",
+          "target": "~/syntyr/blocks/footer-sitemap.html"
+        },
+        {
+          "path": "LICENSE",
+          "type": "registry:file",
+          "target": "~/syntyr/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "footer-newsletter",
+      "type": "registry:item",
+      "title": "Newsletter and links footer",
+      "description": "Email subscription example beside site links; requires a host-owned backend.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://syntyr-css.pages.dev/registry/r/core.json"
+      ],
+      "files": [
+        {
+          "path": "blocks/snippets/footer-newsletter.html",
+          "type": "registry:file",
+          "target": "~/syntyr/blocks/footer-newsletter.html"
+        },
+        {
+          "path": "LICENSE",
+          "type": "registry:file",
+          "target": "~/syntyr/LICENSE"
+        }
+      ]
+    },
+    {
       "name": "mega-navigation",
       "type": "registry:item",
       "title": "Native expandable mega menu",

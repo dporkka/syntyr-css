@@ -936,6 +936,72 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
+    "id": "block-header-centered",
+    "title": "Centered editorial header",
+    "module": "syntyr.core.css",
+    "description": "Centered brand, horizontal links, and a secondary call to action.",
+    "html": "\u003cheader class=\"syn-root syn-region syn-stack\" data-syn-theme=\"studio\" aria-label=\"Example centered site header\">\n  \u003cdiv class=\"syn-inline\" style=\"--syn-inline-justify:center\">\n    \u003ca class=\"syn-logo\" href=\"/home\">Mosaic Collective\u003c/a>\n  \u003c/div>\n  \u003cnav class=\"syn-nav syn-inline\" style=\"--syn-inline-justify:center\" aria-label=\"Primary navigation\">\n    \u003ca href=\"/work\">Our work\u003c/a>\n    \u003ca href=\"/approach\">Approach\u003c/a>\n    \u003ca href=\"/team\">Team\u003c/a>\n    \u003ca href=\"/journal\">Journal\u003c/a>\n  \u003c/nav>\n  \u003cdiv class=\"syn-inline\" style=\"--syn-inline-justify:center\">\n    \u003ca class=\"syn-button syn-button--outline\" href=\"/contact\">Let's talk\u003c/a>\n  \u003c/div>\n\u003c/header>",
+    "keywords": "Centered editorial header Centered brand, horizontal links, and a secondary call to action. header centered editorial navigation",
+    "kind": "block",
+    "category": "Navigation",
+    "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
+  },
+  {
+    "id": "block-header-split",
+    "title": "Two-row product header",
+    "module": "syntyr.core.css",
+    "description": "Separate utility and product navigation with a prominent action.",
+    "html": "\u003cheader class=\"syn-root syn-region syn-stack\" data-syn-theme=\"studio\" aria-label=\"Example two-row site header\">\n  \u003cdiv class=\"syn-inline\" style=\"--syn-inline-justify:space-between\">\n    \u003ca class=\"syn-logo\" href=\"/home\">Atlas Platform\u003c/a>\n    \u003cnav class=\"syn-inline\" aria-label=\"Utility navigation\">\n      \u003ca class=\"syn-list-row\" href=\"/help\">Help\u003c/a>\n      \u003ca class=\"syn-list-row\" href=\"/login\">Sign in\u003c/a>\n    \u003c/nav>\n  \u003c/div>\n  \u003cdiv class=\"syn-header\" style=\"--syn-header-padding-block:0.5rem\">\n    \u003cnav class=\"syn-nav\" aria-label=\"Primary navigation\">\n      \u003ca href=\"/product\">Product\u003c/a>\n      \u003ca href=\"/solutions\">Solutions\u003c/a>\n      \u003ca href=\"/pricing\">Pricing\u003c/a>\n      \u003ca href=\"/docs\">Docs\u003c/a>\n    \u003c/nav>\n    \u003ca class=\"syn-button syn-button--primary\" href=\"/start\">Start free\u003c/a>\n  \u003c/div>\n\u003c/header>",
+    "keywords": "Two-row product header Separate utility and product navigation with a prominent action. header utility two-row saas",
+    "kind": "block",
+    "category": "Navigation",
+    "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
+  },
+  {
+    "id": "block-header-disclosure",
+    "title": "Native disclosure header",
+    "module": "syntyr.core.css",
+    "description": "Compact brand and expandable keyboard-accessible menu without JavaScript.",
+    "html": "\u003cheader class=\"syn-root syn-region syn-stack\" data-syn-theme=\"studio\" aria-label=\"Example disclosure site header\">\n  \u003cdiv class=\"syn-inline\" style=\"--syn-inline-justify:space-between\">\n    \u003ca class=\"syn-logo\" href=\"/home\">Northstar Journal\u003c/a>\n    \u003ca class=\"syn-button syn-button--outline\" href=\"/subscribe\">Subscribe\u003c/a>\n  \u003c/div>\n  \u003cdetails class=\"syn-details\">\n    \u003csummary>Explore the site\u003c/summary>\n    \u003cnav class=\"syn-nav\" aria-label=\"Primary navigation\">\n      \u003ca href=\"/stories\">Stories\u003c/a>\n      \u003ca href=\"/topics\">Topics\u003c/a>\n      \u003ca href=\"/about\">About\u003c/a>\n      \u003ca href=\"/contact\">Contact\u003c/a>\n    \u003c/nav>\n  \u003c/details>\n\u003c/header>",
+    "keywords": "Native disclosure header Compact brand and expandable keyboard-accessible menu without JavaScript. header details mobile disclosure",
+    "kind": "block",
+    "category": "Navigation",
+    "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
+  },
+  {
+    "id": "block-footer-compact",
+    "title": "Compact single-row footer",
+    "module": "syntyr.core.css",
+    "description": "Space-saving brand, legal links and disclosure in a wrapping row.",
+    "html": "\u003cfooter class=\"syn-root syn-region syn-stack\" data-syn-theme=\"studio\" aria-label=\"Example compact site footer\">\n  \u003cdiv class=\"syn-inline\" style=\"--syn-inline-justify:space-between\">\n    \u003ca class=\"syn-logo\" href=\"/home\">Northstar Studio\u003c/a>\n    \u003cnav class=\"syn-inline\" aria-label=\"Footer navigation\">\n      \u003ca class=\"syn-list-row\" href=\"/work\">Work\u003c/a>\n      \u003ca class=\"syn-list-row\" href=\"/contact\">Contact\u003c/a>\n      \u003ca class=\"syn-list-row\" href=\"/privacy\">Privacy\u003c/a>\n    \u003c/nav>\n  \u003c/div>\n  \u003cp class=\"syn-caption\">Example company information. Replace links and legal details before publishing.\u003c/p>\n\u003c/footer>",
+    "keywords": "Compact single-row footer Space-saving brand, legal links and disclosure in a wrapping row. footer compact minimal legal",
+    "kind": "block",
+    "category": "Navigation",
+    "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
+  },
+  {
+    "id": "block-footer-sitemap",
+    "title": "Four-column sitemap footer",
+    "module": "syntyr.core.css",
+    "description": "Responsive product, resource, company and legal navigation groups.",
+    "html": "\u003cfooter class=\"syn-root syn-region syn-stack\" data-syn-theme=\"studio\" aria-label=\"Example sitemap site footer\">\n  \u003cdiv class=\"syn-grid\" style=\"--syn-grid-min:12rem\">\n    \u003csection aria-labelledby=\"syn-sitemap-about\">\n      \u003ch2 class=\"syn-heading\" id=\"syn-sitemap-about\">Atlas Platform\u003c/h2>\n      \u003cp class=\"syn-muted\">A clearer way to manage your work.\u003c/p>\n    \u003c/section>\n    \u003cnav class=\"syn-stack\" aria-label=\"Product links\">\n      \u003cstrong>Product\u003c/strong>\n      \u003ca class=\"syn-list-row\" href=\"/features\">Features\u003c/a>\n      \u003ca class=\"syn-list-row\" href=\"/pricing\">Pricing\u003c/a>\n      \u003ca class=\"syn-list-row\" href=\"/integrations\">Integrations\u003c/a>\n    \u003c/nav>\n    \u003cnav class=\"syn-stack\" aria-label=\"Resources links\">\n      \u003cstrong>Resources\u003c/strong>\n      \u003ca class=\"syn-list-row\" href=\"/docs\">Documentation\u003c/a>\n      \u003ca class=\"syn-list-row\" href=\"/guides\">Guides\u003c/a>\n      \u003ca class=\"syn-list-row\" href=\"/support\">Support\u003c/a>\n    \u003c/nav>\n    \u003cnav class=\"syn-stack\" aria-label=\"Company and legal links\">\n      \u003cstrong>Company\u003c/strong>\n      \u003ca class=\"syn-list-row\" href=\"/about\">About\u003c/a>\n      \u003ca class=\"syn-list-row\" href=\"/privacy\">Privacy\u003c/a>\n      \u003ca class=\"syn-list-row\" href=\"/terms\">Terms\u003c/a>\n    \u003c/nav>\n  \u003c/div>\n  \u003cp class=\"syn-caption\">Example links and company details; replace before publishing.\u003c/p>\n\u003c/footer>",
+    "keywords": "Four-column sitemap footer Responsive product, resource, company and legal navigation groups. footer sitemap columns links",
+    "kind": "block",
+    "category": "Navigation",
+    "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
+  },
+  {
+    "id": "block-footer-newsletter",
+    "title": "Newsletter and links footer",
+    "module": "syntyr.core.css",
+    "description": "Email subscription example beside site links; requires a host-owned backend.",
+    "html": "\u003cfooter class=\"syn-root syn-region syn-stack\" data-syn-theme=\"studio\" aria-label=\"Example newsletter site footer\">\n  \u003cdiv class=\"syn-grid\">\n    \u003csection class=\"syn-stack\" aria-labelledby=\"syn-newsletter-footer-title\">\n      \u003ch2 class=\"syn-heading\" id=\"syn-newsletter-footer-title\">The Field Notes\u003c/h2>\n      \u003cp class=\"syn-muted\">Occasional ideas for more thoughtful digital products.\u003c/p>\n      \u003cform class=\"syn-stack\" action=\"/newsletter/subscribe\" method=\"post\">\n        \u003clabel class=\"syn-label\" for=\"syn-footer-newsletter-email\">Email address\u003c/label>\n        \u003cdiv class=\"syn-inline\">\n          \u003cinput class=\"syn-input\" id=\"syn-footer-newsletter-email\" name=\"email\" type=\"email\" autocomplete=\"email\" required>\n          \u003cbutton class=\"syn-button syn-button--primary\" type=\"submit\">Subscribe\u003c/button>\n        \u003c/div>\n        \u003cp class=\"syn-caption\">Example form only. Connect server validation, consent, CSRF protection and unsubscribe handling.\u003c/p>\n      \u003c/form>\n    \u003c/section>\n    \u003cnav class=\"syn-stack\" aria-label=\"Footer navigation\">\n      \u003cstrong>Explore\u003c/strong>\n      \u003ca class=\"syn-list-row\" href=\"/articles\">Articles\u003c/a>\n      \u003ca class=\"syn-list-row\" href=\"/about\">About\u003c/a>\n      \u003ca class=\"syn-list-row\" href=\"/contact\">Contact\u003c/a>\n      \u003ca class=\"syn-list-row\" href=\"/privacy\">Privacy\u003c/a>\n    \u003c/nav>\n  \u003c/div>\n  \u003cp class=\"syn-caption\">Illustrative business and subscription details; replace before publishing.\u003c/p>\n\u003c/footer>",
+    "keywords": "Newsletter and links footer Email subscription example beside site links; requires a host-owned backend. footer newsletter subscription form",
+    "kind": "block",
+    "category": "Navigation",
+    "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
+  },
+  {
     "id": "block-mega-navigation",
     "title": "Native expandable mega menu",
     "module": "syntyr.core.css + syntyr.recipes.css",

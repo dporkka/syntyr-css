@@ -652,6 +652,96 @@
       ]
     },
     {
+      "id": "header-centered",
+      "category": "Navigation",
+      "title": "Centered editorial header",
+      "description": "Centered brand, horizontal links, and a secondary call to action.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "header",
+        "centered",
+        "editorial",
+        "navigation"
+      ]
+    },
+    {
+      "id": "header-split",
+      "category": "Navigation",
+      "title": "Two-row product header",
+      "description": "Separate utility and product navigation with a prominent action.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "header",
+        "utility",
+        "two-row",
+        "saas"
+      ]
+    },
+    {
+      "id": "header-disclosure",
+      "category": "Navigation",
+      "title": "Native disclosure header",
+      "description": "Compact brand and expandable keyboard-accessible menu without JavaScript.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "header",
+        "details",
+        "mobile",
+        "disclosure"
+      ]
+    },
+    {
+      "id": "footer-compact",
+      "category": "Navigation",
+      "title": "Compact single-row footer",
+      "description": "Space-saving brand, legal links and disclosure in a wrapping row.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "footer",
+        "compact",
+        "minimal",
+        "legal"
+      ]
+    },
+    {
+      "id": "footer-sitemap",
+      "category": "Navigation",
+      "title": "Four-column sitemap footer",
+      "description": "Responsive product, resource, company and legal navigation groups.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "footer",
+        "sitemap",
+        "columns",
+        "links"
+      ]
+    },
+    {
+      "id": "footer-newsletter",
+      "category": "Navigation",
+      "title": "Newsletter and links footer",
+      "description": "Email subscription example beside site links; requires a host-owned backend.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "footer",
+        "newsletter",
+        "subscription",
+        "form"
+      ]
+    },
+    {
       "id": "mega-navigation",
       "category": "Navigation",
       "title": "Native expandable mega menu",
