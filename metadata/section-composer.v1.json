@@ -577,7 +577,7 @@
       "title": "API endpoint reference",
       "description": "Readable example request and response, with method, route, and JSON; your API owns behavior.",
       "category": "Technical",
-      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"api-endpoint-heading\">\n  <p class=\"syn-eyebrow\">REFERENCE / ILLUSTRATIVE</p>\n  <h2 class=\"syn-heading\" id=\"api-endpoint-heading\">List example records</h2>\n  <p><code>GET /v1/records</code> · Sample contract, not a live endpoint.</p>\n  <h3 class=\"syn-heading\">Request</h3>\n  <pre><code>GET /v1/records?limit=10</code></pre>\n  <h3 class=\"syn-heading\">Example response</h3>\n  <pre><code>{\n  \"items\": [{\"id\": \"example-1\", \"status\": \"ready\"}],\n  \"next\": null\n}</code></pre>\n  <a href=\"/docs/api\">Full API reference</a>\n</section>",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"api-endpoint-heading\">\n  <p class=\"syn-eyebrow\">REFERENCE / ILLUSTRATIVE</p>\n  <h2 class=\"syn-heading\" id=\"api-endpoint-heading\">List example records</h2>\n  <p><code>GET /v1/records</code> · Sample contract, not a live endpoint.</p>\n  <h3 class=\"syn-heading\">Request</h3>\n  <pre class=\"syn-code-scroll\" tabindex=\"0\" role=\"region\" aria-label=\"Example API request\"><code>GET /v1/records?limit=10</code></pre>\n  <h3 class=\"syn-heading\">Example response</h3>\n  <pre class=\"syn-code-scroll\" tabindex=\"0\" role=\"region\" aria-label=\"Example JSON response\"><code>{\n  \"items\": [{\"id\": \"example-1\", \"status\": \"ready\"}],\n  \"next\": null\n}</code></pre>\n  <a href=\"/docs/api\">Full API reference</a>\n</section>",
       "required_stylesheets": [
         "syntyr.core.css"
       ]

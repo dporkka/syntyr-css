@@ -57,6 +57,7 @@ stylesheets.
 - **Optional website animations (alpha.5 source):** fade, slide, zoom and emphasis presets with finite/infinite loop controls and a native Web Animations API helper ([guide](docs/animation.md)).
 - **Real navigation and loading states:** semantic breadcrumbs, touch-friendly page links, and static accessible skeleton placeholders.
 - **No installation:** copy prebuilt CSS. Python 3 is used only by maintainers to regenerate it.
+- **Visual page starters + offline images (alpha.5 source):** four editable complete-site starting layouts (portfolio, agency, SaaS, local business); replace original gallery examples with local PNG/JPEG/WebP photos and export a self-contained static ZIP without JavaScript. Editor JSON retains photos. [Builder](docs/page-builder.html).
 - **Static page composition (alpha.5 source):** browse and rearrange all 85 copy-owned sections in the optional visual builder, then download a self-hostable HTML/CSS/image ZIP without application JavaScript. Backend forms remain host-owned. [Builder](docs/page-builder.html).
 - **Opt-in universal registry (alpha.5 source):** 85 copy-owned HTML blocks plus 9 CSS modules in shadcn-compatible static JSON; no consumer runtime dependency. See [blocks guide](docs/blocks-guide.md).
 

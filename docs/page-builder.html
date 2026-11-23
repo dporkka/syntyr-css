@@ -30,9 +30,37 @@
         <p class="syn-lede">Compose real Syntyr blocks and catalog components, edit content, rearrange sections, preview themes and export portable HTML and JSON. No account or build tool.</p>
       </section>
 
+      <section class="syn-panel builder-starters" aria-labelledby="builder-starters-heading">
+        <div>
+          <h2 class="syn-heading" id="builder-starters-heading">Start with a complete page</h2>
+          <p class="syn-caption">Four example site layouts. Applying a starter replaces your current page; save its JSON first. All sections remain editable and export without JavaScript.</p>
+        </div>
+        <label class="syn-label" for="builder-starter">PAGE STARTER
+          <select class="syn-select" id="builder-starter" aria-describedby="builder-starter-help">
+            <option value="">Choose a starting layout…</option>
+          </select>
+        </label>
+        <button class="syn-button syn-button--primary" type="button" id="builder-apply-starter" disabled>USE STARTER</button>
+        <p class="syn-caption" id="builder-starter-help">Starter layouts load with the website section library. Placeholder services, locations and prices are not verified production content.</p>
+      </section>
+
       <section class="syn-panel builder-toolbar" aria-label="Page settings and export">
         <label class="syn-label" for="builder-page-title">PAGE TITLE
           <input class="syn-input" id="builder-page-title" maxlength="160" value="My Syntyr page">
+        </label>
+        <label class="syn-label" for="builder-page-description">SEARCH DESCRIPTION
+          <textarea class="syn-input" id="builder-page-description" maxlength="300" rows="2" placeholder="Describe this page in one or two sentences"></textarea>
+        </label>
+        <label class="syn-label" for="builder-page-language">PAGE LANGUAGE
+          <select class="syn-select" id="builder-page-language">
+            <option value="en">English</option>
+            <option value="pt-BR">Português (Brasil)</option>
+            <option value="es">Español</option>
+            <option value="fr">Français</option>
+            <option value="de">Deutsch</option>
+            <option value="it">Italiano</option>
+            <option value="zh-CN">简体中文</option>
+          </select>
         </label>
         <label class="syn-label" for="builder-theme">THEME
           <select class="syn-select" id="builder-theme">

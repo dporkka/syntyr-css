@@ -133,6 +133,14 @@ two distinct illustrative artworks (not evidence of a real transformation).
 Replace all example text, fictional products and host-owned routes with verified
 production content.
 
+## Long code examples on mobile
+
+Use `syn-code-scroll` on a `pre` element for long, unbreakable code examples.
+Keep a descriptive `aria-label` and `tabindex="0"` so keyboard users can
+scroll the code without horizontally scrolling the full page. The sample
+`api-endpoint-reference` block demonstrates this no-JavaScript behavior
+in the builder and in standalone exports.
+
 ## Native HTML and framework integration
 
 Load the specific CSS modules shown on each block, from the same pinned version.

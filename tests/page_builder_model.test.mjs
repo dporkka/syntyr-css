@@ -131,7 +131,30 @@ test("all valid editor projects, including large and multibyte text, can be reop
 });
 
 test("JSON import is bounded by the same UTF-8 byte limit as the file picker", () => {
-  assert.equal(MAX_PROJECT_BYTES, 16 * 1024 * 1024);
+  assert.equal(MAX_PROJECT_BYTES, 32 * 1024 * 1024);
   const huge = JSON.stringify(createDefaultDocument()) + " ".repeat(MAX_PROJECT_BYTES);
   assert.throws(() => parseDocument(huge), /too large/i);
+});
+
+test("optional page SEO metadata is rendered safely and legacy projects still reopen", () => {
+  const fresh = createDefaultDocument();
+  assert.equal(fresh.description, "");
+  assert.equal(fresh.language, "en");
+  fresh.description = 'Accessible & practical "component" sites <no-script>';
+  fresh.language = "pt-BR";
+  const html = exportHtml(fresh);
+  assert.match(html, /<html lang="pt-BR">/);
+  assert.match(html, /<meta name="description" content="Accessible &amp; practical &quot;component&quot; sites &lt;no-script&gt;">/);
+  assert.doesNotMatch(html, /<no-script>|<script\b/);
+  assert.deepEqual(parseDocument(JSON.stringify(fresh)), fresh);
+  const legacy = createDefaultDocument();
+  delete legacy.description;
+  delete legacy.language;
+  const imported = parseDocument(JSON.stringify(legacy));
+  assert.equal(imported.description, "");
+  assert.equal(imported.language, "en");
+  assert.throws(() => parseDocument({...fresh, description: "x".repeat(301)}), /description/i);
+  assert.throws(() => parseDocument({...fresh, description: { toString() {return "<script>";} }}), /description/i);
+  assert.throws(() => parseDocument({...fresh, language: "en\" onmouseover=\"alert(1)"}), /language/i);
+  assert.throws(() => parseDocument({...fresh, language: "fr\nFR"}), /language/i);
 });

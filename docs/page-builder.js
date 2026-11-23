@@ -1,12 +1,14 @@
 /* Docs-only, dependency-free visual composition. The shipped Syntyr CSS stays JS-free. */
 import {
-  BLOCK_TYPES, THEMES, MAX_PROJECT_BYTES,
+  BLOCK_TYPES, THEMES, MAX_PROJECT_BYTES, MAX_IMAGE_BYTES,
   registerGalleryManifest, galleryBlockTypes, registerSectionManifest, sectionBlockTypes,
   getBlockDefinition, createBlock, createDefaultDocument, parseDocument, moveBlock,
   duplicateBlock, insertBlockAfter, exportHtml, requiredAssets,
+  replaceBlockImage, restoreBlockImage, getImageAssetBytes,
   projectNeedsGalleryManifest, projectNeedsSectionManifest
 } from "./page-builder-model.mjs";
 import { createStoredZip } from "./page-builder-zip.mjs";
+import {STARTER_PAGES, createStarterPage} from "./page-builder-starters.mjs";
 
 const byId = (id) => document.getElementById(id);
 const palette = byId("builder-palette");
@@ -15,12 +17,16 @@ const gallerySearch = byId("builder-gallery-search");
 const sectionPalette = byId("builder-section-palette");
 const sectionSearch = byId("builder-section-search");
 const sectionCategory = byId("builder-section-category");
+const starterSelect = byId("builder-starter");
+const starterButton = byId("builder-apply-starter");
 const outline = byId("builder-outline");
 const inspector = byId("builder-inspector");
 const preview = byId("builder-preview");
 const status = byId("builder-status");
 const theme = byId("builder-theme");
 const title = byId("builder-page-title");
+const description = byId("builder-page-description");
+const language = byId("builder-page-language");
 const viewport = byId("builder-viewport");
 const viewportFrame = byId("builder-viewport-frame");
 const undo = byId("builder-undo");
@@ -32,13 +38,19 @@ let selectedId = page.blocks[0].id;
 let sequence = 4;
 let draggingIndex = null;
 let titleEditing = false;
+let descriptionEditing = false;
 
 function notify(message) {
   status.textContent = message;
 }
 function remember(snapshot = JSON.stringify(page)) {
   history.push(snapshot);
-  if (history.length > 40) history.shift();
+  // Uploaded photos are embedded in project snapshots. Bound undo history by
+  // total retained bytes rather than only the number of edits.
+  let size = history.reduce((sum, entry) => sum + entry.length, 0);
+  while (history.length > 40 || (size > 48 * 1024 * 1024 && history.length > 1)) {
+    size -= history.shift().length;
+  }
   future.length = 0;
   updateHistoryButtons();
 }
@@ -139,12 +151,37 @@ async function loadSections() {
       sectionCategory.append(option);
     }
     renderSectionPalette();
+    starterButton.disabled = false;
     notify(count + " copy-owned sections available for static page composition.");
   } catch {
     byId("builder-section-count").textContent = "Website sections unavailable; basic blocks still work.";
     notify("Section manifest unavailable. The basic page composer remains usable.");
   }
 }
+
+for (const starter of STARTER_PAGES) {
+  const option = makeElement("option", starter.label);
+  option.value = starter.id;
+  starterSelect.append(option);
+}
+starterSelect.addEventListener("change", () => {
+  const starter = STARTER_PAGES.find(item => item.id === starterSelect.value);
+  byId("builder-starter-help").textContent = starter
+    ? starter.description + " Replaces the current page; use Save Project first."
+    : "Select a layout to begin with editable example content.";
+});
+starterButton.addEventListener("click", () => {
+  if (!starterSelect.value || !sectionBlockTypes().length) return;
+  if (!window.confirm("Replace the current page with this example starter? Save the current project first if needed."))
+    return;
+  try {
+    const created = createStarterPage(starterSelect.value);
+    commit(created, "Starter applied: " + starterSelect.options[starterSelect.selectedIndex].text);
+    selectedId = page.blocks[0]?.id || null;
+    sequence = Math.max(sequence, page.blocks.length + 5);
+    redraw();
+  } catch (error) { notify("Starter failed: " + error.message); }
+});
 
 function renderOutline() {
   const focusedButton = outline.contains(document.activeElement)
@@ -206,6 +243,56 @@ function renderInspector() {
       : name.replace(/([A-Z])/g, " $1").toUpperCase();
     label.append(document.createTextNode(friendlyName));
     const value = block.props[name];
+    if (fieldKind === "src") {
+      const group = makeElement("div", null, "builder-image-control");
+      group.append(makeElement("code", value));
+      const file = makeElement("input");
+      file.type = "file";
+      file.accept = "image/png,image/jpeg,image/webp";
+      file.dataset.field = name;
+      file.setAttribute("aria-label", "Replace image " + name + " with PNG, JPEG or WebP");
+      file.addEventListener("change", async () => {
+        const selected = file.files?.[0];
+        if (!selected) return;
+        const editingBlock = block.id;
+        try {
+          const mime = {"image/png": "png", "image/jpeg": "jpg", "image/webp": "webp"}[selected.type];
+          if (!mime) throw new Error("Only PNG, JPEG and WebP images are supported");
+          if (selected.size > MAX_IMAGE_BYTES) throw new Error("Image exceeds 2 MiB; optimize it first");
+          if (!crypto?.subtle) throw new Error("Image hashing requires a secure browser context");
+          const raw = await selected.arrayBuffer();
+          const digest = new Uint8Array(await crypto.subtle.digest("SHA-256", raw));
+          const hash = [...digest].map(n => n.toString(16).padStart(2, "0")).join("");
+          const filename = "custom-" + hash + "." + mime;
+          const dataURL = await new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = () => reject(new Error("Cannot read image"));
+            reader.readAsDataURL(selected);
+          });
+          const updated = replaceBlockImage(page, editingBlock, name, {filename, dataURL});
+          commit(updated, "Image bundled into project and static export. Update its alt text to describe the photo.");
+          selectedId = editingBlock;
+          redraw();
+        } catch (error) { notify("Image replacement failed: " + error.message); }
+      });
+      group.append(file);
+      const reset = makeElement("button", "Restore original image", "syn-button");
+      reset.type = "button";
+      reset.addEventListener("click", () => {
+        try {
+          commit(restoreBlockImage(page, block.id, name), "Original image restored.");
+          selectedId = block.id;
+          redraw();
+        } catch (error) { notify(error.message); }
+      });
+      group.append(reset, makeElement("span",
+        "Choose an optimized raster image (2 MiB maximum). Edit the corresponding ALT field to describe it. Images are embedded in project JSON and bundled into the static ZIP.",
+        "syn-caption"));
+      label.append(group);
+      inspector.append(label);
+      continue;
+    }
     const multi = value.length > 65 || /description|answer|quote|Text$/i.test(name);
     const control = makeElement(multi ? "textarea" : "input", null, "syn-input");
     if (multi) control.rows = 3;
@@ -269,6 +356,14 @@ preview.addEventListener("load", () => {
 });
 function redraw() {
   title.value = page.title;
+  description.value = page.description;
+  // Imported projects may use a valid BCP-47 language not in the quick choices.
+  // Keep it visible/selectable instead of silently changing document metadata.
+  if (![...language.options].some(option => option.value === page.language)) {
+    const option = new Option(page.language, page.language);
+    language.add(option);
+  }
+  language.value = page.language;
   theme.value = page.theme;
   renderOutline();
   renderInspector();
@@ -391,6 +486,18 @@ title.addEventListener("input", () => {
   renderPreview();
 });
 title.addEventListener("blur", () => { titleEditing = false; });
+description.addEventListener("input", () => {
+  if (!descriptionEditing) { remember(); descriptionEditing = true; }
+  page.description = description.value;
+  renderPreview();
+});
+description.addEventListener("blur", () => { descriptionEditing = false; });
+language.addEventListener("change", () => {
+  if (language.value === page.language) return;
+  const next = structuredClone(page);
+  next.language = language.value;
+  commit(next, "Page language updated.");
+});
 theme.addEventListener("change", () => {
   if (!THEMES.includes(theme.value) || theme.value === page.theme) return;
   const next = structuredClone(page);
@@ -430,6 +537,10 @@ byId("builder-export-zip").addEventListener("click", async () => {
       {name: "syntyr.all.css", content: await cssResponse.text()}
     ];
     for (const name of requiredAssets(page)) {
+      if (Object.prototype.hasOwnProperty.call(page.media, name)) {
+        entries.push({name: "assets/" + name, content: getImageAssetBytes(page, name)});
+        continue;
+      }
       const url = new URL("../assets/" + name, import.meta.url);
       const response = await fetch(url, {credentials: "same-origin"});
       if (!response.ok) throw new Error("Missing approved local asset: " + name);
@@ -460,8 +571,13 @@ byId("builder-export-zip").addEventListener("click", async () => {
   }
 });
 byId("builder-export-json").addEventListener("click", () => {
-  download("syntyr-page.json", JSON.stringify(parseDocument(page), null, 2) + "\n", "application/json");
-  notify("Editable JSON project downloaded.");
+  try {
+    const content = JSON.stringify(parseDocument(page), null, 2) + "\n";
+    if (new TextEncoder().encode(content).length > MAX_PROJECT_BYTES)
+      throw new Error("Project exceeds 32 MiB; remove images or shorten content");
+    download("syntyr-page.json", content, "application/json");
+    notify("Editable JSON project downloaded, including any embedded photos.");
+  } catch (error) { notify("Cannot save project: " + error.message); }
 });
 let importGeneration = 0;
 byId("builder-import").addEventListener("change", async (event) => {
@@ -469,7 +585,7 @@ byId("builder-import").addEventListener("change", async (event) => {
   if (!file) return;
   const generation = ++importGeneration;
   try {
-    if (file.size > MAX_PROJECT_BYTES) throw new Error("Project file exceeds 16 MiB");
+    if (file.size > MAX_PROJECT_BYTES) throw new Error("Project file exceeds 32 MiB");
     const text = await file.text();
     if (generation !== importGeneration) return;
     let candidate;
