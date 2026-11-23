@@ -3,7 +3,7 @@
   "source_version": "0.3.0-alpha.5",
   "stability": "experimental-source-candidate",
   "name": "Agent workflow",
-  "stylesheet": "syntyr.agent.css",
+  "stylesheet": "syntyr.core.css",
   "runtime_requirement": "none",
   "scope": ".syn-root",
   "states": [
@@ -14,12 +14,12 @@
     "failed",
     "canceled"
   ],
+  "state_description": "Host workflow states; these are not data-syn-state attribute values.",
   "components": [
     {
       "id": "run",
       "element": "section",
-      "class": "syn-agent-run",
-      "state_attribute": "data-syn-state",
+      "classes": ["syn-panel", "syn-stack"],
       "required_attributes": [
         "aria-labelledby"
       ],
@@ -28,28 +28,32 @@
     {
       "id": "status",
       "element": "span",
-      "class": "syn-agent-status",
+      "classes": ["syn-status"],
       "description": "Readable text label; never communicate state solely by color or shape."
     },
     {
       "id": "plan",
       "element": "ol",
-      "class": "syn-agent-steps",
+      "classes": ["syn-steps", "syn-steps--vertical"],
       "child_element": "li",
-      "child_class": "syn-agent-step",
+      "child_class": "syn-step",
+      "required_attributes": ["aria-label", "role"],
+      "role": "list",
       "child_state_attribute": "data-syn-state",
+      "child_state_values": {"completed": "complete", "failed": "error"},
+      "current_child_attributes": {"aria-current": "step"},
       "description": "Ordered real steps with readable status text and server-owned state."
     },
     {
       "id": "approval",
       "element": "section",
-      "class": "syn-agent-approval",
+      "classes": ["syn-panel", "syn-stack"],
       "description": "Explicit action summary, impact, and native POST forms for human approval or rejection."
     },
     {
       "id": "outcome",
       "element": "section",
-      "class": "syn-agent-outcome",
+      "classes": ["syn-panel", "syn-stack"],
       "description": "Evidence and results linked to the actual run, including failures and recovery."
     }
   ],
@@ -72,7 +76,7 @@
     "Reflect pending, running, completed and failed states from authoritative backend data; CSS cannot infer them."
   ],
   "accessibility_notes": [
-    "Use semantic headings and an ordered list for the steps.",
+    "Use semantic headings and a named ordered list with role=list to preserve list semantics when CSS hides native markers.",
     "Render visible state labels independent of color.",
     "Give approval forms real accessible button labels and maintain keyboard focus after updates.",
     "Only announce new updates through an appropriately scoped live region in a host with dynamic rendering; never set the entire run to a live region."

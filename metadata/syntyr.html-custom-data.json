@@ -18,42 +18,6 @@
           "description": "Activity timeline presentation in the recipes.css module; use semantic HTML and consult its component example."
         },
         {
-          "name": "syn-agent-approval",
-          "description": "Agent approval presentation in the agent.css module; use semantic HTML and consult its component example."
-        },
-        {
-          "name": "syn-agent-approval-actions",
-          "description": "Agent approval actions presentation in the agent.css module; use semantic HTML and consult its component example."
-        },
-        {
-          "name": "syn-agent-detail",
-          "description": "Agent detail presentation in the agent.css module; use semantic HTML and consult its component example."
-        },
-        {
-          "name": "syn-agent-header",
-          "description": "Agent header presentation in the agent.css module; use semantic HTML and consult its component example."
-        },
-        {
-          "name": "syn-agent-outcome",
-          "description": "Agent outcome presentation in the agent.css module; use semantic HTML and consult its component example."
-        },
-        {
-          "name": "syn-agent-run",
-          "description": "Agent run presentation in the agent.css module; use semantic HTML and consult its component example."
-        },
-        {
-          "name": "syn-agent-status",
-          "description": "Agent status presentation in the agent.css module; use semantic HTML and consult its component example."
-        },
-        {
-          "name": "syn-agent-step",
-          "description": "Agent step presentation in the agent.css module; use semantic HTML and consult its component example."
-        },
-        {
-          "name": "syn-agent-steps",
-          "description": "Agent steps presentation in the agent.css module; use semantic HTML and consult its component example."
-        },
-        {
           "name": "syn-alert",
           "description": "Inline informational or status notice; write the message in readable text."
         },
@@ -1748,13 +1712,7 @@
           "name": "active"
         },
         {
-          "name": "awaiting-approval"
-        },
-        {
           "name": "complete"
-        },
-        {
-          "name": "completed"
         },
         {
           "name": "conflict"
@@ -1782,9 +1740,6 @@
         },
         {
           "name": "queued"
-        },
-        {
-          "name": "running"
         },
         {
           "name": "saved"

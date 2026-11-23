@@ -6245,18 +6245,20 @@ Syntyr styles browser HTML/CSS. It does not supply a JavaScript component runtim
 
 ## Human approval and agent-run UI
 
-The source candidate includes an optional **CSS-only** agent workflow module:
-`dist/syntyr.agent.css` (also exported as `@syntyr/css/agent.css`).
-It is **not** part of the stable published alpha.4 CSS and is not loaded by
-`syntyr.core.css`. The module presents human-readable agent plans, step status,
-explicit approval requests, and authoritative outcomes without implementing
-an AI model, orchestrator or action executor.
+The unreleased v0.3.0-alpha.5 source candidate includes an agent workflow
+template and JSON contract. The template follows the
+[workflow operations example](../examples/workflow-operations.html): it uses
+core steps and status labels for progress, panels and layout classes for
+approval and outcomes, and native forms for decisions. These resources are
+not part of published alpha.4.
 
 - [Copyable native HTML integration template](../examples/agent-workflow.html)
 - [Structured, allowlisted component contract](../metadata/agent-workflow.v1.json)
-- Load core CSS first, then the optional agent stylesheet. Keep the `.syn-root` scope.
-- Render actual plan and state on the **server**, using the supported
-  `data-syn-state` values. Never use colors, CSS, or generated prose as proof
+- Load `dist/syntyr.core.css` and keep the `.syn-root` scope.
+- Render the actual plan and readable state on the **server**. The JSON states
+  describe host workflow data. Map a completed step to `data-syn-state="complete"`,
+  a failed step to `data-syn-state="error"`, and the current step to
+  `aria-current="step"`. Never use colors, CSS or generated prose as proof
   that an action happened.
 - Bind both approve and reject buttons to a real POST endpoint. The application
   must verify authentication, tenant permissions, CSRF, run state and immutable

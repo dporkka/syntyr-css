@@ -5,41 +5,40 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Agent workflow and human approval — Syntyr</title>
   <link rel="stylesheet" href="../dist/syntyr.core.css">
-  <link rel="stylesheet" href="../dist/syntyr.agent.css">
 </head>
 <body class="syn-root syn-page" data-syn-theme="studio">
-  <main class="syn-container">
+  <main class="syn-shell syn-stack">
     <h1>Review proposed campaign</h1>
-    <p class="syn-agent-detail">Integration template: the application must implement the POST endpoint, session authorization, CSRF validation, and audit logging.</p>
+    <p class="syn-muted">Integration template: the application must implement the POST endpoint, session authorization, CSRF validation, and audit logging.</p>
 
-    <section class="syn-agent-run" data-syn-state="awaiting-approval"
+    <section class="syn-panel syn-stack"
              aria-labelledby="agent-run-title">
-      <header class="syn-agent-header">
+      <header class="syn-inline">
         <h2 id="agent-run-title">Campaign proposal · run 42</h2>
-        <span class="syn-agent-status">Awaiting your approval</span>
+        <span class="syn-status syn-status--warning">Awaiting your approval</span>
       </header>
       <p>Prepare a draft campaign proposal using authorized inventory data. No proposal will be sent without approval.</p>
 
-      <ol class="syn-agent-steps" aria-label="Agent plan and progress">
-        <li class="syn-agent-step" data-syn-state="completed">
-          <div><h3>Find available inventory</h3>
-            <p class="syn-agent-detail">Completed · checked against availability records</p></div>
+      <ol class="syn-steps syn-steps--vertical" role="list" aria-label="Agent plan and progress">
+        <li class="syn-step" data-syn-state="complete">
+          <div><strong class="syn-step-label">Find available inventory</strong>
+            <p class="syn-step-detail">Completed · checked against availability records</p></div>
         </li>
-        <li class="syn-agent-step" data-syn-state="completed">
-          <div><h3>Calculate draft budget</h3>
-            <p class="syn-agent-detail">Completed · draft total $40,000, pending your review</p></div>
+        <li class="syn-step" data-syn-state="complete">
+          <div><strong class="syn-step-label">Calculate draft budget</strong>
+            <p class="syn-step-detail">Completed · draft total $40,000, pending your review</p></div>
         </li>
-        <li class="syn-agent-step" data-syn-state="awaiting-approval">
-          <div><h3>Request permission to send</h3>
-            <p class="syn-agent-detail">Awaiting approval · no external message has been sent</p></div>
+        <li class="syn-step" aria-current="step">
+          <div><strong class="syn-step-label">Request permission to send</strong>
+            <p class="syn-step-detail">Awaiting approval · no external message has been sent</p></div>
         </li>
-        <li class="syn-agent-step" data-syn-state="pending">
-          <div><h3>Send proposal and record receipt</h3>
-            <p class="syn-agent-detail">Pending · requires an authorized decision</p></div>
+        <li class="syn-step">
+          <div><strong class="syn-step-label">Send proposal and record receipt</strong>
+            <p class="syn-step-detail">Pending · requires an authorized decision</p></div>
         </li>
       </ol>
 
-      <section class="syn-agent-approval" aria-labelledby="agent-approval-title">
+      <section class="syn-panel syn-stack" aria-labelledby="agent-approval-title">
         <h3 id="agent-approval-title">Review required before sending</h3>
         <p id="agent-approval-impact">Proposed action: send the $40,000 draft to the selected customer.
            This is an external communication; verify the recipient and inventory first.</p>
@@ -47,7 +46,7 @@
         <form method="post" action="/agent-runs/run-42/decisions"
               aria-describedby="agent-approval-impact">
           <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
-          <div class="syn-agent-approval-actions">
+          <div class="syn-inline">
             <button class="syn-button syn-button--primary" type="submit"
                     name="decision" value="approve">Approve sending</button>
             <button class="syn-button syn-button--outline" type="submit"
@@ -56,7 +55,7 @@
         </form>
       </section>
 
-      <section class="syn-agent-outcome" aria-labelledby="agent-outcome-title">
+      <section class="syn-panel syn-stack" aria-labelledby="agent-outcome-title">
         <h3 id="agent-outcome-title">Outcome</h3>
         <p>No action taken. Once processed, the application should display the
           authoritative result, evidence and audit record here.</p>

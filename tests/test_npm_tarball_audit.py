@@ -74,7 +74,6 @@ class NpmTarballAuditTests(unittest.TestCase):
             "package/metadata/css-contract.v1.json",
             "package/metadata/component-gallery.v1.json",
             "package/metadata/agent-workflow.v1.json",
-            "package/dist/syntyr.agent.css",
             "package/dist/syntyr.animate.mjs",
             "package/dist/syntyr.animate.d.mts",
             "package/dist/syntyr.copy.mjs",

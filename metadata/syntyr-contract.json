@@ -17,7 +17,6 @@
     "presets/cinematic.css",
     "presets/minimal.css",
     "presets/saas.css",
-    "syntyr.agent.css",
     "syntyr.all.css",
     "syntyr.core.css",
     "syntyr.css",
@@ -76,87 +75,6 @@
         "presets/saas.css",
         "syntyr.all.css",
         "syntyr.recipes.css"
-      ]
-    },
-    {
-      "name": "syn-agent-approval",
-      "module": "agent.css",
-      "description": "Agent approval presentation in the agent.css module; use semantic HTML and consult its component example.",
-      "stylesheets": [
-        "syntyr.agent.css",
-        "syntyr.all.css"
-      ]
-    },
-    {
-      "name": "syn-agent-approval-actions",
-      "module": "agent.css",
-      "description": "Agent approval actions presentation in the agent.css module; use semantic HTML and consult its component example.",
-      "stylesheets": [
-        "syntyr.agent.css",
-        "syntyr.all.css"
-      ]
-    },
-    {
-      "name": "syn-agent-detail",
-      "module": "agent.css",
-      "description": "Agent detail presentation in the agent.css module; use semantic HTML and consult its component example.",
-      "stylesheets": [
-        "syntyr.agent.css",
-        "syntyr.all.css"
-      ]
-    },
-    {
-      "name": "syn-agent-header",
-      "module": "agent.css",
-      "description": "Agent header presentation in the agent.css module; use semantic HTML and consult its component example.",
-      "stylesheets": [
-        "syntyr.agent.css",
-        "syntyr.all.css"
-      ]
-    },
-    {
-      "name": "syn-agent-outcome",
-      "module": "agent.css",
-      "description": "Agent outcome presentation in the agent.css module; use semantic HTML and consult its component example.",
-      "stylesheets": [
-        "syntyr.agent.css",
-        "syntyr.all.css"
-      ]
-    },
-    {
-      "name": "syn-agent-run",
-      "module": "agent.css",
-      "description": "Agent run presentation in the agent.css module; use semantic HTML and consult its component example.",
-      "stylesheets": [
-        "syntyr.agent.css",
-        "syntyr.all.css"
-      ]
-    },
-    {
-      "name": "syn-agent-status",
-      "module": "agent.css",
-      "description": "Agent status presentation in the agent.css module; use semantic HTML and consult its component example.",
-      "stylesheets": [
-        "syntyr.agent.css",
-        "syntyr.all.css"
-      ]
-    },
-    {
-      "name": "syn-agent-step",
-      "module": "agent.css",
-      "description": "Agent step presentation in the agent.css module; use semantic HTML and consult its component example.",
-      "stylesheets": [
-        "syntyr.agent.css",
-        "syntyr.all.css"
-      ]
-    },
-    {
-      "name": "syn-agent-steps",
-      "module": "agent.css",
-      "description": "Agent steps presentation in the agent.css module; use semantic HTML and consult its component example.",
-      "stylesheets": [
-        "syntyr.agent.css",
-        "syntyr.all.css"
       ]
     },
     {
@@ -6946,9 +6864,7 @@
     ],
     "data-syn-state": [
       "active",
-      "awaiting-approval",
       "complete",
-      "completed",
       "conflict",
       "degraded",
       "down",
@@ -6958,7 +6874,6 @@
       "loading",
       "pending",
       "queued",
-      "running",
       "saved",
       "selected",
       "unknown",
@@ -7322,30 +7237,6 @@
         "syn-bento-card--wide"
       ],
       "notes": "Experimental alpha.5. Container-aware wide card spans; use meaningful article headings and syn-feature-card for surfaces."
-    },
-    {
-      "name": "Agent workflow",
-      "module": "syntyr.agent.css",
-      "elements": [
-        "section",
-        "header",
-        "ol",
-        "li",
-        "form",
-        "button"
-      ],
-      "classes": [
-        "syn-agent-run",
-        "syn-agent-header",
-        "syn-agent-status",
-        "syn-agent-steps",
-        "syn-agent-step",
-        "syn-agent-detail",
-        "syn-agent-approval",
-        "syn-agent-approval-actions",
-        "syn-agent-outcome"
-      ],
-      "notes": "Optional, unreleased alpha.5 source candidate. Native server-rendered plan, progress and approval views; host must authorize actions, validate CSRF, ensure idempotency and record audit evidence. No AI runtime or JavaScript required."
     }
   ],
   "recipes": [

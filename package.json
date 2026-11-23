@@ -29,7 +29,6 @@
     "./viz.css": "./dist/syntyr.viz.css",
     "./geo.css": "./dist/syntyr.geo.css",
     "./data-grid.css": "./dist/syntyr.data-grid.css",
-    "./agent.css": "./dist/syntyr.agent.css",
     "./agent-workflow.json": "./metadata/agent-workflow.v1.json",
     "./components/tokens.css": "./dist/components/tokens.css",
     "./components/base.css": "./dist/components/base.css",
