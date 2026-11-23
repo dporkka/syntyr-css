@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Customize Syntyr CSS themes and design tokens for SaaS dashboards, accessible business applications, and futuristic interfaces.">
-  <meta name="syntyr-source-sha256" content="f16aacef4035c4352a870ba51ceb062f7802963c72ac62d4fecef56d15e2d496">
+  <meta name="syntyr-source-sha256" content="3e0f7673ae35bfe75204e1dfc4c5e06f1ff6abc52296e7fdcb051fb9f70034b4">
   <meta name="theme-color" content="#f5f7fb">
   <title>Syntyr theme customization — copy, override, ship — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/theme-customization">
@@ -63,7 +63,23 @@ metadata, not an executable preset installer, stylesheet, or published API.
 For density/intensity, apply the indicated <code>data-syn-density</code> and
 <code>data-syn-intensity</code> attributes on the Syntyr scope. A custom radius uses
 <code>--syn-radius</code> and <code>--syn-panel-radius</code>; the default option preserves each
-base theme's geometry. The documentation script and clipboard enhancement are
+base theme's geometry. The editor also supports <strong>site-wide color roles</strong> (background, card surface,
+primary/secondary text, accent, on-accent), three system-font typography
+pairings (default, editorial, technical), and three spacing rhythms
+(balanced, tight, airy). The page preview includes header, feature,
+form and footer sections; it is a visual sample, not a live deployment.
+Generated CSS uses only the existing <code>--syn-*</code> variables. The optional
+JSON preset retains <code>schema_version: 1</code> and adds <code>typography</code> and
+<code>spacing</code> metadata; older consumers may ignore these optional fields.
+Typography uses locally available system fonts, not network-loaded files.</p>
+<p>Color changes are scoped to the selected theme. Switching themes resets
+the six color inputs to that palette's values but preserves your selected
+typography, spacing, radius, intensity and density; the <strong>Reset palette
+colors</strong> action does the same. The contrast indicators inspect button
+foreground, body text on both background and surface, and muted text on
+surface. They are advisory; other contrast combinations, graphics and focus
+states require testing in the consuming application.</p>
+<p>The documentation script and clipboard enhancement are
 not included in Syntyr's distributed CSS. Test the resulting palette and
 control contrast in the consuming application.</p>
 <h2 id="2-override-tokens-using-application-css">2. Override tokens using application CSS</h2>
