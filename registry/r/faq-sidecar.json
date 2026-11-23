@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "faq-sidecar",
+  "type": "registry:item",
+  "title": "FAQs with a contact sidebar",
+  "description": "Native expandable answers alongside a clear contact path.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://syntyr-css.pages.dev/registry/r/core.json"
+  ],
+  "files": [
+    {
+      "path": "blocks/snippets/faq-sidecar.html",
+      "type": "registry:file",
+      "target": "~/syntyr/blocks/faq-sidecar.html",
+      "content": "<section class=\"syn-root syn-region syn-stack\" data-syn-theme=\"studio\" aria-labelledby=\"syn-layout-faq-heading\">\n  <p class=\"syn-eyebrow\">COMMON QUESTIONS</p>\n  <h2 class=\"syn-heading\" id=\"syn-layout-faq-heading\">Answers, with a direct way to ask more.</h2>\n  <div class=\"syn-sidecar\">\n    <div class=\"syn-stack\">\n      <details class=\"syn-details\">\n        <summary>What belongs in the initial brief?</summary>\n        <p>A concise description of the audience, the problem, constraints and a useful definition of success.</p>\n      </details>\n      <details class=\"syn-details\">\n        <summary>Can we begin with a small scope?</summary>\n        <p>A narrowly defined first step can make assumptions easier to verify. Agree on boundaries before implementation.</p>\n      </details>\n      <details class=\"syn-details\">\n        <summary>How should progress be communicated?</summary>\n        <p>Use a predictable review rhythm, explicit owners and documented decisions so context is not lost.</p>\n      </details>\n    </div>\n    <aside class=\"syn-panel syn-stack\" aria-labelledby=\"syn-layout-faq-contact\">\n      <h3 class=\"syn-heading\" id=\"syn-layout-faq-contact\">Still have a question?</h3>\n      <p>Share the outcome you need and the constraints that matter most.</p>\n      <a class=\"syn-button syn-button--primary\" href=\"/contact\">Contact the team</a>\n      <p class=\"syn-caption\">Replace the example contact route before publishing.</p>\n    </aside>\n  </div>\n</section>\n"
+    },
+    {
+      "path": "LICENSE",
+      "type": "registry:file",
+      "target": "~/syntyr/LICENSE",
+      "content": "MIT License\n\nCopyright (c) 2026 Syntyr CSS contributors\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n"
+    }
+  ],
+  "meta": {
+    "syntyrVersion": "0.3.0-alpha.5",
+    "source": "MIT source candidate",
+    "runtimeJavaScript": false,
+    "fileDigests": {
+      "~/syntyr/blocks/faq-sidecar.html": "b6de7a5e99b8f594a9e6cc74fd79ae393abaf53362eef7666d082f6feeb1d57b",
+      "~/syntyr/LICENSE": "42f56369ac06362dbfe433d2d50b178bf74c369a55ea22337ab40fd9433521bf"
+    }
+  },
+  "docs": "Experimental source-candidate asset. Review exact version, HTML routes, keyboard behavior and integration before production use."
+}

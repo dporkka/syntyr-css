@@ -2,22 +2,22 @@
 
 **Status:** Experimental alpha.5 source gallery, not an immutable release or published npm package.
 
-[Browse 91 blocks](blocks.html) | [Component catalog](catalog.html) | [Themes](theme-customization.md) | [Accessibility](accessibility.md)
+[Browse 99 blocks](blocks.html) | [Component catalog](catalog.html) | [Themes](theme-customization.md) | [Accessibility](accessibility.md)
 
 ## Contract
 
-The 91 copy-owned HTML compositions cover marketing, application, services, portfolio, editorial, navigation, publishing, commerce and technical use
+The 99 copy-owned HTML compositions cover marketing, application, services, portfolio, editorial, navigation, publishing, commerce, company and technical use
 cases. Each contains its own Syntyr root, uses accessible native markup and requires
 no application JavaScript. The data, testimonials and prices are illustrative, not live.
 
 The gallery script powers optional documentation search, theme switching and copy
-buttons. Disable JavaScript and all 91 static previews remain visible, with
+buttons. Disable JavaScript and all 99 static previews remain visible, with
 selectable source under native disclosure elements. No scripts are included in
 application CSS; the added gallery rules remain CSS-only.
 
 ## Safe local registry installation (experimental alpha.5 source)
 
-The static [universal registry](../registry/registry.json) contains the 91 MIT
+The static [universal registry](../registry/registry.json) contains the 99 MIT
 HTML blocks and nine CSS module entries. Every item includes its exact
 source-tree version, SHA-256 content hashes, declared CSS dependencies, files,
 and destination paths. This is **not** a published immutable alpha.5 release.
@@ -156,6 +156,35 @@ all sample brands, links and legal details. Each snippet is included in
 [the Blocks gallery](blocks.html), the offline registry and the page builder,
 where it remains reorderable and exportable as static HTML/CSS.
 
+## Reusable content and section layouts (unreleased source)
+
+Eight additional copy-owned compositions expand the library from 91 to **99
+blocks**. They provide distinct content shapes rather than new CSS components:
+
+- `editorial-intro-split`: opening statement and supporting checklist;
+  `article-toc`: readable long-form content with actual same-page headings and
+  anchored contents navigation.
+- `feature-rows`: stacked feature explanations with context cards;
+  `impact-narrative`: measures displayed alongside the explanation needed
+  to interpret them.
+- `decision-guide`: three linked service paths and their criteria;
+  `faq-sidecar`: native questions beside a contact path.
+- `resource-index`: grouped navigational topic index;
+  `principles-columns`: readable, multi-column company principles.
+
+All eight use **only `syntyr.core.css`**. Existing `syn-sidecar` flex layouts
+wrap when content no longer fits, and `syn-grid` uses intrinsic sizing for
+responsive columns. There are no new selectors, dependencies, JavaScript
+handlers, inaccessible tabs, or fabricated search widgets.
+
+The article's hash links target headings within its own section; keep target
+IDs unique when inserting multiple copies. The FAQ uses native `details` and
+`summary` controls. The metrics are labeled hypothetical examples, not
+testimonials or measured product outcomes. Replace demonstration copy, links,
+and source notes before production. All variants are available in the
+[Blocks gallery](blocks.html), offline registry, and the page builder's
+reorderable, static HTML/CSS export.
+
 ## Long code examples on mobile
 
 Use `syn-code-scroll` on a `pre` element for long, unbreakable code examples.
@@ -280,7 +309,7 @@ copied into the public project. The separate private Console Kit is unaffected.
 ## Experimental shadcn universal-item registry
 
 The source candidate can generate a **copy-owned, framework-independent**
-shadcn-compatible universal-item registry from the same 91 MIT blocks and
+shadcn-compatible universal-item registry from the same 99 MIT blocks and
 checked-in CSS distributions. It neither replaces nor duplicates the native
 block installer from PR #104. Universal files use explicit project-relative
 targets, so no React, Tailwind, or Syntyr runtime JavaScript is required.
