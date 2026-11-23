@@ -38,7 +38,7 @@ prebuilt adapter for any generator. The source candidate remains unreleased.
 | --- | --- | --- | --- |
 | **Astro** | `import '@syntyr/css/core.css'` in an Astro page/layout (local archive or published package) | Astro `base` controls generated asset paths; prefer imported CSS to hardcoded root URLs | [Runnable Astro fixture](https://github.com/dporkka/syntyr-css/tree/main/examples/astro/) |
 | **Eleventy (11ty)** | Copy `dist/syntyr.core.css` through `addPassthroughCopy` | Use `pathPrefix` and Eleventy's `url` filter | [Runnable Eleventy fixture](https://github.com/dporkka/syntyr-css/tree/main/examples/eleventy/) |
-| **Hugo** | Serve prebuilt CSS from `static/` or a Hugo filesystem mount | Use `relURL` for assets, not a bare `/css/` URL on project subpaths | [Isolated Hugo proof](https://github.com/dporkka/syntyr-css/tree/main/experiments/hugo/) |
+| **Hugo** | Serve prebuilt CSS from `static/` or a Hugo filesystem mount | Use `relURL` for assets, not a bare `/css/` URL on project subpaths | [Runnable CMS-driven Hugo starter](https://github.com/dporkka/syntyr-css/tree/main/examples/hugo-cms/); [isolated docs proof](https://github.com/dporkka/syntyr-css/tree/main/experiments/hugo/) |
 | **Jekyll** | Copy prebuilt CSS into `assets/css/`; do not process it as Sass | Use Liquid `relative_url` and configure `baseurl` for GitHub project pages | Snippet below |
 | **Zola** | Copy prebuilt CSS into `static/assets/` | Use `get_url` and a correctly configured `base_url` | Snippet below |
 | **Next.js static export** | Import package CSS once in `app/layout.tsx` or host CSS in `public/` | Configure `output: 'export'` and `basePath` for project subpaths | Notes below |
@@ -99,6 +99,20 @@ layout:
 ```
 
 Do not use an unprefixed `/assets/...` URL for GitHub Pages project sites.
+For an independent, CMS-driven landing page, the
+[runnable Hugo fixture](https://github.com/dporkka/syntyr-css/tree/main/examples/hugo-cms/) renders the **same**
+`content/pages/home.json` as the Git-backed CMS starter, with five native
+semantic HTML blocks and no browser script:
+
+```sh
+python3 scripts/build.py
+python3 scripts/build_hugo_cms_starter.py --hugo hugo --output /tmp/syntyr-hugo-site
+```
+
+It verifies generated CSS and page URLs under `/syntyr-hugo/` and supports
+`--base-url https://example.com/my-project/`. Hugo is a build-time tool,
+not a requirement of the Syntyr CSS package.
+
 Hugo's own preview script validates its existing rendered Markdown pages
 and local links:
 

@@ -60,6 +60,27 @@ class SemanticCatalogTests(unittest.TestCase):
                 self.assertIn(f'href="#{identifier}-preview"', card["body"])
                 self.assertIn(f'href="playground.html#component={identifier}"', card["body"])
 
+    def test_pagination_targets_use_the_page_link_composition(self):
+        """Bare text links render ~10x25px and fail WCAG 2.2 SC 2.5.8.
+
+        Every pagination target must carry the documented .syn-page-link class
+        that keeps the 44px control box, matching the other shipped examples.
+        """
+        body = self.cards["catalog-pagination-title"]["body"]
+        preview = re.search(
+            r'<div class="catalog-preview">\n(.*?)\n          </div>\n'
+            r'          <details class="catalog-code-details">',
+            body, re.S,
+        )
+        self.assertIsNotNone(preview)
+        markup = preview.group(1)
+        self.assertIn('<nav class="syn-pagination"', markup)
+        targets = re.findall(r'<(?:a|span)\b[^>]*>', markup)
+        self.assertGreaterEqual(len(targets), 5)
+        for target in targets:
+            with self.subTest(target=target):
+                self.assertIn('class="syn-page-link"', target)
+
     def test_semantic_navigation_and_form_have_accessible_names(self):
         for identifier in ("catalog-primary-nav-title", "catalog-table-of-contents-title",
                            "catalog-footer-nav-title", "catalog-pagination-title"):
