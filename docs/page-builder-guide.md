@@ -4,16 +4,102 @@ The [visual builder](page-builder.html) is a local-first, optional editing tool 
 
 ## What works
 
-- Add hero, feature-card, split-text, testimonial, FAQ, CTA, site header and footer sections from the palette.
+- Add hero, feature-card, split-text, testimonial, FAQ, CTA, site header and footer sections from the palette. The canonical library also provides editorial intros, article contents, stacked feature rows, metric narratives, decision cards, FAQ sidebars, resource indexes and principles grids.
+- Start with one of four **complete, editable single-page layouts**: creative portfolio, agency website, SaaS landing page, or local business. Or select a **multi-page website kit**: the same four categories include distinct interior pages and synchronized native site header/footer. Both import only validated, copy-owned blocks. Applying a kit replaces the *entire project* after a confirmation; save your editable JSON first.
+- Replace individual images in image gallery, image-story, hero-photo and other image-based sections with optimized **PNG/JPEG/WebP uploads** (up to 2 MiB each). Captions, link destinations and descriptive alt text remain editable. Uploaded photos and matching full-size links export as local assets, never as long-lived blob URLs.
+- Browse and search **99 copy-owned website/SaaS sections** from the generated canonical `metadata/section-composer.v1.json` library. Filter by category or curated **website use case** (landing page, SaaS, business, editorial, commerce, portfolio, navigation), view lightweight layout sketches, and select **Preview** for a full, real Syntyr-rendered section in a sandboxed dialog. Choose **Add** to insert any section with one click; the existing **Add after selected block** checkbox controls insertion position. All categories remain available via the All sections view. Edit the section's text and safe links after insertion; the library tracks the Blocks source manifest and snippets, not a second hand-edited section inventory.
 - Search and insert **gallery components** from the generated `metadata/component-gallery.v1.json` contract (16 curated examples in the current source candidate). Edit their visible text, placeholders and safe links; examples carry the CSS modules needed and can be repeated without duplicate input IDs.
 - The gallery is loaded from the same origin as the builder. If the JSON is missing, the original eight semantic page sections remain available; no external API or build service is required.
-- Select sections in the outline or preview, edit their text and links, reorder with buttons or drag-and-drop, and remove sections. Keyboard focus remains in the outline during reordering; native FAQ disclosures open in the preview.
+- Select sections in the outline or preview, edit text and safe links, reorder with keyboard-accessible **Up, Down, First, Last** buttons or drag-and-drop; duplicate or remove sections. Choose **Add after selected block** when inserting a new section in the middle of a page. Keyboard focus remains in the outline during reordering; native FAQ disclosures open in the preview.
 - Switch among themes available to the unreleased source candidate and preview true 1200px desktop, 760px tablet, and 390px mobile iframe viewports. Narrow canvases scroll rather than silently scaling the device viewport.
 - Undo and redo editing changes (limited in-memory history).
-- Export an HTML file and matching Syntyr CSS as separate files and host them alongside each other.
+- Optionally create up to **10 pages** with safe one-segment slugs (such as `about`), switch between them, and edit a synchronized shared native header/footer. The `syntyr.site.v1` JSON project preserves all editable page documents and the shared layout. Removing an inner page does not remove the home page.
+- Save a native **Hero, Features, Split, Testimonial, FAQ, or CTA** section as a reusable component, insert it on another page, and update every instance by editing an un-overridden field. Per-instance **Override on this page** toggles are field-specific; detach a section to keep its current content while unlinking it. This is a *content-linked section* pilot, not arbitrary nested HTML or a CSS class/component designer. Up to 20 masters and 200 references are allowed across a site. Existing `syntyr.site.v1` documents without `components` / `instances` import as empty libraries.
+- Download a **static website ZIP** with `index.html`, optional `about/index.html`-style routes, the matching `syntyr.all.css`, any self-hosted SVG image assets, the MIT license and a brief publishing README. Every nested page uses relative CSS/image paths and the ZIP contains **no JavaScript**. Standalone HTML/CSS downloads remain available.
+- Set the page title, optional search-result description (300-character limit), and HTML document language (including Portuguese for Brazil). The exported HTML contains escaped metadata and a correct `lang` attribute for accessibility and SEO. Existing `syntyr.page.v1` JSON projects without these optional settings still import.
 - Download a JSON project and reopen that JSON to restore editability.
 
+Shared reusable components are portable JSON declarations containing a validated native block master and references to existing page sections. Export resolves each reference into ordinary HTML with escaped text and sanitized links; no browser JavaScript is emitted. Editing a master preserves explicit page overrides. Imported references to unknown components, missing blocks, mismatched types, duplicate placements, or undeclared override fields fail validation. Deleting a referenced section in the editor detaches that reference. Deleting a page removes references on that page, but keeps the shared component available elsewhere.
+
 The builder runs entirely in your browser. It does not upload projects or require a server account. Save the JSON file before closing the page: unsaved edits are not persisted.
+
+### Multi-page website kits (experimental alpha.5 source)
+
+Choose **Website kit** in the builder to import a complete portfolio, agency, SaaS,
+or local-business example with 3–4 editable pages. Each uses a shared native
+header/footer and page-specific content, and exports via the existing
+`syntyr.site.v1` JSON and static-site ZIP path. A plain single-page starter
+remains available separately; selecting a website kit replaces your entire
+unsaved editor project after confirmation. Use **Save Project** before switching.
+
+Pages contain illustrative service offerings, projects, prices and hours, not
+verified business information. Links to internal pages work in the exported
+directory structure; forms and checkout require the consuming site's backend.
+The kit generator and selection UI exist only in documentation tooling, not
+in distributed Syntyr CSS or the downloaded website.
+
+## Static-first export and assets
+
+Page descriptions are optional and do not guarantee a search-engine snippet.
+The default builder exports a single HTML document. Adding a page or enabling
+shared layouts opts into a multi-page site project (up to ten pages), exported
+as root `index.html` and `slug/index.html` files. The builder does not yet
+generate a sitemap, edit route-condition templates, support nested route slugs,
+or implement content-driven dynamic templates. The **Download HTML** control
+still exports only the currently selected page; use the ZIP for a multi-page
+site. The CSS and local image paths are relative to the page depth. Links with
+leading `/` are origin-root absolute and need correct hosting; verify site
+navigation after publishing. Language tags on the HTML element describe the document language,
+but do **not** translate your content automatically.
+
+The optional browser-based builder uses JavaScript **only as an authoring tool**.
+Its static ZIP output contains ordinary HTML/CSS and required local images,
+without a Syntyr script, framework or build step. Native `details` disclosures,
+image links, download links and visual layouts work without client JavaScript.
+Use the ZIP when composing image sections so assets stay alongside `index.html`.
+The standalone HTML download is only complete if you also supply the matching
+stylesheet and referenced images. Asset paths in the exported site are relative
+to the page, not to Syntyr's docs.
+
+### Editable images and project portability
+
+The builder reads raster images **locally in the browser**. Accepted formats are
+PNG, JPEG and WebP, with a 2 MiB limit per image, 20 embedded images maximum,
+and a 10 MiB aggregate media budget. Unsupported types, HTML and uploaded
+SVGs are rejected. Image filenames use SHA-256 hashes and a restricted
+`assets/custom-<hash>.<png|jpg|webp>` path.
+
+A downloaded **project JSON embeds uploaded images** (as base64 data URLs)
+alongside editable section fields; importing it restores images and URLs,
+including when working offline. The source project is different from the
+published static site: the **ZIP includes only images still referenced** in
+the page, as regular asset files, and uses normal relative links. Unused
+uploaded images are pruned when restored to their original samples.
+
+Projects created before image replacement support are still importable: missing
+image-source and alternative-text fields are populated from the trusted
+original section definition. Previously edited captions, text and links are
+retained. Malformed or unrecognized fields still fail strict validation.
+
+The project JSON import limit is 32 MiB. Images may significantly increase
+the project size; optimize photos before uploading. After choosing a new image,
+**update the ALT field** to accurately describe its content (or clear it if
+purely decorative). The example images are original placeholders, not actual
+customer portfolios or before/after evidence. No image leaves the browser
+until you choose to export the project or publish its static ZIP.
+
+For the generated section library, the manifest contains only reviewed,
+copy-owned canonical HTML. Imported projects contain **no executable HTML
+templates**; text and links are escaped and restricted to declared editable
+fields. Category search and section selection are optional editor behaviors,
+not dependencies in exported markup.
+
+Static exports deliberately **do not implement** authentication, commerce,
+newsletter subscriptions, server forms, real search/filter results or
+dynamic data. Those blocks are *presentational* and their form actions/routes
+must be wired to your own backend. Replace fictional examples and claims.
+Save the project JSON separately to continue editing; ZIP HTML is not a
+lossless project source file.
 
 ## Framework-independent output
 
@@ -27,7 +113,7 @@ placing saved strings in different locations. Preserve an exported HTML copy
 for long-term rendering when the optional source catalog changes. The manifest is an **unreleased alpha.5 source candidate**; these
 examples are not promised in the published alpha.4 release.
 
-The document schema is syntyr.page.v1, with schema, title, theme, and an ordered array of id, type, and props blocks. The canonical validation and renderer are in page-builder-model.mjs, a dependency-free ESM module with no browser globals.
+Single-page projects retain the `syntyr.page.v1` schema with title, theme, optional description/language and media, plus ordered id/type/props blocks. Multi-page projects use `syntyr.site.v1` with a list of slug/page-document entries and two optional shared native blocks (`header` and `footer`). No arbitrary HTML templates are accepted from project JSON. Both formats can be reopened. The canonical validation and renderer are in page-builder-model.mjs, a dependency-free ESM module with no browser globals.
 
 The exported index.html uses ordinary HTML sections, anchors, buttons-styled links, native FAQ disclosures, and existing syn-* classes. The local syntyr.all.css stylesheet must be hosted next to it; the page does not contain React, a builder script, or Syntyr editor dependencies. You can instead load CSS modules required by your chosen components using the [distribution guide](distribution.md).
 
@@ -35,7 +121,7 @@ An HTML export does **not** preserve editor metadata sufficiently for arbitrary 
 
 ## Security boundaries
 
-Imported project data is strictly validated: only recognized string block types and string fields, unique safe IDs, a known theme, up to 50 blocks, bounded property lengths, and a 16 MiB UTF-8 JSON import cap compatible with the maximum valid exported project size. Repeating gallery snippets scopes internal HTML IDs and their `for`,
+Imported project data is strictly validated: only recognized string block types and string fields, unique safe IDs, a known theme, up to 50 blocks, bounded property lengths, and a 32 MiB UTF-8 JSON import cap compatible with the maximum valid exported project size. Repeating gallery snippets scopes internal HTML IDs and their `for`,
 `list`, `commandfor`, and ARIA references to each block instance.
 The gallery manifest is restricted to checked-in, validated markup; links
 are normalized to local anchors/paths or HTTPS. Every user-controlled text value is HTML escaped, and unsupported href protocols (including javascript: and data:) are rendered as #. The preview is inside a sandboxed iframe without script or form-submission permissions. The exported result is still **static HTML**, not a backend application.
@@ -46,12 +132,19 @@ This experimental tool is deliberately separate from the MIT CSS core. It uses o
 
 Run from repository root:
 
-    node --test tests/page_builder_model.test.mjs tests/page_builder_gallery.test.mjs
+    node --test tests/page_builder_model.test.mjs tests/page_builder_gallery.test.mjs tests/page_builder_sections.test.mjs tests/page_builder_zip.test.mjs tests/page_builder_custom_media.test.mjs tests/page_builder_starters.test.mjs tests/site_builder_model.test.mjs tests/synced_components.test.mjs tests/site_builder_model.test.mjs
+    python3 scripts/build_section_composer.py --check
     python3 -m unittest tests.test_cloudflare_site -v
     python3 scripts/build_cloudflare_site.py --check
 
 For the optional browser smoke test:
 
     python3 tests/page_builder_browser.py
+    python3 tests/site_builder_browser.py
+    python3 tests/site_builder_upload_race_browser.py
+    python3 tests/synced_components_browser.py
+    python3 tests/page_builder_sections_browser.py
+    python3 tests/page_builder_starter_media_browser.py
+    python3 tests/static_sections_mobile_browser.py
 
 The browser smoke test requires Playwright and a local browser installation. Validate keyboard access, small screens, malicious imported JSON, and download/export before treating this as a stable product.

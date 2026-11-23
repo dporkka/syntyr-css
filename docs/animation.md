@@ -61,11 +61,31 @@ declarations. The default package import remains the CSS entrypoint.
 | `stagger(iterable, preset = 'enter', options?)` | Animate each element with an incremental WAAPI delay | Array of animations or `null` entries |
 | `observeReveals(root = document)` | Observe `.syn-root [data-syn-reveal]` once per element | `disconnect()` cleanup function |
 
-Presets are `fade` (opacity), `enter` (opacity plus individual `translate`),
-and `scale` (opacity plus individual `scale`). There is no infinite or
-autoplay animation preset. `enter` supports `direction: 'up' | 'down' |
-'left' | 'right'` and `distance: '.75rem'`. Use `scaleFrom` to override the
-initial scale.
+Presets include `fade-in`, `fade-out`, `slide-up`, `slide-down`,
+`slide-left`, `slide-right`, `zoom-in`, `zoom-out`, `pop`, `bounce`,
+`pulse`, `shake`, `rotate-in`, `flip-in` and `rotate`. The existing `fade`,
+`enter` and `scale` aliases remain supported. `enter` takes
+`direction: 'up' | 'down' | 'left' | 'right'` (direction of entrance),
+while named `slide-*` presets specify travel direction.
+Use `distance` and `scaleFrom` to customize supported effects.
+
+**Playback controls:** `iterations: 3` repeats three times;
+`loop: true` (or `iterations: Infinity`) repeats indefinitely.
+Repetition is **off by default** (`iterations: 1`).
+Use `iterationDirection: 'alternate'` to reverse every other cycle.
+Also supported: `normal`, `reverse`, `alternate-reverse`.
+`loop: true` and `iterations` cannot both be set;
+invalid counts/directions throw `TypeError`. The native Animation
+returned by `animate()` exposes `pause()`, `play()` and `cancel()`.
+
+**Speed and rotation:** `speed: 2` runs at double speed; `speed: .5`
+runs at half speed. The value is a positive finite multiplier of
+native playback rate, and defaults to `--syn-animation-speed` or `1`.
+`rotation: -360` makes the `rotate` preset spin counterclockwise
+(`360` degrees is the default clockwise turn). The JavaScript
+options are also available through `stagger()`.
+Use `iterationDirection: 'reverse'` to reverse an entire
+animation sequence, including its keyframe progression.
 
 All presets accept `duration` and `delay` in milliseconds and `easing`
 as a CSS timing function. `stagger` additionally accepts `interval` in
@@ -75,6 +95,29 @@ are omitted: `--syn-motion-duration` (220ms default),
 `--syn-motion-scale-from` (.96), and `--syn-ease-out`
 (`cubic-bezier(.22, 1, .36, 1)`). These defaults also work without a Syntyr
 stylesheet, and per-element CSS tokens can override them.
+
+The CSS token `--syn-animation-iterations: 3` (or `infinite`) can
+supply the JS helper's default repetition count. Explicit options win.
+`stagger()` accepts repetition options; `observeReveals()` always
+uses a single cycle, even when the CSS token requests looping.
+
+```js
+const running = animate(card, 'rotate', {
+  loop: true, speed: 2, rotation: 360, duration: 900,
+});
+running?.pause();
+running?.play();
+running?.cancel();
+
+animate(card, 'slide-up', {
+  iterations: 3, iterationDirection: 'alternate', duration: 300,
+});
+
+// Exit effects are visual, not semantic hiding:
+const exit = animate(card, 'fade-out', { duration: 220, iterations: 1 });
+if (exit) exit.finished.then(() => { card.hidden = true; }).catch(() => {});
+else card.hidden = true; // Reduced-motion and missing-API fallback
+```
 
 Unknown presets and invalid directions throw `TypeError`; missing target,
 missing Web Animations API, or a reduced-motion preference return `null`
@@ -118,8 +161,10 @@ There is no `MutationObserver` or automatic event interception.
   layout dimensions. Avoid animating essential text and high-density data,
   where fading can temporarily reduce readability. An element with custom
   individual transform properties may need a wrapper for composition.
-- The module uses one-shot `fill: 'none'` and `iterations: 1`, so focus and
-  disabled states cannot remain overridden by a completed animation.
+- The module defaults to `fill: 'none'` and `iterations: 1`.
+  A fade-out resets to visible CSS state unless your application
+  separately removes/hides the content. Loops also use `fill: 'none'`;
+  cancel long-running effects on component teardown.
 - For layout changes, prefer native View Transitions where available. For
   interactive scrubbing and complex timelines, use a specialized animation
   engine *outside* Syntyr instead of expanding this low-level module.
@@ -128,6 +173,8 @@ There is no `MutationObserver` or automatic event interception.
 
 ```sh
 node --test tests/animate.test.mjs
+# Optional local Chromium smoke test; install Playwright separately
+python3 tests/website_animation_browser.py
 python3 scripts/build.py --check
 python3 -m unittest discover -s tests -v
 ```
@@ -136,6 +183,242 @@ Node is for the optional JavaScript behavior tests, **not** for building
 Syntyr or using the CSS library. The production JS is copied byte-for-byte
 by Syntyr's existing Python build, allowing deterministic release checks.
 
+
+## Website animation presets (CSS only)
+
+`syntyr.motion.css` provides **15 opt-in, non-scroll-linked website
+animations**. No JavaScript or animation framework is needed. Only
+elements with `data-syn-animate` animate, independently of the
+`data-syn-scroll` view timeline and the optional icon animations.
+These are **unreleased alpha.5 source candidate** features.
+
+```html
+<link rel="stylesheet" href="/css/syntyr.core.css">
+<link rel="stylesheet" href="/css/syntyr.motion.css">
+<main class="syn-root">
+  <h2 data-syn-animate="fade-in">Welcome back</h2>
+  <div class="syn-panel" data-syn-animate="slide-up">
+    CSS-only entrance.
+  </div>
+  <span class="syn-badge" data-syn-animate="pulse"
+        style="--syn-animation-iterations: 3;
+               --syn-animation-duration: 800ms">Three pulses</span>
+  <span class="syn-badge syn-animate--loop" data-syn-animate="bounce"
+        aria-hidden="true"
+        style="--syn-animation-duration: 1200ms;
+               --syn-animation-direction: alternate">●</span>
+  <span class="syn-badge syn-animate--loop"
+        data-syn-animate="rotate" aria-hidden="true"
+        style="--syn-animation-duration: 1.2s;
+               --syn-animation-speed: 2;
+               --syn-animation-rotation: -360deg">◌</span>
+</main>
+```
+
+### Available effects
+
+| Animation | Purpose |
+| --- | --- |
+| `data-syn-animate="fade-in"` | Gentle opacity entrance |
+| `data-syn-animate="fade-out"` | Visual opacity exit |
+| `data-syn-animate="slide-up"` | Move upward into place |
+| `data-syn-animate="slide-down"` | Move downward into place |
+| `data-syn-animate="slide-left"` | Move leftward into place |
+| `data-syn-animate="slide-right"` | Move rightward into place |
+| `data-syn-animate="zoom-in"` | Scale up and appear |
+| `data-syn-animate="zoom-out"` | Scale down and disappear |
+| `data-syn-animate="pop"` | Brief overshoot entrance |
+| `data-syn-animate="bounce"` | Vertical bounce |
+| `data-syn-animate="pulse"` | Gentle scale emphasis |
+| `data-syn-animate="shake"` | Horizontal shake |
+| `data-syn-animate="rotate"` | Complete turn, clockwise or counterclockwise |
+| `data-syn-animate="rotate-in"` | Rotate gently into view |
+| `data-syn-animate="flip-in"` | 3D Y-axis entrance |
+
+### Timing and loop controls
+
+| CSS variable | Default | Purpose |
+| --- | --- | --- |
+| `--syn-animation-duration` | `420ms` | Duration of each cycle |
+| `--syn-animation-speed` | `1` | Positive speed multiplier: `0.5` slow, `2` fast (modern CSS typed arithmetic) |
+| `--syn-animation-delay` | `0ms` | Delay before start |
+| `--syn-animation-easing` | `ease-out` | Timing function |
+| `--syn-animation-iterations` | `1` | Count or `infinite` |
+| `--syn-animation-direction` | `normal` | `normal` / `reverse` / `alternate` / `alternate-reverse` |
+| `--syn-animation-play-state` | `running` | `running` or `paused` |
+| `--syn-animation-fill-mode` | `none` | Native CSS fill mode |
+| `--syn-animation-distance` | `1rem` | Slide / bounce distance |
+| `--syn-animation-scale` | `.94` | Zoom start or end scale |
+| `--syn-animation-rotation` | `360deg` | Rotation angle; set `-360deg` for counterclockwise |
+
+`syn-animate--loop` is shorthand for an infinite iteration count.
+Set `--syn-animation-iterations: 2` or any positive CSS iteration count
+to make a finite loop. Combine with
+`--syn-animation-direction: alternate` to avoid abrupt jumps.
+A host can pause via `--syn-animation-play-state: paused` without
+shipping a Syntyr runtime. `--syn-animation-speed: 2` halves the cycle
+duration; `--syn-animation-speed: 0.5` doubles it. Modern CSS engines
+with typed arithmetic support the multiplier directly. Browsers without
+typed CSS division retain the explicit `--syn-animation-duration`
+instead. CSS users can always set that duration directly for universal
+speed control. The CSS speed multiplier changes cycle duration but
+does not change delay; native JavaScript playback rate changes the
+animation clock (including delays).
+
+**Accessibility:** Animations do not create a hidden baseline state.
+Under `prefers-reduced-motion: reduce` all presets and loops are
+disabled. `fade-out` and `zoom-out` are visual only: by default,
+they return to visible state afterward, because fill is `none`.
+When dismissing a dialog, button or actionable content, update the
+DOM/HTML state and focus as well—opacity or
+`animation-fill-mode: forwards` is not a semantic hide.
+Keep infinite loops decorative and avoid moving essential text.
+
+## Responsive two-row logo marquee (CSS only)
+
+The optional `syntyr.motion.css` module includes a seamless, continuous
+logo marquee for landing pages, customer galleries and partner strips.
+The `.syn-logo-marquee` wrapper holds two `.syn-logo-marquee__row`
+elements, each containing a `.syn-logo-marquee__track` and two matching
+`.syn-logo-marquee__group` lists. One row moves left and the other right;
+each row has adjustable speed and direction. **No JavaScript** or
+animation library is needed, and no logos, fonts, or network assets are
+bundled with Syntyr. This is an **unreleased alpha.5 source candidate**.
+
+### Copy-and-paste HTML
+
+Load `syntyr.motion.css` alongside the chosen Syntyr core stylesheet.
+Replace the sample paths and logo names with your own, and repeat
+each row's *exact same group* once. The second copy must remain
+`aria-hidden="true"` and `inert` so assistive technology and keyboard
+navigation never encounter duplicate logos or links.
+
+```html
+<link rel="stylesheet" href="/css/syntyr.core.css">
+<link rel="stylesheet" href="/css/syntyr.motion.css">
+
+<section class="syn-root syn-logo-marquee" aria-label="Our customers"
+         style="--syn-logo-gap: 2rem; --syn-logo-height: 2rem">
+  <!-- Row 1: leftward, 30 seconds per cycle -->
+  <div class="syn-logo-marquee__row" data-syn-logo-direction="left"
+       style="--syn-logo-duration: 30s">
+    <div class="syn-logo-marquee__track">
+      <ul class="syn-logo-marquee__group">
+        <li><img src="/logos/acme.svg" alt="Acme" width="120" height="40"></li>
+        <li><img src="/logos/north.svg" alt="North" width="120" height="40"></li>
+        <li><img src="/logos/orbit.svg" alt="Orbit" width="120" height="40"></li>
+      </ul>
+      <!-- Identical second copy; purely decorative -->
+      <ul class="syn-logo-marquee__group" aria-hidden="true" inert>
+        <li><img src="/logos/acme.svg" alt="" width="120" height="40"></li>
+        <li><img src="/logos/north.svg" alt="" width="120" height="40"></li>
+        <li><img src="/logos/orbit.svg" alt="" width="120" height="40"></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Row 2: rightward, 40 seconds per cycle (1.5× speed) -->
+  <div class="syn-logo-marquee__row" data-syn-logo-direction="right"
+       style="--syn-logo-duration: 40s; --syn-logo-speed: 1.5">
+    <div class="syn-logo-marquee__track">
+      <ul class="syn-logo-marquee__group">
+        <li><img src="/logos/lumen.svg" alt="Lumen" width="120" height="40"></li>
+        <li><img src="/logos/pixel.svg" alt="Pixel" width="120" height="40"></li>
+        <li><img src="/logos/zenith.svg" alt="Zenith" width="120" height="40"></li>
+      </ul>
+      <ul class="syn-logo-marquee__group" aria-hidden="true" inert>
+        <li><img src="/logos/lumen.svg" alt="" width="120" height="40"></li>
+        <li><img src="/logos/pixel.svg" alt="" width="120" height="40"></li>
+        <li><img src="/logos/zenith.svg" alt="" width="120" height="40"></li>
+      </ul>
+    </div>
+  </div>
+</section>
+```
+
+Rows accept `data-syn-logo-direction="left"` (the default) or
+`data-syn-logo-direction="right"`. Set the duration and multiplier on
+each row independently, or set shared defaults on the root.
+The layout adapts to narrow and wide viewports using container query
+units, flexible logo widths, and gap variables; small lists expand to
+fill each row, while long lists keep their intrinsic width.
+The exact visual loop uses two *identical* groups and shifts the
+combined track by **half its width**, so there is no abrupt reset.
+Keep both copies in the **same order with matching sizing**; differing
+logos or reordered items cause a visible seam.
+
+### Maintaining one source list (optional enhancement)
+
+If logos change frequently, generate the two identical lists from one array
+in your SSR/CMS template instead of editing both by hand. You can also
+render **one** group per row and use this small, optional enhancement to
+duplicate it after load. With JavaScript disabled, the original logos remain
+visible and the incomplete track stays still; CSS-only copied markup above
+needs **no** JavaScript.
+
+```js
+// Copy into your own local module. Run after rendering the logo rows.
+for (const row of document.querySelectorAll('.syn-root .syn-logo-marquee__row')) {
+  const track = row.querySelector(':scope > .syn-logo-marquee__track');
+  const source = track?.querySelector(':scope > .syn-logo-marquee__group:only-child');
+  if (!source) continue; // Idempotent: never duplicate again
+  const copy = source.cloneNode(true);
+  copy.setAttribute('aria-hidden', 'true');
+  copy.inert = true;
+  copy.querySelectorAll('[id]').forEach(node => node.removeAttribute('id'));
+  copy.querySelectorAll('img').forEach(image => { image.alt = ''; });
+  track.append(copy);
+}
+```
+
+This optional snippet has no imports or dependencies. Host it locally to
+satisfy sites with strict Content Security Policy; do not attach event
+listeners or forms to decorative duplicates. For server-rendered pages,
+duplicating the same template fragment twice avoids JavaScript entirely.
+
+### Style and playback variables
+
+| Variable | Default | Purpose |
+| --- | --- | --- |
+| `--syn-logo-duration` | `32s` | Baseline duration for one full pass (lower = faster) |
+| `--syn-logo-speed` | `1` | Positive playback multiplier; `2` = twice as fast, `0.5` = half as fast |
+| `--syn-logo-gap` | `clamp(1rem, 3vw, 3rem)` | Horizontal spacing between logos |
+| `--syn-logo-height` | `clamp(1.4rem, 3vw, 2.4rem)` | Logo image/SVG block height |
+| `--syn-logo-max-width` | `10rem` | Maximum image/SVG width |
+| `--syn-logo-row-gap` | `clamp(.75rem, 2vw, 1.5rem)` | Vertical distance between rows |
+| `--syn-logo-play-state` | `running` | `running` or `paused` |
+
+`--syn-logo-duration` works in all supported browsers; newer CSS
+engines supporting typed division also apply
+`calc(var(--syn-logo-duration) / var(--syn-logo-speed))`. To maximize
+cross-browser precision, set `--syn-logo-duration` explicitly.
+
+<!-- coderabbit-ai-generated:v1 -->
+
+<!-- coderabbit-ai-generated-section:v1:ba62471601719527dd45406f875cda9bb1983ea2c413a8faa60e5c5439ad68f7 -->
+
+**Accessibility and fallback:** Hover pauses scrolling in place. When a
+row or one of its links receives focus, that row shows the original
+logos as a static, wrapped list and hides the decorative copy. Scrolling
+starts again when focus leaves. For a row without links, add
+`tabindex="0"`, `role="group"` and a distinct accessible name to let
+keyboard users reach it.
+
+With reduced motion or just one group, the original logos stay static
+and wrap without horizontal clipping. No JavaScript is required. Only
+the original logo links are interactive; duplicated links must remain
+`inert` and hidden from assistive technologies. Provide real `alt` text
+for meaningful logos and empty `alt=""` for decorative copies.
+
+<!-- /coderabbit-ai-generated:v1 -->
+
+This composition lives in the optional motion stylesheet, not core.
+There is no mandatory runtime or external asset. See the
+[animation showcase](../examples/animation.html) for a self-contained
+two-row version using fictional wordmarks. That showcase also provides
+optional per-row speed/direction sliders and a pause/resume button; those
+controls are demonstration JavaScript only, not a requirement for the
+CSS-only component or the embeddable HTML recipe.
 
 ## Website block effects (CSS only)
 

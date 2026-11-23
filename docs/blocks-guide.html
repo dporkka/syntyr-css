@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Status: Experimental alpha.5 source gallery, not an immutable release or published npm package.">
-  <meta name="syntyr-source-sha256" content="159cca5aefecaa3dd2469b0c5862550855ef52a060fcbffb89c6a49c5cf9d9e1">
+  <meta name="syntyr-source-sha256" content="e44ce649647b0cc996a929e5e742c2c89d1f127b5e6cbeb7461c280f8e49e75d">
   <meta name="theme-color" content="#f5f7fb">
   <title>Syntyr Blocks &amp; Assets — integration guide — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/blocks-guide">
@@ -36,17 +36,17 @@
         <article class="docs-prose" aria-label="Syntyr Blocks &amp; Assets — integration guide">
 <h1 id="syntyr-blocks-assets-integration-guide">Syntyr Blocks &amp; Assets — integration guide</h1>
 <p><strong>Status:</strong> Experimental alpha.5 source gallery, not an immutable release or published npm package.</p>
-<p><a href="blocks.html">Browse 50 blocks</a> | <a href="catalog.html">Component catalog</a> | <a href="theme-customization.html">Themes</a> | <a href="accessibility.html">Accessibility</a></p>
+<p><a href="blocks.html">Browse 99 blocks</a> | <a href="catalog.html">Component catalog</a> | <a href="theme-customization.html">Themes</a> | <a href="accessibility.html">Accessibility</a></p>
 <h2 id="contract">Contract</h2>
-<p>The 50 copy-owned HTML compositions cover marketing, application, services, portfolio, editorial, navigation, publishing, commerce and technical use
+<p>The 99 copy-owned HTML compositions cover marketing, application, services, portfolio, editorial, navigation, publishing, commerce, company and technical use
 cases. Each contains its own Syntyr root, uses accessible native markup and requires
 no application JavaScript. The data, testimonials and prices are illustrative, not live.</p>
 <p>The gallery script powers optional documentation search, theme switching and copy
-buttons. Disable JavaScript and all 50 static previews remain visible, with
+buttons. Disable JavaScript and all 99 static previews remain visible, with
 selectable source under native disclosure elements. No scripts are included in
-application CSS, and the core Syntyr build is unchanged.</p>
+application CSS; the added gallery rules remain CSS-only.</p>
 <h2 id="safe-local-registry-installation-experimental-alpha5-source">Safe local registry installation (experimental alpha.5 source)</h2>
-<p>The static <a href="../registry/registry.json">universal registry</a> contains the 50 MIT
+<p>The static <a href="../registry/registry.json">universal registry</a> contains the 99 MIT
 HTML blocks and nine CSS module entries. Every item includes its exact
 source-tree version, SHA-256 content hashes, declared CSS dependencies, files,
 and destination paths. This is <strong>not</strong> a published immutable alpha.5 release.</p>
@@ -68,11 +68,16 @@ commands for local agents and CI checks.</p>
 <p>The script refuses incompatible versions, mismatched hashes, untrusted
 registry URLs, unsafe/symlinked paths, and changed existing files. It never
 executes installed markup or installs JavaScript dependencies. Re-running an
-identical installation is safe. If a later asset fails during installation,
-the helper attempts to remove earlier assets <strong>it created</strong> only when they
-still have their original content and file identity; previously existing
-identical files are preserved. Empty directories may remain after a failed
-install, and filesystem-level concurrency is not an atomic transaction.
+identical installation is safe. The installer first stages complete files in
+a private temporary directory under the project and then publishes each file
+through an atomic no-overwrite hard link. No incomplete destination is exposed.
+If a later file fails, earlier complete files <strong>remain in place</strong>: deleting
+them could destroy concurrent edits or replacements. Run --verify --json
+to locate missing files and retry --apply to fill gaps without overwriting
+customer changes. Staged temporary files are cleaned up; empty destination
+directories may remain. This is <strong>not</strong> an atomic multi-file transaction, and
+filesystems that disallow hard links fail closed rather than copying partial
+files. Previously existing identical customer files are never removed.
 The helper intentionally does <strong>not</strong> offer a force-overwrite mode; manage
 customization and upgrades through your own source control. Syntyr still
 works by copying a prebuilt CSS file directly, without Python in the
@@ -91,6 +96,119 @@ manual keyboard, screen-reader or actual browser zoom review.</p>
 contain <strong>illustrative data and placeholder host routes</strong>. Their host
 application must supply authorization, data queries, CSRF protection,
 validation and persistence. See <a href="component-recipes.html">form state contracts</a>.</p>
+<h2 id="saas-and-business-collection-experimental-alpha5-source">SaaS and business collection (experimental alpha.5 source)</h2>
+<p>Twelve additional copy-owned compositions expand the collection from 56 to 68:
+six marketing sections (scrollable card rail, bento features, product preview hero,
+split feature detail spotlight, full example case study, pricing comparison) and six SaaS
+workspaces (sign-up, resource management, workspace invitations, billing usage,
+integration connection states, API keys and webhooks).</p>
+<p>For generic horizontal collections, load <code>syntyr.recipes.css</code> and use
+<code>syn-scroll-rail</code> on a named, focusable <code>role=&quot;region&quot;</code> wrapper. Each direct
+child is an independent card. Customize <code>--syn-scroll-rail-card-width</code> and
+<code>--syn-scroll-rail-gap</code> locally. Native overflow and scroll snapping work
+without JavaScript; this does <strong>not</strong> add carousel buttons, autoplay or a new
+interaction runtime. The existing <code>syn-media-rail</code> remains unchanged and
+better suited to media/poster catalogs.</p>
+<p>For asymmetric feature cards, use <code>syn-bento-grid</code> and opt-in
+<code>syn-bento-card--wide</code> on an individual card. The grid's own container width
+determines when a wide card may span two columns. The previous <code>syn-grid</code>
+and <code>syn-feature-grid</code> remain available for equal-size cards. Reuse
+<code>syn-showcase</code> for split product storytelling rather than creating another
+split-layout API.</p>
+<p>Dense four-column tables in the SaaS screen examples opt into
+<code>syn-table--readable</code>. Place them inside an existing named, keyboard-focusable
+<code>syn-table-wrap</code> and customize <code>--syn-table-readable-min</code> (default 38rem) to
+preserve readable columns while allowing local horizontal scrolling.</p>
+<p>All example names, plan details, statuses and usage metrics are illustrative.
+Registration, authorization, invites, persistence, CSRF protection, OAuth,
+billing, webhook security and API key issuance are <strong>host application</strong> responsibilities.
+Replace example routes and sample data before deploying.</p>
+<h2 id="additional-core-website-sections-unreleased-source">Additional Core website sections (unreleased source)</h2>
+<p>Six independent, framework-neutral website sections joined the collection
+from the latest Core catalog: a <strong>company story</strong>, <strong>customer reviews</strong>,
+<strong>use case showcase</strong>, <strong>locations and opening hours</strong>, <strong>career listings</strong>,
+and <strong>native feature disclosures</strong>. All use semantic HTML and CSS-first
+presentation; review sample content and replace example links before use.</p>
+<h2 id="image-gallery-and-reusable-website-sections-unreleased-source">Image gallery and reusable website sections (unreleased source)</h2>
+<p>Five further sections expand the collection from 74 to 85:
+responsive <strong>image gallery</strong>, <strong>image-and-copy story</strong>, <strong>multi-testimonial
+social proof</strong>, <strong>company milestones timeline</strong>, and <strong>event agenda</strong>.
+They use native figures, captions, quotes, ordered lists, and machine-readable
+dates/times rather than introducing application JavaScript.</p>
+<p>The image gallery uses <code>syn-image-gallery</code> and the story uses
+<code>syn-media-figure</code>, both in <code>syntyr.core.css</code>. Every thumbnail in the copied HTML
+is a real anchor to its full-size original illustration, not a simulated
+JavaScript lightbox. Documentation previews keep links inert to prevent accidental navigation. Keyboard and screen-reader users can follow the same
+links. The media use intrinsic width and height and lazy loading to reduce
+layout shift and unnecessary downloads.</p>
+<p>The four SVG illustrations are original, self-hosted demo assets. The
+universal registry installs them to <code>syntyr/assets/</code> alongside the HTML,
+so relative example paths work immediately. When pasting a snippet directly
+into your own template, <strong>replace the <code>../assets/gallery-*.svg</code> URLs with
+your own local, optimized images</strong> and update descriptive alt text. Do not
+treat illustrative testimonials, company dates, or event times as factual.
+The agenda's example times require a real date and time zone in production.</p>
+<h2 id="six-additional-everyday-website-sections-unreleased-source">Six additional everyday website sections (unreleased source)</h2>
+<p>Six new copy-owned blocks bring the library to <strong>85 sections</strong>: a photographic hero,
+a side-by-side before/after image comparison, a resources/downloads library,
+press/news highlights, a community/social links panel, and a product
+specifications table. These use real native links and figures, not simulated
+interactive controls or invented press endorsements.</p>
+<p>The images reuse original local SVG files in <code>assets/</code>. The comparison uses
+two distinct illustrative artworks (not evidence of a real transformation).
+Replace all example text, fictional products and host-owned routes with verified
+production content.</p>
+<h2 id="css-only-header-and-footer-layouts-unreleased-source">CSS-only header and footer layouts (unreleased source)</h2>
+<p>Six additional copyable Navigation blocks extend the library to <strong>91 sections</strong>.
+The headers offer a <strong>centered editorial</strong> composition (<code>header-centered</code>), a
+<strong>two-row utility and product</strong> navigation (<code>header-split</code>), and a <strong>native
+disclosure</strong> menu (<code>header-disclosure</code>). The footers offer a <strong>compact brand
+and links</strong> treatment (<code>footer-compact</code>), a <strong>responsive multi-column
+sitemap</strong> (<code>footer-sitemap</code>), and a <strong>newsletter with navigation</strong>
+(<code>footer-newsletter</code>). The original <code>site-header</code> and <code>site-footer</code>
+remain available, so the collection now has four header and four footer styles.</p>
+<p>All six are composed exclusively from existing <code>syntyr.core.css</code> primitives.
+<code>syn-inline</code> wraps on narrow viewports, <code>syn-grid</code> reflows columns without
+media-query-specific markup, and the disclosure header uses native
+<code>&lt;details&gt;</code> and <code>&lt;summary&gt;</code>. No extra CSS bundle or JavaScript is needed.</p>
+<p>The newsletter footer contains an illustrative POST form, not a working
+subscription service. Before production, implement consent, server-side
+validation, CSRF protection, confirmation and unsubscribe handling. Replace
+all sample brands, links and legal details. Each snippet is included in
+<a href="blocks.html">the Blocks gallery</a>, the offline registry and the page builder,
+where it remains reorderable and exportable as static HTML/CSS.</p>
+<h2 id="reusable-content-and-section-layouts-unreleased-source">Reusable content and section layouts (unreleased source)</h2>
+<p>Eight additional copy-owned compositions expand the library from 91 to <strong>99
+blocks</strong>. They provide distinct content shapes rather than new CSS components:</p>
+<ul>
+<li><code>editorial-intro-split</code>: opening statement and supporting checklist;
+<code>article-toc</code>: readable long-form content with actual same-page headings and
+anchored contents navigation.</li>
+<li><code>feature-rows</code>: stacked feature explanations with context cards;
+<code>impact-narrative</code>: measures displayed alongside the explanation needed
+to interpret them.</li>
+<li><code>decision-guide</code>: three linked service paths and their criteria;
+<code>faq-sidecar</code>: native questions beside a contact path.</li>
+<li><code>resource-index</code>: grouped navigational topic index;
+<code>principles-columns</code>: readable, multi-column company principles.</li>
+</ul>
+<p>All eight use <strong>only <code>syntyr.core.css</code></strong>. Existing <code>syn-sidecar</code> flex layouts
+wrap when content no longer fits, and <code>syn-grid</code> uses intrinsic sizing for
+responsive columns. There are no new selectors, dependencies, JavaScript
+handlers, inaccessible tabs, or fabricated search widgets.</p>
+<p>The article's hash links target headings within its own section; keep target
+IDs unique when inserting multiple copies. The FAQ uses native <code>details</code> and
+<code>summary</code> controls. The metrics are labeled hypothetical examples, not
+testimonials or measured product outcomes. Replace demonstration copy, links,
+and source notes before production. All variants are available in the
+<a href="blocks.html">Blocks gallery</a>, offline registry, and the page builder's
+reorderable, static HTML/CSS export.</p>
+<h2 id="long-code-examples-on-mobile">Long code examples on mobile</h2>
+<p>Use <code>syn-code-scroll</code> on a <code>pre</code> element for long, unbreakable code examples.
+Keep a descriptive <code>aria-label</code> and <code>tabindex=&quot;0&quot;</code> so keyboard users can
+scroll the code without horizontally scrolling the full page. The sample
+<code>api-endpoint-reference</code> block demonstrates this no-JavaScript behavior
+in the builder and in standalone exports.</p>
 <h2 id="native-html-and-framework-integration">Native HTML and framework integration</h2>
 <p>Load the specific CSS modules shown on each block, from the same pinned version.
 For example, blocks using both core and recipes:</p>
@@ -145,16 +263,18 @@ JavaScript or network imports. Scanning beam animation respects reduced-motion
 preferences, and effects disable in forced-colors mode.</p>
 <p>Existing Syntyr geometry and effects modules should be the default choice when
 they already provide the desired result.</p>
-<h2 id="six-font-recipes-and-24-original-svg-icons">Six font recipes and 24 original SVG icons</h2>
+<h2 id="six-font-recipes-and-150-original-svg-icons">Six font recipes and 150 original SVG icons</h2>
 <p>Six system-font typography directions are displayed in the gallery:
 Studio sans, Editorial serif, Terminal mono, Technical sans, Reading serif
 and Compact system. They do not bundle or download font files. Customize
 CSS tokens for UI, display and monospace type, preserving readable fallbacks.</p>
-<p>The gallery now provides 24 original, copyable inline SVG examples using
+<p>The gallery now provides 150 original, copyable inline SVG examples using
 Syntyr's existing generic icon sizing contract. These are not a dependency,
 icon font or stand-alone icon runtime. You may also use appropriately licensed
 provider packs such as Lucide, Tabler and Heroicons; none are vendored here. Icon-only controls need accessible
-names. See <a href="symbols.html">symbols</a> for supported integration patterns.</p>
+names. Icons can optionally use 14 no-JavaScript animation presets, with
+hover/focus activation and reduced-motion support. See <a href="symbols.html">symbols</a>
+for supported integration patterns.</p>
 <h2 id="source-build-and-maintenance">Source, build and maintenance</h2>
 <p>Editable fragments live in the blocks/snippets directory. Metadata and module
 dependencies live in blocks/manifest.json. The gallery is generated, not hand
@@ -179,7 +299,7 @@ No premium Tailwind, commercial UI kit or third-party icon artwork has been
 copied into the public project. The separate private Console Kit is unaffected.</p>
 <h2 id="experimental-shadcn-universal-item-registry">Experimental shadcn universal-item registry</h2>
 <p>The source candidate can generate a <strong>copy-owned, framework-independent</strong>
-shadcn-compatible universal-item registry from the same 50 MIT blocks and
+shadcn-compatible universal-item registry from the same 99 MIT blocks and
 checked-in CSS distributions. It neither replaces nor duplicates the native
 block installer from PR #104. Universal files use explicit project-relative
 targets, so no React, Tailwind, or Syntyr runtime JavaScript is required.</p>
@@ -205,17 +325,47 @@ service, telemetry, npm dependency, or customer license is introduced.
 Published alpha.4 assets remain immutable; registry payloads declare their
 source-candidate Syntyr version and must not be confused with a tagged release.</p>
         </article>
-        <aside class="docs-article-sidebar"><nav aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#contract">Contract</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#safe-local-registry-installation-experimental-alpha5-source">Safe local registry installation (experimental alpha.5 source)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#saas-and-business-collection-experimental-alpha5-source">SaaS and business collection (experimental alpha.5 source)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#additional-core-website-sections-unreleased-source">Additional Core website sections (unreleased source)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#image-gallery-and-reusable-website-sections-unreleased-source">Image gallery and reusable website sections (unreleased source)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#six-additional-everyday-website-sections-unreleased-source">Six additional everyday website sections (unreleased source)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#css-only-header-and-footer-layouts-unreleased-source">CSS-only header and footer layouts (unreleased source)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#reusable-content-and-section-layouts-unreleased-source">Reusable content and section layouts (unreleased source)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#long-code-examples-on-mobile">Long code examples on mobile</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#native-html-and-framework-integration">Native HTML and framework integration</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#optional-scroll-parallax-and-hover-effects">Optional scroll, parallax, and hover effects</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#12-original-optional-css-asset-recipes">12 original, optional CSS asset recipes</a>
-<a class="docs-article-toc-link docs-article-toc-2" href="#six-font-recipes-and-24-original-svg-icons">Six font recipes and 24 original SVG icons</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#six-font-recipes-and-150-original-svg-icons">Six font recipes and 150 original SVG icons</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#source-build-and-maintenance">Source, build and maintenance</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#accessibility-fidelity-and-licensing">Accessibility, fidelity and licensing</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#experimental-shadcn-universal-item-registry">Experimental shadcn universal-item registry</a>
-        </nav></aside>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#contract">Contract</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#safe-local-registry-installation-experimental-alpha5-source">Safe local registry installation (experimental alpha.5 source)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#saas-and-business-collection-experimental-alpha5-source">SaaS and business collection (experimental alpha.5 source)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#additional-core-website-sections-unreleased-source">Additional Core website sections (unreleased source)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#image-gallery-and-reusable-website-sections-unreleased-source">Image gallery and reusable website sections (unreleased source)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#six-additional-everyday-website-sections-unreleased-source">Six additional everyday website sections (unreleased source)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#css-only-header-and-footer-layouts-unreleased-source">CSS-only header and footer layouts (unreleased source)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#reusable-content-and-section-layouts-unreleased-source">Reusable content and section layouts (unreleased source)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#long-code-examples-on-mobile">Long code examples on mobile</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#native-html-and-framework-integration">Native HTML and framework integration</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#optional-scroll-parallax-and-hover-effects">Optional scroll, parallax, and hover effects</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#12-original-optional-css-asset-recipes">12 original, optional CSS asset recipes</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#six-font-recipes-and-150-original-svg-icons">Six font recipes and 150 original SVG icons</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#source-build-and-maintenance">Source, build and maintenance</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#accessibility-fidelity-and-licensing">Accessibility, fidelity and licensing</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#experimental-shadcn-universal-item-registry">Experimental shadcn universal-item registry</a>
+            </nav>
+          </details>
+        </aside>
       </div>
       <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="blocks-guide.md">Markdown source</a></nav>
     </main>

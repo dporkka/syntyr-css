@@ -5,6 +5,7 @@ import (
 	"flag"
 	"html/template"
 	"log"
+	"net"
 	"net/http"
 	"net/url"
 	"sort"
@@ -38,6 +39,7 @@ type pageData struct {
 	HasPrevious, HasNext                      bool
 	PreviousURL, NextURL                      string
 	Selected                                  *resource
+	EditToken                                 string
 	AllPreviewURL, ReturnURL                  string
 	IsPreview                                 bool
 	Chosen                                    []resource
@@ -62,9 +64,9 @@ func limitedQuery(q string) string {
 	}
 	return q
 }
-func filterResources(q, status, ordering string) []resource {
-	result := make([]resource, 0, len(resources))
-	for _, item := range resources {
+func filterResources(rows []resource, q, status, ordering string) []resource {
+	result := make([]resource, 0, len(rows))
+	for _, item := range rows {
 		searchable := strings.ToLower(item.ID + " " + item.Name + " " + item.Owner + " " + item.Region)
 		if status != "" && item.Status != status {
 			continue
@@ -109,8 +111,11 @@ func link(path string, q url.Values) string {
 }
 
 func newHandler(distDir string) http.Handler {
+	state := newResourceState()
+	secret := newCSRFSecret()
 	mux := http.NewServeMux()
 	mux.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir(distDir))))
+	mux.Handle("/resource/edit", editHandler(state, secret))
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		if r.URL.Path != "/" && r.URL.Path != "/resources" && r.URL.Path != "/preview" {
 			http.NotFound(w, r)
@@ -150,7 +155,8 @@ func newHandler(distDir string) http.Handler {
 				}
 			}
 		}
-		filtered := filterResources(q, status, ordering)
+		rows := state.snapshot()
+		filtered := filterResources(rows, q, status, ordering)
 		page := 1
 		if v.Has("page") {
 			var err error
@@ -204,6 +210,14 @@ func newHandler(distDir string) http.Handler {
 			if item.ID == v.Get("id") && r.URL.Path != "/preview" {
 				selected := item
 				data.Selected = &selected
+				if r.Method == http.MethodGet {
+					token, err := issueFormToken(w, r, secret)
+					if err != nil {
+						http.Error(w, "Cannot prepare edit form", http.StatusServiceUnavailable)
+						return
+					}
+					data.EditToken = token
+				}
 			}
 		}
 		if len(filtered) > 0 {
@@ -229,8 +243,8 @@ func newHandler(distDir string) http.Handler {
 					http.Error(w, "Too many selected IDs", http.StatusBadRequest)
 					return
 				}
-				known := make(map[string]struct{}, len(resources))
-				for _, item := range resources {
+				known := make(map[string]struct{}, len(rows))
+				for _, item := range rows {
 					known[item.ID] = struct{}{}
 				}
 				requested := make(map[string]struct{}, len(ids))
@@ -261,10 +275,26 @@ func newHandler(distDir string) http.Handler {
 	return mux
 }
 
+// loopbackAddress keeps the unauthenticated, in-memory edit demo off public interfaces.
+func loopbackAddress(addr string) bool {
+	host, _, err := net.SplitHostPort(addr)
+	if err != nil {
+		return false
+	}
+	if host == "localhost" {
+		return true
+	}
+	ip := net.ParseIP(host)
+	return ip != nil && ip.IsLoopback()
+}
+
 func main() {
 	addr := flag.String("addr", "127.0.0.1:8767", "local listen address")
 	dist := flag.String("dist", "../../dist", "path to compiled Syntyr CSS")
 	flag.Parse()
+	if !loopbackAddress(*addr) {
+		log.Fatal("This unauthenticated demo must bind to 127.0.0.1, [::1], or localhost")
+	}
 	log.Printf("Syntyr resource workbench demo at http://%s/resources", *addr)
 	log.Fatal(http.ListenAndServe(*addr, newHandler(*dist)))
 }

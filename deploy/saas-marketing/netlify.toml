@@ -1,0 +1,15 @@
+# Netlify site settings: Base = repository root; Package directory = deploy/saas-marketing
+[build]
+command = "python3 scripts/build_saas_marketing_site.py"
+publish = "deploy/saas-marketing/.public"
+
+[build.environment]
+PYTHON_VERSION = "3.12"
+
+[[headers]]
+for = "/*"
+[headers.values]
+X-Content-Type-Options = "nosniff"
+X-Frame-Options = "DENY"
+Referrer-Policy = "strict-origin-when-cross-origin"
+Permissions-Policy = "camera=(), microphone=(), geolocation=()"

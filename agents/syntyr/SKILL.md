@@ -11,9 +11,8 @@ Syntyr server, JavaScript runtime, npm installation, or network access is requir
 
 ## Discover the installed contract first
 
-1. If the project contains `syntyr.agent.json`, read it before generating markup.
-   `release` is the explicit CSS version; `assets_dir` is the local CSS location;
-   `stylesheets` is the list installed by the optional offline setup tool.
+1. If the Syntyr source checkout is available, run `python3 scripts/syntyr_agent.py info --project /path/to/app --json` first. Its read-only JSON reports verified asset hashes, release status, installed stylesheet filenames, themes and agent reference paths. Exit 0 means healthy, 1 means invalid/degraded and 2 means unconfigured. It does **not** verify that the host actually loads the CSS.
+   Otherwise, if the project contains `syntyr.agent.json`, read it before generating markup. `release` is the explicit CSS version; `assets_dir` is the local CSS location; `stylesheets` is the list installed by the optional offline setup tool.
 2. Read `references/api.json` next to this Skill if it exists. Its `classes`
    and curated `components` are verified against that version, not the latest
    unreleased source. The `themes` list is also version-specific.
@@ -21,7 +20,15 @@ Syntyr server, JavaScript runtime, npm installation, or network access is requir
    installed. Determine the real CSS assets/imports first. The published immutable
    `0.3.0-alpha.4` supports `studio`, `grid`, `noir`; `0.3.0-alpha.5` is an
    *unreleased source candidate* and has additional APIs.
-4. For detailed public guidance, consult the [AI quickstart](https://syntyr-css.pages.dev/docs/ai-quickstart.md),
+4. In a verified **alpha.5 source checkout** only, inspect
+   `metadata/component-gallery.v1.json` for task-specific examples. Filter
+   `examples[].use_cases` and confirm every
+   `examples[].required_stylesheets` file is installed before selecting the
+   `html`. Open `catalog_url`/`playground_url` for the source pattern;
+   read `native_feature_requirements` and documented fallbacks. These fields
+   are curated discovery signals, not runtime compatibility or accessibility
+   certifications. Do not assume they exist in the pinned alpha.4 release.
+5. For detailed public guidance, consult the [AI quickstart](https://syntyr-css.pages.dev/docs/ai-quickstart.md),
    [component guide](https://syntyr-css.pages.dev/docs/components.md),
    [composition recipes](https://syntyr-css.pages.dev/docs/recipes.md) and
    [LLM documentation index](https://syntyr-css.pages.dev/llms.txt).

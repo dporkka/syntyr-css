@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Status: experimental 0.3.0-alpha.5 candidate; no v1 stability promise. This document names the intended public contracts so that changes can be reviewed…">
-  <meta name="syntyr-source-sha256" content="74e8285a71b8fd7d9a5968932b00d4af57265dae4debf5ed6a36ec347c9bea0a">
+  <meta name="syntyr-source-sha256" content="15585f00a737a2ab8d2badd64c8981513b090ea0dd3be7b0b9c61e7b7890b394">
   <meta name="theme-color" content="#f5f7fb">
   <title>SYNTYR CSS public API and prerelease stability — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/api-stability">
@@ -79,6 +79,16 @@ reviewed consistently before <code>1.0.0</code>. It is not a new compatibility g
 <td>Evaluate for stability after responsive review</td>
 </tr>
 <tr>
+<td><code>.syn-list</code>, <code>.syn-list--compact</code>, <code>.syn-list--accent</code> and list-local gap/padding properties</td>
+<td>Experimental alpha.5 core additions; semantic mode keeps native markers</td>
+<td>Evaluate accessibility, nested rhythm and RTL before v1</td>
+</tr>
+<tr>
+<td><code>--syn-space-fluid-1</code> through <code>--syn-space-fluid-4</code></td>
+<td>Experimental alpha.5 opt-in tokens; bounded fluid spacing with fixed-unit fallback; no default layout changes</td>
+<td>Evaluate browser behavior and typography/zoom interaction before v1</td>
+</tr>
+<tr>
 <td><code>data-syn-color-space=&quot;oklch&quot;</code></td>
 <td>Experimental alpha.5 presentation opt-in</td>
 <td>Evaluate perceptual color/contrast before v1</td>
@@ -104,6 +114,11 @@ reviewed consistently before <code>1.0.0</code>. It is not a new compatibility g
 <td>Version schema independently of public CSS API</td>
 </tr>
 <tr>
+<td><code>syntyr.media.css</code>: <code>syn-media-rail--controls</code>, <code>syn-media-rail--markers</code>, <code>data-syn-scroll-label</code></td>
+<td>Experimental alpha.5 progressive carousel affordances; require CSS Overflow 5 and anchor positioning</td>
+<td>Evaluate cross-browser parity and marker accessibility before v1</td>
+</tr>
+<tr>
 <td><code>syntyr.recipes.css</code>, <code>syntyr.geometry.css</code></td>
 <td>Experimental, opt-in</td>
 <td>Evaluate for individual stabilization</td>
@@ -112,6 +127,16 @@ reviewed consistently before <code>1.0.0</code>. It is not a new compatibility g
 <td><code>syntyr.effects.css</code>, <code>syntyr.utilities.css</code></td>
 <td>Experimental, opt-in</td>
 <td>Evaluate for individual stabilization</td>
+</tr>
+<tr>
+<td><code>syntyr.motion.css</code> <code>data-syn-animate</code> presets, <code>--syn-animation-*</code> speed/loop/rotation controls and optional <code>syntyr.animate.mjs</code> loops</td>
+<td>Experimental alpha.5 opt-in; not published in alpha.4</td>
+<td>Evaluate naming, reduced-motion behavior and semantic exits before stabilization</td>
+</tr>
+<tr>
+<td><code>syn-logo-marquee</code>, <code>syn-logo-marquee__row</code>, group/track selectors and <code>--syn-logo-*</code> tokens</td>
+<td>Experimental alpha.5 CSS-only logo strip, not in published alpha.4</td>
+<td>Verify seamless looping, responsive sizing, and reduced-motion fallback before stabilization</td>
 </tr>
 <tr>
 <td><code>syntyr.css</code>, <code>syntyr.all.css</code></td>
@@ -303,8 +328,18 @@ runtime dependency.</p>
 CSS selectors, not part of the immutable alpha.4 package and not a guarantee
 of application-level selection, dialog focus management, image verification
 or review workflows. See <a href="recipes.html">recipe contracts</a>.</p>
+<h2 id="experimental-alpha5-copy-owned-composition-additions">Experimental alpha.5 copy-owned composition additions</h2>
+<p>The optional recipes stylesheet now provides <code>syn-scroll-rail</code>,
+<code>syn-bento-grid</code>, and <code>syn-bento-card--wide</code> for generic card collections
+and feature section layout. They are <strong>source candidate only</strong>, not part
+of the published alpha.4 contract. Existing <code>syn-media-rail</code>, <code>syn-grid</code>
+and <code>syn-showcase</code> remain unchanged. No runtime scripting, event handlers,
+authentication or persistence are introduced by these selectors.</p>
+<p>The optional <code>syn-table--readable</code> recipe provides table min-width
+without adding JavaScript or changing the base table styles.</p>
         </article>
-        <aside class="docs-article-sidebar"><nav aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#public-surface-and-intended-v1-boundaries">Public surface and intended v1 boundaries</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#proposed-minimum-v1-contract-not-yet-approved">Proposed minimum v1 contract (not yet approved)</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#alpha5-opt-in-crm-compositions-and-density-profiles">Alpha.5 opt-in CRM compositions and density profiles</a>
@@ -316,7 +351,26 @@ or review workflows. See <a href="recipes.html">recipe contracts</a>.</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#compatibility-and-version-policy">Compatibility and version policy</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#pre-10-release-checklist">Pre-1.0 release checklist</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#enterprise-presentation-recipes-unreleased-alpha5">Enterprise presentation recipes (unreleased alpha.5)</a>
-        </nav></aside>
+<a class="docs-article-toc-link docs-article-toc-2" href="#experimental-alpha5-copy-owned-composition-additions">Experimental alpha.5 copy-owned composition additions</a>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#public-surface-and-intended-v1-boundaries">Public surface and intended v1 boundaries</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#proposed-minimum-v1-contract-not-yet-approved">Proposed minimum v1 contract (not yet approved)</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#alpha5-opt-in-crm-compositions-and-density-profiles">Alpha.5 opt-in CRM compositions and density profiles</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#alpha5-native-css-refinements">Alpha.5 native CSS refinements</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#alpha5-native-readonly-form-presentation">Alpha.5 native readonly form presentation</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#alpha5-semantic-html-authoring-changes">Alpha.5 semantic HTML authoring changes</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#alpha5-data-table-wrapping-migration">Alpha.5 data-table wrapping migration</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#alpha5-component-local-styling-and-registry-installation">Alpha.5 component-local styling and registry installation</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#compatibility-and-version-policy">Compatibility and version policy</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#pre-10-release-checklist">Pre-1.0 release checklist</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#enterprise-presentation-recipes-unreleased-alpha5">Enterprise presentation recipes (unreleased alpha.5)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#experimental-alpha5-copy-owned-composition-additions">Experimental alpha.5 copy-owned composition additions</a>
+            </nav>
+          </details>
+        </aside>
       </div>
       <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="api-stability.md">Markdown source</a></nav>
     </main>

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Syntyr&#x27;s distribution is ordinary, scoped CSS. It does not require a JavaScript runtime, hydration, Sass, PostCSS, browser-specific components, or a…">
-  <meta name="syntyr-source-sha256" content="461e46e260475a31e3e5b3c86e72936529995a9dcdf0fb418ca887091613150e">
+  <meta name="syntyr-source-sha256" content="6d1575575531dd61b8cbd3c2ce3ee25d4ed4afaa5072ccbff574b94453fa8da0">
   <meta name="theme-color" content="#f5f7fb">
   <title>Syntyr with static-site generators — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/static-site-generators">
@@ -45,6 +45,28 @@ site's assets and put <code>syn-root</code> on the intended page or region.</p>
 assets are different. Do not claim <code>npm install @syntyr/css</code> will fetch
 alpha.5 from the registry; use an actual published, pinned version, a local
 package archive, or a self-hosted versioned CSS file.</p>
+<h2 id="runnable-zero-javascript-marketing-site-starter">Runnable zero-JavaScript marketing site starter</h2>
+<p>The <a href="https://github.com/dporkka/syntyr-css/blob/6a6c63c6c7de0fcd1b6382d9184f912f548d7f45/examples/site-starters/saas-marketing/README.md">Waypoint SaaS marketing starter</a>
+demonstrates how one Syntyr stylesheet can serve a <strong>complete three-page site</strong>:
+a home page with hero, dashboard illustration, feature grid, workflow steps
+and native FAQ; a pricing page; and an about page. All content is explicitly
+fictional. Unlike a source-only snippet, it includes an offline exporter:</p>
+<pre tabindex="0"><code class="language-sh">python3 scripts/export_site_starter.py --output /tmp/waypoint-static
+python3 -m http.server 8000 --directory /tmp/waypoint-static
+</code></pre>
+<p>Open <code>http://localhost:8000/</code>. The export contains its own pinned
+<code>assets/syntyr.core.css</code>, works offline, and uses <strong>no browser JavaScript</strong>.
+The <a href="https://syntyr-css.pages.dev/examples/site-starters/saas-marketing/">public preview</a>
+is available only after the corresponding source change is published.
+It is a starting point for Astro, Hugo or Eleventy composition, <strong>not</strong> a
+prebuilt adapter for any generator. The source candidate remains unreleased.</p>
+<p>The <a href="https://github.com/dporkka/syntyr-css/blob/main/deploy/saas-marketing/README.md">separate marketing-site deployment guide</a>
+adds isolated Vercel and Netlify Git-project settings, plus Render, Cloudflare,
+GitHub Pages and ordinary static-server instructions. Build repeatably with
+<code>python3 scripts/build_saas_marketing_site.py</code>, then publish only
+<code>deploy/saas-marketing/.public</code> (nine allowlisted files). This is separate
+from the repository-root SaaS Admin deployment and does not add a runtime.
+The example remains noindexed until its fictional content is replaced.</p>
 <h2 id="integration-matrix">Integration matrix</h2>
 <table>
 <thead>
@@ -72,7 +94,7 @@ package archive, or a self-hosted versioned CSS file.</p>
 <td><strong>Hugo</strong></td>
 <td>Serve prebuilt CSS from <code>static/</code> or a Hugo filesystem mount</td>
 <td>Use <code>relURL</code> for assets, not a bare <code>/css/</code> URL on project subpaths</td>
-<td><a href="https://github.com/dporkka/syntyr-css/tree/main/experiments/hugo/">Isolated Hugo proof</a></td>
+<td><a href="https://github.com/dporkka/syntyr-css/tree/main/examples/hugo-cms/">Runnable CMS-driven Hugo starter</a>; <a href="https://github.com/dporkka/syntyr-css/tree/main/experiments/hugo/">isolated docs proof</a></td>
 </tr>
 <tr>
 <td><strong>Jekyll</strong></td>
@@ -141,7 +163,17 @@ layout:</p>
 &lt;main class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot;&gt;...&lt;/main&gt;
 </code></pre>
 <p>Do not use an unprefixed <code>/assets/...</code> URL for GitHub Pages project sites.
-Hugo's own preview script validates its existing rendered Markdown pages
+For an independent, CMS-driven landing page, the
+<a href="https://github.com/dporkka/syntyr-css/tree/main/examples/hugo-cms/">runnable Hugo fixture</a> renders the <strong>same</strong>
+<code>content/pages/home.json</code> as the Git-backed CMS starter, with five native
+semantic HTML blocks and no browser script:</p>
+<pre tabindex="0"><code class="language-sh">python3 scripts/build.py
+python3 scripts/build_hugo_cms_starter.py --hugo hugo --output /tmp/syntyr-hugo-site
+</code></pre>
+<p>It verifies generated CSS and page URLs under <code>/syntyr-hugo/</code> and supports
+<code>--base-url https://example.com/my-project/</code>. Hugo is a build-time tool,
+not a requirement of the Syntyr CSS package.</p>
+<p>Hugo's own preview script validates its existing rendered Markdown pages
 and local links:</p>
 <pre tabindex="0"><code class="language-sh">python3 scripts/verify_hugo_preview.py --hugo /path/to/hugo
 </code></pre>
@@ -211,7 +243,9 @@ CDN URLs; and assuming <code>file:../..</code> in a development fixture is a pub
 npm package. The Syntyr CSS runtime remains zero dependency regardless of
 the generator chosen.</p>
         </article>
-        <aside class="docs-article-sidebar"><nav aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+<a class="docs-article-toc-link docs-article-toc-2" href="#runnable-zero-javascript-marketing-site-starter">Runnable zero-JavaScript marketing site starter</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#integration-matrix">Integration matrix</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#astro">Astro</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#eleventy">Eleventy</a>
@@ -220,7 +254,22 @@ the generator chosen.</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#zola">Zola</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#nextjs-export-gatsby-and-documentation-generators">Next.js export, Gatsby and documentation generators</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#verification-and-failure-modes">Verification and failure modes</a>
-        </nav></aside>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#runnable-zero-javascript-marketing-site-starter">Runnable zero-JavaScript marketing site starter</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#integration-matrix">Integration matrix</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#astro">Astro</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#eleventy">Eleventy</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#hugo">Hugo</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#jekyll-github-pages">Jekyll / GitHub Pages</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#zola">Zola</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#nextjs-export-gatsby-and-documentation-generators">Next.js export, Gatsby and documentation generators</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#verification-and-failure-modes">Verification and failure modes</a>
+            </nav>
+          </details>
+        </aside>
       </div>
       <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="static-site-generators.md">Markdown source</a></nav>
     </main>

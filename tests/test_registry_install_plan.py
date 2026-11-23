@@ -1,6 +1,6 @@
 """An optional local installation planner must be safe without a Node runtime."""
-from contextlib import contextmanager
 import json
+import os
 from pathlib import Path
 import subprocess
 import sys
@@ -106,12 +106,13 @@ class RegistryInstallPlanTests(unittest.TestCase):
             self.assertTrue(mutated[0])
             self.assertEqual(target.read_text(), "changed after preflight")
 
-    def test_failed_write_removes_partial_new_file(self):
+    def test_failed_stage_write_never_publishes_partial_asset(self):
         with tempfile.TemporaryDirectory() as tmp:
             project = Path(tmp)
             plan = plan_install("core", project)
             target = project / plan["files"][0]["path"]
             original_open = Path.open
+
             class FailWritingStream:
                 def __init__(self, stream):
                     self.stream = stream
@@ -119,141 +120,121 @@ class RegistryInstallPlanTests(unittest.TestCase):
                     return self
                 def __exit__(self, *args):
                     return self.stream.__exit__(*args)
-                def fileno(self):
-                    return self.stream.fileno()
                 def write(self, data):
                     self.stream.write(data[:3])
-                    raise OSError("simulated disk failure")
+                    raise OSError("simulated staged disk failure")
+
             def injected_open(path, *args, **kwargs):
                 stream = original_open(path, *args, **kwargs)
-                if path == target and args and args[0] == "xb":
+                if (path.name == "0000" and path.parent.name.startswith(".syntyr-stage-")
+                        and args and args[0] == "xb"):
                     return FailWritingStream(stream)
                 return stream
+
             with patch.object(Path, "open", injected_open):
-                with self.assertRaises(OSError):
+                with self.assertRaisesRegex(OSError, "staged disk failure"):
                     apply_install(plan, project)
-            self.assertFalse(target.exists(), "failed creation must not leave a partial asset")
+            self.assertFalse(target.exists(), "partial staged bytes must never publish")
+            self.assertFalse(list(project.glob(".syntyr-stage-*")))
 
-
-
-    def test_partial_cleanup_preserves_replacement_on_write_or_close_failure(self):
-        for failure in ("write", "close"):
-            with self.subTest(failure=failure), tempfile.TemporaryDirectory() as tmp:
-                project = Path(tmp)
-                plan = plan_install("core", project)
-                target = project / plan["files"][0]["path"]
-                moved = target.with_suffix(".moved")
-                original_open = Path.open
-
-                def replace_and_fail():
-                    target.rename(moved)
-                    target.write_bytes(b"customer asset")
-                    raise OSError(f"simulated {failure} failure")
-
-                @contextmanager
-                def failing_stream(path):
-                    with original_open(path, "xb") as stream:
-                        if failure == "write":
-                            with patch.object(stream, "write", side_effect=lambda data: replace_and_fail()):
-                                yield stream
-                        else:
-                            yield stream
-                            replace_and_fail()
-
-                def injected_open(path, mode="r", *args, **kwargs):
-                    if path == target and mode == "xb":
-                        return failing_stream(path)
-                    return original_open(path, mode, *args, **kwargs)
-
-                with patch.object(Path, "open", injected_open):
-                    with self.assertRaisesRegex(OSError, f"simulated {failure} failure"):
-                        apply_install(plan, project)
-                self.assertTrue(target.exists(), "cleanup deleted the replacement")
-                self.assertEqual(target.read_bytes(), b"customer asset")
-
-    def test_mid_install_failure_rolls_back_only_new_assets(self):
+    def test_stage_failure_preserves_existing_customer_asset(self):
         with tempfile.TemporaryDirectory() as tmp:
             project = Path(tmp)
-            first_plan = plan_install("settings-form", project)
-            license_entry = next(item for item in first_plan["files"] if item["path"] == "syntyr/LICENSE")
+            plan = plan_install("settings-form", project)
+            license_entry = next(x for x in plan["files"] if x["path"] == "syntyr/LICENSE")
             license_target = project / license_entry["path"]
             license_target.parent.mkdir(parents=True)
-            license_target.write_text(license_entry["_content"], encoding="utf-8")
-
+            license_target.write_text(license_entry["_content"])
             plan = plan_install("settings-form", project)
-            self.assertEqual(
-                [item["status"] for item in plan["files"]],
-                ["create", "identical", "create"],
-            )
-            failing_target = project / "syntyr/blocks/settings-form.html"
             original_open = Path.open
 
-            def fail_on_last_asset(path, *args, **kwargs):
-                if path == failing_target and args and args[0] == "xb":
-                    raise OSError("simulated later asset failure")
+            def fail_second_stage(path, *args, **kwargs):
+                if (path.name == "0001" and path.parent.name.startswith(".syntyr-stage-")
+                        and args and args[0] == "xb"):
+                    raise OSError("simulated stage error")
                 return original_open(path, *args, **kwargs)
 
-            with patch.object(Path, "open", fail_on_last_asset):
-                with self.assertRaisesRegex(OSError, "simulated later asset failure"):
+            with patch.object(Path, "open", fail_second_stage):
+                with self.assertRaisesRegex(OSError, "simulated stage error"):
+                    apply_install(plan, project)
+            self.assertEqual(license_target.read_text(), license_entry["_content"])
+            self.assertFalse((project / "syntyr/css/syntyr.core.css").exists())
+            self.assertFalse(list(project.glob(".syntyr-stage-*")))
+
+    def test_late_publish_failure_keeps_complete_assets_for_safe_retry(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            project = Path(tmp)
+            plan = plan_install("settings-form", project)
+            license_entry = next(x for x in plan["files"] if x["path"] == "syntyr/LICENSE")
+            license_target = project / license_entry["path"]
+            license_target.parent.mkdir(parents=True)
+            license_target.write_text(license_entry["_content"])
+            plan = plan_install("settings-form", project)
+            first = project / "syntyr/css/syntyr.core.css"
+            last = project / "syntyr/blocks/settings-form.html"
+            original_link = os.link
+
+            def fail_last_link(source, target, **kwargs):
+                if target == last:
+                    raise OSError("simulated publish failure")
+                return original_link(source, target, **kwargs)
+
+            with patch("scripts.registry_install.os.link", fail_last_link):
+                with self.assertRaisesRegex(OSError, "simulated publish failure"):
                     apply_install(plan, project)
 
-            self.assertFalse(
-                (project / "syntyr/css/syntyr.core.css").exists(),
-                "a failed multi-asset install must remove earlier new files",
-            )
-            self.assertFalse(failing_target.exists())
-            self.assertEqual(
-                license_target.read_text(encoding="utf-8"),
-                license_entry["_content"],
-                "previously identical customer files must remain untouched",
-            )
+            self.assertTrue(first.is_file(), "complete earlier asset must not be deleted")
+            self.assertEqual(first.read_text(), plan["files"][0]["_content"])
+            self.assertFalse(last.exists())
+            self.assertEqual(license_target.read_text(), license_entry["_content"])
+            self.assertFalse(list(project.glob(".syntyr-stage-*")))
 
             apply_install(plan_install("settings-form", project), project)
-            self.assertTrue(failing_target.is_file())
             self.assertTrue(all(item["status"] == "identical" for item in
                                 plan_install("settings-form", project)["files"]))
 
+    def test_concurrent_destination_creation_never_overwrites_customer_data(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            project = Path(tmp)
+            plan = plan_install("core", project)
+            target = project / "syntyr/css/syntyr.core.css"
+            original_link = os.link
 
+            def competing_link(source, destination, **kwargs):
+                if destination == target:
+                    target.write_bytes(b"customer replacement")
+                return original_link(source, destination, **kwargs)
 
-    def test_rollback_preserves_identical_replacement_during_write(self):
+            with patch("scripts.registry_install.os.link", competing_link):
+                with self.assertRaisesRegex(RegistryError, "Concurrent installation conflict"):
+                    apply_install(plan, project)
+            self.assertEqual(target.read_bytes(), b"customer replacement")
+            self.assertFalse(list(project.glob(".syntyr-stage-*")))
+
+    def test_committed_install_file_is_never_deleted_on_late_failure(self):
         with tempfile.TemporaryDirectory() as tmp:
             project = Path(tmp)
             plan = plan_install("settings-form", project)
-            first = project / plan["files"][0]["path"]
-            moved = first.with_suffix(".moved")
-            failing = project / plan["files"][-1]["path"]
-            content = plan["files"][0]["_content"].encode("utf-8")
-            original_open = Path.open
+            first = project / "syntyr/css/syntyr.core.css"
+            blocked_dir = project / "syntyr/blocks"
+            original_mkdir = Path.mkdir
 
-            @contextmanager
-            def swap_during_write(path):
-                with original_open(path, "xb") as stream:
-                    write = stream.write
+            def fail_late(path, *args, **kwargs):
+                if path == blocked_dir:
+                    raise OSError("simulated late filesystem failure")
+                return original_mkdir(path, *args, **kwargs)
 
-                    def write_then_replace(data):
-                        size = write(data)
-                        path.rename(moved)
-                        path.write_bytes(data)
-                        return size
-
-                    with patch.object(stream, "write", write_then_replace):
-                        yield stream
-
-            def injected_open(path, mode="r", *args, **kwargs):
-                if mode == "xb":
-                    if path == first:
-                        return swap_during_write(path)
-                    if path == failing:
-                        raise OSError("simulated later asset failure")
-                return original_open(path, mode, *args, **kwargs)
-
-            with patch.object(Path, "open", injected_open):
-                with self.assertRaisesRegex(OSError, "simulated later asset failure"):
+            with patch.object(Path, "mkdir", fail_late):
+                with self.assertRaisesRegex(OSError, "simulated late filesystem failure"):
                     apply_install(plan, project)
 
-            self.assertEqual(moved.read_bytes(), content)
-            self.assertEqual(first.read_bytes(), content)
-            self.assertFalse((project / "syntyr/LICENSE").exists())
+            self.assertTrue(first.is_file(),
+                            "already published assets must never be unlinked after later failure")
+            self.assertEqual(first.read_text(), plan["files"][0]["_content"])
+            self.assertFalse((blocked_dir / "settings-form.html").exists())
+            apply_install(plan_install("settings-form", project), project)
+            self.assertTrue(all(item["status"] == "identical" for item in
+                                plan_install("settings-form", project)["files"]))
 
     def test_cli_json_verify_reports_installation_integrity_without_source_leaks(self):
         with tempfile.TemporaryDirectory() as tmp:

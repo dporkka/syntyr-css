@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Reference Syntyr CSS components, class names, design tokens, scopes, and semantic HTML patterns for lightweight application interfaces.">
-  <meta name="syntyr-source-sha256" content="deb900aef94301ad7a0355244f3f420d8fbbbacefac4225836c597dcd6c64576">
+  <meta name="syntyr-source-sha256" content="92189e28f016620379e705d8a2025fe2b3f91b4510f617158f9bfde3df0bc009">
   <meta name="theme-color" content="#f5f7fb">
   <title>Syntyr CSS component and token contract — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/components">
@@ -101,6 +101,11 @@ the surrounding label should provide additional activation area.</p>
 <td>native heading/text</td>
 </tr>
 <tr>
+<td>Content lists</td>
+<td><code>.syn-list</code>, optional <code>.syn-list--compact</code> and <code>.syn-list--accent</code></td>
+<td>unclassed <code>ul</code> / <code>ol</code> in semantic mode</td>
+</tr>
+<tr>
 <td>Status</td>
 <td><code>.syn-badge</code>, <code>.syn-badge--accent</code>, <code>.syn-status</code> and semantic variants, <code>.syn-alert</code>, <code>.syn-alert--danger</code>, <code>.syn-meter</code> on <code>progress</code></td>
 <td>native <code>progress</code></td>
@@ -157,6 +162,7 @@ the surrounding label should provide additional activation area.</p>
 </tr>
 </tbody>
 </table>
+<p>For layout composition, the shell defaults to a maximum width of 72rem and a total inline inset of 2rem (normally 1rem per side). Set <code>--syn-shell-max</code> and <code>--syn-shell-inline-inset</code> on the shell to customize these dimensions. The header supports <code>--syn-header-gap</code> and <code>--syn-header-padding-block</code>; navigation supports <code>--syn-nav-gap</code>. All controls are optional and preserve existing defaults.</p>
 <p>For wrapping action/filter clusters, use existing <code>.syn-inline</code> with optional
 <code>--syn-inline-align</code>, <code>--syn-inline-justify</code> and <code>--syn-inline-gap</code>.
 For a main region followed by an aside, <code>.syn-sidecar</code> wraps intrinsically
@@ -194,6 +200,33 @@ or use the <a href="editor-integration.html">editor integration instructions</a>
 <p>Use native button <code>popovertarget=&quot;id&quot;</code> to control a popover and <code>commandfor=&quot;id&quot; command=&quot;show-modal&quot;</code> to open a dialog in supporting browsers. This last native dialog invoker API has newer browser support; provide alternate ways to reach important content where needed. Do not build custom ARIA dialog/tab/combobox patterns unless they are tested and necessary.</p>
 <p>For component-level package imports and optional native UI recipes, see
 <a href="native-patterns.html">native patterns</a>.</p>
+<h3 id="content-lists-and-grouped-rows-alpha5-source-candidate">Content lists and grouped rows (alpha.5 source candidate)</h3>
+<p>Use an ordinary <code>&lt;ul&gt;</code> or <code>&lt;ol&gt;</code> inside <code>.syn-semantic</code> for native list
+spacing, nesting and markers. When loading <strong>core only</strong>, opt into the same
+scoped list presentation with <code>.syn-list</code>. It preserves native bullet shapes,
+ordered numbering (<code>start</code>, <code>reversed</code>, <code>value</code>), writing direction and
+screen-reader list semantics. <code>.syn-list--compact</code> reduces vertical item gaps
+and <code>.syn-list--accent</code> colors the top-level markers; both are optional.
+Set <code>--syn-list-item-gap</code> locally to override the item rhythm.</p>
+<pre tabindex="0"><code class="language-html">&lt;ul class=&quot;syn-list syn-list--accent&quot;&gt;
+  &lt;li&gt;Accessible headings&lt;/li&gt;
+  &lt;li&gt;Native nested lists
+    &lt;ul&gt;&lt;li&gt;First detail&lt;/li&gt;&lt;li&gt;Second detail&lt;/li&gt;&lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol class=&quot;syn-list syn-list--compact&quot; start=&quot;9&quot;&gt;
+  &lt;li&gt;Review&lt;/li&gt;&lt;li&gt;Publish&lt;/li&gt;
+&lt;/ol&gt;
+</code></pre>
+<p><code>.syn-feature-list</code> is a legible, accent-marked list intended for pricing and
+features; override its row gap with <code>--syn-feature-list-gap</code>. The distinct
+<code>.syn-list-group</code> is for markerless grouped navigation or collection rows.
+Customize row density by setting <code>--syn-list-row-padding</code> on a containing
+<code>.syn-list-group</code> rather than creating a new component. When removing markers
+with <code>list-style: none</code>, Safari/VoiceOver may not expose the list as a list;
+add <code>role=&quot;list&quot;</code> to the native <code>ul</code> or <code>ol</code> if list semantics are intended.
+Do <strong>not</strong> apply a global marker reset or use fake list text in place of
+semantic list markup.</p>
 <h2 id="standard-low-entropy-component-inventory">Standard low-entropy component inventory</h2>
 <p><strong>Standard does not mean a CSS class for every HTML element.</strong> Use
 <code>syntyr.core.css</code> for explicitly classed components and
@@ -529,7 +562,11 @@ toast lifecycles) belong to the host app, not a CSS runtime.</p>
 </tr>
 <tr>
 <td><code>--syn-space-1</code> ... <code>--syn-space-5</code></td>
-<td>Spacing scale</td>
+<td>Stable fixed spacing scale</td>
+</tr>
+<tr>
+<td><code>--syn-space-fluid-1</code> ... <code>--syn-space-fluid-4</code></td>
+<td>Optional fluid gaps and padding, bounded by adjacent fixed tokens (unreleased alpha.5)</td>
 </tr>
 <tr>
 <td><code>--syn-cut</code>, <code>--syn-radius</code>, <code>--syn-line</code>, <code>--syn-control-height</code></td>
@@ -710,10 +747,12 @@ block start so vertical connectors do not cross the marker or its numeral.</p>
 reuses these steps with existing activity timelines and approval surfaces.
 These classes are not included in the published immutable alpha.4 release.</p>
         </article>
-        <aside class="docs-article-sidebar"><nav aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#loading-and-scoping">Loading and scoping</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#components">Components</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#optional-composition-utilities-and-component-overrides">Optional composition utilities and component overrides</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#content-lists-and-grouped-rows-alpha5-source-candidate">Content lists and grouped rows (alpha.5 source candidate)</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#standard-low-entropy-component-inventory">Standard low-entropy component inventory</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#native-choices-filters-and-rich-list-rows-alpha5-source-candidate">Native choices, filters and rich list rows (alpha.5 source candidate)</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#choice-cards">Choice cards</a>
@@ -735,7 +774,38 @@ These classes are not included in the published immutable alpha.4 release.</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#visual-role-examples">Visual role examples</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#progressive-rendering-extensions">Progressive rendering extensions</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#workflow-steps-source-candidate-only">Workflow steps (source candidate only)</a>
-        </nav></aside>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#loading-and-scoping">Loading and scoping</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#components">Components</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#optional-composition-utilities-and-component-overrides">Optional composition utilities and component overrides</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#content-lists-and-grouped-rows-alpha5-source-candidate">Content lists and grouped rows (alpha.5 source candidate)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#standard-low-entropy-component-inventory">Standard low-entropy component inventory</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#native-choices-filters-and-rich-list-rows-alpha5-source-candidate">Native choices, filters and rich list rows (alpha.5 source candidate)</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#choice-cards">Choice cards</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#validation-browser-and-server">Validation (browser and server)</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#native-filter-choices">Native filter choices</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#rich-collection-rows">Rich collection rows</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#neutral-first-visual-styling">Neutral-first visual styling</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#native-html-elements-optional-semantic-mode">Native HTML elements (optional semantic mode)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#additional-common-ui-elements-and-semantic-html">Additional common UI elements and semantic HTML</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#theme-tokens">Theme tokens</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#optional-charts-and-microvisualizations">Optional charts and microvisualizations</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#accessibility-and-performance-contracts">Accessibility and performance contracts</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#distribution-behavior">Distribution behavior</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#licensing-and-provenance">Licensing and provenance</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#embedded-versus-full-page-usage">Embedded versus full-page usage</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#v03-compositional-patterns-no-build-step">v0.3 compositional patterns (no build step)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#optional-saas-business-and-cli-compositions-development-branch">Optional SaaS, business and CLI compositions (development branch)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#minimalist-compositions-experimental">Minimalist compositions (experimental)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#visual-role-examples">Visual role examples</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#progressive-rendering-extensions">Progressive rendering extensions</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#workflow-steps-source-candidate-only">Workflow steps (source candidate only)</a>
+            </nav>
+          </details>
+        </aside>
       </div>
       <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="components.md">Markdown source</a></nav>
     </main>

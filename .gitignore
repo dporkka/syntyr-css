@@ -8,6 +8,7 @@ previews/
 
 release/
 .cloudflare-public/
+.saas-admin-public/
 
 # The Hugo documentation proof never checks in its generated output.
 experiments/hugo/public/
@@ -50,3 +51,6 @@ examples/next-app-router/.next/
 
 # Generated optional portable CMS starter website.
 examples/cms-starter/_site/
+
+# Separate generated SaaS marketing deployment output (not source assets)
+deploy/saas-marketing/.public/

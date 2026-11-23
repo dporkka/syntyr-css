@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="These are MIT-licensed, plain-HTML examples . Copy and modify them without installing a Syntyr CLI, template registry, React, or a JavaScript runtime…">
-  <meta name="syntyr-source-sha256" content="9830b8c01a6fd9f082d97a610e849f3965ac59bfb676a985162e6136a1b3c64e">
+  <meta name="description" content="Prefer an interactive starting point? The Syntyr Form Customizer generates copyable forms and standalone HTML, with native form submission and no…">
+  <meta name="syntyr-source-sha256" content="58f99991c44d80ad19305264445ba2ebc104f05a32b73725258b983122d0e635">
   <meta name="theme-color" content="#f5f7fb">
   <title>Copy-owned form recipes — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/component-recipes">
@@ -35,6 +35,7 @@
       <div class="docs-article-layout">
         <article class="docs-prose" aria-label="Copy-owned form recipes">
 <h1 id="copy-owned-form-recipes">Copy-owned form recipes</h1>
+<p>Prefer an interactive starting point? The <a href="form-builder.html">Syntyr Form Customizer</a> generates copyable forms and standalone HTML, with native form submission and no JavaScript in the output. Configure a real server endpoint before publishing.</p>
 <p>These are <strong>MIT-licensed, plain-HTML examples</strong>. Copy and modify them without installing a Syntyr CLI, template registry, React, or a JavaScript runtime. Syntyr provides presentation; your browser and application provide behavior.</p>
 <p>Load <code>dist/syntyr.core.css</code> and apply <code>.syn-root</code> on a stable ancestor. Input groups and fields are included in core. The examples below also work in Go/templ, Askama, Django templates, Astro, React, and HTMX.</p>
 <h2 id="1-labeled-field-with-assistance-and-server-side-validation">1. Labeled field with assistance and server-side validation</h2>
@@ -186,7 +187,8 @@ theme scope; they do not require Sass or JavaScript. For button color changes,
 choose foreground/hover colors that meet applicable contrast requirements.</p>
 <p><a href="../examples/form-state-contracts.html">See the static example with server-error, valid, disabled and token states</a>.</p>
         </article>
-        <aside class="docs-article-sidebar"><nav aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#1-labeled-field-with-assistance-and-server-side-validation">1. Labeled field with assistance and server-side validation</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#2-search-field-with-a-connected-button">2. Search field with a connected button</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#search-results-accessibility-and-enhancement-contract">Search results, accessibility, and enhancement contract</a>
@@ -196,7 +198,22 @@ choose foreground/hover colors that meet applicable contrast requirements.</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#6-native-readonly-text-fields">6. Native readonly text fields</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#optional-companion-styles">Optional companion styles</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#server-owned-validation-and-local-component-variables-alpha5-candidate">Server-owned validation and local component variables (alpha.5 candidate)</a>
-        </nav></aside>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#1-labeled-field-with-assistance-and-server-side-validation">1. Labeled field with assistance and server-side validation</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#2-search-field-with-a-connected-button">2. Search field with a connected button</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#search-results-accessibility-and-enhancement-contract">Search results, accessibility, and enhancement contract</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#3-input-addon-currency-and-unit">3. Input addon (currency and unit)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#4-container-responsive-horizontal-form">4. Container-responsive horizontal form</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#5-server-rendered-error-recovery">5. Server-rendered error recovery</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#6-native-readonly-text-fields">6. Native readonly text fields</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#optional-companion-styles">Optional companion styles</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#server-owned-validation-and-local-component-variables-alpha5-candidate">Server-owned validation and local component variables (alpha.5 candidate)</a>
+            </nav>
+          </details>
+        </aside>
       </div>
       <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="component-recipes.md">Markdown source</a></nav>
     </main>

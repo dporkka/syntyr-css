@@ -37,6 +37,11 @@
       "description": "Warning-state variant of a text-based alert."
     },
     {
+      "name": "syn-animate--loop",
+      "module": "motion.css",
+      "description": "Loop appearance variant of the animate component; see motion.css for styles."
+    },
+    {
       "name": "syn-app-card",
       "module": "recipes.css",
       "description": "App card presentation in the recipes.css module; use semantic HTML and consult its component example."
@@ -115,6 +120,16 @@
       "name": "syn-badge--accent",
       "module": "components/typography.css",
       "description": "Accent-emphasis variant of a badge or status label."
+    },
+    {
+      "name": "syn-bento-card--wide",
+      "module": "recipes.css",
+      "description": "Span two bento tracks only when the parent container has enough room."
+    },
+    {
+      "name": "syn-bento-grid",
+      "module": "recipes.css",
+      "description": "Optional container-aware card grid for responsive feature compositions."
     },
     {
       "name": "syn-body",
@@ -270,6 +285,11 @@
       "name": "syn-code-figure",
       "module": "native-recipes.css",
       "description": "Code figure presentation in the native-recipes.css module; use semantic HTML and consult its component example."
+    },
+    {
+      "name": "syn-code-scroll",
+      "module": "components/data.css",
+      "description": "Code scroll presentation in the components/data.css module; use semantic HTML and consult its component example."
     },
     {
       "name": "syn-collection-actions",
@@ -937,6 +957,86 @@
       "description": "Icon presentation in the symbols.css module; use semantic HTML and consult its component example."
     },
     {
+      "name": "syn-icon--bounce",
+      "module": "symbols.css",
+      "description": "Bounce appearance variant of the icon component; see symbols.css for styles."
+    },
+    {
+      "name": "syn-icon--flash",
+      "module": "symbols.css",
+      "description": "Flash appearance variant of the icon component; see symbols.css for styles."
+    },
+    {
+      "name": "syn-icon--flip",
+      "module": "symbols.css",
+      "description": "Flip appearance variant of the icon component; see symbols.css for styles."
+    },
+    {
+      "name": "syn-icon--float",
+      "module": "symbols.css",
+      "description": "Float appearance variant of the icon component; see symbols.css for styles."
+    },
+    {
+      "name": "syn-icon--heartbeat",
+      "module": "symbols.css",
+      "description": "Heartbeat appearance variant of the icon component; see symbols.css for styles."
+    },
+    {
+      "name": "syn-icon--nudge-left",
+      "module": "symbols.css",
+      "description": "Nudge left appearance variant of the icon component; see symbols.css for styles."
+    },
+    {
+      "name": "syn-icon--nudge-right",
+      "module": "symbols.css",
+      "description": "Nudge right appearance variant of the icon component; see symbols.css for styles."
+    },
+    {
+      "name": "syn-icon--on-interact",
+      "module": "symbols.css",
+      "description": "On interact appearance variant of the icon component; see symbols.css for styles."
+    },
+    {
+      "name": "syn-icon--ping",
+      "module": "symbols.css",
+      "description": "Ping appearance variant of the icon component; see symbols.css for styles."
+    },
+    {
+      "name": "syn-icon--pop",
+      "module": "symbols.css",
+      "description": "Pop appearance variant of the icon component; see symbols.css for styles."
+    },
+    {
+      "name": "syn-icon--pulse",
+      "module": "symbols.css",
+      "description": "Pulse appearance variant of the icon component; see symbols.css for styles."
+    },
+    {
+      "name": "syn-icon--shake",
+      "module": "symbols.css",
+      "description": "Shake appearance variant of the icon component; see symbols.css for styles."
+    },
+    {
+      "name": "syn-icon--spin",
+      "module": "symbols.css",
+      "description": "Spin appearance variant of the icon component; see symbols.css for styles."
+    },
+    {
+      "name": "syn-icon--swing",
+      "module": "symbols.css",
+      "description": "Swing appearance variant of the icon component; see symbols.css for styles."
+    },
+    {
+      "name": "syn-icon--wiggle",
+      "module": "symbols.css",
+      "description": "Wiggle appearance variant of the icon component; see symbols.css for styles."
+    },
+    {
+      "name": "syn-image-gallery",
+      "module": "components/patterns.css",
+      "description": "Image gallery presentation in the components/patterns.css module; use semantic HTML and consult its component example."
+    },
+    {
       "name": "syn-inline",
       "module": "components/layout.css",
       "description": "Inline, wrapping layout for small groups of peers."
@@ -977,9 +1077,24 @@
       "description": "Lead paragraph typography beneath a heading."
     },
     {
+      "name": "syn-list",
+      "module": "components/typography.css",
+      "description": "Scoped native bullet or numbered list for core-only consumers."
+    },
+    {
+      "name": "syn-list--accent",
+      "module": "components/typography.css",
+      "description": "Accent-colored top-level list markers; native numbering preserved."
+    },
+    {
+      "name": "syn-list--compact",
+      "module": "components/typography.css",
+      "description": "Reduced vertical item rhythm for native list content."
+    },
+    {
       "name": "syn-list-group",
       "module": "components/patterns.css",
-      "description": "Grouped list presentation; preserve semantic list markup."
+      "description": "Grouped markerless navigation or collection list; keep list semantics."
     },
     {
       "name": "syn-list-row",
@@ -1005,6 +1120,31 @@
       "name": "syn-logo",
       "module": "components/typography.css",
       "description": "Logo presentation in the components/typography.css module; use semantic HTML and consult its component example."
+    },
+    {
+      "name": "syn-logo-marquee",
+      "module": "motion.css",
+      "description": "Logo marquee presentation in the motion.css module; use semantic HTML and consult its component example."
+    },
+    {
+      "name": "syn-logo-marquee__group",
+      "module": "motion.css",
+      "description": "Group part of the logo marquee component; see motion.css for markup."
+    },
+    {
+      "name": "syn-logo-marquee__row",
+      "module": "motion.css",
+      "description": "Row part of the logo marquee component; see motion.css for markup."
+    },
+    {
+      "name": "syn-logo-marquee__track",
+      "module": "motion.css",
+      "description": "Track part of the logo marquee component; see motion.css for markup."
+    },
+    {
+      "name": "syn-logo-marquee__wordmark",
+      "module": "motion.css",
+      "description": "Wordmark part of the logo marquee component; see motion.css for markup."
     },
     {
       "name": "syn-media-card",
@@ -1040,6 +1180,11 @@
       "name": "syn-media-card__visual",
       "module": "media.css",
       "description": "Visual part of the media card component; see media.css for markup."
+    },
+    {
+      "name": "syn-media-figure",
+      "module": "components/patterns.css",
+      "description": "Media figure presentation in the components/patterns.css module; use semantic HTML and consult its component example."
     },
     {
       "name": "syn-media-hero",
@@ -1100,6 +1245,16 @@
       "name": "syn-media-rail",
       "module": "media.css",
       "description": "Media rail presentation in the media.css module; use semantic HTML and consult its component example."
+    },
+    {
+      "name": "syn-media-rail--controls",
+      "module": "media.css",
+      "description": "Opt-in native CSS carousel previous/next buttons; Scroll Snap remains usable without CSS Overflow 5 support."
+    },
+    {
+      "name": "syn-media-rail--markers",
+      "module": "media.css",
+      "description": "Opt-in native CSS position markers; label each direct child with data-syn-scroll-label."
     },
     {
       "name": "syn-media-search",
@@ -1325,6 +1480,11 @@
       "name": "syn-scanlines",
       "module": "effects.css",
       "description": "Scanlines presentation in the effects.css module; use semantic HTML and consult its component example."
+    },
+    {
+      "name": "syn-scroll-rail",
+      "module": "recipes.css",
+      "description": "Optional, keyboard-scrollable card rail with native scroll snapping; host owns any arrow controls or filtering."
     },
     {
       "name": "syn-section-heading",
@@ -1560,6 +1720,11 @@
       "name": "syn-table--compact",
       "module": "recipes.css",
       "description": "Compact-density native table variant."
+    },
+    {
+      "name": "syn-table--readable",
+      "module": "recipes.css",
+      "description": "Optional min-width table presentation; use inside a keyboard-focusable syn-table-wrap region for narrow screens."
     },
     {
       "name": "syn-table--sticky",
@@ -1902,6 +2067,16 @@
       "name": "--syn-accent-soft",
       "module": "tokens.css",
       "description": "Accent soft design token from tokens.css; override in the appropriate Syntyr scope when needed."
+    },
+    {
+      "name": "--syn-animation-iterations",
+      "module": "motion.css",
+      "description": "Animation iterations design token from motion.css; override in the appropriate Syntyr scope when needed."
+    },
+    {
+      "name": "--syn-animation-keyframes",
+      "module": "motion.css",
+      "description": "Animation keyframes design token from motion.css; override in the appropriate Syntyr scope when needed."
     },
     {
       "name": "--syn-avatar-size",
@@ -2284,6 +2459,11 @@
       "description": "Horizon line accent share."
     },
     {
+      "name": "--syn-icon-motion-keyframes",
+      "module": "symbols.css",
+      "description": "Icon motion keyframes design token from symbols.css; override in the appropriate Syntyr scope when needed."
+    },
+    {
       "name": "--syn-inline-gap",
       "module": "components/layout.css",
       "description": "Inline flex gap; defaults to --syn-space-2."
@@ -2317,6 +2497,11 @@
       "name": "--syn-line",
       "module": "tokens.css",
       "description": "Line design token from tokens.css; override in the appropriate Syntyr scope when needed."
+    },
+    {
+      "name": "--syn-list-item-gap",
+      "module": "components/typography.css",
+      "description": "List item gap design token from components/typography.css; override in the appropriate Syntyr scope when needed."
     },
     {
       "name": "--syn-media-card-ratio",
@@ -2447,6 +2632,26 @@
       "name": "--syn-space-5",
       "module": "tokens.css",
       "description": "Spacing scale token 5; use for consistent layout spacing."
+    },
+    {
+      "name": "--syn-space-fluid-1",
+      "module": "tokens.css",
+      "description": "Spacing scale token fluid-1; use for consistent layout spacing."
+    },
+    {
+      "name": "--syn-space-fluid-2",
+      "module": "tokens.css",
+      "description": "Spacing scale token fluid-2; use for consistent layout spacing."
+    },
+    {
+      "name": "--syn-space-fluid-3",
+      "module": "tokens.css",
+      "description": "Spacing scale token fluid-3; use for consistent layout spacing."
+    },
+    {
+      "name": "--syn-space-fluid-4",
+      "module": "tokens.css",
+      "description": "Spacing scale token fluid-4; use for consistent layout spacing."
     },
     {
       "name": "--syn-stack-gap",

@@ -142,6 +142,12 @@ def build() -> str:
         f'<option value="{escape(category, quote=True)}">{escape(category)}</option>'
         for category in categories
     )
+    category_nav = "".join(
+        f'<a href="#block-title-{escape(next(block["id"] for block in blocks if block["category"] == category))}" '
+        f'data-block-category-link="{escape(category, quote=True)}">{escape(category)}'
+        f' <span>({sum(block["category"] == category for block in blocks)})</span></a>'
+        for category in categories
+    )
     cards = []
     for block in blocks:
         ident = block["id"]
@@ -162,9 +168,12 @@ def build() -> str:
           <span class="syn-badge">{escape(modules)}</span>
         </div>
         <p class="syn-muted">{escape(block['description'])}</p>
-        <div class="blocks-preview">
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview {escape(block['title'])}</summary>
+          <div class="blocks-preview">
 {preview}
-        </div>
+          </div>
+        </details>
         <details class="blocks-details">
           <summary data-block-source>View HTML source for {escape(block['title'])}</summary>
           <pre class="blocks-source"><code>{escape(snippet)}</code></pre>
@@ -173,6 +182,7 @@ def build() -> str:
                 aria-label="Copy HTML for {escape(block['title'], quote=True)}" hidden>Copy HTML</button>
       </article>""")
     icons = json.loads((ROOT / "blocks/icons.json").read_text(encoding="utf-8"))["icons"]
+    icon_count = len(icons)
     icon_cards = []
     for icon in icons:
         ident, label = escape(icon["id"]), escape(icon["label"])
@@ -186,6 +196,25 @@ def build() -> str:
           <div class="blocks-icon-preview">{svg}<strong>{label}</strong></div>
           <details><summary data-icon-source>SVG source for {escape(icon['label'])}</summary><pre><code>{escape(svg)}</code></pre></details>
         </div>""")
+    animation_cards = []
+    motion_examples = (("spin", "refresh"), ("pulse", "heart"),
+                       ("bounce", "arrow-up"), ("shake", "notification"),
+                       ("wiggle", "star"), ("pop", "check-circle"),
+                       ("float", "cloud"), ("swing", "notification"),
+                       ("heartbeat", "heart"), ("flash", "alert-circle"),
+                       ("ping", "wifi"), ("flip", "layers"),
+                       ("nudge-left", "arrow-left"), ("nudge-right", "arrow-right"))
+    icon_by_id = {icon["id"]: icon for icon in icons}
+    for preset, icon_id in motion_examples:
+        icon = icon_by_id[icon_id]
+        svg = ('<svg class="syn-icon syn-icon--' + preset + ' syn-icon--on-interact" '
+               'viewBox="0 0 24 24" fill="none" stroke="currentColor" '
+               'stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" '
+               'aria-hidden="true" focusable="false">' + icon["body"] + '</svg>')
+        animation_cards.append(
+            '<button type="button" class="syn-button blocks-motion-example">'
+            + svg + '<span>' + preset.capitalize() + '</span></button>'
+        )
     asset_cards = []
     for ident, title in ASSETS:
         asset_cards.append(f"""
@@ -202,8 +231,8 @@ def build() -> str:
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="{count} original HTML/CSS blocks, 12 visual assets, and 24 SVG icon examples for Syntyr. View, filter, and copy without a framework.">
-  <title>Free HTML/CSS Blocks and UI Assets — Syntyr CSS</title>
+  <meta name="description" content="{count} original HTML/CSS blocks, 12 visual assets, and {icon_count} SVG icon examples for Syntyr. View, filter, and copy without a framework.">
+  <title>Free HTML/CSS Blocks for SaaS and Websites — Syntyr CSS</title>
   <link rel="stylesheet" href="../dist/syntyr.all.css">
   <link rel="stylesheet" href="docs.css">
   <link rel="stylesheet" href="blocks.css">
@@ -212,23 +241,79 @@ def build() -> str:
 </head>
 <body class="syn-root syn-page" data-syn-theme="studio">
   <a href="#blocks-main" class="syn-button blocks-skip">Skip to blocks</a>
-  <header class="syn-header syn-shell">
+  <header class="syn-header syn-shell docs-header">
     <a class="syn-logo" href="index.html">SYNTYR / BLOCKS &amp; ASSETS</a>
-    <nav class="syn-nav" aria-label="Documentation">
-      <a href="index.html">Gallery</a><a href="catalog.html">Components</a>
-      <a href="blocks-guide.html">Integration guide</a><a href="how-to.html">How-To</a>
+    <nav class="syn-nav" aria-label="Main navigation">
+      <a href="index.html#install">Get started</a>
+      <a href="catalog.html">Components</a>
+      <a href="blocks.html">Blocks</a>
+      <a href="../tools/">Free tools</a>
+      <a href="index.html">Docs</a>
+      <a href="https://github.com/dporkka/syntyr-css">GitHub</a>
     </nav>
+    <details class="site-mobile-menu">
+      <summary>Menu</summary>
+      <nav aria-label="Mobile navigation">
+        <a href="index.html#install">Get started</a>
+        <a href="catalog.html">Components</a>
+        <a href="blocks.html">Blocks</a>
+        <a href="../tools/">Free tools</a>
+        <a href="index.html">Docs</a>
+        <a href="https://github.com/dporkka/syntyr-css">GitHub</a>
+        <a href="blocks-guide.html">Integration guide</a>
+        <a href="how-to.html">How-To guides</a>
+      </nav>
+    </details>
   </header>
   <main class="syn-shell" id="blocks-main">
     <section class="docs-section">
       <p class="syn-eyebrow">COPY-OWNED / FRAMEWORK-INDEPENDENT</p>
-      <h1 class="syn-title">{count} production-shaped blocks.</h1>
+      <h1 class="syn-title">{count} free HTML and CSS UI blocks for websites and SaaS.</h1>
       <p class="syn-lede">Build faster with original HTML compositions styled by Syntyr.
       Every preview renders without JavaScript. Search, theme switching, and copying
       are documentation-only enhancements, not dependencies for your application.</p>
+      <aside id="blocks-release-scope" class="syn-panel" aria-labelledby="blocks-release-title">
+        <p class="syn-eyebrow">SOURCE PREVIEW / NOT A PUBLISHED RELEASE</p>
+        <h2 class="syn-heading" id="blocks-release-title">Unreleased alpha.5 section examples</h2>
+        <p>These copyable blocks target the experimental alpha.5 source candidate; they are not a guarantee of compatibility with the published v0.3.0-alpha.4 CSS. Verify the referenced modules before using them in production.</p>
+        <p><a href="index.html#install">Install published alpha.4 first</a> or <a href="blocks-guide.html">read the blocks integration guide</a>.</p>
+      </aside>
       <p class="syn-caption">These are static illustrative presentations: real authentication,
       billing, filtering, form validation, persistence and permissions belong to your application.
       <a href="blocks-guide.html">Read integration and accessibility guidance.</a></p>
+      <section class="blocks-pathways" aria-labelledby="blocks-pathways-heading">
+        <p class="syn-eyebrow">DISCOVER / BUILD COMPLETE PAGES</p>
+        <h2 class="syn-heading" id="blocks-pathways-heading">From small components to full layouts</h2>
+        <p class="syn-muted">Free examples are MIT-licensed. Commercial kits are concepts and not available for purchase.</p>
+        <div class="syn-grid">
+          <article class="syn-panel">
+            <p class="syn-eyebrow">FREE / MIT</p>
+            <h3 class="syn-heading"><a href="blocks.html">Free sections &amp; layouts</a></h3>
+            <p>Copy complete hero, support, feature, account, and documentation sections.</p>
+          </article>
+          <article class="syn-panel">
+            <p class="syn-eyebrow">FREE / MIT</p>
+            <h3 class="syn-heading"><a href="premium-compositions.html">Premium-inspired compositions</a></h3>
+            <p>Polished page anatomy and storytelling recipes, still part of the free CSS library.</p>
+            <p><a href="../examples/premium-compositions.html">Open the working HTML demo</a></p>
+          </article>
+          <article class="syn-panel">
+            <p class="syn-eyebrow">PRIVATE PREVIEW / NOT FOR SALE</p>
+            <h3 class="syn-heading"><a href="console-kit.html">Console Kit layout previews</a></h3>
+            <p>Static screenshots of application layouts. The private kit is not available for purchase.</p>
+          </article>
+          <article class="syn-panel">
+            <p class="syn-eyebrow">PRODUCT RESEARCH</p>
+            <h3 class="syn-heading"><a href="products.html">Products and future Premium layouts</a></h3>
+            <p><a href="pro.html">Pro SaaS templates concept</a> · <a href="studio.html">Studio website templates concept</a>.</p>
+            <p>See proposed paid section and application packs. No Premium products are available for purchase.</p>
+          </article>
+        </div>
+      </section>
+      <nav class="blocks-category-nav" aria-label="Browse blocks by category">
+        <span class="syn-caption">Jump to category</span>
+        {category_nav}
+      </nav>
       <div class="blocks-controls" id="blocks-controls" hidden>
         <div><label class="syn-label" for="blocks-search">Search blocks</label>
           <input class="syn-input" type="search" id="blocks-search" placeholder="Try pricing, settings, telemetry…" autocomplete="off"></div>
@@ -242,6 +327,9 @@ def build() -> str:
             <option value="terminal">Terminal</option><option value="corporate">Corporate</option>
             <option value="minimal">Minimal</option>
           </select></div>
+      </div>
+      <div class="blocks-preview-actions">
+        <button type="button" id="blocks-preview-toggle" class="syn-button" aria-controls="blocks-grid" aria-pressed="false" hidden>Show all previews</button>
       </div>
       <p id="blocks-results" class="syn-caption" role="status" aria-live="polite">{count} blocks available.</p>
       <p id="blocks-feedback" class="syn-caption" role="status" aria-live="polite" aria-atomic="true"></p>
@@ -260,11 +348,22 @@ def build() -> str:
     </section>
     <section class="docs-section" aria-labelledby="blocks-icons-heading">
       <p class="syn-eyebrow">INLINE SVG / NO ICON FONT</p>
-      <h2 id="blocks-icons-heading" class="syn-title">24 original SVG icon examples</h2>
+      <h2 id="blocks-icons-heading" class="syn-title">{icon_count} original SVG icon examples</h2>
       <p class="syn-muted">Small, copyable SVGs that inherit theme color and work with the existing
       Syntyr symbol-sizing contract. These are examples, not a bundled icon dependency.
       When icons are used alone as controls, add accessible names.</p>
+      <div class="blocks-icon-controls" id="blocks-icon-controls" hidden>
+        <label class="syn-label" for="blocks-icon-search">Find an icon</label>
+        <input class="syn-input" type="search" id="blocks-icon-search" placeholder="Search icons, e.g. mail, home, copy" autocomplete="off">
+      </div>
+      <p class="syn-caption" id="blocks-icon-results" role="status" aria-live="polite">{icon_count} icons available.</p>
       <div class="blocks-icons-grid">{''.join(icon_cards)}</div>
+      <h3 class="syn-heading">Icon animation presets</h3>
+      <p class="syn-muted">Hover or keyboard-focus these examples. Add a motion class to any icon,
+      plus <code>syn-icon--on-interact</code> to animate only during interaction. Continuous
+      animation is also supported. Motion respects reduced-motion preferences.
+      <a href="symbols.html">Read the CSS API and examples.</a></p>
+      <div class="syn-actions blocks-motion-examples">{''.join(animation_cards)}</div>
     </section>
     <section class="docs-section" aria-labelledby="blocks-type-heading">
       <p class="syn-eyebrow">FONT-AGNOSTIC / NO REMOTE FONTS</p>

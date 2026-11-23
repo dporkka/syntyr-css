@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Syntyr&#x27;s editor integration is optional . Applications still consume ordinary prebuilt CSS, HTML, and custom properties without Node, JavaScript, or a…">
-  <meta name="syntyr-source-sha256" content="134eda0d35e845c5dcbce6bc39cefe66cbccb5114e0dd3b13164354e46390cb4">
+  <meta name="syntyr-source-sha256" content="7ecfcc239d5c50eaaef516144d0cd5758e62716cf43ee1e6418eb2716e7bd4cc">
   <meta name="theme-color" content="#f5f7fb">
   <title>Syntyr editor autocomplete and metadata — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/editor-integration">
@@ -121,6 +121,48 @@ keywords, native HTML, semantic element names, actual <code>syn-*</code> classes
 <code>required_stylesheets</code>. The stylesheet list can include the separately opt-in
 semantic CSS module; loading <code>syntyr.core.css</code> alone is not always sufficient.
 The <code>module</code> field preserves the primary stylesheet shown in the gallery.</p>
+<h3 id="select-html-examples-by-task-and-installed-css">Select HTML examples by task and installed CSS</h3>
+<p>Every example now includes <strong>curated, non-exclusive <code>use_cases</code></strong> tags, stable
+<code>catalog_url</code> and <code>playground_url</code> fragments, plus the exact
+<code>required_stylesheets</code> list. The top-level <code>use_case_definitions</code> explains
+the five supported tags: <code>marketing-site</code>, <code>saas-dashboard</code>,
+<code>forms-workflow</code>, <code>content-docs</code>, and <code>navigation</code>.
+The <code>adoption_guidance</code> field describes CSS order, framework guidance,
+release boundaries, and browser fallback obligations. These are <strong>discovery
+hints</strong>, not a guarantee that a component implements application behavior.</p>
+<p>An editor or agent can select candidates deterministically without executing
+a runtime or downloading packages:</p>
+<pre tabindex="0"><code class="language-python">import json
+from pathlib import Path
+
+gallery = json.loads(Path(&quot;metadata/component-gallery.v1.json&quot;).read_text())
+installed = {&quot;syntyr.core.css&quot;, &quot;syntyr.recipes.css&quot;}  # actual installed files
+candidates = [
+    example for example in gallery[&quot;examples&quot;]
+    if &quot;saas-dashboard&quot; in example[&quot;use_cases&quot;]
+    and set(example[&quot;required_stylesheets&quot;]).issubset(installed)
+]
+for example in candidates:
+    print(example[&quot;title&quot;], example[&quot;catalog_url&quot;], example[&quot;required_stylesheets&quot;])
+</code></pre>
+<p>Use the selected example's <code>html</code> with a stable <code>.syn-root</code> ancestor and
+honor its CSS dependencies in order. Follow <code>playground_url</code> to inspect or
+edit it, and check <code>native_feature_requirements</code> before shipping. An empty
+feature list only means no <em>tracked</em> native interaction APIs were detected.
+The gallery's CSS-module and use-case dropdowns use the <strong>same authored
+catalog card labels and use-case tags</strong> as this generated JSON; scripts are
+needed only for gallery convenience, not for rendered Syntyr components.</p>
+<p>The additive <code>native_feature_requirements</code> array on each example records only
+three <em>detectable native HTML interaction contracts</em>: <code>popover</code>,
+<code>invoker-commands</code>, and <code>details-name</code>. These are derived from the example's
+parsed HTML, not its title or CSS theme. The companion
+<code>native_browser_features</code> dictionary supplies a short fallback description
+and an MDN documentation URL for each feature. Empty requirements mean <strong>none
+of these three detected features</strong>, not universal browser compatibility.
+The metadata intentionally omits unsupported browser-version guarantees, CSS
+feature detection, and false claims that application behaviors are complete.
+The optional gallery filter uses the same native element/attribute criteria,
+without JavaScript dependencies for consuming Syntyr CSS.</p>
 <p>From a source checkout, regenerate and verify with:</p>
 <pre tabindex="0"><code class="language-sh">python3 scripts/build_component_gallery.py
 python3 scripts/build_component_gallery.py --check
@@ -231,14 +273,29 @@ language-aware parsing. Semantic accessibility and actual loaded CSS still
 need browser and keyboard checks. No script or generated manifest is shipped
 to the browser by this integration.</p>
         </article>
-        <aside class="docs-article-sidebar"><nav aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#vs-code-and-compatible-editors">VS Code and compatible editors</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#audit-css-class-and-token-collisions">Audit CSS class and token collisions</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#regenerate-after-css-changes">Regenerate after CSS changes</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#generated-portable-component-gallery-for-builders">Generated portable component gallery for builders</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#select-html-examples-by-task-and-installed-css">Select HTML examples by task and installed CSS</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#optional-static-html-diagnostics">Optional static HTML diagnostics</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#agent-ready-composition-recipes">Agent-ready composition recipes</a>
-        </nav></aside>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#vs-code-and-compatible-editors">VS Code and compatible editors</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#audit-css-class-and-token-collisions">Audit CSS class and token collisions</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#regenerate-after-css-changes">Regenerate after CSS changes</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#generated-portable-component-gallery-for-builders">Generated portable component gallery for builders</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#select-html-examples-by-task-and-installed-css">Select HTML examples by task and installed CSS</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#optional-static-html-diagnostics">Optional static HTML diagnostics</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#agent-ready-composition-recipes">Agent-ready composition recipes</a>
+            </nav>
+          </details>
+        </aside>
       </div>
       <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="editor-integration.md">Markdown source</a></nav>
     </main>

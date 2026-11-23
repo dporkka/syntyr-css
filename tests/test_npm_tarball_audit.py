@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import gzip
 import io
+import json
 from pathlib import Path
 import tarfile
 import tempfile
@@ -68,6 +69,7 @@ class NpmTarballAuditTests(unittest.TestCase):
         package_files = expected_files(ROOT)
         for path in (
             "package/integrations/headless/interactions.css",
+            "package/integrations/htmx/syntyr.htmx.css",
             "package/integrations/dropdown/menu.mjs",
             "package/metadata/css-contract.v1.json",
             "package/metadata/component-gallery.v1.json",
@@ -77,6 +79,10 @@ class NpmTarballAuditTests(unittest.TestCase):
             "package/dist/syntyr.copy.d.mts",
         ):
             self.assertIn(path, package_files)
+
+    def test_rejects_missing_optional_htmx_stylesheet(self):
+        errors = self.check(archive_with(changes={"package/integrations/htmx/syntyr.htmx.css": None}))
+        self.assertTrue(any("missing" in err.lower() and "syntyr.htmx.css" in err for err in errors), errors)
 
     def test_rejects_missing_conditional_js_export(self):
         errors = self.check(archive_with(changes={"package/dist/syntyr.animate.mjs": None}))
@@ -140,6 +146,22 @@ class NpmTarballAuditTests(unittest.TestCase):
             "package/package.json": b'{"name":"@syntyr/css","exports":[]}',
         }))
         self.assertTrue(any("metadata" in err.lower() for err in errors), errors)
+
+    def test_css_side_effects_contract_is_required(self):
+        original = json.loads((ROOT / "package.json").read_text(encoding="utf-8"))
+        for invalid in (None, False, [], ["**/*.js"]):
+            with self.subTest(side_effects=invalid):
+                modified = dict(original)
+                if invalid is None:
+                    modified.pop("sideEffects", None)
+                else:
+                    modified["sideEffects"] = invalid
+                errors = self.check(archive_with(changes={
+                    "package/package.json": json.dumps(modified).encode("utf-8"),
+                }))
+                self.assertTrue(
+                    any("sideEffects" in error for error in errors), errors
+                )
 
     def test_rejects_bad_package_metadata_in_tarball(self):
         errors = self.check(archive_with(changes={"package/package.json": b'{"name": "something-else"}'}))

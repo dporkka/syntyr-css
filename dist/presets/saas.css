@@ -20,6 +20,12 @@
     --syn-space-3: 1.125rem;
     --syn-space-4: 1.75rem;
     --syn-space-5: 2.5rem;
+    /* Opt-in fluid rhythm, with fixed fallbacks for engines without vi units.
+       Existing --syn-space-* tokens and component defaults are unchanged. */
+    --syn-space-fluid-1: var(--syn-space-1);
+    --syn-space-fluid-2: var(--syn-space-2);
+    --syn-space-fluid-3: var(--syn-space-3);
+    --syn-space-fluid-4: var(--syn-space-4);
     --syn-cut: .9rem;
     --syn-radius: .25rem;
     --syn-line: 1.55;
@@ -34,6 +40,16 @@
     --syn-ease-enter: cubic-bezier(.16, 1, .3, 1);
     --syn-duration-fast: 150ms;
     --syn-duration-standard: 240ms;
+  }
+  /* vi is the logical viewport inline axis; no JavaScript or media queries.
+     Feature-gating also preserves fixed spacing in older CSS engines. */
+  @supports (width: 1vi) {
+    :where(.syn-root) {
+      --syn-space-fluid-1: clamp(var(--syn-space-1), calc(.25rem + .65vi), var(--syn-space-2));
+      --syn-space-fluid-2: clamp(var(--syn-space-2), calc(.5rem + 1vi), var(--syn-space-3));
+      --syn-space-fluid-3: clamp(var(--syn-space-3), calc(.75rem + 1.5vi), var(--syn-space-4));
+      --syn-space-fluid-4: clamp(var(--syn-space-4), calc(1rem + 2vi), var(--syn-space-5));
+    }
   }
   /* Derived surfaces recompute inside nested themes, not just on the parent. */
   :where(.syn-root, .syn-root [data-syn-theme]) {
@@ -334,9 +350,9 @@
 @layer syn.components {
   /* All component rules match the root itself or a descendant, never a host sibling. */
   :where(.syn-root, .syn-root *) {
-    &.syn-shell { width: min(100% - 2rem, 72rem); margin-inline: auto; }
-    &.syn-header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; padding-block: 2rem; }
-    &.syn-nav { display: flex; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    &.syn-shell { width: min(100% - var(--syn-shell-inline-inset, 2rem), var(--syn-shell-max, 72rem)); margin-inline: auto; }
+    &.syn-header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--syn-header-gap, 1rem); padding-block: var(--syn-header-padding-block, 2rem); }
+    &.syn-nav { display: flex; align-items: center; flex-wrap: wrap; gap: var(--syn-nav-gap, 1rem); }
     &.syn-nav a { color: var(--syn-muted); text-decoration: none; font: 600 var(--syn-type-sm) var(--syn-font-ui); }
     &.syn-nav a:hover, &.syn-nav a[aria-current] { color: var(--syn-accent); }
     &.syn-stage {
@@ -416,6 +432,27 @@
     &.syn-prose { max-width: 65ch; font: 400 var(--syn-type-body)/var(--syn-leading-body) var(--syn-font-ui); }
     &.syn-prose > :where(* + *) { margin-block-start: var(--syn-space-2); }
     &.syn-prose > :where(h2, h3, h4) { margin-block-start: var(--syn-space-4); }
+    /* Explicit native content lists for core-only consumers. Native list markers,
+       numbering, reversed/start/value semantics and wrapping remain intact. */
+    &.syn-list {
+      margin-block: var(--syn-space-2);
+      padding-inline-start: 1.5rem;
+      max-inline-size: 100%;
+      line-height: var(--syn-leading-body);
+    }
+    &.syn-list > li {
+      margin-block: var(--syn-list-item-gap, .35rem);
+      padding-inline-start: .125rem;
+      overflow-wrap: anywhere;
+    }
+    &.syn-list > li::marker { color: var(--syn-text-subtle); }
+    &.syn-list--accent > li::marker { color: var(--syn-accent); }
+    &.syn-list--compact { --syn-list-item-gap: .15rem; }
+    &.syn-list :is(ul, ol) {
+      margin-block: var(--syn-space-1);
+      padding-inline-start: 1.5rem;
+      max-inline-size: 100%;
+    }
     &.syn-lede { max-width: 56ch; color: var(--syn-muted); }
     &.syn-muted { color: var(--syn-text-subtle); }
     &.syn-mono { font-family: var(--syn-mono); font-variant-numeric: tabular-nums; }
@@ -855,6 +892,16 @@
     &.syn-meter::-webkit-progress-value { background: var(--syn-accent); }
     &.syn-meter::-moz-progress-bar { background: var(--syn-accent); }
     &.syn-table-wrap { max-inline-size: 100%; overflow-x: auto; overscroll-behavior-inline: contain; }
+    /* Code samples with long unbreakable content scroll locally rather than
+       forcing the entire document wider than a phone screen. */
+    &.syn-code-scroll {
+      display: block;
+      min-inline-size: 0;
+      max-inline-size: 100%;
+      overflow-x: auto;
+      overscroll-behavior-inline: contain;
+      tab-size: 2;
+    }
     /* Bounded, keyboard-scrollable overflow for large native tables. */
     &.syn-table-wrap--scroll { max-block-size: var(--syn-table-scroll-height, 24rem); overflow: auto; }
     &.syn-table { width: 100%; border-collapse: collapse; text-align: left; font: var(--syn-type-sm)/1.55 var(--syn-font-ui); }
@@ -913,6 +960,47 @@
   :where(.syn-root, .syn-root *) {
     &.syn-region { container-name: syn-region; container-type: inline-size; min-width: 0; }
     &.syn-split { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--syn-space-3); min-width: 0; }
+    /* Reusable image sections: native links provide full-size navigation without
+       a scripted lightbox; image dimensions and captions remain semantic. */
+    &.syn-image-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+      gap: var(--syn-space-2);
+      min-inline-size: 0;
+    }
+    &.syn-image-gallery > figure {
+      margin: 0;
+      min-inline-size: 0;
+      border: 1px solid var(--syn-frame);
+      background: var(--syn-surface);
+      overflow: hidden;
+    }
+    &.syn-image-gallery > figure > a { display: block; }
+    &.syn-image-gallery img {
+      display: block;
+      inline-size: 100%;
+      block-size: auto;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+    }
+    &.syn-image-gallery figcaption, &.syn-media-figure figcaption {
+      padding: .75rem var(--syn-space-2);
+      color: var(--syn-muted);
+      font: 400 var(--syn-type-sm)/1.5 var(--syn-font);
+    }
+    &.syn-media-figure {
+      margin: 0;
+      min-inline-size: 0;
+      overflow: hidden;
+      border: 1px solid var(--syn-frame);
+      background: var(--syn-surface);
+    }
+    &.syn-media-figure img {
+      display: block;
+      inline-size: 100%;
+      block-size: auto;
+      object-fit: cover;
+    }
     &.syn-stats { display: grid; gap: var(--syn-space-2); grid-template-columns: minmax(0, 1fr); }
     &.syn-stat { padding: var(--syn-space-3); border: 1px solid var(--syn-frame); background: var(--syn-surface); min-width: 0; }
     &.syn-stat-label { color: var(--syn-muted); font: 650 .8125rem/1.4 var(--syn-mono); letter-spacing: .05em; }
@@ -926,7 +1014,12 @@
     &.syn-price-card > .syn-button { margin-block-start: auto; }
     &.syn-price-value { margin: 0; color: var(--syn-text); font: 650 clamp(2rem, 5vw, 3rem)/1.1 var(--syn-mono); font-variant-numeric: tabular-nums; }
     &.syn-price-value small { color: var(--syn-muted); font: 400 .9rem var(--syn-font); }
-    &.syn-feature-list { display: grid; gap: .6rem; padding-inline-start: 1.2rem; margin: 0 0 var(--syn-space-3); color: var(--syn-muted); }
+    /* Marketing/pricing features need legible body contrast, not subdued text. */
+    &.syn-feature-list {
+      display: grid; gap: var(--syn-feature-list-gap, .6rem);
+      padding-inline-start: 1.5rem; margin: 0 0 var(--syn-space-3);
+      color: var(--syn-text); line-height: var(--syn-leading-body);
+    }
     &.syn-feature-list li::marker { color: var(--syn-accent); }
       &.syn-breadcrumbs ol { display: flex; align-items: center; flex-wrap: wrap; gap: .5rem; list-style: none; padding: 0; margin: 0; }
     &.syn-breadcrumbs li { display: inline-flex; align-items: center; gap: .5rem; min-width: 0; }
@@ -1123,7 +1216,7 @@
     &.syn-list-row {
       display: flex; gap: var(--syn-space-2); align-items: center;
       min-block-size: var(--syn-control-height);
-      min-inline-size: 0; padding: var(--syn-space-2);
+      min-inline-size: 0; padding: var(--syn-list-row-padding, var(--syn-space-2));
       color: var(--syn-text); text-decoration: none; overflow-wrap: anywhere;
     }
     &.syn-list-group > :where(li + li, .syn-list-row + .syn-list-row) { border-block-start: 1px solid var(--syn-border-default); }
@@ -1400,8 +1493,17 @@
     max-inline-size: 100%;
   }
   :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(li:not([class]), li[data-syn-semantic])) {
-    margin-block: .25rem;
+    margin-block: var(--syn-list-item-gap, .25rem);
     overflow-wrap: anywhere;
+  }
+  /* Nested lists retain their browser-native disc/circle/square and decimal
+     hierarchy. Only their local vertical rhythm is reduced; no marker reset. */
+  :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(
+    :is(ul:not([class]), ol:not([class]), menu:not([class]), ul[data-syn-semantic], ol[data-syn-semantic], menu[data-syn-semantic])
+    :is(ul:not([class]), ol:not([class]), menu:not([class]), ul[data-syn-semantic], ol[data-syn-semantic], menu[data-syn-semantic])
+  ) {
+    margin-block: var(--syn-space-1);
+    padding-inline-start: 1.5rem;
   }
   :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(dl:not([class]), dl[data-syn-semantic])) {
     margin-block: var(--syn-space-2);
@@ -1774,6 +1876,16 @@
     }
     /* Opt-in row density, never a global table override. */
     &.syn-table--compact :where(th, td) { padding-block: .375rem; padding-inline: .5rem; }
+    /* Keep dense columns readable in narrow embedded screens. Place inside a
+       named, keyboard-focusable syn-table-wrap so overflow stays local. */
+    &.syn-table--readable {
+      min-inline-size: var(--syn-table-readable-min, 38rem);
+    }
+    &.syn-table--readable :where(th, td) {
+      overflow-wrap: normal;
+      word-break: normal;
+    }
+
     &.syn-result-state {
       padding: clamp(1rem, 3vw, 2rem); min-inline-size: 0;
       border: 1px dashed var(--syn-border-default);
@@ -2165,6 +2277,39 @@
     }
     &.syn-activity-timeline time {
       display: block; color: var(--syn-muted); font-size: var(--syn-type-sm);
+    }
+
+    /* Generic card collection: a reusable CSS-only counterpart to syn-media-rail.
+       The rail is focusable and named in the copy-owned HTML; no autoplay or JS. */
+    &.syn-scroll-rail {
+      display: flex; gap: var(--syn-scroll-rail-gap, var(--syn-space-3));
+      min-inline-size: 0; max-inline-size: 100%;
+      padding: .25rem .25rem var(--syn-space-2);
+      overflow-x: auto; overflow-y: hidden;
+      overscroll-behavior-inline: contain; scroll-snap-type: inline proximity;
+      scroll-padding-inline: .25rem; scrollbar-width: thin;
+    }
+    &.syn-scroll-rail > * {
+      flex: 0 0 min(85%, var(--syn-scroll-rail-card-width, clamp(14rem, 32vw, 21rem)));
+      min-inline-size: 0; scroll-snap-align: start;
+    }
+    &.syn-scroll-rail:focus-visible {
+      outline: 3px solid var(--syn-focus-ring); outline-offset: 2px;
+    }
+
+    /* Grid remains responsive in narrow embeds, not only at viewport breakpoints.
+       Wide cards expand only when the grid itself has room for two tracks. */
+    &.syn-bento-grid {
+      display: grid; gap: var(--syn-bento-gap, var(--syn-space-2));
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+      container-type: inline-size; min-inline-size: 0;
+    }
+    &.syn-bento-grid > * { min-inline-size: 0; overflow-wrap: anywhere; }
+    @container (min-width: 37rem) {
+      &.syn-bento-grid > .syn-bento-card--wide { grid-column: span 2; }
+    }
+    @media (forced-colors: active) {
+      &.syn-scroll-rail:focus-visible { outline-color: Highlight; }
     }
 
     /* Product storytelling without canvas, filter blur, or automatic animation. */

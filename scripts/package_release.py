@@ -49,6 +49,8 @@ FILES = (
     "docs/native-patterns.md",
     "docs/radix-integration.md",
     "docs/framework-integrations.md",
+    "docs/htmx-components.md",
+    "integrations/htmx/syntyr.htmx.css",
     "docs/site-builders.md",
     "examples/platform-embed.html",
     "integrations/wordpress/syntyr-enqueue.php",

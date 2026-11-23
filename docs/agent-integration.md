@@ -28,6 +28,7 @@ runtime dependencies, connect to services, or publish a package:
 
 ```sh
 python3 scripts/syntyr_agent.py init --project /path/to/my-app --json
+python3 scripts/syntyr_agent.py info --project /path/to/my-app --json
 python3 scripts/syntyr_agent.py check --project /path/to/my-app --json /path/to/my-app/page.html
 ```
 
@@ -46,8 +47,16 @@ Choose `--release 0.3.0-alpha.5` only when deliberately testing the
 actually present in the selected CSS files; source-only selectors cannot
 appear in an alpha.4 reference.
 
-`check` validates the installed CSS asset hashes and literal `.html` files
-against that project's pinned release, returning structured, source-located
+`info` is read-only project discovery for coding agents. It reports the configured
+release (published or source candidate), its actual pinned CSS asset hashes and
+integrity statuses, supported themes, and portable Skill/reference paths. Exit
+code **0** means the pinned installation is healthy, **1** means degraded or
+invalid, and **2** means the project was not initialized. Do not infer active
+stylesheet imports or framework support from this inventory: the host
+application must still load and test the appropriate CSS. The command does
+not scan application code or need application dependencies.
+
+`check` validates the installed CSS asset hashes and literal `.html` files\nagainst that project's pinned release, returning structured, source-located
 JSON diagnostics. Its exit codes are **0** for checked and error-free HTML,
 **1** for errors, and **2** for incomplete coverage (for example, JSX/TSX or
 no HTML files). It is not a React/Vue/Svelte parser or a browser accessibility

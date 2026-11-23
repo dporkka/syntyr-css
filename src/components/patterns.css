@@ -3,6 +3,47 @@
   :where(.syn-root, .syn-root *) {
     &.syn-region { container-name: syn-region; container-type: inline-size; min-width: 0; }
     &.syn-split { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--syn-space-3); min-width: 0; }
+    /* Reusable image sections: native links provide full-size navigation without
+       a scripted lightbox; image dimensions and captions remain semantic. */
+    &.syn-image-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+      gap: var(--syn-space-2);
+      min-inline-size: 0;
+    }
+    &.syn-image-gallery > figure {
+      margin: 0;
+      min-inline-size: 0;
+      border: 1px solid var(--syn-frame);
+      background: var(--syn-surface);
+      overflow: hidden;
+    }
+    &.syn-image-gallery > figure > a { display: block; }
+    &.syn-image-gallery img {
+      display: block;
+      inline-size: 100%;
+      block-size: auto;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+    }
+    &.syn-image-gallery figcaption, &.syn-media-figure figcaption {
+      padding: .75rem var(--syn-space-2);
+      color: var(--syn-muted);
+      font: 400 var(--syn-type-sm)/1.5 var(--syn-font);
+    }
+    &.syn-media-figure {
+      margin: 0;
+      min-inline-size: 0;
+      overflow: hidden;
+      border: 1px solid var(--syn-frame);
+      background: var(--syn-surface);
+    }
+    &.syn-media-figure img {
+      display: block;
+      inline-size: 100%;
+      block-size: auto;
+      object-fit: cover;
+    }
     &.syn-stats { display: grid; gap: var(--syn-space-2); grid-template-columns: minmax(0, 1fr); }
     &.syn-stat { padding: var(--syn-space-3); border: 1px solid var(--syn-frame); background: var(--syn-surface); min-width: 0; }
     &.syn-stat-label { color: var(--syn-muted); font: 650 .8125rem/1.4 var(--syn-mono); letter-spacing: .05em; }
@@ -16,7 +57,12 @@
     &.syn-price-card > .syn-button { margin-block-start: auto; }
     &.syn-price-value { margin: 0; color: var(--syn-text); font: 650 clamp(2rem, 5vw, 3rem)/1.1 var(--syn-mono); font-variant-numeric: tabular-nums; }
     &.syn-price-value small { color: var(--syn-muted); font: 400 .9rem var(--syn-font); }
-    &.syn-feature-list { display: grid; gap: .6rem; padding-inline-start: 1.2rem; margin: 0 0 var(--syn-space-3); color: var(--syn-muted); }
+    /* Marketing/pricing features need legible body contrast, not subdued text. */
+    &.syn-feature-list {
+      display: grid; gap: var(--syn-feature-list-gap, .6rem);
+      padding-inline-start: 1.5rem; margin: 0 0 var(--syn-space-3);
+      color: var(--syn-text); line-height: var(--syn-leading-body);
+    }
     &.syn-feature-list li::marker { color: var(--syn-accent); }
       &.syn-breadcrumbs ol { display: flex; align-items: center; flex-wrap: wrap; gap: .5rem; list-style: none; padding: 0; margin: 0; }
     &.syn-breadcrumbs li { display: inline-flex; align-items: center; gap: .5rem; min-width: 0; }
@@ -213,7 +259,7 @@
     &.syn-list-row {
       display: flex; gap: var(--syn-space-2); align-items: center;
       min-block-size: var(--syn-control-height);
-      min-inline-size: 0; padding: var(--syn-space-2);
+      min-inline-size: 0; padding: var(--syn-list-row-padding, var(--syn-space-2));
       color: var(--syn-text); text-decoration: none; overflow-wrap: anywhere;
     }
     &.syn-list-group > :where(li + li, .syn-list-row + .syn-list-row) { border-block-start: 1px solid var(--syn-border-default); }

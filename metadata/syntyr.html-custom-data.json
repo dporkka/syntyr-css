@@ -34,6 +34,10 @@
           "description": "Warning-state variant of a text-based alert."
         },
         {
+          "name": "syn-animate--loop",
+          "description": "Loop appearance variant of the animate component; see motion.css for styles."
+        },
+        {
           "name": "syn-app-card",
           "description": "App card presentation in the recipes.css module; use semantic HTML and consult its component example."
         },
@@ -96,6 +100,14 @@
         {
           "name": "syn-badge--accent",
           "description": "Accent-emphasis variant of a badge or status label."
+        },
+        {
+          "name": "syn-bento-card--wide",
+          "description": "Span two bento tracks only when the parent container has enough room."
+        },
+        {
+          "name": "syn-bento-grid",
+          "description": "Optional container-aware card grid for responsive feature compositions."
         },
         {
           "name": "syn-body",
@@ -220,6 +232,10 @@
         {
           "name": "syn-code-figure",
           "description": "Code figure presentation in the native-recipes.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-code-scroll",
+          "description": "Code scroll presentation in the components/data.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-collection-actions",
@@ -754,6 +770,70 @@
           "description": "Icon presentation in the symbols.css module; use semantic HTML and consult its component example."
         },
         {
+          "name": "syn-icon--bounce",
+          "description": "Bounce appearance variant of the icon component; see symbols.css for styles."
+        },
+        {
+          "name": "syn-icon--flash",
+          "description": "Flash appearance variant of the icon component; see symbols.css for styles."
+        },
+        {
+          "name": "syn-icon--flip",
+          "description": "Flip appearance variant of the icon component; see symbols.css for styles."
+        },
+        {
+          "name": "syn-icon--float",
+          "description": "Float appearance variant of the icon component; see symbols.css for styles."
+        },
+        {
+          "name": "syn-icon--heartbeat",
+          "description": "Heartbeat appearance variant of the icon component; see symbols.css for styles."
+        },
+        {
+          "name": "syn-icon--nudge-left",
+          "description": "Nudge left appearance variant of the icon component; see symbols.css for styles."
+        },
+        {
+          "name": "syn-icon--nudge-right",
+          "description": "Nudge right appearance variant of the icon component; see symbols.css for styles."
+        },
+        {
+          "name": "syn-icon--on-interact",
+          "description": "On interact appearance variant of the icon component; see symbols.css for styles."
+        },
+        {
+          "name": "syn-icon--ping",
+          "description": "Ping appearance variant of the icon component; see symbols.css for styles."
+        },
+        {
+          "name": "syn-icon--pop",
+          "description": "Pop appearance variant of the icon component; see symbols.css for styles."
+        },
+        {
+          "name": "syn-icon--pulse",
+          "description": "Pulse appearance variant of the icon component; see symbols.css for styles."
+        },
+        {
+          "name": "syn-icon--shake",
+          "description": "Shake appearance variant of the icon component; see symbols.css for styles."
+        },
+        {
+          "name": "syn-icon--spin",
+          "description": "Spin appearance variant of the icon component; see symbols.css for styles."
+        },
+        {
+          "name": "syn-icon--swing",
+          "description": "Swing appearance variant of the icon component; see symbols.css for styles."
+        },
+        {
+          "name": "syn-icon--wiggle",
+          "description": "Wiggle appearance variant of the icon component; see symbols.css for styles."
+        },
+        {
+          "name": "syn-image-gallery",
+          "description": "Image gallery presentation in the components/patterns.css module; use semantic HTML and consult its component example."
+        },
+        {
           "name": "syn-inline",
           "description": "Inline, wrapping layout for small groups of peers."
         },
@@ -786,8 +866,20 @@
           "description": "Lead paragraph typography beneath a heading."
         },
         {
+          "name": "syn-list",
+          "description": "Scoped native bullet or numbered list for core-only consumers."
+        },
+        {
+          "name": "syn-list--accent",
+          "description": "Accent-colored top-level list markers; native numbering preserved."
+        },
+        {
+          "name": "syn-list--compact",
+          "description": "Reduced vertical item rhythm for native list content."
+        },
+        {
           "name": "syn-list-group",
-          "description": "Grouped list presentation; preserve semantic list markup."
+          "description": "Grouped markerless navigation or collection list; keep list semantics."
         },
         {
           "name": "syn-list-row",
@@ -808,6 +900,26 @@
         {
           "name": "syn-logo",
           "description": "Logo presentation in the components/typography.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-logo-marquee",
+          "description": "Logo marquee presentation in the motion.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-logo-marquee__group",
+          "description": "Group part of the logo marquee component; see motion.css for markup."
+        },
+        {
+          "name": "syn-logo-marquee__row",
+          "description": "Row part of the logo marquee component; see motion.css for markup."
+        },
+        {
+          "name": "syn-logo-marquee__track",
+          "description": "Track part of the logo marquee component; see motion.css for markup."
+        },
+        {
+          "name": "syn-logo-marquee__wordmark",
+          "description": "Wordmark part of the logo marquee component; see motion.css for markup."
         },
         {
           "name": "syn-media-card",
@@ -836,6 +948,10 @@
         {
           "name": "syn-media-card__visual",
           "description": "Visual part of the media card component; see media.css for markup."
+        },
+        {
+          "name": "syn-media-figure",
+          "description": "Media figure presentation in the components/patterns.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-media-hero",
@@ -884,6 +1000,14 @@
         {
           "name": "syn-media-rail",
           "description": "Media rail presentation in the media.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-media-rail--controls",
+          "description": "Opt-in native CSS carousel previous/next buttons; Scroll Snap remains usable without CSS Overflow 5 support."
+        },
+        {
+          "name": "syn-media-rail--markers",
+          "description": "Opt-in native CSS position markers; label each direct child with data-syn-scroll-label."
         },
         {
           "name": "syn-media-search",
@@ -1064,6 +1188,10 @@
         {
           "name": "syn-scanlines",
           "description": "Scanlines presentation in the effects.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-scroll-rail",
+          "description": "Optional, keyboard-scrollable card rail with native scroll snapping; host owns any arrow controls or filtering."
         },
         {
           "name": "syn-section-heading",
@@ -1252,6 +1380,10 @@
         {
           "name": "syn-table--compact",
           "description": "Compact-density native table variant."
+        },
+        {
+          "name": "syn-table--readable",
+          "description": "Optional min-width table presentation; use inside a keyboard-focusable syn-table-wrap region for narrow screens."
         },
         {
           "name": "syn-table--sticky",

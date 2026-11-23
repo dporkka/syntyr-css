@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Build accessible, progressively enhanced forms with Syntyr. Preview and export semantic HTML without runtime JavaScript.">
+  <title>Form Customizer — SYNTYR CSS</title>
+  <link rel="icon" href="../assets/syntyr-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="docs.css">
+  <link rel="stylesheet" href="form-builder.css">
+  <script type="module" src="form-builder.js"></script>
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <a class="syn-button form-builder-skip" href="#form-builder-main">Skip to form customizer</a>
+  <div class="syn-shell">
+    <header class="syn-header">
+      <a class="syn-logo" href="index.html">SYNTYR <span class="syn-muted">/ FORMS</span></a>
+      <nav class="syn-nav" aria-label="Form customizer navigation">
+        <a href="index.html">DOCUMENTATION</a>
+        <a href="component-recipes.html">FORM RECIPES</a>
+        <a href="page-builder.html">PAGE BUILDER</a>
+      </nav>
+    </header>
+    <main id="form-builder-main">
+      <section class="syn-stage form-builder-intro" aria-labelledby="form-builder-title">
+        <span class="syn-eyebrow">NATIVE HTML / ZERO-JS EXPORT</span>
+        <h1 class="syn-title" id="form-builder-title">Form customizer</h1>
+        <p class="syn-lede">Start with a template, customize accessible fields, and export a real HTML form. The editor uses JavaScript; the generated form does not.</p>
+      </section>
+
+      <noscript>
+        <section class="syn-panel" aria-label="No JavaScript alternative">
+          <p>The visual editor needs JavaScript. You can still build and publish forms without it: copy the <a href="../examples/form-composition.html">native form example</a> or <a href="component-recipes.html">HTML recipes</a>.</p>
+        </section>
+      </noscript>
+
+      <div class="form-builder-layout">
+        <section class="syn-panel form-builder-editor" aria-labelledby="form-builder-settings-title">
+          <h2 class="syn-heading" id="form-builder-settings-title">1. Configure your form</h2>
+            <p class="syn-caption form-builder-status" role="status" aria-live="polite" id="form-status">Loading form editor…</p>
+          <div class="form-builder-settings">
+            <label class="syn-label" for="form-template">START FROM A TEMPLATE
+              <select class="syn-select" id="form-template">
+                <option value="contact">Contact</option>
+                <option value="feedback">Feedback</option>
+                <option value="newsletter">Newsletter signup</option>
+                <option value="blank">Blank</option>
+              </select>
+            </label>
+            <label class="syn-label" for="form-theme">THEME
+              <select class="syn-select" id="form-theme">
+                <option value="studio">Studio</option>
+                <option value="grid">Grid</option>
+                <option value="noir">Noir</option>
+                <option value="industrial">Industrial</option>
+                <option value="terminal">Terminal</option>
+                <option value="corporate">Corporate</option>
+                <option value="minimal">Minimal</option>
+              </select>
+            </label>
+            <label class="syn-label" for="form-title">FORM TITLE
+              <input class="syn-input" id="form-title" maxlength="160">
+            </label>
+            <label class="syn-label" for="form-description">DESCRIPTION
+              <textarea class="syn-textarea" id="form-description" rows="2" maxlength="500"></textarea>
+            </label>
+            <label class="syn-label" for="form-action">SUBMISSION ENDPOINT
+              <input class="syn-input" id="form-action" type="text" maxlength="500" spellcheck="false" aria-describedby="form-action-help">
+            </label>
+            <p class="syn-help" id="form-action-help">Required: your own server route or an HTTPS form endpoint. Syntyr does not process submissions.</p>
+            <label class="syn-label" for="form-method">SUBMISSION METHOD
+              <select class="syn-select" id="form-method">
+                <option value="post">POST</option>
+                <option value="get">GET</option>
+              </select>
+            </label>
+            <label class="syn-label" for="form-submit-label">BUTTON TEXT
+              <input class="syn-input" id="form-submit-label" maxlength="100">
+            </label>
+          </div>
+          <div class="form-builder-fields-heading">
+            <h2 class="syn-heading" id="form-fields-title">2. Add and arrange fields</h2>
+            <p class="syn-caption">Labels, names and required constraints use real browser form semantics.</p>
+          </div>
+          <div class="form-builder-add">
+            <label class="syn-label" for="form-add-type">FIELD TYPE
+              <select class="syn-select" id="form-add-type">
+                <option value="text">Text</option>
+                <option value="email">Email</option>
+                <option value="tel">Phone</option>
+                <option value="url">URL</option>
+                <option value="number">Number</option>
+                <option value="date">Date</option>
+                <option value="textarea">Long text</option>
+                <option value="select">Select menu</option>
+                <option value="radio">Radio group</option>
+                <option value="checkbox">Checkbox</option>
+                <option value="file">File upload</option>
+              </select>
+            </label>
+            <button class="syn-button syn-button--primary" type="button" id="form-add-field">ADD FIELD</button>
+          </div>
+          <ol class="form-builder-field-list" id="form-field-list" aria-labelledby="form-fields-title"></ol>
+        </section>
+
+        <section class="form-builder-results" aria-label="Form preview and export">
+          <div class="syn-panel">
+            <div class="form-builder-result-heading">
+              <h2 class="syn-heading" id="form-preview-heading">3. Live preview</h2>
+              <span class="syn-caption">SANDBOXED / NO SUBMISSIONS</span>
+            </div>
+            <iframe id="form-preview" title="Sandboxed preview of generated native HTML form" sandbox="" referrerpolicy="no-referrer" aria-labelledby="form-preview-heading"></iframe>
+            <p class="syn-caption">Preview submission is intentionally blocked. Native required fields and form controls remain visible; test actual submissions on your own server.</p>
+          </div>
+          <div class="syn-panel">
+            <h2 class="syn-heading" id="form-code-heading">4. Copy or download HTML</h2>
+            <p class="syn-muted">Embed the generated section inside any HTML page. Include the Syntyr stylesheet once; no form JavaScript, framework, or build step is required.</p>
+            <label class="syn-label" for="form-code">EMBED HTML</label>
+            <textarea class="syn-textarea form-builder-code" id="form-code" rows="12" readonly spellcheck="false" aria-describedby="form-code-help"></textarea>
+            <p class="syn-help" id="form-code-help">Use your own form action. The downloadable page expects <code>syntyr.core.css</code> next to the HTML file.</p>
+            <div class="form-builder-export">
+              <button class="syn-button syn-button--primary" type="button" id="form-copy">COPY EMBED HTML</button>
+              <button class="syn-button" type="button" id="form-download">DOWNLOAD HTML PAGE</button>
+              <a class="syn-button" href="../dist/syntyr.core.css" download="syntyr.core.css">DOWNLOAD CSS</a>
+            </div>
+
+          </div>
+          <section class="syn-panel" aria-labelledby="form-publish-heading">
+            <h2 class="syn-heading" id="form-publish-heading">Progressive enhancement, by default</h2>
+            <p>Native labels, fieldsets, <code>required</code>, input types, <code>GET</code>/<code>POST</code>, and full-page submissions work without client JavaScript. Add HTMX, Alpine, React, or your own fetch handler later if you need inline results, conditional sections or multi-step flows.</p>
+            <p>Publishing requires a working submission endpoint. Validate and sanitize on the server, protect state-changing actions against CSRF, limit uploads, and provide a server-rendered success or error response. Client-side constraints alone are not security controls.</p>
+            <p class="syn-caption">Copyable form patterns: <a href="component-recipes.html">Syntyr form recipes</a> · <a href="../examples/form-composition.html">no-JavaScript example</a>.</p>
+          </section>
+        </section>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

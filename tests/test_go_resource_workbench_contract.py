@@ -32,7 +32,11 @@ class GoResourceWorkbenchContract(unittest.TestCase):
         self.assertTrue(any(tag == "caption" for tag, _ in tags))
         self.assertTrue(any(tag == "aside" for tag, _ in tags))
         self.assertTrue(any(tag == "form" and attrs.get("method") == "get" for tag, attrs in tags))
-        self.assertFalse(any(tag == "form" and attrs.get("method") == "post" for tag, attrs in tags))
+        post_forms = [attrs for tag, attrs in tags if tag == "form" and attrs.get("method") == "post"]
+        self.assertEqual(len(post_forms), 1, "only the local resource edit form may POST")
+        self.assertEqual(post_forms[0].get("action"), "/resource/edit")
+        self.assertTrue(any(tag == "input" and attrs.get("type") == "hidden"
+                            and attrs.get("name") == "csrf_token" for tag, attrs in tags))
         self.assertEqual(
             ["ids"],
             sorted(set(attrs.get("name") for tag, attrs in tags

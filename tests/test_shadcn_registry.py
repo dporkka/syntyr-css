@@ -32,9 +32,9 @@ class UniversalRegistryTests(unittest.TestCase):
         for item in index["items"]:
             self.assertEqual(item["type"], "registry:item")
             self.assertEqual(item["dependencies"], [])
-            self.assertEqual(len(item["files"]), 2)
-            self.assertEqual(item["files"][1]["path"], "LICENSE")
-            self.assertEqual(item["files"][1]["target"], "~/syntyr/LICENSE")
+            self.assertGreaterEqual(len(item["files"]), 2)
+            self.assertEqual(item["files"][-1]["path"], "LICENSE")
+            self.assertEqual(item["files"][-1]["target"], "~/syntyr/LICENSE")
             self.assertEqual(item["files"][0]["type"], "registry:file")
             self.assertTrue(item["files"][0]["target"].startswith("~/syntyr/"))
             payload = json.loads((REGISTRY / "r" / (item["name"] + ".json")).read_text(encoding="utf-8"))
@@ -42,7 +42,7 @@ class UniversalRegistryTests(unittest.TestCase):
             self.assertEqual(payload["type"], "registry:item")
             self.assertEqual(payload["files"][0]["target"], item["files"][0]["target"])
             self.assertIn("content", payload["files"][0])
-            self.assertEqual(payload["files"][1]["content"],
+            self.assertEqual(payload["files"][-1]["content"],
                              (ROOT / "LICENSE").read_text(encoding="utf-8"))
             self.assertNotIn("<script", payload["files"][0]["content"].lower())
             self.assertEqual(payload["dependencies"], [])

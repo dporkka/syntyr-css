@@ -1,0 +1,16 @@
+{
+  "name": "syntyr-cms-payload-fixture",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Optional Payload block definitions; not a Syntyr runtime dependency",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "export:fixture": "python3 ../../scripts/export_cms_adapter.py payload --input fixtures/home-document.json --output _portable/home.json",
+    "smoke": "tsc --outDir .generated --noEmit false && node scripts/smoke.mjs"
+  },
+  "devDependencies": {
+    "payload": "3.94.1",
+    "typescript": "5.9.3"
+  }
+}

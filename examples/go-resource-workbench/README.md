@@ -1,6 +1,6 @@
 # Syntyr Go Resource Workbench
 
-A runnable **server-rendered** enterprise resource workspace demonstrating how to compose existing Syntyr CSS classes without a frontend runtime. The records are fictional and held in a fixed in-memory slice.
+A runnable **server-rendered** resource workspace demonstrating how to compose existing Syntyr CSS classes without a frontend runtime. Fictional records start from a fixed in-memory dataset, and edits live only in the running Go process. No JavaScript, database, third-party Go modules or authentication service is required.
 
 ## Run
 
@@ -11,7 +11,9 @@ go test ./...
 go run . -addr 127.0.0.1:8767
 ```
 
-Open http://127.0.0.1:8767/resources. The demo serves the repository's already-built CSS from `../../dist`. Run from `examples/go-resource-workbench/`; if your CSS is elsewhere, pass `-dist /absolute/path/to/dist`.
+Open http://127.0.0.1:8767/resources. Select a record, change its owner or status, and save. The result uses an ordinary HTML POST and **303 See Other** redirect back to the updated inspector. Changes reset when the process restarts.
+
+The demo serves the repository's already-built CSS from `../../dist`. Run from `examples/go-resource-workbench/`; if your CSS is elsewhere, pass `-dist /absolute/path/to/dist`. The server refuses non-loopback `-addr` values because edit actions are **not authenticated**.
 
 ## Optional browser verification
 
@@ -35,8 +37,10 @@ The test compiles and runs the Go app on localhost, allocates a temporary binary
 - Checked-row bulk **preview** via a native GET form; the server validates IDs, removes duplicates and intersects choices with **the visible filtered page**. It cannot submit hidden rows from another page.
 - Explicit "Preview all matching" link spanning **all filtered pages**, not just the current page. It does **not** infer select-all from an empty checkbox form.
 - Empty-results and empty-selection screens. Input validation, output escaping, method checks and no-store response headers.
+- **Local-only real edit workflow:** select a visible record, use a native POST form to change owner/status, validate inputs server-side, update a mutex-protected in-memory resource store and redirect safely back to the record.
+- A cryptographically signed, session-cookie-bound CSRF field with `HttpOnly` and `SameSite=Strict`. No dynamic browser scripting, arbitrary redirect destinations or externally hosted assets.
 
-This is a self-contained example, not a new Syntyr CSS component or a full backend. No authentication, tenant isolation, CRUD writes, audit persistence, pagination, virtualization, export or database connections are included. **Do not deploy it as a live multi-tenant business application.** Integrating real data requires server-side tenant/RBAC checks, stable query scope, per-record authorization, CSRF protection for mutations, transaction semantics and audit logs.
+This is a self-contained example, not a new Syntyr CSS component or a full backend. It has filtering, pagination, selection previews and **in-memory edits**, but no authentication, tenant isolation, database persistence, audit logs, export, or user session management. **Do not deploy it as a live multi-tenant business application.** The demonstration's signed form token is not a substitute for identity, per-record authorization, durable storage, transactions, audit history or production security review. Integrating real data requires those application-owned controls.
 
 Pagination limits each rendered table to three records (to exercise the example); this is not a recommendation for production page size. A request for an invalid or out-of-range page fails with HTTP 400 instead of silently changing selection scope. The `/preview` endpoint only describes a proposed selection. It never changes records. Large paginated selections need a server-owned query snapshot or select-all-except contract; unchecked IDs on unloaded pages cannot be inferred from checkboxes.
 

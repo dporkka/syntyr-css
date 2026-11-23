@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Build MIT-licensed interface compositions with Syntyr CSS, including forms, layout flows, responsive sections, and SaaS presentation patterns.">
-  <meta name="syntyr-source-sha256" content="7a73b51e5387dde2f055dc8d786bbc74c0a72a60fb1840b680b6ed0e5f958d38">
+  <meta name="syntyr-source-sha256" content="6bd9448999c5407fcf92a6974086a2a6fbc86a29ff441b3536ac09d611b55965">
   <meta name="theme-color" content="#f5f7fb">
   <title>MIT-licensed composition recipes — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/recipes">
@@ -416,7 +416,7 @@ application CSS. Keep real document headings and reading order.</p>
 <li>Preserve search/filter/sort state in URL parameters. Announce actual result counts, not sample counts. Display no-result or service-error state only when it is true.</li>
 </ul>
 <p>The example is illustrative, <strong>not a configured server</strong>. Avoid relying on color alone to convey status. Test with a keyboard, screen reader, 320 CSS-pixel viewport, text zoom and forced-colors mode.</p>
-<p>For a <strong>runnable, zero-JavaScript reference</strong>, see the <a href="https://github.com/dporkka/syntyr-css/tree/main/examples/go-resource-workbench">Go resource workbench</a>. It composes the existing filter, table, bulk-action and inspector classes with real server-side GET filtering, status filters, sorting, column and theme settings, record links and read-only bulk-selection previews, and real previous/next pagination with preserved view state. Checked-row previews are limited to records on the current server-rendered page, whereas an explicit matching-scope preview spans all filtered pages. Unlike the static markup, the Go example actually constrains result sets. An empty checked selection never means all matching records: selecting the full matching set is an explicit separate link. The example has no writes, accounts, tenant isolation or durable authorization; production apps must supply those behaviors.</p>
+<p>For a <strong>runnable, zero-JavaScript reference</strong>, see the <a href="https://github.com/dporkka/syntyr-css/tree/main/examples/go-resource-workbench">Go resource workbench</a>. It composes the existing filter, table, bulk-action and inspector classes with real server-side GET filtering, status filters, sorting, column and theme settings, record links and read-only bulk-selection previews, and real previous/next pagination with preserved view state. Checked-row previews are limited to records on the current server-rendered page, whereas an explicit matching-scope preview spans all filtered pages. Unlike the static markup, the Go example actually constrains result sets. An empty checked selection never means all matching records: selecting the full matching set is an explicit separate link. The example additionally demonstrates a local-only native POST edit for owner and status with a signed CSRF form token, input validation and a safe redirect. Its in-memory changes reset on restart; the unauthenticated server refuses non-loopback binds. It has no accounts, tenant isolation, persistent records or durable authorization; production apps must supply those behaviors.</p>
 <h2 id="native-query-filters-and-record-review-alpha5-source-candidate">Native query filters and record review (alpha.5 source candidate)</h2>
 <p>The <a href="../examples/query-review.html">copy-owned filter and review composition</a>
 reuses <code>.syn-filter-bar</code>, <code>.syn-filter-choices</code>, <code>.syn-chip</code>,
@@ -491,7 +491,8 @@ in browser storage, or claim accessibility compliance without manual testing.</l
 <p>The markup belongs to the host application; this is an integration pattern,
 not a JavaScript permissions widget or a substitute for authorization.</p>
         </article>
-        <aside class="docs-article-sidebar"><nav aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#optional-vertical-flow">Optional vertical flow</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#1-responsive-telemetry-cards">1. Responsive telemetry cards</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#2-accessible-empty-state">2. Accessible empty state</a>
@@ -514,7 +515,35 @@ not a JavaScript permissions widget or a substitute for authorization.</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#native-query-filters-and-record-review-alpha5-source-candidate">Native query filters and record review (alpha.5 source candidate)</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#enterprise-collection-sheet-and-evidence-compositions-alpha5-source-candidate">Enterprise collection, sheet and evidence compositions (alpha.5 source candidate)</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#permission-matrix-rolecapability-review">Permission matrix — role/capability review</a>
-        </nav></aside>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#optional-vertical-flow">Optional vertical flow</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#1-responsive-telemetry-cards">1. Responsive telemetry cards</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#2-accessible-empty-state">2. Accessible empty state</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#3-three-card-pricing-display">3. Three-card pricing display</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#4-stateful-native-button-host-controlled">4. Stateful native button (host controlled)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#token-only-custom-theme">Token-only custom theme</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#crm-and-vertical-saas-patterns-alpha5-source-candidate">CRM and vertical SaaS patterns (alpha.5 source candidate)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#resizable-workspace-optional-behavior">Resizable workspace (optional behavior)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#operation-feedback-and-record-revisions-alpha5-source-candidate">Operation feedback and record revisions (alpha.5 source candidate)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#file-selection-and-lifecycle-presentation-alpha5-source-candidate">File selection and lifecycle presentation (alpha.5 source candidate)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#reusing-recipes-across-stacks">Reusing recipes across stacks</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#accessible-navigation-and-loading-placeholders">Accessible navigation and loading placeholders</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#server-rendered-saas-filter-and-settings-patterns">Server-rendered SaaS filter and settings patterns</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#composed-operations-workflows-progress-activity-and-decisions-alpha5-source-only">Composed operations workflows: progress, activity and decisions (alpha.5 source only)</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#1-progress-ordered-list-and-authoritative-state">1. Progress: ordered list and authoritative state</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#2-execution-activity-event-list-and-native-disclosures">2. Execution activity: event list and native disclosures</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#3-approval-honest-actions-and-durable-outcomes">3. Approval: honest actions and durable outcomes</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#intrinsic-responsive-layouts-optional-recipes-css">Intrinsic responsive layouts (optional recipes CSS)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#collection-workspaces-and-error-recovery-source-candidate">Collection workspaces and error recovery (source candidate)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#native-query-filters-and-record-review-alpha5-source-candidate">Native query filters and record review (alpha.5 source candidate)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#enterprise-collection-sheet-and-evidence-compositions-alpha5-source-candidate">Enterprise collection, sheet and evidence compositions (alpha.5 source candidate)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#permission-matrix-rolecapability-review">Permission matrix — role/capability review</a>
+            </nav>
+          </details>
+        </aside>
       </div>
       <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="recipes.md">Markdown source</a></nav>
     </main>

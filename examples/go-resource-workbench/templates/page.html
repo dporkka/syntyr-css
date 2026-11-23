@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Runnable, framework-free Syntyr resource workbench with real GET filtering and selection previews.">
+  <meta name="description" content="Runnable, framework-free Syntyr resource workbench with GET filtering, safe selection previews and local-only edits.">
   <title>Resource workbench — Syntyr</title>
   <link rel="stylesheet" href="/assets/syntyr.core.css">
   <link rel="stylesheet" href="/assets/syntyr.recipes.css">
@@ -18,7 +18,7 @@
       <div>
         <p class="syn-eyebrow">CSS FIRST / SERVER RENDERED</p>
         <h1>Resource workbench</h1>
-        <p class="syn-muted">Filtering, sorting and read-only previews are handled by Go. Fictional data; no persistence, authentication or bulk mutation.</p>
+        <p class="syn-muted">Go handles filtering, sorting, selection previews and local-only record edits. Fictional data resets when the server restarts; no authentication or bulk mutation.</p>
       </div>
       <div class="syn-page-header__actions"><a class="syn-button" href="/resources">Reset workspace</a></div>
     </header>
@@ -153,12 +153,32 @@
             <div><dt>Status</dt><dd>{{.Selected.Status}}</dd></div>
             <div><dt>Updated</dt><dd><time datetime="{{.Selected.Updated}}">{{.Selected.Updated}}</time></dd></div>
           </dl>
+          {{if .EditToken}}
+          <form method="post" action="/resource/edit" class="syn-stack" aria-label="Edit selected resource">
+            <input type="hidden" name="id" value="{{.Selected.ID}}">
+            <input type="hidden" name="theme" value="{{.Theme}}">
+            <input type="hidden" name="csrf_token" value="{{.EditToken}}">
+            <h4 class="syn-heading">Edit this record</h4>
+            <label for="edit-owner">Owner
+              <input class="syn-input" id="edit-owner" name="owner" value="{{.Selected.Owner}}" maxlength="80" required>
+            </label>
+            <label for="edit-status">Status
+              <select class="syn-select" id="edit-status" name="status" required>
+                <option value="active" {{if eq .Selected.Status "active"}}selected{{end}}>Active</option>
+                <option value="review" {{if eq .Selected.Status "review"}}selected{{end}}>Review</option>
+                <option value="done" {{if eq .Selected.Status "done"}}selected{{end}}>Done</option>
+              </select>
+            </label>
+            <button class="syn-button syn-button--primary" type="submit">Save local change</button>
+            <p class="syn-caption">Native POST + redirect + GET. This demo stores changes in memory only and has no user authentication. Do not expose it publicly.</p>
+          </form>
+          {{end}}
         {{else}}
           <p class="syn-muted">Choose a resource from the table to inspect its current server-rendered record.</p>
         {{end}}
         <details class="syn-details">
           <summary>Application responsibility</summary>
-          <p>The host must enforce tenant isolation, permissions, durable edits, CSRF protection for mutations, concurrency and audit logging. These examples do not implement those services.</p>
+          <p>The host must add authentication, tenant isolation, permissions, durable storage, persistent sessions and audit logging. This localhost demo validates edits and uses a signed CSRF form token, but is not an authenticated multi-user application.</p>
         </details>
       </aside>
     </div>

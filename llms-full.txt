@@ -56,6 +56,21 @@ If testing alpha.5 from a local source checkout, `syntyr.semantic-bundle.css` in
 
 Use `.syn-root` and `.syn-semantic` together; the bundle does not globally restyle arbitrary host HTML. Never load it alongside `core.css` or `semantic.css`, which would duplicate CSS. [Complete source demo](../examples/semantic-starter.html).
 
+### Find a matching source example (unreleased candidate only)
+
+For work against a verified alpha.5 **source checkout**, read the local
+`metadata/component-gallery.v1.json` instead of inventing classes:
+filter `examples[]` by `use_cases` (for example `saas-dashboard` or
+`forms-workflow`), then verify `required_stylesheets` against what is
+actually installed. Each example includes `html`, `catalog_url`,
+`playground_url`, and `native_feature_requirements`; browser caveats
+are in `native_browser_features`. The
+[editor integration guide](editor-integration.md#select-html-examples-by-task-and-installed-css)
+provides a standard-library Python selection example. Tags are
+recommendations, not evidence of complete behavior or a compatibility
+certificate. Do not copy unreleased examples into an alpha.4 application
+without checking that the classes and files exist in that release.
+
 ## 2. Generate valid HTML
 
 ```html
@@ -420,6 +435,7 @@ For optional effects, load `syntyr.effects.css`. `syntyr.css` is the convenient 
 | Panels | `.syn-panel`, `.syn-panel--cut` | unclassed `article` |
 | Layout | `.syn-page` (viewport-height opt-in), `.syn-shell`, `.syn-header`, `.syn-grid`, `.syn-layout`, `.syn-inline`, `.syn-sidecar`, `.syn-stack` | normal CSS layout |
 | Typography | `.syn-logo`, `.syn-eyebrow`, `.syn-title`, `.syn-section-heading`, `.syn-heading`, `.syn-lede`, `.syn-mono`, `.syn-caption`, `.syn-muted` | native heading/text |
+| Content lists | `.syn-list`, optional `.syn-list--compact` and `.syn-list--accent` | unclassed `ul` / `ol` in semantic mode |
 | Status | `.syn-badge`, `.syn-badge--accent`, `.syn-status` and semantic variants, `.syn-alert`, `.syn-alert--danger`, `.syn-meter` on `progress` | native `progress` |
 | Forms | `.syn-form`, `.syn-label`, `.syn-input`, `.syn-select`, `.syn-textarea`, `.syn-check`, `.syn-fieldset`, `.syn-help`, `.syn-error` | unclassed form controls |
 | Email UI (optional) | `.syn-email-signup`, `.syn-email-inbox`, `.syn-email-message`, `.syn-email-compose`, `.syn-email-preferences` | Native forms and mailbox navigation; see [email components](email-components.md) |
@@ -431,6 +447,9 @@ For optional effects, load `syntyr.effects.css`. `syntyr.css` is the convenient 
 | Workflow (unreleased) | `.syn-steps`, `.syn-step`, `.syn-steps--vertical` | ordered `<ol>` and `aria-current="step"` |
 | Loading | `.syn-skeleton`, `.syn-skeleton--short` | decorative placeholders; announce status separately |
 | Effects (optional) | `.syn-grid-effect`, `.syn-glow`, `.syn-scanlines` | none |
+
+For layout composition, the shell defaults to a maximum width of 72rem and a total inline inset of 2rem (normally 1rem per side). Set `--syn-shell-max` and `--syn-shell-inline-inset` on the shell to customize these dimensions. The header supports `--syn-header-gap` and `--syn-header-padding-block`; navigation supports `--syn-nav-gap`. All controls are optional and preserve existing defaults.
+
 
 For wrapping action/filter clusters, use existing `.syn-inline` with optional
 `--syn-inline-align`, `--syn-inline-justify` and `--syn-inline-gap`.
@@ -479,6 +498,38 @@ Use native button `popovertarget="id"` to control a popover and `commandfor="id"
 
 For component-level package imports and optional native UI recipes, see
 [native patterns](native-patterns.md).
+
+### Content lists and grouped rows (alpha.5 source candidate)
+
+Use an ordinary `<ul>` or `<ol>` inside `.syn-semantic` for native list
+spacing, nesting and markers. When loading **core only**, opt into the same
+scoped list presentation with `.syn-list`. It preserves native bullet shapes,
+ordered numbering (`start`, `reversed`, `value`), writing direction and
+screen-reader list semantics. `.syn-list--compact` reduces vertical item gaps
+and `.syn-list--accent` colors the top-level markers; both are optional.
+Set `--syn-list-item-gap` locally to override the item rhythm.
+
+```html
+<ul class="syn-list syn-list--accent">
+  <li>Accessible headings</li>
+  <li>Native nested lists
+    <ul><li>First detail</li><li>Second detail</li></ul>
+  </li>
+</ul>
+<ol class="syn-list syn-list--compact" start="9">
+  <li>Review</li><li>Publish</li>
+</ol>
+```
+
+`.syn-feature-list` is a legible, accent-marked list intended for pricing and
+features; override its row gap with `--syn-feature-list-gap`. The distinct
+`.syn-list-group` is for markerless grouped navigation or collection rows.
+Customize row density by setting `--syn-list-row-padding` on a containing
+`.syn-list-group` rather than creating a new component. When removing markers
+with `list-style: none`, Safari/VoiceOver may not expose the list as a list;
+add `role="list"` to the native `ul` or `ol` if list semantics are intended.
+Do **not** apply a global marker reset or use fake list text in place of
+semantic list markup.
 
 ## Standard low-entropy component inventory
 
@@ -711,7 +762,8 @@ toast lifecycles) belong to the host app, not a CSS runtime.
 | `--syn-accent`, `--syn-on-accent`, `--syn-accent-soft` | Accent and contrast |
 | `--syn-frame`, `--syn-danger` | Borders and warning states |
 | `--syn-font`, `--syn-mono` | System typography |
-| `--syn-space-1` ... `--syn-space-5` | Spacing scale |
+| `--syn-space-1` ... `--syn-space-5` | Stable fixed spacing scale |
+| `--syn-space-fluid-1` ... `--syn-space-fluid-4` | Optional fluid gaps and padding, bounded by adjacent fixed tokens (unreleased alpha.5) |
 | `--syn-cut`, `--syn-radius`, `--syn-line`, `--syn-control-height` | Shape and layout |
 
 Application CSS can override tokens:
@@ -1436,7 +1488,7 @@ The optional recipes stylesheet contains `.syn-collection-toolbar`, `.syn-collec
 
 The example is illustrative, **not a configured server**. Avoid relying on color alone to convey status. Test with a keyboard, screen reader, 320 CSS-pixel viewport, text zoom and forced-colors mode.
 
-For a **runnable, zero-JavaScript reference**, see the [Go resource workbench](https://github.com/dporkka/syntyr-css/tree/main/examples/go-resource-workbench). It composes the existing filter, table, bulk-action and inspector classes with real server-side GET filtering, status filters, sorting, column and theme settings, record links and read-only bulk-selection previews, and real previous/next pagination with preserved view state. Checked-row previews are limited to records on the current server-rendered page, whereas an explicit matching-scope preview spans all filtered pages. Unlike the static markup, the Go example actually constrains result sets. An empty checked selection never means all matching records: selecting the full matching set is an explicit separate link. The example has no writes, accounts, tenant isolation or durable authorization; production apps must supply those behaviors.
+For a **runnable, zero-JavaScript reference**, see the [Go resource workbench](https://github.com/dporkka/syntyr-css/tree/main/examples/go-resource-workbench). It composes the existing filter, table, bulk-action and inspector classes with real server-side GET filtering, status filters, sorting, column and theme settings, record links and read-only bulk-selection previews, and real previous/next pagination with preserved view state. Checked-row previews are limited to records on the current server-rendered page, whereas an explicit matching-scope preview spans all filtered pages. Unlike the static markup, the Go example actually constrains result sets. An empty checked selection never means all matching records: selecting the full matching set is an explicit separate link. The example additionally demonstrates a local-only native POST edit for owner and status with a signed CSRF form token, input validation and a safe redirect. Its in-memory changes reset on restart; the unauthenticated server refuses non-loopback binds. It has no accounts, tenant isolation, persistent records or durable authorization; production apps must supply those behaviors.
 
 ## Native query filters and record review (alpha.5 source candidate)
 
@@ -1523,6 +1575,8 @@ not a JavaScript permissions widget or a substitute for authorization.
 Original: https://syntyr-css.pages.dev/docs/component-recipes.md
 
 # Copy-owned form recipes
+
+Prefer an interactive starting point? The [Syntyr Form Customizer](form-builder.html) generates copyable forms and standalone HTML, with native form submission and no JavaScript in the output. Configure a real server endpoint before publishing.
 
 These are **MIT-licensed, plain-HTML examples**. Copy and modify them without installing a Syntyr CLI, template registry, React, or a JavaScript runtime. Syntyr provides presentation; your browser and application provide behavior.
 
@@ -1783,6 +1837,20 @@ Test keyboard interaction, forced colors, zoom/reflow, and real product
 copy in the target browsers. **Application-owned behavior** includes
 search filtering, validation on the server, destructive action
 authorization, and live calculations; none are provided by CSS.
+
+## Native horizontal carousels
+
+The existing opt-in `syntyr.media.css` module supplies
+`syn-media-rail--controls` for browser-generated previous/next buttons and
+`syn-media-rail--markers` for optional position markers. The underlying
+`syn-media-rail` continues to scroll and snap without those features.
+Every marked direct child must provide a localized `data-syn-scroll-label`
+for its accessible marker name.
+
+[Copy the script-free example](https://syntyr-css.pages.dev/examples/media-entertainment.html) and read
+[compatibility details and the full recipe](https://syntyr-css.pages.dev/docs/media-entertainment.md).
+Do not replace real ARIA tab widgets with CSS markers, or claim that markers
+provide autoplay, filtering, infinite looping or application state.
 
 ## Resource outline (nested native navigation)
 
@@ -2697,6 +2765,105 @@ rather than guessing from the viewport. Content may still overflow if
 application-defined children use fixed dimensions; make tables and code blocks
 scrollable and keyboard reachable where necessary.
 
+## Fluid spacing and a copyable intrinsic layout cookbook (unreleased alpha.5)
+
+Core now provides four **opt-in** fluid spacing tokens. They grow smoothly
+with the logical viewport inline size between adjacent fixed tokens; the
+existing `--syn-space-1` through `--syn-space-5`, default component spacing,
+and density settings do **not** change.
+
+| Fluid token | Bounded by | Typical use |
+| --- | --- | --- |
+| `--syn-space-fluid-1` | `--syn-space-1` to `--syn-space-2` | Tight action and chip gaps |
+| `--syn-space-fluid-2` | `--syn-space-2` to `--syn-space-3` | Toolbars and form groups |
+| `--syn-space-fluid-3` | `--syn-space-3` to `--syn-space-4` | Cards and content stacks |
+| `--syn-space-fluid-4` | `--syn-space-4` to `--syn-space-5` | Page sections and feature grids |
+
+`clamp()` and `vi` are handled by CSS alone. When the browser lacks logical
+viewport units, the feature-gated declarations use the lower fixed bound. The
+tokens depend on the **viewport**, not an element's container size: combine
+them with existing intrinsic-wrapping classes to handle embedded layouts.
+
+### Vertical stack: article or onboarding steps
+
+~~~html
+<link rel="stylesheet" href="/dist/syntyr.core.css">
+<section class="syn-root syn-stack" data-syn-theme="studio"
+         style="--syn-stack-gap:var(--syn-space-fluid-3)">
+  <h2>Launch checklist</h2>
+  <p>Publish the landing page and review the results.</p>
+  <a class="syn-button" href="/checklist">Open checklist</a>
+</section>
+~~~
+
+### Wrapping navigation and filter actions
+
+~~~html
+<nav class="syn-root syn-inline" aria-label="Project filters"
+     style="--syn-inline-gap:var(--syn-space-fluid-1)">
+  <a href="/projects">All projects</a>
+  <a href="/projects?status=active">Active</a>
+  <a href="/projects?status=archived">Archived</a>
+</nav>
+~~~
+
+Use actual GET forms for input filters; ordinary navigation links do not need
+tab roles or application-owned keyboard handlers.
+
+### Responsive main content and complementary aside
+
+~~~html
+<div class="syn-root syn-sidecar" data-syn-theme="studio"
+     style="--syn-sidecar-gap:var(--syn-space-fluid-3)">
+  <main class="syn-panel">
+    <h1>Project overview</h1>
+    <p>Core information stays first in document and keyboard order.</p>
+  </main>
+  <aside class="syn-panel" aria-label="Project activity">
+    <h2>Recent activity</h2>
+    <p>Three updates this week.</p>
+  </aside>
+</div>
+~~~
+
+### Responsive feature and pricing grid
+
+~~~html
+<section class="syn-root" data-syn-theme="studio" aria-labelledby="features-title">
+  <h2 id="features-title">Features</h2>
+  <div class="syn-grid"
+       style="--syn-grid-gap:var(--syn-space-fluid-4); --syn-grid-min:16rem">
+    <article class="syn-panel"><h3>Accessible</h3><p>Real HTML controls.</p></article>
+    <article class="syn-panel"><h3>Portable</h3><p>No runtime framework.</p></article>
+    <article class="syn-panel"><h3>Responsive</h3><p>Intrinsic CSS grid.</p></article>
+  </div>
+</section>
+~~~
+
+### Optional all-or-nothing card switcher
+
+The `syn-switcher` class is in **optional** `syntyr.recipes.css`, *not*
+`syntyr.core.css`; load recipes after core to use it:
+
+~~~html
+<link rel="stylesheet" href="/dist/syntyr.core.css">
+<link rel="stylesheet" href="/dist/syntyr.recipes.css">
+<div class="syn-root syn-switcher" data-syn-theme="studio"
+     style="--syn-switcher-threshold:42rem; gap:var(--syn-space-fluid-2)">
+  <article class="syn-panel"><h2>Starter</h2><p>For small teams.</p></article>
+  <article class="syn-panel"><h2>Growth</h2><p>For busy teams.</p></article>
+  <article class="syn-panel"><h2>Scale</h2><p>For large teams.</p></article>
+</div>
+~~~
+
+These snippets are original MIT examples. They work with no JavaScript and
+can be reordered in source; moving blocks in the DOM also changes reading and focus
+order. Use semantic headings, named navigation, descriptive link text, and
+visible focus indicators. Content with fixed widths, long tables, or code may
+need separate overflow handling. Test zoom, RTL, and embedded widths before
+shipping. CSS does not fetch data, virtualize cards, or implement infinite
+loading.
+
 ## Import only what you need
 
 For no-build consumers, the preferred option is one self-hosted
@@ -3122,13 +3289,18 @@ reviewed consistently before `1.0.0`. It is not a new compatibility guarantee.
 | New `.syn-field`, `.syn-field-row`, `.syn-field-body`, `.syn-input-group`, `.syn-input-addon` form compositions | Experimental prerelease core additions | Evaluate for v1 stabilization after browser/accessibility review |
 | Documented `--syn-*` design-token names | Public prerelease API | Stable names, not fixed default values |
 | New documented component-local layout variables | Experimental alpha.5 opt-in API | Evaluate for stability after responsive review |
+| `.syn-list`, `.syn-list--compact`, `.syn-list--accent` and list-local gap/padding properties | Experimental alpha.5 core additions; semantic mode keeps native markers | Evaluate accessibility, nested rhythm and RTL before v1 |
+| `--syn-space-fluid-1` through `--syn-space-fluid-4` | Experimental alpha.5 opt-in tokens; bounded fluid spacing with fixed-unit fallback; no default layout changes | Evaluate browser behavior and typography/zoom interaction before v1 |
 | `data-syn-color-space="oklch"` | Experimental alpha.5 presentation opt-in | Evaluate perceptual color/contrast before v1 |
 | `data-syn-theme` and documented `data-syn-*` state hooks | Public prerelease API | Stable names and meanings |
 | `syntyr.semantic.css` and `.syn-semantic` | Opt-in prerelease API | Stable scoped semantics after audit |
 | `dist/presets/{minimal,saas,cinematic}.css` | Experimental single-file entrypoints | Stabilize names and inclusion contract only after explicit review |
 | `metadata/css-contract.v1.json` | Build artifact-manifest schema v1 | Version schema independently of public CSS API |
+| `syntyr.media.css`: `syn-media-rail--controls`, `syn-media-rail--markers`, `data-syn-scroll-label` | Experimental alpha.5 progressive carousel affordances; require CSS Overflow 5 and anchor positioning | Evaluate cross-browser parity and marker accessibility before v1 |
 | `syntyr.recipes.css`, `syntyr.geometry.css` | Experimental, opt-in | Evaluate for individual stabilization |
 | `syntyr.effects.css`, `syntyr.utilities.css` | Experimental, opt-in | Evaluate for individual stabilization |
+| `syntyr.motion.css` `data-syn-animate` presets, `--syn-animation-*` speed/loop/rotation controls and optional `syntyr.animate.mjs` loops | Experimental alpha.5 opt-in; not published in alpha.4 | Evaluate naming, reduced-motion behavior and semantic exits before stabilization |
+| `syn-logo-marquee`, `syn-logo-marquee__row`, group/track selectors and `--syn-logo-*` tokens | Experimental alpha.5 CSS-only logo strip, not in published alpha.4 | Verify seamless looping, responsive sizing, and reduced-motion fallback before stabilization |
 | `syntyr.css`, `syntyr.all.css` | Public convenience bundles | Maintain documented contents/meaning at v1 |
 | `terminal/palettes.json` | Optional example/palette asset | Separate compatibility decision from CSS |
 | `integrations/`, `examples/`, documentation editor | Non-core adapters/showcases | No automatic CSS-core stability promise |
@@ -3295,6 +3467,18 @@ CSS selectors, not part of the immutable alpha.4 package and not a guarantee
 of application-level selection, dialog focus management, image verification
 or review workflows. See [recipe contracts](recipes.md).
 
+## Experimental alpha.5 copy-owned composition additions
+
+The optional recipes stylesheet now provides `syn-scroll-rail`,
+`syn-bento-grid`, and `syn-bento-card--wide` for generic card collections
+and feature section layout. They are **source candidate only**, not part
+of the published alpha.4 contract. Existing `syn-media-rail`, `syn-grid`
+and `syn-showcase` remain unchanged. No runtime scripting, event handlers,
+authentication or persistence are introduced by these selectors.
+
+The optional `syn-table--readable` recipe provides table min-width
+without adding JavaScript or changing the base table styles.
+
 ---
 
 ## Source: docs/framework-integrations.md
@@ -3306,6 +3490,109 @@ Original: https://syntyr-css.pages.dev/docs/framework-integrations.md
 Syntyr is a **CSS presentation layer**, not a state manager, request client, or component runtime.
 It has no JavaScript initialization, no required build tool, and no runtime dependency.
 Every example uses the same `syn-` classes, CSS tokens and standard HTML.
+
+## Copy a catalog example into your stack
+
+The [49-example component catalog](catalog.html) has a **Copy HTML** action for
+snippets and an optional **Copy full page** action that includes the
+**actual required stylesheets**, the document shell and `.syn-root` theme
+scope. Copying uses docs-only JavaScript; view the ordinary HTML source
+without JavaScript. For complete layouts, choose the existing
+[99 MIT blocks](blocks.html) instead of rebuilding a pricing or dashboard
+section from scratch.
+
+The full-page option expects you to self-host the same **unreleased alpha.5**
+CSS files under `/dist/`; change those paths if your app uses `/public/css/`,
+`/assets/`, or a build-time import. Do not mix alpha.5 examples with
+published alpha.4 assets. Only load the CSS modules your example names;
+`syntyr.all.css` replaces these modules, not accompanies them.
+
+### Plain HTML or server-rendered partial
+
+Copy the full page, or add core once to your layout:
+
+```html
+<link rel="stylesheet" href="/dist/syntyr.core.css">
+<main class="syn-root" data-syn-theme="studio">
+  <article class="syn-panel">
+    <h1 class="syn-heading">Overview</h1>
+    <a class="syn-button" href="/reports">View reports</a>
+  </article>
+</main>
+```
+
+Use a real server route for `/reports`. For reusable HTML partials, place
+`.syn-root` on an ancestor that survives page/fragment replacements.
+
+### React / Next.js JSX
+
+Copy the component's *markup*, not the full `<!doctype>` page, into JSX.
+Import the CSS once in the application entry or root layout and use
+`className` and `htmlFor` instead of `class` and `for`:
+
+```jsx
+// Import /dist/syntyr.core.css once from the app's supported global CSS entry.
+export function SearchPanel() {
+  return (
+    <section className="syn-root syn-panel" data-syn-theme="studio">
+      <form action="/search" method="get" className="syn-form">
+        <label className="syn-label" htmlFor="search-term">Search records</label>
+        <input className="syn-input" id="search-term" name="q" type="search" />
+        <button className="syn-button" type="submit">Search</button>
+      </form>
+    </section>
+  );
+}
+```
+
+No client component or hydration is necessary just to style a form. The
+application route owns request handling and escaping.
+
+### Vue / Nuxt template
+
+Vue's template retains `class` and `for`; load CSS once using the framework's
+supported CSS entry. Native GET submission still works with scripting off:
+
+```vue
+<template>
+  <section class="syn-root syn-panel" data-syn-theme="studio">
+    <form class="syn-form" method="get" action="/search">
+      <label class="syn-label" for="vue-search">Search records</label>
+      <input class="syn-input" id="vue-search" name="q" type="search">
+      <button class="syn-button" type="submit">Search</button>
+    </form>
+  </section>
+</template>
+```
+
+### HTMX-enhanced native GET
+
+Keep the exact same HTML contract, adding HTMX attributes only if your app
+has deliberately loaded a pinned HTMX runtime:
+
+```html
+<section class="syn-root" data-syn-theme="studio">
+  <form action="/records" method="get" class="syn-form"
+        hx-get="/records" hx-target="#record-results" hx-push-url="true">
+    <label class="syn-label" for="record-query">Records</label>
+    <input class="syn-input" id="record-query" name="q" type="search">
+    <button class="syn-button" type="submit">Find</button>
+  </form>
+  <div id="record-results" aria-live="polite"></div>
+</section>
+```
+
+Without HTMX, this still submits an ordinary GET. With HTMX, the server must
+return a safe HTML fragment for normal HTMX requests, a **complete page** for
+direct navigation and history restoration, and correctly vary cached
+representations. Do not swap the stable `.syn-root`. Read the more detailed
+HTMX behavior and error contracts below before building production search.
+
+Some catalog examples demonstrate static UI rather than complete application
+behavior. Replace demo-relative URLs and duplicate IDs; validate accessibility,
+form submission, CSRF and authorization in your own app. Check the catalog's
+[browser compatibility and fallbacks](catalog.html#catalog-browser-support)
+for `popover`, named disclosures and invoker commands.
 
 ## Choose one styling mode
 
@@ -3340,6 +3627,8 @@ control stateful, disabled, or accessible by itself.
 For accessible advanced menus, comboboxes and toasts, see the [optional headless interaction guide](headless-interactions.md). All framework JavaScript remains application-owned.
 
 ## HTMX: progressive enhancement
+
+For a dedicated collection of 12 copy-owned patterns (tables, search, forms, dialogs, polling and loading feedback), see the [HTMX components guide](htmx-components.html) and [live server-backed playground](htmx-playground.html). These recipes reuse existing Syntyr classes and an independently removable, CSS-only request-state adapter.
 
 For a **Go standard-library runnable starter** with no third-party Go modules,
 see [examples/go-htmx](https://github.com/dporkka/syntyr-css/tree/main/examples/go-htmx). The default server runs
@@ -4587,6 +4876,38 @@ Load the published `syntyr.core.css` in your application and use regular HTML:
 
 Use `data-syn-theme="noir"` for warm amber. Native HTML features
 such as `details`, `dialog` and `popover` don't need framework JavaScript.
+
+## Copyable theme presets (alpha.5 documentation tool)
+
+The [theme editor](theme-editor.html) now previews independently selectable
+theme, visual intensity, control density, and radius, and generates both CSS
+overrides and a portable JSON preset. Copy the JSON into an application-owned
+design configuration or use the CSS immediately. The JSON is declarative
+metadata, not an executable preset installer, stylesheet, or published API.
+For density/intensity, apply the indicated `data-syn-density` and
+`data-syn-intensity` attributes on the Syntyr scope. A custom radius uses
+`--syn-radius` and `--syn-panel-radius`; the default option preserves each
+base theme's geometry. The editor also supports **site-wide color roles** (background, card surface,
+primary/secondary text, accent, on-accent), three system-font typography
+pairings (default, editorial, technical), and three spacing rhythms
+(balanced, tight, airy). The page preview includes header, feature,
+form and footer sections; it is a visual sample, not a live deployment.
+Generated CSS uses only the existing `--syn-*` variables. The optional
+JSON preset retains `schema_version: 1` and adds `typography` and
+`spacing` metadata; older consumers may ignore these optional fields.
+Typography uses locally available system fonts, not network-loaded files.
+
+Color changes are scoped to the selected theme. Switching themes resets
+the six color inputs to that palette's values but preserves your selected
+typography, spacing, radius, intensity and density; the **Reset palette
+colors** action does the same. The contrast indicators inspect button
+foreground, body text on both background and surface, and muted text on
+surface. They are advisory; other contrast combinations, graphics and focus
+states require testing in the consuming application.
+
+The documentation script and clipboard enhancement are
+not included in Syntyr's distributed CSS. Test the resulting palette and
+control contrast in the consuming application.
 
 ## 2. Override tokens using application CSS
 
@@ -5890,6 +6211,7 @@ runtime dependencies, connect to services, or publish a package:
 
 ```sh
 python3 scripts/syntyr_agent.py init --project /path/to/my-app --json
+python3 scripts/syntyr_agent.py info --project /path/to/my-app --json
 python3 scripts/syntyr_agent.py check --project /path/to/my-app --json /path/to/my-app/page.html
 ```
 
@@ -5908,8 +6230,16 @@ Choose `--release 0.3.0-alpha.5` only when deliberately testing the
 actually present in the selected CSS files; source-only selectors cannot
 appear in an alpha.4 reference.
 
-`check` validates the installed CSS asset hashes and literal `.html` files
-against that project's pinned release, returning structured, source-located
+`info` is read-only project discovery for coding agents. It reports the configured
+release (published or source candidate), its actual pinned CSS asset hashes and
+integrity statuses, supported themes, and portable Skill/reference paths. Exit
+code **0** means the pinned installation is healthy, **1** means degraded or
+invalid, and **2** means the project was not initialized. Do not infer active
+stylesheet imports or framework support from this inventory: the host
+application must still load and test the appropriate CSS. The command does
+not scan application code or need application dependencies.
+
+`check` validates the installed CSS asset hashes and literal `.html` files\nagainst that project's pinned release, returning structured, source-located
 JSON diagnostics. Its exit codes are **0** for checked and error-free HTML,
 **1** for errors, and **2** for incomplete coverage (for example, JSX/TSX or
 no HTML files). It is not a React/Vue/Svelte parser or a browser accessibility
@@ -6082,6 +6412,55 @@ keywords, native HTML, semantic element names, actual `syn-*` classes, and
 `required_stylesheets`. The stylesheet list can include the separately opt-in
 semantic CSS module; loading `syntyr.core.css` alone is not always sufficient.
 The `module` field preserves the primary stylesheet shown in the gallery.
+
+### Select HTML examples by task and installed CSS
+
+Every example now includes **curated, non-exclusive `use_cases`** tags, stable
+`catalog_url` and `playground_url` fragments, plus the exact
+`required_stylesheets` list. The top-level `use_case_definitions` explains
+the five supported tags: `marketing-site`, `saas-dashboard`,
+`forms-workflow`, `content-docs`, and `navigation`.
+The `adoption_guidance` field describes CSS order, framework guidance,
+release boundaries, and browser fallback obligations. These are **discovery
+hints**, not a guarantee that a component implements application behavior.
+
+An editor or agent can select candidates deterministically without executing
+a runtime or downloading packages:
+
+```python
+import json
+from pathlib import Path
+
+gallery = json.loads(Path("metadata/component-gallery.v1.json").read_text())
+installed = {"syntyr.core.css", "syntyr.recipes.css"}  # actual installed files
+candidates = [
+    example for example in gallery["examples"]
+    if "saas-dashboard" in example["use_cases"]
+    and set(example["required_stylesheets"]).issubset(installed)
+]
+for example in candidates:
+    print(example["title"], example["catalog_url"], example["required_stylesheets"])
+```
+
+Use the selected example's `html` with a stable `.syn-root` ancestor and
+honor its CSS dependencies in order. Follow `playground_url` to inspect or
+edit it, and check `native_feature_requirements` before shipping. An empty
+feature list only means no *tracked* native interaction APIs were detected.
+The gallery's CSS-module and use-case dropdowns use the **same authored
+catalog card labels and use-case tags** as this generated JSON; scripts are
+needed only for gallery convenience, not for rendered Syntyr components.
+
+The additive `native_feature_requirements` array on each example records only
+three *detectable native HTML interaction contracts*: `popover`,
+`invoker-commands`, and `details-name`. These are derived from the example's
+parsed HTML, not its title or CSS theme. The companion
+`native_browser_features` dictionary supplies a short fallback description
+and an MDN documentation URL for each feature. Empty requirements mean **none
+of these three detected features**, not universal browser compatibility.
+The metadata intentionally omits unsupported browser-version guarantees, CSS
+feature detection, and false claims that application behaviors are complete.
+The optional gallery filter uses the same native element/attribute criteria,
+without JavaScript dependencies for consuming Syntyr CSS.
 
 From a source checkout, regenerate and verify with:
 

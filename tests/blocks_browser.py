@@ -61,6 +61,46 @@ def layout_check(browser, engine, width, scale):
         require(not metrics["clipped"],
                 f"{engine} {width}px {scale}x: controls clipped {metrics}")
         if width == 390 and scale == 1:
+            icons = page.locator("[data-icon-id]")
+            expected = len(json.loads((ROOT / "blocks/icons.json").read_text())["icons"])
+            require(icons.count() == expected, "Live catalog is missing icons")
+            icon_search = page.locator("#blocks-icon-search")
+            require(icon_search.is_visible(), "Icon search was not revealed")
+            icon_search.fill("moon")
+            require(page.locator("[data-icon-id]:visible").count() == 1,
+                    "Icon search did not filter to a matching icon")
+            icon_search.fill("")
+            require(page.locator("[data-icon-id]:visible").count() == expected,
+                    "Icon search did not restore the catalog")
+            motion_button = page.locator(".blocks-motion-example").first
+            motion_icon = motion_button.locator(".syn-icon")
+            require(page.locator(".blocks-motion-example").count() == 14,
+                    "New animation presets are missing from the gallery")
+            resting = motion_icon.evaluate("node => getComputedStyle(node).animationName")
+            require(resting == "none", f"Opt-in motion must rest by default, got {resting}")
+            motion_button.hover()
+            running = motion_icon.evaluate("node => getComputedStyle(node).animationName")
+            require(running == "syn-icon-spin", f"Motion should run on hover, got {running}")
+            page.mouse.move(0, 0)
+            resting_again = motion_icon.evaluate("node => getComputedStyle(node).animationName")
+            require(resting_again == "none", f"Motion must reset after hover, got {resting_again}")
+            # Check every new preset and accessibility override, not only spinning.
+            for icon in page.locator(".blocks-motion-example .syn-icon").all():
+                preset = next(cls.removeprefix("syn-icon--") for cls in
+                              icon.get_attribute("class").split()
+                              if cls.startswith("syn-icon--") and cls != "syn-icon--on-interact")
+                button = icon.locator("xpath=..")
+                button.hover()
+                actual = icon.evaluate("node => getComputedStyle(node).animationName")
+                require(actual == "syn-icon-" + preset,
+                        f"Preset {preset} did not animate on hover: {actual}")
+            page.emulate_media(reduced_motion="reduce")
+            for icon in page.locator(".blocks-motion-example .syn-icon").all():
+                icon.locator("xpath=..").hover()
+                name = icon.evaluate("node => getComputedStyle(node).animationName")
+                require(name == "none", f"Reduced motion must suppress all icons: {name}")
+            page.emulate_media(reduced_motion="no-preference")
+        if width == 390 and scale == 1:
             # Small text must not inherit the muted token against decorative radar rings.
             radar = page.locator(".syn-block-asset--radar")
             require(radar.count() == 1, f"{engine}: radar preview missing")
@@ -74,6 +114,79 @@ def layout_check(browser, engine, width, scale):
         context.close()
 
 
+def root_control_motion_check(browser):
+    page = browser.new_page()
+    try:
+        page.set_content("""
+          <button class="syn-root syn-button">
+            <svg class="syn-icon syn-icon--spin syn-icon--on-interact"
+                 viewBox="0 0 24 24" aria-hidden="true"></svg>
+            <span>Refresh</span>
+          </button>
+          <button>Next</button>
+        """)
+        page.add_style_tag(path=ROOT / "dist/syntyr.symbols.css")
+        icon = page.locator(".syn-icon")
+        control = page.get_by_role("button", name="Refresh")
+        animation = "node => getComputedStyle(node).animationName"
+        require(icon.evaluate(animation) == "none", "Root control motion must rest by default")
+        page.keyboard.press("Tab")
+        require(control.evaluate("node => node.matches(':focus-visible')"),
+                "Tab must focus the root control")
+        require(icon.evaluate(animation) == "syn-icon-spin", "Root control focus must start motion")
+        page.emulate_media(reduced_motion="reduce")
+        require(icon.evaluate(animation) == "none", "Reduced motion must override root control focus")
+        page.emulate_media(reduced_motion="no-preference")
+        page.keyboard.press("Tab")
+        require(icon.evaluate(animation) == "none", "Root control motion must reset after blur")
+        control.get_by_text("Refresh").hover()
+        require(icon.evaluate(animation) == "syn-icon-spin", "Hovering the root control label must start motion")
+        control.evaluate("node => node.disabled = true")
+        require(icon.evaluate(animation) == "none", "Disabled root control hover must not start motion")
+        icon.hover(force=True)
+        require(icon.evaluate(animation) == "none", "Direct icon hover must not bypass disabled root control")
+        control.evaluate("""node => {
+            node.disabled = false;
+            node.setAttribute('aria-disabled', 'true');
+        }""")
+        require(icon.evaluate(animation) == "none", "ARIA-disabled root control hover must not start motion")
+    finally:
+        page.close()
+
+
+def disabled_icon_wrapper_motion_check(browser):
+    page = browser.new_page()
+    try:
+        page.set_content("""
+          <div class="syn-root">
+            <button class="syn-icon syn-icon--spin syn-icon--on-interact"
+                    aria-label="Refresh">
+              <svg viewBox="0 0 24 24" aria-hidden="true"></svg>
+            </button>
+          </div>
+        """)
+        page.add_style_tag(path=ROOT / "dist/syntyr.symbols.css")
+        wrapper = page.get_by_role("button", name="Refresh")
+        animation = "node => getComputedStyle(node).animationName"
+        require(wrapper.evaluate(animation) == "none", "Icon wrapper must rest by default")
+        wrapper.hover()
+        require(wrapper.evaluate(animation) == "syn-icon-spin", "Enabled icon wrapper must animate on hover")
+        wrapper.evaluate("node => node.setAttribute('aria-disabled', 'true')")
+        require(wrapper.evaluate(animation) == "none", "ARIA-disabled icon wrapper must not animate on hover")
+        page.mouse.move(0, 0)
+        page.keyboard.press("Tab")
+        require(wrapper.evaluate("node => node.matches(':focus-visible')"),
+                "ARIA-disabled icon wrapper must still receive keyboard focus")
+        require(wrapper.evaluate(animation) == "none", "ARIA-disabled icon wrapper must not animate on focus")
+        wrapper.evaluate("node => node.removeAttribute('aria-disabled')")
+        require(wrapper.evaluate(animation) == "syn-icon-spin", "Enabled icon wrapper must animate on focus")
+        wrapper.hover(force=True)
+        wrapper.evaluate("node => node.disabled = true")
+        require(wrapper.evaluate(animation) == "none", "Native disabled icon wrapper must not animate on hover")
+    finally:
+        page.close()
+
+
 def progressive_checks(browser, engine, screenshots):
     context = browser.new_context(java_script_enabled=False,
                                   viewport={"width": 390, "height": 844},
@@ -83,7 +196,8 @@ def progressive_checks(browser, engine, screenshots):
     require(page.locator("[data-block-id]").count() == BLOCK_COUNT, "No-JS: blocks missing")
     require(page.locator(".blocks-preview a[href]").count() == 0,
             "No-JS: gallery preview still navigates to placeholder routes")
-    require(page.locator("[data-icon-id]").count() == 24, "No-JS: SVG icons missing")
+    icon_count = len(json.loads((ROOT / "blocks/icons.json").read_text())["icons"])
+    require(page.locator("[data-icon-id]").count() == icon_count, "No-JS: SVG icons missing")
     require(page.locator(".syn-block-asset").count() == 12, "No-JS: CSS assets missing")
     require(page.locator("#blocks-controls").is_hidden(), "No-JS: controls should be hidden")
     details = page.locator(".blocks-details").first
@@ -137,7 +251,10 @@ def progressive_checks(browser, engine, screenshots):
     # pipeline is reachable via Tab and exposes later lanes using keyboard arrows.
     pipeline = page.locator('[data-block-id="crm-workspace"] .syn-pipeline')
     focused = False
-    for _ in range(90):
+    # Expanded icon galleries add keyboard-reachable source disclosures.
+    # Walk the actual page tab-order rather than assuming <=90 focus stops.
+    max_stops = page.locator("a,button,input,select,textarea,summary,[tabindex]").count() + 1
+    for _ in range(max_stops):
         page.keyboard.press("Tab")
         if pipeline.evaluate("e => e === document.activeElement"):
             focused = True
@@ -175,7 +292,12 @@ def progressive_checks(browser, engine, screenshots):
             "Accessibility: copy button lacks block context")
     require(f"{BLOCK_COUNT} of {BLOCK_COUNT}" in page.locator("#blocks-results").inner_text(), "JS: count wrong")
     page.locator("#blocks-search").fill("pricing")
-    require(page.locator("[data-block-id]:visible").count() == 1, "JS: search wrong")
+    expected_pricing = sum(
+        "pricing" in " ".join([block["title"], block["description"], *block["tags"]]).lower()
+        for block in json.loads((ROOT / "blocks/manifest.json").read_text())["blocks"]
+    )
+    require(page.locator("[data-block-id]:visible").count() == expected_pricing,
+            f"JS: search matched wrong blocks; expected {expected_pricing}")
     page.locator("#blocks-search").fill("no-results-can-match-XYZ")
     require(page.locator("#blocks-empty").is_visible(), "JS: empty state missing")
     page.locator("#blocks-search").fill("")
@@ -356,6 +478,18 @@ def main():
             except Exception as exc:
                 failures.append(f"{engine} playground preview: {exc}")
                 item["playground_navigation"] = "fail"
+            try:
+                root_control_motion_check(browser)
+                item["root_control_motion"] = "pass"
+            except Exception as exc:
+                failures.append(f"{engine} root control motion: {exc}")
+                item["root_control_motion"] = "fail"
+            try:
+                disabled_icon_wrapper_motion_check(browser)
+                item["disabled_icon_wrapper_motion"] = "pass"
+            except Exception as exc:
+                failures.append(f"{engine} disabled icon wrapper motion: {exc}")
+                item["disabled_icon_wrapper_motion"] = "fail"
             if engine == "chromium":
                 try:
                     live_clipboard_check(browser)

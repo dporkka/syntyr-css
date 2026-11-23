@@ -11,6 +11,7 @@ import json
 import os
 from pathlib import Path
 import re
+import tempfile
 
 if __package__:
     from .build_shadcn_registry import ROOT, OUTPUT, DEFAULT_REGISTRY_URL
@@ -29,7 +30,7 @@ def _safe_destination(project: Path, target: str) -> Path:
     parts = Path(relative).parts
     if not parts or any(part in {".", ".."} for part in parts):
         raise RegistryError("Invalid registry target")
-    if not re.fullmatch(r"syntyr/(css|blocks)/[a-z0-9_.-]+|syntyr/LICENSE", relative):
+    if not re.fullmatch(r"syntyr/(css|blocks)/[a-z0-9_.-]+|syntyr/assets/gallery-[a-z0-9-]+\.svg|syntyr/LICENSE", relative):
         raise RegistryError("Unknown registry destination: " + relative)
     if project.is_symlink():
         raise RegistryError("Project directory must not be a symlink")
@@ -132,54 +133,36 @@ def apply_install(plan: dict, project: Path) -> None:
         if entry["status"] == "conflict" or (target.exists() and
               (not target.is_file() or target.read_bytes() != entry["_content"].encode("utf-8"))):
             raise RegistryError("Would overwrite existing file: " + entry["path"])
-    # A multi-file install can fail after earlier assets were copied (e.g. disk
-    # full or a concurrent directory change). Keep the install retryable by
-    # rolling back only assets this invocation created and that remain unchanged.
-    created_files: list[tuple[Path, bytes, int, int]] = []
-    try:
-        for entry in plan["files"]:
+    # Stage complete bytes in a private directory on the same filesystem.
+    # Install each complete file using atomic no-clobber hard links. We NEVER
+    # unlink published destinations on failure: another process might have
+    # replaced or edited them since creation. --verify exposes partial installs;
+    # a retry skips identical files and creates remaining ones.
+    project.mkdir(parents=True, exist_ok=True)
+    if project.is_symlink() or not project.is_dir():
+        raise RegistryError("Project directory is not safe")
+    with tempfile.TemporaryDirectory(prefix=".syntyr-stage-", dir=project) as staging:
+        staged: list[tuple[dict, Path, bytes]] = []
+        for i, entry in enumerate(plan["files"]):
+            content = entry["_content"].encode("utf-8")
+            temporary = Path(staging) / f"{i:04d}"
+            with temporary.open("xb") as stream:
+                count = stream.write(content)
+                if count != len(content):
+                    raise OSError("Incomplete staging write: " + entry["path"])
+            staged.append((entry, temporary, content))
+        for entry, temporary, content in staged:
             target = _safe_destination(project, "~/" + entry["path"])
             target.parent.mkdir(parents=True, exist_ok=True)
             _safe_destination(project, "~/" + entry["path"])
-            content = entry["_content"].encode("utf-8")
             if target.exists():
-                # Another process can modify a once-identical target after preflight.
                 if not target.is_file() or target.read_bytes() != content:
                     raise RegistryError("Changed during installation: " + entry["path"])
                 continue
             try:
-                stream = target.open("xb")
+                os.link(temporary, target, follow_symlinks=False)
             except FileExistsError as error:
                 raise RegistryError("Concurrent installation conflict: " + entry["path"]) from error
-
-            metadata = None
-            try:
-                with stream as opened:
-                    metadata = os.fstat(opened.fileno())
-                    opened.write(content)
-            except BaseException:
-                # A failed write or close can leave partial bytes. Compare identity
-                # before removing them, and preserve the original install error.
-                if metadata is not None:
-                    try:
-                        current = target.stat(follow_symlinks=False)
-                        if (current.st_dev, current.st_ino) == (metadata.st_dev, metadata.st_ino):
-                            target.unlink()
-                    except OSError:
-                        pass
-                raise
-            created_files.append((target, content, metadata.st_dev, metadata.st_ino))
-    except BaseException:
-        for target, content, device, inode in reversed(created_files):
-            try:
-                metadata = target.stat(follow_symlinks=False)
-                if (metadata.st_dev == device and metadata.st_ino == inode
-                        and target.is_file() and target.read_bytes() == content):
-                    target.unlink()
-            except OSError:
-                # Do not mask the original failure or delete a changed target.
-                pass
-        raise
 
 
 def main() -> int:

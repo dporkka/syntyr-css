@@ -21,12 +21,16 @@ if __package__:
     from .build_shadcn_registry import generate as universal_registry_files
     from .build_playground_catalog import generate as playground_catalog
     from .build_blocks import build as blocks_gallery
+    from .build_section_composer import build as section_catalog
+    from .build_catalog_release import build_release_matrix, render_release_matrix, verify_catalog_annotations
     from .static_deploy import validate_site_url
 else:
     from build import all_distributions, javascript_distributions
     from build_shadcn_registry import generate as universal_registry_files
     from build_playground_catalog import generate as playground_catalog
     from build_blocks import build as blocks_gallery
+    from build_section_composer import build as section_catalog
+    from build_catalog_release import build_release_matrix, render_release_matrix, verify_catalog_annotations
     from static_deploy import validate_site_url
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -37,13 +41,29 @@ SITE_URL = "https://syntyr-css.pages.dev"
 # landing pages. Their HTML remains publicly available and linkable.
 NOINDEX_HTML = frozenset({
     "404.html", "examples/crm.html", "examples/saas.html", "examples/pricing.html", "examples/preset-preview.html",
+    "examples/saas-admin-starter/index.html", "examples/saas-admin-starter/pipeline.html",
+    "examples/saas-admin-starter/customers.html", "examples/saas-admin-starter/billing.html",
     "examples/resource-workspace.html", "examples/form-state-contracts.html", "examples/geo.html",
     "examples/permission-matrix.html",
     "examples/query-review.html",
     "examples/command-launcher.html",
     "examples/settings-billing.html",
+    "examples/app-onboarding.html", "examples/app-team.html", "examples/app-notifications.html",
+    "examples/app-integrations.html", "examples/app-security.html",
     "examples/design-benchmarks/marketing.html", "examples/design-benchmarks/crm.html",
     "examples/design-benchmarks/documentation.html",
+    "examples/site-starters/saas-marketing/index.html",
+    "examples/site-starters/saas-marketing/pricing/index.html",
+    "examples/site-starters/saas-marketing/about/index.html",
+    "examples/industry-sites/index.html",
+    "examples/industry-sites/field-service/index.html",
+    "examples/industry-sites/field-service/services.html",
+    "examples/industry-sites/professional-practice/index.html",
+    "examples/industry-sites/professional-practice/services.html",
+    "examples/industry-sites/saas-developer/index.html",
+    "examples/industry-sites/saas-developer/pricing.html",
+    "examples/industry-sites/saas-developer/docs.html",
+    "docs/htmx-playground.html",  # Interactive app demo, not an SEO landing page.
 })
 CANONICAL_LINK = re.compile(r'<link\s+rel="canonical"[^>]*>', re.IGNORECASE)
 ROBOTS_META = re.compile(r'<meta\s+name="robots"[^>]*>', re.IGNORECASE)
@@ -202,6 +222,9 @@ HEADERS = """/*
 /blog/*
   Cache-Control: public, max-age=0, must-revalidate
 
+/tools/*
+  Cache-Control: public, max-age=0, must-revalidate
+
 /blog/rss.xml
   Content-Type: application/rss+xml; charset=utf-8
 
@@ -218,6 +241,9 @@ HEADERS = """/*
   Access-Control-Allow-Origin: *
 
 /metadata/component-gallery.v1.json
+  Access-Control-Allow-Origin: *
+
+/metadata/section-composer.v1.json
   Access-Control-Allow-Origin: *
 
 /_assets/css/*
@@ -274,7 +300,7 @@ def immutable_site_css(files: dict[str, bytes]) -> None:
 
 
 PUBLIC_DOCS = (
-    "ai-quickstart.md", "agent-integration.md", "design-principles.md",
+    "ai-quickstart.md", "agent-integration.md", "design-principles.md", "app-screens.md",
     "media-entertainment.md",
     "accessibility.md", "accessibility-alpha5-review.md", "api-stability.md", "cloudflare-hosting.md", "nulang-cloud-hosting.md",
     "release-freeze.md", "component-authoring.md", "components.md", "data-tables.md", "data-grid.md",
@@ -283,11 +309,12 @@ PUBLIC_DOCS = (
     "faq.md", "compare.md", "compare-tailwind.md", "compare-bootstrap.md", "compare-shadcn.md",
     "compare-daisyui.md", "compare-pico.md", "compare-native-css.md",
     "distribution.md", "native-patterns.md", "native-workflows.md", "semantic-components.md", "composition-adoption.md", "from-pico.md", "package-managers.md", "docs.css", "guides.html", "how-to.html", "how-to.css", "how-to.js", "starter-wizard.html", "starter-wizard.mjs", "catalog.html", "catalog.css", "catalog.js",
-    "blocks.html", "blocks.css", "blocks.js", "blocks-assets.css", "blocks-guide.md", "headless-interactions.md", "framework-integrations.md", "mobile-frameworks.md",
+    "blocks.html", "blocks.css", "blocks.js", "blocks-assets.css", "blocks-guide.md", "headless-interactions.md", "framework-integrations.md", "htmx-components.md", "htmx-playground.html", "mobile-frameworks.md",
     "geometry-terminal.md", "native-browser-apis.md", "dropdowns.md", "radix-integration.md", "visual-intensity.md", "performance-and-polish.md",
     "performance-validation.md", "progressive-enhancement.md", "progressive-loading.md", "live-performance-audit.md",
-    "index.html", "design-resources.html", "animation.md", "clipboard.md", "lit-integration.md", "playground.html", "playground.css", "playground.js", "playground-catalog.js", "playground-snippet.js", "playground-editor.js", "playground-editor.licenses.txt", "page-builder-guide.md", "page-builder.html", "page-builder.css", "page-builder.js", "page-builder-model.mjs",
-    "editor-integration.md", "recipes.md", "saas-cli-business.md", "products.html",
+    "index.html", "design-resources.html", "animation.md", "clipboard.md", "lit-integration.md", "playground.html", "playground.css", "playground.js", "playground-catalog.js", "playground-snippet.js", "playground-editor.js", "playground-editor.licenses.txt", "page-builder-guide.md", "page-builder.html",  "page-builder.css", "page-builder.js", "page-builder-model.mjs", "site-builder-model.mjs", "page-builder-zip.mjs", "page-builder-starters.mjs", "page-builder-site-kits.mjs", "page-builder-section-picker.mjs",
+    "form-builder.html", "form-builder.css", "form-builder.js", "form-builder-model.mjs",
+    "editor-integration.md", "recipes.md", "saas-cli-business.md", "products.html", "pro.html", "studio.html", "integration-services.html",
     "cms-integration.md", "site-generator-decision.md", "static-site-generators.md", "site-builders.md", "tailwind-research.md", "tailwind-alternative.html",
     "wordpress.md", "shopify.md", "wix.md", "webflow.md", "framer.md", "squarespace.md", "ghost.md", "hubspot.md", "drupal.md", "joomla.md", "carrd.md", "duda.md", "tilda.md",
     "theme-customization.md", "theme-editor.html", "theme-editor.js", "symbols.md",
@@ -300,6 +327,14 @@ def source_files(site_url: str = SITE_URL, *, include_cloudflare_headers: bool =
     # Both galleries are generated from reviewed, MIT-owned source fragments.
     if (ROOT / "docs/blocks.html").read_text(encoding="utf-8") != blocks_gallery():
         raise ValueError("Stale blocks gallery: run scripts/build_blocks.py")
+    if (ROOT / "metadata/section-composer.v1.json").read_bytes() != section_catalog():
+        raise ValueError("Stale section composer library: run scripts/build_section_composer.py")
+    # Published-release copy targets must be backed by the frozen CSS snapshot.
+    release_matrix = build_release_matrix()
+    if ((ROOT / "metadata/catalog-release-compatibility.v1.json").read_text(encoding="utf-8")
+            != render_release_matrix(release_matrix)
+            or not verify_catalog_annotations(release_matrix)):
+        raise ValueError("Stale release coverage: run scripts/build_catalog_release.py")
     # Fail closed if either gallery changes without updating the playground.
     if (ROOT / "docs/playground-catalog.js").read_text(encoding="utf-8") != playground_catalog():
         raise ValueError("Stale playground examples: run scripts/build_playground_catalog.py")
@@ -308,6 +343,11 @@ def source_files(site_url: str = SITE_URL, *, include_cloudflare_headers: bool =
         ROOT / "index.html",
         ROOT / "assets/syntyr-mark.svg",
         ROOT / "assets/og-syntyr.png",
+        ROOT / "assets/gallery-horizon.svg",
+        ROOT / "assets/gallery-architecture.svg",
+        ROOT / "assets/gallery-signal.svg",
+        ROOT / "assets/gallery-botanical.svg",
+
         ROOT / "404.html",
         ROOT / "LICENSE",
         ROOT / "README.md",
@@ -317,6 +357,8 @@ def source_files(site_url: str = SITE_URL, *, include_cloudflare_headers: bool =
         ROOT / "llms-full.txt",
         ROOT / "metadata/components.json",
         ROOT / "metadata/component-gallery.v1.json",
+        ROOT / "metadata/catalog-release-compatibility.v1.json",
+        ROOT / "metadata/section-composer.v1.json",
         # Public, generated, dependency-free mobile design tokens and copy-owned source.
         ROOT / "metadata/mobile/syntyr.tokens.json",
         ROOT / "integrations/react-native/tokens.ts",
@@ -336,6 +378,7 @@ def source_files(site_url: str = SITE_URL, *, include_cloudflare_headers: bool =
         ROOT / "integrations/vertigo/admin.css",
         ROOT / "integrations/radix/states.css",
         ROOT / "integrations/headless/interactions.css",
+        ROOT / "integrations/htmx/syntyr.htmx.css",
         ROOT / "examples/ansi_cli.py",
         ROOT / "examples/animation-demo.mjs",
         ROOT / "examples/copy-demo.mjs",
@@ -348,16 +391,39 @@ def source_files(site_url: str = SITE_URL, *, include_cloudflare_headers: bool =
         "media-entertainment.html", "email.html", "common-ui.html", "platform-embed.html", "console.html", "form-composition.html", "geometry-terminal.html", "intensity-geometry.html", "landing.html", "semantic-starter.html",
         "minimalist-patterns.html", "design-states.html", "native-elements.html", "semantic-compositions.html", "native-interactions.html", "native-recipes.html", "resource-outline.html", "query-review.html", "command-launcher.html", "command-launcher.mjs", "native-choice-filter-list.html", "composition-adoption.html", "native-apis.html", "dropdowns.html", "performance-first.html",
         "operations-console.css", "operations-console.html", "pricing.html", "workflow-steps.html", "settings-billing.html", "settings-billing.css",
+        "app-screens.css", "app-onboarding.html", "app-team.html", "app-notifications.html",
+        "app-integrations.html", "app-security.html",
         "flagship.css", "flagship-studio.html", "flagship-noir.html", "flagship-grid.html",
-        "rust-axum/README.md", "resources.html", "data-tables.html", "saas.html", "preset-preview.html", "saas-workflows.html", "enterprise-compositions.html", "permission-matrix.html", "permission-matrix.css", "crm.html", "resource-workspace.html", "native-workflows.html", "file-lifecycle.html", "resizable-workspace.html", "operation-revisions.html", "saas-workflows.css", "workflow-operations.html", "workflow-operations.css", "premium-compositions.html",
+        "rust-axum/README.md", "resources.html", "data-tables.html", "saas.html", "preset-preview.html", "saas-workflows.html",
+        "saas-admin-starter/index.html", "saas-admin-starter/pipeline.html",
+        "saas-admin-starter/customers.html", "saas-admin-starter/billing.html",
+        "saas-admin-starter/styles.css", "saas-admin-starter/README.md", "enterprise-compositions.html", "permission-matrix.html", "permission-matrix.css", "crm.html", "resource-workspace.html", "native-workflows.html", "file-lifecycle.html", "resizable-workspace.html", "operation-revisions.html", "saas-workflows.css", "workflow-operations.html", "workflow-operations.css", "premium-compositions.html",
         "terminal.html", "themes.html", "vertigo-admin.html", "vertigo-resource-workflow.html", "vertigo-resource-workflow.css", "symbols.html",
         "viz.html", "geo.html", "data-grid.html", "animation.html", "copy.html",
         "design-benchmarks/marketing.html", "design-benchmarks/crm.html",
         "design-benchmarks/documentation.html", "design-benchmarks/benchmark.css",
+        "site-starters/saas-marketing/index.html", "site-starters/saas-marketing/pricing/index.html",
+        "site-starters/saas-marketing/about/index.html", "site-starters/saas-marketing/assets/site.css",
+        # Reviewed MIT site starters only; do not scan arbitrary template directories.
+        "industry-sites/index.html", "industry-sites/site.css",
+        "industry-sites/field-service/index.html", "industry-sites/field-service/services.html",
+        "industry-sites/professional-practice/index.html", "industry-sites/professional-practice/services.html",
+        "industry-sites/saas-developer/index.html", "industry-sites/saas-developer/pricing.html",
+        "industry-sites/saas-developer/docs.html",
     )
     # Import the canonical distribution registry rather than maintaining
     # a second list that can silently omit new CSS entrypoints.
     public_css = tuple(all_distributions())
+    # Independent SEO landing pages, no server-side URL scanning or npm dependencies.
+    public_tools = (
+        "index.html", "color-contrast-checker.html", "css-theme-generator.html",
+        "css-clamp-generator.html", "responsive-design-tester.html",
+        "site.css", "logic.mjs", "site.mjs",
+    )
+    paths.extend(ROOT / "tools" / name for name in public_tools)
+    # Self-hosted, exact-version HTMX; docs-only, excluded from npm and core bundles.
+    paths.extend(ROOT / "docs/vendor" / name for name in
+                 ("htmx-2.0.11.min.js", "htmx-LICENSE.txt"))
     paths.extend(ROOT / "docs" / name for name in PUBLIC_DOCS)
     paths.extend(ROOT / "docs" / (name.removesuffix(".md") + ".html")
                  for name in PUBLIC_DOCS if name.endswith(".md"))
@@ -373,6 +439,10 @@ def source_files(site_url: str = SITE_URL, *, include_cloudflare_headers: bool =
         "grid-detail.webp",
         "noir-team.webp",
         "grid-sign-in.webp",
+        # Product-specific static marketing screenshots from private, original source.
+        # Screenshots are public; never distribute the premium HTML/CSS prototypes.
+        "pro-work-orders-studio.webp",
+        "studio-saas-home.webp",
     )
     paths.extend(ROOT / "docs/previews" / name for name in public_preview_images)
     paths.extend(ROOT / "examples" / name for name in public_examples)
@@ -434,6 +504,10 @@ def source_files(site_url: str = SITE_URL, *, include_cloudflare_headers: bool =
     files["robots.txt"] = (f"User-agent: *\nAllow: /\n\nSitemap: {site_url}/sitemap.xml\n").encode("utf-8")
     immutable_site_css(files)
     if include_cloudflare_headers:
+        # Only the live demo API invokes Pages Functions. Keep static traffic free.
+        files["_routes.json"] = (json.dumps({"version": 1, "include":
+                                        ["/api/htmx-demo/*"], "exclude": []},
+                                        separators=(",", ":")) + "\n").encode("utf-8")
         files["_headers"] = HEADERS.encode("utf-8")
     return files
 

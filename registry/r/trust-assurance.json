@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "trust-assurance",
+  "type": "registry:item",
+  "title": "Trust and assurance section",
+  "description": "Transparent questions to ask about security, reliability, and data handling; not certification claims.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://syntyr-css.pages.dev/registry/r/core.json"
+  ],
+  "files": [
+    {
+      "path": "blocks/snippets/trust-assurance.html",
+      "type": "registry:file",
+      "target": "~/syntyr/blocks/trust-assurance.html",
+      "content": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"trust-assurance-heading\">\n  <h2 class=\"syn-heading\" id=\"trust-assurance-heading\">Trust needs evidence.</h2>\n  <p>Replace these sample prompts with verified policies and public documentation.</p>\n  <ul class=\"syn-grid\">\n    <li class=\"syn-panel\"><h3 class=\"syn-heading\">Access controls</h3><p>Describe how permissions are enforced and audited.</p></li>\n    <li class=\"syn-panel\"><h3 class=\"syn-heading\">Data handling</h3><p>Publish retention, export and deletion policies.</p></li>\n    <li class=\"syn-panel\"><h3 class=\"syn-heading\">Incident response</h3><p>Explain reporting channels and response expectations.</p></li>\n  </ul>\n  <a href=\"/security\">Read our documented practices</a>\n</section>\n"
+    },
+    {
+      "path": "LICENSE",
+      "type": "registry:file",
+      "target": "~/syntyr/LICENSE",
+      "content": "MIT License\n\nCopyright (c) 2026 Syntyr CSS contributors\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n"
+    }
+  ],
+  "meta": {
+    "syntyrVersion": "0.3.0-alpha.5",
+    "source": "MIT source candidate",
+    "runtimeJavaScript": false,
+    "fileDigests": {
+      "~/syntyr/blocks/trust-assurance.html": "2186e627353fda9ba506d2c44e022ede8d9a78d32785f93e2264f1761478d954",
+      "~/syntyr/LICENSE": "42f56369ac06362dbfe433d2d50b178bf74c369a55ea22337ab40fd9433521bf"
+    }
+  },
+  "docs": "Experimental source-candidate asset. Review exact version, HTML routes, keyboard behavior and integration before production use."
+}
