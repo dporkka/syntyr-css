@@ -72,6 +72,14 @@ class AdoptionJourneyTests(unittest.TestCase):
                 self.assertIn('class="site-mobile-menu"', html)
                 self.assertIn('<summary>Menu</summary>', html)
 
+    def test_responsive_docs_navigation_requires_replacement_menu(self):
+        css = (ROOT / "docs/docs.css").read_text(encoding="utf-8")
+        how_to = (ROOT / "docs/how-to.html").read_text(encoding="utf-8")
+        self.assertIn('class="syn-header docs-header"', how_to)
+        self.assertNotIn('class="site-mobile-menu"', how_to)
+        self.assertNotIn(".docs-header .syn-nav { display: none; }", css)
+        self.assertIn(".docs-header:has(> .site-mobile-menu) .syn-nav { display: none; }", css)
+
     def test_every_catalog_card_is_labeled_as_unreleased(self):
         catalog = (ROOT / "docs/catalog.html").read_text(encoding="utf-8")
         self.assertIn('id="catalog-release-scope"', catalog)
