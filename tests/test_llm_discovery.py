@@ -1,6 +1,7 @@
 """Machine-friendly docs are small, release-safe and explicitly published."""
 from pathlib import Path
 import unittest
+from unittest.mock import patch
 
 from scripts.build_cloudflare_site import source_files
 
@@ -50,6 +51,18 @@ class LlmDiscoveryTests(unittest.TestCase):
         self.assertNotIn("alpha.5", content)
         self.assertNotIn("syntyr.semantic-bundle.css", content)
         self.assertIn("/v/*\n", published["_headers"].decode())
+
+    def test_modified_pinned_release_index_is_rejected(self):
+        frozen = ROOT / "site-releases/0.3.0-alpha.4/llms.txt"
+        read_bytes = Path.read_bytes
+
+        def changed_read(path):
+            data = read_bytes(path)
+            return data + b"unexpected edit" if path == frozen else data
+
+        with patch.object(Path, "read_bytes", changed_read):
+            with self.assertRaisesRegex(ValueError, r"Modified immutable release documentation: .*llms\.txt"):
+                source_files()
 
     def test_agent_discovery_metadata_on_docs_html(self):
         published = source_files()

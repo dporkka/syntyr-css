@@ -35,6 +35,8 @@ ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_OUTPUT = ROOT / ".cloudflare-public"
 MARKER = ".syntyr-site-manifest.json"
 SITE_URL = "https://syntyr-css.pages.dev"
+# Pin the published bytes independently of the CSS-only release manifest.
+ALPHA4_LLM_INDEX_SHA256 = "d36d5056409152c4621890401d113dce34759ae43d10af542bbaf1bb370faa7d"
 # These pages are illustrative applications or an error response, not search
 # landing pages. Their HTML remains publicly available and linkable.
 NOINDEX_HTML = frozenset({
@@ -479,7 +481,10 @@ def source_files(site_url: str = SITE_URL, *, include_cloudflare_headers: bool =
     alpha4_docs = releases / "0.3.0-alpha.4/llms.txt"
     if alpha4_docs.is_symlink() or not alpha4_docs.is_file():
         raise ValueError(f"Missing reviewed release documentation: {alpha4_docs}")
-    files["v/0.3.0-alpha.4/llms.txt"] = alpha4_docs.read_bytes()
+    data = alpha4_docs.read_bytes()
+    if hashlib.sha256(data).hexdigest() != ALPHA4_LLM_INDEX_SHA256:
+        raise ValueError(f"Modified immutable release documentation: {alpha4_docs}")
+    files["v/0.3.0-alpha.4/llms.txt"] = data
 
     # Keep the sitemap confined to HTML that is useful as a search result.
     # Cloudflare Pages redirects *.html -> clean paths, so only list final 200 URLs.
