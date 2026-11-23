@@ -1,9 +1,11 @@
 """Machine-friendly docs are small, release-safe and explicitly published."""
+import json
 from pathlib import Path
 import unittest
 from unittest.mock import patch
 
 from scripts.build_cloudflare_site import source_files
+from scripts.freeze_site_release import verify_published
 
 ROOT = Path(__file__).resolve().parents[1]
 ORIGIN = "https://syntyr-css.pages.dev"
@@ -39,7 +41,11 @@ class LlmDiscoveryTests(unittest.TestCase):
                          "llms-frameworks.txt"):
             self.assertIn(f"/{filename}\n  X-Robots-Tag: noindex", headers)
 
-    def test_pinned_release_index_only_claims_published_assets(self):
+    def test_pinned_release_index_publishes_alongside_valid_css_snapshots(self):
+        releases = ROOT / "site-releases"
+        manifest = json.loads((releases / "manifest.json").read_text(encoding="utf-8"))
+        verify_published(releases, manifest)
+
         published = source_files()
         pinned = "v/0.3.0-alpha.4/llms.txt"
         self.assertIn(pinned, published)
@@ -53,7 +59,7 @@ class LlmDiscoveryTests(unittest.TestCase):
         self.assertIn("/v/*\n", published["_headers"].decode())
 
     def test_modified_pinned_release_index_is_rejected(self):
-        frozen = ROOT / "site-releases/0.3.0-alpha.4/llms.txt"
+        frozen = ROOT / "docs/release-indexes/0.3.0-alpha.4/llms.txt"
         read_bytes = Path.read_bytes
 
         def changed_read(path):

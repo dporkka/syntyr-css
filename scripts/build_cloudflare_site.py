@@ -509,9 +509,8 @@ def source_files(site_url: str = SITE_URL, *, include_cloudflare_headers: bool =
                 raise ValueError(f"Modified immutable release asset: {path}")
             files[f"v/{version}/{filename}"] = data
 
-    # This release-specific documentation is separately allowlisted; the
-    # release manifest still authenticates only immutable CSS assets.
-    alpha4_docs = releases / "0.3.0-alpha.4/llms.txt"
+    # Release documentation lives outside the exact-membership CSS snapshots.
+    alpha4_docs = ROOT / "docs/release-indexes/0.3.0-alpha.4/llms.txt"
     if alpha4_docs.is_symlink() or not alpha4_docs.is_file():
         raise ValueError(f"Missing reviewed release documentation: {alpha4_docs}")
     data = alpha4_docs.read_bytes()
