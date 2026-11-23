@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Reference Syntyr CSS components, class names, design tokens, scopes, and semantic HTML patterns for lightweight application interfaces.">
-  <meta name="syntyr-source-sha256" content="76427e4a9a717cde10fc988fb58119b9ad21d3809ce9ff1ae74769ef299404db">
+  <meta name="syntyr-source-sha256" content="2780e2faab568b7bf67dda2f8167922fd6b8f0210a924c5d94c20e44f4c10022">
   <meta name="theme-color" content="#f5f7fb">
   <title>Syntyr CSS component and token contract — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/components">
@@ -101,6 +101,11 @@ the surrounding label should provide additional activation area.</p>
 <td>native heading/text</td>
 </tr>
 <tr>
+<td>Content lists</td>
+<td><code>.syn-list</code>, optional <code>.syn-list--compact</code> and <code>.syn-list--accent</code></td>
+<td>unclassed <code>ul</code> / <code>ol</code> in semantic mode</td>
+</tr>
+<tr>
 <td>Status</td>
 <td><code>.syn-badge</code>, <code>.syn-badge--accent</code>, <code>.syn-status</code> and semantic variants, <code>.syn-alert</code>, <code>.syn-alert--danger</code>, <code>.syn-meter</code> on <code>progress</code></td>
 <td>native <code>progress</code></td>
@@ -195,6 +200,33 @@ or use the <a href="editor-integration.html">editor integration instructions</a>
 <p>Use native button <code>popovertarget=&quot;id&quot;</code> to control a popover and <code>commandfor=&quot;id&quot; command=&quot;show-modal&quot;</code> to open a dialog in supporting browsers. This last native dialog invoker API has newer browser support; provide alternate ways to reach important content where needed. Do not build custom ARIA dialog/tab/combobox patterns unless they are tested and necessary.</p>
 <p>For component-level package imports and optional native UI recipes, see
 <a href="native-patterns.html">native patterns</a>.</p>
+<h3 id="content-lists-and-grouped-rows-alpha5-source-candidate">Content lists and grouped rows (alpha.5 source candidate)</h3>
+<p>Use an ordinary <code>&lt;ul&gt;</code> or <code>&lt;ol&gt;</code> inside <code>.syn-semantic</code> for native list
+spacing, nesting and markers. When loading <strong>core only</strong>, opt into the same
+scoped list presentation with <code>.syn-list</code>. It preserves native bullet shapes,
+ordered numbering (<code>start</code>, <code>reversed</code>, <code>value</code>), writing direction and
+screen-reader list semantics. <code>.syn-list--compact</code> reduces vertical item gaps
+and <code>.syn-list--accent</code> colors the top-level markers; both are optional.
+Set <code>--syn-list-item-gap</code> locally to override the item rhythm.</p>
+<pre tabindex="0"><code class="language-html">&lt;ul class=&quot;syn-list syn-list--accent&quot;&gt;
+  &lt;li&gt;Accessible headings&lt;/li&gt;
+  &lt;li&gt;Native nested lists
+    &lt;ul&gt;&lt;li&gt;First detail&lt;/li&gt;&lt;li&gt;Second detail&lt;/li&gt;&lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol class=&quot;syn-list syn-list--compact&quot; start=&quot;9&quot;&gt;
+  &lt;li&gt;Review&lt;/li&gt;&lt;li&gt;Publish&lt;/li&gt;
+&lt;/ol&gt;
+</code></pre>
+<p><code>.syn-feature-list</code> is a legible, accent-marked list intended for pricing and
+features; override its row gap with <code>--syn-feature-list-gap</code>. The distinct
+<code>.syn-list-group</code> is for markerless grouped navigation or collection rows.
+Customize row density by setting <code>--syn-list-row-padding</code> on a containing
+<code>.syn-list-group</code> rather than creating a new component. When removing markers
+with <code>list-style: none</code>, Safari/VoiceOver may not expose the list as a list;
+add <code>role=&quot;list&quot;</code> to the native <code>ul</code> or <code>ol</code> if list semantics are intended.
+Do <strong>not</strong> apply a global marker reset or use fake list text in place of
+semantic list markup.</p>
 <h2 id="standard-low-entropy-component-inventory">Standard low-entropy component inventory</h2>
 <p><strong>Standard does not mean a CSS class for every HTML element.</strong> Use
 <code>syntyr.core.css</code> for explicitly classed components and
@@ -720,6 +752,7 @@ These classes are not included in the published immutable alpha.4 release.</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#loading-and-scoping">Loading and scoping</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#components">Components</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#optional-composition-utilities-and-component-overrides">Optional composition utilities and component overrides</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#content-lists-and-grouped-rows-alpha5-source-candidate">Content lists and grouped rows (alpha.5 source candidate)</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#standard-low-entropy-component-inventory">Standard low-entropy component inventory</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#native-choices-filters-and-rich-list-rows-alpha5-source-candidate">Native choices, filters and rich list rows (alpha.5 source candidate)</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#choice-cards">Choice cards</a>
@@ -748,6 +781,7 @@ These classes are not included in the published immutable alpha.4 release.</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#loading-and-scoping">Loading and scoping</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#components">Components</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#optional-composition-utilities-and-component-overrides">Optional composition utilities and component overrides</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#content-lists-and-grouped-rows-alpha5-source-candidate">Content lists and grouped rows (alpha.5 source candidate)</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#standard-low-entropy-component-inventory">Standard low-entropy component inventory</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#native-choices-filters-and-rich-list-rows-alpha5-source-candidate">Native choices, filters and rich list rows (alpha.5 source candidate)</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#choice-cards">Choice cards</a>

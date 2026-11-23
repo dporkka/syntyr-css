@@ -32,7 +32,7 @@
     </nav>
     <section id="navigation" aria-labelledby="navigation-heading">
       <h2 id="navigation-heading">List groups, avatars, and chips</h2>
-      <ul class="syn-list-group" aria-label="Workspace destinations">
+      <ul class="syn-list-group" role="list" aria-label="Workspace destinations">
         <li><a class="syn-list-row" href="common-ui.html" aria-current="page"><span class="syn-avatar" aria-hidden="true">W</span><span>Workspace overview</span><span class="syn-chip">Current</span></a></li>
         <li><a class="syn-list-row" href="#controls"><span class="syn-avatar syn-avatar--sm" aria-hidden="true">C</span><span>Native form controls</span></a></li>
         <li><a class="syn-list-row" href="#content"><span class="syn-avatar syn-avatar--lg" aria-hidden="true">D</span><span>Document content</span></a></li>
@@ -47,6 +47,19 @@
     </section>
     <section id="content" aria-labelledby="content-heading">
       <h2 id="content-heading">Inline text, quotes, changes, and embedded media</h2>
+      <h3>Core-only content lists</h3>
+      <p>Native bullets and numbering remain intact, even for nested and compact variants.</p>
+      <ul class="syn-list syn-list--accent">
+        <li>Readable feature bullets</li>
+        <li>Accessible native nesting
+          <ul><li>Nested bullet</li><li>Another nested bullet</li></ul>
+        </li>
+      </ul>
+      <ol class="syn-list syn-list--compact" start="9">
+        <li>Review design tokens</li>
+        <li>Apply scoped styles</li>
+        <li>Validate keyboard navigation</li>
+      </ol>
       <p>This version was updated <time datetime="2026-11-15">15 November 2026</time>.
          Plan tier: <data value="growth">Growth</data>.</p>
       <p><dfn>Native-first</dfn> means browser semantics remain authoritative.
