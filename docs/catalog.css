@@ -14,6 +14,11 @@
   .catalog-card[hidden], #catalog-empty[hidden], #catalog-controls[hidden], .catalog-copy[hidden], .catalog-copy-page[hidden] { display: none; }
   .catalog-card-top { display: flex; justify-content: space-between; align-items: start; flex-wrap: wrap; gap: .6rem; }
   .catalog-card-top h2 { margin: 0; }
+  .catalog-release-scope { display: grid; gap: .7rem; margin-block: 1rem 1.5rem; border-inline-start: 3px solid var(--syn-accent); }
+  .catalog-release-scope > :where(h2, p) { margin: 0; }
+  .catalog-release-scope .syn-actions { flex-wrap: wrap; }
+  .catalog-release-label { align-self: center; color: var(--syn-muted); font: 700 .72rem/1.4 var(--syn-font-ui); text-transform: uppercase; white-space: nowrap; }
+
   .catalog-preview { min-width: 0; padding: 1rem; border: 1px solid var(--syn-border-subtle); background: var(--syn-surface-recessed); overflow: auto; }
   .catalog-grid[data-catalog-preview="compact"] .catalog-preview { inline-size: min(100%, 23rem); box-sizing: border-box; justify-self: start; }
   .catalog-preview :where(.syn-panel, .syn-price-card, .syn-stat) { margin: 0; }
