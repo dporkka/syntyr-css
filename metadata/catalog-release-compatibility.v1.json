@@ -240,6 +240,7 @@
       "published_css_covered": false,
       "missing_stylesheets": [],
       "missing_classes": [
+        "syn-page-link",
         "syn-pagination"
       ]
     },
