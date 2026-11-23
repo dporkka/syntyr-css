@@ -2,7 +2,7 @@
 import {createBlock,createDefaultDocument,parseDocument,exportHtml,MAX_PROJECT_BYTES} from './page-builder-model.mjs';
 export const SITE_SCHEMA_VERSION='syntyr.site.v1';
 const MAX_PAGES=10;
-const SLUG=/^[a-z][a-z0-9-]{0,39}$/;
+const SLUG=/^[a-z](?:[a-z0-9]|-(?=[a-z0-9])){0,39}$/;
 const object=v=>v!==null&&typeof v==='object'&&!Array.isArray(v);
 const keysOnly=(value,allowed)=>Object.keys(value).every(key=>allowed.includes(key));
 

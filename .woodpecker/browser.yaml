@@ -11,6 +11,7 @@ steps:
       - python3 -m pip install --disable-pip-version-check playwright==1.65.2
       - python3 tests/browser_test.py
       - python3 tests/site_builder_browser.py
+      - python3 tests/site_builder_upload_race_browser.py
       - python3 tests/browser_matrix.py --browsers chromium firefox webkit
       - python3 tests/progressive_reliability_browser.py --browsers chromium firefox webkit
       - python3 tests/accessibility_regression_browser.py --browsers chromium firefox webkit

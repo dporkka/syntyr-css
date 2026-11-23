@@ -64,3 +64,11 @@ test('site rejects colliding asset names with different image contents',()=>{
  site.pages[1].document.media[name]=img(1);
  assert.doesNotThrow(()=>parseSiteProject(site));
 });
+
+test('invalid trailing and repeated separators in page slugs fail validation',()=>{
+  const site=createSiteProject();
+  for(const slug of ['about-','about--team','a--b','-about']) {
+    assert.throws(()=>addSitePage(site,slug),/slug/i);
+  }
+  assert.equal(addSitePage(site,'about-team').pages[1].document.title,'About Team');
+});

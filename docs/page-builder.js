@@ -49,13 +49,15 @@ let descriptionEditing = false;
 function notify(message) {
   status.textContent = message;
 }
-function currentSite() {
-  if (!site) return null;
-  const snapshot = structuredClone(site);
-  const current = snapshot.pages.find(entry => entry.slug === activeSlug);
+function siteWithPage(proposedPage) {
+  const candidate = structuredClone(site);
+  const current = candidate.pages.find(entry => entry.slug === activeSlug);
   if (!current) throw new Error("Current site page is missing");
-  current.document = parseDocument(page);
-  return parseSiteProject(snapshot);
+  current.document = parseDocument(proposedPage);
+  return parseSiteProject(candidate);
+}
+function currentSite() {
+  return site ? siteWithPage(page) : null;
 }
 function snapshot() {
   return JSON.stringify(site ? {mode: "site", activeSlug, site: currentSite()} : {mode: "page", page});
@@ -91,9 +93,13 @@ function updateHistoryButtons() {
 }
 function commit(next, message) {
   const normalized = parseDocument(next);
+  // Validate the whole proposed site before changing page or undo history.
+  const proposedSite = site ? siteWithPage(normalized) : null;
   remember();
-  page = normalized;
-  if (site) site = currentSite();
+  site = proposedSite;
+  page = proposedSite
+    ? structuredClone(proposedSite.pages.find(entry => entry.slug === activeSlug).document)
+    : normalized;
   if (!page.blocks.some(block => block.id === selectedId)) selectedId = page.blocks[0]?.id || null;
   redraw();
   notify(message);
@@ -371,6 +377,9 @@ function renderInspector() {
         const selected = file.files?.[0];
         if (!selected) return;
         const editingBlock = block.id;
+        const owningPage = page;
+        const owningSite = site;
+        const owningSlug = activeSlug;
         try {
           const mime = {"image/png": "png", "image/jpeg": "jpg", "image/webp": "webp"}[selected.type];
           if (!mime) throw new Error("Only PNG, JPEG and WebP images are supported");
@@ -386,7 +395,10 @@ function renderInspector() {
             reader.onerror = () => reject(new Error("Cannot read image"));
             reader.readAsDataURL(selected);
           });
-          const updated = replaceBlockImage(page, editingBlock, name, {filename, dataURL});
+          // Async file reads may finish after navigation or importing another site.
+          if (page !== owningPage || site !== owningSite || activeSlug !== owningSlug)
+            throw new Error("The page changed during image processing; retry the upload on its original page");
+          const updated = replaceBlockImage(owningPage, editingBlock, name, {filename, dataURL});
           commit(updated, "Image bundled into project and static export. Update its alt text to describe the photo.");
           selectedId = editingBlock;
           redraw();
