@@ -5,6 +5,8 @@ The [visual builder](page-builder.html) is a local-first, optional editing tool 
 ## What works
 
 - Add hero, feature-card, split-text, testimonial, FAQ, CTA, site header and footer sections from the palette.
+- Start with one of four **complete, editable website layouts**: creative portfolio, agency website, SaaS landing page, or local business. The optional builder loads vetted sections from its canonical manifest; applying a starter asks before replacing the current page. Save your editable JSON first.
+- Replace individual images in image gallery, image-story, hero-photo and other image-based sections with optimized **PNG/JPEG/WebP uploads** (up to 2 MiB each). Captions, link destinations and descriptive alt text remain editable. Uploaded photos and matching full-size links export as local assets, never as long-lived blob URLs.
 - Browse and search **85 copy-owned website/SaaS sections** from the generated canonical `metadata/section-composer.v1.json` library, filter by category, and edit their textual content and safe links. The library tracks the Blocks source manifest and snippets, so it does not maintain a second hand-edited section inventory.
 - Search and insert **gallery components** from the generated `metadata/component-gallery.v1.json` contract (16 curated examples in the current source candidate). Edit their visible text, placeholders and safe links; examples carry the CSS modules needed and can be repeated without duplicate input IDs.
 - The gallery is loaded from the same origin as the builder. If the JSON is missing, the original eight semantic page sections remain available; no external API or build service is required.
@@ -33,6 +35,33 @@ The standalone HTML download is only complete if you also supply the matching
 stylesheet and referenced images. Asset paths in the exported site are relative
 to the page, not to Syntyr's docs.
 
+### Editable images and project portability
+
+The builder reads raster images **locally in the browser**. Accepted formats are
+PNG, JPEG and WebP, with a 2 MiB limit per image, 20 embedded images maximum,
+and a 10 MiB aggregate media budget. Unsupported types, HTML and uploaded
+SVGs are rejected. Image filenames use SHA-256 hashes and a restricted
+`assets/custom-<hash>.<png|jpg|webp>` path.
+
+A downloaded **project JSON embeds uploaded images** (as base64 data URLs)
+alongside editable section fields; importing it restores images and URLs,
+including when working offline. The source project is different from the
+published static site: the **ZIP includes only images still referenced** in
+the page, as regular asset files, and uses normal relative links. Unused
+uploaded images are pruned when restored to their original samples.
+
+Projects created before image replacement support are still importable: missing
+image-source and alternative-text fields are populated from the trusted
+original section definition. Previously edited captions, text and links are
+retained. Malformed or unrecognized fields still fail strict validation.
+
+The project JSON import limit is 32 MiB. Images may significantly increase
+the project size; optimize photos before uploading. After choosing a new image,
+**update the ALT field** to accurately describe its content (or clear it if
+purely decorative). The example images are original placeholders, not actual
+customer portfolios or before/after evidence. No image leaves the browser
+until you choose to export the project or publish its static ZIP.
+
 For the generated section library, the manifest contains only reviewed,
 copy-owned canonical HTML. Imported projects contain **no executable HTML
 templates**; text and links are escaped and restricted to declared editable
@@ -58,7 +87,7 @@ placing saved strings in different locations. Preserve an exported HTML copy
 for long-term rendering when the optional source catalog changes. The manifest is an **unreleased alpha.5 source candidate**; these
 examples are not promised in the published alpha.4 release.
 
-The document schema is syntyr.page.v1, with schema, title, theme, optional description and language, and an ordered array of id, type, and props blocks. The canonical validation and renderer are in page-builder-model.mjs, a dependency-free ESM module with no browser globals.
+The document schema is syntyr.page.v1, with schema, title, theme, optional description/language and an optional embedded media asset map, plus an ordered array of id, type, and props blocks. The canonical validation and renderer are in page-builder-model.mjs, a dependency-free ESM module with no browser globals.
 
 The exported index.html uses ordinary HTML sections, anchors, buttons-styled links, native FAQ disclosures, and existing syn-* classes. The local syntyr.all.css stylesheet must be hosted next to it; the page does not contain React, a builder script, or Syntyr editor dependencies. You can instead load CSS modules required by your chosen components using the [distribution guide](distribution.md).
 
@@ -66,7 +95,7 @@ An HTML export does **not** preserve editor metadata sufficiently for arbitrary 
 
 ## Security boundaries
 
-Imported project data is strictly validated: only recognized string block types and string fields, unique safe IDs, a known theme, up to 50 blocks, bounded property lengths, and a 16 MiB UTF-8 JSON import cap compatible with the maximum valid exported project size. Repeating gallery snippets scopes internal HTML IDs and their `for`,
+Imported project data is strictly validated: only recognized string block types and string fields, unique safe IDs, a known theme, up to 50 blocks, bounded property lengths, and a 32 MiB UTF-8 JSON import cap compatible with the maximum valid exported project size. Repeating gallery snippets scopes internal HTML IDs and their `for`,
 `list`, `commandfor`, and ARIA references to each block instance.
 The gallery manifest is restricted to checked-in, validated markup; links
 are normalized to local anchors/paths or HTTPS. Every user-controlled text value is HTML escaped, and unsupported href protocols (including javascript: and data:) are rendered as #. The preview is inside a sandboxed iframe without script or form-submission permissions. The exported result is still **static HTML**, not a backend application.
@@ -77,7 +106,7 @@ This experimental tool is deliberately separate from the MIT CSS core. It uses o
 
 Run from repository root:
 
-    node --test tests/page_builder_model.test.mjs tests/page_builder_gallery.test.mjs tests/page_builder_sections.test.mjs tests/page_builder_zip.test.mjs
+    node --test tests/page_builder_model.test.mjs tests/page_builder_gallery.test.mjs tests/page_builder_sections.test.mjs tests/page_builder_zip.test.mjs tests/page_builder_custom_media.test.mjs tests/page_builder_starters.test.mjs
     python3 scripts/build_section_composer.py --check
     python3 -m unittest tests.test_cloudflare_site -v
     python3 scripts/build_cloudflare_site.py --check
@@ -86,6 +115,7 @@ For the optional browser smoke test:
 
     python3 tests/page_builder_browser.py
     python3 tests/page_builder_sections_browser.py
+    python3 tests/page_builder_starter_media_browser.py
     python3 tests/static_sections_mobile_browser.py
 
 The browser smoke test requires Playwright and a local browser installation. Validate keyboard access, small screens, malicious imported JSON, and download/export before treating this as a stable product.
