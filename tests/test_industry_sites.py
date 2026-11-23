@@ -102,6 +102,7 @@ class IndustrySitesTests(unittest.TestCase):
                         self.assertIn("assets/syntyr.core.css", files)
                         self.assertIn("assets/site.css", files)
                         self.assertIn("README.md", files)
+                        self.assertIn("LICENSE", files)
                         self.assertIn("index.html", files)
                         self.assertGreaterEqual(len([x for x in files if x.endswith(".html")]), 2)
                         for filename in files:

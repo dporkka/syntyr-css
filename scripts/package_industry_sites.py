@@ -28,6 +28,7 @@ def package_sites(output_dir: Path) -> dict[str, Path]:
     core = (ROOT / "dist" / "syntyr.core.css").read_bytes()
     shared = (SOURCE / "site.css").read_bytes()
     readme = (SOURCE / "README.md").read_bytes()
+    license_text = (ROOT / "LICENSE").read_bytes()
     output_dir.mkdir(parents=True, exist_ok=True)
     packages: dict[str, Path] = {}
     for site in SITE_NAMES:
@@ -39,6 +40,7 @@ def package_sites(output_dir: Path) -> dict[str, Path]:
             _store(zip_file, "assets/syntyr.core.css", core)
             _store(zip_file, "assets/site.css", shared)
             _store(zip_file, "README.md", readme)
+            _store(zip_file, "LICENSE", license_text)
             for page in pages:
                 html = page.read_text(encoding="utf-8")
                 if html.count(CORE_HREF) != 1 or html.count(SITE_HREF) != 1:

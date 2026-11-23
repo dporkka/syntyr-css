@@ -27,7 +27,7 @@ Open `http://localhost:8000/examples/industry-sites/`, or directly visit a start
 python3 scripts/package_industry_sites.py --output /tmp/syntyr-starters
 ```
 
-Each ZIP contains all pages, `assets/syntyr.core.css`, `assets/site.css`, and this README. Extract a ZIP and host its contents at any path on a static server; links and stylesheets are relative, so no rebuild is needed. The archive includes CSS from the **current repository source candidate**, not necessarily the published npm release.
+Each ZIP contains all pages, `assets/syntyr.core.css`, `assets/site.css`, this README, and the MIT `LICENSE`. Extract a ZIP and host its contents at any path on a static server; links and stylesheets are relative, so no rebuild is needed. The archive includes CSS from the **current repository source candidate**, not necessarily the published npm release.
 
 ## Before publishing a customer website
 
