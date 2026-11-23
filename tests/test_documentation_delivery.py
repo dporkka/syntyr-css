@@ -49,7 +49,9 @@ class DocumentationDeliveryTests(unittest.TestCase):
         self.assertIn('docs/launch-status.md', files)
         self.assertIn('docs/launch-status.html', files)
         self.assertIn(b'href="launch-status.html"', files['docs/reference.html'])
-        self.assertIn(b'Published immutable GitHub prerelease', files['docs/launch-status.html'])
+        page = files['docs/launch-status.html']
+        self.assertIn(b'Published GitHub prerelease</a> with an immutable CDN snapshot', page)
+        self.assertIn(b'https://syntyr-css.pages.dev/docs/launch-status.md', files['llms.txt'])
 
     def test_markdown_table_code_and_links_are_real_html(self):
         files = source_files()

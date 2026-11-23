@@ -6,7 +6,7 @@
 
 | Channel | Evidence-supported status | Safe action |
 | --- | --- | --- |
-| Free CSS v0.3.0-alpha.4 | [Published immutable GitHub prerelease](https://github.com/dporkka/syntyr-css/releases/tag/v0.3.0-alpha.4) | Download, pin and self-host the versioned CSS. MIT terms apply. |
+| Free CSS v0.3.0-alpha.4 | [Published GitHub prerelease](https://github.com/dporkka/syntyr-css/releases/tag/v0.3.0-alpha.4) with an immutable CDN snapshot | Download, pin and self-host the versioned CSS. MIT terms apply. |
 | v0.3.0-alpha.5 CSS and site previews | **Unreleased source candidate**; does not have an approved immutable tag | Evaluate from a verified source checkout, clearly labeled as experimental. Do not mix with alpha.4 CSS. |
 | `@syntyr/css` on npm | Prepared in source; public publication is **unverified/not claimed** | Use a local audited tarball or the published alpha.4 CSS until actual registry ownership, approved tag and public package are independently verified. |
 | Console Kit, Pro, Studio | Private prototypes, **not for sale** | Review original screenshots or request a qualified research conversation. Do not accept payment, issue customer licenses or promise delivery. |
@@ -29,14 +29,14 @@ The detailed **technical process and exact-SHA review** live in [release-freeze.
 
 ## Commercial readiness is independent
 
-The [commercial launch gates](https://github.com/dporkka/syntyr-css/blob/main/business/commercial-launch-gates.md) and private kit's [commercial readiness issue #51](https://github.com/dporkka/syntyr-console-kit/issues/51) cover license rights, manual accessibility, tax/refund/support terms, verified checkout, entitlement-controlled delivery, and end-to-end purchase/refund evidence. No order or buyer commitment should be inferred from a demo, a mailto click, a screenshot or GitHub engagement.
+The public [commercial launch gates](https://github.com/dporkka/syntyr-css/blob/main/business/commercial-launch-gates.md) cover license rights, manual accessibility, tax/refund/support terms, verified checkout, entitlement-controlled delivery, and end-to-end purchase/refund evidence. The private kit tracks its readiness separately. No order or buyer commitment should be inferred from a demo, a mailto click, a screenshot or GitHub engagement.
 
 **Next commercial experiment:** ten qualified developer/agency conversations with code-level integration feedback and documented, separate purchase intent; use the [design-partner research plan](https://github.com/dporkka/syntyr-css/blob/main/business/design-partner-pilot.md). These interviews guide investment but do not replace legal, payment or release requirements.
 
 ## Change-control sequence
 
 1. Prioritize overlap removal and low-risk work in [open pull requests](https://github.com/dporkka/syntyr-css/pulls) before selecting one release-candidate SHA. Do not merge a stale stacked branch merely because similar functionality already exists on main.
-2. Run `python3 -m unittest discover -s tests -q`, `python3 scripts/build.py --check`, and `python3 scripts/build_cloudflare_site.py --check` on that SHA, then the full browser/reflow/axe matrix.
+2. On that SHA, run `python3 -m unittest discover -s tests -q` and `python3 scripts/build.py --check`. Build the site with `python3 scripts/build_cloudflare_site.py`, verify it with `python3 scripts/build_cloudflare_site.py --check`, then run the full browser/reflow/axe matrix.
 3. Complete all manual accessibility and brand reviews; store their evidence separately with the exact SHA. A historical numerical result is **never** a release-pass flag.
 4. Follow [release-freeze.md](release-freeze.md) and verify the frozen assets and HTTP cache/content hashes before public prerelease announcement.
 5. Only then evaluate npm distribution; paid products must separately clear their own commercial gates.
