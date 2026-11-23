@@ -52,8 +52,23 @@ try:
             page.select_option('#ramp','custom')
             page.fill('#custom-ramp',' .#')
             assert set(page.locator('#export').input_value()) <= set(' .#\n')
+            page.evaluate("""() => {
+                const decode = window.createImageBitmap.bind(window);
+                window.createImageBitmap = file => new Promise((resolve, reject) => {
+                    window.finishImageDecode = () => {
+                        window.createImageBitmap = decode;
+                        return decode(file).then(resolve, reject);
+                    };
+                });
+            }""")
+            page.locator('#image').set_input_files({'name':'delayed.png','mimeType':'image/png','buffer':bytes(png)})
             page.fill('#custom-ramp','aa')
+            page.evaluate('window.finishImageDecode()')
+            assert 'Use 2–32 distinct' in page.locator('#status').inner_text()
+            assert page.locator('#preview').inner_text()=='No preview'
+            assert not page.locator('#export').input_value()
             assert page.locator('#copy').is_disabled()
+            assert page.locator('#download').is_disabled()
             page.fill('#custom-ramp',' .#')
             assert page.locator('#copy').is_enabled()
             page.select_option('#source','logo')

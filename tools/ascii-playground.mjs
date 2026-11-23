@@ -12,9 +12,10 @@ function syncActions() {
 }
 function syncExport() { output.value=art?exportArt(art,format.value,color.value):''; syncActions(); }
 function draw(time=0) {
-  try { drawFrame(time); } catch(error) {
+  try { return drawFrame(time); } catch(error) {
     art=''; preview.textContent='No preview'; $('dimensions').textContent='Invalid settings';
     syncExport(); setStatus(error.message);
+    return false;
   }
 }
 function drawFrame(time=0) {
@@ -26,7 +27,7 @@ function drawFrame(time=0) {
     art=renderLogo($('logo-text').value,$('logo-style').value);
     size={cols:art.split('\n')[0].length,rows:5};
   } else if(source.value==='image') {
-    if(!bitmap||loading) { art=''; preview.textContent=loading?'Decoding image…':'Choose a local image.'; $('dimensions').textContent='No image ready'; syncExport(); return; }
+    if(!bitmap||loading) { art=''; preview.textContent=loading?'Decoding image…':'Choose a local image.'; $('dimensions').textContent='No image ready'; syncExport(); return false; }
     size=gridSize(bitmap.width,bitmap.height,cols);
     const canvas=document.createElement('canvas'); canvas.width=size.cols; canvas.height=size.rows;
     const ctx=canvas.getContext('2d',{willReadFrequently:true});
@@ -40,6 +41,7 @@ function drawFrame(time=0) {
   preview.style.color=color.value;
   $('dimensions').textContent=size.cols+' columns × '+size.rows+' rows';
   if(!playing) syncExport();
+  return true;
 }
 function stop(message='') {
   if(!playing) return;
@@ -84,7 +86,8 @@ $('image').addEventListener('change',async()=>{
     const decoded=await createImageBitmap(file);
     if(version!==loadVersion) { decoded.close(); return; }
     if(decoded.width*decoded.height>40_000_000) { decoded.close(); throw new Error('Image exceeds 40 megapixels.'); }
-    bitmap=decoded; loading=false; draw(); setStatus('Image converted locally.');
+    bitmap=decoded; loading=false;
+    if(draw()&&source.value==='image') setStatus('Image converted locally.');
   } catch(error) {
     if(version!==loadVersion) return;
     loading=false; bitmap?.close(); bitmap=null; draw(); setStatus('Could not convert image. '+error.message);
