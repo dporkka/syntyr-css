@@ -78,3 +78,16 @@ after npm release. Generated assets, caches and dependencies are ignored.
 
 The Syntyr core package itself still requires no Node, Astro, Tailwind or
 other runtime dependency.
+
+## Keystatic and Payload CMS content adapters
+
+[Keystatic](../examples/cms-keystatic/README.md) and
+[Payload CMS 3](../examples/cms-payload/README.md) offer optional typed
+editor schemas for the **same Syntyr CMS v1 content**. Neither adapter is a
+runtime dependency of `@syntyr/css`. Both have Python standard-library
+conversion tests; the TypeScript configs can be type-checked independently.
+
+The host applications provide editing and authorization; Syntyr validates
+and renders the resulting content during a static build. See
+[the CMS integration guide](cms-integration.md) for conversion commands and
+security boundaries.

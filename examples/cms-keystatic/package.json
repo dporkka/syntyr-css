@@ -1,0 +1,16 @@
+{
+  "name": "syntyr-cms-keystatic-fixture",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Optional Keystatic editor config; not a Syntyr runtime dependency",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "export": "python3 ../../scripts/export_cms_adapter.py keystatic --input content/pages/home.json --output _portable/home.json",
+    "smoke": "tsc --outDir .generated --noEmit false && node scripts/smoke.mjs"
+  },
+  "devDependencies": {
+    "@keystatic/core": "0.6.10",
+    "typescript": "5.9.3"
+  }
+}
