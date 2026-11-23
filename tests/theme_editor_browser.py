@@ -49,6 +49,27 @@ def check(browser, viewport):
         assert preview.get_attribute('data-syn-theme') == variant
         assert page.locator('#contrast-result').get_attribute('data-result') == 'pass'
 
+    # The full-page sample must apply typography, rhythm and semantic colors.
+    assert page.locator('#surface').input_value() == '#111f2c'
+    assert page.locator('#body-text').input_value() == '#edf9ff'
+    page.locator('#typography').select_option('editorial')
+    page.locator('#spacing').select_option('airy')
+    assert 'Georgia' in preview.locator('.syn-heading').first.evaluate(
+        "e => getComputedStyle(e).fontFamily")
+    assert preview.evaluate("e => getComputedStyle(e).getPropertyValue('--syn-space-3').trim()") == '1.5rem'
+    preset = page.locator('#generated-preset').inner_text()
+    assert '"typography": "editorial"' in preset
+    assert '"spacing": "airy"' in preset
+    assert '--syn-space-3: 1.5rem' in page.locator('#generated-css').inner_text()
+    page.locator('#body-text').fill('#111f2c')
+    assert page.locator('#contrast-surface-result').get_attribute('data-result') == 'fail'
+    page.locator('#page-bg').fill('#111f2c')
+    assert page.locator('#contrast-background-result').get_attribute('data-result') == 'fail'
+    page.locator('#reset-theme').click()
+    assert page.locator('#contrast-surface-result').get_attribute('data-result') == 'pass'
+    assert page.locator('#typography').input_value() == 'editorial'
+    assert page.locator('#spacing').input_value() == 'airy'
+
     page.locator('#theme').select_option('noir')
     assert preview.get_attribute('data-syn-theme') == 'noir'
     assert page.locator('#accent').input_value() == '#f1b574'
