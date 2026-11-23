@@ -1,0 +1,56 @@
+"""Optional browser smoke: local image conversion, export, animation and reflow."""
+from functools import partial
+from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
+from pathlib import Path
+from threading import Thread
+import os
+from playwright.sync_api import sync_playwright
+
+ROOT = Path(__file__).resolve().parents[1]
+server = ThreadingHTTPServer(('127.0.0.1', 0), partial(SimpleHTTPRequestHandler, directory=ROOT / '.cloudflare-public'))
+Thread(target=server.serve_forever, daemon=True).start()
+try:
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=True, executable_path=os.getenv('PLAYWRIGHT_CHROMIUM_EXECUTABLE'), args=['--no-sandbox'])
+        for width in (320, 1280):
+            page = browser.new_page(viewport={'width':width, 'height':900}, accept_downloads=True)
+            errors, requests = [], []
+            page.on('pageerror', lambda e: errors.append(str(e)))
+            page.on('request', lambda r: requests.append(r.url))
+            page.goto(f'http://127.0.0.1:{server.server_port}/tools/ascii-playground.html')
+            page.locator('#copy').wait_for()
+            assert page.locator('#export').input_value().strip()
+            assert page.evaluate('document.documentElement.scrollWidth <= innerWidth + 1')
+            original = page.locator('#export').input_value()
+            page.select_option('#pattern','plasma')
+            assert page.locator('#export').input_value()!=original
+            page.select_option('#format','svg')
+            assert '<svg' in page.locator('#export').input_value()
+            with page.expect_download() as result:
+                page.click('#download')
+            assert result.value.suggested_filename=='syntyr-ascii.svg'
+            page.click('#play')
+            assert page.locator('#copy').is_disabled()
+            page.click('#stop')
+            assert page.locator('#copy').is_enabled()
+            page.emulate_media(reduced_motion='reduce')
+            page.wait_for_function("document.querySelector('#play').disabled")
+            assert page.locator('#play').is_disabled()
+            page.select_option('#source','image')
+            assert page.locator('#copy').is_disabled()
+            png=page.evaluate("""() => {const c=document.createElement('canvas');c.width=32;c.height=16;const x=c.getContext('2d');x.fillStyle='white';x.fillRect(0,0,16,16);return [...Uint8Array.from(atob(c.toDataURL().split(',')[1]),s=>s.charCodeAt(0))]}""")
+            page.locator('#image').set_input_files({'name':'sample.png','mimeType':'image/png','buffer':bytes(png)})
+            page.wait_for_function("document.querySelector('#status').textContent==='Image converted locally.'")
+            assert page.locator('#copy').is_enabled()
+            assert page.locator('#dimensions').inner_text()=='64 columns × 16 rows'
+            page.select_option('#format','txt')
+            art=page.locator('#export').input_value()
+            page.check('#invert')
+            assert page.locator('#export').input_value()!=art
+            assert not errors,errors
+            assert all(url.startswith(f'http://127.0.0.1:{server.server_port}/') for url in requests),requests
+            page.close()
+        browser.close()
+finally:
+    server.shutdown()
+print('PASS Chromium: mobile/desktop, six-pattern controls, local image conversion, SVG download, reduced motion, no external requests')
