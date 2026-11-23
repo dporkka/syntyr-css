@@ -52,6 +52,9 @@ NOINDEX_HTML = frozenset({
     "examples/app-integrations.html", "examples/app-security.html",
     "examples/design-benchmarks/marketing.html", "examples/design-benchmarks/crm.html",
     "examples/design-benchmarks/documentation.html",
+    "examples/site-starters/saas-marketing/index.html",
+    "examples/site-starters/saas-marketing/pricing/index.html",
+    "examples/site-starters/saas-marketing/about/index.html",
     "examples/industry-sites/index.html",
     "examples/industry-sites/field-service/index.html",
     "examples/industry-sites/field-service/services.html",
@@ -399,6 +402,8 @@ def source_files(site_url: str = SITE_URL, *, include_cloudflare_headers: bool =
         "viz.html", "geo.html", "data-grid.html", "animation.html", "copy.html",
         "design-benchmarks/marketing.html", "design-benchmarks/crm.html",
         "design-benchmarks/documentation.html", "design-benchmarks/benchmark.css",
+        "site-starters/saas-marketing/index.html", "site-starters/saas-marketing/pricing/index.html",
+        "site-starters/saas-marketing/about/index.html", "site-starters/saas-marketing/assets/site.css",
         # Reviewed MIT site starters only; do not scan arbitrary template directories.
         "industry-sites/index.html", "industry-sites/site.css",
         "industry-sites/field-service/index.html", "industry-sites/field-service/services.html",
