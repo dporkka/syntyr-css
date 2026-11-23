@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Install Syntyr CSS with AI coding agents using semantic HTML, real component classes, and version-aware, framework-neutral examples.">
-  <meta name="syntyr-source-sha256" content="4aef64c5ae186dac7a7831df6f8654f85c29b1cd6b0162d2ef1d26e8beaa47d5">
+  <meta name="syntyr-source-sha256" content="d609aeb1831709fc0fa338bfa0902fe9574bf5fd9a2f3ec919c71e08dd47aef8">
   <meta name="theme-color" content="#f5f7fb">
   <title>Syntyr CSS: AI-agent quickstart — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/ai-quickstart">
@@ -77,6 +77,19 @@
 &lt;/main&gt;
 </code></pre>
 <p>Use <code>.syn-root</code> and <code>.syn-semantic</code> together; the bundle does not globally restyle arbitrary host HTML. Never load it alongside <code>core.css</code> or <code>semantic.css</code>, which would duplicate CSS. <a href="../examples/semantic-starter.html">Complete source demo</a>.</p>
+<h3 id="find-a-matching-source-example-unreleased-candidate-only">Find a matching source example (unreleased candidate only)</h3>
+<p>For work against a verified alpha.5 <strong>source checkout</strong>, read the local
+<code>metadata/component-gallery.v1.json</code> instead of inventing classes:
+filter <code>examples[]</code> by <code>use_cases</code> (for example <code>saas-dashboard</code> or
+<code>forms-workflow</code>), then verify <code>required_stylesheets</code> against what is
+actually installed. Each example includes <code>html</code>, <code>catalog_url</code>,
+<code>playground_url</code>, and <code>native_feature_requirements</code>; browser caveats
+are in <code>native_browser_features</code>. The
+<a href="editor-integration.html#select-html-examples-by-task-and-installed-css">editor integration guide</a>
+provides a standard-library Python selection example. Tags are
+recommendations, not evidence of complete behavior or a compatibility
+certificate. Do not copy unreleased examples into an alpha.4 application
+without checking that the classes and files exist in that release.</p>
 <h2 id="2-generate-valid-html">2. Generate valid HTML</h2>
 <pre tabindex="0"><code class="language-html">&lt;main class=&quot;syn-root syn-page&quot; data-syn-theme=&quot;studio&quot;&gt;
   &lt;div class=&quot;syn-shell&quot;&gt;
@@ -141,6 +154,7 @@
           <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#1-choose-the-correct-version">1. Choose the correct version</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#one-file-semantic-html-unreleased-source-only">One-file semantic HTML (unreleased source only)</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#find-a-matching-source-example-unreleased-candidate-only">Find a matching source example (unreleased candidate only)</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#2-generate-valid-html">2. Generate valid HTML</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#3-use-responsive-recipes-only-when-their-module-is-loaded">3. Use responsive recipes only when their module is loaded</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#4-optional-scoped-semantic-mode">4. Optional scoped semantic mode</a>
@@ -152,6 +166,7 @@
             <nav aria-label="On this page (mobile)">
 <a class="docs-article-toc-link docs-article-toc-2" href="#1-choose-the-correct-version">1. Choose the correct version</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#one-file-semantic-html-unreleased-source-only">One-file semantic HTML (unreleased source only)</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#find-a-matching-source-example-unreleased-candidate-only">Find a matching source example (unreleased candidate only)</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#2-generate-valid-html">2. Generate valid HTML</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#3-use-responsive-recipes-only-when-their-module-is-loaded">3. Use responsive recipes only when their module is loaded</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#4-optional-scoped-semantic-mode">4. Optional scoped semantic mode</a>

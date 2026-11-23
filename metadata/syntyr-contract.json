@@ -791,6 +791,22 @@
       ]
     },
     {
+      "name": "syn-code-scroll",
+      "module": "components/data.css",
+      "description": "Code scroll presentation in the components/data.css module; use semantic HTML and consult its component example.",
+      "stylesheets": [
+        "components/data.css",
+        "presets/cinematic.css",
+        "presets/minimal.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.core.css",
+        "syntyr.css",
+        "syntyr.embed.css",
+        "syntyr.semantic-bundle.css"
+      ]
+    },
+    {
       "name": "syn-collection-actions",
       "module": "recipes.css",
       "description": "Collection actions presentation in the recipes.css module; use semantic HTML and consult its component example.",
@@ -2398,6 +2414,22 @@
       ]
     },
     {
+      "name": "syn-image-gallery",
+      "module": "components/patterns.css",
+      "description": "Image gallery presentation in the components/patterns.css module; use semantic HTML and consult its component example.",
+      "stylesheets": [
+        "components/patterns.css",
+        "presets/cinematic.css",
+        "presets/minimal.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.core.css",
+        "syntyr.css",
+        "syntyr.embed.css",
+        "syntyr.semantic-bundle.css"
+      ]
+    },
+    {
       "name": "syn-inline",
       "module": "components/layout.css",
       "description": "Inline, wrapping layout for small groups of peers.",
@@ -2521,9 +2553,57 @@
       ]
     },
     {
+      "name": "syn-list",
+      "module": "components/typography.css",
+      "description": "Scoped native bullet or numbered list for core-only consumers.",
+      "stylesheets": [
+        "components/typography.css",
+        "presets/cinematic.css",
+        "presets/minimal.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.core.css",
+        "syntyr.css",
+        "syntyr.embed.css",
+        "syntyr.semantic-bundle.css"
+      ]
+    },
+    {
+      "name": "syn-list--accent",
+      "module": "components/typography.css",
+      "description": "Accent-colored top-level list markers; native numbering preserved.",
+      "stylesheets": [
+        "components/typography.css",
+        "presets/cinematic.css",
+        "presets/minimal.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.core.css",
+        "syntyr.css",
+        "syntyr.embed.css",
+        "syntyr.semantic-bundle.css"
+      ]
+    },
+    {
+      "name": "syn-list--compact",
+      "module": "components/typography.css",
+      "description": "Reduced vertical item rhythm for native list content.",
+      "stylesheets": [
+        "components/typography.css",
+        "presets/cinematic.css",
+        "presets/minimal.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.core.css",
+        "syntyr.css",
+        "syntyr.embed.css",
+        "syntyr.semantic-bundle.css"
+      ]
+    },
+    {
       "name": "syn-list-group",
       "module": "components/patterns.css",
-      "description": "Grouped list presentation; preserve semantic list markup.",
+      "description": "Grouped markerless navigation or collection list; keep list semantics.",
       "stylesheets": [
         "components/patterns.css",
         "presets/cinematic.css",
@@ -2720,6 +2800,22 @@
       "description": "Visual part of the media card component; see media.css for markup.",
       "stylesheets": [
         "syntyr.media.css"
+      ]
+    },
+    {
+      "name": "syn-media-figure",
+      "module": "components/patterns.css",
+      "description": "Media figure presentation in the components/patterns.css module; use semantic HTML and consult its component example.",
+      "stylesheets": [
+        "components/patterns.css",
+        "presets/cinematic.css",
+        "presets/minimal.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.core.css",
+        "syntyr.css",
+        "syntyr.embed.css",
+        "syntyr.semantic-bundle.css"
       ]
     },
     {
@@ -5905,6 +6001,22 @@
       ]
     },
     {
+      "name": "--syn-list-item-gap",
+      "module": "components/typography.css",
+      "description": "List item gap design token from components/typography.css; override in the appropriate Syntyr scope when needed.",
+      "stylesheets": [
+        "components/typography.css",
+        "presets/cinematic.css",
+        "presets/minimal.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.core.css",
+        "syntyr.css",
+        "syntyr.embed.css",
+        "syntyr.semantic-bundle.css"
+      ]
+    },
+    {
       "name": "--syn-media-card-ratio",
       "module": "media.css",
       "description": "Media card ratio design token from media.css; override in the appropriate Syntyr scope when needed.",
@@ -6253,6 +6365,70 @@
       "name": "--syn-space-5",
       "module": "tokens.css",
       "description": "Spacing scale token 5; use for consistent layout spacing.",
+      "stylesheets": [
+        "components/tokens.css",
+        "presets/cinematic.css",
+        "presets/minimal.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.core.css",
+        "syntyr.css",
+        "syntyr.embed.css",
+        "syntyr.semantic-bundle.css"
+      ]
+    },
+    {
+      "name": "--syn-space-fluid-1",
+      "module": "tokens.css",
+      "description": "Spacing scale token fluid-1; use for consistent layout spacing.",
+      "stylesheets": [
+        "components/tokens.css",
+        "presets/cinematic.css",
+        "presets/minimal.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.core.css",
+        "syntyr.css",
+        "syntyr.embed.css",
+        "syntyr.semantic-bundle.css"
+      ]
+    },
+    {
+      "name": "--syn-space-fluid-2",
+      "module": "tokens.css",
+      "description": "Spacing scale token fluid-2; use for consistent layout spacing.",
+      "stylesheets": [
+        "components/tokens.css",
+        "presets/cinematic.css",
+        "presets/minimal.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.core.css",
+        "syntyr.css",
+        "syntyr.embed.css",
+        "syntyr.semantic-bundle.css"
+      ]
+    },
+    {
+      "name": "--syn-space-fluid-3",
+      "module": "tokens.css",
+      "description": "Spacing scale token fluid-3; use for consistent layout spacing.",
+      "stylesheets": [
+        "components/tokens.css",
+        "presets/cinematic.css",
+        "presets/minimal.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.core.css",
+        "syntyr.css",
+        "syntyr.embed.css",
+        "syntyr.semantic-bundle.css"
+      ]
+    },
+    {
+      "name": "--syn-space-fluid-4",
+      "module": "tokens.css",
+      "description": "Spacing scale token fluid-4; use for consistent layout spacing.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -6799,6 +6975,20 @@
         "syn-panel--cut"
       ],
       "notes": "Choose native headings and accessible labels."
+    },
+    {
+      "name": "Content list",
+      "module": "syntyr.core.css",
+      "elements": [
+        "ul",
+        "ol"
+      ],
+      "classes": [
+        "syn-list",
+        "syn-list--compact",
+        "syn-list--accent"
+      ],
+      "notes": "Native list markers and order preserved. Use in core-only scopes; semantic mode handles unclassed lists."
     },
     {
       "name": "Form fields",

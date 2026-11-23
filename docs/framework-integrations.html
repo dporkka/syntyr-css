@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Integrate Syntyr CSS with server-rendered HTML, HTMX, LiveView, Livewire, and frontend frameworks without requiring client-side JavaScript.">
-  <meta name="syntyr-source-sha256" content="284d6aa64dbd55e9e94a0620df1eefe0fe38a340b1e71019d3e4b4f037f23866">
+  <meta name="syntyr-source-sha256" content="666b88024c86a5c4383d11858f3946b68673e5edd4e5711bdc4fdf0b8ff99b95">
   <meta name="theme-color" content="#f5f7fb">
   <title>Syntyr CSS integration guide: server-rendered HTML and frontend stacks — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/framework-integrations">
@@ -38,6 +38,86 @@
 <p>Syntyr is a <strong>CSS presentation layer</strong>, not a state manager, request client, or component runtime.
 It has no JavaScript initialization, no required build tool, and no runtime dependency.
 Every example uses the same <code>syn-</code> classes, CSS tokens and standard HTML.</p>
+<h2 id="copy-a-catalog-example-into-your-stack">Copy a catalog example into your stack</h2>
+<p>The <a href="catalog.html">49-example component catalog</a> has a <strong>Copy HTML</strong> action for
+snippets and an optional <strong>Copy full page</strong> action that includes the
+<strong>actual required stylesheets</strong>, the document shell and <code>.syn-root</code> theme
+scope. Copying uses docs-only JavaScript; view the ordinary HTML source
+without JavaScript. For complete layouts, choose the existing
+<a href="blocks.html">99 MIT blocks</a> instead of rebuilding a pricing or dashboard
+section from scratch.</p>
+<p>The full-page option expects you to self-host the same <strong>unreleased alpha.5</strong>
+CSS files under <code>/dist/</code>; change those paths if your app uses <code>/public/css/</code>,
+<code>/assets/</code>, or a build-time import. Do not mix alpha.5 examples with
+published alpha.4 assets. Only load the CSS modules your example names;
+<code>syntyr.all.css</code> replaces these modules, not accompanies them.</p>
+<h3 id="plain-html-or-server-rendered-partial">Plain HTML or server-rendered partial</h3>
+<p>Copy the full page, or add core once to your layout:</p>
+<pre tabindex="0"><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/dist/syntyr.core.css&quot;&gt;
+&lt;main class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot;&gt;
+  &lt;article class=&quot;syn-panel&quot;&gt;
+    &lt;h1 class=&quot;syn-heading&quot;&gt;Overview&lt;/h1&gt;
+    &lt;a class=&quot;syn-button&quot; href=&quot;/reports&quot;&gt;View reports&lt;/a&gt;
+  &lt;/article&gt;
+&lt;/main&gt;
+</code></pre>
+<p>Use a real server route for <code>/reports</code>. For reusable HTML partials, place
+<code>.syn-root</code> on an ancestor that survives page/fragment replacements.</p>
+<h3 id="react-nextjs-jsx">React / Next.js JSX</h3>
+<p>Copy the component's <em>markup</em>, not the full <code>&lt;!doctype&gt;</code> page, into JSX.
+Import the CSS once in the application entry or root layout and use
+<code>className</code> and <code>htmlFor</code> instead of <code>class</code> and <code>for</code>:</p>
+<pre tabindex="0"><code class="language-jsx">// Import /dist/syntyr.core.css once from the app's supported global CSS entry.
+export function SearchPanel() {
+  return (
+    &lt;section className=&quot;syn-root syn-panel&quot; data-syn-theme=&quot;studio&quot;&gt;
+      &lt;form action=&quot;/search&quot; method=&quot;get&quot; className=&quot;syn-form&quot;&gt;
+        &lt;label className=&quot;syn-label&quot; htmlFor=&quot;search-term&quot;&gt;Search records&lt;/label&gt;
+        &lt;input className=&quot;syn-input&quot; id=&quot;search-term&quot; name=&quot;q&quot; type=&quot;search&quot; /&gt;
+        &lt;button className=&quot;syn-button&quot; type=&quot;submit&quot;&gt;Search&lt;/button&gt;
+      &lt;/form&gt;
+    &lt;/section&gt;
+  );
+}
+</code></pre>
+<p>No client component or hydration is necessary just to style a form. The
+application route owns request handling and escaping.</p>
+<h3 id="vue-nuxt-template">Vue / Nuxt template</h3>
+<p>Vue's template retains <code>class</code> and <code>for</code>; load CSS once using the framework's
+supported CSS entry. Native GET submission still works with scripting off:</p>
+<pre tabindex="0"><code class="language-vue">&lt;template&gt;
+  &lt;section class=&quot;syn-root syn-panel&quot; data-syn-theme=&quot;studio&quot;&gt;
+    &lt;form class=&quot;syn-form&quot; method=&quot;get&quot; action=&quot;/search&quot;&gt;
+      &lt;label class=&quot;syn-label&quot; for=&quot;vue-search&quot;&gt;Search records&lt;/label&gt;
+      &lt;input class=&quot;syn-input&quot; id=&quot;vue-search&quot; name=&quot;q&quot; type=&quot;search&quot;&gt;
+      &lt;button class=&quot;syn-button&quot; type=&quot;submit&quot;&gt;Search&lt;/button&gt;
+    &lt;/form&gt;
+  &lt;/section&gt;
+&lt;/template&gt;
+</code></pre>
+<h3 id="htmx-enhanced-native-get">HTMX-enhanced native GET</h3>
+<p>Keep the exact same HTML contract, adding HTMX attributes only if your app
+has deliberately loaded a pinned HTMX runtime:</p>
+<pre tabindex="0"><code class="language-html">&lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot;&gt;
+  &lt;form action=&quot;/records&quot; method=&quot;get&quot; class=&quot;syn-form&quot;
+        hx-get=&quot;/records&quot; hx-target=&quot;#record-results&quot; hx-push-url=&quot;true&quot;&gt;
+    &lt;label class=&quot;syn-label&quot; for=&quot;record-query&quot;&gt;Records&lt;/label&gt;
+    &lt;input class=&quot;syn-input&quot; id=&quot;record-query&quot; name=&quot;q&quot; type=&quot;search&quot;&gt;
+    &lt;button class=&quot;syn-button&quot; type=&quot;submit&quot;&gt;Find&lt;/button&gt;
+  &lt;/form&gt;
+  &lt;div id=&quot;record-results&quot; aria-live=&quot;polite&quot;&gt;&lt;/div&gt;
+&lt;/section&gt;
+</code></pre>
+<p>Without HTMX, this still submits an ordinary GET. With HTMX, the server must
+return a safe HTML fragment for normal HTMX requests, a <strong>complete page</strong> for
+direct navigation and history restoration, and correctly vary cached
+representations. Do not swap the stable <code>.syn-root</code>. Read the more detailed
+HTMX behavior and error contracts below before building production search.</p>
+<p>Some catalog examples demonstrate static UI rather than complete application
+behavior. Replace demo-relative URLs and duplicate IDs; validate accessibility,
+form submission, CSRF and authorization in your own app. Check the catalog's
+<a href="catalog.html#catalog-browser-support">browser compatibility and fallbacks</a>
+for <code>popover</code>, named disclosures and invoker commands.</p>
 <h2 id="choose-one-styling-mode">Choose one styling mode</h2>
 <ol>
 <li><strong>Explicit classes (recommended for apps):</strong> load <code>syntyr.core.css</code>, use
@@ -66,6 +146,7 @@ library unless you explicitly want Syntyr semantic styling there. Prefer
 control stateful, disabled, or accessible by itself.</p>
 <p>For accessible advanced menus, comboboxes and toasts, see the <a href="headless-interactions.html">optional headless interaction guide</a>. All framework JavaScript remains application-owned.</p>
 <h2 id="htmx-progressive-enhancement">HTMX: progressive enhancement</h2>
+<p>For a dedicated collection of 12 copy-owned patterns (tables, search, forms, dialogs, polling and loading feedback), see the <a href="htmx-components.html">HTMX components guide</a> and <a href="htmx-playground.html">live server-backed playground</a>. These recipes reuse existing Syntyr classes and an independently removable, CSS-only request-state adapter.</p>
 <p>For a <strong>Go standard-library runnable starter</strong> with no third-party Go modules,
 see <a href="https://github.com/dporkka/syntyr-css/tree/main/examples/go-htmx">examples/go-htmx</a>. The default server runs
 without JavaScript; optional locally vendored HTMX uses the same GET endpoint.
@@ -554,6 +635,11 @@ and unnecessary hydration. Measure actual page LCP, CLS and INP.</li>
         </article>
         <aside class="docs-article-sidebar">
           <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+<a class="docs-article-toc-link docs-article-toc-2" href="#copy-a-catalog-example-into-your-stack">Copy a catalog example into your stack</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#plain-html-or-server-rendered-partial">Plain HTML or server-rendered partial</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#react-nextjs-jsx">React / Next.js JSX</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#vue-nuxt-template">Vue / Nuxt template</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#htmx-enhanced-native-get">HTMX-enhanced native GET</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#choose-one-styling-mode">Choose one styling mode</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#htmx-progressive-enhancement">HTMX: progressive enhancement</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#htmx-4-migration-separate-from-syntyr">HTMX 4 migration (separate from Syntyr)</a>
@@ -580,6 +666,11 @@ and unnecessary hydration. Measure actual page LCP, CLS and INP.</li>
           <details class="docs-article-toc-mobile">
             <summary>On this page <span>Jump to section</span></summary>
             <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#copy-a-catalog-example-into-your-stack">Copy a catalog example into your stack</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#plain-html-or-server-rendered-partial">Plain HTML or server-rendered partial</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#react-nextjs-jsx">React / Next.js JSX</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#vue-nuxt-template">Vue / Nuxt template</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#htmx-enhanced-native-get">HTMX-enhanced native GET</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#choose-one-styling-mode">Choose one styling mode</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#htmx-progressive-enhancement">HTMX: progressive enhancement</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#htmx-4-migration-separate-from-syntyr">HTMX 4 migration (separate from Syntyr)</a>

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Status: experimental 0.3.0-alpha.5 candidate; no v1 stability promise. This document names the intended public contracts so that changes can be reviewed…">
-  <meta name="syntyr-source-sha256" content="a51cb8eea798a548aa0a6c5c35745de916435159f2110d6108b3c1b0c093d6b0">
+  <meta name="syntyr-source-sha256" content="15585f00a737a2ab8d2badd64c8981513b090ea0dd3be7b0b9c61e7b7890b394">
   <meta name="theme-color" content="#f5f7fb">
   <title>SYNTYR CSS public API and prerelease stability — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/api-stability">
@@ -77,6 +77,16 @@ reviewed consistently before <code>1.0.0</code>. It is not a new compatibility g
 <td>New documented component-local layout variables</td>
 <td>Experimental alpha.5 opt-in API</td>
 <td>Evaluate for stability after responsive review</td>
+</tr>
+<tr>
+<td><code>.syn-list</code>, <code>.syn-list--compact</code>, <code>.syn-list--accent</code> and list-local gap/padding properties</td>
+<td>Experimental alpha.5 core additions; semantic mode keeps native markers</td>
+<td>Evaluate accessibility, nested rhythm and RTL before v1</td>
+</tr>
+<tr>
+<td><code>--syn-space-fluid-1</code> through <code>--syn-space-fluid-4</code></td>
+<td>Experimental alpha.5 opt-in tokens; bounded fluid spacing with fixed-unit fallback; no default layout changes</td>
+<td>Evaluate browser behavior and typography/zoom interaction before v1</td>
 </tr>
 <tr>
 <td><code>data-syn-color-space=&quot;oklch&quot;</code></td>

@@ -8,6 +8,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
 from pathlib import Path
 import sys
 
@@ -62,13 +63,27 @@ def generate(registry_url: str = DEFAULT_REGISTRY_URL) -> dict[str, bytes]:
         modules = block["modules"]
         if not modules or not set(modules).issubset(CSS_MODULES):
             raise ValueError(f"Unsupported CSS dependency: {ident}")
+        snippet_path = f"blocks/snippets/{ident}.html"
+        snippet = (ROOT / snippet_path).read_text(encoding="utf-8")
+        # Bundle first-party gallery illustrations alongside copy-owned markup:
+        # ../assets/ continues to resolve after local installation. Only the
+        # explicitly named original gallery SVGs may become registry assets.
+        illustration_names = sorted(set(re.findall(
+            r'(?:src|href)="\.\./assets/(gallery-[a-z0-9-]+\.svg)"', snippet
+        )))
+        block_files = [{"path": snippet_path, "type": "registry:file",
+                        "target": f"~/syntyr/blocks/{ident}.html"}]
+        block_files.extend(
+            {"path": f"assets/{name}", "type": "registry:file",
+             "target": f"~/syntyr/assets/{name}"}
+            for name in illustration_names
+        )
         items.append({
             "name": ident, "type": "registry:item",
             "title": block["title"], "description": block["description"],
             "dependencies": [],
             "registryDependencies": [f"{registry_url}/{module}.json" for module in modules],
-            "files": [{"path": f"blocks/snippets/{ident}.html", "type": "registry:file",
-                       "target": f"~/syntyr/blocks/{ident}.html"}],
+            "files": block_files,
         })
     for item in items:
         # Copy-owned MIT files must retain the license notice when installed.

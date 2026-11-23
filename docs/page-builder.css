@@ -12,6 +12,9 @@
 }
 .builder-toolbar > .syn-label { flex: 1 1 140px; min-width: 0; }
 .builder-toolbar > .syn-label:first-child { flex: 2 1 210px; }
+.builder-toolbar > .syn-label:has(#builder-page-description) { flex: 2 1 260px; }
+.builder-toolbar textarea.syn-input { display: block; inline-size: 100%; min-block-size: 4rem; resize: vertical; margin-top: .4rem; }
+
 .builder-toolbar .syn-input, .builder-toolbar .syn-select { display: block; margin-top: .4rem; width: 100%; }
 .builder-export { display: flex; align-items: center; flex-wrap: wrap; gap: .45rem; }
 .builder-export .syn-button { white-space: nowrap; }
@@ -124,4 +127,137 @@
   .builder-canvas { min-height: 420px; padding: .5rem; }
   .builder-viewport iframe { height: 540px; }
   .builder-export { width: 100%; }
+}
+
+/* Scroll the complete copy-owned section palette without expanding the outline. */
+.builder-sections .builder-gallery-palette { max-height: 23rem; }
+.builder-insert-choice { display: flex; align-items: center; gap: .5rem; font-size: var(--syn-type-sm); }
+.builder-insert-choice input { width: 1.25rem; height: 1.25rem; accent-color: var(--syn-accent); }
+.builder-sections select { width: 100%; }
+.builder-outline-item:focus-within { outline: 2px solid var(--syn-accent); outline-offset: 1px; }
+
+/* Small, optional authoring controls: none of these styles ship in exported HTML. */
+.builder-starters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: var(--syn-space-2);
+}
+.builder-starters > :first-child { flex: 2 1 17rem; }
+.builder-starters > label { flex: 1 1 12rem; }
+.builder-starters > p { flex-basis: 100%; }
+.builder-starters select { inline-size: 100%; }
+.builder-image-control { display: grid; gap: .5rem; }
+.builder-image-control input[type="file"] { max-inline-size: 100%; }
+.builder-image-control code { overflow-wrap: anywhere; }
+.builder-image-control .syn-caption { display: block; }
+
+/* Optional multi-page authoring is isolated from the exported runtime. */
+.builder-site-row {display:flex;flex-wrap:wrap;gap:1rem;align-items:end;margin-block:1rem}
+.builder-site-row > .syn-label {flex:1 1 12rem}
+.builder-site-layout {min-width:min(100%,17rem);flex:1 1 17rem;border:1px solid var(--syn-border, #6665);border-radius:.65rem;padding:1rem;display:grid;gap:.65rem}
+.builder-site-layout legend {font-weight:650;padding-inline:.35rem}
+.builder-site-layout .syn-label {display:grid;gap:.3rem}
+.builder-site-layout input:disabled {opacity:.55}
+
+.builder-reusable {border-top:1px solid var(--syn-border-subtle, currentColor);padding-top:1rem;margin-top:.65rem}
+.builder-reusable h3 {font-size:var(--syn-type-md,1rem)}
+.builder-synced-label {display:flex;align-items:center;gap:.4rem;margin-top:.35rem;font-size:.78rem;font-weight:400}
+.builder-synced-label input {accent-color:var(--syn-accent, currentColor)}
+.builder-block-name[data-synced="true"] {font-weight:700}
+
+/* Docs-only section picker. CSS sketches are illustrative; the modal renders real HTML. */
+.builder-section-palette { grid-template-columns: minmax(0, 1fr); }
+.builder-section-card {
+  display: grid;
+  gap: .55rem;
+  padding: .65rem;
+  border: 1px solid var(--syn-border, currentColor);
+  border-radius: .5rem;
+  min-width: 0;
+}
+.builder-section-card-copy { display: grid; gap: .2rem; }
+.builder-section-card-copy strong { font-size: .875rem; overflow-wrap: anywhere; }
+.builder-section-card-copy small { color: var(--syn-muted); font-size: .75rem; line-height: 1.45; }
+.builder-section-card-actions { display: flex; flex-wrap: wrap; gap: .4rem; }
+.builder-section-card-actions .syn-button { flex: 1 1 5rem; font-size: .75rem; padding: .4rem .45rem; }
+.builder-section-thumbnail {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-rows: repeat(4, minmax(0, 1fr));
+  gap: 4px;
+  min-block-size: 6rem;
+  border: 1px solid var(--syn-border-subtle);
+  border-radius: .3rem;
+  padding: .5rem;
+  background: var(--syn-surface-recessed, var(--syn-surface));
+}
+.builder-section-thumbnail > span { min-width: 0; border-radius: 2px; background: var(--syn-border, currentColor); opacity: .55; }
+.builder-section-thumbnail > span:nth-child(1) { grid-area: 1 / 1 / 2 / 5; opacity: .85; }
+.builder-section-thumbnail > span:nth-child(2) { grid-area: 2 / 1 / 3 / 4; }
+.builder-section-thumbnail > span:nth-child(3) { grid-area: 3 / 1 / 5 / 4; opacity: .28; }
+.builder-section-thumbnail > span:nth-child(4) { grid-area: 1 / 5 / 5 / 7; opacity: .38; }
+.builder-section-thumbnail[data-layout="grid"] > span:nth-child(1) { grid-area: 1 / 1 / 2 / 5; }
+.builder-section-thumbnail[data-layout="grid"] > span:nth-child(2) { grid-area: 2 / 1 / 5 / 3; }
+.builder-section-thumbnail[data-layout="grid"] > span:nth-child(3) { grid-area: 2 / 3 / 5 / 5; }
+.builder-section-thumbnail[data-layout="grid"] > span:nth-child(4) { grid-area: 2 / 5 / 5 / 7; }
+.builder-section-thumbnail[data-layout="navigation"] > span:nth-child(1) { grid-area: 1 / 1 / 2 / 3; }
+.builder-section-thumbnail[data-layout="navigation"] > span:nth-child(2) { grid-area: 1 / 4 / 2 / 5; }
+.builder-section-thumbnail[data-layout="navigation"] > span:nth-child(3) { grid-area: 1 / 5 / 2 / 6; }
+.builder-section-thumbnail[data-layout="navigation"] > span:nth-child(4) { grid-area: 1 / 6 / 2 / 7; }
+.builder-section-thumbnail[data-layout="article"] > span:nth-child(1) { grid-area: 1 / 1 / 2 / 5; }
+.builder-section-thumbnail[data-layout="article"] > span:nth-child(2) { grid-area: 2 / 1 / 3 / 5; }
+.builder-section-thumbnail[data-layout="article"] > span:nth-child(3) { grid-area: 3 / 1 / 5 / 5; }
+.builder-section-thumbnail[data-layout="article"] > span:nth-child(4) { grid-area: 2 / 5 / 5 / 7; }
+.builder-section-thumbnail[data-layout="media"] > span:nth-child(1) { grid-area: 1 / 1 / 2 / 4; }
+.builder-section-thumbnail[data-layout="media"] > span:nth-child(2) { grid-area: 2 / 1 / 4 / 7; opacity: .4; }
+.builder-section-thumbnail[data-layout="media"] > span:nth-child(3) { grid-area: 4 / 1 / 5 / 5; }
+.builder-section-thumbnail[data-layout="media"] > span:nth-child(4) { grid-area: 4 / 6 / 5 / 7; }
+.builder-section-thumbnail[data-layout="stats"] > span:nth-child(1) { grid-area: 1 / 1 / 2 / 5; }
+.builder-section-thumbnail[data-layout="stats"] > span:nth-child(2) { grid-area: 2 / 1 / 5 / 3; }
+.builder-section-thumbnail[data-layout="stats"] > span:nth-child(3) { grid-area: 2 / 3 / 5 / 5; }
+.builder-section-thumbnail[data-layout="stats"] > span:nth-child(4) { grid-area: 2 / 5 / 5 / 7; }
+.builder-section-thumbnail[data-layout="form"] > span:nth-child(1) { grid-area: 1 / 1 / 2 / 4; }
+.builder-section-thumbnail[data-layout="form"] > span:nth-child(2) { grid-area: 2 / 1 / 3 / 7; opacity: .3; }
+.builder-section-thumbnail[data-layout="form"] > span:nth-child(3) { grid-area: 3 / 1 / 4 / 7; opacity: .3; }
+.builder-section-thumbnail[data-layout="form"] > span:nth-child(4) { grid-area: 4 / 1 / 5 / 3; opacity: .9; }
+.builder-section-thumbnail[data-layout="rows"] > span:nth-child(1) { grid-area: 1 / 1 / 2 / 4; }
+.builder-section-thumbnail[data-layout="rows"] > span:nth-child(2) { grid-area: 2 / 1 / 3 / 7; }
+.builder-section-thumbnail[data-layout="rows"] > span:nth-child(3) { grid-area: 3 / 1 / 4 / 7; }
+.builder-section-thumbnail[data-layout="rows"] > span:nth-child(4) { grid-area: 4 / 1 / 5 / 7; }
+.builder-section-dialog {
+  box-sizing: border-box;
+  color: var(--syn-text);
+  background: var(--syn-bg);
+  border: 1px solid var(--syn-frame);
+  border-radius: .65rem;
+  width: min(92vw, 880px);
+  max-height: 90dvh;
+  overflow-y: auto;
+  padding: clamp(.75rem, 3vw, 1.25rem);
+}
+.builder-section-dialog::backdrop { background: rgb(0 0 0 / .7); }
+.builder-section-dialog-heading,
+.builder-section-dialog-actions { display: flex; gap: .7rem; flex-wrap: wrap; align-items: center; justify-content: space-between; }
+.builder-section-dialog-heading h2 { margin: 0; }
+.builder-section-dialog iframe {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 310px;
+  height: min(48vh, 460px);
+  border: 1px solid var(--syn-frame);
+  border-radius: .35rem;
+  background: var(--syn-bg);
+}
+.builder-section-dialog-actions { margin-block-start: .75rem; }
+.builder-section-dialog-actions .syn-caption { flex: 1 1 15rem; }
+.builder-section-dialog-actions .syn-button { flex: 0 1 auto; }
+@media (width < 740px) {
+  .builder-section-dialog { width: 96vw; }
+  .builder-section-dialog iframe { height: min(45vh, 370px); }
+}
+@media (forced-colors: active) {
+  .builder-section-thumbnail, .builder-section-dialog, .builder-section-card { border-color: CanvasText; }
+  .builder-section-thumbnail > span { background: CanvasText; }
 }

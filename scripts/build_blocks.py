@@ -273,13 +273,29 @@ def build() -> str:
 </head>
 <body class="syn-root syn-page" data-syn-theme="studio">
   <a href="#blocks-main" class="syn-button blocks-skip">Skip to blocks</a>
-  <header class="syn-header syn-shell">
+  <header class="syn-header syn-shell docs-header">
     <a class="syn-logo" href="index.html">SYNTYR / BLOCKS &amp; ASSETS</a>
-    <nav class="syn-nav" aria-label="Documentation">
-      <a href="index.html">Gallery</a><a href="catalog.html">Components</a>
-      <a href="blocks-guide.html">Integration guide</a><a href="how-to.html">How-To</a>
-      <a href="premium-compositions.html">Premium-inspired layouts</a><a href="console-kit.html">Console Kit previews</a>
+    <nav class="syn-nav" aria-label="Main navigation">
+      <a href="index.html#install">Get started</a>
+      <a href="catalog.html">Components</a>
+      <a href="blocks.html">Blocks</a>
+      <a href="../tools/">Free tools</a>
+      <a href="index.html">Docs</a>
+      <a href="https://github.com/dporkka/syntyr-css">GitHub</a>
     </nav>
+    <details class="site-mobile-menu">
+      <summary>Menu</summary>
+      <nav aria-label="Mobile navigation">
+        <a href="index.html#install">Get started</a>
+        <a href="catalog.html">Components</a>
+        <a href="blocks.html">Blocks</a>
+        <a href="../tools/">Free tools</a>
+        <a href="index.html">Docs</a>
+        <a href="https://github.com/dporkka/syntyr-css">GitHub</a>
+        <a href="blocks-guide.html">Integration guide</a>
+        <a href="how-to.html">How-To guides</a>
+      </nav>
+    </details>
   </header>
   <main class="syn-shell" id="blocks-main">
     <section class="docs-section">
@@ -288,6 +304,12 @@ def build() -> str:
       <p class="syn-lede">Build faster with original HTML compositions styled by Syntyr.
       Every preview renders without JavaScript. Search, theme switching, and copying
       are documentation-only enhancements, not dependencies for your application.</p>
+      <aside id="blocks-release-scope" class="syn-panel" aria-labelledby="blocks-release-title">
+        <p class="syn-eyebrow">SOURCE PREVIEW / NOT A PUBLISHED RELEASE</p>
+        <h2 class="syn-heading" id="blocks-release-title">Unreleased alpha.5 section examples</h2>
+        <p>These copyable blocks target the experimental alpha.5 source candidate; they are not a guarantee of compatibility with the published v0.3.0-alpha.4 CSS. Verify the referenced modules before using them in production.</p>
+        <p><a href="index.html#install">Install published alpha.4 first</a> or <a href="blocks-guide.html">read the blocks integration guide</a>.</p>
+      </aside>
       <p class="syn-caption">These are static illustrative presentations: real authentication,
       billing, filtering, form validation, persistence and permissions belong to your application.
       <a href="blocks-guide.html">Read integration and accessibility guidance.</a></p>

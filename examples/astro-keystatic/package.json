@@ -1,0 +1,30 @@
+{
+  "name": "syntyr-astro-keystatic-starter",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "export:data": "python3 ../../scripts/export_cms_adapter.py keystatic --input content/pages/home.json --output src/data/home.json",
+    "prebuild": "npm run export:data",
+    "build": "astro build",
+    "predev": "npm run export:data",
+    "dev": "astro dev --host 127.0.0.1",
+    "predev:editor": "npm run export:data",
+    "dev:editor": "SYNTYR_ENABLE_LOCAL_EDITOR=1 astro dev --host 127.0.0.1",
+    "verify": "python3 ../../scripts/verify_astro_keystatic.py dist"
+  },
+  "dependencies": {
+    "@syntyr/css": "file:../..",
+    "astro": "7.4.13"
+  },
+  "devDependencies": {
+    "@astrojs/react": "7.1.9",
+    "@keystatic/astro": "6.0.0",
+    "@keystatic/core": "0.6.10",
+    "react": "19.2.0",
+    "react-dom": "19.2.0"
+  },
+  "engines": {
+    "node": ">=22.23.4"
+  }
+}

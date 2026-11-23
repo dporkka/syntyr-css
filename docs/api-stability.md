@@ -14,6 +14,8 @@ reviewed consistently before `1.0.0`. It is not a new compatibility guarantee.
 | New `.syn-field`, `.syn-field-row`, `.syn-field-body`, `.syn-input-group`, `.syn-input-addon` form compositions | Experimental prerelease core additions | Evaluate for v1 stabilization after browser/accessibility review |
 | Documented `--syn-*` design-token names | Public prerelease API | Stable names, not fixed default values |
 | New documented component-local layout variables | Experimental alpha.5 opt-in API | Evaluate for stability after responsive review |
+| `.syn-list`, `.syn-list--compact`, `.syn-list--accent` and list-local gap/padding properties | Experimental alpha.5 core additions; semantic mode keeps native markers | Evaluate accessibility, nested rhythm and RTL before v1 |
+| `--syn-space-fluid-1` through `--syn-space-fluid-4` | Experimental alpha.5 opt-in tokens; bounded fluid spacing with fixed-unit fallback; no default layout changes | Evaluate browser behavior and typography/zoom interaction before v1 |
 | `data-syn-color-space="oklch"` | Experimental alpha.5 presentation opt-in | Evaluate perceptual color/contrast before v1 |
 | `data-syn-theme` and documented `data-syn-*` state hooks | Public prerelease API | Stable names and meanings |
 | `syntyr.semantic.css` and `.syn-semantic` | Opt-in prerelease API | Stable scoped semantics after audit |

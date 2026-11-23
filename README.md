@@ -2,6 +2,8 @@
 
 **Experimental v0.3.0-alpha.5 (unreleased candidate)** — framework-neutral, low-dependency, CSS-first styling for modern SaaS apps, professional business websites and optional cinematic Grid/Noir designs.
 
+**What can users install or buy today?** See the [release and commercial readiness overview](docs/launch-status.md). Published alpha.4 remains usable now; alpha.5, npm distribution, and paid kits have separate approval gates.
+
 ## Quick start — published alpha.4
 
 Copy the HTML below into `index.html` and open it in a browser. It uses the
@@ -57,9 +59,14 @@ stylesheets.
 - **Optional website animations (alpha.5 source):** fade, slide, zoom and emphasis presets with finite/infinite loop controls and a native Web Animations API helper ([guide](docs/animation.md)).
 - **Real navigation and loading states:** semantic breadcrumbs, touch-friendly page links, and static accessible skeleton placeholders.
 - **No installation:** copy prebuilt CSS. Python 3 is used only by maintainers to regenerate it.
-- **Opt-in universal registry (alpha.5 source):** 68 copy-owned HTML blocks plus 9 CSS modules in shadcn-compatible static JSON; no consumer runtime dependency. See [blocks guide](docs/blocks-guide.md).
+- **Visual page starters + offline images (alpha.5 source):** four editable complete-site starting layouts (portfolio, agency, SaaS, local business); replace original gallery examples with local PNG/JPEG/WebP photos and export a self-contained static ZIP without JavaScript. Editor JSON retains photos. [Builder](docs/page-builder.html).
+- **Static page composition (alpha.5 source):** browse and rearrange all 99 copy-owned sections in the optional visual builder, then download a self-hostable HTML/CSS/image ZIP without application JavaScript. Backend forms remain host-owned. [Builder](docs/page-builder.html).
+- **Opt-in universal registry (alpha.5 source):** 99 copy-owned HTML blocks plus 9 CSS modules in shadcn-compatible static JSON; no consumer runtime dependency. See [blocks guide](docs/blocks-guide.md).
 
 ## Live gallery and installation
+
+* [Three-page SaaS marketing site starter](examples/site-starters/saas-marketing/README.md): original responsive hero, features, workflow, pricing, about and native FAQs; [live source preview](https://syntyr-css.pages.dev/examples/site-starters/saas-marketing/) and dependency-free offline export with `scripts/export_site_starter.py`; [separate Vercel/Netlify deployment guide](deploy/saas-marketing/README.md). Illustrative alpha.5 source, not a commercial SaaS product.
+
 
 - [Live website on Cloudflare](https://syntyr-css.pages.dev/)
 - [Tailwind alternative decision guide](docs/tailwind-alternative.html): honest tradeoffs against Tailwind v4 and plain CSS, free SaaS demos, and HTML-first adoption guidance.
@@ -70,7 +77,7 @@ stylesheets.
 - [Common HTML and UI example](examples/common-ui.html): navigation links, avatars, chips, list groups, notices and native form controls; no JavaScript
 - [SaaS settings and billing showcase](examples/settings-billing.html): original three-level navigation, annual/monthly price comparison, current-plan states, and responsive billing workspace; static illustrative data, no JavaScript or live subscription actions
 - [Native HTML elements demo](examples/native-elements.html): lists, code, media, forms, progress, and native overlays with optional semantic CSS
-- [68 copy-owned blocks, 12 CSS textures, 6 typography directions, and 150 SVG icons](https://syntyr-css.pages.dev/docs/blocks.html) ([authoring guide](docs/blocks-guide.md))
+- [99 copy-owned blocks, 12 CSS textures, 6 typography directions, and 150 SVG icons](https://syntyr-css.pages.dev/docs/blocks.html) ([authoring guide](docs/blocks-guide.md))
 - [Practical installation, integration and performance guides](https://syntyr-css.pages.dev/docs/guides.html)
 - [Task-based How-To tutorials](docs/how-to.html): search 10 native HTML workflows and edit 20 existing MIT blocks in the sandboxed CodeMirror playground (unreleased alpha.5 source candidate)
 - [Searchable, copyable component catalog](docs/catalog.html) with theme and width previews; [generated, portable gallery manifest](metadata/component-gallery.v1.json) for visual builders
@@ -153,6 +160,7 @@ stylesheets.
 - [Three flagship visual compositions](docs/visual-composition.md): [Studio operations](examples/flagship-studio.html), [Noir editorial](examples/flagship-noir.html), and [Grid control](examples/flagship-grid.html); original, static, zero-JavaScript showcases.
 - [Free production-shaped operations console](examples/operations-console.html): responsive SaaS dashboard composed from existing CSS modules; no backend or runtime JS
 - [Search, filtering, settings and pagination SaaS workflow demonstration](examples/saas-workflows.html): server-ready semantic HTML, static illustrative data, zero JavaScript
+- [SaaS Admin Starter](examples/saas-admin-starter/index.html): four linked, responsive HTML pages for overview, pipeline, customers and billing; read-only sample data, no runtime JavaScript
 - [Role-permissions review matrix](examples/permission-matrix.html): accessible native checkbox/table composition for enterprise authorization UIs; local preview only, no real permissions or JavaScript
 - [Workflow operations compositions](examples/workflow-operations.html): progress steps, expandable activity diagnostics, and human approval queue using existing Syntyr classes; no backend or JavaScript
 - [Operation feedback and revision comparison recipes](examples/operation-revisions.html): five host-owned states and semantic before/after record values using the existing definition-list layout (unreleased alpha.5 source)
@@ -307,6 +315,8 @@ For native platform integration, see the [browser API compatibility and progress
 
 ## Development and verification
 
+Use Python 3.11 or later to run the full unit test suite.
+
 ```sh
 python3 scripts/build.py
 python3 scripts/build.py --check
@@ -343,7 +353,7 @@ python3 scripts/check_merge_candidate.py --base FETCH_HEAD
 
 The test checks CSS, editor API metadata, consolidated agent documentation,
 Python contracts, Cloudflare allowlisted assets, and release packaging. It
-leaves the source branch unchanged and requires only Python 3 and Git.
+leaves the source branch unchanged and requires Python 3.11 or later and Git.
 
 **Race boundary:** A passing check proves compatibility with the specific
 base SHA it fetched. It does not protect against another PR landing afterward.

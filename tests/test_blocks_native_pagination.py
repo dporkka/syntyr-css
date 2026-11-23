@@ -47,8 +47,9 @@ class BlocksNativePaginationTests(unittest.TestCase):
         parser.feed(html)
         expected = [entry["id"] for entry in json.loads((ROOT / "blocks/manifest.json").read_text())["blocks"]]
         self.assertEqual(parser.blocks, expected)
-        self.assertEqual([len(group["cards"]) for group in parser.block_groups], [12, 12, 12, 12, 12, 8])
-        self.assertEqual([group["tag"] for group in parser.block_groups], ["section"] + ["details"] * 5)
+        batches = [expected[start:start + 12] for start in range(0, len(expected), 12)]
+        self.assertEqual([group["cards"] for group in parser.block_groups], batches)
+        self.assertEqual([group["tag"] for group in parser.block_groups], ["section"] + ["details"] * (len(batches) - 1))
         self.assertIn('id="blocks-grid" class="blocks-pages"', html)
         self.assertIn('href="#block-title-', html)
 

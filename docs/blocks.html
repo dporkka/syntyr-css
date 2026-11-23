@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="68 original HTML/CSS blocks, 12 visual assets, and 150 SVG icon examples for Syntyr. View, filter, and copy without a framework.">
+  <meta name="description" content="99 original HTML/CSS blocks, 12 visual assets, and 150 SVG icon examples for Syntyr. View, filter, and copy without a framework.">
   <title>Free HTML/CSS Blocks for SaaS and Websites — Syntyr CSS</title>
   <link rel="stylesheet" href="../dist/syntyr.all.css">
   <link rel="stylesheet" href="docs.css">
@@ -13,21 +13,43 @@
 </head>
 <body class="syn-root syn-page" data-syn-theme="studio">
   <a href="#blocks-main" class="syn-button blocks-skip">Skip to blocks</a>
-  <header class="syn-header syn-shell">
+  <header class="syn-header syn-shell docs-header">
     <a class="syn-logo" href="index.html">SYNTYR / BLOCKS &amp; ASSETS</a>
-    <nav class="syn-nav" aria-label="Documentation">
-      <a href="index.html">Gallery</a><a href="catalog.html">Components</a>
-      <a href="blocks-guide.html">Integration guide</a><a href="how-to.html">How-To</a>
-      <a href="premium-compositions.html">Premium-inspired layouts</a><a href="console-kit.html">Console Kit previews</a>
+    <nav class="syn-nav" aria-label="Main navigation">
+      <a href="index.html#install">Get started</a>
+      <a href="catalog.html">Components</a>
+      <a href="blocks.html">Blocks</a>
+      <a href="../tools/">Free tools</a>
+      <a href="index.html">Docs</a>
+      <a href="https://github.com/dporkka/syntyr-css">GitHub</a>
     </nav>
+    <details class="site-mobile-menu">
+      <summary>Menu</summary>
+      <nav aria-label="Mobile navigation">
+        <a href="index.html#install">Get started</a>
+        <a href="catalog.html">Components</a>
+        <a href="blocks.html">Blocks</a>
+        <a href="../tools/">Free tools</a>
+        <a href="index.html">Docs</a>
+        <a href="https://github.com/dporkka/syntyr-css">GitHub</a>
+        <a href="blocks-guide.html">Integration guide</a>
+        <a href="how-to.html">How-To guides</a>
+      </nav>
+    </details>
   </header>
   <main class="syn-shell" id="blocks-main">
     <section class="docs-section">
       <p class="syn-eyebrow">COPY-OWNED / FRAMEWORK-INDEPENDENT</p>
-      <h1 class="syn-title">68 free HTML and CSS UI blocks for websites and SaaS.</h1>
+      <h1 class="syn-title">99 free HTML and CSS UI blocks for websites and SaaS.</h1>
       <p class="syn-lede">Build faster with original HTML compositions styled by Syntyr.
       Every preview renders without JavaScript. Search, theme switching, and copying
       are documentation-only enhancements, not dependencies for your application.</p>
+      <aside id="blocks-release-scope" class="syn-panel" aria-labelledby="blocks-release-title">
+        <p class="syn-eyebrow">SOURCE PREVIEW / NOT A PUBLISHED RELEASE</p>
+        <h2 class="syn-heading" id="blocks-release-title">Unreleased alpha.5 section examples</h2>
+        <p>These copyable blocks target the experimental alpha.5 source candidate; they are not a guarantee of compatibility with the published v0.3.0-alpha.4 CSS. Verify the referenced modules before using them in production.</p>
+        <p><a href="index.html#install">Install published alpha.4 first</a> or <a href="blocks-guide.html">read the blocks integration guide</a>.</p>
+      </aside>
       <p class="syn-caption">These are static illustrative presentations: real authentication,
       billing, filtering, form validation, persistence and permissions belong to your application.
       <a href="blocks-guide.html">Read integration and accessibility guidance.</a></p>
@@ -62,14 +84,14 @@
       </section>
       <nav class="blocks-category-nav" aria-label="Browse blocks by category">
         <span class="syn-caption">Jump to category</span>
-        <a href="#block-title-hero-product" data-block-category-link="Marketing">Marketing <span>(22)</span></a><a href="#block-title-metric-overview" data-block-category-link="Applications">Applications <span>(23)</span></a><a href="#block-title-terminal-session" data-block-category-link="Technical">Technical <span>(6)</span></a><a href="#block-title-process-steps" data-block-category-link="Services">Services <span>(5)</span></a><a href="#block-title-portfolio-grid" data-block-category-link="Portfolio">Portfolio <span>(2)</span></a><a href="#block-title-article-featured" data-block-category-link="Editorial">Editorial <span>(4)</span></a><a href="#block-title-site-header" data-block-category-link="Navigation">Navigation <span>(3)</span></a><a href="#block-title-content-collection" data-block-category-link="Publishing">Publishing <span>(1)</span></a><a href="#block-title-product-collection" data-block-category-link="Commerce">Commerce <span>(2)</span></a>
+        <a href="#block-title-hero-product" data-block-category-link="Marketing">Marketing <span>(31)</span></a><a href="#block-title-metric-overview" data-block-category-link="Applications">Applications <span>(23)</span></a><a href="#block-title-terminal-session" data-block-category-link="Technical">Technical <span>(6)</span></a><a href="#block-title-process-steps" data-block-category-link="Services">Services <span>(10)</span></a><a href="#block-title-portfolio-grid" data-block-category-link="Portfolio">Portfolio <span>(4)</span></a><a href="#block-title-article-featured" data-block-category-link="Editorial">Editorial <span>(6)</span></a><a href="#block-title-site-header" data-block-category-link="Navigation">Navigation <span>(10)</span></a><a href="#block-title-content-collection" data-block-category-link="Publishing">Publishing <span>(3)</span></a><a href="#block-title-product-collection" data-block-category-link="Commerce">Commerce <span>(3)</span></a><a href="#block-title-company-story" data-block-category-link="Company">Company <span>(3)</span></a>
       </nav>
       <div class="blocks-controls" id="blocks-controls" hidden>
         <div><label class="syn-label" for="blocks-search">Search blocks</label>
           <input class="syn-input" type="search" id="blocks-search" placeholder="Try pricing, settings, telemetry…" autocomplete="off"></div>
         <div><label class="syn-label" for="blocks-category">Category</label>
           <select class="syn-select" id="blocks-category"><option value="all">All categories</option>
-            <option value="Marketing">Marketing</option><option value="Applications">Applications</option><option value="Technical">Technical</option><option value="Services">Services</option><option value="Portfolio">Portfolio</option><option value="Editorial">Editorial</option><option value="Navigation">Navigation</option><option value="Publishing">Publishing</option><option value="Commerce">Commerce</option></select></div>
+            <option value="Marketing">Marketing</option><option value="Applications">Applications</option><option value="Technical">Technical</option><option value="Services">Services</option><option value="Portfolio">Portfolio</option><option value="Editorial">Editorial</option><option value="Navigation">Navigation</option><option value="Publishing">Publishing</option><option value="Commerce">Commerce</option><option value="Company">Company</option></select></div>
         <div><label class="syn-label" for="blocks-theme">Preview theme</label>
           <select class="syn-select" id="blocks-theme">
             <option value="studio">Studio</option><option value="grid">Grid</option>
@@ -81,14 +103,14 @@
       <div class="blocks-preview-actions">
         <button type="button" id="blocks-preview-toggle" class="syn-button" aria-controls="blocks-grid" aria-pressed="false" hidden>Show all previews</button>
       </div>
-      <p id="blocks-results" class="syn-caption" role="status" aria-live="polite">68 blocks available.</p>
+      <p id="blocks-results" class="syn-caption" role="status" aria-live="polite">99 blocks available.</p>
       <p id="blocks-feedback" class="syn-caption" role="status" aria-live="polite" aria-atomic="true"></p>
       <p id="blocks-empty" class="syn-alert" hidden>No blocks found. Try a different search or category.</p>
       <p class="syn-caption">No JavaScript needed: the first 12 blocks are visible immediately.
         Open a numbered batch below for more examples, or jump directly to any block with a link.
-        All 68 examples are already included in this HTML document.</p>
+        All 99 examples are already included in this HTML document.</p>
       <div id="blocks-grid" class="blocks-pages">
-        <section class="blocks-batch blocks-batch--first" aria-label="Blocks 1–12 of 68"><div class="blocks-grid">
+        <section class="blocks-batch blocks-batch--first" aria-label="Blocks 1–12 of 99"><div class="blocks-grid">
       <article class="blocks-card syn-panel" data-block-id="hero-product"
                data-block-category="Marketing"
                data-block-keywords="Product launch hero A concise product introduction with real calls to action. hero landing product"
@@ -558,7 +580,7 @@
         </details>
         <button type="button" class="syn-button blocks-copy" data-block-copy
                 aria-label="Copy HTML for Search and filter form" hidden>Copy HTML</button>
-      </article></div></section><details class="blocks-batch" data-block-batch="2"><summary>Show more blocks <span>13–24 of 68</span></summary><div class="blocks-grid">
+      </article></div></section><details class="blocks-batch" data-block-batch="2"><summary>Show more blocks <span>13–24 of 99</span></summary><div class="blocks-grid">
       <article class="blocks-card syn-panel" data-block-id="settings-form"
                data-block-category="Applications"
                data-block-keywords="Account settings Labeled settings form for server-backed applications. settings account form"
@@ -1290,7 +1312,7 @@
         </details>
         <button type="button" class="syn-button blocks-copy" data-block-copy
                 aria-label="Copy HTML for Sign-in form" hidden>Copy HTML</button>
-      </article></div></details><details class="blocks-batch" data-block-batch="3"><summary>Show more blocks <span>25–36 of 68</span></summary><div class="blocks-grid">
+      </article></div></details><details class="blocks-batch" data-block-batch="3"><summary>Show more blocks <span>25–36 of 99</span></summary><div class="blocks-grid">
       <article class="blocks-card syn-panel" data-block-id="auth-recovery"
                data-block-category="Applications"
                data-block-keywords="Account recovery Email recovery request presentation with security integration notes. authentication recovery password"
@@ -1772,7 +1794,7 @@
         </details>
         <button type="button" class="syn-button blocks-copy" data-block-copy
                 aria-label="Copy HTML for Selected work grid" hidden>Copy HTML</button>
-      </article></div></details><details class="blocks-batch" data-block-batch="4"><summary>Show more blocks <span>37–48 of 68</span></summary><div class="blocks-grid">
+      </article></div></details><details class="blocks-batch" data-block-batch="4"><summary>Show more blocks <span>37–48 of 99</span></summary><div class="blocks-grid">
       <article class="blocks-card syn-panel" data-block-id="team-grid"
                data-block-category="Services"
                data-block-keywords="Team introduction cards A team directory section without invented portraits or credentials. team people about"
@@ -2035,6 +2057,152 @@
         <button type="button" class="syn-button blocks-copy" data-block-copy
                 aria-label="Copy HTML for Author bio card" hidden>Copy HTML</button>
       </article>
+      <article class="blocks-card syn-panel" data-block-id="editorial-intro-split"
+               data-block-category="Editorial"
+               data-block-keywords="Editorial intro with context panel An editorial introduction with primary actions and a contextual checklist beside it. intro split editorial landing"
+               aria-labelledby="block-title-editorial-intro-split">
+        <div class="blocks-card-heading">
+          <div><p class="syn-eyebrow">Editorial</p>
+            <h2 class="syn-heading" id="block-title-editorial-intro-split">Editorial intro with context panel</h2></div>
+          <span class="syn-badge">syntyr.core.css</span>
+        </div>
+        <p class="syn-muted">An editorial introduction with primary actions and a contextual checklist beside it.</p>
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Editorial intro with context panel</summary>
+          <div class="blocks-preview">
+<section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-layout-intro-heading">
+  <div class="syn-sidecar">
+    <div class="syn-stack">
+      <p class="syn-eyebrow">A CLEARER APPROACH</p>
+      <h2 class="syn-heading" id="syn-layout-intro-heading">Start with the problem, not the platform.</h2>
+      <p class="syn-lede">Design work becomes easier when the people, constraints and desired outcomes are visible from the beginning.</p>
+      <div class="syn-inline">
+        <a class="syn-button syn-button--primary">Explore our approach</a>
+        <a class="syn-button syn-button--outline">See example projects</a>
+      </div>
+    </div>
+    <aside class="syn-panel syn-stack" aria-label="What to expect">
+      <p class="syn-eyebrow">AT A GLANCE</p>
+      <h3 class="syn-heading">Focus on what matters</h3>
+      <ul class="syn-feature-list">
+        <li>Understand the audience</li>
+        <li>Choose measurable goals</li>
+        <li>Keep decisions documented</li>
+      </ul>
+    </aside>
+  </div>
+</section>
+          </div>
+        </details>
+        <details class="blocks-details">
+          <summary data-block-source>View HTML source for Editorial intro with context panel</summary>
+          <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-layout-intro-heading&quot;&gt;
+  &lt;div class=&quot;syn-sidecar&quot;&gt;
+    &lt;div class=&quot;syn-stack&quot;&gt;
+      &lt;p class=&quot;syn-eyebrow&quot;&gt;A CLEARER APPROACH&lt;/p&gt;
+      &lt;h2 class=&quot;syn-heading&quot; id=&quot;syn-layout-intro-heading&quot;&gt;Start with the problem, not the platform.&lt;/h2&gt;
+      &lt;p class=&quot;syn-lede&quot;&gt;Design work becomes easier when the people, constraints and desired outcomes are visible from the beginning.&lt;/p&gt;
+      &lt;div class=&quot;syn-inline&quot;&gt;
+        &lt;a class=&quot;syn-button syn-button--primary&quot; href=&quot;/approach&quot;&gt;Explore our approach&lt;/a&gt;
+        &lt;a class=&quot;syn-button syn-button--outline&quot; href=&quot;/work&quot;&gt;See example projects&lt;/a&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;aside class=&quot;syn-panel syn-stack&quot; aria-label=&quot;What to expect&quot;&gt;
+      &lt;p class=&quot;syn-eyebrow&quot;&gt;AT A GLANCE&lt;/p&gt;
+      &lt;h3 class=&quot;syn-heading&quot;&gt;Focus on what matters&lt;/h3&gt;
+      &lt;ul class=&quot;syn-feature-list&quot;&gt;
+        &lt;li&gt;Understand the audience&lt;/li&gt;
+        &lt;li&gt;Choose measurable goals&lt;/li&gt;
+        &lt;li&gt;Keep decisions documented&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/aside&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre>
+        </details>
+        <button type="button" class="syn-button blocks-copy" data-block-copy
+                aria-label="Copy HTML for Editorial intro with context panel" hidden>Copy HTML</button>
+      </article>
+      <article class="blocks-card syn-panel" data-block-id="article-toc"
+               data-block-category="Editorial"
+               data-block-keywords="Article with contents sidebar A long-form article and real anchor-linked table of contents in a wrapping sidecar. article contents sidebar reading"
+               aria-labelledby="block-title-article-toc">
+        <div class="blocks-card-heading">
+          <div><p class="syn-eyebrow">Editorial</p>
+            <h2 class="syn-heading" id="block-title-article-toc">Article with contents sidebar</h2></div>
+          <span class="syn-badge">syntyr.core.css</span>
+        </div>
+        <p class="syn-muted">A long-form article and real anchor-linked table of contents in a wrapping sidecar.</p>
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Article with contents sidebar</summary>
+          <div class="blocks-preview">
+<section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-layout-article-heading">
+  <p class="syn-eyebrow">PRACTICAL GUIDE</p>
+  <h2 class="syn-heading" id="syn-layout-article-heading">A practical way to write clearer product pages</h2>
+  <p class="syn-lede">An article and an in-page contents list that reflow without a JavaScript scroll handler.</p>
+  <div class="syn-sidecar">
+    <article class="syn-stack" aria-label="Guide content">
+      <section class="syn-stack" aria-labelledby="syn-layout-article-summary">
+        <h3 id="syn-layout-article-summary">Begin with one question</h3>
+        <p>What does a reader need to understand or accomplish here? Put the answer near the beginning, using familiar language and a meaningful heading.</p>
+        <p>Provide context without burying the action beneath decorative content.</p>
+      </section>
+      <section class="syn-stack" aria-labelledby="syn-layout-article-practices">
+        <h3 id="syn-layout-article-practices">Make the next step obvious</h3>
+        <p>Group related material, keep link names descriptive, and prefer short paragraphs when scanning is likely.</p>
+        <ul class="syn-feature-list"><li>Use one heading per idea.</li><li>Explain unfamiliar terminology.</li><li>Offer a clear path forward.</li></ul>
+        <p><a>Read the full content guide</a></p>
+      </section>
+    </article>
+    <aside class="syn-panel syn-stack">
+      <nav aria-label="On this page">
+        <strong>On this page</strong>
+        <ol class="syn-stack">
+          <li><a>Begin with one question</a></li>
+          <li><a>Make the next step obvious</a></li>
+        </ol>
+      </nav>
+      <p class="syn-caption">The in-page links target real headings; adjust IDs when copying more than once.</p>
+    </aside>
+  </div>
+</section>
+          </div>
+        </details>
+        <details class="blocks-details">
+          <summary data-block-source>View HTML source for Article with contents sidebar</summary>
+          <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-layout-article-heading&quot;&gt;
+  &lt;p class=&quot;syn-eyebrow&quot;&gt;PRACTICAL GUIDE&lt;/p&gt;
+  &lt;h2 class=&quot;syn-heading&quot; id=&quot;syn-layout-article-heading&quot;&gt;A practical way to write clearer product pages&lt;/h2&gt;
+  &lt;p class=&quot;syn-lede&quot;&gt;An article and an in-page contents list that reflow without a JavaScript scroll handler.&lt;/p&gt;
+  &lt;div class=&quot;syn-sidecar&quot;&gt;
+    &lt;article class=&quot;syn-stack&quot; aria-label=&quot;Guide content&quot;&gt;
+      &lt;section class=&quot;syn-stack&quot; aria-labelledby=&quot;syn-layout-article-summary&quot;&gt;
+        &lt;h3 id=&quot;syn-layout-article-summary&quot;&gt;Begin with one question&lt;/h3&gt;
+        &lt;p&gt;What does a reader need to understand or accomplish here? Put the answer near the beginning, using familiar language and a meaningful heading.&lt;/p&gt;
+        &lt;p&gt;Provide context without burying the action beneath decorative content.&lt;/p&gt;
+      &lt;/section&gt;
+      &lt;section class=&quot;syn-stack&quot; aria-labelledby=&quot;syn-layout-article-practices&quot;&gt;
+        &lt;h3 id=&quot;syn-layout-article-practices&quot;&gt;Make the next step obvious&lt;/h3&gt;
+        &lt;p&gt;Group related material, keep link names descriptive, and prefer short paragraphs when scanning is likely.&lt;/p&gt;
+        &lt;ul class=&quot;syn-feature-list&quot;&gt;&lt;li&gt;Use one heading per idea.&lt;/li&gt;&lt;li&gt;Explain unfamiliar terminology.&lt;/li&gt;&lt;li&gt;Offer a clear path forward.&lt;/li&gt;&lt;/ul&gt;
+        &lt;p&gt;&lt;a href=&quot;/guides/content&quot;&gt;Read the full content guide&lt;/a&gt;&lt;/p&gt;
+      &lt;/section&gt;
+    &lt;/article&gt;
+    &lt;aside class=&quot;syn-panel syn-stack&quot;&gt;
+      &lt;nav aria-label=&quot;On this page&quot;&gt;
+        &lt;strong&gt;On this page&lt;/strong&gt;
+        &lt;ol class=&quot;syn-stack&quot;&gt;
+          &lt;li&gt;&lt;a href=&quot;#syn-layout-article-summary&quot;&gt;Begin with one question&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#syn-layout-article-practices&quot;&gt;Make the next step obvious&lt;/a&gt;&lt;/li&gt;
+        &lt;/ol&gt;
+      &lt;/nav&gt;
+      &lt;p class=&quot;syn-caption&quot;&gt;The in-page links target real headings; adjust IDs when copying more than once.&lt;/p&gt;
+    &lt;/aside&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre>
+        </details>
+        <button type="button" class="syn-button blocks-copy" data-block-copy
+                aria-label="Copy HTML for Article with contents sidebar" hidden>Copy HTML</button>
+      </article>
       <article class="blocks-card syn-panel" data-block-id="case-study-preview"
                data-block-category="Portfolio"
                data-block-keywords="Case-study teaser A project outcome summary with challenges, solution and next action. case-study portfolio results"
@@ -2174,6 +2342,350 @@
         <button type="button" class="syn-button blocks-copy" data-block-copy
                 aria-label="Copy HTML for Multi-column site footer" hidden>Copy HTML</button>
       </article>
+      <article class="blocks-card syn-panel" data-block-id="header-centered"
+               data-block-category="Navigation"
+               data-block-keywords="Centered editorial header Centered brand, horizontal links, and a secondary call to action. header centered editorial navigation"
+               aria-labelledby="block-title-header-centered">
+        <div class="blocks-card-heading">
+          <div><p class="syn-eyebrow">Navigation</p>
+            <h2 class="syn-heading" id="block-title-header-centered">Centered editorial header</h2></div>
+          <span class="syn-badge">syntyr.core.css</span>
+        </div>
+        <p class="syn-muted">Centered brand, horizontal links, and a secondary call to action.</p>
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Centered editorial header</summary>
+          <div class="blocks-preview">
+<header class="syn-root syn-region syn-stack" data-syn-theme="studio" aria-label="Example centered site header">
+  <div class="syn-inline" style="--syn-inline-justify:center">
+    <a class="syn-logo">Mosaic Collective</a>
+  </div>
+  <nav class="syn-nav syn-inline" style="--syn-inline-justify:center" aria-label="Primary navigation">
+    <a>Our work</a>
+    <a>Approach</a>
+    <a>Team</a>
+    <a>Journal</a>
+  </nav>
+  <div class="syn-inline" style="--syn-inline-justify:center">
+    <a class="syn-button syn-button--outline">Let's talk</a>
+  </div>
+</header>
+          </div>
+        </details>
+        <details class="blocks-details">
+          <summary data-block-source>View HTML source for Centered editorial header</summary>
+          <pre class="blocks-source"><code>&lt;header class=&quot;syn-root syn-region syn-stack&quot; data-syn-theme=&quot;studio&quot; aria-label=&quot;Example centered site header&quot;&gt;
+  &lt;div class=&quot;syn-inline&quot; style=&quot;--syn-inline-justify:center&quot;&gt;
+    &lt;a class=&quot;syn-logo&quot; href=&quot;/home&quot;&gt;Mosaic Collective&lt;/a&gt;
+  &lt;/div&gt;
+  &lt;nav class=&quot;syn-nav syn-inline&quot; style=&quot;--syn-inline-justify:center&quot; aria-label=&quot;Primary navigation&quot;&gt;
+    &lt;a href=&quot;/work&quot;&gt;Our work&lt;/a&gt;
+    &lt;a href=&quot;/approach&quot;&gt;Approach&lt;/a&gt;
+    &lt;a href=&quot;/team&quot;&gt;Team&lt;/a&gt;
+    &lt;a href=&quot;/journal&quot;&gt;Journal&lt;/a&gt;
+  &lt;/nav&gt;
+  &lt;div class=&quot;syn-inline&quot; style=&quot;--syn-inline-justify:center&quot;&gt;
+    &lt;a class=&quot;syn-button syn-button--outline&quot; href=&quot;/contact&quot;&gt;Let&#x27;s talk&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/header&gt;</code></pre>
+        </details>
+        <button type="button" class="syn-button blocks-copy" data-block-copy
+                aria-label="Copy HTML for Centered editorial header" hidden>Copy HTML</button>
+      </article></div></details><details class="blocks-batch" data-block-batch="5"><summary>Show more blocks <span>49–60 of 99</span></summary><div class="blocks-grid">
+      <article class="blocks-card syn-panel" data-block-id="header-split"
+               data-block-category="Navigation"
+               data-block-keywords="Two-row product header Separate utility and product navigation with a prominent action. header utility two-row saas"
+               aria-labelledby="block-title-header-split">
+        <div class="blocks-card-heading">
+          <div><p class="syn-eyebrow">Navigation</p>
+            <h2 class="syn-heading" id="block-title-header-split">Two-row product header</h2></div>
+          <span class="syn-badge">syntyr.core.css</span>
+        </div>
+        <p class="syn-muted">Separate utility and product navigation with a prominent action.</p>
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Two-row product header</summary>
+          <div class="blocks-preview">
+<header class="syn-root syn-region syn-stack" data-syn-theme="studio" aria-label="Example two-row site header">
+  <div class="syn-inline" style="--syn-inline-justify:space-between">
+    <a class="syn-logo">Atlas Platform</a>
+    <nav class="syn-inline" aria-label="Utility navigation">
+      <a class="syn-list-row">Help</a>
+      <a class="syn-list-row">Sign in</a>
+    </nav>
+  </div>
+  <div class="syn-header" style="--syn-header-padding-block:0.5rem">
+    <nav class="syn-nav" aria-label="Primary navigation">
+      <a>Product</a>
+      <a>Solutions</a>
+      <a>Pricing</a>
+      <a>Docs</a>
+    </nav>
+    <a class="syn-button syn-button--primary">Start free</a>
+  </div>
+</header>
+          </div>
+        </details>
+        <details class="blocks-details">
+          <summary data-block-source>View HTML source for Two-row product header</summary>
+          <pre class="blocks-source"><code>&lt;header class=&quot;syn-root syn-region syn-stack&quot; data-syn-theme=&quot;studio&quot; aria-label=&quot;Example two-row site header&quot;&gt;
+  &lt;div class=&quot;syn-inline&quot; style=&quot;--syn-inline-justify:space-between&quot;&gt;
+    &lt;a class=&quot;syn-logo&quot; href=&quot;/home&quot;&gt;Atlas Platform&lt;/a&gt;
+    &lt;nav class=&quot;syn-inline&quot; aria-label=&quot;Utility navigation&quot;&gt;
+      &lt;a class=&quot;syn-list-row&quot; href=&quot;/help&quot;&gt;Help&lt;/a&gt;
+      &lt;a class=&quot;syn-list-row&quot; href=&quot;/login&quot;&gt;Sign in&lt;/a&gt;
+    &lt;/nav&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;syn-header&quot; style=&quot;--syn-header-padding-block:0.5rem&quot;&gt;
+    &lt;nav class=&quot;syn-nav&quot; aria-label=&quot;Primary navigation&quot;&gt;
+      &lt;a href=&quot;/product&quot;&gt;Product&lt;/a&gt;
+      &lt;a href=&quot;/solutions&quot;&gt;Solutions&lt;/a&gt;
+      &lt;a href=&quot;/pricing&quot;&gt;Pricing&lt;/a&gt;
+      &lt;a href=&quot;/docs&quot;&gt;Docs&lt;/a&gt;
+    &lt;/nav&gt;
+    &lt;a class=&quot;syn-button syn-button--primary&quot; href=&quot;/start&quot;&gt;Start free&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/header&gt;</code></pre>
+        </details>
+        <button type="button" class="syn-button blocks-copy" data-block-copy
+                aria-label="Copy HTML for Two-row product header" hidden>Copy HTML</button>
+      </article>
+      <article class="blocks-card syn-panel" data-block-id="header-disclosure"
+               data-block-category="Navigation"
+               data-block-keywords="Native disclosure header Compact brand and expandable keyboard-accessible menu without JavaScript. header details mobile disclosure"
+               aria-labelledby="block-title-header-disclosure">
+        <div class="blocks-card-heading">
+          <div><p class="syn-eyebrow">Navigation</p>
+            <h2 class="syn-heading" id="block-title-header-disclosure">Native disclosure header</h2></div>
+          <span class="syn-badge">syntyr.core.css</span>
+        </div>
+        <p class="syn-muted">Compact brand and expandable keyboard-accessible menu without JavaScript.</p>
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Native disclosure header</summary>
+          <div class="blocks-preview">
+<header class="syn-root syn-region syn-stack" data-syn-theme="studio" aria-label="Example disclosure site header">
+  <div class="syn-inline" style="--syn-inline-justify:space-between">
+    <a class="syn-logo">Northstar Journal</a>
+    <a class="syn-button syn-button--outline">Subscribe</a>
+  </div>
+  <details class="syn-details">
+    <summary>Explore the site</summary>
+    <nav class="syn-nav" aria-label="Primary navigation">
+      <a>Stories</a>
+      <a>Topics</a>
+      <a>About</a>
+      <a>Contact</a>
+    </nav>
+  </details>
+</header>
+          </div>
+        </details>
+        <details class="blocks-details">
+          <summary data-block-source>View HTML source for Native disclosure header</summary>
+          <pre class="blocks-source"><code>&lt;header class=&quot;syn-root syn-region syn-stack&quot; data-syn-theme=&quot;studio&quot; aria-label=&quot;Example disclosure site header&quot;&gt;
+  &lt;div class=&quot;syn-inline&quot; style=&quot;--syn-inline-justify:space-between&quot;&gt;
+    &lt;a class=&quot;syn-logo&quot; href=&quot;/home&quot;&gt;Northstar Journal&lt;/a&gt;
+    &lt;a class=&quot;syn-button syn-button--outline&quot; href=&quot;/subscribe&quot;&gt;Subscribe&lt;/a&gt;
+  &lt;/div&gt;
+  &lt;details class=&quot;syn-details&quot;&gt;
+    &lt;summary&gt;Explore the site&lt;/summary&gt;
+    &lt;nav class=&quot;syn-nav&quot; aria-label=&quot;Primary navigation&quot;&gt;
+      &lt;a href=&quot;/stories&quot;&gt;Stories&lt;/a&gt;
+      &lt;a href=&quot;/topics&quot;&gt;Topics&lt;/a&gt;
+      &lt;a href=&quot;/about&quot;&gt;About&lt;/a&gt;
+      &lt;a href=&quot;/contact&quot;&gt;Contact&lt;/a&gt;
+    &lt;/nav&gt;
+  &lt;/details&gt;
+&lt;/header&gt;</code></pre>
+        </details>
+        <button type="button" class="syn-button blocks-copy" data-block-copy
+                aria-label="Copy HTML for Native disclosure header" hidden>Copy HTML</button>
+      </article>
+      <article class="blocks-card syn-panel" data-block-id="footer-compact"
+               data-block-category="Navigation"
+               data-block-keywords="Compact single-row footer Space-saving brand, legal links and disclosure in a wrapping row. footer compact minimal legal"
+               aria-labelledby="block-title-footer-compact">
+        <div class="blocks-card-heading">
+          <div><p class="syn-eyebrow">Navigation</p>
+            <h2 class="syn-heading" id="block-title-footer-compact">Compact single-row footer</h2></div>
+          <span class="syn-badge">syntyr.core.css</span>
+        </div>
+        <p class="syn-muted">Space-saving brand, legal links and disclosure in a wrapping row.</p>
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Compact single-row footer</summary>
+          <div class="blocks-preview">
+<footer class="syn-root syn-region syn-stack" data-syn-theme="studio" aria-label="Example compact site footer">
+  <div class="syn-inline" style="--syn-inline-justify:space-between">
+    <a class="syn-logo">Northstar Studio</a>
+    <nav class="syn-inline" aria-label="Footer navigation">
+      <a class="syn-list-row">Work</a>
+      <a class="syn-list-row">Contact</a>
+      <a class="syn-list-row">Privacy</a>
+    </nav>
+  </div>
+  <p class="syn-caption">Example company information. Replace links and legal details before publishing.</p>
+</footer>
+          </div>
+        </details>
+        <details class="blocks-details">
+          <summary data-block-source>View HTML source for Compact single-row footer</summary>
+          <pre class="blocks-source"><code>&lt;footer class=&quot;syn-root syn-region syn-stack&quot; data-syn-theme=&quot;studio&quot; aria-label=&quot;Example compact site footer&quot;&gt;
+  &lt;div class=&quot;syn-inline&quot; style=&quot;--syn-inline-justify:space-between&quot;&gt;
+    &lt;a class=&quot;syn-logo&quot; href=&quot;/home&quot;&gt;Northstar Studio&lt;/a&gt;
+    &lt;nav class=&quot;syn-inline&quot; aria-label=&quot;Footer navigation&quot;&gt;
+      &lt;a class=&quot;syn-list-row&quot; href=&quot;/work&quot;&gt;Work&lt;/a&gt;
+      &lt;a class=&quot;syn-list-row&quot; href=&quot;/contact&quot;&gt;Contact&lt;/a&gt;
+      &lt;a class=&quot;syn-list-row&quot; href=&quot;/privacy&quot;&gt;Privacy&lt;/a&gt;
+    &lt;/nav&gt;
+  &lt;/div&gt;
+  &lt;p class=&quot;syn-caption&quot;&gt;Example company information. Replace links and legal details before publishing.&lt;/p&gt;
+&lt;/footer&gt;</code></pre>
+        </details>
+        <button type="button" class="syn-button blocks-copy" data-block-copy
+                aria-label="Copy HTML for Compact single-row footer" hidden>Copy HTML</button>
+      </article>
+      <article class="blocks-card syn-panel" data-block-id="footer-sitemap"
+               data-block-category="Navigation"
+               data-block-keywords="Four-column sitemap footer Responsive product, resource, company and legal navigation groups. footer sitemap columns links"
+               aria-labelledby="block-title-footer-sitemap">
+        <div class="blocks-card-heading">
+          <div><p class="syn-eyebrow">Navigation</p>
+            <h2 class="syn-heading" id="block-title-footer-sitemap">Four-column sitemap footer</h2></div>
+          <span class="syn-badge">syntyr.core.css</span>
+        </div>
+        <p class="syn-muted">Responsive product, resource, company and legal navigation groups.</p>
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Four-column sitemap footer</summary>
+          <div class="blocks-preview">
+<footer class="syn-root syn-region syn-stack" data-syn-theme="studio" aria-label="Example sitemap site footer">
+  <div class="syn-grid" style="--syn-grid-min:12rem">
+    <section aria-labelledby="syn-sitemap-about">
+      <h2 class="syn-heading" id="syn-sitemap-about">Atlas Platform</h2>
+      <p class="syn-muted">A clearer way to manage your work.</p>
+    </section>
+    <nav class="syn-stack" aria-label="Product links">
+      <strong>Product</strong>
+      <a class="syn-list-row">Features</a>
+      <a class="syn-list-row">Pricing</a>
+      <a class="syn-list-row">Integrations</a>
+    </nav>
+    <nav class="syn-stack" aria-label="Resources links">
+      <strong>Resources</strong>
+      <a class="syn-list-row">Documentation</a>
+      <a class="syn-list-row">Guides</a>
+      <a class="syn-list-row">Support</a>
+    </nav>
+    <nav class="syn-stack" aria-label="Company and legal links">
+      <strong>Company</strong>
+      <a class="syn-list-row">About</a>
+      <a class="syn-list-row">Privacy</a>
+      <a class="syn-list-row">Terms</a>
+    </nav>
+  </div>
+  <p class="syn-caption">Example links and company details; replace before publishing.</p>
+</footer>
+          </div>
+        </details>
+        <details class="blocks-details">
+          <summary data-block-source>View HTML source for Four-column sitemap footer</summary>
+          <pre class="blocks-source"><code>&lt;footer class=&quot;syn-root syn-region syn-stack&quot; data-syn-theme=&quot;studio&quot; aria-label=&quot;Example sitemap site footer&quot;&gt;
+  &lt;div class=&quot;syn-grid&quot; style=&quot;--syn-grid-min:12rem&quot;&gt;
+    &lt;section aria-labelledby=&quot;syn-sitemap-about&quot;&gt;
+      &lt;h2 class=&quot;syn-heading&quot; id=&quot;syn-sitemap-about&quot;&gt;Atlas Platform&lt;/h2&gt;
+      &lt;p class=&quot;syn-muted&quot;&gt;A clearer way to manage your work.&lt;/p&gt;
+    &lt;/section&gt;
+    &lt;nav class=&quot;syn-stack&quot; aria-label=&quot;Product links&quot;&gt;
+      &lt;strong&gt;Product&lt;/strong&gt;
+      &lt;a class=&quot;syn-list-row&quot; href=&quot;/features&quot;&gt;Features&lt;/a&gt;
+      &lt;a class=&quot;syn-list-row&quot; href=&quot;/pricing&quot;&gt;Pricing&lt;/a&gt;
+      &lt;a class=&quot;syn-list-row&quot; href=&quot;/integrations&quot;&gt;Integrations&lt;/a&gt;
+    &lt;/nav&gt;
+    &lt;nav class=&quot;syn-stack&quot; aria-label=&quot;Resources links&quot;&gt;
+      &lt;strong&gt;Resources&lt;/strong&gt;
+      &lt;a class=&quot;syn-list-row&quot; href=&quot;/docs&quot;&gt;Documentation&lt;/a&gt;
+      &lt;a class=&quot;syn-list-row&quot; href=&quot;/guides&quot;&gt;Guides&lt;/a&gt;
+      &lt;a class=&quot;syn-list-row&quot; href=&quot;/support&quot;&gt;Support&lt;/a&gt;
+    &lt;/nav&gt;
+    &lt;nav class=&quot;syn-stack&quot; aria-label=&quot;Company and legal links&quot;&gt;
+      &lt;strong&gt;Company&lt;/strong&gt;
+      &lt;a class=&quot;syn-list-row&quot; href=&quot;/about&quot;&gt;About&lt;/a&gt;
+      &lt;a class=&quot;syn-list-row&quot; href=&quot;/privacy&quot;&gt;Privacy&lt;/a&gt;
+      &lt;a class=&quot;syn-list-row&quot; href=&quot;/terms&quot;&gt;Terms&lt;/a&gt;
+    &lt;/nav&gt;
+  &lt;/div&gt;
+  &lt;p class=&quot;syn-caption&quot;&gt;Example links and company details; replace before publishing.&lt;/p&gt;
+&lt;/footer&gt;</code></pre>
+        </details>
+        <button type="button" class="syn-button blocks-copy" data-block-copy
+                aria-label="Copy HTML for Four-column sitemap footer" hidden>Copy HTML</button>
+      </article>
+      <article class="blocks-card syn-panel" data-block-id="footer-newsletter"
+               data-block-category="Navigation"
+               data-block-keywords="Newsletter and links footer Email subscription example beside site links; requires a host-owned backend. footer newsletter subscription form"
+               aria-labelledby="block-title-footer-newsletter">
+        <div class="blocks-card-heading">
+          <div><p class="syn-eyebrow">Navigation</p>
+            <h2 class="syn-heading" id="block-title-footer-newsletter">Newsletter and links footer</h2></div>
+          <span class="syn-badge">syntyr.core.css</span>
+        </div>
+        <p class="syn-muted">Email subscription example beside site links; requires a host-owned backend.</p>
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Newsletter and links footer</summary>
+          <div class="blocks-preview">
+<footer class="syn-root syn-region syn-stack" data-syn-theme="studio" aria-label="Example newsletter site footer">
+  <div class="syn-grid">
+    <section class="syn-stack" aria-labelledby="syn-newsletter-footer-title">
+      <h2 class="syn-heading" id="syn-newsletter-footer-title">The Field Notes</h2>
+      <p class="syn-muted">Occasional ideas for more thoughtful digital products.</p>
+      <form class="syn-stack" action="/newsletter/subscribe" method="post"><fieldset class="blocks-preview-disabled" disabled>
+        <label class="syn-label" for="syn-footer-newsletter-email">Email address</label>
+        <div class="syn-inline">
+          <input class="syn-input" id="syn-footer-newsletter-email" name="email" type="email" autocomplete="email" required>
+          <button class="syn-button syn-button--primary" type="submit">Subscribe</button>
+        </div>
+        <p class="syn-caption">Example form only. Connect server validation, consent, CSRF protection and unsubscribe handling.</p>
+      </fieldset></form>
+    </section>
+    <nav class="syn-stack" aria-label="Footer navigation">
+      <strong>Explore</strong>
+      <a class="syn-list-row">Articles</a>
+      <a class="syn-list-row">About</a>
+      <a class="syn-list-row">Contact</a>
+      <a class="syn-list-row">Privacy</a>
+    </nav>
+  </div>
+  <p class="syn-caption">Illustrative business and subscription details; replace before publishing.</p>
+</footer>
+          </div>
+        </details>
+        <details class="blocks-details">
+          <summary data-block-source>View HTML source for Newsletter and links footer</summary>
+          <pre class="blocks-source"><code>&lt;footer class=&quot;syn-root syn-region syn-stack&quot; data-syn-theme=&quot;studio&quot; aria-label=&quot;Example newsletter site footer&quot;&gt;
+  &lt;div class=&quot;syn-grid&quot;&gt;
+    &lt;section class=&quot;syn-stack&quot; aria-labelledby=&quot;syn-newsletter-footer-title&quot;&gt;
+      &lt;h2 class=&quot;syn-heading&quot; id=&quot;syn-newsletter-footer-title&quot;&gt;The Field Notes&lt;/h2&gt;
+      &lt;p class=&quot;syn-muted&quot;&gt;Occasional ideas for more thoughtful digital products.&lt;/p&gt;
+      &lt;form class=&quot;syn-stack&quot; action=&quot;/newsletter/subscribe&quot; method=&quot;post&quot;&gt;
+        &lt;label class=&quot;syn-label&quot; for=&quot;syn-footer-newsletter-email&quot;&gt;Email address&lt;/label&gt;
+        &lt;div class=&quot;syn-inline&quot;&gt;
+          &lt;input class=&quot;syn-input&quot; id=&quot;syn-footer-newsletter-email&quot; name=&quot;email&quot; type=&quot;email&quot; autocomplete=&quot;email&quot; required&gt;
+          &lt;button class=&quot;syn-button syn-button--primary&quot; type=&quot;submit&quot;&gt;Subscribe&lt;/button&gt;
+        &lt;/div&gt;
+        &lt;p class=&quot;syn-caption&quot;&gt;Example form only. Connect server validation, consent, CSRF protection and unsubscribe handling.&lt;/p&gt;
+      &lt;/form&gt;
+    &lt;/section&gt;
+    &lt;nav class=&quot;syn-stack&quot; aria-label=&quot;Footer navigation&quot;&gt;
+      &lt;strong&gt;Explore&lt;/strong&gt;
+      &lt;a class=&quot;syn-list-row&quot; href=&quot;/articles&quot;&gt;Articles&lt;/a&gt;
+      &lt;a class=&quot;syn-list-row&quot; href=&quot;/about&quot;&gt;About&lt;/a&gt;
+      &lt;a class=&quot;syn-list-row&quot; href=&quot;/contact&quot;&gt;Contact&lt;/a&gt;
+      &lt;a class=&quot;syn-list-row&quot; href=&quot;/privacy&quot;&gt;Privacy&lt;/a&gt;
+    &lt;/nav&gt;
+  &lt;/div&gt;
+  &lt;p class=&quot;syn-caption&quot;&gt;Illustrative business and subscription details; replace before publishing.&lt;/p&gt;
+&lt;/footer&gt;</code></pre>
+        </details>
+        <button type="button" class="syn-button blocks-copy" data-block-copy
+                aria-label="Copy HTML for Newsletter and links footer" hidden>Copy HTML</button>
+      </article>
       <article class="blocks-card syn-panel" data-block-id="mega-navigation"
                data-block-category="Navigation"
                data-block-keywords="Native expandable mega menu Keyboard-friendly disclosure with grouped destination links and no menu runtime. mega menu navigation disclosure site"
@@ -2278,7 +2790,7 @@
       <a>Browse components</a>
     </article>
     <nav class="syn-panel" aria-label="Documentation sections"><h2 class="syn-heading">Guides</h2>
-      <ul class="syn-list-group">
+      <ul class="syn-list-group" role="list">
         <li><a class="syn-list-row" aria-current="page">Getting started</a></li>
         <li><a class="syn-list-row">Components</a></li>
         <li><a class="syn-list-row">Themes</a></li>
@@ -2300,7 +2812,7 @@
       &lt;a href=&quot;/docs/components&quot;&gt;Browse components&lt;/a&gt;
     &lt;/article&gt;
     &lt;nav class=&quot;syn-panel&quot; aria-label=&quot;Documentation sections&quot;&gt;&lt;h2 class=&quot;syn-heading&quot;&gt;Guides&lt;/h2&gt;
-      &lt;ul class=&quot;syn-list-group&quot;&gt;
+      &lt;ul class=&quot;syn-list-group&quot; role=&quot;list&quot;&gt;
         &lt;li&gt;&lt;a class=&quot;syn-list-row&quot; href=&quot;/docs/start&quot; aria-current=&quot;page&quot;&gt;Getting started&lt;/a&gt;&lt;/li&gt;
         &lt;li&gt;&lt;a class=&quot;syn-list-row&quot; href=&quot;/docs/components&quot;&gt;Components&lt;/a&gt;&lt;/li&gt;
         &lt;li&gt;&lt;a class=&quot;syn-list-row&quot; href=&quot;/docs/themes&quot;&gt;Themes&lt;/a&gt;&lt;/li&gt;
@@ -2426,7 +2938,7 @@
         </details>
         <button type="button" class="syn-button blocks-copy" data-block-copy
                 aria-label="Copy HTML for Filterable content collection" hidden>Copy HTML</button>
-      </article></div></details><details class="blocks-batch" data-block-batch="5"><summary>Show more blocks <span>49–60 of 68</span></summary><div class="blocks-grid">
+      </article>
       <article class="blocks-card syn-panel" data-block-id="product-collection"
                data-block-category="Commerce"
                data-block-keywords="Product collection cards Product catalog cards with explicit price and detail links. ecommerce products catalog"
@@ -2594,7 +3106,7 @@
         </details>
         <button type="button" class="syn-button blocks-copy" data-block-copy
                 aria-label="Copy HTML for Trust and assurance section" hidden>Copy HTML</button>
-      </article>
+      </article></div></details><details class="blocks-batch" data-block-batch="6"><summary>Show more blocks <span>61–72 of 99</span></summary><div class="blocks-grid">
       <article class="blocks-card syn-panel" data-block-id="event-registration"
                data-block-category="Marketing"
                data-block-keywords="Event registration section An agenda and accessible native signup form; your server must implement registration. event registration webinar signup marketing form"
@@ -2750,9 +3262,9 @@
   <h2 class="syn-heading" id="api-endpoint-heading">List example records</h2>
   <p><code>GET /v1/records</code> · Sample contract, not a live endpoint.</p>
   <h3 class="syn-heading">Request</h3>
-  <pre><code>GET /v1/records?limit=10</code></pre>
+  <pre class="syn-code-scroll" tabindex="0" role="region" aria-label="Example API request"><code>GET /v1/records?limit=10</code></pre>
   <h3 class="syn-heading">Example response</h3>
-  <pre><code>{
+  <pre class="syn-code-scroll" tabindex="0" role="region" aria-label="Example JSON response"><code>{
   "items": [{"id": "example-1", "status": "ready"}],
   "next": null
 }</code></pre>
@@ -2767,9 +3279,9 @@
   &lt;h2 class=&quot;syn-heading&quot; id=&quot;api-endpoint-heading&quot;&gt;List example records&lt;/h2&gt;
   &lt;p&gt;&lt;code&gt;GET /v1/records&lt;/code&gt; · Sample contract, not a live endpoint.&lt;/p&gt;
   &lt;h3 class=&quot;syn-heading&quot;&gt;Request&lt;/h3&gt;
-  &lt;pre&gt;&lt;code&gt;GET /v1/records?limit=10&lt;/code&gt;&lt;/pre&gt;
+  &lt;pre class=&quot;syn-code-scroll&quot; tabindex=&quot;0&quot; role=&quot;region&quot; aria-label=&quot;Example API request&quot;&gt;&lt;code&gt;GET /v1/records?limit=10&lt;/code&gt;&lt;/pre&gt;
   &lt;h3 class=&quot;syn-heading&quot;&gt;Example response&lt;/h3&gt;
-  &lt;pre&gt;&lt;code&gt;{
+  &lt;pre class=&quot;syn-code-scroll&quot; tabindex=&quot;0&quot; role=&quot;region&quot; aria-label=&quot;Example JSON response&quot;&gt;&lt;code&gt;{
   &quot;items&quot;: [{&quot;id&quot;: &quot;example-1&quot;, &quot;status&quot;: &quot;ready&quot;}],
   &quot;next&quot;: null
 }&lt;/code&gt;&lt;/pre&gt;
@@ -3064,7 +3576,7 @@
         </details>
         <button type="button" class="syn-button blocks-copy" data-block-copy
                 aria-label="Copy HTML for Split feature detail spotlight" hidden>Copy HTML</button>
-      </article></div></details><details class="blocks-batch" data-block-batch="6"><summary>Show more blocks <span>61–68 of 68</span></summary><div class="blocks-grid">
+      </article>
       <article class="blocks-card syn-panel" data-block-id="customer-case-study"
                data-block-category="Marketing"
                data-block-keywords="Customer case study detail A complete editorial case-study layout with honest illustrative metrics. case-study story social-proof"
@@ -3378,7 +3890,7 @@
         </details>
         <button type="button" class="syn-button blocks-copy" data-block-copy
                 aria-label="Copy HTML for Resource create and browse screen" hidden>Copy HTML</button>
-      </article>
+      </article></div></details><details class="blocks-batch" data-block-batch="7"><summary>Show more blocks <span>73–84 of 99</span></summary><div class="blocks-grid">
       <article class="blocks-card syn-panel" data-block-id="organization-members"
                data-block-category="Applications"
                data-block-keywords="Team and invitation management Workspace roster, role information and a native invite form. organization team roles"
@@ -3700,6 +4212,1331 @@
         </details>
         <button type="button" class="syn-button blocks-copy" data-block-copy
                 aria-label="Copy HTML for API key and webhook settings" hidden>Copy HTML</button>
+      </article>
+      <article class="blocks-card syn-panel" data-block-id="image-gallery"
+               data-block-category="Portfolio"
+               data-block-keywords="Responsive image gallery Four original local illustrations in a CSS-only responsive gallery with native full-image links. gallery images photography portfolio"
+               aria-labelledby="block-title-image-gallery">
+        <div class="blocks-card-heading">
+          <div><p class="syn-eyebrow">Portfolio</p>
+            <h2 class="syn-heading" id="block-title-image-gallery">Responsive image gallery</h2></div>
+          <span class="syn-badge">syntyr.core.css</span>
+        </div>
+        <p class="syn-muted">Four original local illustrations in a CSS-only responsive gallery with native full-image links.</p>
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Responsive image gallery</summary>
+          <div class="blocks-preview">
+<section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-gallery-heading">
+  <p class="syn-eyebrow">SELECTED IMAGES</p>
+  <h2 class="syn-heading" id="syn-gallery-heading">A closer look at the work</h2>
+  <p class="syn-muted">Choose an image to view the full illustration. Replace these original samples with your own optimized photography.</p>
+  <div class="syn-image-gallery">
+    <figure><a aria-label="View coastal horizon at full size"><img src="../assets/gallery-horizon.svg" alt="Layered coastal hills beneath a warm sunset" width="960" height="640" loading="lazy" decoding="async"></a><figcaption>01 / Coastal horizon</figcaption></figure>
+    <figure><a aria-label="View architectural study at full size"><img src="../assets/gallery-architecture.svg" alt="Geometric arches on a sunlit modern building" width="960" height="640" loading="lazy" decoding="async"></a><figcaption>02 / Architecture study</figcaption></figure>
+    <figure><a aria-label="View night skyline at full size"><img src="../assets/gallery-signal.svg" alt="Illuminated windows in an abstract nighttime city skyline" width="960" height="640" loading="lazy" decoding="async"></a><figcaption>03 / Night signals</figcaption></figure>
+    <figure><a aria-label="View botanical artwork at full size"><img src="../assets/gallery-botanical.svg" alt="Overlapping sage green leaves on a dark background" width="960" height="640" loading="lazy" decoding="async"></a><figcaption>04 / Botanical study</figcaption></figure>
+  </div>
+</section>
+          </div>
+        </details>
+        <details class="blocks-details">
+          <summary data-block-source>View HTML source for Responsive image gallery</summary>
+          <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-gallery-heading&quot;&gt;
+  &lt;p class=&quot;syn-eyebrow&quot;&gt;SELECTED IMAGES&lt;/p&gt;
+  &lt;h2 class=&quot;syn-heading&quot; id=&quot;syn-gallery-heading&quot;&gt;A closer look at the work&lt;/h2&gt;
+  &lt;p class=&quot;syn-muted&quot;&gt;Choose an image to view the full illustration. Replace these original samples with your own optimized photography.&lt;/p&gt;
+  &lt;div class=&quot;syn-image-gallery&quot;&gt;
+    &lt;figure&gt;&lt;a href=&quot;../assets/gallery-horizon.svg&quot; aria-label=&quot;View coastal horizon at full size&quot;&gt;&lt;img src=&quot;../assets/gallery-horizon.svg&quot; alt=&quot;Layered coastal hills beneath a warm sunset&quot; width=&quot;960&quot; height=&quot;640&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;&gt;&lt;/a&gt;&lt;figcaption&gt;01 / Coastal horizon&lt;/figcaption&gt;&lt;/figure&gt;
+    &lt;figure&gt;&lt;a href=&quot;../assets/gallery-architecture.svg&quot; aria-label=&quot;View architectural study at full size&quot;&gt;&lt;img src=&quot;../assets/gallery-architecture.svg&quot; alt=&quot;Geometric arches on a sunlit modern building&quot; width=&quot;960&quot; height=&quot;640&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;&gt;&lt;/a&gt;&lt;figcaption&gt;02 / Architecture study&lt;/figcaption&gt;&lt;/figure&gt;
+    &lt;figure&gt;&lt;a href=&quot;../assets/gallery-signal.svg&quot; aria-label=&quot;View night skyline at full size&quot;&gt;&lt;img src=&quot;../assets/gallery-signal.svg&quot; alt=&quot;Illuminated windows in an abstract nighttime city skyline&quot; width=&quot;960&quot; height=&quot;640&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;&gt;&lt;/a&gt;&lt;figcaption&gt;03 / Night signals&lt;/figcaption&gt;&lt;/figure&gt;
+    &lt;figure&gt;&lt;a href=&quot;../assets/gallery-botanical.svg&quot; aria-label=&quot;View botanical artwork at full size&quot;&gt;&lt;img src=&quot;../assets/gallery-botanical.svg&quot; alt=&quot;Overlapping sage green leaves on a dark background&quot; width=&quot;960&quot; height=&quot;640&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;&gt;&lt;/a&gt;&lt;figcaption&gt;04 / Botanical study&lt;/figcaption&gt;&lt;/figure&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre>
+        </details>
+        <button type="button" class="syn-button blocks-copy" data-block-copy
+                aria-label="Copy HTML for Responsive image gallery" hidden>Copy HTML</button>
+      </article>
+      <article class="blocks-card syn-panel" data-block-id="image-story"
+               data-block-category="Marketing"
+               data-block-keywords="Image and story split A media-and-copy section with semantic figure, responsive image and action. image story about feature"
+               aria-labelledby="block-title-image-story">
+        <div class="blocks-card-heading">
+          <div><p class="syn-eyebrow">Marketing</p>
+            <h2 class="syn-heading" id="block-title-image-story">Image and story split</h2></div>
+          <span class="syn-badge">syntyr.core.css</span>
+        </div>
+        <p class="syn-muted">A media-and-copy section with semantic figure, responsive image and action.</p>
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Image and story split</summary>
+          <div class="blocks-preview">
+<section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-image-story-heading">
+  <div class="syn-sidecar">
+    <div>
+      <p class="syn-eyebrow">ABOUT THE STUDIO</p>
+      <h2 class="syn-heading" id="syn-image-story-heading">Thoughtful design for everyday life.</h2>
+      <p class="syn-lede">We pair clear structure with expressive visuals, so the finished work feels as useful as it looks.</p>
+      <p class="syn-muted">Start with a narrative, show a real example, and give visitors a destination for more context.</p>
+      <a class="syn-button syn-button--primary">Our approach</a>
+    </div>
+    <figure class="syn-media-figure">
+      <img src="../assets/gallery-architecture.svg" alt="Warm-toned architectural artwork with a pair of arched openings" width="960" height="640" loading="lazy" decoding="async">
+      <figcaption>An original illustration; replace with your own project imagery.</figcaption>
+    </figure>
+  </div>
+</section>
+          </div>
+        </details>
+        <details class="blocks-details">
+          <summary data-block-source>View HTML source for Image and story split</summary>
+          <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-image-story-heading&quot;&gt;
+  &lt;div class=&quot;syn-sidecar&quot;&gt;
+    &lt;div&gt;
+      &lt;p class=&quot;syn-eyebrow&quot;&gt;ABOUT THE STUDIO&lt;/p&gt;
+      &lt;h2 class=&quot;syn-heading&quot; id=&quot;syn-image-story-heading&quot;&gt;Thoughtful design for everyday life.&lt;/h2&gt;
+      &lt;p class=&quot;syn-lede&quot;&gt;We pair clear structure with expressive visuals, so the finished work feels as useful as it looks.&lt;/p&gt;
+      &lt;p class=&quot;syn-muted&quot;&gt;Start with a narrative, show a real example, and give visitors a destination for more context.&lt;/p&gt;
+      &lt;a class=&quot;syn-button syn-button--primary&quot; href=&quot;/about&quot;&gt;Our approach&lt;/a&gt;
+    &lt;/div&gt;
+    &lt;figure class=&quot;syn-media-figure&quot;&gt;
+      &lt;img src=&quot;../assets/gallery-architecture.svg&quot; alt=&quot;Warm-toned architectural artwork with a pair of arched openings&quot; width=&quot;960&quot; height=&quot;640&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;&gt;
+      &lt;figcaption&gt;An original illustration; replace with your own project imagery.&lt;/figcaption&gt;
+    &lt;/figure&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre>
+        </details>
+        <button type="button" class="syn-button blocks-copy" data-block-copy
+                aria-label="Copy HTML for Image and story split" hidden>Copy HTML</button>
+      </article>
+      <article class="blocks-card syn-panel" data-block-id="testimonials-grid"
+               data-block-category="Marketing"
+               data-block-keywords="Testimonials grid Three sample quotation cards with clear demo-only attribution. testimonials reviews social-proof"
+               aria-labelledby="block-title-testimonials-grid">
+        <div class="blocks-card-heading">
+          <div><p class="syn-eyebrow">Marketing</p>
+            <h2 class="syn-heading" id="block-title-testimonials-grid">Testimonials grid</h2></div>
+          <span class="syn-badge">syntyr.core.css</span>
+        </div>
+        <p class="syn-muted">Three sample quotation cards with clear demo-only attribution.</p>
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Testimonials grid</summary>
+          <div class="blocks-preview">
+<section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-testimonials-heading">
+  <p class="syn-eyebrow">CUSTOMER STORIES / DEMONSTRATION</p>
+  <h2 class="syn-heading" id="syn-testimonials-heading">What working together can feel like</h2>
+  <p class="syn-muted">Sample quotations for layout demonstration only. Use approved, verifiable customer feedback in production.</p>
+  <div class="syn-grid">
+    <figure class="syn-panel"><blockquote><p>“The handoff was clear and the final site was easy to maintain.”</p></blockquote><figcaption><cite>Illustrative quote A</cite> · Sample, not an endorsement</figcaption></figure>
+    <figure class="syn-panel"><blockquote><p>“We could find the information we needed without extra steps.”</p></blockquote><figcaption><cite>Illustrative quote B</cite> · Sample, not an endorsement</figcaption></figure>
+    <figure class="syn-panel"><blockquote><p>“Everything was documented, from the first review to launch.”</p></blockquote><figcaption><cite>Illustrative quote C</cite> · Sample, not an endorsement</figcaption></figure>
+  </div>
+</section>
+          </div>
+        </details>
+        <details class="blocks-details">
+          <summary data-block-source>View HTML source for Testimonials grid</summary>
+          <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-testimonials-heading&quot;&gt;
+  &lt;p class=&quot;syn-eyebrow&quot;&gt;CUSTOMER STORIES / DEMONSTRATION&lt;/p&gt;
+  &lt;h2 class=&quot;syn-heading&quot; id=&quot;syn-testimonials-heading&quot;&gt;What working together can feel like&lt;/h2&gt;
+  &lt;p class=&quot;syn-muted&quot;&gt;Sample quotations for layout demonstration only. Use approved, verifiable customer feedback in production.&lt;/p&gt;
+  &lt;div class=&quot;syn-grid&quot;&gt;
+    &lt;figure class=&quot;syn-panel&quot;&gt;&lt;blockquote&gt;&lt;p&gt;“The handoff was clear and the final site was easy to maintain.”&lt;/p&gt;&lt;/blockquote&gt;&lt;figcaption&gt;&lt;cite&gt;Illustrative quote A&lt;/cite&gt; · Sample, not an endorsement&lt;/figcaption&gt;&lt;/figure&gt;
+    &lt;figure class=&quot;syn-panel&quot;&gt;&lt;blockquote&gt;&lt;p&gt;“We could find the information we needed without extra steps.”&lt;/p&gt;&lt;/blockquote&gt;&lt;figcaption&gt;&lt;cite&gt;Illustrative quote B&lt;/cite&gt; · Sample, not an endorsement&lt;/figcaption&gt;&lt;/figure&gt;
+    &lt;figure class=&quot;syn-panel&quot;&gt;&lt;blockquote&gt;&lt;p&gt;“Everything was documented, from the first review to launch.”&lt;/p&gt;&lt;/blockquote&gt;&lt;figcaption&gt;&lt;cite&gt;Illustrative quote C&lt;/cite&gt; · Sample, not an endorsement&lt;/figcaption&gt;&lt;/figure&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre>
+        </details>
+        <button type="button" class="syn-button blocks-copy" data-block-copy
+                aria-label="Copy HTML for Testimonials grid" hidden>Copy HTML</button>
+      </article>
+      <article class="blocks-card syn-panel" data-block-id="milestone-timeline"
+               data-block-category="Services"
+               data-block-keywords="Company milestones timeline A chronological history using native dates and an ordered vertical sequence. timeline history about milestones"
+               aria-labelledby="block-title-milestone-timeline">
+        <div class="blocks-card-heading">
+          <div><p class="syn-eyebrow">Services</p>
+            <h2 class="syn-heading" id="block-title-milestone-timeline">Company milestones timeline</h2></div>
+          <span class="syn-badge">syntyr.core.css</span>
+        </div>
+        <p class="syn-muted">A chronological history using native dates and an ordered vertical sequence.</p>
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Company milestones timeline</summary>
+          <div class="blocks-preview">
+<section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-milestones-heading">
+  <p class="syn-eyebrow">OUR HISTORY / EXAMPLE DATES</p>
+  <h2 class="syn-heading" id="syn-milestones-heading">How the work evolved</h2>
+  <ol class="syn-steps syn-steps--vertical" role="list">
+    <li class="syn-step"><div><time datetime="2023">2023</time><h3 class="syn-step-label">Started with research</h3><p class="syn-step-detail">A small team mapping practical needs and constraints.</p></div></li>
+    <li class="syn-step"><div><time datetime="2024">2024</time><h3 class="syn-step-label">Built the first tools</h3><p class="syn-step-detail">Shared design patterns and accessible front-end foundations.</p></div></li>
+    <li class="syn-step"><div><time datetime="2025">2025</time><h3 class="syn-step-label">Expanded the practice</h3><p class="syn-step-detail">More services, clearer documentation and repeatable delivery.</p></div></li>
+  </ol>
+  <p class="syn-caption">Illustrative history; replace dates and claims before publishing.</p>
+</section>
+          </div>
+        </details>
+        <details class="blocks-details">
+          <summary data-block-source>View HTML source for Company milestones timeline</summary>
+          <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-milestones-heading&quot;&gt;
+  &lt;p class=&quot;syn-eyebrow&quot;&gt;OUR HISTORY / EXAMPLE DATES&lt;/p&gt;
+  &lt;h2 class=&quot;syn-heading&quot; id=&quot;syn-milestones-heading&quot;&gt;How the work evolved&lt;/h2&gt;
+  &lt;ol class=&quot;syn-steps syn-steps--vertical&quot; role=&quot;list&quot;&gt;
+    &lt;li class=&quot;syn-step&quot;&gt;&lt;div&gt;&lt;time datetime=&quot;2023&quot;&gt;2023&lt;/time&gt;&lt;h3 class=&quot;syn-step-label&quot;&gt;Started with research&lt;/h3&gt;&lt;p class=&quot;syn-step-detail&quot;&gt;A small team mapping practical needs and constraints.&lt;/p&gt;&lt;/div&gt;&lt;/li&gt;
+    &lt;li class=&quot;syn-step&quot;&gt;&lt;div&gt;&lt;time datetime=&quot;2024&quot;&gt;2024&lt;/time&gt;&lt;h3 class=&quot;syn-step-label&quot;&gt;Built the first tools&lt;/h3&gt;&lt;p class=&quot;syn-step-detail&quot;&gt;Shared design patterns and accessible front-end foundations.&lt;/p&gt;&lt;/div&gt;&lt;/li&gt;
+    &lt;li class=&quot;syn-step&quot;&gt;&lt;div&gt;&lt;time datetime=&quot;2025&quot;&gt;2025&lt;/time&gt;&lt;h3 class=&quot;syn-step-label&quot;&gt;Expanded the practice&lt;/h3&gt;&lt;p class=&quot;syn-step-detail&quot;&gt;More services, clearer documentation and repeatable delivery.&lt;/p&gt;&lt;/div&gt;&lt;/li&gt;
+  &lt;/ol&gt;
+  &lt;p class=&quot;syn-caption&quot;&gt;Illustrative history; replace dates and claims before publishing.&lt;/p&gt;
+&lt;/section&gt;</code></pre>
+        </details>
+        <button type="button" class="syn-button blocks-copy" data-block-copy
+                aria-label="Copy HTML for Company milestones timeline" hidden>Copy HTML</button>
+      </article>
+      <article class="blocks-card syn-panel" data-block-id="event-agenda"
+               data-block-category="Services"
+               data-block-keywords="Event agenda A schedule of talks and sessions with native time elements. events agenda schedule conference"
+               aria-labelledby="block-title-event-agenda">
+        <div class="blocks-card-heading">
+          <div><p class="syn-eyebrow">Services</p>
+            <h2 class="syn-heading" id="block-title-event-agenda">Event agenda</h2></div>
+          <span class="syn-badge">syntyr.core.css</span>
+        </div>
+        <p class="syn-muted">A schedule of talks and sessions with native time elements.</p>
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Event agenda</summary>
+          <div class="blocks-preview">
+<section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-agenda-heading">
+  <p class="syn-eyebrow">EVENT / EXAMPLE PROGRAM</p>
+  <h2 class="syn-heading" id="syn-agenda-heading">A day of ideas and practical workshops</h2>
+  <p class="syn-muted">Example schedule for a fictional event; specify the actual time zone and dates when publishing.</p>
+  <ol class="syn-grid">
+    <li class="syn-panel"><p class="syn-eyebrow"><time datetime="09:00">09:00</time> – <time datetime="09:45">09:45</time></p><h3>Opening session</h3><p>Introduction, context and what to expect.</p></li>
+    <li class="syn-panel"><p class="syn-eyebrow"><time datetime="10:00">10:00</time> – <time datetime="11:30">11:30</time></p><h3>Hands-on workshop</h3><p>Explore accessible interface patterns with real content.</p></li>
+    <li class="syn-panel"><p class="syn-eyebrow"><time datetime="13:00">13:00</time> – <time datetime="14:00">14:00</time></p><h3>Open questions</h3><p>Discuss practical constraints and the next steps.</p></li>
+  </ol>
+  <a class="syn-button syn-button--primary">Event registration</a>
+</section>
+          </div>
+        </details>
+        <details class="blocks-details">
+          <summary data-block-source>View HTML source for Event agenda</summary>
+          <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-agenda-heading&quot;&gt;
+  &lt;p class=&quot;syn-eyebrow&quot;&gt;EVENT / EXAMPLE PROGRAM&lt;/p&gt;
+  &lt;h2 class=&quot;syn-heading&quot; id=&quot;syn-agenda-heading&quot;&gt;A day of ideas and practical workshops&lt;/h2&gt;
+  &lt;p class=&quot;syn-muted&quot;&gt;Example schedule for a fictional event; specify the actual time zone and dates when publishing.&lt;/p&gt;
+  &lt;ol class=&quot;syn-grid&quot;&gt;
+    &lt;li class=&quot;syn-panel&quot;&gt;&lt;p class=&quot;syn-eyebrow&quot;&gt;&lt;time datetime=&quot;09:00&quot;&gt;09:00&lt;/time&gt; – &lt;time datetime=&quot;09:45&quot;&gt;09:45&lt;/time&gt;&lt;/p&gt;&lt;h3&gt;Opening session&lt;/h3&gt;&lt;p&gt;Introduction, context and what to expect.&lt;/p&gt;&lt;/li&gt;
+    &lt;li class=&quot;syn-panel&quot;&gt;&lt;p class=&quot;syn-eyebrow&quot;&gt;&lt;time datetime=&quot;10:00&quot;&gt;10:00&lt;/time&gt; – &lt;time datetime=&quot;11:30&quot;&gt;11:30&lt;/time&gt;&lt;/p&gt;&lt;h3&gt;Hands-on workshop&lt;/h3&gt;&lt;p&gt;Explore accessible interface patterns with real content.&lt;/p&gt;&lt;/li&gt;
+    &lt;li class=&quot;syn-panel&quot;&gt;&lt;p class=&quot;syn-eyebrow&quot;&gt;&lt;time datetime=&quot;13:00&quot;&gt;13:00&lt;/time&gt; – &lt;time datetime=&quot;14:00&quot;&gt;14:00&lt;/time&gt;&lt;/p&gt;&lt;h3&gt;Open questions&lt;/h3&gt;&lt;p&gt;Discuss practical constraints and the next steps.&lt;/p&gt;&lt;/li&gt;
+  &lt;/ol&gt;
+  &lt;a class=&quot;syn-button syn-button--primary&quot; href=&quot;/events/register&quot;&gt;Event registration&lt;/a&gt;
+&lt;/section&gt;</code></pre>
+        </details>
+        <button type="button" class="syn-button blocks-copy" data-block-copy
+                aria-label="Copy HTML for Event agenda" hidden>Copy HTML</button>
+      </article>
+      <article class="blocks-card syn-panel" data-block-id="company-story"
+               data-block-category="Company"
+               data-block-keywords="Company story and milestones An accessible company introduction with mission copy and an ordered story timeline. about story company mission"
+               aria-labelledby="block-title-company-story">
+        <div class="blocks-card-heading">
+          <div><p class="syn-eyebrow">Company</p>
+            <h2 class="syn-heading" id="block-title-company-story">Company story and milestones</h2></div>
+          <span class="syn-badge">syntyr.core.css</span>
+        </div>
+        <p class="syn-muted">An accessible company introduction with mission copy and an ordered story timeline.</p>
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Company story and milestones</summary>
+          <div class="blocks-preview">
+<section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="company-story-heading">
+  <p class="syn-eyebrow">ABOUT / OUR STORY</p>
+  <div class="syn-sidecar">
+    <div class="syn-stack">
+      <h2 id="company-story-heading" class="syn-heading">Built around the work that matters.</h2>
+      <p class="syn-lede">Explain why your organization exists, the people it serves, and what makes its approach distinct.</p>
+      <p class="syn-muted">Replace this illustrative copy and milestones with your own verified history, mission, and values.</p>
+      <a class="syn-button syn-button--primary">Meet the company</a>
+    </div>
+    <div class="syn-panel">
+      <h3 class="syn-heading">Our journey</h3>
+      <ol class="syn-stack">
+        <li><strong>The beginning</strong><p class="syn-muted">Describe the customer problem that motivated your team.</p></li>
+        <li><strong>The breakthrough</strong><p class="syn-muted">Explain an actual product milestone or meaningful change.</p></li>
+        <li><strong>What comes next</strong><p class="syn-muted">Share a concrete commitment to customers and partners.</p></li>
+      </ol>
+    </div>
+  </div>
+</section>
+          </div>
+        </details>
+        <details class="blocks-details">
+          <summary data-block-source>View HTML source for Company story and milestones</summary>
+          <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;company-story-heading&quot;&gt;
+  &lt;p class=&quot;syn-eyebrow&quot;&gt;ABOUT / OUR STORY&lt;/p&gt;
+  &lt;div class=&quot;syn-sidecar&quot;&gt;
+    &lt;div class=&quot;syn-stack&quot;&gt;
+      &lt;h2 id=&quot;company-story-heading&quot; class=&quot;syn-heading&quot;&gt;Built around the work that matters.&lt;/h2&gt;
+      &lt;p class=&quot;syn-lede&quot;&gt;Explain why your organization exists, the people it serves, and what makes its approach distinct.&lt;/p&gt;
+      &lt;p class=&quot;syn-muted&quot;&gt;Replace this illustrative copy and milestones with your own verified history, mission, and values.&lt;/p&gt;
+      &lt;a class=&quot;syn-button syn-button--primary&quot; href=&quot;/about&quot;&gt;Meet the company&lt;/a&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;syn-panel&quot;&gt;
+      &lt;h3 class=&quot;syn-heading&quot;&gt;Our journey&lt;/h3&gt;
+      &lt;ol class=&quot;syn-stack&quot;&gt;
+        &lt;li&gt;&lt;strong&gt;The beginning&lt;/strong&gt;&lt;p class=&quot;syn-muted&quot;&gt;Describe the customer problem that motivated your team.&lt;/p&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;The breakthrough&lt;/strong&gt;&lt;p class=&quot;syn-muted&quot;&gt;Explain an actual product milestone or meaningful change.&lt;/p&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;strong&gt;What comes next&lt;/strong&gt;&lt;p class=&quot;syn-muted&quot;&gt;Share a concrete commitment to customers and partners.&lt;/p&gt;&lt;/li&gt;
+      &lt;/ol&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre>
+        </details>
+        <button type="button" class="syn-button blocks-copy" data-block-copy
+                aria-label="Copy HTML for Company story and milestones" hidden>Copy HTML</button>
+      </article>
+      <article class="blocks-card syn-panel" data-block-id="customer-reviews"
+               data-block-category="Marketing"
+               data-block-keywords="Customer review grid Original attributed review cards with an explicit sample-content disclosure. reviews testimonials social proof"
+               aria-labelledby="block-title-customer-reviews">
+        <div class="blocks-card-heading">
+          <div><p class="syn-eyebrow">Marketing</p>
+            <h2 class="syn-heading" id="block-title-customer-reviews">Customer review grid</h2></div>
+          <span class="syn-badge">syntyr.core.css</span>
+        </div>
+        <p class="syn-muted">Original attributed review cards with an explicit sample-content disclosure.</p>
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Customer review grid</summary>
+          <div class="blocks-preview">
+<section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="customer-reviews-heading">
+  <p class="syn-eyebrow">CUSTOMER VOICES</p>
+  <h2 id="customer-reviews-heading" class="syn-heading">What customers are saying</h2>
+  <p class="syn-muted">Illustrative feedback only. Replace with authentic, permission-based reviews and accurately attributed sources.</p>
+  <div class="syn-grid">
+    <figure class="syn-panel">
+      <blockquote><p>“The onboarding was clear, and the team knew what to do next.”</p></blockquote>
+      <figcaption class="syn-muted">Illustrative review — Customer role, organization</figcaption>
+    </figure>
+    <figure class="syn-panel">
+      <blockquote><p>“We have a much better view of projects and follow-ups.”</p></blockquote>
+      <figcaption class="syn-muted">Illustrative review — Customer role, organization</figcaption>
+    </figure>
+    <figure class="syn-panel">
+      <blockquote><p>“A simpler workflow made the handoffs easier to manage.”</p></blockquote>
+      <figcaption class="syn-muted">Illustrative review — Customer role, organization</figcaption>
+    </figure>
+  </div>
+  <p><a class="syn-button">Read customer stories</a></p>
+</section>
+          </div>
+        </details>
+        <details class="blocks-details">
+          <summary data-block-source>View HTML source for Customer review grid</summary>
+          <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;customer-reviews-heading&quot;&gt;
+  &lt;p class=&quot;syn-eyebrow&quot;&gt;CUSTOMER VOICES&lt;/p&gt;
+  &lt;h2 id=&quot;customer-reviews-heading&quot; class=&quot;syn-heading&quot;&gt;What customers are saying&lt;/h2&gt;
+  &lt;p class=&quot;syn-muted&quot;&gt;Illustrative feedback only. Replace with authentic, permission-based reviews and accurately attributed sources.&lt;/p&gt;
+  &lt;div class=&quot;syn-grid&quot;&gt;
+    &lt;figure class=&quot;syn-panel&quot;&gt;
+      &lt;blockquote&gt;&lt;p&gt;“The onboarding was clear, and the team knew what to do next.”&lt;/p&gt;&lt;/blockquote&gt;
+      &lt;figcaption class=&quot;syn-muted&quot;&gt;Illustrative review — Customer role, organization&lt;/figcaption&gt;
+    &lt;/figure&gt;
+    &lt;figure class=&quot;syn-panel&quot;&gt;
+      &lt;blockquote&gt;&lt;p&gt;“We have a much better view of projects and follow-ups.”&lt;/p&gt;&lt;/blockquote&gt;
+      &lt;figcaption class=&quot;syn-muted&quot;&gt;Illustrative review — Customer role, organization&lt;/figcaption&gt;
+    &lt;/figure&gt;
+    &lt;figure class=&quot;syn-panel&quot;&gt;
+      &lt;blockquote&gt;&lt;p&gt;“A simpler workflow made the handoffs easier to manage.”&lt;/p&gt;&lt;/blockquote&gt;
+      &lt;figcaption class=&quot;syn-muted&quot;&gt;Illustrative review — Customer role, organization&lt;/figcaption&gt;
+    &lt;/figure&gt;
+  &lt;/div&gt;
+  &lt;p&gt;&lt;a class=&quot;syn-button&quot; href=&quot;/reviews&quot;&gt;Read customer stories&lt;/a&gt;&lt;/p&gt;
+&lt;/section&gt;</code></pre>
+        </details>
+        <button type="button" class="syn-button blocks-copy" data-block-copy
+                aria-label="Copy HTML for Customer review grid" hidden>Copy HTML</button>
+      </article>
+      <article class="blocks-card syn-panel" data-block-id="use-case-showcase"
+               data-block-category="Marketing"
+               data-block-keywords="Industry and use-case showcase Audience-specific benefits with real destination links and honest example content. solutions industries use cases cards"
+               aria-labelledby="block-title-use-case-showcase">
+        <div class="blocks-card-heading">
+          <div><p class="syn-eyebrow">Marketing</p>
+            <h2 class="syn-heading" id="block-title-use-case-showcase">Industry and use-case showcase</h2></div>
+          <span class="syn-badge">syntyr.core.css</span>
+        </div>
+        <p class="syn-muted">Audience-specific benefits with real destination links and honest example content.</p>
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Industry and use-case showcase</summary>
+          <div class="blocks-preview">
+<section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="use-cases-heading">
+  <p class="syn-eyebrow">USE CASES / WHO IT HELPS</p>
+  <h2 id="use-cases-heading" class="syn-heading">One workspace, different ways of working.</h2>
+  <p class="syn-lede">Show the specific problem each audience can solve without assuming one workflow fits everyone.</p>
+  <div class="syn-grid">
+    <article class="syn-panel">
+      <p class="syn-badge">Operations</p>
+      <h3 class="syn-heading">Coordinate delivery</h3>
+      <p>Keep ownership, deadlines, and project handoffs visible across the team.</p>
+      <a>Explore operations use cases</a>
+    </article>
+    <article class="syn-panel">
+      <p class="syn-badge">Sales</p>
+      <h3 class="syn-heading">Follow the opportunity</h3>
+      <p>Organize prospects and next steps without losing account context.</p>
+      <a>Explore sales use cases</a>
+    </article>
+    <article class="syn-panel">
+      <p class="syn-badge">Customer teams</p>
+      <h3 class="syn-heading">Serve customers clearly</h3>
+      <p>Provide a shared record of requests, decisions, and outstanding work.</p>
+      <a>Explore customer team use cases</a>
+    </article>
+  </div>
+</section>
+          </div>
+        </details>
+        <details class="blocks-details">
+          <summary data-block-source>View HTML source for Industry and use-case showcase</summary>
+          <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;use-cases-heading&quot;&gt;
+  &lt;p class=&quot;syn-eyebrow&quot;&gt;USE CASES / WHO IT HELPS&lt;/p&gt;
+  &lt;h2 id=&quot;use-cases-heading&quot; class=&quot;syn-heading&quot;&gt;One workspace, different ways of working.&lt;/h2&gt;
+  &lt;p class=&quot;syn-lede&quot;&gt;Show the specific problem each audience can solve without assuming one workflow fits everyone.&lt;/p&gt;
+  &lt;div class=&quot;syn-grid&quot;&gt;
+    &lt;article class=&quot;syn-panel&quot;&gt;
+      &lt;p class=&quot;syn-badge&quot;&gt;Operations&lt;/p&gt;
+      &lt;h3 class=&quot;syn-heading&quot;&gt;Coordinate delivery&lt;/h3&gt;
+      &lt;p&gt;Keep ownership, deadlines, and project handoffs visible across the team.&lt;/p&gt;
+      &lt;a href=&quot;/solutions/operations&quot;&gt;Explore operations use cases&lt;/a&gt;
+    &lt;/article&gt;
+    &lt;article class=&quot;syn-panel&quot;&gt;
+      &lt;p class=&quot;syn-badge&quot;&gt;Sales&lt;/p&gt;
+      &lt;h3 class=&quot;syn-heading&quot;&gt;Follow the opportunity&lt;/h3&gt;
+      &lt;p&gt;Organize prospects and next steps without losing account context.&lt;/p&gt;
+      &lt;a href=&quot;/solutions/sales&quot;&gt;Explore sales use cases&lt;/a&gt;
+    &lt;/article&gt;
+    &lt;article class=&quot;syn-panel&quot;&gt;
+      &lt;p class=&quot;syn-badge&quot;&gt;Customer teams&lt;/p&gt;
+      &lt;h3 class=&quot;syn-heading&quot;&gt;Serve customers clearly&lt;/h3&gt;
+      &lt;p&gt;Provide a shared record of requests, decisions, and outstanding work.&lt;/p&gt;
+      &lt;a href=&quot;/solutions/customer-teams&quot;&gt;Explore customer team use cases&lt;/a&gt;
+    &lt;/article&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre>
+        </details>
+        <button type="button" class="syn-button blocks-copy" data-block-copy
+                aria-label="Copy HTML for Industry and use-case showcase" hidden>Copy HTML</button>
+      </article></div></details><details class="blocks-batch" data-block-batch="8"><summary>Show more blocks <span>85–96 of 99</span></summary><div class="blocks-grid">
+      <article class="blocks-card syn-panel" data-block-id="locations-hours"
+               data-block-category="Services"
+               data-block-keywords="Locations and opening hours Semantic multi-location contacts with structured hours and accessibility links. locations hours local business contact"
+               aria-labelledby="block-title-locations-hours">
+        <div class="blocks-card-heading">
+          <div><p class="syn-eyebrow">Services</p>
+            <h2 class="syn-heading" id="block-title-locations-hours">Locations and opening hours</h2></div>
+          <span class="syn-badge">syntyr.core.css</span>
+        </div>
+        <p class="syn-muted">Semantic multi-location contacts with structured hours and accessibility links.</p>
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Locations and opening hours</summary>
+          <div class="blocks-preview">
+<section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="locations-hours-heading">
+  <p class="syn-eyebrow">VISIT / CONTACT</p>
+  <h2 id="locations-hours-heading" class="syn-heading">Find a location near you.</h2>
+  <p class="syn-muted">Example addresses and hours below are placeholders; publish only verified business details and local time zones.</p>
+  <div class="syn-grid">
+    <article class="syn-panel">
+      <h3 class="syn-heading">Central office</h3>
+      <address>100 Example Street, Suite 100<br>Sample City, ST 00000</address>
+      <dl>
+        <dt>Monday–Friday</dt><dd>9:00 AM–5:00 PM (local time)</dd>
+        <dt>Saturday–Sunday</dt><dd>Closed</dd>
+      </dl>
+      <a>Directions and accessibility details</a>
+    </article>
+    <article class="syn-panel">
+      <h3 class="syn-heading">North office</h3>
+      <address>200 Sample Avenue<br>Sample City, ST 00000</address>
+      <dl>
+        <dt>Monday–Friday</dt><dd>10:00 AM–6:00 PM (local time)</dd>
+        <dt>Saturday–Sunday</dt><dd>Closed</dd>
+      </dl>
+      <a>Directions and accessibility details</a>
+    </article>
+  </div>
+  <p><a class="syn-button syn-button--primary">View all locations</a></p>
+</section>
+          </div>
+        </details>
+        <details class="blocks-details">
+          <summary data-block-source>View HTML source for Locations and opening hours</summary>
+          <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;locations-hours-heading&quot;&gt;
+  &lt;p class=&quot;syn-eyebrow&quot;&gt;VISIT / CONTACT&lt;/p&gt;
+  &lt;h2 id=&quot;locations-hours-heading&quot; class=&quot;syn-heading&quot;&gt;Find a location near you.&lt;/h2&gt;
+  &lt;p class=&quot;syn-muted&quot;&gt;Example addresses and hours below are placeholders; publish only verified business details and local time zones.&lt;/p&gt;
+  &lt;div class=&quot;syn-grid&quot;&gt;
+    &lt;article class=&quot;syn-panel&quot;&gt;
+      &lt;h3 class=&quot;syn-heading&quot;&gt;Central office&lt;/h3&gt;
+      &lt;address&gt;100 Example Street, Suite 100&lt;br&gt;Sample City, ST 00000&lt;/address&gt;
+      &lt;dl&gt;
+        &lt;dt&gt;Monday–Friday&lt;/dt&gt;&lt;dd&gt;9:00 AM–5:00 PM (local time)&lt;/dd&gt;
+        &lt;dt&gt;Saturday–Sunday&lt;/dt&gt;&lt;dd&gt;Closed&lt;/dd&gt;
+      &lt;/dl&gt;
+      &lt;a href=&quot;/locations/central&quot;&gt;Directions and accessibility details&lt;/a&gt;
+    &lt;/article&gt;
+    &lt;article class=&quot;syn-panel&quot;&gt;
+      &lt;h3 class=&quot;syn-heading&quot;&gt;North office&lt;/h3&gt;
+      &lt;address&gt;200 Sample Avenue&lt;br&gt;Sample City, ST 00000&lt;/address&gt;
+      &lt;dl&gt;
+        &lt;dt&gt;Monday–Friday&lt;/dt&gt;&lt;dd&gt;10:00 AM–6:00 PM (local time)&lt;/dd&gt;
+        &lt;dt&gt;Saturday–Sunday&lt;/dt&gt;&lt;dd&gt;Closed&lt;/dd&gt;
+      &lt;/dl&gt;
+      &lt;a href=&quot;/locations/north&quot;&gt;Directions and accessibility details&lt;/a&gt;
+    &lt;/article&gt;
+  &lt;/div&gt;
+  &lt;p&gt;&lt;a class=&quot;syn-button syn-button--primary&quot; href=&quot;/locations&quot;&gt;View all locations&lt;/a&gt;&lt;/p&gt;
+&lt;/section&gt;</code></pre>
+        </details>
+        <button type="button" class="syn-button blocks-copy" data-block-copy
+                aria-label="Copy HTML for Locations and opening hours" hidden>Copy HTML</button>
+      </article>
+      <article class="blocks-card syn-panel" data-block-id="decision-guide"
+               data-block-category="Services"
+               data-block-keywords="Three-path decision guide A responsive choice of three service approaches with visible criteria and tradeoffs. decision comparison services paths"
+               aria-labelledby="block-title-decision-guide">
+        <div class="blocks-card-heading">
+          <div><p class="syn-eyebrow">Services</p>
+            <h2 class="syn-heading" id="block-title-decision-guide">Three-path decision guide</h2></div>
+          <span class="syn-badge">syntyr.core.css</span>
+        </div>
+        <p class="syn-muted">A responsive choice of three service approaches with visible criteria and tradeoffs.</p>
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Three-path decision guide</summary>
+          <div class="blocks-preview">
+<section class="syn-root syn-region syn-stack" data-syn-theme="studio" aria-labelledby="syn-layout-decision-heading">
+  <p class="syn-eyebrow">FIND YOUR STARTING POINT</p>
+  <h2 class="syn-heading" id="syn-layout-decision-heading">Choose the approach that fits your next goal.</h2>
+  <p class="syn-lede">Three paths with explicit tradeoffs, not a simulated selector.</p>
+  <div class="syn-grid" style="--syn-grid-min:15rem">
+    <article class="syn-panel syn-stack">
+      <h3 class="syn-heading">Explore</h3>
+      <p>Useful when requirements are still changing and you need to test an idea.</p>
+      <ul class="syn-feature-list"><li>Small initial scope</li><li>Room to learn</li></ul>
+      <a class="syn-button syn-button--outline">Discovery details</a>
+    </article>
+    <article class="syn-panel syn-stack">
+      <h3 class="syn-heading">Build</h3>
+      <p>Useful when the problem is understood and the workflow is ready to implement.</p>
+      <ul class="syn-feature-list"><li>Defined milestones</li><li>Reviewable deliverables</li></ul>
+      <a class="syn-button syn-button--outline">Build details</a>
+    </article>
+    <article class="syn-panel syn-stack">
+      <h3 class="syn-heading">Improve</h3>
+      <p>Useful when an existing service needs fewer bottlenecks and clearer feedback.</p>
+      <ul class="syn-feature-list"><li>Baseline first</li><li>Measured iteration</li></ul>
+      <a class="syn-button syn-button--outline">Improvement details</a>
+    </article>
+  </div>
+</section>
+          </div>
+        </details>
+        <details class="blocks-details">
+          <summary data-block-source>View HTML source for Three-path decision guide</summary>
+          <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region syn-stack&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-layout-decision-heading&quot;&gt;
+  &lt;p class=&quot;syn-eyebrow&quot;&gt;FIND YOUR STARTING POINT&lt;/p&gt;
+  &lt;h2 class=&quot;syn-heading&quot; id=&quot;syn-layout-decision-heading&quot;&gt;Choose the approach that fits your next goal.&lt;/h2&gt;
+  &lt;p class=&quot;syn-lede&quot;&gt;Three paths with explicit tradeoffs, not a simulated selector.&lt;/p&gt;
+  &lt;div class=&quot;syn-grid&quot; style=&quot;--syn-grid-min:15rem&quot;&gt;
+    &lt;article class=&quot;syn-panel syn-stack&quot;&gt;
+      &lt;h3 class=&quot;syn-heading&quot;&gt;Explore&lt;/h3&gt;
+      &lt;p&gt;Useful when requirements are still changing and you need to test an idea.&lt;/p&gt;
+      &lt;ul class=&quot;syn-feature-list&quot;&gt;&lt;li&gt;Small initial scope&lt;/li&gt;&lt;li&gt;Room to learn&lt;/li&gt;&lt;/ul&gt;
+      &lt;a class=&quot;syn-button syn-button--outline&quot; href=&quot;/services/discovery&quot;&gt;Discovery details&lt;/a&gt;
+    &lt;/article&gt;
+    &lt;article class=&quot;syn-panel syn-stack&quot;&gt;
+      &lt;h3 class=&quot;syn-heading&quot;&gt;Build&lt;/h3&gt;
+      &lt;p&gt;Useful when the problem is understood and the workflow is ready to implement.&lt;/p&gt;
+      &lt;ul class=&quot;syn-feature-list&quot;&gt;&lt;li&gt;Defined milestones&lt;/li&gt;&lt;li&gt;Reviewable deliverables&lt;/li&gt;&lt;/ul&gt;
+      &lt;a class=&quot;syn-button syn-button--outline&quot; href=&quot;/services/build&quot;&gt;Build details&lt;/a&gt;
+    &lt;/article&gt;
+    &lt;article class=&quot;syn-panel syn-stack&quot;&gt;
+      &lt;h3 class=&quot;syn-heading&quot;&gt;Improve&lt;/h3&gt;
+      &lt;p&gt;Useful when an existing service needs fewer bottlenecks and clearer feedback.&lt;/p&gt;
+      &lt;ul class=&quot;syn-feature-list&quot;&gt;&lt;li&gt;Baseline first&lt;/li&gt;&lt;li&gt;Measured iteration&lt;/li&gt;&lt;/ul&gt;
+      &lt;a class=&quot;syn-button syn-button--outline&quot; href=&quot;/services/improve&quot;&gt;Improvement details&lt;/a&gt;
+    &lt;/article&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre>
+        </details>
+        <button type="button" class="syn-button blocks-copy" data-block-copy
+                aria-label="Copy HTML for Three-path decision guide" hidden>Copy HTML</button>
+      </article>
+      <article class="blocks-card syn-panel" data-block-id="faq-sidecar"
+               data-block-category="Services"
+               data-block-keywords="FAQs with a contact sidebar Native expandable answers alongside a clear contact path. faq questions sidebar contact"
+               aria-labelledby="block-title-faq-sidecar">
+        <div class="blocks-card-heading">
+          <div><p class="syn-eyebrow">Services</p>
+            <h2 class="syn-heading" id="block-title-faq-sidecar">FAQs with a contact sidebar</h2></div>
+          <span class="syn-badge">syntyr.core.css</span>
+        </div>
+        <p class="syn-muted">Native expandable answers alongside a clear contact path.</p>
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview FAQs with a contact sidebar</summary>
+          <div class="blocks-preview">
+<section class="syn-root syn-region syn-stack" data-syn-theme="studio" aria-labelledby="syn-layout-faq-heading">
+  <p class="syn-eyebrow">COMMON QUESTIONS</p>
+  <h2 class="syn-heading" id="syn-layout-faq-heading">Answers, with a direct way to ask more.</h2>
+  <div class="syn-sidecar">
+    <div class="syn-stack">
+      <details class="syn-details">
+        <summary>What belongs in the initial brief?</summary>
+        <p>A concise description of the audience, the problem, constraints and a useful definition of success.</p>
+      </details>
+      <details class="syn-details">
+        <summary>Can we begin with a small scope?</summary>
+        <p>A narrowly defined first step can make assumptions easier to verify. Agree on boundaries before implementation.</p>
+      </details>
+      <details class="syn-details">
+        <summary>How should progress be communicated?</summary>
+        <p>Use a predictable review rhythm, explicit owners and documented decisions so context is not lost.</p>
+      </details>
+    </div>
+    <aside class="syn-panel syn-stack" aria-labelledby="syn-layout-faq-contact">
+      <h3 class="syn-heading" id="syn-layout-faq-contact">Still have a question?</h3>
+      <p>Share the outcome you need and the constraints that matter most.</p>
+      <a class="syn-button syn-button--primary">Contact the team</a>
+      <p class="syn-caption">Replace the example contact route before publishing.</p>
+    </aside>
+  </div>
+</section>
+          </div>
+        </details>
+        <details class="blocks-details">
+          <summary data-block-source>View HTML source for FAQs with a contact sidebar</summary>
+          <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region syn-stack&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-layout-faq-heading&quot;&gt;
+  &lt;p class=&quot;syn-eyebrow&quot;&gt;COMMON QUESTIONS&lt;/p&gt;
+  &lt;h2 class=&quot;syn-heading&quot; id=&quot;syn-layout-faq-heading&quot;&gt;Answers, with a direct way to ask more.&lt;/h2&gt;
+  &lt;div class=&quot;syn-sidecar&quot;&gt;
+    &lt;div class=&quot;syn-stack&quot;&gt;
+      &lt;details class=&quot;syn-details&quot;&gt;
+        &lt;summary&gt;What belongs in the initial brief?&lt;/summary&gt;
+        &lt;p&gt;A concise description of the audience, the problem, constraints and a useful definition of success.&lt;/p&gt;
+      &lt;/details&gt;
+      &lt;details class=&quot;syn-details&quot;&gt;
+        &lt;summary&gt;Can we begin with a small scope?&lt;/summary&gt;
+        &lt;p&gt;A narrowly defined first step can make assumptions easier to verify. Agree on boundaries before implementation.&lt;/p&gt;
+      &lt;/details&gt;
+      &lt;details class=&quot;syn-details&quot;&gt;
+        &lt;summary&gt;How should progress be communicated?&lt;/summary&gt;
+        &lt;p&gt;Use a predictable review rhythm, explicit owners and documented decisions so context is not lost.&lt;/p&gt;
+      &lt;/details&gt;
+    &lt;/div&gt;
+    &lt;aside class=&quot;syn-panel syn-stack&quot; aria-labelledby=&quot;syn-layout-faq-contact&quot;&gt;
+      &lt;h3 class=&quot;syn-heading&quot; id=&quot;syn-layout-faq-contact&quot;&gt;Still have a question?&lt;/h3&gt;
+      &lt;p&gt;Share the outcome you need and the constraints that matter most.&lt;/p&gt;
+      &lt;a class=&quot;syn-button syn-button--primary&quot; href=&quot;/contact&quot;&gt;Contact the team&lt;/a&gt;
+      &lt;p class=&quot;syn-caption&quot;&gt;Replace the example contact route before publishing.&lt;/p&gt;
+    &lt;/aside&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre>
+        </details>
+        <button type="button" class="syn-button blocks-copy" data-block-copy
+                aria-label="Copy HTML for FAQs with a contact sidebar" hidden>Copy HTML</button>
+      </article>
+      <article class="blocks-card syn-panel" data-block-id="careers-listings"
+               data-block-category="Company"
+               data-block-keywords="Careers and open positions Readable role summaries with clear application routes and example-data disclosure. careers jobs recruiting hiring"
+               aria-labelledby="block-title-careers-listings">
+        <div class="blocks-card-heading">
+          <div><p class="syn-eyebrow">Company</p>
+            <h2 class="syn-heading" id="block-title-careers-listings">Careers and open positions</h2></div>
+          <span class="syn-badge">syntyr.core.css</span>
+        </div>
+        <p class="syn-muted">Readable role summaries with clear application routes and example-data disclosure.</p>
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Careers and open positions</summary>
+          <div class="blocks-preview">
+<section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="careers-heading">
+  <p class="syn-eyebrow">CAREERS / OPEN ROLES</p>
+  <h2 id="careers-heading" class="syn-heading">Do meaningful work with us.</h2>
+  <p class="syn-muted">Illustrative roles only. Replace with actual openings, location or remote policy, and transparent employment details.</p>
+  <ul class="syn-stack">
+    <li class="syn-panel">
+      <div class="syn-sidecar">
+        <div><h3 class="syn-heading">Product designer</h3><p class="syn-muted">Design · Remote eligible · Full-time</p></div>
+        <a class="syn-button">View role details</a>
+      </div>
+    </li>
+    <li class="syn-panel">
+      <div class="syn-sidecar">
+        <div><h3 class="syn-heading">Customer success specialist</h3><p class="syn-muted">Customer success · Hybrid · Full-time</p></div>
+        <a class="syn-button">View role details</a>
+      </div>
+    </li>
+    <li class="syn-panel">
+      <div class="syn-sidecar">
+        <div><h3 class="syn-heading">Software engineer</h3><p class="syn-muted">Engineering · Remote eligible · Full-time</p></div>
+        <a class="syn-button">View role details</a>
+      </div>
+    </li>
+  </ul>
+  <p><a>Browse all open positions</a></p>
+</section>
+          </div>
+        </details>
+        <details class="blocks-details">
+          <summary data-block-source>View HTML source for Careers and open positions</summary>
+          <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;careers-heading&quot;&gt;
+  &lt;p class=&quot;syn-eyebrow&quot;&gt;CAREERS / OPEN ROLES&lt;/p&gt;
+  &lt;h2 id=&quot;careers-heading&quot; class=&quot;syn-heading&quot;&gt;Do meaningful work with us.&lt;/h2&gt;
+  &lt;p class=&quot;syn-muted&quot;&gt;Illustrative roles only. Replace with actual openings, location or remote policy, and transparent employment details.&lt;/p&gt;
+  &lt;ul class=&quot;syn-stack&quot;&gt;
+    &lt;li class=&quot;syn-panel&quot;&gt;
+      &lt;div class=&quot;syn-sidecar&quot;&gt;
+        &lt;div&gt;&lt;h3 class=&quot;syn-heading&quot;&gt;Product designer&lt;/h3&gt;&lt;p class=&quot;syn-muted&quot;&gt;Design · Remote eligible · Full-time&lt;/p&gt;&lt;/div&gt;
+        &lt;a class=&quot;syn-button&quot; href=&quot;/careers/product-designer&quot;&gt;View role details&lt;/a&gt;
+      &lt;/div&gt;
+    &lt;/li&gt;
+    &lt;li class=&quot;syn-panel&quot;&gt;
+      &lt;div class=&quot;syn-sidecar&quot;&gt;
+        &lt;div&gt;&lt;h3 class=&quot;syn-heading&quot;&gt;Customer success specialist&lt;/h3&gt;&lt;p class=&quot;syn-muted&quot;&gt;Customer success · Hybrid · Full-time&lt;/p&gt;&lt;/div&gt;
+        &lt;a class=&quot;syn-button&quot; href=&quot;/careers/customer-success-specialist&quot;&gt;View role details&lt;/a&gt;
+      &lt;/div&gt;
+    &lt;/li&gt;
+    &lt;li class=&quot;syn-panel&quot;&gt;
+      &lt;div class=&quot;syn-sidecar&quot;&gt;
+        &lt;div&gt;&lt;h3 class=&quot;syn-heading&quot;&gt;Software engineer&lt;/h3&gt;&lt;p class=&quot;syn-muted&quot;&gt;Engineering · Remote eligible · Full-time&lt;/p&gt;&lt;/div&gt;
+        &lt;a class=&quot;syn-button&quot; href=&quot;/careers/software-engineer&quot;&gt;View role details&lt;/a&gt;
+      &lt;/div&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;p&gt;&lt;a href=&quot;/careers&quot;&gt;Browse all open positions&lt;/a&gt;&lt;/p&gt;
+&lt;/section&gt;</code></pre>
+        </details>
+        <button type="button" class="syn-button blocks-copy" data-block-copy
+                aria-label="Copy HTML for Careers and open positions" hidden>Copy HTML</button>
+      </article>
+      <article class="blocks-card syn-panel" data-block-id="principles-columns"
+               data-block-category="Company"
+               data-block-keywords="Three-column principles section Organizational principles with concrete explanations in a responsive grid. principles values company columns"
+               aria-labelledby="block-title-principles-columns">
+        <div class="blocks-card-heading">
+          <div><p class="syn-eyebrow">Company</p>
+            <h2 class="syn-heading" id="block-title-principles-columns">Three-column principles section</h2></div>
+          <span class="syn-badge">syntyr.core.css</span>
+        </div>
+        <p class="syn-muted">Organizational principles with concrete explanations in a responsive grid.</p>
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Three-column principles section</summary>
+          <div class="blocks-preview">
+<section class="syn-root syn-region syn-stack" data-syn-theme="studio" aria-labelledby="syn-layout-principles-heading">
+  <p class="syn-eyebrow">WHAT GUIDES OUR WORK</p>
+  <h2 class="syn-heading" id="syn-layout-principles-heading">Three principles, one consistent standard.</h2>
+  <p class="syn-lede">Give organizational values substance with practical descriptions, not abstract slogans.</p>
+  <ol class="syn-grid" style="--syn-grid-min:16rem">
+    <li class="syn-panel syn-stack">
+      <h3 class="syn-heading">Understand first</h3>
+      <p>Map the real problem, constraints and affected people before committing to a solution.</p>
+    </li>
+    <li class="syn-panel syn-stack">
+      <h3 class="syn-heading">Favor clear systems</h3>
+      <p>Choose accessible interfaces and maintainable components over short-lived decoration.</p>
+    </li>
+    <li class="syn-panel syn-stack">
+      <h3 class="syn-heading">Improve deliberately</h3>
+      <p>Document outcomes and change direction when evidence suggests a better approach.</p>
+    </li>
+  </ol>
+  <div class="syn-inline">
+    <a class="syn-button syn-button--outline">More about the company</a>
+    <a class="syn-button">Meet the team</a>
+  </div>
+</section>
+          </div>
+        </details>
+        <details class="blocks-details">
+          <summary data-block-source>View HTML source for Three-column principles section</summary>
+          <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region syn-stack&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-layout-principles-heading&quot;&gt;
+  &lt;p class=&quot;syn-eyebrow&quot;&gt;WHAT GUIDES OUR WORK&lt;/p&gt;
+  &lt;h2 class=&quot;syn-heading&quot; id=&quot;syn-layout-principles-heading&quot;&gt;Three principles, one consistent standard.&lt;/h2&gt;
+  &lt;p class=&quot;syn-lede&quot;&gt;Give organizational values substance with practical descriptions, not abstract slogans.&lt;/p&gt;
+  &lt;ol class=&quot;syn-grid&quot; style=&quot;--syn-grid-min:16rem&quot;&gt;
+    &lt;li class=&quot;syn-panel syn-stack&quot;&gt;
+      &lt;h3 class=&quot;syn-heading&quot;&gt;Understand first&lt;/h3&gt;
+      &lt;p&gt;Map the real problem, constraints and affected people before committing to a solution.&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li class=&quot;syn-panel syn-stack&quot;&gt;
+      &lt;h3 class=&quot;syn-heading&quot;&gt;Favor clear systems&lt;/h3&gt;
+      &lt;p&gt;Choose accessible interfaces and maintainable components over short-lived decoration.&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li class=&quot;syn-panel syn-stack&quot;&gt;
+      &lt;h3 class=&quot;syn-heading&quot;&gt;Improve deliberately&lt;/h3&gt;
+      &lt;p&gt;Document outcomes and change direction when evidence suggests a better approach.&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+  &lt;div class=&quot;syn-inline&quot;&gt;
+    &lt;a class=&quot;syn-button syn-button--outline&quot; href=&quot;/company/about&quot;&gt;More about the company&lt;/a&gt;
+    &lt;a class=&quot;syn-button&quot; href=&quot;/company/team&quot;&gt;Meet the team&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre>
+        </details>
+        <button type="button" class="syn-button blocks-copy" data-block-copy
+                aria-label="Copy HTML for Three-column principles section" hidden>Copy HTML</button>
+      </article>
+      <article class="blocks-card syn-panel" data-block-id="feature-disclosures"
+               data-block-category="Marketing"
+               data-block-keywords="Native feature switcher Exclusive browser-native disclosures for feature storytelling without a script. features accordion progressive enhancement no javascript"
+               aria-labelledby="block-title-feature-disclosures">
+        <div class="blocks-card-heading">
+          <div><p class="syn-eyebrow">Marketing</p>
+            <h2 class="syn-heading" id="block-title-feature-disclosures">Native feature switcher</h2></div>
+          <span class="syn-badge">syntyr.core.css</span>
+        </div>
+        <p class="syn-muted">Exclusive browser-native disclosures for feature storytelling without a script.</p>
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Native feature switcher</summary>
+          <div class="blocks-preview">
+<section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="feature-disclosures-heading">
+  <p class="syn-eyebrow">PRODUCT / CAPABILITIES</p>
+  <h2 id="feature-disclosures-heading" class="syn-heading">Explore what each feature does.</h2>
+  <p class="syn-muted">Native, exclusive disclosures offer keyboard-accessible content switching without requiring JavaScript. This is an accordion, not an ARIA tabs widget.</p>
+  <div class="syn-stack">
+    <details class="syn-details syn-panel" name="syntyr-features" open>
+      <summary><strong>Plan with clarity</strong></summary>
+      <p>Review scope, owners, and dependencies in one place before work begins.</p>
+      <p><a>Explore planning</a></p>
+    </details>
+    <details class="syn-details syn-panel" name="syntyr-features">
+      <summary><strong>Track progress</strong></summary>
+      <p>See what has been completed and what still requires attention.</p>
+      <p><a>Explore progress tracking</a></p>
+    </details>
+    <details class="syn-details syn-panel" name="syntyr-features">
+      <summary><strong>Share the outcome</strong></summary>
+      <p>Capture decisions and provide updates to the people who need them.</p>
+      <p><a>Explore reporting</a></p>
+    </details>
+  </div>
+</section>
+          </div>
+        </details>
+        <details class="blocks-details">
+          <summary data-block-source>View HTML source for Native feature switcher</summary>
+          <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;feature-disclosures-heading&quot;&gt;
+  &lt;p class=&quot;syn-eyebrow&quot;&gt;PRODUCT / CAPABILITIES&lt;/p&gt;
+  &lt;h2 id=&quot;feature-disclosures-heading&quot; class=&quot;syn-heading&quot;&gt;Explore what each feature does.&lt;/h2&gt;
+  &lt;p class=&quot;syn-muted&quot;&gt;Native, exclusive disclosures offer keyboard-accessible content switching without requiring JavaScript. This is an accordion, not an ARIA tabs widget.&lt;/p&gt;
+  &lt;div class=&quot;syn-stack&quot;&gt;
+    &lt;details class=&quot;syn-details syn-panel&quot; name=&quot;syntyr-features&quot; open&gt;
+      &lt;summary&gt;&lt;strong&gt;Plan with clarity&lt;/strong&gt;&lt;/summary&gt;
+      &lt;p&gt;Review scope, owners, and dependencies in one place before work begins.&lt;/p&gt;
+      &lt;p&gt;&lt;a href=&quot;/features/planning&quot;&gt;Explore planning&lt;/a&gt;&lt;/p&gt;
+    &lt;/details&gt;
+    &lt;details class=&quot;syn-details syn-panel&quot; name=&quot;syntyr-features&quot;&gt;
+      &lt;summary&gt;&lt;strong&gt;Track progress&lt;/strong&gt;&lt;/summary&gt;
+      &lt;p&gt;See what has been completed and what still requires attention.&lt;/p&gt;
+      &lt;p&gt;&lt;a href=&quot;/features/progress&quot;&gt;Explore progress tracking&lt;/a&gt;&lt;/p&gt;
+    &lt;/details&gt;
+    &lt;details class=&quot;syn-details syn-panel&quot; name=&quot;syntyr-features&quot;&gt;
+      &lt;summary&gt;&lt;strong&gt;Share the outcome&lt;/strong&gt;&lt;/summary&gt;
+      &lt;p&gt;Capture decisions and provide updates to the people who need them.&lt;/p&gt;
+      &lt;p&gt;&lt;a href=&quot;/features/reporting&quot;&gt;Explore reporting&lt;/a&gt;&lt;/p&gt;
+    &lt;/details&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre>
+        </details>
+        <button type="button" class="syn-button blocks-copy" data-block-copy
+                aria-label="Copy HTML for Native feature switcher" hidden>Copy HTML</button>
+      </article>
+      <article class="blocks-card syn-panel" data-block-id="hero-photo"
+               data-block-category="Marketing"
+               data-block-keywords="Photographic hero section An image-led introduction with a meaningful action and figure caption. hero image landing photography"
+               aria-labelledby="block-title-hero-photo">
+        <div class="blocks-card-heading">
+          <div><p class="syn-eyebrow">Marketing</p>
+            <h2 class="syn-heading" id="block-title-hero-photo">Photographic hero section</h2></div>
+          <span class="syn-badge">syntyr.core.css</span>
+        </div>
+        <p class="syn-muted">An image-led introduction with a meaningful action and figure caption.</p>
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Photographic hero section</summary>
+          <div class="blocks-preview">
+<section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-photo-hero">
+  <div class="syn-sidecar">
+    <div>
+      <p class="syn-eyebrow">A PLACE TO EXPLORE</p>
+      <h2 class="syn-heading" id="syn-photo-hero">A visual introduction worth exploring.</h2>
+      <p class="syn-lede">Pair your main message with real photography or product imagery.</p>
+      <p class="syn-muted">Responsive, semantic, and ready for your own story.</p>
+      <a class="syn-button syn-button--primary">Explore the collection</a>
+    </div>
+    <figure class="syn-media-figure">
+      <img src="../assets/gallery-horizon.svg" alt="Original illustration of layered coastal hills at sunset" width="960" height="640" loading="lazy" decoding="async">
+      <figcaption>Example image; replace with your own licensed photography.</figcaption>
+    </figure>
+  </div>
+</section>
+          </div>
+        </details>
+        <details class="blocks-details">
+          <summary data-block-source>View HTML source for Photographic hero section</summary>
+          <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-photo-hero&quot;&gt;
+  &lt;div class=&quot;syn-sidecar&quot;&gt;
+    &lt;div&gt;
+      &lt;p class=&quot;syn-eyebrow&quot;&gt;A PLACE TO EXPLORE&lt;/p&gt;
+      &lt;h2 class=&quot;syn-heading&quot; id=&quot;syn-photo-hero&quot;&gt;A visual introduction worth exploring.&lt;/h2&gt;
+      &lt;p class=&quot;syn-lede&quot;&gt;Pair your main message with real photography or product imagery.&lt;/p&gt;
+      &lt;p class=&quot;syn-muted&quot;&gt;Responsive, semantic, and ready for your own story.&lt;/p&gt;
+      &lt;a class=&quot;syn-button syn-button--primary&quot; href=&quot;/explore&quot;&gt;Explore the collection&lt;/a&gt;
+    &lt;/div&gt;
+    &lt;figure class=&quot;syn-media-figure&quot;&gt;
+      &lt;img src=&quot;../assets/gallery-horizon.svg&quot; alt=&quot;Original illustration of layered coastal hills at sunset&quot; width=&quot;960&quot; height=&quot;640&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;&gt;
+      &lt;figcaption&gt;Example image; replace with your own licensed photography.&lt;/figcaption&gt;
+    &lt;/figure&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre>
+        </details>
+        <button type="button" class="syn-button blocks-copy" data-block-copy
+                aria-label="Copy HTML for Photographic hero section" hidden>Copy HTML</button>
+      </article>
+      <article class="blocks-card syn-panel" data-block-id="before-after"
+               data-block-category="Portfolio"
+               data-block-keywords="Before and after image comparison Two semantic, responsive photos with accessible full-image links; no scripted comparison slider. before after portfolio images"
+               aria-labelledby="block-title-before-after">
+        <div class="blocks-card-heading">
+          <div><p class="syn-eyebrow">Portfolio</p>
+            <h2 class="syn-heading" id="block-title-before-after">Before and after image comparison</h2></div>
+          <span class="syn-badge">syntyr.core.css</span>
+        </div>
+        <p class="syn-muted">Two semantic, responsive photos with accessible full-image links; no scripted comparison slider.</p>
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Before and after image comparison</summary>
+          <div class="blocks-preview">
+<section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-compare-images">
+  <p class="syn-eyebrow">PROJECT COMPARISON</p>
+  <h2 class="syn-heading" id="syn-compare-images">See the change side by side.</h2>
+  <p class="syn-muted">Use two real photos to show a process or transformation. These unrelated illustrations are layout placeholders, not a factual before-and-after claim.</p>
+  <div class="syn-image-gallery">
+    <figure><a aria-label="View example before artwork"><img src="../assets/gallery-architecture.svg" alt="Warm building arches in an abstract illustration" width="960" height="640" loading="lazy" decoding="async"></a><figcaption>Before / illustrative artwork</figcaption></figure>
+    <figure><a aria-label="View example after artwork"><img src="../assets/gallery-botanical.svg" alt="Abstract study of overlapping green leaves" width="960" height="640" loading="lazy" decoding="async"></a><figcaption>After / illustrative artwork</figcaption></figure>
+  </div>
+</section>
+          </div>
+        </details>
+        <details class="blocks-details">
+          <summary data-block-source>View HTML source for Before and after image comparison</summary>
+          <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-compare-images&quot;&gt;
+  &lt;p class=&quot;syn-eyebrow&quot;&gt;PROJECT COMPARISON&lt;/p&gt;
+  &lt;h2 class=&quot;syn-heading&quot; id=&quot;syn-compare-images&quot;&gt;See the change side by side.&lt;/h2&gt;
+  &lt;p class=&quot;syn-muted&quot;&gt;Use two real photos to show a process or transformation. These unrelated illustrations are layout placeholders, not a factual before-and-after claim.&lt;/p&gt;
+  &lt;div class=&quot;syn-image-gallery&quot;&gt;
+    &lt;figure&gt;&lt;a href=&quot;../assets/gallery-architecture.svg&quot; aria-label=&quot;View example before artwork&quot;&gt;&lt;img src=&quot;../assets/gallery-architecture.svg&quot; alt=&quot;Warm building arches in an abstract illustration&quot; width=&quot;960&quot; height=&quot;640&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;&gt;&lt;/a&gt;&lt;figcaption&gt;Before / illustrative artwork&lt;/figcaption&gt;&lt;/figure&gt;
+    &lt;figure&gt;&lt;a href=&quot;../assets/gallery-botanical.svg&quot; aria-label=&quot;View example after artwork&quot;&gt;&lt;img src=&quot;../assets/gallery-botanical.svg&quot; alt=&quot;Abstract study of overlapping green leaves&quot; width=&quot;960&quot; height=&quot;640&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;&gt;&lt;/a&gt;&lt;figcaption&gt;After / illustrative artwork&lt;/figcaption&gt;&lt;/figure&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre>
+        </details>
+        <button type="button" class="syn-button blocks-copy" data-block-copy
+                aria-label="Copy HTML for Before and after image comparison" hidden>Copy HTML</button>
+      </article>
+      <article class="blocks-card syn-panel" data-block-id="resource-downloads"
+               data-block-category="Publishing"
+               data-block-keywords="Free resources and downloads Native download links to reusable illustrations in a flexible resource grid. resources downloads files library"
+               aria-labelledby="block-title-resource-downloads">
+        <div class="blocks-card-heading">
+          <div><p class="syn-eyebrow">Publishing</p>
+            <h2 class="syn-heading" id="block-title-resource-downloads">Free resources and downloads</h2></div>
+          <span class="syn-badge">syntyr.core.css</span>
+        </div>
+        <p class="syn-muted">Native download links to reusable illustrations in a flexible resource grid.</p>
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Free resources and downloads</summary>
+          <div class="blocks-preview">
+<section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-free-resources">
+  <p class="syn-eyebrow">FREE DOWNLOADS</p>
+  <h2 class="syn-heading" id="syn-free-resources">Useful resources to take with you.</h2>
+  <p class="syn-muted">Example downloadable SVG artwork; replace these with your own guides, reports, templates or product downloads.</p>
+  <ul class="syn-grid">
+    <li class="syn-panel"><h3>Coastal illustration</h3><p>Original SVG artwork for layouts and prototypes.</p><a class="syn-button" download="coastal-illustration.svg">Download SVG</a></li>
+    <li class="syn-panel"><h3>Architectural illustration</h3><p>A simple geometric artwork for a portfolio or landing page.</p><a class="syn-button" download="architectural-illustration.svg">Download SVG</a></li>
+    <li class="syn-panel"><h3>Botanical illustration</h3><p>Lightweight visual art for editorial content.</p><a class="syn-button" download="botanical-illustration.svg">Download SVG</a></li>
+  </ul>
+</section>
+          </div>
+        </details>
+        <details class="blocks-details">
+          <summary data-block-source>View HTML source for Free resources and downloads</summary>
+          <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-free-resources&quot;&gt;
+  &lt;p class=&quot;syn-eyebrow&quot;&gt;FREE DOWNLOADS&lt;/p&gt;
+  &lt;h2 class=&quot;syn-heading&quot; id=&quot;syn-free-resources&quot;&gt;Useful resources to take with you.&lt;/h2&gt;
+  &lt;p class=&quot;syn-muted&quot;&gt;Example downloadable SVG artwork; replace these with your own guides, reports, templates or product downloads.&lt;/p&gt;
+  &lt;ul class=&quot;syn-grid&quot;&gt;
+    &lt;li class=&quot;syn-panel&quot;&gt;&lt;h3&gt;Coastal illustration&lt;/h3&gt;&lt;p&gt;Original SVG artwork for layouts and prototypes.&lt;/p&gt;&lt;a class=&quot;syn-button&quot; href=&quot;../assets/gallery-horizon.svg&quot; download=&quot;coastal-illustration.svg&quot;&gt;Download SVG&lt;/a&gt;&lt;/li&gt;
+    &lt;li class=&quot;syn-panel&quot;&gt;&lt;h3&gt;Architectural illustration&lt;/h3&gt;&lt;p&gt;A simple geometric artwork for a portfolio or landing page.&lt;/p&gt;&lt;a class=&quot;syn-button&quot; href=&quot;../assets/gallery-architecture.svg&quot; download=&quot;architectural-illustration.svg&quot;&gt;Download SVG&lt;/a&gt;&lt;/li&gt;
+    &lt;li class=&quot;syn-panel&quot;&gt;&lt;h3&gt;Botanical illustration&lt;/h3&gt;&lt;p&gt;Lightweight visual art for editorial content.&lt;/p&gt;&lt;a class=&quot;syn-button&quot; href=&quot;../assets/gallery-botanical.svg&quot; download=&quot;botanical-illustration.svg&quot;&gt;Download SVG&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/section&gt;</code></pre>
+        </details>
+        <button type="button" class="syn-button blocks-copy" data-block-copy
+                aria-label="Copy HTML for Free resources and downloads" hidden>Copy HTML</button>
+      </article>
+      <article class="blocks-card syn-panel" data-block-id="resource-index"
+               data-block-category="Publishing"
+               data-block-keywords="Grouped resource topic index A documentation and resource hub with grouped descriptive navigation links. resources index documentation navigation"
+               aria-labelledby="block-title-resource-index">
+        <div class="blocks-card-heading">
+          <div><p class="syn-eyebrow">Publishing</p>
+            <h2 class="syn-heading" id="block-title-resource-index">Grouped resource topic index</h2></div>
+          <span class="syn-badge">syntyr.core.css</span>
+        </div>
+        <p class="syn-muted">A documentation and resource hub with grouped descriptive navigation links.</p>
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Grouped resource topic index</summary>
+          <div class="blocks-preview">
+<section class="syn-root syn-region syn-stack" data-syn-theme="studio" aria-labelledby="syn-layout-resource-heading">
+  <p class="syn-eyebrow">LEARN AT YOUR PACE</p>
+  <h2 class="syn-heading" id="syn-layout-resource-heading">Resources organized by what you want to do.</h2>
+  <p class="syn-lede">A grouped topic index using real links, without a pretend search box or client-side filtering.</p>
+  <div class="syn-grid" style="--syn-grid-min:16rem">
+    <nav class="syn-panel syn-stack" aria-label="Getting started resources">
+      <h3 class="syn-heading">Get started</h3>
+      <p>Start with the fundamentals and the quickest path to a first result.</p>
+      <a class="syn-list-row">Quickstart guide</a>
+      <a class="syn-list-row">Core concepts</a>
+      <a class="syn-list-row">Launch checklist</a>
+    </nav>
+    <nav class="syn-panel syn-stack" aria-label="Best practice resources">
+      <h3 class="syn-heading">Go deeper</h3>
+      <p>Patterns for teams ready to refine existing workflows.</p>
+      <a class="syn-list-row">Accessibility practices</a>
+      <a class="syn-list-row">Performance guide</a>
+      <a class="syn-list-row">Maintenance notes</a>
+    </nav>
+    <nav class="syn-panel syn-stack" aria-label="Support resources">
+      <h3 class="syn-heading">Find help</h3>
+      <p>Get unblocked using real documentation or a human support path.</p>
+      <a class="syn-list-row">Common questions</a>
+      <a class="syn-list-row">Contact support</a>
+      <a class="syn-list-row">Product updates</a>
+    </nav>
+  </div>
+</section>
+          </div>
+        </details>
+        <details class="blocks-details">
+          <summary data-block-source>View HTML source for Grouped resource topic index</summary>
+          <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region syn-stack&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-layout-resource-heading&quot;&gt;
+  &lt;p class=&quot;syn-eyebrow&quot;&gt;LEARN AT YOUR PACE&lt;/p&gt;
+  &lt;h2 class=&quot;syn-heading&quot; id=&quot;syn-layout-resource-heading&quot;&gt;Resources organized by what you want to do.&lt;/h2&gt;
+  &lt;p class=&quot;syn-lede&quot;&gt;A grouped topic index using real links, without a pretend search box or client-side filtering.&lt;/p&gt;
+  &lt;div class=&quot;syn-grid&quot; style=&quot;--syn-grid-min:16rem&quot;&gt;
+    &lt;nav class=&quot;syn-panel syn-stack&quot; aria-label=&quot;Getting started resources&quot;&gt;
+      &lt;h3 class=&quot;syn-heading&quot;&gt;Get started&lt;/h3&gt;
+      &lt;p&gt;Start with the fundamentals and the quickest path to a first result.&lt;/p&gt;
+      &lt;a class=&quot;syn-list-row&quot; href=&quot;/guides/quickstart&quot;&gt;Quickstart guide&lt;/a&gt;
+      &lt;a class=&quot;syn-list-row&quot; href=&quot;/guides/basics&quot;&gt;Core concepts&lt;/a&gt;
+      &lt;a class=&quot;syn-list-row&quot; href=&quot;/guides/checklist&quot;&gt;Launch checklist&lt;/a&gt;
+    &lt;/nav&gt;
+    &lt;nav class=&quot;syn-panel syn-stack&quot; aria-label=&quot;Best practice resources&quot;&gt;
+      &lt;h3 class=&quot;syn-heading&quot;&gt;Go deeper&lt;/h3&gt;
+      &lt;p&gt;Patterns for teams ready to refine existing workflows.&lt;/p&gt;
+      &lt;a class=&quot;syn-list-row&quot; href=&quot;/guides/accessibility&quot;&gt;Accessibility practices&lt;/a&gt;
+      &lt;a class=&quot;syn-list-row&quot; href=&quot;/guides/performance&quot;&gt;Performance guide&lt;/a&gt;
+      &lt;a class=&quot;syn-list-row&quot; href=&quot;/guides/maintenance&quot;&gt;Maintenance notes&lt;/a&gt;
+    &lt;/nav&gt;
+    &lt;nav class=&quot;syn-panel syn-stack&quot; aria-label=&quot;Support resources&quot;&gt;
+      &lt;h3 class=&quot;syn-heading&quot;&gt;Find help&lt;/h3&gt;
+      &lt;p&gt;Get unblocked using real documentation or a human support path.&lt;/p&gt;
+      &lt;a class=&quot;syn-list-row&quot; href=&quot;/support/questions&quot;&gt;Common questions&lt;/a&gt;
+      &lt;a class=&quot;syn-list-row&quot; href=&quot;/support/contact&quot;&gt;Contact support&lt;/a&gt;
+      &lt;a class=&quot;syn-list-row&quot; href=&quot;/updates&quot;&gt;Product updates&lt;/a&gt;
+    &lt;/nav&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre>
+        </details>
+        <button type="button" class="syn-button blocks-copy" data-block-copy
+                aria-label="Copy HTML for Grouped resource topic index" hidden>Copy HTML</button>
+      </article>
+      <article class="blocks-card syn-panel" data-block-id="press-highlights"
+               data-block-category="Marketing"
+               data-block-keywords="News and press highlights A dated editorial summary grid with descriptive story destinations. press mentions news announcements"
+               aria-labelledby="block-title-press-highlights">
+        <div class="blocks-card-heading">
+          <div><p class="syn-eyebrow">Marketing</p>
+            <h2 class="syn-heading" id="block-title-press-highlights">News and press highlights</h2></div>
+          <span class="syn-badge">syntyr.core.css</span>
+        </div>
+        <p class="syn-muted">A dated editorial summary grid with descriptive story destinations.</p>
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview News and press highlights</summary>
+          <div class="blocks-preview">
+<section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-press-highlights">
+  <p class="syn-eyebrow">FROM THE JOURNAL / EXAMPLES</p>
+  <h2 class="syn-heading" id="syn-press-highlights">Recent stories and announcements</h2>
+  <p class="syn-muted">These are fictional editorial examples, not actual press mentions or endorsements.</p>
+  <div class="syn-grid">
+    <article class="syn-panel"><p class="syn-caption"><time datetime="2026-09-15">September 15, 2026</time></p><h3>Why readable layouts matter</h3><p>Practical notes on clarity, hierarchy and useful content.</p><a>Read sample story</a></article>
+    <article class="syn-panel"><p class="syn-caption"><time datetime="2026-10-02">October 2, 2026</time></p><h3>Building better resource pages</h3><p>Make helpful information easy to discover and keep current.</p><a>Read sample story</a></article>
+    <article class="syn-panel"><p class="syn-caption"><time datetime="2026-10-23">October 23, 2026</time></p><h3>Creating an accessible launch</h3><p>Use native controls, tested navigation and clear feedback.</p><a>Read sample story</a></article>
+  </div>
+</section>
+          </div>
+        </details>
+        <details class="blocks-details">
+          <summary data-block-source>View HTML source for News and press highlights</summary>
+          <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-press-highlights&quot;&gt;
+  &lt;p class=&quot;syn-eyebrow&quot;&gt;FROM THE JOURNAL / EXAMPLES&lt;/p&gt;
+  &lt;h2 class=&quot;syn-heading&quot; id=&quot;syn-press-highlights&quot;&gt;Recent stories and announcements&lt;/h2&gt;
+  &lt;p class=&quot;syn-muted&quot;&gt;These are fictional editorial examples, not actual press mentions or endorsements.&lt;/p&gt;
+  &lt;div class=&quot;syn-grid&quot;&gt;
+    &lt;article class=&quot;syn-panel&quot;&gt;&lt;p class=&quot;syn-caption&quot;&gt;&lt;time datetime=&quot;2026-09-15&quot;&gt;September 15, 2026&lt;/time&gt;&lt;/p&gt;&lt;h3&gt;Why readable layouts matter&lt;/h3&gt;&lt;p&gt;Practical notes on clarity, hierarchy and useful content.&lt;/p&gt;&lt;a href=&quot;/news/layout-clarity&quot;&gt;Read sample story&lt;/a&gt;&lt;/article&gt;
+    &lt;article class=&quot;syn-panel&quot;&gt;&lt;p class=&quot;syn-caption&quot;&gt;&lt;time datetime=&quot;2026-10-02&quot;&gt;October 2, 2026&lt;/time&gt;&lt;/p&gt;&lt;h3&gt;Building better resource pages&lt;/h3&gt;&lt;p&gt;Make helpful information easy to discover and keep current.&lt;/p&gt;&lt;a href=&quot;/news/resource-pages&quot;&gt;Read sample story&lt;/a&gt;&lt;/article&gt;
+    &lt;article class=&quot;syn-panel&quot;&gt;&lt;p class=&quot;syn-caption&quot;&gt;&lt;time datetime=&quot;2026-10-23&quot;&gt;October 23, 2026&lt;/time&gt;&lt;/p&gt;&lt;h3&gt;Creating an accessible launch&lt;/h3&gt;&lt;p&gt;Use native controls, tested navigation and clear feedback.&lt;/p&gt;&lt;a href=&quot;/news/accessible-launch&quot;&gt;Read sample story&lt;/a&gt;&lt;/article&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre>
+        </details>
+        <button type="button" class="syn-button blocks-copy" data-block-copy
+                aria-label="Copy HTML for News and press highlights" hidden>Copy HTML</button>
+      </article>
+      <article class="blocks-card syn-panel" data-block-id="feature-rows"
+               data-block-category="Marketing"
+               data-block-keywords="Stacked feature story rows Two narrative feature rows with contextual detail cards and destination links. features story rows content"
+               aria-labelledby="block-title-feature-rows">
+        <div class="blocks-card-heading">
+          <div><p class="syn-eyebrow">Marketing</p>
+            <h2 class="syn-heading" id="block-title-feature-rows">Stacked feature story rows</h2></div>
+          <span class="syn-badge">syntyr.core.css</span>
+        </div>
+        <p class="syn-muted">Two narrative feature rows with contextual detail cards and destination links.</p>
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Stacked feature story rows</summary>
+          <div class="blocks-preview">
+<section class="syn-root syn-region syn-stack" data-syn-theme="studio" aria-labelledby="syn-layout-feature-rows-heading">
+  <p class="syn-eyebrow">HOW THE WORK FLOWS</p>
+  <h2 class="syn-heading" id="syn-layout-feature-rows-heading">One story, two complementary capabilities</h2>
+  <div class="syn-stack">
+    <article class="syn-sidecar">
+      <div class="syn-stack">
+        <h3 class="syn-heading">01 / Plan with context</h3>
+        <p>Bring the brief, relevant decisions and open questions together before work begins.</p>
+        <a>Explore planning features</a>
+      </div>
+      <div class="syn-panel syn-stack">
+        <strong>Planning checklist</strong>
+        <ul class="syn-feature-list"><li>Define the outcome</li><li>Capture requirements</li><li>Assign next steps</li></ul>
+      </div>
+    </article>
+    <article class="syn-sidecar">
+      <div class="syn-stack">
+        <h3 class="syn-heading">02 / Report what changed</h3>
+        <p>Present progress as a readable narrative, with evidence and next actions close at hand.</p>
+        <a>Explore reporting features</a>
+      </div>
+      <div class="syn-panel syn-stack">
+        <strong>Update summary</strong>
+        <ul class="syn-feature-list">
+          <li>Progress: example review</li>
+          <li>Next step: share findings</li>
+        </ul>
+      </div>
+    </article>
+  </div>
+  <p class="syn-caption">Illustrative workflow and sample labels; connect real data where appropriate.</p>
+</section>
+          </div>
+        </details>
+        <details class="blocks-details">
+          <summary data-block-source>View HTML source for Stacked feature story rows</summary>
+          <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region syn-stack&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-layout-feature-rows-heading&quot;&gt;
+  &lt;p class=&quot;syn-eyebrow&quot;&gt;HOW THE WORK FLOWS&lt;/p&gt;
+  &lt;h2 class=&quot;syn-heading&quot; id=&quot;syn-layout-feature-rows-heading&quot;&gt;One story, two complementary capabilities&lt;/h2&gt;
+  &lt;div class=&quot;syn-stack&quot;&gt;
+    &lt;article class=&quot;syn-sidecar&quot;&gt;
+      &lt;div class=&quot;syn-stack&quot;&gt;
+        &lt;h3 class=&quot;syn-heading&quot;&gt;01 / Plan with context&lt;/h3&gt;
+        &lt;p&gt;Bring the brief, relevant decisions and open questions together before work begins.&lt;/p&gt;
+        &lt;a href=&quot;/features/planning&quot;&gt;Explore planning features&lt;/a&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;syn-panel syn-stack&quot;&gt;
+        &lt;strong&gt;Planning checklist&lt;/strong&gt;
+        &lt;ul class=&quot;syn-feature-list&quot;&gt;&lt;li&gt;Define the outcome&lt;/li&gt;&lt;li&gt;Capture requirements&lt;/li&gt;&lt;li&gt;Assign next steps&lt;/li&gt;&lt;/ul&gt;
+      &lt;/div&gt;
+    &lt;/article&gt;
+    &lt;article class=&quot;syn-sidecar&quot;&gt;
+      &lt;div class=&quot;syn-stack&quot;&gt;
+        &lt;h3 class=&quot;syn-heading&quot;&gt;02 / Report what changed&lt;/h3&gt;
+        &lt;p&gt;Present progress as a readable narrative, with evidence and next actions close at hand.&lt;/p&gt;
+        &lt;a href=&quot;/features/reporting&quot;&gt;Explore reporting features&lt;/a&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;syn-panel syn-stack&quot;&gt;
+        &lt;strong&gt;Update summary&lt;/strong&gt;
+        &lt;ul class=&quot;syn-feature-list&quot;&gt;
+          &lt;li&gt;Progress: example review&lt;/li&gt;
+          &lt;li&gt;Next step: share findings&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/div&gt;
+    &lt;/article&gt;
+  &lt;/div&gt;
+  &lt;p class=&quot;syn-caption&quot;&gt;Illustrative workflow and sample labels; connect real data where appropriate.&lt;/p&gt;
+&lt;/section&gt;</code></pre>
+        </details>
+        <button type="button" class="syn-button blocks-copy" data-block-copy
+                aria-label="Copy HTML for Stacked feature story rows" hidden>Copy HTML</button>
+      </article></div></details><details class="blocks-batch" data-block-batch="9"><summary>Show more blocks <span>97–99 of 99</span></summary><div class="blocks-grid">
+      <article class="blocks-card syn-panel" data-block-id="impact-narrative"
+               data-block-category="Marketing"
+               data-block-keywords="Metrics with explanatory narrative Contextualized illustrative metrics paired with interpretation and source guidance. metrics story stats explanation"
+               aria-labelledby="block-title-impact-narrative">
+        <div class="blocks-card-heading">
+          <div><p class="syn-eyebrow">Marketing</p>
+            <h2 class="syn-heading" id="block-title-impact-narrative">Metrics with explanatory narrative</h2></div>
+          <span class="syn-badge">syntyr.core.css</span>
+        </div>
+        <p class="syn-muted">Contextualized illustrative metrics paired with interpretation and source guidance.</p>
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Metrics with explanatory narrative</summary>
+          <div class="blocks-preview">
+<section class="syn-root syn-region syn-stack" data-syn-theme="studio" aria-labelledby="syn-layout-impact-heading">
+  <p class="syn-eyebrow">MEASURING IMPACT</p>
+  <h2 class="syn-heading" id="syn-layout-impact-heading">Put numbers next to their meaning.</h2>
+  <div class="syn-sidecar">
+    <div class="syn-stack">
+      <h3 class="syn-heading">From observation to a useful decision</h3>
+      <p>Strong reporting combines a small set of measures with the context needed to interpret them. Explain the source, the time period and what happens next.</p>
+      <p class="syn-muted">The figures in this demo are hypothetical; they are not customer results or product performance claims.</p>
+      <a class="syn-button syn-button--outline">Learn about measurement</a>
+    </div>
+    <div class="syn-panel syn-stack">
+      <div class="syn-grid" style="--syn-grid-min:9rem">
+        <div class="syn-stat"><p class="syn-stat-label">Example tasks</p><p class="syn-stat-value">24</p></div>
+        <div class="syn-stat"><p class="syn-stat-label">Example reviewed</p><p class="syn-stat-value">18</p></div>
+        <div class="syn-stat"><p class="syn-stat-label">Example remaining</p><p class="syn-stat-value">6</p></div>
+      </div>
+      <p class="syn-caption">Illustrative numbers only. Replace with sourced, dated data.</p>
+    </div>
+  </div>
+</section>
+          </div>
+        </details>
+        <details class="blocks-details">
+          <summary data-block-source>View HTML source for Metrics with explanatory narrative</summary>
+          <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region syn-stack&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-layout-impact-heading&quot;&gt;
+  &lt;p class=&quot;syn-eyebrow&quot;&gt;MEASURING IMPACT&lt;/p&gt;
+  &lt;h2 class=&quot;syn-heading&quot; id=&quot;syn-layout-impact-heading&quot;&gt;Put numbers next to their meaning.&lt;/h2&gt;
+  &lt;div class=&quot;syn-sidecar&quot;&gt;
+    &lt;div class=&quot;syn-stack&quot;&gt;
+      &lt;h3 class=&quot;syn-heading&quot;&gt;From observation to a useful decision&lt;/h3&gt;
+      &lt;p&gt;Strong reporting combines a small set of measures with the context needed to interpret them. Explain the source, the time period and what happens next.&lt;/p&gt;
+      &lt;p class=&quot;syn-muted&quot;&gt;The figures in this demo are hypothetical; they are not customer results or product performance claims.&lt;/p&gt;
+      &lt;a class=&quot;syn-button syn-button--outline&quot; href=&quot;/methods&quot;&gt;Learn about measurement&lt;/a&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;syn-panel syn-stack&quot;&gt;
+      &lt;div class=&quot;syn-grid&quot; style=&quot;--syn-grid-min:9rem&quot;&gt;
+        &lt;div class=&quot;syn-stat&quot;&gt;&lt;p class=&quot;syn-stat-label&quot;&gt;Example tasks&lt;/p&gt;&lt;p class=&quot;syn-stat-value&quot;&gt;24&lt;/p&gt;&lt;/div&gt;
+        &lt;div class=&quot;syn-stat&quot;&gt;&lt;p class=&quot;syn-stat-label&quot;&gt;Example reviewed&lt;/p&gt;&lt;p class=&quot;syn-stat-value&quot;&gt;18&lt;/p&gt;&lt;/div&gt;
+        &lt;div class=&quot;syn-stat&quot;&gt;&lt;p class=&quot;syn-stat-label&quot;&gt;Example remaining&lt;/p&gt;&lt;p class=&quot;syn-stat-value&quot;&gt;6&lt;/p&gt;&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;p class=&quot;syn-caption&quot;&gt;Illustrative numbers only. Replace with sourced, dated data.&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre>
+        </details>
+        <button type="button" class="syn-button blocks-copy" data-block-copy
+                aria-label="Copy HTML for Metrics with explanatory narrative" hidden>Copy HTML</button>
+      </article>
+      <article class="blocks-card syn-panel" data-block-id="social-links"
+               data-block-category="Navigation"
+               data-block-keywords="Community and social links A semantic link directory for communities, updates and contact channels. social community links follow"
+               aria-labelledby="block-title-social-links">
+        <div class="blocks-card-heading">
+          <div><p class="syn-eyebrow">Navigation</p>
+            <h2 class="syn-heading" id="block-title-social-links">Community and social links</h2></div>
+          <span class="syn-badge">syntyr.core.css</span>
+        </div>
+        <p class="syn-muted">A semantic link directory for communities, updates and contact channels.</p>
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Community and social links</summary>
+          <div class="blocks-preview">
+<section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-social-links">
+  <p class="syn-eyebrow">STAY CONNECTED</p>
+  <h2 class="syn-heading" id="syn-social-links">Find the right place to connect.</h2>
+  <p class="syn-muted">Example destinations: replace these routes with your organization's actual public profiles.</p>
+  <nav aria-label="Example community destinations">
+    <ul class="syn-grid">
+      <li class="syn-panel"><h3>Community</h3><p>Questions, conversation and shared ideas.</p><a>Visit community</a></li>
+      <li class="syn-panel"><h3>Updates</h3><p>Announcements and product notes.</p><a>Read updates</a></li>
+      <li class="syn-panel"><h3>Contact</h3><p>Reach our team directly.</p><a>Get in touch</a></li>
+    </ul>
+  </nav>
+</section>
+          </div>
+        </details>
+        <details class="blocks-details">
+          <summary data-block-source>View HTML source for Community and social links</summary>
+          <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-social-links&quot;&gt;
+  &lt;p class=&quot;syn-eyebrow&quot;&gt;STAY CONNECTED&lt;/p&gt;
+  &lt;h2 class=&quot;syn-heading&quot; id=&quot;syn-social-links&quot;&gt;Find the right place to connect.&lt;/h2&gt;
+  &lt;p class=&quot;syn-muted&quot;&gt;Example destinations: replace these routes with your organization&#x27;s actual public profiles.&lt;/p&gt;
+  &lt;nav aria-label=&quot;Example community destinations&quot;&gt;
+    &lt;ul class=&quot;syn-grid&quot;&gt;
+      &lt;li class=&quot;syn-panel&quot;&gt;&lt;h3&gt;Community&lt;/h3&gt;&lt;p&gt;Questions, conversation and shared ideas.&lt;/p&gt;&lt;a href=&quot;/community&quot;&gt;Visit community&lt;/a&gt;&lt;/li&gt;
+      &lt;li class=&quot;syn-panel&quot;&gt;&lt;h3&gt;Updates&lt;/h3&gt;&lt;p&gt;Announcements and product notes.&lt;/p&gt;&lt;a href=&quot;/updates&quot;&gt;Read updates&lt;/a&gt;&lt;/li&gt;
+      &lt;li class=&quot;syn-panel&quot;&gt;&lt;h3&gt;Contact&lt;/h3&gt;&lt;p&gt;Reach our team directly.&lt;/p&gt;&lt;a href=&quot;/contact&quot;&gt;Get in touch&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/nav&gt;
+&lt;/section&gt;</code></pre>
+        </details>
+        <button type="button" class="syn-button blocks-copy" data-block-copy
+                aria-label="Copy HTML for Community and social links" hidden>Copy HTML</button>
+      </article>
+      <article class="blocks-card syn-panel" data-block-id="product-specifications"
+               data-block-category="Commerce"
+               data-block-keywords="Product specifications table Accessible product details in a named, keyboard-scrollable semantic table. product details specifications commerce"
+               aria-labelledby="block-title-product-specifications">
+        <div class="blocks-card-heading">
+          <div><p class="syn-eyebrow">Commerce</p>
+            <h2 class="syn-heading" id="block-title-product-specifications">Product specifications table</h2></div>
+          <span class="syn-badge">syntyr.core.css</span>
+        </div>
+        <p class="syn-muted">Accessible product details in a named, keyboard-scrollable semantic table.</p>
+        <details class="blocks-preview-disclosure" open>
+          <summary>Preview Product specifications table</summary>
+          <div class="blocks-preview">
+<section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-specs-heading">
+  <p class="syn-eyebrow">PRODUCT DETAILS / EXAMPLE</p>
+  <h2 class="syn-heading" id="syn-specs-heading">Specifications at a glance</h2>
+  <p class="syn-muted">Illustrative specifications for a fictional desk notebook. Replace with verified product data.</p>
+  <div class="syn-table-wrap" role="region" tabindex="0" aria-label="Example notebook specifications">
+    <table class="syn-table">
+      <caption>Example notebook specification table</caption>
+      <tbody>
+        <tr><th scope="row">Size</th><td>A5 (148 × 210 mm)</td></tr>
+        <tr><th scope="row">Pages</th><td>128</td></tr>
+        <tr><th scope="row">Paper</th><td>Uncoated, blank</td></tr>
+        <tr><th scope="row">Binding</th><td>Stitched</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+          </div>
+        </details>
+        <details class="blocks-details">
+          <summary data-block-source>View HTML source for Product specifications table</summary>
+          <pre class="blocks-source"><code>&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syn-specs-heading&quot;&gt;
+  &lt;p class=&quot;syn-eyebrow&quot;&gt;PRODUCT DETAILS / EXAMPLE&lt;/p&gt;
+  &lt;h2 class=&quot;syn-heading&quot; id=&quot;syn-specs-heading&quot;&gt;Specifications at a glance&lt;/h2&gt;
+  &lt;p class=&quot;syn-muted&quot;&gt;Illustrative specifications for a fictional desk notebook. Replace with verified product data.&lt;/p&gt;
+  &lt;div class=&quot;syn-table-wrap&quot; role=&quot;region&quot; tabindex=&quot;0&quot; aria-label=&quot;Example notebook specifications&quot;&gt;
+    &lt;table class=&quot;syn-table&quot;&gt;
+      &lt;caption&gt;Example notebook specification table&lt;/caption&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;&lt;th scope=&quot;row&quot;&gt;Size&lt;/th&gt;&lt;td&gt;A5 (148 × 210 mm)&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;th scope=&quot;row&quot;&gt;Pages&lt;/th&gt;&lt;td&gt;128&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;th scope=&quot;row&quot;&gt;Paper&lt;/th&gt;&lt;td&gt;Uncoated, blank&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;th scope=&quot;row&quot;&gt;Binding&lt;/th&gt;&lt;td&gt;Stitched&lt;/td&gt;&lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre>
+        </details>
+        <button type="button" class="syn-button blocks-copy" data-block-copy
+                aria-label="Copy HTML for Product specifications table" hidden>Copy HTML</button>
       </article></div></details>
       </div>
     </section>

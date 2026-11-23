@@ -55,6 +55,7 @@ For optional effects, load `syntyr.effects.css`. `syntyr.css` is the convenient 
 | Panels | `.syn-panel`, `.syn-panel--cut` | unclassed `article` |
 | Layout | `.syn-page` (viewport-height opt-in), `.syn-shell`, `.syn-header`, `.syn-grid`, `.syn-layout`, `.syn-inline`, `.syn-sidecar`, `.syn-stack` | normal CSS layout |
 | Typography | `.syn-logo`, `.syn-eyebrow`, `.syn-title`, `.syn-section-heading`, `.syn-heading`, `.syn-lede`, `.syn-mono`, `.syn-caption`, `.syn-muted` | native heading/text |
+| Content lists | `.syn-list`, optional `.syn-list--compact` and `.syn-list--accent` | unclassed `ul` / `ol` in semantic mode |
 | Status | `.syn-badge`, `.syn-badge--accent`, `.syn-status` and semantic variants, `.syn-alert`, `.syn-alert--danger`, `.syn-meter` on `progress` | native `progress` |
 | Forms | `.syn-form`, `.syn-label`, `.syn-input`, `.syn-select`, `.syn-textarea`, `.syn-check`, `.syn-fieldset`, `.syn-help`, `.syn-error` | unclassed form controls |
 | Email UI (optional) | `.syn-email-signup`, `.syn-email-inbox`, `.syn-email-message`, `.syn-email-compose`, `.syn-email-preferences` | Native forms and mailbox navigation; see [email components](email-components.md) |
@@ -117,6 +118,38 @@ Use native button `popovertarget="id"` to control a popover and `commandfor="id"
 
 For component-level package imports and optional native UI recipes, see
 [native patterns](native-patterns.md).
+
+### Content lists and grouped rows (alpha.5 source candidate)
+
+Use an ordinary `<ul>` or `<ol>` inside `.syn-semantic` for native list
+spacing, nesting and markers. When loading **core only**, opt into the same
+scoped list presentation with `.syn-list`. It preserves native bullet shapes,
+ordered numbering (`start`, `reversed`, `value`), writing direction and
+screen-reader list semantics. `.syn-list--compact` reduces vertical item gaps
+and `.syn-list--accent` colors the top-level markers; both are optional.
+Set `--syn-list-item-gap` locally to override the item rhythm.
+
+```html
+<ul class="syn-list syn-list--accent">
+  <li>Accessible headings</li>
+  <li>Native nested lists
+    <ul><li>First detail</li><li>Second detail</li></ul>
+  </li>
+</ul>
+<ol class="syn-list syn-list--compact" start="9">
+  <li>Review</li><li>Publish</li>
+</ol>
+```
+
+`.syn-feature-list` is a legible, accent-marked list intended for pricing and
+features; override its row gap with `--syn-feature-list-gap`. The distinct
+`.syn-list-group` is for markerless grouped navigation or collection rows.
+Customize row density by setting `--syn-list-row-padding` on a containing
+`.syn-list-group` rather than creating a new component. When removing markers
+with `list-style: none`, Safari/VoiceOver may not expose the list as a list;
+add `role="list"` to the native `ul` or `ol` if list semantics are intended.
+Do **not** apply a global marker reset or use fake list text in place of
+semantic list markup.
 
 ## Standard low-entropy component inventory
 
@@ -349,7 +382,8 @@ toast lifecycles) belong to the host app, not a CSS runtime.
 | `--syn-accent`, `--syn-on-accent`, `--syn-accent-soft` | Accent and contrast |
 | `--syn-frame`, `--syn-danger` | Borders and warning states |
 | `--syn-font`, `--syn-mono` | System typography |
-| `--syn-space-1` ... `--syn-space-5` | Spacing scale |
+| `--syn-space-1` ... `--syn-space-5` | Stable fixed spacing scale |
+| `--syn-space-fluid-1` ... `--syn-space-fluid-4` | Optional fluid gaps and padding, bounded by adjacent fixed tokens (unreleased alpha.5) |
 | `--syn-cut`, `--syn-radius`, `--syn-line`, `--syn-control-height` | Shape and layout |
 
 Application CSS can override tokens:

@@ -610,6 +610,36 @@
       ]
     },
     {
+      "id": "editorial-intro-split",
+      "category": "Editorial",
+      "title": "Editorial intro with context panel",
+      "description": "An editorial introduction with primary actions and a contextual checklist beside it.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "intro",
+        "split",
+        "editorial",
+        "landing"
+      ]
+    },
+    {
+      "id": "article-toc",
+      "category": "Editorial",
+      "title": "Article with contents sidebar",
+      "description": "A long-form article and real anchor-linked table of contents in a wrapping sidecar.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "article",
+        "contents",
+        "sidebar",
+        "reading"
+      ]
+    },
+    {
       "id": "case-study-preview",
       "category": "Portfolio",
       "title": "Case-study teaser",
@@ -649,6 +679,96 @@
         "footer",
         "links",
         "website"
+      ]
+    },
+    {
+      "id": "header-centered",
+      "category": "Navigation",
+      "title": "Centered editorial header",
+      "description": "Centered brand, horizontal links, and a secondary call to action.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "header",
+        "centered",
+        "editorial",
+        "navigation"
+      ]
+    },
+    {
+      "id": "header-split",
+      "category": "Navigation",
+      "title": "Two-row product header",
+      "description": "Separate utility and product navigation with a prominent action.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "header",
+        "utility",
+        "two-row",
+        "saas"
+      ]
+    },
+    {
+      "id": "header-disclosure",
+      "category": "Navigation",
+      "title": "Native disclosure header",
+      "description": "Compact brand and expandable keyboard-accessible menu without JavaScript.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "header",
+        "details",
+        "mobile",
+        "disclosure"
+      ]
+    },
+    {
+      "id": "footer-compact",
+      "category": "Navigation",
+      "title": "Compact single-row footer",
+      "description": "Space-saving brand, legal links and disclosure in a wrapping row.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "footer",
+        "compact",
+        "minimal",
+        "legal"
+      ]
+    },
+    {
+      "id": "footer-sitemap",
+      "category": "Navigation",
+      "title": "Four-column sitemap footer",
+      "description": "Responsive product, resource, company and legal navigation groups.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "footer",
+        "sitemap",
+        "columns",
+        "links"
+      ]
+    },
+    {
+      "id": "footer-newsletter",
+      "category": "Navigation",
+      "title": "Newsletter and links footer",
+      "description": "Email subscription example beside site links; requires a host-owned backend.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "footer",
+        "newsletter",
+        "subscription",
+        "form"
       ]
     },
     {
@@ -1002,6 +1122,349 @@
         "api-keys",
         "webhooks",
         "developer"
+      ]
+    },
+    {
+      "id": "image-gallery",
+      "category": "Portfolio",
+      "title": "Responsive image gallery",
+      "description": "Four original local illustrations in a CSS-only responsive gallery with native full-image links.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "gallery",
+        "images",
+        "photography",
+        "portfolio"
+      ]
+    },
+    {
+      "id": "image-story",
+      "category": "Marketing",
+      "title": "Image and story split",
+      "description": "A media-and-copy section with semantic figure, responsive image and action.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "image",
+        "story",
+        "about",
+        "feature"
+      ]
+    },
+    {
+      "id": "testimonials-grid",
+      "category": "Marketing",
+      "title": "Testimonials grid",
+      "description": "Three sample quotation cards with clear demo-only attribution.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "testimonials",
+        "reviews",
+        "social-proof"
+      ]
+    },
+    {
+      "id": "milestone-timeline",
+      "category": "Services",
+      "title": "Company milestones timeline",
+      "description": "A chronological history using native dates and an ordered vertical sequence.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "timeline",
+        "history",
+        "about",
+        "milestones"
+      ]
+    },
+    {
+      "id": "event-agenda",
+      "category": "Services",
+      "title": "Event agenda",
+      "description": "A schedule of talks and sessions with native time elements.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "events",
+        "agenda",
+        "schedule",
+        "conference"
+      ]
+    },
+    {
+      "id": "company-story",
+      "category": "Company",
+      "title": "Company story and milestones",
+      "description": "An accessible company introduction with mission copy and an ordered story timeline.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "about",
+        "story",
+        "company",
+        "mission"
+      ]
+    },
+    {
+      "id": "customer-reviews",
+      "category": "Marketing",
+      "title": "Customer review grid",
+      "description": "Original attributed review cards with an explicit sample-content disclosure.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "reviews",
+        "testimonials",
+        "social proof"
+      ]
+    },
+    {
+      "id": "use-case-showcase",
+      "category": "Marketing",
+      "title": "Industry and use-case showcase",
+      "description": "Audience-specific benefits with real destination links and honest example content.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "solutions",
+        "industries",
+        "use cases",
+        "cards"
+      ]
+    },
+    {
+      "id": "locations-hours",
+      "category": "Services",
+      "title": "Locations and opening hours",
+      "description": "Semantic multi-location contacts with structured hours and accessibility links.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "locations",
+        "hours",
+        "local business",
+        "contact"
+      ]
+    },
+    {
+      "id": "decision-guide",
+      "category": "Services",
+      "title": "Three-path decision guide",
+      "description": "A responsive choice of three service approaches with visible criteria and tradeoffs.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "decision",
+        "comparison",
+        "services",
+        "paths"
+      ]
+    },
+    {
+      "id": "faq-sidecar",
+      "category": "Services",
+      "title": "FAQs with a contact sidebar",
+      "description": "Native expandable answers alongside a clear contact path.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "faq",
+        "questions",
+        "sidebar",
+        "contact"
+      ]
+    },
+    {
+      "id": "careers-listings",
+      "category": "Company",
+      "title": "Careers and open positions",
+      "description": "Readable role summaries with clear application routes and example-data disclosure.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "careers",
+        "jobs",
+        "recruiting",
+        "hiring"
+      ]
+    },
+    {
+      "id": "principles-columns",
+      "category": "Company",
+      "title": "Three-column principles section",
+      "description": "Organizational principles with concrete explanations in a responsive grid.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "principles",
+        "values",
+        "company",
+        "columns"
+      ]
+    },
+    {
+      "id": "feature-disclosures",
+      "category": "Marketing",
+      "title": "Native feature switcher",
+      "description": "Exclusive browser-native disclosures for feature storytelling without a script.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "features",
+        "accordion",
+        "progressive enhancement",
+        "no javascript"
+      ]
+    },
+    {
+      "id": "hero-photo",
+      "category": "Marketing",
+      "title": "Photographic hero section",
+      "description": "An image-led introduction with a meaningful action and figure caption.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "hero",
+        "image",
+        "landing",
+        "photography"
+      ]
+    },
+    {
+      "id": "before-after",
+      "category": "Portfolio",
+      "title": "Before and after image comparison",
+      "description": "Two semantic, responsive photos with accessible full-image links; no scripted comparison slider.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "before",
+        "after",
+        "portfolio",
+        "images"
+      ]
+    },
+    {
+      "id": "resource-downloads",
+      "category": "Publishing",
+      "title": "Free resources and downloads",
+      "description": "Native download links to reusable illustrations in a flexible resource grid.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "resources",
+        "downloads",
+        "files",
+        "library"
+      ]
+    },
+    {
+      "id": "resource-index",
+      "category": "Publishing",
+      "title": "Grouped resource topic index",
+      "description": "A documentation and resource hub with grouped descriptive navigation links.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "resources",
+        "index",
+        "documentation",
+        "navigation"
+      ]
+    },
+    {
+      "id": "press-highlights",
+      "category": "Marketing",
+      "title": "News and press highlights",
+      "description": "A dated editorial summary grid with descriptive story destinations.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "press",
+        "mentions",
+        "news",
+        "announcements"
+      ]
+    },
+    {
+      "id": "feature-rows",
+      "category": "Marketing",
+      "title": "Stacked feature story rows",
+      "description": "Two narrative feature rows with contextual detail cards and destination links.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "features",
+        "story",
+        "rows",
+        "content"
+      ]
+    },
+    {
+      "id": "impact-narrative",
+      "category": "Marketing",
+      "title": "Metrics with explanatory narrative",
+      "description": "Contextualized illustrative metrics paired with interpretation and source guidance.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "metrics",
+        "story",
+        "stats",
+        "explanation"
+      ]
+    },
+    {
+      "id": "social-links",
+      "category": "Navigation",
+      "title": "Community and social links",
+      "description": "A semantic link directory for communities, updates and contact channels.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "social",
+        "community",
+        "links",
+        "follow"
+      ]
+    },
+    {
+      "id": "product-specifications",
+      "category": "Commerce",
+      "title": "Product specifications table",
+      "description": "Accessible product details in a named, keyboard-scrollable semantic table.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "product",
+        "details",
+        "specifications",
+        "commerce"
       ]
     }
   ]

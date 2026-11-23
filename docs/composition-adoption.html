@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Syntyr uses scoped native CSS, not a JavaScript layout engine. These patterns are available in the unreleased alpha.5 source candidate under…">
-  <meta name="syntyr-source-sha256" content="b204c287de2cc92ca7dd81691a513ca640b6aadbf506dc1444ea12832ef21a54">
+  <meta name="syntyr-source-sha256" content="c3603b59bce80286df931ef39e8fd23f9f892e705f5a309ca87d181d5b92420b">
   <meta name="theme-color" content="#f5f7fb">
   <title>Intrinsic layout compositions: inline clusters and sidecars — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/composition-adoption">
@@ -109,6 +109,108 @@ wrapping responds to the <em>actual available width</em>, including embedded sid
 rather than guessing from the viewport. Content may still overflow if
 application-defined children use fixed dimensions; make tables and code blocks
 scrollable and keyboard reachable where necessary.</p>
+<h2 id="fluid-spacing-and-a-copyable-intrinsic-layout-cookbook-unreleased-alpha5">Fluid spacing and a copyable intrinsic layout cookbook (unreleased alpha.5)</h2>
+<p>Core now provides four <strong>opt-in</strong> fluid spacing tokens. They grow smoothly
+with the logical viewport inline size between adjacent fixed tokens; the
+existing <code>--syn-space-1</code> through <code>--syn-space-5</code>, default component spacing,
+and density settings do <strong>not</strong> change.</p>
+<table>
+<thead>
+<tr>
+<th>Fluid token</th>
+<th>Bounded by</th>
+<th>Typical use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--syn-space-fluid-1</code></td>
+<td><code>--syn-space-1</code> to <code>--syn-space-2</code></td>
+<td>Tight action and chip gaps</td>
+</tr>
+<tr>
+<td><code>--syn-space-fluid-2</code></td>
+<td><code>--syn-space-2</code> to <code>--syn-space-3</code></td>
+<td>Toolbars and form groups</td>
+</tr>
+<tr>
+<td><code>--syn-space-fluid-3</code></td>
+<td><code>--syn-space-3</code> to <code>--syn-space-4</code></td>
+<td>Cards and content stacks</td>
+</tr>
+<tr>
+<td><code>--syn-space-fluid-4</code></td>
+<td><code>--syn-space-4</code> to <code>--syn-space-5</code></td>
+<td>Page sections and feature grids</td>
+</tr>
+</tbody>
+</table>
+<p><code>clamp()</code> and <code>vi</code> are handled by CSS alone. When the browser lacks logical
+viewport units, the feature-gated declarations use the lower fixed bound. The
+tokens depend on the <strong>viewport</strong>, not an element's container size: combine
+them with existing intrinsic-wrapping classes to handle embedded layouts.</p>
+<h3 id="vertical-stack-article-or-onboarding-steps">Vertical stack: article or onboarding steps</h3>
+<pre tabindex="0"><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/dist/syntyr.core.css&quot;&gt;
+&lt;section class=&quot;syn-root syn-stack&quot; data-syn-theme=&quot;studio&quot;
+         style=&quot;--syn-stack-gap:var(--syn-space-fluid-3)&quot;&gt;
+  &lt;h2&gt;Launch checklist&lt;/h2&gt;
+  &lt;p&gt;Publish the landing page and review the results.&lt;/p&gt;
+  &lt;a class=&quot;syn-button&quot; href=&quot;/checklist&quot;&gt;Open checklist&lt;/a&gt;
+&lt;/section&gt;
+</code></pre>
+<h3 id="wrapping-navigation-and-filter-actions">Wrapping navigation and filter actions</h3>
+<pre tabindex="0"><code class="language-html">&lt;nav class=&quot;syn-root syn-inline&quot; aria-label=&quot;Project filters&quot;
+     style=&quot;--syn-inline-gap:var(--syn-space-fluid-1)&quot;&gt;
+  &lt;a href=&quot;/projects&quot;&gt;All projects&lt;/a&gt;
+  &lt;a href=&quot;/projects?status=active&quot;&gt;Active&lt;/a&gt;
+  &lt;a href=&quot;/projects?status=archived&quot;&gt;Archived&lt;/a&gt;
+&lt;/nav&gt;
+</code></pre>
+<p>Use actual GET forms for input filters; ordinary navigation links do not need
+tab roles or application-owned keyboard handlers.</p>
+<h3 id="responsive-main-content-and-complementary-aside">Responsive main content and complementary aside</h3>
+<pre tabindex="0"><code class="language-html">&lt;div class=&quot;syn-root syn-sidecar&quot; data-syn-theme=&quot;studio&quot;
+     style=&quot;--syn-sidecar-gap:var(--syn-space-fluid-3)&quot;&gt;
+  &lt;main class=&quot;syn-panel&quot;&gt;
+    &lt;h1&gt;Project overview&lt;/h1&gt;
+    &lt;p&gt;Core information stays first in document and keyboard order.&lt;/p&gt;
+  &lt;/main&gt;
+  &lt;aside class=&quot;syn-panel&quot; aria-label=&quot;Project activity&quot;&gt;
+    &lt;h2&gt;Recent activity&lt;/h2&gt;
+    &lt;p&gt;Three updates this week.&lt;/p&gt;
+  &lt;/aside&gt;
+&lt;/div&gt;
+</code></pre>
+<h3 id="responsive-feature-and-pricing-grid">Responsive feature and pricing grid</h3>
+<pre tabindex="0"><code class="language-html">&lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;features-title&quot;&gt;
+  &lt;h2 id=&quot;features-title&quot;&gt;Features&lt;/h2&gt;
+  &lt;div class=&quot;syn-grid&quot;
+       style=&quot;--syn-grid-gap:var(--syn-space-fluid-4); --syn-grid-min:16rem&quot;&gt;
+    &lt;article class=&quot;syn-panel&quot;&gt;&lt;h3&gt;Accessible&lt;/h3&gt;&lt;p&gt;Real HTML controls.&lt;/p&gt;&lt;/article&gt;
+    &lt;article class=&quot;syn-panel&quot;&gt;&lt;h3&gt;Portable&lt;/h3&gt;&lt;p&gt;No runtime framework.&lt;/p&gt;&lt;/article&gt;
+    &lt;article class=&quot;syn-panel&quot;&gt;&lt;h3&gt;Responsive&lt;/h3&gt;&lt;p&gt;Intrinsic CSS grid.&lt;/p&gt;&lt;/article&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+</code></pre>
+<h3 id="optional-all-or-nothing-card-switcher">Optional all-or-nothing card switcher</h3>
+<p>The <code>syn-switcher</code> class is in <strong>optional</strong> <code>syntyr.recipes.css</code>, <em>not</em>
+<code>syntyr.core.css</code>; load recipes after core to use it:</p>
+<pre tabindex="0"><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/dist/syntyr.core.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;/dist/syntyr.recipes.css&quot;&gt;
+&lt;div class=&quot;syn-root syn-switcher&quot; data-syn-theme=&quot;studio&quot;
+     style=&quot;--syn-switcher-threshold:42rem; gap:var(--syn-space-fluid-2)&quot;&gt;
+  &lt;article class=&quot;syn-panel&quot;&gt;&lt;h2&gt;Starter&lt;/h2&gt;&lt;p&gt;For small teams.&lt;/p&gt;&lt;/article&gt;
+  &lt;article class=&quot;syn-panel&quot;&gt;&lt;h2&gt;Growth&lt;/h2&gt;&lt;p&gt;For busy teams.&lt;/p&gt;&lt;/article&gt;
+  &lt;article class=&quot;syn-panel&quot;&gt;&lt;h2&gt;Scale&lt;/h2&gt;&lt;p&gt;For large teams.&lt;/p&gt;&lt;/article&gt;
+&lt;/div&gt;
+</code></pre>
+<p>These snippets are original MIT examples. They work with no JavaScript and
+can be reordered in source; moving blocks in the DOM also changes reading and focus
+order. Use semantic headings, named navigation, descriptive link text, and
+visible focus indicators. Content with fixed widths, long tables, or code may
+need separate overflow handling. Test zoom, RTL, and embedded widths before
+shipping. CSS does not fetch data, virtualize cards, or implement infinite
+loading.</p>
 <h2 id="import-only-what-you-need">Import only what you need</h2>
 <p>For no-build consumers, the preferred option is one self-hosted
 <code>syntyr.core.css</code> stylesheet. For selective component loading, use the
@@ -133,6 +235,12 @@ The release CSS and the example itself do not require Playwright.</p>
           <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#use-syn-inline-for-a-wrapping-cluster">Use syn-inline for a wrapping cluster</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#use-syn-sidecar-for-an-intrinsic-main-aside">Use syn-sidecar for an intrinsic main + aside</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#fluid-spacing-and-a-copyable-intrinsic-layout-cookbook-unreleased-alpha5">Fluid spacing and a copyable intrinsic layout cookbook (unreleased alpha.5)</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#vertical-stack-article-or-onboarding-steps">Vertical stack: article or onboarding steps</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#wrapping-navigation-and-filter-actions">Wrapping navigation and filter actions</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#responsive-main-content-and-complementary-aside">Responsive main content and complementary aside</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#responsive-feature-and-pricing-grid">Responsive feature and pricing grid</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#optional-all-or-nothing-card-switcher">Optional all-or-nothing card switcher</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#import-only-what-you-need">Import only what you need</a>
           </nav>
           <details class="docs-article-toc-mobile">
@@ -140,6 +248,12 @@ The release CSS and the example itself do not require Playwright.</p>
             <nav aria-label="On this page (mobile)">
 <a class="docs-article-toc-link docs-article-toc-2" href="#use-syn-inline-for-a-wrapping-cluster">Use syn-inline for a wrapping cluster</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#use-syn-sidecar-for-an-intrinsic-main-aside">Use syn-sidecar for an intrinsic main + aside</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#fluid-spacing-and-a-copyable-intrinsic-layout-cookbook-unreleased-alpha5">Fluid spacing and a copyable intrinsic layout cookbook (unreleased alpha.5)</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#vertical-stack-article-or-onboarding-steps">Vertical stack: article or onboarding steps</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#wrapping-navigation-and-filter-actions">Wrapping navigation and filter actions</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#responsive-main-content-and-complementary-aside">Responsive main content and complementary aside</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#responsive-feature-and-pricing-grid">Responsive feature and pricing grid</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#optional-all-or-nothing-card-switcher">Optional all-or-nothing card switcher</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#import-only-what-you-need">Import only what you need</a>
             </nav>
           </details>

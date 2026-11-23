@@ -358,6 +358,10 @@
       "description": "Line design token from tokens.css; override in the appropriate Syntyr scope when needed."
     },
     {
+      "name": "--syn-list-item-gap",
+      "description": "List item gap design token from components/typography.css; override in the appropriate Syntyr scope when needed."
+    },
+    {
       "name": "--syn-media-card-ratio",
       "description": "Media card ratio design token from media.css; override in the appropriate Syntyr scope when needed."
     },
@@ -460,6 +464,22 @@
     {
       "name": "--syn-space-5",
       "description": "Spacing scale token 5; use for consistent layout spacing."
+    },
+    {
+      "name": "--syn-space-fluid-1",
+      "description": "Spacing scale token fluid-1; use for consistent layout spacing."
+    },
+    {
+      "name": "--syn-space-fluid-2",
+      "description": "Spacing scale token fluid-2; use for consistent layout spacing."
+    },
+    {
+      "name": "--syn-space-fluid-3",
+      "description": "Spacing scale token fluid-3; use for consistent layout spacing."
+    },
+    {
+      "name": "--syn-space-fluid-4",
+      "description": "Spacing scale token fluid-4; use for consistent layout spacing."
     },
     {
       "name": "--syn-stack-gap",
