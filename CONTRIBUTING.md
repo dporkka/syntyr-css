@@ -40,7 +40,7 @@ business notes, or entire source directories.
 
 ## Verify a proposed change
 
-From the repository root, with Python 3 installed:
+From the repository root, use Python 3.11 or later for the full verification sequence:
 
 ```sh
 python3 scripts/build.py

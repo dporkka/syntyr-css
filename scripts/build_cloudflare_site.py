@@ -322,7 +322,7 @@ PUBLIC_DOCS = (
     "ai-quickstart.md", "agent-integration.md", "design-principles.md", "app-screens.md",
     "media-entertainment.md",
     "accessibility.md", "accessibility-alpha5-review.md", "api-stability.md", "cloudflare-hosting.md", "nulang-cloud-hosting.md",
-    "release-freeze.md", "component-authoring.md", "components.md", "data-tables.md", "data-grid.md",
+    "release-freeze.md", "launch-status.md", "component-authoring.md", "components.md", "data-tables.md", "data-grid.md",
     "console-kit.html", "component-recipes.md", "email-components.md", "design-research-linear-resend.md", "design-reference-matrix.md", "premium-compositions.md", "visual-composition.md",
     "console-kit.html", "component-recipes.md", "design-research-linear-resend.md", "premium-compositions.md", "visual-composition.md",
     "faq.md", "compare.md", "compare-tailwind.md", "compare-bootstrap.md", "compare-shadcn.md",

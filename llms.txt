@@ -10,14 +10,15 @@ For browser readers, use the [human-readable HTML documentation directory](https
 
 ## Start here
 
-- [Published v0.3.0-alpha.4 documentation](https://syntyr-css.pages.dev/v/0.3.0-alpha.4/llms.txt): Verified published CSS modules and themes; prefer this when using alpha.4.
-- [Components index](https://syntyr-css.pages.dev/llms-components.txt): Topic-specific current-source reference (may include unreleased features).
-- [Frameworks index](https://syntyr-css.pages.dev/llms-frameworks.txt): Topic-specific framework and platform integration reference.
+- [Published v0.3.0-alpha.4 documentation](https://syntyr-css.pages.dev/v/0.3.0-alpha.4/llms.txt): Published CSS and three themes; not alpha.5.
+- [Components index](https://syntyr-css.pages.dev/llms-components.txt): Current-source reference, including unreleased previews.
+- [Frameworks index](https://syntyr-css.pages.dev/llms-frameworks.txt): Framework/platform integration reference.
 - [Canonical DESIGN.md contract](https://syntyr-css.pages.dev/DESIGN.md)
 - [AI quickstart](https://syntyr-css.pages.dev/docs/ai-quickstart.md)
+- [Release readiness](https://syntyr-css.pages.dev/docs/launch-status.md): Published alpha.4 versus unreleased source and commercial gates.
 - [Complete curated reference](https://syntyr-css.pages.dev/llms-full.txt)
-- [Syntyr Pro concept](https://syntyr-css.pages.dev/docs/pro): Proposed SaaS/CRM/operations templates. The public research page includes one authentic static screenshot (docs/previews/pro-work-orders-studio.webp) from fictional work-order sample data, not an interactive preview. Private candidate, not for sale; no premium source, license grant, payment or customer download is available.
-- [Syntyr Studio concept](https://syntyr-css.pages.dev/docs/studio): Proposed website and application templates. The public research page includes one authentic static screenshot (docs/previews/studio-saas-home.webp) from a fictional B2B SaaS homepage, not an interactive demo. Private candidate, not for sale; no premium source, license grant, checkout or customer download is available.
+- [Syntyr Pro concept](https://syntyr-css.pages.dev/docs/pro): Proposed SaaS/CRM/operations templates. Private research candidate with a static screenshot and fictional data; not for sale, no live backend, checkout or premium download.
+- [Syntyr Studio concept](https://syntyr-css.pages.dev/docs/studio): Proposed website and application templates. Private research candidate with a static screenshot and fictional data; not for sale, no live backend, checkout or premium download.
 - [Free CSS developer tools](https://syntyr-css.pages.dev/tools/)
 - [Curated web design resources and Syntyr research priorities](https://syntyr-css.pages.dev/docs/design-resources.html)
 - [Syntyr vs Tailwind vs plain CSS decision guide](https://syntyr-css.pages.dev/docs/tailwind-alternative.html)

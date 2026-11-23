@@ -28,7 +28,7 @@ GUIDES = tuple(name for name in PUBLIC_DOCS if name.endswith(".md"))
 SECTIONS = (
     ("FAQ and comparisons", ("faq", "compare", "compare-tailwind", "compare-bootstrap",
                              "compare-shadcn", "compare-daisyui", "compare-pico", "compare-native-css")),
-    ("Start here", ("ai-quickstart", "distribution", "package-managers", "from-pico",
+    ("Start here", ("ai-quickstart", "launch-status", "distribution", "package-managers", "from-pico",
                     "adoption-starters", "components", "data-tables", "data-grid",
                     "recipes", "app-screens", "native-patterns", "native-workflows", "semantic-components", "composition-adoption", "component-recipes",
                     "email-components")),
