@@ -54,6 +54,15 @@ class IntegrationServicesFunnelTests(unittest.TestCase):
             with self.subTest(page=page_name):
                 self.assertIn(expected, (ROOT / page_name).read_text(encoding="utf-8"))
 
+    def test_quote_based_service_offer_is_discoverable_to_agents(self):
+        index = (ROOT / "llms.txt").read_text(encoding="utf-8")
+        entry = next((line for line in index.splitlines()
+                      if "[Syntyr integration services]" in line), "")
+        self.assertIn("https://syntyr-css.pages.dev/docs/integration-services.html", entry)
+        self.assertIn("quote-based", entry.lower())
+        self.assertIn("not for sale", entry.lower())
+        self.assertIn("mit", entry.lower())
+
     def test_public_build_exposes_service_page_not_private_source(self):
         files = source_files()
         name = "docs/integration-services.html"
