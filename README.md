@@ -2,6 +2,8 @@
 
 **Experimental v0.3.0-alpha.5 (unreleased candidate)** — framework-neutral, low-dependency, CSS-first styling for modern SaaS apps, professional business websites and optional cinematic Grid/Noir designs.
 
+**What can users install or buy today?** See the [release and commercial readiness overview](docs/launch-status.md). Published alpha.4 remains usable now; alpha.5, npm distribution, and paid kits have separate approval gates.
+
 ## Quick start — published alpha.4
 
 Copy the HTML below into `index.html` and open it in a browser. It uses the
