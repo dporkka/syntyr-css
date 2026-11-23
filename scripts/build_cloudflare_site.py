@@ -37,6 +37,8 @@ ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_OUTPUT = ROOT / ".cloudflare-public"
 MARKER = ".syntyr-site-manifest.json"
 SITE_URL = "https://syntyr-css.pages.dev"
+# Pin the published bytes independently of the CSS-only release manifest.
+ALPHA4_LLM_INDEX_SHA256 = "d36d5056409152c4621890401d113dce34759ae43d10af542bbaf1bb370faa7d"
 # These pages are illustrative applications or an error response, not search
 # landing pages. Their HTML remains publicly available and linkable.
 NOINDEX_HTML = frozenset({
@@ -163,6 +165,11 @@ def add_seo_metadata(files: dict[str, bytes], site_url: str = SITE_URL, *, porta
                 # Escape markup sentinels even though data originates in checked-in source.
                 json_text = json.dumps(schema, ensure_ascii=True, separators=(",", ":")).replace("<", r"\u003c")
                 html = html.replace("</head>", f'  <script type="application/ld+json">{json_text}</script>\n</head>', 1)
+        # Link documentation pages to the small machine-readable index.
+        # Keep this in the build output, not hundreds of duplicated HTML sources.
+        if name.startswith("docs/") and 'rel="describedby"' not in html:
+            desc = f'<link rel="describedby" href="{site_url}/llms.txt" type="text/plain">'
+            html = html.replace("</head>", f"  {desc}\n</head>", 1)
         files[name] = html.encode("utf-8")
 
 
@@ -215,6 +222,18 @@ HEADERS = """/*
 
 /llms-full.txt
   X-Robots-Tag: noindex
+
+/llms-components.txt
+  X-Robots-Tag: noindex
+  Content-Type: text/markdown; charset=utf-8
+
+/llms-frameworks.txt
+  X-Robots-Tag: noindex
+  Content-Type: text/markdown; charset=utf-8
+
+/v/0.3.0-alpha.4/llms.txt
+  X-Robots-Tag: noindex
+  Content-Type: text/markdown; charset=utf-8
 
 /examples/*
   Cache-Control: public, max-age=0, must-revalidate
@@ -355,6 +374,8 @@ def source_files(site_url: str = SITE_URL, *, include_cloudflare_headers: bool =
         ROOT / "ARCHITECTURE.md",
         ROOT / "llms.txt",
         ROOT / "llms-full.txt",
+        ROOT / "llms-components.txt",
+        ROOT / "llms-frameworks.txt",
         ROOT / "metadata/components.json",
         ROOT / "metadata/component-gallery.v1.json",
         ROOT / "metadata/catalog-release-compatibility.v1.json",
@@ -487,6 +508,15 @@ def source_files(site_url: str = SITE_URL, *, include_cloudflare_headers: bool =
             if hashlib.sha256(data).hexdigest() != expected_hash:
                 raise ValueError(f"Modified immutable release asset: {path}")
             files[f"v/{version}/{filename}"] = data
+
+    # Release documentation lives outside the exact-membership CSS snapshots.
+    alpha4_docs = ROOT / "docs/release-indexes/0.3.0-alpha.4/llms.txt"
+    if alpha4_docs.is_symlink() or not alpha4_docs.is_file():
+        raise ValueError(f"Missing reviewed release documentation: {alpha4_docs}")
+    data = alpha4_docs.read_bytes()
+    if hashlib.sha256(data).hexdigest() != ALPHA4_LLM_INDEX_SHA256:
+        raise ValueError(f"Modified immutable release documentation: {alpha4_docs}")
+    files["v/0.3.0-alpha.4/llms.txt"] = data
 
     # Keep the sitemap confined to HTML that is useful as a search result.
     # Cloudflare Pages redirects *.html -> clean paths, so only list final 200 URLs.

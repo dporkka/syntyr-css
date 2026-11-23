@@ -67,6 +67,8 @@ FILES = (
     "examples/geo.html",
     "llms.txt",
     "llms-full.txt",
+    "llms-components.txt",
+    "llms-frameworks.txt",
     "metadata/components.json",
     "metadata/component-gallery.v1.json",
     "metadata/css-contract.v1.json",

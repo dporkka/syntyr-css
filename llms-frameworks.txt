@@ -1,0 +1,40 @@
+# Syntyr CSS — frameworks and platforms index
+
+> Source-tree integrations may describe unreleased v0.3.0-alpha.5 features. The published immutable release is v0.3.0-alpha.4. Syntyr is CSS; it does not provide framework-specific JavaScript components, application state or network handlers.
+
+## Choose and install correctly
+
+- [AI quickstart](https://syntyr-css.pages.dev/docs/ai-quickstart.md): Published-release CSS and class examples.
+- [Distribution guide](https://syntyr-css.pages.dev/docs/distribution.md): Pin immutable assets; do not mix alpha.4 and alpha.5.
+- [Published alpha.4 contract](https://syntyr-css.pages.dev/v/0.3.0-alpha.4/llms.txt)
+- [Agent integration](https://syntyr-css.pages.dev/docs/agent-integration.md): Portable Skill, optional offline install and validation.
+- [Framework integrations](https://syntyr-css.pages.dev/docs/framework-integrations.md): React, Vue, Svelte, server-rendered HTML, HTMX and more.
+- [HTMX components](https://syntyr-css.pages.dev/docs/htmx-components.md): Copy-owned server-rendered patterns; source candidate.
+- [Live HTMX playground](https://syntyr-css.pages.dev/docs/htmx-playground.html): Read-only Pages Function demo with self-hosted docs-only JavaScript (not included in Syntyr CSS).
+- [Native browser APIs](https://syntyr-css.pages.dev/docs/native-browser-apis.md)
+
+## Server-rendered and progressive enhancement
+
+- [Go standard-library components](https://github.com/dporkka/syntyr-css/tree/main/examples/server-components-go)
+- [Go templ adapter](https://github.com/dporkka/syntyr-css/tree/main/examples/server-components-templ)
+- [Node.js components](https://github.com/dporkka/syntyr-css/tree/main/examples/server-components-node)
+- [Rust Axum / Askama example](https://github.com/dporkka/syntyr-css/tree/main/examples/rust-axum)
+- [Vertigo integration](https://syntyr-css.pages.dev/docs/vertigo-integration.md)
+- [React Aria / Radix styling](https://syntyr-css.pages.dev/docs/headless-interactions.md)
+- [Lit and Web Components](https://syntyr-css.pages.dev/docs/lit-integration.md)
+
+## CMS and visual site builders
+
+- [Site-builder overview](https://syntyr-css.pages.dev/docs/site-builders.md)
+- [CMS integration](https://syntyr-css.pages.dev/docs/cms-integration.md)
+- [WordPress](https://syntyr-css.pages.dev/docs/wordpress.md)
+- [Shopify](https://syntyr-css.pages.dev/docs/shopify.md)
+- [Wix](https://syntyr-css.pages.dev/docs/wix.md)
+- [Webflow](https://syntyr-css.pages.dev/docs/webflow.md)
+- [Framer](https://syntyr-css.pages.dev/docs/framer.md)
+- [Static site generators](https://syntyr-css.pages.dev/docs/static-site-generators.md)
+- [Mobile/native adapters](https://syntyr-css.pages.dev/docs/mobile-frameworks.md): Tokens/adapters, not a cross-platform CSS runtime.
+
+## Output contract for coding agents
+
+Use `className` in JSX and normal class attributes in HTML; keep form handlers and state in the host framework. Validate class names against the installed CSS version and module, and test accessibility in a real browser.

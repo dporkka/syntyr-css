@@ -80,7 +80,10 @@ checked-in CSS rather than presenting candidate-only selectors as fixes.
 
 ## Documents and machine-readable inventory
 
-- [`llms.txt`](../llms.txt): small navigation file following the community `llms.txt` convention; it is useful when deliberately retrieved, but not a universal automatic-discovery protocol.
+- [`llms.txt`](../llms.txt): compact navigation file following the community `llms.txt` convention; it is useful when deliberately retrieved, but not a universal automatic-discovery protocol.
+- [`llms-components.txt`](../llms-components.txt): focused component, native pattern, theme, and composition links; source-candidate features are explicitly labeled.
+- [`llms-frameworks.txt`](../llms-frameworks.txt): focused framework and platform integration links.
+- [Published alpha.4 index](https://syntyr-css.pages.dev/v/0.3.0-alpha.4/llms.txt): release-specific CSS paths, themes, and scoping, served at `/v/0.3.0-alpha.4/llms.txt`.
 - [`llms-full.txt`](../llms-full.txt): generated, version-stamped concatenation of selected public technical docs, for tools that benefit from one context file.
 - [`metadata/components.json`](../metadata/components.json): small **curated, non-exhaustive** inventory with the CSS modules required by the included classes. Do not infer that a class is unavailable solely because this catalog omits it.
 - [`metadata/syntyr-contract.json`](../metadata/syntyr-contract.json): full source-discovered Syntyr classes, tokens, known stylesheet distributions, themes, literal state values and curated component recipes. This candidate-version manifest is suitable for LLM tooling and optional [static HTML checks](editor-integration.md#optional-static-html-diagnostics); it is not a compiler or an accessibility certification.

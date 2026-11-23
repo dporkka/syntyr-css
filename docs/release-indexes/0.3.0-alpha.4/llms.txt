@@ -1,0 +1,30 @@
+# Syntyr CSS 0.3.0-alpha.4 — immutable published CSS reference
+
+> This index describes the published v0.3.0-alpha.4 CSS assets only. It does not imply later source-tree components, themes or examples are included. Syntyr is CSS, not a JavaScript component library.
+
+## CSS assets
+
+- [Core stylesheet](https://syntyr-css.pages.dev/v/0.3.0-alpha.4/syntyr.core.css)
+- [Recipes stylesheet](https://syntyr-css.pages.dev/v/0.3.0-alpha.4/syntyr.recipes.css): Optional application/website compositions.
+- [Semantic stylesheet](https://syntyr-css.pages.dev/v/0.3.0-alpha.4/syntyr.semantic.css): Optional opt-in native element styling; load after core.
+- [Effects stylesheet](https://syntyr-css.pages.dev/v/0.3.0-alpha.4/syntyr.effects.css): Optional.
+- [Geometry stylesheet](https://syntyr-css.pages.dev/v/0.3.0-alpha.4/syntyr.geometry.css): Optional.
+- [All-in-one stylesheet](https://syntyr-css.pages.dev/v/0.3.0-alpha.4/syntyr.all.css): Do not load alongside its individual modules.
+
+## Valid themes and scoping
+
+The only published themes for this release are `studio`, `grid` and `noir`. Wrap styled markup in `.syn-root`, and set `data-syn-theme` on that root or a nested themed subtree. Use only selectors actually defined in your installed module(s).
+
+Example:
+
+```html
+<link rel="stylesheet" href="https://syntyr-css.pages.dev/v/0.3.0-alpha.4/syntyr.core.css">
+<main class="syn-root syn-page" data-syn-theme="studio">
+  <h1 class="syn-heading">Dashboard</h1>
+  <p class="syn-muted">Welcome back.</p>
+</main>
+```
+
+Syntyr does not implement form submissions, state management, CRUD, authorization, chart rendering or advanced keyboard widget behavior. Implement those in the host application and verify browser accessibility.
+
+For instructions on using the published release with coding agents, consult the [version-aware quickstart](https://syntyr-css.pages.dev/docs/ai-quickstart.md), but ignore any sections explicitly labeled unreleased or source-only. The [main index](https://syntyr-css.pages.dev/llms.txt) points to current source-candidate documentation, not this release's immutable API.
