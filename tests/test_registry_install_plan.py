@@ -1,4 +1,5 @@
 """An optional local installation planner must be safe without a Node runtime."""
+import errno
 import json
 import os
 from pathlib import Path
@@ -209,6 +210,27 @@ class RegistryInstallPlanTests(unittest.TestCase):
                 with self.assertRaisesRegex(RegistryError, "Concurrent installation conflict"):
                     apply_install(plan, project)
             self.assertEqual(target.read_bytes(), b"customer replacement")
+            self.assertFalse(list(project.glob(".syntyr-stage-*")))
+
+    def test_cross_filesystem_publish_explains_failure_and_keeps_complete_assets(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            project = Path(tmp)
+            plan = plan_install("settings-form", project)
+            first, *_, last = plan["files"]
+            original_link = os.link
+
+            def reject_cross_filesystem_link(source, destination, **kwargs):
+                if destination == project / last["path"]:
+                    raise OSError(errno.EXDEV, os.strerror(errno.EXDEV))
+                return original_link(source, destination, **kwargs)
+
+            with patch("scripts.registry_install.os.link", reject_cross_filesystem_link):
+                with self.assertRaisesRegex(RegistryError, "share the project staging filesystem") as raised:
+                    apply_install(plan, project)
+
+            self.assertIn(last["path"], str(raised.exception))
+            self.assertEqual((project / first["path"]).read_bytes(), first["_content"].encode("utf-8"))
+            self.assertFalse((project / last["path"]).exists())
             self.assertFalse(list(project.glob(".syntyr-stage-*")))
 
     def test_committed_install_file_is_never_deleted_on_late_failure(self):

@@ -41,6 +41,10 @@ paths, statuses (`create`, `identical`, `conflict`), byte counts, and SHA-256
 digests, not file contents. It also works with the dry-run and `--apply`
 commands for local agents and CI checks.
 
+<!-- coderabbit-ai-generated:v1 -->
+
+<!-- coderabbit-ai-generated-section:v1:1b31530227404a94177786a3fcb96bac9705a6ad62f3ac8bdab2c903a814f58c -->
+
 The script refuses incompatible versions, mismatched hashes, untrusted
 registry URLs, unsafe/symlinked paths, and changed existing files. It never
 executes installed markup or installs JavaScript dependencies. Re-running an
@@ -51,13 +55,20 @@ If a later file fails, earlier complete files **remain in place**: deleting
 them could destroy concurrent edits or replacements. Run --verify --json
 to locate missing files and retry --apply to fill gaps without overwriting
 customer changes. Staged temporary files are cleaned up; empty destination
-directories may remain. This is **not** an atomic multi-file transaction, and
-filesystems that disallow hard links fail closed rather than copying partial
-files. Previously existing identical customer files are never removed.
+directories may remain. This is **not** an atomic multi-file transaction.
+Previously existing identical customer files are never removed.
 The helper intentionally does **not** offer a force-overwrite mode; manage
 customization and upgrades through your own source control. Syntyr still
 works by copying a prebuilt CSS file directly, without Python in the
 consuming application.
+
+The project root must be writable for staging. Each new file's destination
+must be on the same mount as staging, and the filesystem must support hard
+links. If publication fails across mounts, put the destination on the same
+mount as the project root before retrying. The installer never falls back to
+copying partial files.
+
+<!-- /coderabbit-ai-generated:v1 -->
 
 For reproducible developer-only checks (without shipping a browser runtime),
 run `node tests/registry_form_workflows_browser.cjs` with

@@ -6,6 +6,7 @@ Only the checked-in prerelease registry matching VERSION is supported.
 from __future__ import annotations
 
 import argparse
+import errno
 import hashlib
 import json
 import os
@@ -163,6 +164,14 @@ def apply_install(plan: dict, project: Path) -> None:
                 os.link(temporary, target, follow_symlinks=False)
             except FileExistsError as error:
                 raise RegistryError("Concurrent installation conflict: " + entry["path"]) from error
+            except OSError as error:
+                if error.errno != errno.EXDEV:
+                    raise
+                raise RegistryError(
+                    "Cannot publish " + entry["path"]
+                    + ": hard links require the destination to share the project staging filesystem"
+                    + " (check for a separate mount)"
+                ) from error
 
 
 def main() -> int:
