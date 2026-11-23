@@ -315,6 +315,8 @@ For native platform integration, see the [browser API compatibility and progress
 
 ## Development and verification
 
+Use Python 3.11 or later to run the full unit test suite.
+
 ```sh
 python3 scripts/build.py
 python3 scripts/build.py --check
@@ -351,7 +353,7 @@ python3 scripts/check_merge_candidate.py --base FETCH_HEAD
 
 The test checks CSS, editor API metadata, consolidated agent documentation,
 Python contracts, Cloudflare allowlisted assets, and release packaging. It
-leaves the source branch unchanged and requires only Python 3 and Git.
+leaves the source branch unchanged and requires Python 3.11 or later and Git.
 
 **Race boundary:** A passing check proves compatibility with the specific
 base SHA it fetched. It does not protect against another PR landing afterward.
