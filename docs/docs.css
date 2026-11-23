@@ -103,6 +103,7 @@
   .docs-prose :is(ul, ol) { padding-inline-start: 1.6rem; }
   .docs-prose li { margin-block: .3rem; }
   .docs-prose li > :first-child { margin-top: .2rem; }
+  .docs-prose li > :is(ul, ol) { margin-block: .45rem; }
   .docs-prose a { text-decoration: underline; text-underline-offset: .16em; }
   .docs-prose :not(pre) > code { font: .88em/1.4 var(--syn-mono); background: var(--syn-surface-hi); padding: .15em .32em; border-radius: .2rem; overflow-wrap: anywhere; }
   .docs-prose pre { background: #0c1722; color: #e4f2f7; border: 1px solid #40526a; border-radius: .5rem; padding: 1.2rem; line-height: 1.55; font-size: .875rem; overflow-x: auto; tab-size: 2; }

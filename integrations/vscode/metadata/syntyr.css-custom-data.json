@@ -358,6 +358,10 @@
       "description": "Line design token from tokens.css; override in the appropriate Syntyr scope when needed."
     },
     {
+      "name": "--syn-list-item-gap",
+      "description": "List item gap design token from components/typography.css; override in the appropriate Syntyr scope when needed."
+    },
+    {
       "name": "--syn-media-card-ratio",
       "description": "Media card ratio design token from media.css; override in the appropriate Syntyr scope when needed."
     },

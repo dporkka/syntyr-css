@@ -866,8 +866,20 @@
           "description": "Lead paragraph typography beneath a heading."
         },
         {
+          "name": "syn-list",
+          "description": "Scoped native bullet or numbered list for core-only consumers."
+        },
+        {
+          "name": "syn-list--accent",
+          "description": "Accent-colored top-level list markers; native numbering preserved."
+        },
+        {
+          "name": "syn-list--compact",
+          "description": "Reduced vertical item rhythm for native list content."
+        },
+        {
           "name": "syn-list-group",
-          "description": "Grouped list presentation; preserve semantic list markup."
+          "description": "Grouped markerless navigation or collection list; keep list semantics."
         },
         {
           "name": "syn-list-row",

@@ -92,6 +92,20 @@
       "notes": "Choose native headings and accessible labels."
     },
     {
+      "name": "Content list",
+      "module": "syntyr.core.css",
+      "elements": [
+        "ul",
+        "ol"
+      ],
+      "classes": [
+        "syn-list",
+        "syn-list--compact",
+        "syn-list--accent"
+      ],
+      "notes": "Native list markers and order preserved. Use in core-only scopes; semantic mode handles unclassed lists."
+    },
+    {
       "name": "Form fields",
       "module": "syntyr.core.css",
       "elements": [
