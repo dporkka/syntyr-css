@@ -13,13 +13,14 @@ From the repository root, with Python 3 and **Hugo 0.170.0** installed:
 
 ```sh
 python3 scripts/build.py
-python3 scripts/build_hugo_cms_starter.py --hugo hugo --output /tmp/syntyr-hugo-site
+python3 scripts/build_hugo_cms_starter.py --hugo hugo --output /tmp/syntyr-hugo
 python3 -m http.server 8080 --directory /tmp
 ```
 
 The fixture intentionally uses `https://example.com/syntyr-hugo/` to test
-non-root deployments. To preview it properly, serve the **output directory**
-under `/syntyr-hugo/` (or copy the site to a project hosted at that path).
+non-root deployments. The command above places the output under
+`/tmp/syntyr-hugo/`, so open `http://localhost:8080/syntyr-hugo/`.
+For production, serve the output at the chosen deployment prefix.
 The builder verifies generated HTML, self-hosted stylesheets, correct
 deployment-base links, and absence of browser JavaScript.
 

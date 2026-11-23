@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Status: optional MIT Syntyr starter for the unreleased alpha.5 source candidate . It does not install a CMS into the core library or claim that the public…">
-  <meta name="syntyr-source-sha256" content="a8404a4190138cfcbbd0b0ee1b2351bcfc54c1cf39bb3d2f0eaa64bd282127bd">
+  <meta name="syntyr-source-sha256" content="ddd7fbbac9a07a3c13cd2a98f56ba86e0b3cb7bffe98b89246ccb26d29db8d9f">
   <meta name="theme-color" content="#f5f7fb">
   <title>Framework-independent CMS integration — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/cms-integration">
@@ -47,6 +47,12 @@ covering Hero, Features, Pricing, FAQ and CTA blocks.</li>
 editorial pull-request workflow.</li>
 <li>An alternative <a href="https://github.com/dporkka/syntyr-css/blob/main/examples/cms-starter/.pages.yml">Pages CMS config</a> with
 repeatable typed blocks editing the very same JSON file.</li>
+<li>An <a href="https://github.com/dporkka/syntyr-css/tree/main/examples/cms-starter/decap/">optional Decap CMS configuration</a>
+targeting the <strong>same</strong> JSON section types with a pinned 3.18.0 editor
+bundle (admin-only, opt-in; requires external GitHub auth setup).</li>
+<li>A <a href="https://github.com/dporkka/syntyr-css/tree/main/examples/hugo-cms/">runnable Hugo adapter</a>
+that stages validated JSON and emits Hugo-rendered HTML/CSS under a
+project-subpath deployment without a client runtime.</li>
 <li>A <a href="https://github.com/dporkka/syntyr-css/blob/main/scripts/render_cms_starter.py">Python standard-library static renderer</a>
 that emits accessible HTML, escapes user content, validates URLs and ships
 no JavaScript in the site pages.</li>
@@ -66,8 +72,32 @@ example later. It is intentionally <strong>not</strong> included in this low-mai
 starter: that would add a service, database, permissions and operational upkeep
 to a problem solvable with Git and static files.</p>
 <p>Blocks require unique stable lowercase <code>id</code> slugs; reordering sections does not change link targets. The first section must be a hero; later hero blocks use level-two headings.</p>
+<h2 id="optional-decap-and-hugo-workflow">Optional Decap and Hugo workflow</h2>
+<p>To use Decap instead of Sveltia, copy <code>examples/cms-starter/decap/config.yml</code>
+and <code>index.html</code> to the <strong>standalone site's</strong> <code>admin/</code> directory. Replace
+<code>REPLACE_OWNER/REPLACE_REPO</code>, configure a GitHub OAuth service as required
+by your hosting environment, and route editorial changes through PR review.
+Decap does not ship with public pages, and the optional CDN-hosted editor
+requires a separately reviewed CSP and asset supply-chain policy. Never
+commit authentication secrets.</p>
+<p>For Hugo, run <code>python3 scripts/build_hugo_cms_starter.py --output &lt;output&gt;</code>
+after building local CSS, with the Hugo executable installed. The builder
+validates the JSON <strong>before</strong> passing it to Hugo. See the
+<a href="https://github.com/dporkka/syntyr-css/blob/main/examples/hugo-cms/README.md">Hugo fixture</a> for custom base URLs and
+deployment caveats. The editor must be connected to a Git-to-deploy pipeline;
+saving in the CMS alone does not publish changes.</p>
         </article>
-
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+<a class="docs-article-toc-link docs-article-toc-2" href="#optional-decap-and-hugo-workflow">Optional Decap and Hugo workflow</a>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#optional-decap-and-hugo-workflow">Optional Decap and Hugo workflow</a>
+            </nav>
+          </details>
+        </aside>
       </div>
       <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="cms-integration.md">Markdown source</a></nav>
     </main>

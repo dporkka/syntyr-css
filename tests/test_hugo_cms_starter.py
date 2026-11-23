@@ -75,6 +75,17 @@ class HugoCmsStarterTests(unittest.TestCase):
             self.assertEqual(html.count("<h1 "), 1)
             self.assertNotIn("<script", html.lower())
 
+    def test_real_hugo_build_custom_base_path(self):
+        hugo = os.environ.get("HUGO_BIN") or shutil.which("hugo")
+        if not hugo:
+            self.skipTest("Hugo not installed; set HUGO_BIN to exercise real output")
+        with TemporaryDirectory() as temp:
+            output = Path(temp) / "public"
+            self.assertEqual(build(output, hugo=hugo, base_url="https://example.org/client/site/"), 1)
+            html = (output / "index.html").read_text()
+            self.assertIn("href=/client/site/assets/syntyr.core.css", html)
+            self.assertIn("href=/client/site/#section-features", html)
+
     def test_real_hugo_autoescapes_untrusted_but_valid_text(self):
         hugo = os.environ.get("HUGO_BIN") or shutil.which("hugo")
         if not hugo:
