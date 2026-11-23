@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Decision record reviewed November 23, 2026. This is an orientation page, not a live CI status board, a legal finding, or a release approval. Evidence…">
-  <meta name="syntyr-source-sha256" content="af1c8a5eede4ba74048b9c545c45a68326d8cae8e3b8388ed1b19f95c280a61d">
+  <meta name="syntyr-source-sha256" content="becc4dd72cb5a45829cc0d15f63e8656629d066849d43e40d5557763a925dd3f">
   <meta name="theme-color" content="#f5f7fb">
   <title>Syntyr release and commercial readiness — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/launch-status">
@@ -48,7 +48,7 @@
 <tbody>
 <tr>
 <td>Free CSS v0.3.0-alpha.4</td>
-<td><a href="https://github.com/dporkka/syntyr-css/releases/tag/v0.3.0-alpha.4">Published GitHub prerelease</a> with an immutable CDN snapshot</td>
+<td><a href="https://github.com/dporkka/syntyr-css/releases/tag/v0.3.0-alpha.4">Published immutable GitHub prerelease</a></td>
 <td>Download, pin and self-host the versioned CSS. MIT terms apply.</td>
 </tr>
 <tr>
@@ -111,12 +111,12 @@
 </table>
 <p><strong>Fail closed:</strong> Do not freeze the alpha.5 CDN directory, tag/publish it, or claim accessibility certification just because a test suite passes. The package-manager flow has a separate ownership and tarball audit in <a href="package-managers.html">package-managers.md</a>.</p>
 <h2 id="commercial-readiness-is-independent">Commercial readiness is independent</h2>
-<p>The public <a href="https://github.com/dporkka/syntyr-css/blob/main/business/commercial-launch-gates.md">commercial launch gates</a> cover license rights, manual accessibility, tax/refund/support terms, verified checkout, entitlement-controlled delivery, and end-to-end purchase/refund evidence. The private kit tracks its readiness separately. No order or buyer commitment should be inferred from a demo, a mailto click, a screenshot or GitHub engagement.</p>
+<p>The <a href="https://github.com/dporkka/syntyr-css/blob/main/business/commercial-launch-gates.md">commercial launch gates</a> and private kit's <a href="https://github.com/dporkka/syntyr-console-kit/issues/51">commercial readiness issue #51</a> cover license rights, manual accessibility, tax/refund/support terms, verified checkout, entitlement-controlled delivery, and end-to-end purchase/refund evidence. No order or buyer commitment should be inferred from a demo, a mailto click, a screenshot or GitHub engagement.</p>
 <p><strong>Next commercial experiment:</strong> ten qualified developer/agency conversations with code-level integration feedback and documented, separate purchase intent; use the <a href="https://github.com/dporkka/syntyr-css/blob/main/business/design-partner-pilot.md">design-partner research plan</a>. These interviews guide investment but do not replace legal, payment or release requirements.</p>
 <h2 id="change-control-sequence">Change-control sequence</h2>
 <ol>
 <li>Prioritize overlap removal and low-risk work in <a href="https://github.com/dporkka/syntyr-css/pulls">open pull requests</a> before selecting one release-candidate SHA. Do not merge a stale stacked branch merely because similar functionality already exists on main.</li>
-<li>On that SHA, run <code>python3 -m unittest discover -s tests -q</code> and <code>python3 scripts/build.py --check</code>. Build the site with <code>python3 scripts/build_cloudflare_site.py</code>, verify it with <code>python3 scripts/build_cloudflare_site.py --check</code>, then run the full browser/reflow/axe matrix.</li>
+<li>Run <code>python3 -m unittest discover -s tests -q</code>, <code>python3 scripts/build.py --check</code>, then run <code>python3 scripts/build_cloudflare_site.py</code> to regenerate the public site and <code>python3 scripts/build_cloudflare_site.py --check</code> on the <strong>same SHA</strong>, followed by the full browser/reflow/axe matrix.</li>
 <li>Complete all manual accessibility and brand reviews; store their evidence separately with the exact SHA. A historical numerical result is <strong>never</strong> a release-pass flag.</li>
 <li>Follow <a href="release-freeze.html">release-freeze.md</a> and verify the frozen assets and HTTP cache/content hashes before public prerelease announcement.</li>
 <li>Only then evaluate npm distribution; paid products must separately clear their own commercial gates.</li>
