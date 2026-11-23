@@ -21,6 +21,14 @@ class ListMarkup(HTMLParser):
 
 
 class ListRhythmContract(unittest.TestCase):
+    def css_between(self, css, start, end):
+        start_index = css.find(start)
+        end_index = css.find(end)
+        self.assertNotEqual(start_index, -1, f"Missing CSS start anchor: {start!r}")
+        self.assertNotEqual(end_index, -1, f"Missing CSS end anchor: {end!r}")
+        self.assertGreater(end_index, start_index, f"CSS end anchor {end!r} must follow {start!r}")
+        return css[start_index:end_index]
+
     def test_opt_in_core_list_preserves_native_markers_and_uses_logical_indent(self):
         css = source("src/components/typography.css")
         self.assertIn("&.syn-list {", css)
@@ -41,13 +49,14 @@ class ListRhythmContract(unittest.TestCase):
         self.assertIn("ol:not([class])", css)
         self.assertIn("padding-inline-start: 1.5rem", css)
         self.assertIn("Nested lists", css)
-        self.assertNotIn("list-style: none", css[css.index("/* Ordinary document content"):css.index("dl:not([class])")])
+        list_css = self.css_between(css, "/* Ordinary document content", "dl:not([class])")
+        self.assertNotIn("list-style: none", list_css)
 
     def test_feature_list_uses_readable_foreground_and_custom_gap(self):
         css = source("src/components/patterns.css")
         self.assertIn("--syn-feature-list-gap", css)
-        self.assertIn("&.syn-feature-list li::marker", css)
-        self.assertIn("color: var(--syn-text)", css[css.index("&.syn-feature-list {"):css.index("&.syn-feature-list li::marker")])
+        feature_css = self.css_between(css, "&.syn-feature-list {", "&.syn-feature-list li::marker")
+        self.assertIn("color: var(--syn-text)", feature_css)
 
     def test_grouped_rows_can_override_density_without_new_component(self):
         css = source("src/components/patterns.css")

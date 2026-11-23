@@ -129,7 +129,7 @@ screen-reader list semantics. `.syn-list--compact` reduces vertical item gaps
 and `.syn-list--accent` colors the top-level markers; both are optional.
 Set `--syn-list-item-gap` locally to override the item rhythm.
 
-~~~html
+```html
 <ul class="syn-list syn-list--accent">
   <li>Accessible headings</li>
   <li>Native nested lists
@@ -139,7 +139,7 @@ Set `--syn-list-item-gap` locally to override the item rhythm.
 <ol class="syn-list syn-list--compact" start="9">
   <li>Review</li><li>Publish</li>
 </ol>
-~~~
+```
 
 `.syn-feature-list` is a legible, accent-marked list intended for pricing and
 features; override its row gap with `--syn-feature-list-gap`. The distinct
