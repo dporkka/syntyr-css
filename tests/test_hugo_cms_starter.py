@@ -1,0 +1,105 @@
+"""Hugo must consume the same validated CMS JSON without runtime dependencies."""
+import json
+import os
+import re
+import shutil
+from pathlib import Path
+from tempfile import TemporaryDirectory
+import unittest
+
+from scripts.build_hugo_cms_starter import build, stage_site
+
+ROOT = Path(__file__).resolve().parents[1]
+CMS = ROOT / "examples/cms-starter"
+
+
+class HugoCmsStarterTests(unittest.TestCase):
+    def test_stage_uses_portable_page_contract_and_pinned_local_css(self):
+        with TemporaryDirectory() as temp:
+            site = Path(temp) / "site"
+            stage_site(site)
+            source = json.loads((CMS / "content/pages/home.json").read_text())
+            generated = json.loads((site / "data/home.json").read_text())
+            self.assertEqual(generated, source)
+            self.assertTrue((site / "static/assets/syntyr.core.css").exists())
+            self.assertTrue((site / "static/assets/syntyr.recipes.css").exists())
+            self.assertFalse((site / "static/admin").exists())
+            self.assertIn("/syntyr-hugo/", (site / "hugo.toml").read_text())
+
+    def test_stage_supports_custom_deployment_prefix(self):
+        with TemporaryDirectory() as temp:
+            site = Path(temp) / "site"
+            stage_site(site, base_url="https://example.org/agency/")
+            self.assertIn("https://example.org/agency/", (site / "hugo.toml").read_text())
+
+    def test_stage_rejects_malformed_base_urls(self):
+        for bad in ("javascript:alert(1)", "https://example.org/a/../b/",
+                    "https://example.org/path/?injected=1", "https://example.org/path/\nkey='unsafe'"):
+            with self.subTest(bad=bad), TemporaryDirectory() as temp:
+                site = Path(temp) / "site"
+                with self.assertRaises(ValueError):
+                    stage_site(site, base_url=bad)
+                self.assertFalse(site.exists())
+
+    def test_stage_rejects_unsafe_cms_content_before_writing(self):
+        with TemporaryDirectory() as temp:
+            bad = Path(temp) / "bad.json"
+            data = json.loads((CMS / "content/pages/home.json").read_text())
+            data["sections"][0]["button"]["url"] = "javascript:alert(1)"
+            bad.write_text(json.dumps(data))
+            site = Path(temp) / "site"
+            with self.assertRaisesRegex(ValueError, "URL"):
+                stage_site(site, content_path=bad)
+            self.assertFalse(site.exists())
+
+    def test_stage_rejects_duplicate_section_anchors(self):
+        with TemporaryDirectory() as temp:
+            bad = Path(temp) / "bad.json"
+            data = json.loads((CMS / "content/pages/home.json").read_text())
+            data["sections"][1]["id"] = data["sections"][0]["id"]
+            bad.write_text(json.dumps(data))
+            with self.assertRaisesRegex(ValueError, "duplicate"):
+                stage_site(Path(temp) / "site", content_path=bad)
+
+    def test_real_hugo_build_resolves_css_and_section_links(self):
+        hugo = os.environ.get("HUGO_BIN") or shutil.which("hugo")
+        if not hugo:
+            self.skipTest("Hugo not installed; set HUGO_BIN to exercise real output")
+        with TemporaryDirectory() as temp:
+            output = Path(temp) / "public"
+            self.assertEqual(build(output, hugo=hugo), 1)
+            html = (output / "index.html").read_text()
+            self.assertRegex(html, r'href="?/syntyr-hugo/assets/syntyr\.core\.css"?(?:[ >])')
+            self.assertIn("href=/syntyr-hugo/#section-features", html)
+            self.assertIn("id=section-pricing", html)
+            self.assertEqual(html.count("<h1 "), 1)
+            self.assertNotIn("<script", html.lower())
+
+    def test_real_hugo_autoescapes_untrusted_but_valid_text(self):
+        hugo = os.environ.get("HUGO_BIN") or shutil.which("hugo")
+        if not hugo:
+            self.skipTest("Hugo not installed; set HUGO_BIN to exercise real output")
+        with TemporaryDirectory() as temp:
+            data = json.loads((CMS / "content/pages/home.json").read_text())
+            data["sections"][0]["heading"] = '<img src=x onerror="alert(1)">'
+            input_path = Path(temp) / "page.json"
+            input_path.write_text(json.dumps(data))
+            output = Path(temp) / "public"
+            self.assertEqual(build(output, hugo=hugo, content_path=input_path), 1)
+            html = (output / "index.html").read_text()
+            self.assertNotIn('<img src=x', html)
+            self.assertIn('&lt;img', html)
+
+    def test_hugo_template_covers_all_portable_block_types(self):
+        source = (ROOT / "examples/hugo-cms/layouts/home.html").read_text()
+        self.assertIn("hugo.Data.home", source)
+        for kind in ("hero", "features", "pricing", "faq", "cta"):
+            with self.subTest(kind=kind):
+                self.assertIn('eq $block.type "' + kind + '"', source)
+        self.assertIn("relURL", source)
+        self.assertIn("syn-root", source)
+        self.assertNotIn("<script", source.lower())
+
+
+if __name__ == "__main__":
+    unittest.main()
