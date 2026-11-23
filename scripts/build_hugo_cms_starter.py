@@ -60,16 +60,26 @@ def stage_site(destination: Path, *, content_path: Path = CONTENT, css_root: Pat
 
 def build(destination: Path, *, hugo: str = "hugo", content_path: Path = CONTENT,
           css_root: Path = CSS_ROOT, base_url: str = DEFAULT_BASE_URL) -> int:
-    """Build in a throwaway staging directory, then inspect actual HTML output."""
-    destination = Path(destination).resolve()
+    """Move a verified build into a fresh or empty output directory."""
+    destination = Path(destination).absolute()
+    if destination.is_symlink() or (destination.exists() and
+            (not destination.is_dir() or any(destination.iterdir()))):
+        raise ValueError(f"Expected a missing or empty output directory: {destination}")
+
     with TemporaryDirectory(prefix="syntyr-hugo-") as temp:
         source = Path(temp) / "site"
         stage_site(source, content_path=content_path, css_root=css_root, base_url=base_url)
-        subprocess.run(
-            [hugo, "--source", str(source), "--destination", str(destination), "--minify"],
-            check=True,
-        )
-    return verify_static_site(destination, base_path=_base_path(base_url))
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        with TemporaryDirectory(prefix=".syntyr-hugo-", dir=destination.parent) as output_temp:
+            candidate = Path(output_temp) / "public"
+            subprocess.run(
+                [hugo, "--source", str(source), "--destination", str(candidate), "--minify"],
+                check=True,
+            )
+            pages = verify_static_site(candidate, base_path=_base_path(base_url))
+            # A same-filesystem rename does not replace a nonempty destination.
+            candidate.replace(destination)
+            return pages
 
 
 if __name__ == "__main__":
@@ -77,7 +87,7 @@ if __name__ == "__main__":
     parser.add_argument("--hugo", default="hugo", help="Hugo executable")
     parser.add_argument("--content", type=Path, default=CONTENT, help="CMS JSON input")
     parser.add_argument("--css-root", type=Path, default=CSS_ROOT, help="Built CSS directory")
-    parser.add_argument("--output", type=Path, required=True, help="Static output directory")
+    parser.add_argument("--output", type=Path, required=True, help="Missing or empty static output directory")
     parser.add_argument("--base-url", default=DEFAULT_BASE_URL, help="Deployment base URL with trailing /")
     args = parser.parse_args()
     pages = build(args.output, hugo=args.hugo, content_path=args.content, css_root=args.css_root, base_url=args.base_url)

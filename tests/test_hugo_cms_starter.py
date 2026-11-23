@@ -4,9 +4,11 @@ import json
 import os
 import re
 import shutil
+import subprocess
 from pathlib import Path
 from tempfile import TemporaryDirectory
 import unittest
+from unittest.mock import patch
 
 from scripts.build_hugo_cms_starter import build, stage_site
 
@@ -64,12 +66,48 @@ class HugoCmsStarterTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "duplicate"):
                 stage_site(Path(temp) / "site", content_path=bad)
 
+    def test_failed_build_leaves_output_untouched(self):
+        for render_fails in (False, True):
+            for existing in (False, True):
+                with self.subTest(render_fails=render_fails, existing=existing), TemporaryDirectory() as temp:
+                    output = Path(temp) / "public"
+                    if existing:
+                        output.mkdir()
+
+                    def render(command, *, check):
+                        candidate = Path(command[command.index("--destination") + 1])
+                        candidate.mkdir(exist_ok=True)
+                        (candidate / "index.html").write_text("<html>Unverified content</html>")
+                        if render_fails:
+                            raise subprocess.CalledProcessError(1, command)
+
+                    error = subprocess.CalledProcessError if render_fails else AssertionError
+                    with patch("scripts.build_hugo_cms_starter.subprocess.run", side_effect=render):
+                        with self.assertRaises(error):
+                            build(output)
+                    self.assertEqual(output.exists(), existing)
+                    self.assertEqual(list(Path(temp).rglob("index.html")), [])
+                    self.assertEqual(list(Path(temp).iterdir()), [output] if existing else [])
+
+    def test_build_refuses_to_overwrite_existing_release(self):
+        with TemporaryDirectory() as temp:
+            output = Path(temp) / "public"
+            output.mkdir()
+            prior_page = output / "index.html"
+            prior_page.write_text("Previous release")
+            with patch("scripts.build_hugo_cms_starter.subprocess.run") as render:
+                with self.assertRaisesRegex(ValueError, "missing or empty"):
+                    build(output)
+                render.assert_not_called()
+            self.assertEqual(prior_page.read_text(), "Previous release")
+
     def test_real_hugo_build_resolves_css_and_section_links(self):
         hugo = os.environ.get("HUGO_BIN") or shutil.which("hugo")
         if not hugo:
             self.skipTest("Hugo not installed; set HUGO_BIN to exercise real output")
         with TemporaryDirectory() as temp:
             output = Path(temp) / "public"
+            output.mkdir()
             self.assertEqual(build(output, hugo=hugo), 1)
             html = (output / "index.html").read_text()
             self.assertRegex(html, r'href="?/syntyr-hugo/assets/syntyr\.core\.css"?(?:[ >])')

@@ -20,9 +20,13 @@ python3 -m http.server 8080 --directory /tmp
 The fixture intentionally uses `https://example.com/syntyr-hugo/` to test
 non-root deployments. The command above places the output under
 `/tmp/syntyr-hugo/`, so open `http://localhost:8080/syntyr-hugo/`.
-For production, serve the output at the chosen deployment prefix.
-The builder verifies generated HTML, self-hosted stylesheets, correct
-deployment-base links, and absence of browser JavaScript.
+Use a new or empty output directory for each build. Hugo renders into a
+private temporary directory. The builder verifies the generated HTML,
+self-hosted stylesheets, deployment-base links, and absence of browser
+JavaScript before moving the finished site into the requested directory.
+For production, configure your hosting pipeline to switch to the new release
+at the chosen deployment prefix only after the build succeeds. Keep the
+previous release directory if you need to roll back.
 
 For a different deployment prefix, pass your actual public base URL:
 
