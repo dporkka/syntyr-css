@@ -5512,7 +5512,7 @@ Source candidate only (alpha.5); not available in published alpha.4. Load core, 
 <link rel="stylesheet" href="dist/syntyr.ascii.css">
 ```
 
-Or import `@syntyr/css/ascii.css` alongside core and symbols. The selective build accepts `--modules symbols,ascii`. The all bundle includes both; core and cinematic preset remain unchanged.
+For a plain HTML site, copy the installed CSS files from the package’s `node_modules/@syntyr/css/dist/` directory into the served `dist/` directory (or adjust the URLs to your public asset path). npm installation does not serve files automatically. In a bundler, import the package CSS instead. Or import `@syntyr/css/ascii.css` alongside core and symbols. The selective build accepts `--modules symbols,ascii`. The all bundle includes both; core and cinematic preset remain unchanged.
 
 [Open the ASCII effects lab](../examples/ascii.html) for original, copyable character art. CSS only styles literal DOM text; it does not generate random characters, calculate a chart, perform real typing, decode text, or convert media. Use existing symbols for geometry and native progress or textual equivalents for status.
 
@@ -5520,7 +5520,7 @@ Or import `@syntyr/css/ascii.css` alongside core and symbols. The selective buil
 <div class="syn-root" data-syn-theme="grid">
   <p>System online</p>
   <pre class="syn-ascii syn-ascii--compact syn-ascii--phosphor syn-ascii--scan"
-       aria-hidden="true">[#####.....] 50%</pre>
+       aria-hidden="true" tabindex="-1">[#####.....] 50%</pre>
   <p>Example completion: 50%</p>
 </div>
 ```

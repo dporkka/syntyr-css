@@ -35,3 +35,18 @@ class AsciiEffectsContract(unittest.TestCase):
         self.assertIn("syntyr.ascii.css", gallery)
         self.assertIn("aria-hidden=\"true\"", gallery)
         self.assertIn("../examples/ascii.html", (ROOT / "docs/index.html").read_text())
+
+    def test_decorative_scroll_art_is_not_in_sequential_tab_order(self):
+        from html.parser import HTMLParser
+        class Inspect(HTMLParser):
+            def __init__(self):
+                super().__init__()
+                self.art = []
+            def handle_starttag(self, tag, attrs):
+                a = dict(attrs)
+                if "syn-ascii" in a.get("class", "").split() and a.get("aria-hidden") == "true":
+                    self.art.append(a)
+        parser = Inspect()
+        parser.feed((ROOT / "examples/ascii.html").read_text())
+        self.assertTrue(parser.art)
+        self.assertTrue(all(a.get("tabindex") == "-1" for a in parser.art))
