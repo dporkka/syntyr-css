@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "impact-narrative",
+  "type": "registry:item",
+  "title": "Metrics with explanatory narrative",
+  "description": "Contextualized illustrative metrics paired with interpretation and source guidance.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://syntyr-css.pages.dev/registry/r/core.json"
+  ],
+  "files": [
+    {
+      "path": "blocks/snippets/impact-narrative.html",
+      "type": "registry:file",
+      "target": "~/syntyr/blocks/impact-narrative.html",
+      "content": "<section class=\"syn-root syn-region syn-stack\" data-syn-theme=\"studio\" aria-labelledby=\"syn-layout-impact-heading\">\n  <p class=\"syn-eyebrow\">MEASURING IMPACT</p>\n  <h2 class=\"syn-heading\" id=\"syn-layout-impact-heading\">Put numbers next to their meaning.</h2>\n  <div class=\"syn-sidecar\">\n    <div class=\"syn-stack\">\n      <h3 class=\"syn-heading\">From observation to a useful decision</h3>\n      <p>Strong reporting combines a small set of measures with the context needed to interpret them. Explain the source, the time period and what happens next.</p>\n      <p class=\"syn-muted\">The figures in this demo are hypothetical; they are not customer results or product performance claims.</p>\n      <a class=\"syn-button syn-button--outline\" href=\"/methods\">Learn about measurement</a>\n    </div>\n    <div class=\"syn-panel syn-stack\">\n      <div class=\"syn-grid\" style=\"--syn-grid-min:9rem\">\n        <div class=\"syn-stat\"><p class=\"syn-stat-label\">Example tasks</p><p class=\"syn-stat-value\">24</p></div>\n        <div class=\"syn-stat\"><p class=\"syn-stat-label\">Example reviewed</p><p class=\"syn-stat-value\">18</p></div>\n        <div class=\"syn-stat\"><p class=\"syn-stat-label\">Example remaining</p><p class=\"syn-stat-value\">6</p></div>\n      </div>\n      <p class=\"syn-caption\">Illustrative numbers only. Replace with sourced, dated data.</p>\n    </div>\n  </div>\n</section>\n"
+    },
+    {
+      "path": "LICENSE",
+      "type": "registry:file",
+      "target": "~/syntyr/LICENSE",
+      "content": "MIT License\n\nCopyright (c) 2026 Syntyr CSS contributors\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n"
+    }
+  ],
+  "meta": {
+    "syntyrVersion": "0.3.0-alpha.5",
+    "source": "MIT source candidate",
+    "runtimeJavaScript": false,
+    "fileDigests": {
+      "~/syntyr/blocks/impact-narrative.html": "2d3c7630561a2bc0d947f6bcff9f2cfaa9135d6f7abcf4db6f425c8e5f9ac547",
+      "~/syntyr/LICENSE": "42f56369ac06362dbfe433d2d50b178bf74c369a55ea22337ab40fd9433521bf"
+    }
+  },
+  "docs": "Experimental source-candidate asset. Review exact version, HTML routes, keyboard behavior and integration before production use."
+}
