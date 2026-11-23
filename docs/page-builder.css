@@ -151,3 +151,11 @@
 .builder-image-control input[type="file"] { max-inline-size: 100%; }
 .builder-image-control code { overflow-wrap: anywhere; }
 .builder-image-control .syn-caption { display: block; }
+
+/* Optional multi-page authoring is isolated from the exported runtime. */
+.builder-site-row {display:flex;flex-wrap:wrap;gap:1rem;align-items:end;margin-block:1rem}
+.builder-site-row > .syn-label {flex:1 1 12rem}
+.builder-site-layout {min-width:min(100%,17rem);flex:1 1 17rem;border:1px solid var(--syn-border, #6665);border-radius:.65rem;padding:1rem;display:grid;gap:.65rem}
+.builder-site-layout legend {font-weight:650;padding-inline:.35rem}
+.builder-site-layout .syn-label {display:grid;gap:.3rem}
+.builder-site-layout input:disabled {opacity:.55}

@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { createStoredZip } from "../docs/page-builder-zip.mjs";
+import { createStoredZip, SITE_ZIP_MAX_ENTRIES } from "../docs/page-builder-zip.mjs";
 
 const read = bytes => new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
 function entries(zip) {
@@ -44,4 +44,14 @@ test("ZIP exporter fails closed for dangerous paths, duplicates and oversized in
   assert.throws(() => createStoredZip([
     {name:"index.html",content:"x".repeat(20)}
   ], {maxBytes: 10}), /large|limit/i);
+});
+
+test("keeps standalone and multi-page ZIP entry counts bounded", () => {
+  const files = Array.from({length: SITE_ZIP_MAX_ENTRIES + 1}, (_, n) => ({
+    name: "assets/gallery-" + n + ".svg", content: "<svg/>"
+  }));
+  assert.throws(() => createStoredZip(files.slice(0, 129)), /file count/i);
+  assert.doesNotThrow(() => createStoredZip(files.slice(0, -1), {maxEntries: SITE_ZIP_MAX_ENTRIES}));
+  assert.throws(() => createStoredZip(files, {maxEntries: SITE_ZIP_MAX_ENTRIES}), /file count/i);
+  assert.throws(() => createStoredZip(files, {maxEntries: files.length}), /file count/i);
 });

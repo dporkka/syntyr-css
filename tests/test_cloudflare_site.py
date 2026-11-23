@@ -79,7 +79,7 @@ class CloudflareSiteTests(unittest.TestCase):
                     resolved = target / 'index.html' if target.is_dir() else target
                     self.assertTrue(resolved.is_file(), (page, url))
             self.assertTrue((out / "docs/theme-editor.js").is_file())
-            for name in ("page-builder.html", "page-builder.css", "page-builder.js", "page-builder-model.mjs", "page-builder-guide.md", "page-builder-guide.html"):
+            for name in ("page-builder.html", "page-builder.css", "page-builder.js", "page-builder-model.mjs", "site-builder-model.mjs", "page-builder-guide.md", "page-builder-guide.html"):
                 self.assertTrue((out / "docs" / name).is_file(), name)
             for name in ("form-builder.html", "form-builder.css", "form-builder.js", "form-builder-model.mjs"):
                 self.assertTrue((out / "docs" / name).is_file(), name)

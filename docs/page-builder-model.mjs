@@ -594,8 +594,9 @@ function renderBlock(block, anchor, assetPrefix, media, preview) {
   }
 }
 
-export function renderSections(page, {previewAssets = false} = {}) {
-  const assetPrefix = previewAssets === true ? "../assets/" : "assets/";
+export function renderSections(page, {previewAssets = false, assetPrefix} = {}) {
+  assetPrefix = assetPrefix ?? (previewAssets === true ? "../assets/" : "assets/");
+  if (!["assets/", "../assets/"].includes(assetPrefix)) throw new Error("Invalid assets path");
   const normalized = parseDocument(page);
   const anchors = new Set();
   return normalized.blocks.map((block) => {
@@ -606,8 +607,21 @@ export function renderSections(page, {previewAssets = false} = {}) {
   }).join("\n");
 }
 
-export function exportHtml(page, {previewAssets = false} = {}) {
+export function exportHtml(page, {
+  previewAssets = false, sharedHeader = null, sharedFooter = null,
+  stylesheetHref = "syntyr.all.css", assetPrefix
+} = {}) {
   const normalized = parseDocument(page);
+  if (!["syntyr.all.css", "../syntyr.all.css"].includes(stylesheetHref))
+    throw new Error("Invalid stylesheet path");
+  assetPrefix = assetPrefix ?? (previewAssets === true ? "../assets/" : "assets/");
+  if (!["assets/", "../assets/"].includes(assetPrefix)) throw new Error("Invalid assets path");
+  function sharedBlock(block, kind) {
+    if (block === null) return "";
+    if (!block || block.type !== kind) throw new Error("Invalid shared " + kind);
+    const checked = parseDocument({...normalized, blocks: [block]}).blocks[0];
+    return renderBlock(checked, "", assetPrefix, normalized.media, previewAssets === true);
+  }
   return [
     "<!doctype html>",
     '<html lang="' + escapeHtml(normalized.language) + '"><head><meta charset="utf-8">',
@@ -615,10 +629,12 @@ export function exportHtml(page, {previewAssets = false} = {}) {
     "<title>" + escapeHtml(normalized.title) + "</title>",
     ...(normalized.description ? ['<meta name="description" content="' +
       escapeHtml(normalized.description) + '">'] : []),
-    '<link rel="stylesheet" href="syntyr.all.css">',
+    '<link rel="stylesheet" href="' + stylesheetHref + '">',
     "</head>",
     '<body class="syn-root syn-page" data-syn-theme="' + escapeHtml(normalized.theme) + '">',
-    '<main class="syn-shell">' + renderSections(normalized, {previewAssets}) + "</main>",
+    sharedBlock(sharedHeader, "header"),
+    '<main class="syn-shell">' + renderSections(normalized, {previewAssets, assetPrefix}) + "</main>",
+    sharedBlock(sharedFooter, "footer"),
     "</body></html>"
   ].join("\n");
 }

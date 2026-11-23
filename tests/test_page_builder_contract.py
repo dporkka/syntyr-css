@@ -12,7 +12,8 @@ class PageBuilderModelTests(unittest.TestCase):
     def test_portable_page_schema_and_export_contract(self):
         result = subprocess.run(
             ["node", "--test", "tests/page_builder_model.test.mjs", "tests/page_builder_gallery.test.mjs",
-             "tests/page_builder_sections.test.mjs", "tests/page_builder_zip.test.mjs"],
+             "tests/page_builder_sections.test.mjs", "tests/page_builder_zip.test.mjs",
+             "tests/site_builder_model.test.mjs"],
             cwd=ROOT, text=True, capture_output=True, timeout=30,
         )
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
