@@ -15,6 +15,7 @@ import {
 } from "./site-builder-model.mjs";
 import { createStoredZip, SITE_ZIP_MAX_ENTRIES } from "./page-builder-zip.mjs";
 import {STARTER_PAGES, createStarterPage} from "./page-builder-starters.mjs";
+import {STARTER_SITE_KITS, createStarterSite} from "./page-builder-site-kits.mjs";
 
 const byId = (id) => document.getElementById(id);
 const palette = byId("builder-palette");
@@ -25,6 +26,8 @@ const sectionSearch = byId("builder-section-search");
 const sectionCategory = byId("builder-section-category");
 const starterSelect = byId("builder-starter");
 const starterButton = byId("builder-apply-starter");
+const siteKitSelect = byId("builder-site-kit-select");
+const siteKitButton = byId("builder-apply-site-kit");
 const outline = byId("builder-outline");
 const inspector = byId("builder-inspector");
 const preview = byId("builder-preview");
@@ -342,12 +345,37 @@ async function loadSections() {
     }
     renderSectionPalette();
     starterButton.disabled = false;
+    siteKitButton.disabled = false;
     notify(count + " copy-owned sections available for static page composition.");
   } catch {
     byId("builder-section-count").textContent = "Website sections unavailable; basic blocks still work.";
     notify("Section manifest unavailable. The basic page composer remains usable.");
   }
 }
+
+for (const kit of STARTER_SITE_KITS) {
+  const option = makeElement("option", kit.label + " (" + kit.pages + " pages)");
+  option.value = kit.id;
+  siteKitSelect.append(option);
+}
+siteKitSelect.addEventListener("change", () => {
+  const kit = STARTER_SITE_KITS.find(item => item.id === siteKitSelect.value);
+  byId("builder-site-kit-help").textContent = kit
+    ? kit.description + " Replaces the whole project; save your current project first."
+    : "Choose a complete, editable multi-page example with a shared header and footer.";
+});
+siteKitButton.addEventListener("click", () => {
+  if (!siteKitSelect.value || !sectionBlockTypes().length) return;
+  if (!window.confirm("Replace the entire current project with this example website kit? Save your current project first if needed."))
+    return;
+  try {
+    const created = createStarterSite(siteKitSelect.value);
+    applySite(created, "", "Site kit applied: " +
+      siteKitSelect.options[siteKitSelect.selectedIndex].text +
+      ". Save site JSON to continue later; export ZIP to publish.");
+    sequence = Math.max(sequence, ...created.pages.map(entry => entry.document.blocks.length + 5));
+  } catch (error) { notify("Site kit failed: " + error.message); }
+});
 
 for (const starter of STARTER_PAGES) {
   const option = makeElement("option", starter.label);

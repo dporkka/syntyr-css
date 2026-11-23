@@ -13,7 +13,8 @@ class PageBuilderModelTests(unittest.TestCase):
         result = subprocess.run(
             ["node", "--test", "tests/page_builder_model.test.mjs", "tests/page_builder_gallery.test.mjs",
              "tests/page_builder_sections.test.mjs", "tests/page_builder_zip.test.mjs",
-             "tests/site_builder_model.test.mjs", "tests/synced_components.test.mjs"],
+             "tests/site_builder_model.test.mjs", "tests/synced_components.test.mjs",
+             "tests/page_builder_site_kits.test.mjs"],
             cwd=ROOT, text=True, capture_output=True, timeout=30,
         )
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
