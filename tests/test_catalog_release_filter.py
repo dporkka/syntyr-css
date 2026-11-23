@@ -53,6 +53,26 @@ class PublishedReleaseCatalogTests(unittest.TestCase):
         self.assertIn("verify_catalog_annotations(release_matrix)", build)
         self.assertIn('ROOT / "metadata/catalog-release-compatibility.v1.json"', build)
 
+    def test_release_picker_is_in_top_scope_and_tracks_active_release(self):
+        scope = self.catalog.split('id="catalog-release-scope"', 1)[1].split("</aside>", 1)[0]
+        self.assertIn('id="catalog-release-control"', scope)
+        self.assertIn('id="catalog-release-filter"', scope)
+        self.assertIn('id="catalog-release-eyebrow"', scope)
+        self.assertIn('id="catalog-release-title"', scope)
+        self.assertIn('id="catalog-release-details"', scope)
+        self.assertIn("releaseControl.hidden = false", self.script)
+        self.assertIn("releaseTitle.textContent = published", self.script)
+        self.assertIn("releaseEyebrow.textContent = published", self.script)
+
+    def test_published_preview_uses_path_independent_frozen_css(self):
+        self.assertIn("https://syntyr-css.pages.dev/v/0.3.0-alpha.4/syntyr.all.css", self.script)
+        self.assertNotIn("    : '/v/0.3.0-alpha.4/syntyr.all.css';", self.script)
+
+    def test_hash_navigation_reveals_components_under_the_correct_release(self):
+        self.assertIn("function revealHashTarget()", self.script)
+        self.assertIn("window.addEventListener('hashchange', revealHashTarget)", self.script)
+        self.assertIn("card.dataset.catalogAlpha4 !== 'true'", self.script)
+
     def test_copy_full_page_uses_the_selected_release_css(self):
         self.assertIn("https://syntyr-css.pages.dev/v/0.3.0-alpha.4/", self.script)
         self.assertIn("/dist/", self.script)

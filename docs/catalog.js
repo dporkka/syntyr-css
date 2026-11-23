@@ -6,6 +6,10 @@
   const browserFilter = document.getElementById('catalog-browser-filter');
   const moduleFilter = document.getElementById('catalog-module-filter');
   const useCaseFilter = document.getElementById('catalog-use-case-filter');
+  const releaseControl = document.getElementById('catalog-release-control');
+  const releaseEyebrow = document.getElementById('catalog-release-eyebrow');
+  const releaseTitle = document.getElementById('catalog-release-title');
+  const releaseDetails = document.getElementById('catalog-release-details');
   const releaseFilter = document.getElementById('catalog-release-filter');
   const releaseNote = document.getElementById('catalog-release-note');
   const frameworkStylesheet = document.getElementById('catalog-framework-stylesheet');
@@ -80,6 +84,38 @@
   window.addEventListener('scroll', scheduleIndexUpdate, {passive: true});
   window.addEventListener('resize', scheduleIndexUpdate);
   window.addEventListener('hashchange', scheduleIndexUpdate);
+
+  // A source-only deep link must not be hidden by the default published filter.
+  // Resolve the fragment before scrolling; never query-select with raw URL text.
+  function revealHashTarget() {
+    let id;
+    try {
+      id = decodeURIComponent(window.location.hash.slice(1));
+    } catch {
+      return;
+    }
+    if (!id) return;
+    const target = document.getElementById(id);
+    const card = target?.closest('.catalog-card');
+    if (!card) return;
+    if (card.hidden) {
+      search.value = '';
+      category.value = 'all';
+      if (browserFilter) browserFilter.value = 'all';
+      if (moduleFilter) moduleFilter.value = 'all';
+      if (useCaseFilter) useCaseFilter.value = 'all';
+      if (releaseFilter && card.dataset.catalogAlpha4 !== 'true') {
+        releaseFilter.value = 'source-alpha5';
+      }
+      applyRelease();
+    }
+    // After filtering and CSS selection, ensure the anchor is within view.
+    window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => target.scrollIntoView({block: 'start'}));
+    });
+  }
+  window.addEventListener('hashchange', revealHashTarget);
+
   for (const {card, links} of indexedCards) {
     for (const link of links) {
       link.addEventListener('click', () => {
@@ -90,7 +126,7 @@
         if (browserFilter) browserFilter.value = 'all';
         if (moduleFilter) moduleFilter.value = 'all';
         if (useCaseFilter) useCaseFilter.value = 'all';
-        if (releaseFilter) releaseFilter.value = 'source-alpha5';
+        if (releaseFilter && card.dataset.catalogAlpha4 !== 'true') releaseFilter.value = 'source-alpha5';
         applyRelease();
       });
     }
@@ -128,10 +164,26 @@
   const root = document.querySelector('.syn-root');
   const publishedStylesheet = window.location.protocol === 'file:'
     ? '../site-releases/0.3.0-alpha.4/syntyr.all.css'
-    : '/v/0.3.0-alpha.4/syntyr.all.css';
+    : 'https://syntyr-css.pages.dev/v/0.3.0-alpha.4/syntyr.all.css';
   const sourceStylesheet = '../dist/syntyr.all.css';
   function applyRelease() {
     const published = releaseFilter?.value === 'published-alpha4';
+    if (releaseEyebrow) {
+      releaseEyebrow.textContent = published
+        ? 'PUBLISHED RELEASE / CSS-COVERAGE CHECKED'
+        : 'SOURCE PREVIEW / NOT A PUBLISHED RELEASE';
+    }
+    if (releaseTitle) {
+      releaseTitle.textContent = published
+        ? 'Published alpha.4 CSS-covered examples'
+        : 'Unreleased alpha.5 component examples';
+    }
+    if (releaseDetails) {
+      releaseDetails.textContent = published
+        ? 'This view includes examples whose required CSS modules and class selectors exist in the immutable alpha.4 release. It does not certify visual parity, accessibility, or browser interaction behavior. For production, download and self-host the pinned CSS.'
+        : 'These examples use the unreleased alpha.5 source candidate. They may need classes or modules absent from published alpha.4. Preview and copy them only with matching alpha.5 CSS.';
+    }
+
     // Switch the real CSS in the preview, not just a status badge.
     if (frameworkStylesheet) {
       frameworkStylesheet.setAttribute('href', published ? publishedStylesheet : sourceStylesheet);
@@ -172,6 +224,7 @@
       grid.setAttribute('data-catalog-preview', previewSize.value);
     });
   }
+  if (releaseControl) releaseControl.hidden = false;
   controls.hidden = false;
   search.addEventListener("input", updateResults);
   category.addEventListener("change", updateResults);
@@ -180,6 +233,7 @@
   useCaseFilter?.addEventListener("change", updateResults);
   releaseFilter?.addEventListener('change', applyRelease);
   applyRelease();
+  revealHashTarget();
 
   // Docs-only: create an actual, version-local HTML document rather than
   // implying that a partial component snippet includes its CSS dependencies.

@@ -153,9 +153,17 @@
       <h1 class="syn-title" id="catalog-title">Free HTML and CSS component catalog</h1>
       <p class="syn-lede">Browse common HTML elements by category, inspect their source, and copy into any Syntyr-styled page. Every preview and HTML snippet works without JavaScript; optional search and clipboard controls enhance this documentation page only.</p>
       <aside class="syn-panel catalog-release-scope" id="catalog-release-scope" aria-labelledby="catalog-release-title">
-        <p class="syn-eyebrow">SOURCE PREVIEW / NOT A PUBLISHED RELEASE</p>
+        <p class="syn-eyebrow" id="catalog-release-eyebrow">SOURCE PREVIEW / NOT A PUBLISHED RELEASE</p>
         <h2 class="syn-heading" id="catalog-release-title">Unreleased alpha.5 component examples</h2>
-        <p class="syn-muted">With JavaScript enabled, select Published alpha.4 to show only examples whose required stylesheets and CSS classes are present in the immutable release, previewed using its real CSS. Select Source alpha.5 to browse all experimental examples. Selector coverage is not a visual, accessibility, or behavior certification. Without JavaScript, the gallery remains a readable alpha.5 source preview.</p>
+        <p class="syn-muted" id="catalog-release-details">These are unreleased alpha.5 source examples. With JavaScript enabled, the release selector provides a published alpha.4 view limited to examples with matching CSS selectors and modules. The check does not certify visual appearance, accessibility, or interactive behavior.</p>
+        <div id="catalog-release-control" class="catalog-release-control" hidden>
+        <label class="syn-label" for="catalog-release-filter">CSS release</label>
+        <select id="catalog-release-filter" class="syn-input" aria-controls="catalog-items" aria-describedby="catalog-release-note">
+          <option value="published-alpha4" selected>Published alpha.4 · CSS-checked examples</option>
+          <option value="source-alpha5">Unreleased alpha.5 · all source examples</option>
+        </select>
+        <p id="catalog-release-note" class="syn-caption" role="status" aria-live="polite">Published alpha.4 selection checks CSS module and class coverage, not full visual or browser compatibility. For production, self-host the pinned CSS.</p>
+        </div>
         <div class="syn-actions">
           <a class="syn-button syn-button--primary" href="index.html#install">Install published alpha.4</a>
           <a class="syn-button syn-button--outline" href="distribution.html">Read release compatibility guidance</a>
@@ -217,12 +225,6 @@
         </div>
       </section>
       <div id="catalog-controls" class="catalog-controls" hidden>
-        <label class="syn-label" for="catalog-release-filter">CSS release</label>
-        <select id="catalog-release-filter" class="syn-input" aria-controls="catalog-items" aria-describedby="catalog-release-note">
-          <option value="published-alpha4" selected>Published alpha.4 · CSS-checked examples</option>
-          <option value="source-alpha5">Unreleased alpha.5 · all source examples</option>
-        </select>
-        <p id="catalog-release-note" class="syn-caption" role="status" aria-live="polite">Published alpha.4 selection checks CSS module and class coverage, not full visual or browser compatibility. For production, self-host the pinned CSS.</p>
         <label class="syn-label" for="catalog-search">Find a component</label>
         <input id="catalog-search" class="syn-input" type="search" autocomplete="off" placeholder="Search buttons, tables, alerts…" aria-controls="catalog-items">
         <label class="syn-label" for="catalog-category">Category</label>
