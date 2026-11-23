@@ -74,6 +74,22 @@
             <label class="syn-label">LINK URL <input class="syn-input" id="builder-site-footer-link-href" maxlength="5000" data-layout-part="footer" data-layout-field="linkHref" disabled></label>
           </fieldset>
         </div>
+        <section class="builder-reusable" aria-labelledby="builder-reusable-title">
+          <h3 class="syn-heading" id="builder-reusable-title">Reusable components</h3>
+          <p class="syn-caption">Link a native section across pages. Changing a shared property updates every use; override individual fields where needed. The published output is ordinary HTML.</p>
+          <div class="builder-site-row">
+            <label class="syn-label" for="builder-reusable-name">COMPONENT NAME
+              <input class="syn-input" id="builder-reusable-name" maxlength="100" placeholder="Primary call to action" autocomplete="off">
+            </label>
+            <button class="syn-button" id="builder-reusable-save" type="button">Save selected as reusable</button>
+            <label class="syn-label" for="builder-reusable-select">LIBRARY
+              <select class="syn-select" id="builder-reusable-select"><option value="">Choose a component</option></select>
+            </label>
+            <button class="syn-button" id="builder-reusable-insert" type="button" disabled>Insert on this page</button>
+            <button class="syn-button" id="builder-reusable-detach" type="button" disabled>Detach selected</button>
+          </div>
+          <p class="syn-caption" id="builder-reusable-hint" aria-live="polite">Select a native section to create a reusable component.</p>
+        </section>
       </section>
       <section class="syn-panel builder-toolbar" aria-label="Page settings and export">
         <label class="syn-label" for="builder-page-title">PAGE TITLE
@@ -183,7 +199,7 @@
         <h2 class="syn-heading" id="builder-notes-title">Own your output</h2>
         <p>Download the static-site ZIP for portable <code>index.html</code> and optional <code>about/index.html</code>-style pages, <code>syntyr.all.css</code>, local image assets, license and publishing instructions. Your exported page contains no JavaScript. Standalone HTML and CSS downloads remain available. Save the JSON project separately to reopen and edit your layout later.</p>
         <p>Most sections are purely HTML/CSS; forms, authentication, checkout, live data and some destination links need integration with your own backend before production. Demo testimonials, dates, product claims and URLs are not real endorsements or configured services.</p>
-        <p>This early composer intentionally provides content-first sections rather than arbitrary pixel positioning or a hosted CMS. It adds no JavaScript to Syntyr's distributed CSS core.</p>
+        <p>Reusable components synchronize native section content across pages; they do not implement arbitrary nested markup, a CSS-class designer, or runtime data binding. This early composer intentionally provides content-first sections rather than arbitrary pixel positioning or a hosted CMS. It adds no JavaScript to Syntyr's distributed CSS core.</p>
       </section>
     </main>
   </div>

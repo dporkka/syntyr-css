@@ -159,3 +159,9 @@
 .builder-site-layout legend {font-weight:650;padding-inline:.35rem}
 .builder-site-layout .syn-label {display:grid;gap:.3rem}
 .builder-site-layout input:disabled {opacity:.55}
+
+.builder-reusable {border-top:1px solid var(--syn-border-subtle, currentColor);padding-top:1rem;margin-top:.65rem}
+.builder-reusable h3 {font-size:var(--syn-type-md,1rem)}
+.builder-synced-label {display:flex;align-items:center;gap:.4rem;margin-top:.35rem;font-size:.78rem;font-weight:400}
+.builder-synced-label input {accent-color:var(--syn-accent, currentColor)}
+.builder-block-name[data-synced="true"] {font-weight:700}

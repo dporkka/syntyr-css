@@ -14,9 +14,12 @@ The [visual builder](page-builder.html) is a local-first, optional editing tool 
 - Switch among themes available to the unreleased source candidate and preview true 1200px desktop, 760px tablet, and 390px mobile iframe viewports. Narrow canvases scroll rather than silently scaling the device viewport.
 - Undo and redo editing changes (limited in-memory history).
 - Optionally create up to **10 pages** with safe one-segment slugs (such as `about`), switch between them, and edit a synchronized shared native header/footer. The `syntyr.site.v1` JSON project preserves all editable page documents and the shared layout. Removing an inner page does not remove the home page.
+- Save a native **Hero, Features, Split, Testimonial, FAQ, or CTA** section as a reusable component, insert it on another page, and update every instance by editing an un-overridden field. Per-instance **Override on this page** toggles are field-specific; detach a section to keep its current content while unlinking it. This is a *content-linked section* pilot, not arbitrary nested HTML or a CSS class/component designer. Up to 20 masters and 200 references are allowed across a site. Existing `syntyr.site.v1` documents without `components` / `instances` import as empty libraries.
 - Download a **static website ZIP** with `index.html`, optional `about/index.html`-style routes, the matching `syntyr.all.css`, any self-hosted SVG image assets, the MIT license and a brief publishing README. Every nested page uses relative CSS/image paths and the ZIP contains **no JavaScript**. Standalone HTML/CSS downloads remain available.
 - Set the page title, optional search-result description (300-character limit), and HTML document language (including Portuguese for Brazil). The exported HTML contains escaped metadata and a correct `lang` attribute for accessibility and SEO. Existing `syntyr.page.v1` JSON projects without these optional settings still import.
 - Download a JSON project and reopen that JSON to restore editability.
+
+Shared reusable components are portable JSON declarations containing a validated native block master and references to existing page sections. Export resolves each reference into ordinary HTML with escaped text and sanitized links; no browser JavaScript is emitted. Editing a master preserves explicit page overrides. Imported references to unknown components, missing blocks, mismatched types, duplicate placements, or undeclared override fields fail validation. Deleting a referenced section in the editor detaches that reference. Deleting a page removes references on that page, but keeps the shared component available elsewhere.
 
 The builder runs entirely in your browser. It does not upload projects or require a server account. Save the JSON file before closing the page: unsaved edits are not persisted.
 
@@ -114,7 +117,7 @@ This experimental tool is deliberately separate from the MIT CSS core. It uses o
 
 Run from repository root:
 
-    node --test tests/page_builder_model.test.mjs tests/page_builder_gallery.test.mjs tests/page_builder_sections.test.mjs tests/page_builder_zip.test.mjs tests/page_builder_custom_media.test.mjs tests/page_builder_starters.test.mjs tests/site_builder_model.test.mjs
+    node --test tests/page_builder_model.test.mjs tests/page_builder_gallery.test.mjs tests/page_builder_sections.test.mjs tests/page_builder_zip.test.mjs tests/page_builder_custom_media.test.mjs tests/page_builder_starters.test.mjs tests/site_builder_model.test.mjs tests/synced_components.test.mjs tests/site_builder_model.test.mjs
     python3 scripts/build_section_composer.py --check
     python3 -m unittest tests.test_cloudflare_site -v
     python3 scripts/build_cloudflare_site.py --check
@@ -123,6 +126,8 @@ For the optional browser smoke test:
 
     python3 tests/page_builder_browser.py
     python3 tests/site_builder_browser.py
+    python3 tests/site_builder_upload_race_browser.py
+    python3 tests/synced_components_browser.py
     python3 tests/page_builder_sections_browser.py
     python3 tests/page_builder_starter_media_browser.py
     python3 tests/static_sections_mobile_browser.py
