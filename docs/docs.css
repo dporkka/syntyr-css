@@ -74,9 +74,12 @@
   @media (max-width: 78rem) {
     .docs-header--landing .syn-nav { display: none; }
   }
-  @media (max-width: 45rem) {
-    .docs-header .syn-nav { display: none; }
+  /* Keep long documentation navigation usable before links start to wrap. */
+  @media (max-width: 70rem) {
+    .docs-header:has(> .site-mobile-menu) .syn-nav { display: none; }
     .docs-header .site-mobile-menu { display: block; }
+  }
+  @media (max-width: 45rem) {
     .docs-grid, .docs-two, .docs-kpis, .docs-hero-layout { grid-template-columns: minmax(0, 1fr); }
     .docs-kpis { gap: .5rem; }
     .docs-kpis > div { padding-left: .6rem; }
