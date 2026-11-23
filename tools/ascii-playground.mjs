@@ -1,4 +1,4 @@
-import { gridSize, pixelsToAscii, renderPattern, exportArt } from './ascii-logic.mjs';
+import { gridSize, pixelsToAscii, renderPattern, exportArt, customRamp, renderLogo } from './ascii-logic.mjs';
 const $ = id => document.getElementById(id);
 const source=$('source'), pattern=$('pattern'), ramp=$('ramp'), columns=$('columns'), color=$('color'), invert=$('invert'), format=$('format');
 const preview=$('preview'), output=$('export'), status=$('status');
@@ -6,25 +6,35 @@ const motion=matchMedia('(prefers-reduced-motion: reduce)');
 let bitmap=null, loadVersion=0, art='', playing=false, raf=0, start=0, last=0, loading=false;
 function setStatus(message) { status.textContent=message; }
 function syncActions() {
-  $('play').disabled=source.value!=='pattern'||motion.matches||playing;
+  $('play').disabled=source.value!=='pattern'||motion.matches||playing||!art;
   $('stop').disabled=!playing;
   $('copy').disabled=$('download').disabled=!art||playing||loading;
 }
 function syncExport() { output.value=art?exportArt(art,format.value,color.value):''; syncActions(); }
 function draw(time=0) {
+  try { drawFrame(time); } catch(error) {
+    art=''; preview.textContent='No preview'; $('dimensions').textContent='Invalid settings';
+    syncExport(); setStatus(error.message);
+  }
+}
+function drawFrame(time=0) {
   const cols=Number(columns.value);
   $('columns-value').value=String(cols);
   let size;
-  if(source.value==='image') {
+  const chosenRamp=source.value!=='logo'&&ramp.value==='custom'?customRamp($('custom-ramp').value):ramp.value;
+  if(source.value==='logo') {
+    art=renderLogo($('logo-text').value,$('logo-style').value);
+    size={cols:art.split('\n')[0].length,rows:5};
+  } else if(source.value==='image') {
     if(!bitmap||loading) { art=''; preview.textContent=loading?'Decoding image…':'Choose a local image.'; $('dimensions').textContent='No image ready'; syncExport(); return; }
     size=gridSize(bitmap.width,bitmap.height,cols);
     const canvas=document.createElement('canvas'); canvas.width=size.cols; canvas.height=size.rows;
     const ctx=canvas.getContext('2d',{willReadFrequently:true});
     ctx.drawImage(bitmap,0,0,size.cols,size.rows);
-    art=pixelsToAscii(ctx.getImageData(0,0,size.cols,size.rows).data,size.cols,size.rows,ramp.value,invert.checked);
+    art=pixelsToAscii(ctx.getImageData(0,0,size.cols,size.rows).data,size.cols,size.rows,chosenRamp,invert.checked,$('dither').value);
   } else {
     size={cols,rows:Math.min(100,Math.max(8,Math.round(cols*.38)))};
-    art=renderPattern(pattern.value,size.cols,size.rows,ramp.value,time);
+    art=renderPattern(pattern.value,size.cols,size.rows,chosenRamp,time);
   }
   preview.textContent=art;
   preview.style.color=color.value;
@@ -43,19 +53,24 @@ function tick(now) {
   raf=requestAnimationFrame(tick);
 }
 $('play').addEventListener('click',()=>{
-  if(motion.matches||source.value!=='pattern'||playing) return;
+  if(motion.matches||source.value!=='pattern'||playing||!art) return;
   playing=true; start=performance.now(); last=0; syncActions(); setStatus('Animating for five seconds.');
   raf=requestAnimationFrame(tick);
 });
 $('stop').addEventListener('click',()=>stop('Animation stopped. Current frame ready to export.'));
 motion.addEventListener('change',()=>{if(motion.matches) stop('Reduced motion enabled.'); syncActions();});
 document.addEventListener('visibilitychange',()=>{if(document.hidden) stop();});
-source.addEventListener('change',()=>{
-  stop(); const imageMode=source.value==='image';
-  $('image-field').hidden=$('invert-field').hidden=!imageMode; $('pattern-field').hidden=imageMode;
-  setStatus(''); draw();
-});
-for(const control of [pattern,ramp,columns,color,invert]) control.addEventListener('input',()=>{stop();draw();});
+function syncFields() {
+  const imageMode=source.value==='image', logoMode=source.value==='logo';
+  $('image-field').hidden=$('invert-field').hidden=$('dither-field').hidden=!imageMode;
+  $('logo-field').hidden=$('logo-style-field').hidden=!logoMode;
+  $('pattern-field').hidden=source.value!=='pattern';
+  $('columns-field').hidden=$('ramp-field').hidden=logoMode;
+  $('custom-field').hidden=logoMode||ramp.value!=='custom';
+}
+source.addEventListener('change',()=>{ stop(); syncFields(); setStatus(''); draw(); });
+for(const control of [pattern,ramp,columns,color,invert,$('custom-ramp'),$('dither'),$('logo-text'),$('logo-style')])
+  control.addEventListener('input',()=>{stop();syncFields();setStatus('');draw();});
 format.addEventListener('change',syncExport);
 $('image').addEventListener('change',async()=>{
   const version=++loadVersion, file=$('image').files[0];
@@ -87,4 +102,4 @@ $('download').addEventListener('click',()=>{
   setTimeout(()=>URL.revokeObjectURL(url),1000);
 });
 $('ascii-controls').disabled=false;
-draw();
+syncFields(); draw();

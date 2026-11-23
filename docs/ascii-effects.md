@@ -10,7 +10,7 @@ Source candidate only (alpha.5); not available in published alpha.4. Load core, 
 
 Or import `@syntyr/css/ascii.css` alongside core and symbols. The selective build accepts `--modules symbols,ascii`. The all bundle includes both; core and cinematic preset remain unchanged.
 
-[Open the interactive generator and image converter](../tools/ascii-playground.html) (optional site-only JavaScript; exports are static). [Open the ASCII effects lab](../examples/ascii.html) for original, copyable character art. CSS only styles literal DOM text; it does not generate random characters, calculate a chart, perform real typing, decode text, or convert media. Use existing symbols for geometry and native progress or textual equivalents for status.
+[Open the interactive generator and image converter](../tools/ascii-playground.html) (optional site-only JavaScript; exports are static). The generator supports ordered Bayer and Floyd–Steinberg dithering, custom glyph ramps and a five-row original text logo alphabet. [Copy three CSS-only hero sections](../examples/ascii-heroes.html). [Open the ASCII effects lab](../examples/ascii.html) for original, copyable character art. CSS only styles literal DOM text; it does not generate random characters, calculate a chart, perform real typing, decode text, or convert media. Use existing symbols for geometry and native progress or textual equivalents for status.
 
 ```html
 <div class="syn-root" data-syn-theme="grid">

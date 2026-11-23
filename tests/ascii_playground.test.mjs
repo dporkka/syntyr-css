@@ -32,3 +32,34 @@ test('exports escape markup and reject injected colors', () => {
   assert.throws(()=>exportArt('x','svg','red" onload="alert(1)'));
   assert.throws(()=>exportArt('x','js','#abcdef'));
 });
+
+test('custom ramps preserve spaces and reject multi-cell or control glyphs', async () => {
+  const { customRamp } = await import('../tools/ascii-logic.mjs');
+  assert.deepEqual(customRamp(' .+#'), [' ','.','+','#']);
+  for(const bad of ['x','aaaa','x\nz',' 😀','a\u0301b','x\u202Ey','x漢']) assert.throws(()=>customRamp(bad));
+  assert.equal(pixelsToAscii(Uint8ClampedArray.from([255,255,255,255]),1,1,[' ','X']), 'X');
+});
+
+test('Bayer and Floyd–Steinberg distribute intermediate tones deterministically', () => {
+  const pixels=Uint8ClampedArray.from(Array.from({length:16},()=>[128,128,128,255]).flat());
+  for(const mode of ['bayer','floyd']) {
+    const art=pixelsToAscii(pixels,4,4,[' ','1'],false,mode);
+    assert.equal(art,pixelsToAscii(pixels,4,4,[' ','1'],false,mode));
+    assert.ok(art.includes(' ')&&art.includes('1'));
+    assert.equal(art.split('\n').length,4);
+    assert.equal(pixelsToAscii(new Uint8ClampedArray(64),4,4,[' ','1'],false,mode),'    \n    \n    \n    ');
+  }
+  assert.throws(()=>pixelsToAscii(pixels,4,4,'binary',false,'unknown'));
+});
+
+test('logo text has predictable five-row geometry and safe fallback', async () => {
+  const { renderLogo }=await import('../tools/ascii-logic.mjs');
+  const text=renderLogo('AB','block');
+  assert.equal(text.split('\n').length,5);
+  assert.ok(text.split('\n').every(r=>r.length===11));
+  assert.match(text,/█/);
+  assert.match(renderLogo('a','hash'),/#/);
+  assert.throws(()=>renderLogo('a'.repeat(25),'block'));
+  assert.throws(()=>renderLogo('<script>','block'));
+  assert.throws(()=>renderLogo('A','unknown'));
+});

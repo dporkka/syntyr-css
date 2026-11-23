@@ -47,6 +47,27 @@ try:
             art=page.locator('#export').input_value()
             page.check('#invert')
             assert page.locator('#export').input_value()!=art
+            page.select_option('#dither','floyd')
+            page.select_option('#dither','bayer')
+            page.select_option('#ramp','custom')
+            page.fill('#custom-ramp',' .#')
+            assert set(page.locator('#export').input_value()) <= set(' .#\n')
+            page.fill('#custom-ramp','aa')
+            assert page.locator('#copy').is_disabled()
+            page.fill('#custom-ramp',' .#')
+            assert page.locator('#copy').is_enabled()
+            page.select_option('#source','logo')
+            page.fill('#logo-text','TEST')
+            page.select_option('#logo-style','hash')
+            assert '#' in page.locator('#export').input_value()
+            assert len(page.locator('#export').input_value().splitlines())==5
+            page.fill('#logo-text','<bad>')
+            assert page.locator('#copy').is_disabled()
+            page.fill('#logo-text','SYNTYR')
+            assert page.locator('#copy').is_enabled()
+            page.goto(f'http://127.0.0.1:{server.server_port}/examples/ascii-heroes.html')
+            assert page.locator('main textarea').count()==3
+            assert page.evaluate('document.documentElement.scrollWidth <= innerWidth + 1')
             assert not errors,errors
             assert all(url.startswith(f'http://127.0.0.1:{server.server_port}/') for url in requests),requests
             page.close()
