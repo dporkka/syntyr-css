@@ -80,7 +80,7 @@ layout:
 
 Do not use an unprefixed `/assets/...` URL for GitHub Pages project sites.
 For an independent, CMS-driven landing page, the
-[runnable Hugo fixture](../examples/hugo-cms/) renders the **same**
+[runnable Hugo fixture](https://github.com/dporkka/syntyr-css/tree/main/examples/hugo-cms/) renders the **same**
 `content/pages/home.json` as the Git-backed CMS starter, with five native
 semantic HTML blocks and no browser script:
 
