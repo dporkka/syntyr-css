@@ -12,6 +12,26 @@ assets are different. Do not claim `npm install @syntyr/css` will fetch
 alpha.5 from the registry; use an actual published, pinned version, a local
 package archive, or a self-hosted versioned CSS file.
 
+## Runnable zero-JavaScript marketing site starter
+
+The [Waypoint SaaS marketing starter](../examples/site-starters/saas-marketing/README.md)
+demonstrates how one Syntyr stylesheet can serve a **complete three-page site**:
+a home page with hero, dashboard illustration, feature grid, workflow steps
+and native FAQ; a pricing page; and an about page. All content is explicitly
+fictional. Unlike a source-only snippet, it includes an offline exporter:
+
+```sh
+python3 scripts/export_site_starter.py --output /tmp/waypoint-static
+python3 -m http.server 8000 --directory /tmp/waypoint-static
+```
+
+Open `http://localhost:8000/`. The export contains its own pinned
+`assets/syntyr.core.css`, works offline, and uses **no browser JavaScript**.
+The [public preview](https://syntyr-css.pages.dev/examples/site-starters/saas-marketing/)
+is available only after the corresponding source change is published.
+It is a starting point for Astro, Hugo or Eleventy composition, **not** a
+prebuilt adapter for any generator. The source candidate remains unreleased.
+
 ## Integration matrix
 
 | Generator | Recommended CSS delivery | Base path / deployment concern | Example |

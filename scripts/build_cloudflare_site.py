@@ -50,6 +50,9 @@ NOINDEX_HTML = frozenset({
     "examples/app-integrations.html", "examples/app-security.html",
     "examples/design-benchmarks/marketing.html", "examples/design-benchmarks/crm.html",
     "examples/design-benchmarks/documentation.html",
+    "examples/site-starters/saas-marketing/index.html",
+    "examples/site-starters/saas-marketing/pricing/index.html",
+    "examples/site-starters/saas-marketing/about/index.html",
     "docs/htmx-playground.html",  # Interactive app demo, not an SEO landing page.
 })
 CANONICAL_LINK = re.compile(r'<link\s+rel="canonical"[^>]*>', re.IGNORECASE)
@@ -386,6 +389,8 @@ def source_files(site_url: str = SITE_URL, *, include_cloudflare_headers: bool =
         "viz.html", "geo.html", "data-grid.html", "animation.html", "copy.html",
         "design-benchmarks/marketing.html", "design-benchmarks/crm.html",
         "design-benchmarks/documentation.html", "design-benchmarks/benchmark.css",
+        "site-starters/saas-marketing/index.html", "site-starters/saas-marketing/pricing/index.html",
+        "site-starters/saas-marketing/about/index.html", "site-starters/saas-marketing/assets/site.css",
     )
     # Import the canonical distribution registry rather than maintaining
     # a second list that can silently omit new CSS entrypoints.
