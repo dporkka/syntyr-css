@@ -30,8 +30,12 @@ class OptionalCmsAdaptersTests(unittest.TestCase):
         self.assertEqual(converted, self.canonical())
 
     def test_payload_roundtrip_strips_only_known_database_metadata(self):
-        converted = export_cms_adapter.convert("payload", self.fixture(PAYLOAD))
+        source = self.fixture(PAYLOAD)
+        converted = export_cms_adapter.convert("payload", source)
         self.assertEqual(converted, self.canonical())
+        source["unknownMetadata"] = "unexpected"
+        with self.assertRaisesRegex(ValueError, r"^page: unexpected fields \['unknownMetadata'\]$"):
+            export_cms_adapter.convert("payload", source)
 
     def test_unsafe_urls_duplicate_anchors_and_unknown_types_fail_closed(self):
         for provider, path in (("keystatic", KEYSTATIC), ("payload", PAYLOAD)):

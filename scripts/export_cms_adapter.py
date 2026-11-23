@@ -18,7 +18,7 @@ else:
 
 
 ROOT_FIELDS = frozenset(("title", "description", "theme", "sections"))
-PAYLOAD_METADATA = frozenset(("id", "createdAt", "updatedAt", "_status"))
+PAYLOAD_METADATA = frozenset(("id", "createdAt", "updatedAt", "_status", "globalType"))
 PAYLOAD_BLOCK_METADATA = frozenset(("id", "blockName"))
 NESTED_FIELDS = {
     "features": ("items", {"title", "description"}),

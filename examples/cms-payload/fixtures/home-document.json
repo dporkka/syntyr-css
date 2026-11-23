@@ -120,6 +120,7 @@
     }
   ],
   "id": 1,
+  "globalType": "syntyrHome",
   "createdAt": "2026-11-23T00:00:00.000Z",
   "updatedAt": "2026-11-23T00:00:00.000Z"
 }
