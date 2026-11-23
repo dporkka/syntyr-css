@@ -70,8 +70,56 @@
           "description": "Accent appearance variant of the ascii component; see symbols.css for styles."
         },
         {
+          "name": "syn-ascii--banner",
+          "description": "Banner appearance variant of the ascii component; see ascii.css for styles."
+        },
+        {
+          "name": "syn-ascii--compact",
+          "description": "Compact appearance variant of the ascii component; see ascii.css for styles."
+        },
+        {
+          "name": "syn-ascii--cursor",
+          "description": "Cursor appearance variant of the ascii component; see ascii.css for styles."
+        },
+        {
+          "name": "syn-ascii--decode",
+          "description": "Decode appearance variant of the ascii component; see ascii.css for styles."
+        },
+        {
+          "name": "syn-ascii--dither",
+          "description": "Dither appearance variant of the ascii component; see ascii.css for styles."
+        },
+        {
+          "name": "syn-ascii--gradient",
+          "description": "Gradient appearance variant of the ascii component; see ascii.css for styles."
+        },
+        {
+          "name": "syn-ascii--loader",
+          "description": "Loader appearance variant of the ascii component; see ascii.css for styles."
+        },
+        {
           "name": "syn-ascii--muted",
           "description": "Muted appearance variant of the ascii component; see symbols.css for styles."
+        },
+        {
+          "name": "syn-ascii--phosphor",
+          "description": "Phosphor appearance variant of the ascii component; see ascii.css for styles."
+        },
+        {
+          "name": "syn-ascii--rain",
+          "description": "Rain appearance variant of the ascii component; see ascii.css for styles."
+        },
+        {
+          "name": "syn-ascii--scan",
+          "description": "Scan appearance variant of the ascii component; see ascii.css for styles."
+        },
+        {
+          "name": "syn-ascii--typewriter",
+          "description": "Typewriter appearance variant of the ascii component; see ascii.css for styles."
+        },
+        {
+          "name": "syn-ascii--wave",
+          "description": "Wave appearance variant of the ascii component; see ascii.css for styles."
         },
         {
           "name": "syn-atmosphere",

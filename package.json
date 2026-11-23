@@ -22,6 +22,7 @@
     "./motion.css": "./dist/syntyr.motion.css",
     "./geometry.css": "./dist/syntyr.geometry.css",
     "./symbols.css": "./dist/syntyr.symbols.css",
+    "./ascii.css": "./dist/syntyr.ascii.css",
     "./utilities.css": "./dist/syntyr.utilities.css",
     "./print.css": "./dist/syntyr.print.css",
     "./syntyr.css": "./dist/syntyr.css",
