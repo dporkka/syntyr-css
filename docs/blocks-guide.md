@@ -70,6 +70,17 @@ copying partial files.
 
 <!-- /coderabbit-ai-generated:v1 -->
 
+<!-- coderabbit-ai-generated:v1 -->
+
+<!-- coderabbit-ai-generated-section:v1:50803b19f481b23ea7fd179d38cb6d37f0247bc8bf4084735e7bf41c658eac3c -->
+
+Run `--apply` only in a trusted project. Untrusted users and processes must
+not be able to rename or replace the project root, staging directory, or
+installation paths while apply runs. Private staging permissions do not
+protect the staging directory's name from writers to the project root.
+
+<!-- /coderabbit-ai-generated:v1 -->
+
 For reproducible developer-only checks (without shipping a browser runtime),
 run `node tests/registry_form_workflows_browser.cjs` with
 `SYNTYR_PLAYWRIGHT_MODULE` pointing to an installed Playwright package and

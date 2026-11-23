@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Status: Experimental alpha.5 source gallery, not an immutable release or published npm package.">
-  <meta name="syntyr-source-sha256" content="a78b10d70eca8cb66f5db3105bd64976ae978c6343e93f5e76b9ec1d8b01ae8d">
+  <meta name="syntyr-source-sha256" content="aa19a399d33046bbcd0fad27efee90ab28425a299bace8699c703bfaf7665035">
   <meta name="theme-color" content="#f5f7fb">
   <title>Syntyr Blocks &amp; Assets — integration guide — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/blocks-guide">
@@ -88,6 +88,13 @@ must be on the same mount as staging, and the filesystem must support hard
 links. If publication fails across mounts, put the destination on the same
 mount as the project root before retrying. The installer never falls back to
 copying partial files.</p>
+<p>&lt;!-- /coderabbit-ai-generated:v1 --&gt;</p>
+<p>&lt;!-- coderabbit-ai-generated:v1 --&gt;</p>
+<p>&lt;!-- coderabbit-ai-generated-section:v1:50803b19f481b23ea7fd179d38cb6d37f0247bc8bf4084735e7bf41c658eac3c --&gt;</p>
+<p>Run <code>--apply</code> only in a trusted project. Untrusted users and processes must
+not be able to rename or replace the project root, staging directory, or
+installation paths while apply runs. Private staging permissions do not
+protect the staging directory's name from writers to the project root.</p>
 <p>&lt;!-- /coderabbit-ai-generated:v1 --&gt;</p>
 <p>For reproducible developer-only checks (without shipping a browser runtime),
 run <code>node tests/registry_form_workflows_browser.cjs</code> with

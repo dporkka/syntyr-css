@@ -1,5 +1,8 @@
 """An optional local installation planner must be safe without a Node runtime."""
 import errno
+from contextlib import redirect_stderr
+from functools import partial
+from io import StringIO
 import json
 import os
 from pathlib import Path
@@ -9,12 +12,33 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-from scripts.registry_install import plan_install, apply_install, RegistryError
+from scripts.registry_install import plan_install, apply_install, main, RegistryError
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
 class RegistryInstallPlanTests(unittest.TestCase):
+    def test_verify_reports_invalid_registry_shapes_with_exit_two(self):
+        valid = json.loads((ROOT / "registry/r/core.json").read_text())
+        for payload, diagnostic in (
+            ([], "Expected registry item object"),
+            ({**valid, "meta": None}, "Expected registry item metadata object"),
+            ({**valid, "registryDependencies": {}}, "Expected registry dependency list"),
+        ):
+            with self.subTest(diagnostic=diagnostic), tempfile.TemporaryDirectory() as tmp:
+                registry = Path(tmp) / "r"
+                registry.mkdir()
+                (registry / "core.json").write_text(json.dumps(payload), encoding="utf-8")
+                project = Path(tmp) / "project"
+                stderr = StringIO()
+                with patch("sys.argv", ["registry_install.py", "core", "--project", str(project), "--verify"]), \
+                     patch("scripts.registry_install.plan_install", partial(plan_install, registry_root=registry.parent)), \
+                     redirect_stderr(stderr), self.assertRaises(SystemExit) as result:
+                    main()
+                self.assertEqual(result.exception.code, 2)
+                self.assertIn(f"Registry installation rejected: {diagnostic}: core", stderr.getvalue())
+                self.assertFalse(project.exists())
+
     def test_dependencies_are_resolved_and_install_is_opt_in(self):
         with tempfile.TemporaryDirectory() as tmp:
             project = Path(tmp)

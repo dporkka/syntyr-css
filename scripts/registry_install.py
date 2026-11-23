@@ -70,14 +70,21 @@ def plan_install(name: str, project: Path, registry_root: Path = OUTPUT) -> dict
             obj = json.loads(file.read_text(encoding="utf-8"))
         except (OSError, ValueError) as error:
             raise RegistryError("Missing or unreadable registry item: " + item_name) from error
+        if not isinstance(obj, dict):
+            raise RegistryError("Expected registry item object: " + item_name)
         if obj.get("name") != item_name or obj.get("type") != "registry:item":
             raise RegistryError("Unexpected registry item identity")
         meta = obj.get("meta", {})
+        if not isinstance(meta, dict):
+            raise RegistryError("Expected registry item metadata object: " + item_name)
         if meta.get("syntyrVersion") != version or meta.get("runtimeJavaScript") is not False:
             raise RegistryError("Incompatible item version or runtime")
         if obj.get("dependencies") != []:
             raise RegistryError("Runtime dependencies are not supported")
-        for dep in obj.get("registryDependencies", []):
+        dependencies = obj.get("registryDependencies", [])
+        if not isinstance(dependencies, list):
+            raise RegistryError("Expected registry dependency list: " + item_name)
+        for dep in dependencies:
             prefix = DEFAULT_REGISTRY_URL + "/"
             if not isinstance(dep, str) or not dep.startswith(prefix) or not dep.endswith(".json"):
                 raise RegistryError("Untrusted registry dependency URL")
