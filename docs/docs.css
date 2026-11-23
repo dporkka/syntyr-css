@@ -76,7 +76,7 @@
   }
   /* Keep long documentation navigation usable before links start to wrap. */
   @media (max-width: 70rem) {
-    .docs-header .syn-nav { display: none; }
+    .docs-header:has(> .site-mobile-menu) .syn-nav { display: none; }
     .docs-header .site-mobile-menu { display: block; }
   }
   @media (max-width: 45rem) {
