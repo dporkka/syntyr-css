@@ -44,6 +44,13 @@ class DocumentationDeliveryTests(unittest.TestCase):
                 "Only non-executable JSON-LD metadata may be embedded in docs"
             )
 
+    def test_release_readiness_summary_is_public_and_discoverable(self):
+        files = source_files()
+        self.assertIn('docs/launch-status.md', files)
+        self.assertIn('docs/launch-status.html', files)
+        self.assertIn(b'href="launch-status.html"', files['docs/reference.html'])
+        self.assertIn(b'Published immutable GitHub prerelease', files['docs/launch-status.html'])
+
     def test_markdown_table_code_and_links_are_real_html(self):
         files = source_files()
         page = files['docs/components.html'].decode()
