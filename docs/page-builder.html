@@ -108,12 +108,18 @@
           <section aria-labelledby="builder-sections-title" class="builder-gallery builder-sections">
             <h3 id="builder-sections-title" class="syn-heading">Website sections</h3>
             <p class="syn-caption">Search the copy-owned Blocks library. Your exported page needs no JavaScript; forms and backend features need your own server.</p>
+            <label class="syn-label" for="builder-section-use-case">Website use case</label>
+            <select id="builder-section-use-case" class="syn-select" aria-describedby="builder-section-use-case-help">
+              <option value="all">All sections</option>
+            </select>
+            <p class="syn-caption" id="builder-section-use-case-help">Browse every layout or see suggestions for a particular kind of site.</p>
             <label class="syn-label" for="builder-section-search">Search sections</label>
             <input id="builder-section-search" class="syn-input" type="search" placeholder="Gallery, pricing, news, contact…">
             <label class="syn-label" for="builder-section-category">Category</label>
             <select id="builder-section-category" class="syn-select"><option value="all">All categories</option></select>
             <p id="builder-section-count" class="syn-caption" role="status">Loading website sections…</p>
-            <div id="builder-section-palette" class="builder-palette builder-gallery-palette" role="group" aria-label="Website sections"></div>
+            <div id="builder-section-palette" class="builder-palette builder-gallery-palette builder-section-palette" role="group" aria-label="Website sections"></div>
+            <p class="syn-caption">Thumbnails are layout sketches. Use Preview to see the actual section; Add inserts it immediately.</p>
           </section>
           <label class="syn-label builder-insert-choice" for="builder-insert-after">
             <input id="builder-insert-after" type="checkbox"> Add new sections after selected block
@@ -147,6 +153,20 @@
           <div id="builder-inspector" class="builder-inspector"></div>
         </aside>
       </div>
+      <dialog id="builder-section-preview-dialog" class="builder-section-dialog"
+              aria-labelledby="builder-section-preview-title" aria-describedby="builder-section-preview-description">
+        <div class="builder-section-dialog-heading">
+          <h2 id="builder-section-preview-title" class="syn-heading">Section preview</h2>
+          <button class="syn-button" type="button" id="builder-section-preview-close">Close preview</button>
+        </div>
+        <p class="syn-caption" id="builder-section-preview-description">A live, script-free preview of the selected section.</p>
+        <iframe id="builder-section-preview-frame" title="Full-size preview of selected Syntyr section"
+                sandbox="allow-same-origin" referrerpolicy="no-referrer"></iframe>
+        <div class="builder-section-dialog-actions">
+          <p class="syn-caption">Example content and destinations are illustrative. Your page's current theme is applied.</p>
+          <button type="button" class="syn-button syn-button--primary" id="builder-section-preview-add">Add to page</button>
+        </div>
+      </dialog>
       <p class="syn-caption builder-status" id="builder-status" role="status" aria-live="polite">Ready to compose.</p>
       <section class="syn-panel builder-notes" aria-labelledby="builder-notes-title">
         <h2 class="syn-heading" id="builder-notes-title">Own your output</h2>
