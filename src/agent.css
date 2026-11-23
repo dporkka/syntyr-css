@@ -1,0 +1,110 @@
+/* Optional agent-run presentation only. Hosts own orchestration, auth and state. */
+@layer syn.components {
+  :where(.syn-root, .syn-root *) {
+    &.syn-agent-run {
+      display: grid;
+      gap: var(--syn-space-3);
+      min-inline-size: 0;
+      padding: var(--syn-space-4);
+      border: 1px solid var(--syn-frame);
+      border-radius: var(--syn-radius);
+      background: var(--syn-surface);
+      color: var(--syn-text);
+    }
+    &.syn-agent-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: var(--syn-space-2);
+      flex-wrap: wrap;
+    }
+    &.syn-agent-header > :where(h2, h3, p) { margin: 0; }
+    &.syn-agent-status {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      min-block-size: 2rem;
+      padding: .2rem .65rem;
+      border: 1px solid var(--syn-frame-strong);
+      border-radius: 999px;
+      background: var(--syn-surface-hi);
+      color: var(--syn-text);
+      font: 650 .8125rem/1.4 var(--syn-font);
+    }
+    &.syn-agent-steps {
+      display: grid;
+      gap: var(--syn-space-3);
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      min-inline-size: 0;
+    }
+    &.syn-agent-step {
+      display: grid;
+      grid-template-columns: 1rem minmax(0, 1fr);
+      align-items: start;
+      gap: var(--syn-space-2);
+      overflow-wrap: anywhere;
+      color: var(--syn-text);
+      min-inline-size: 0;
+    }
+    &.syn-agent-step::before {
+      content: "";
+      display: block;
+      box-sizing: border-box;
+      inline-size: .75rem;
+      block-size: .75rem;
+      margin-block-start: .35rem;
+      border: 2px solid var(--syn-frame-strong);
+      border-radius: 50%;
+      background: var(--syn-surface);
+    }
+    &.syn-agent-step[data-syn-state="completed"]::before {
+      border-color: var(--syn-accent);
+      background: var(--syn-accent);
+    }
+    &.syn-agent-step[data-syn-state="running"]::before,
+    &.syn-agent-step[data-syn-state="awaiting-approval"]::before {
+      border-color: var(--syn-accent);
+      outline: 2px solid var(--syn-accent-soft);
+      outline-offset: 2px;
+    }
+    &.syn-agent-step[data-syn-state="failed"]::before {
+      border-color: var(--syn-danger);
+      background: var(--syn-danger);
+    }
+    &.syn-agent-step > :where(div, section) { min-inline-size: 0; }
+    &.syn-agent-step :where(p, h3, h4) { margin-block: 0 .35rem; }
+    &.syn-agent-detail { color: var(--syn-muted); font-size: .875rem; }
+    &.syn-agent-approval {
+      display: grid;
+      gap: var(--syn-space-2);
+      min-inline-size: 0;
+      padding: var(--syn-space-3);
+      border: 1px solid var(--syn-frame-strong);
+      border-inline-start: 3px solid var(--syn-accent);
+      background: var(--syn-surface-hi);
+    }
+    &.syn-agent-approval > :where(h3, h4, p) { margin-block: 0; }
+    &.syn-agent-approval-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--syn-space-2);
+      align-items: center;
+    }
+    &.syn-agent-outcome {
+      padding: var(--syn-space-3);
+      border: 1px solid var(--syn-frame);
+      background: var(--syn-surface-hi);
+      overflow-wrap: anywhere;
+    }
+    &.syn-agent-outcome > :where(h3, h4, p) { margin-block: 0 .5rem; }
+    &.syn-agent-run[data-syn-state="failed"] .syn-agent-outcome {
+      border-inline-start: 3px solid var(--syn-danger);
+    }
+  }
+  @media (forced-colors: active) {
+    :where(.syn-root) .syn-agent-step::before { forced-color-adjust: auto; }
+    :where(.syn-root) .syn-agent-approval { border-color: CanvasText; }
+  }
+}

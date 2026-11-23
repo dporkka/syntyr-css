@@ -17,6 +17,51 @@
       "description": "Activity timeline presentation in the recipes.css module; use semantic HTML and consult its component example."
     },
     {
+      "name": "syn-agent-approval",
+      "module": "agent.css",
+      "description": "Agent approval presentation in the agent.css module; use semantic HTML and consult its component example."
+    },
+    {
+      "name": "syn-agent-approval-actions",
+      "module": "agent.css",
+      "description": "Agent approval actions presentation in the agent.css module; use semantic HTML and consult its component example."
+    },
+    {
+      "name": "syn-agent-detail",
+      "module": "agent.css",
+      "description": "Agent detail presentation in the agent.css module; use semantic HTML and consult its component example."
+    },
+    {
+      "name": "syn-agent-header",
+      "module": "agent.css",
+      "description": "Agent header presentation in the agent.css module; use semantic HTML and consult its component example."
+    },
+    {
+      "name": "syn-agent-outcome",
+      "module": "agent.css",
+      "description": "Agent outcome presentation in the agent.css module; use semantic HTML and consult its component example."
+    },
+    {
+      "name": "syn-agent-run",
+      "module": "agent.css",
+      "description": "Agent run presentation in the agent.css module; use semantic HTML and consult its component example."
+    },
+    {
+      "name": "syn-agent-status",
+      "module": "agent.css",
+      "description": "Agent status presentation in the agent.css module; use semantic HTML and consult its component example."
+    },
+    {
+      "name": "syn-agent-step",
+      "module": "agent.css",
+      "description": "Agent step presentation in the agent.css module; use semantic HTML and consult its component example."
+    },
+    {
+      "name": "syn-agent-steps",
+      "module": "agent.css",
+      "description": "Agent steps presentation in the agent.css module; use semantic HTML and consult its component example."
+    },
+    {
       "name": "syn-alert",
       "module": "components/typography.css",
       "description": "Inline informational or status notice; write the message in readable text."

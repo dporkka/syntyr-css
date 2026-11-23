@@ -416,6 +416,30 @@
         "syn-bento-card--wide"
       ],
       "notes": "Experimental alpha.5. Container-aware wide card spans; use meaningful article headings and syn-feature-card for surfaces."
+    },
+    {
+      "name": "Agent workflow",
+      "module": "syntyr.agent.css",
+      "elements": [
+        "section",
+        "header",
+        "ol",
+        "li",
+        "form",
+        "button"
+      ],
+      "classes": [
+        "syn-agent-run",
+        "syn-agent-header",
+        "syn-agent-status",
+        "syn-agent-steps",
+        "syn-agent-step",
+        "syn-agent-detail",
+        "syn-agent-approval",
+        "syn-agent-approval-actions",
+        "syn-agent-outcome"
+      ],
+      "notes": "Optional, unreleased alpha.5 source candidate. Native server-rendered plan, progress and approval views; host must authorize actions, validate CSRF, ensure idempotency and record audit evidence. No AI runtime or JavaScript required."
     }
   ],
   "recipes": [

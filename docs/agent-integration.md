@@ -111,3 +111,34 @@ The consolidated reference is deterministic and checked in CI through the Python
 ## What Syntyr does not do
 
 Syntyr styles browser HTML/CSS. It does not supply a JavaScript component runtime, chart rendering engine, AI API, CRUD handlers, form submission or remote data access. The optional local read-only MCP adapter is a separate developer tool, never a CSS runtime dependency. Use your existing application technology for those responsibilities.
+
+## Human approval and agent-run UI
+
+The source candidate includes an optional **CSS-only** agent workflow module:
+`dist/syntyr.agent.css` (also exported as `@syntyr/css/agent.css`).
+It is **not** part of the stable published alpha.4 CSS and is not loaded by
+`syntyr.core.css`. The module presents human-readable agent plans, step status,
+explicit approval requests, and authoritative outcomes without implementing
+an AI model, orchestrator or action executor.
+
+- [Copyable native HTML integration template](../examples/agent-workflow.html)
+- [Structured, allowlisted component contract](../metadata/agent-workflow.v1.json)
+- Load core CSS first, then the optional agent stylesheet. Keep the `.syn-root` scope.
+- Render actual plan and state on the **server**, using the supported
+  `data-syn-state` values. Never use colors, CSS, or generated prose as proof
+  that an action happened.
+- Bind both approve and reject buttons to a real POST endpoint. The application
+  must verify authentication, tenant permissions, CSRF, run state and immutable
+  action parameters, then process decisions idempotently and write an audit log.
+  The example's `{{ csrf_token }}` and `/agent-runs/run-42/decisions` are
+  integration placeholders, **not** functioning endpoints.
+- Escape and validate all agent-generated and external text; do not interpolate
+  model-generated HTML, JavaScript, CSS or unverified URLs into the page.
+- After a decision, show the real outcome and recovery options. For dynamic
+  updates, implement carefully scoped live announcements in the host app.
+  For a no-JavaScript server flow, a standard POST/redirect/GET cycle works.
+
+The JSON contract describes safe presentational vocabulary, **not** an A2UI
+implementation or a secure executor. A host may map an external structured
+UI protocol into these trusted components only after validating the input
+against its own allowlist and authorization rules.
