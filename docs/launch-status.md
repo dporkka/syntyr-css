@@ -29,9 +29,9 @@ The detailed **technical process and exact-SHA review** live in [release-freeze.
 
 ## Commercial readiness is independent
 
-The [commercial launch gates](../business/commercial-launch-gates.md) and private kit's [commercial readiness issue #51](https://github.com/dporkka/syntyr-console-kit/issues/51) cover license rights, manual accessibility, tax/refund/support terms, verified checkout, entitlement-controlled delivery, and end-to-end purchase/refund evidence. No order or buyer commitment should be inferred from a demo, a mailto click, a screenshot or GitHub engagement.
+The [commercial launch gates](https://github.com/dporkka/syntyr-css/blob/main/business/commercial-launch-gates.md) and private kit's [commercial readiness issue #51](https://github.com/dporkka/syntyr-console-kit/issues/51) cover license rights, manual accessibility, tax/refund/support terms, verified checkout, entitlement-controlled delivery, and end-to-end purchase/refund evidence. No order or buyer commitment should be inferred from a demo, a mailto click, a screenshot or GitHub engagement.
 
-**Next commercial experiment:** ten qualified developer/agency conversations with code-level integration feedback and documented, separate purchase intent; use the [design-partner research plan](../business/design-partner-pilot.md). These interviews guide investment but do not replace legal, payment or release requirements.
+**Next commercial experiment:** ten qualified developer/agency conversations with code-level integration feedback and documented, separate purchase intent; use the [design-partner research plan](https://github.com/dporkka/syntyr-css/blob/main/business/design-partner-pilot.md). These interviews guide investment but do not replace legal, payment or release requirements.
 
 ## Change-control sequence
 
@@ -41,4 +41,4 @@ The [commercial launch gates](../business/commercial-launch-gates.md) and privat
 4. Follow [release-freeze.md](release-freeze.md) and verify the frozen assets and HTTP cache/content hashes before public prerelease announcement.
 5. Only then evaluate npm distribution; paid products must separately clear their own commercial gates.
 
-Related: [published distribution guide](distribution.md), [commercial conversion hypothesis](../business/pro-studio-conversion-plan.md), [a11y gate issue #24](https://github.com/dporkka/syntyr-css/issues/24), [quality gate issue #26](https://github.com/dporkka/syntyr-css/issues/26).
+Related: [published distribution guide](distribution.md), [commercial conversion hypothesis](https://github.com/dporkka/syntyr-css/blob/main/business/pro-studio-conversion-plan.md), [a11y gate issue #24](https://github.com/dporkka/syntyr-css/issues/24), [quality gate issue #26](https://github.com/dporkka/syntyr-css/issues/26).
