@@ -1,0 +1,7 @@
+# Optional Render Blueprint: creates a static site, not a web service.
+services:
+  - type: web
+    name: syntyr-saas-admin-starter
+    runtime: static
+    buildCommand: python3 scripts/build_saas_admin_starter.py
+    staticPublishPath: .saas-admin-public
