@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import argparse
 from pathlib import Path
+from tempfile import TemporaryDirectory
 from zipfile import ZIP_DEFLATED, ZipFile, ZipInfo
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -31,24 +32,29 @@ def package_sites(output_dir: Path) -> dict[str, Path]:
     license_text = (ROOT / "LICENSE").read_bytes()
     output_dir.mkdir(parents=True, exist_ok=True)
     packages: dict[str, Path] = {}
-    for site in SITE_NAMES:
-        pages = sorted((SOURCE / site).glob("*.html"))
-        if not pages or not (SOURCE / site / "index.html").is_file():
-            raise ValueError(f"Missing index page for {site}")
-        destination = output_dir / f"syntyr-{site}.zip"
-        with ZipFile(destination, "w") as zip_file:
-            _store(zip_file, "assets/syntyr.core.css", core)
-            _store(zip_file, "assets/site.css", shared)
-            _store(zip_file, "README.md", readme)
-            _store(zip_file, "LICENSE", license_text)
-            for page in pages:
-                html = page.read_text(encoding="utf-8")
-                if html.count(CORE_HREF) != 1 or html.count(SITE_HREF) != 1:
-                    raise ValueError(f"Unexpected stylesheet references in {page}")
-                html = html.replace(CORE_HREF, "assets/syntyr.core.css")
-                html = html.replace(SITE_HREF, "assets/site.css")
-                _store(zip_file, page.name, html.encode("utf-8"))
-        packages[site] = destination
+    # Finish every archive before replacing any existing package.
+    with TemporaryDirectory(dir=output_dir, prefix=".syntyr-") as temp_dir:
+        staging = Path(temp_dir)
+        for site in SITE_NAMES:
+            pages = sorted((SOURCE / site).glob("*.html"))
+            if not pages or not (SOURCE / site / "index.html").is_file():
+                raise ValueError(f"Missing index page for {site}")
+            destination = output_dir / f"syntyr-{site}.zip"
+            with ZipFile(staging / destination.name, "w") as zip_file:
+                _store(zip_file, "assets/syntyr.core.css", core)
+                _store(zip_file, "assets/site.css", shared)
+                _store(zip_file, "README.md", readme)
+                _store(zip_file, "LICENSE", license_text)
+                for page in pages:
+                    html = page.read_text(encoding="utf-8")
+                    if html.count(CORE_HREF) != 1 or html.count(SITE_HREF) != 1:
+                        raise ValueError(f"Unexpected stylesheet references in {page}")
+                    html = html.replace(CORE_HREF, "assets/syntyr.core.css")
+                    html = html.replace(SITE_HREF, "assets/site.css")
+                    _store(zip_file, page.name, html.encode("utf-8"))
+            packages[site] = destination
+        for destination in packages.values():
+            (staging / destination.name).replace(destination)
     return packages
 
 

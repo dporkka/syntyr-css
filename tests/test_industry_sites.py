@@ -1,9 +1,11 @@
 """Contract tests for dependency-free, distributable industry site starters."""
 from html.parser import HTMLParser
 from pathlib import Path
+from shutil import copytree
 from tempfile import TemporaryDirectory
 from urllib.parse import unquote, urlsplit
 import unittest
+from unittest.mock import patch
 import zipfile
 
 from scripts.package_industry_sites import SITE_NAMES, package_sites
@@ -112,6 +114,29 @@ class IndustrySitesTests(unittest.TestCase):
                                 self.assertIn('href="assets/site.css"', html)
                                 self.assertNotIn("../../dist/", html)
                                 self.assertNotIn("../site.css", html)
+
+    def test_failed_export_preserves_existing_archives(self):
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            source = root / "source"
+            copytree(BASE, source)
+            output = root / "output"
+            first_page = source / SITE_NAMES[0] / "index.html"
+            last_page = source / SITE_NAMES[-1] / "index.html"
+            with patch("scripts.package_industry_sites.SOURCE", source):
+                paths = package_sites(output)
+                before = {path: path.read_bytes() for path in paths.values()}
+
+                # Make the first replacement detectably different, then make
+                # the last starter fail after earlier ZIPs have been built.
+                with first_page.open("a", encoding="utf-8") as page:
+                    page.write("\n<!-- changed on rerun -->\n")
+                last_page.write_text("<html></html>", encoding="utf-8")
+                with self.assertRaisesRegex(ValueError, "Unexpected stylesheet references"):
+                    package_sites(output)
+
+            self.assertEqual(set(output.iterdir()), set(before))
+            self.assertEqual({path: path.read_bytes() for path in paths.values()}, before)
 
     def test_public_site_only_includes_reviewed_starters_and_noindexes_demos(self):
         from scripts.build_cloudflare_site import NOINDEX_HTML, source_files

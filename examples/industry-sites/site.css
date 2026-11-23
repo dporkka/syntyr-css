@@ -67,6 +67,7 @@
 .industry-site .site-cta p,.industry-site .site-cta .site-eyebrow{color:inherit;opacity:.9}
 .industry-site .site-cta h2{font-size:clamp(1.8rem,3vw,2.7rem);letter-spacing:-.04em}
 .industry-site .site-cta .site-button{background:var(--site-surface);border-color:var(--site-surface);color:var(--site-ink)}
+.industry-site .site-cta .site-button:focus-visible{outline-color:var(--site-surface)}
 .industry-site .site-footer{border-top:1px solid var(--site-line);margin-top:5rem;padding-block:2rem}
 .industry-site .site-footer-inner{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;align-items:start}
 .industry-site .site-footer p{font-size:.82rem;max-width:46rem}
