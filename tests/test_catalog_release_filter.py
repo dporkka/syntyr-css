@@ -54,7 +54,7 @@ class PublishedReleaseCatalogTests(unittest.TestCase):
         self.assertIn('ROOT / "metadata/catalog-release-compatibility.v1.json"', build)
 
     def test_copy_full_page_uses_the_selected_release_css(self):
-        self.assertIn("/v/0.3.0-alpha.4/", self.script)
+        self.assertIn("https://syntyr-css.pages.dev/v/0.3.0-alpha.4/", self.script)
         self.assertIn("/dist/", self.script)
         self.assertIn("Copy full page", self.catalog)
         self.assertIn("Self-host", self.script)
