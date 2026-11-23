@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Syntyr&#x27;s distribution is ordinary, scoped CSS. It does not require a JavaScript runtime, hydration, Sass, PostCSS, browser-specific components, or a…">
-  <meta name="syntyr-source-sha256" content="30e431d7bca75584793230472977045bd95b914f6aaf6a8ceb9a30461f2fa733">
+  <meta name="syntyr-source-sha256" content="6d1575575531dd61b8cbd3c2ce3ee25d4ed4afaa5072ccbff574b94453fa8da0">
   <meta name="theme-color" content="#f5f7fb">
   <title>Syntyr with static-site generators — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/static-site-generators">
@@ -60,6 +60,13 @@ The <a href="https://syntyr-css.pages.dev/examples/site-starters/saas-marketing/
 is available only after the corresponding source change is published.
 It is a starting point for Astro, Hugo or Eleventy composition, <strong>not</strong> a
 prebuilt adapter for any generator. The source candidate remains unreleased.</p>
+<p>The <a href="https://github.com/dporkka/syntyr-css/blob/main/deploy/saas-marketing/README.md">separate marketing-site deployment guide</a>
+adds isolated Vercel and Netlify Git-project settings, plus Render, Cloudflare,
+GitHub Pages and ordinary static-server instructions. Build repeatably with
+<code>python3 scripts/build_saas_marketing_site.py</code>, then publish only
+<code>deploy/saas-marketing/.public</code> (nine allowlisted files). This is separate
+from the repository-root SaaS Admin deployment and does not add a runtime.
+The example remains noindexed until its fictional content is replaced.</p>
 <h2 id="integration-matrix">Integration matrix</h2>
 <table>
 <thead>

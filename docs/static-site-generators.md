@@ -32,6 +32,14 @@ is available only after the corresponding source change is published.
 It is a starting point for Astro, Hugo or Eleventy composition, **not** a
 prebuilt adapter for any generator. The source candidate remains unreleased.
 
+The [separate marketing-site deployment guide](https://github.com/dporkka/syntyr-css/blob/main/deploy/saas-marketing/README.md)
+adds isolated Vercel and Netlify Git-project settings, plus Render, Cloudflare,
+GitHub Pages and ordinary static-server instructions. Build repeatably with
+`python3 scripts/build_saas_marketing_site.py`, then publish only
+`deploy/saas-marketing/.public` (nine allowlisted files). This is separate
+from the repository-root SaaS Admin deployment and does not add a runtime.
+The example remains noindexed until its fictional content is replaced.
+
 ## Integration matrix
 
 | Generator | Recommended CSS delivery | Base path / deployment concern | Example |
