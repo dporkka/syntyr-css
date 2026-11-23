@@ -151,7 +151,7 @@ const engines = {chromium, firefox, webkit};
         await page.locator('.catalog-card:not([hidden]) .catalog-code-details').first().evaluate(el => {el.open = true;});
         await page.locator('.catalog-card:not([hidden]) [data-catalog-copy-page]').first().click();
         const pinnedPage = await page.evaluate(() => window.__catalogCopied);
-        assert.ok(pinnedPage.includes('/v/0.3.0-alpha.4/syntyr.core.css'));
+        assert.ok(pinnedPage.includes('https://syntyr-css.pages.dev/v/0.3.0-alpha.4/syntyr.core.css'));
         assert.ok(!pinnedPage.includes('href="/dist/syntyr.core.css"'));
         await page.locator('#catalog-release-filter').selectOption('source-alpha5');
         // Optional stylesheet requirements must be complete, not only the
