@@ -7,7 +7,7 @@ from pathlib import Path
 import shutil
 import subprocess
 from tempfile import TemporaryDirectory
-from urllib.parse import urlsplit
+from urllib.parse import unquote, urlsplit
 
 if __package__:
     from scripts.render_cms_starter import validate_document
@@ -27,10 +27,12 @@ def _base_path(base_url: str) -> str:
     if not isinstance(base_url, str) or any(c.isspace() or c in (chr(39), chr(34), chr(92)) for c in base_url):
         raise ValueError("Unsafe base URL")
     url = urlsplit(base_url)
-    path = url.path or "/"
+    raw_path = url.path or "/"
+    path = unquote(raw_path)
     if (url.scheme not in ("http", "https") or not url.hostname or url.username
-            or url.password or url.query or url.fragment or not path.endswith("/")
-            or "//" in path or any(part in (".", "..") for part in path.split("/"))):
+            or url.password or url.query or url.fragment or not raw_path.endswith("/")
+            or "//" in path or chr(92) in path
+            or any(part in (".", "..") for part in path.split("/"))):
         raise ValueError("Expected an absolute HTTP(S) site URL ending in /, without traversal")
     return path
 

@@ -1,4 +1,5 @@
 """Hugo must consume the same validated CMS JSON without runtime dependencies."""
+from html.parser import HTMLParser
 import json
 import os
 import re
@@ -34,6 +35,8 @@ class HugoCmsStarterTests(unittest.TestCase):
 
     def test_stage_rejects_malformed_base_urls(self):
         for bad in ("javascript:alert(1)", "https://example.org/a/../b/",
+                    "https://example.org/a/%2e%2e/b/", "https://example.org/a/%2Fb/",
+                    "https://example.org/a%2F", "https://example.org/a%5Cb/",
                     "https://example.org/path/?injected=1", "https://example.org/path/\nkey='unsafe'"):
             with self.subTest(bad=bad), TemporaryDirectory() as temp:
                 site = Path(temp) / "site"
@@ -79,12 +82,42 @@ class HugoCmsStarterTests(unittest.TestCase):
         hugo = os.environ.get("HUGO_BIN") or shutil.which("hugo")
         if not hugo:
             self.skipTest("Hugo not installed; set HUGO_BIN to exercise real output")
+        for prefix in ("/client/site/", "/my%20project/"):
+            with self.subTest(prefix=prefix), TemporaryDirectory() as temp:
+                output = Path(temp) / "public"
+                self.assertEqual(build(output, hugo=hugo, base_url=f"https://example.org{prefix}"), 1)
+                html = (output / "index.html").read_text()
+                self.assertIn(f"href={prefix}assets/syntyr.core.css", html)
+                self.assertIn(f"href={prefix}#section-features", html)
+
+    def test_real_hugo_preserves_action_query_parameters(self):
+        hugo = os.environ.get("HUGO_BIN") or shutil.which("hugo")
+        if not hugo:
+            self.skipTest("Hugo not installed; set HUGO_BIN to exercise real output")
+
+        class Links(HTMLParser):
+            def __init__(self):
+                super().__init__()
+                self.hrefs = []
+
+            def handle_starttag(self, tag, attrs):
+                if tag == "a":
+                    self.hrefs.append(dict(attrs).get("href"))
+
         with TemporaryDirectory() as temp:
+            data = json.loads((CMS / "content/pages/home.json").read_text())
+            local = "/checkout?plan=pro&quantity=2"
+            external = "https://example.org" + local
+            data["sections"][0]["button"]["url"] = local
+            data["sections"][-1]["button"]["url"] = external
+            input_path = Path(temp) / "page.json"
+            input_path.write_text(json.dumps(data))
             output = Path(temp) / "public"
-            self.assertEqual(build(output, hugo=hugo, base_url="https://example.org/client/site/"), 1)
-            html = (output / "index.html").read_text()
-            self.assertIn("href=/client/site/assets/syntyr.core.css", html)
-            self.assertIn("href=/client/site/#section-features", html)
+            self.assertEqual(build(output, hugo=hugo, content_path=input_path), 1)
+            links = Links()
+            links.feed((output / "index.html").read_text())
+            self.assertIn("/syntyr-hugo" + local, links.hrefs)
+            self.assertIn(external, links.hrefs)
 
     def test_real_hugo_autoescapes_untrusted_but_valid_text(self):
         hugo = os.environ.get("HUGO_BIN") or shutil.which("hugo")
