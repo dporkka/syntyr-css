@@ -50,6 +50,14 @@ NOINDEX_HTML = frozenset({
     "examples/app-integrations.html", "examples/app-security.html",
     "examples/design-benchmarks/marketing.html", "examples/design-benchmarks/crm.html",
     "examples/design-benchmarks/documentation.html",
+    "examples/industry-sites/index.html",
+    "examples/industry-sites/field-service/index.html",
+    "examples/industry-sites/field-service/services.html",
+    "examples/industry-sites/professional-practice/index.html",
+    "examples/industry-sites/professional-practice/services.html",
+    "examples/industry-sites/saas-developer/index.html",
+    "examples/industry-sites/saas-developer/pricing.html",
+    "examples/industry-sites/saas-developer/docs.html",
     "docs/htmx-playground.html",  # Interactive app demo, not an SEO landing page.
 })
 CANONICAL_LINK = re.compile(r'<link\s+rel="canonical"[^>]*>', re.IGNORECASE)
@@ -386,6 +394,12 @@ def source_files(site_url: str = SITE_URL, *, include_cloudflare_headers: bool =
         "viz.html", "geo.html", "data-grid.html", "animation.html", "copy.html",
         "design-benchmarks/marketing.html", "design-benchmarks/crm.html",
         "design-benchmarks/documentation.html", "design-benchmarks/benchmark.css",
+        # Reviewed MIT site starters only; do not scan arbitrary template directories.
+        "industry-sites/index.html", "industry-sites/site.css",
+        "industry-sites/field-service/index.html", "industry-sites/field-service/services.html",
+        "industry-sites/professional-practice/index.html", "industry-sites/professional-practice/services.html",
+        "industry-sites/saas-developer/index.html", "industry-sites/saas-developer/pricing.html",
+        "industry-sites/saas-developer/docs.html",
     )
     # Import the canonical distribution registry rather than maintaining
     # a second list that can silently omit new CSS entrypoints.
