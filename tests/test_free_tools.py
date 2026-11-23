@@ -26,6 +26,16 @@ class FreeToolsTests(unittest.TestCase):
         self.assertIn(f'{SITE_URL}/tools/</loc>', sitemap)
         self.assertIn(f'{SITE_URL}/tools/color-contrast-checker</loc>', sitemap)
 
+    def test_ascii_tool_search_intents_have_unique_indexable_content(self):
+        page = self.files['tools/ascii-playground.html'].decode()
+        sitemap = self.files['sitemap.xml'].decode()
+        self.assertIn(f'{SITE_URL}/tools/ascii-playground</loc>', sitemap)
+        self.assertIn('<h1>Free ASCII art generator</h1>', page)
+        for intent in ('image to ASCII', 'ASCII text and logo', 'ASCII effects for websites'):
+            self.assertIn(intent, page)
+        self.assertIn('href="../examples/ascii-heroes.html"', page)
+        self.assertNotIn('name="robots" content="noindex', page)
+
     def test_tools_linked_from_home_and_docs(self):
         self.assertIn('href="tools/"', self.files['index.html'].decode())
         self.assertIn('href="../tools/"', self.files['docs/index.html'].decode())
