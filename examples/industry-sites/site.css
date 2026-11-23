@@ -73,6 +73,7 @@
 .industry-site .site-footer p{font-size:.82rem;max-width:46rem}
 .industry-site .site-footer a{text-underline-offset:.2em}
 .industry-site .site-code{overflow-x:auto;padding:1.4rem;border:1px solid var(--site-line);border-radius:.85rem;background:#081420;color:#c0f7dd;font:.89rem/1.8 ui-monospace,SFMono-Regular,Consolas,monospace}
+.industry-site .site-code:focus-visible{outline:3px solid var(--site-accent);outline-offset:3px}
 .industry-site .site-pricing{font-size:2.65rem;font-weight:820;letter-spacing:-.06em}
 .industry-site .site-pricing small{font-size:.9rem;font-weight:500;letter-spacing:0}
 .industry-site .site-card--featured{border-color:var(--site-accent);box-shadow:0 0 0 1px var(--site-accent) inset}

@@ -115,6 +115,47 @@ class IndustrySitesTests(unittest.TestCase):
                                 self.assertNotIn("../../dist/", html)
                                 self.assertNotIn("../site.css", html)
 
+    def test_export_does_not_include_unreviewed_html_pages(self):
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            source = root / "source"
+            copytree(BASE, source)
+            draft = source / "field-service" / "draft.html"
+            draft.write_text((source / "field-service" / "index.html").read_text(encoding="utf-8"),
+                             encoding="utf-8")
+            with patch("scripts.package_industry_sites.SOURCE", source):
+                outputs = package_sites(root / "output")
+            with zipfile.ZipFile(outputs["field-service"]) as archive:
+                self.assertNotIn("draft.html", archive.namelist())
+                self.assertEqual(
+                    {name for name in archive.namelist() if name.endswith(".html")},
+                    {"index.html", "services.html"},
+                )
+
+    def test_export_rejects_symlinked_reviewed_page(self):
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            source = root / "source"
+            copytree(BASE, source)
+            target = source / "professional-practice" / "services.html"
+            outside = root / "outside.html"
+            outside.write_text(target.read_text(encoding="utf-8"), encoding="utf-8")
+            target.unlink()
+            target.symlink_to(outside)
+            with patch("scripts.package_industry_sites.SOURCE", source):
+                with self.assertRaisesRegex(ValueError, "Not a reviewed regular page"):
+                    package_sites(root / "output")
+
+    def test_code_examples_that_may_scroll_are_keyboard_focusable(self):
+        for path in (BASE / "saas-developer").glob("*.html"):
+            with self.subTest(path=path):
+                page = Page()
+                page.feed(path.read_text(encoding="utf-8"))
+                for tag, attrs in page.tags:
+                    if tag == "pre" and "site-code" in attrs.get("class", "").split():
+                        self.assertEqual(attrs.get("tabindex"), "0", "Code needs Tab access")
+                        self.assertTrue(attrs.get("aria-label"), "Code needs a descriptive label")
+
     def test_failed_export_preserves_existing_archives(self):
         with TemporaryDirectory() as tmp:
             root = Path(tmp)

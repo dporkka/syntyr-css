@@ -12,7 +12,12 @@ from zipfile import ZIP_DEFLATED, ZipFile, ZipInfo
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "examples" / "industry-sites"
-SITE_NAMES = ("field-service", "professional-practice", "saas-developer")
+SITE_PAGES = {
+    "field-service": ("index.html", "services.html"),
+    "professional-practice": ("index.html", "services.html"),
+    "saas-developer": ("index.html", "pricing.html", "docs.html"),
+}
+SITE_NAMES = tuple(SITE_PAGES)
 CORE_HREF = "../../../dist/syntyr.core.css"
 SITE_HREF = "../site.css"
 
@@ -35,10 +40,12 @@ def package_sites(output_dir: Path) -> dict[str, Path]:
     # Finish every archive before replacing any existing package.
     with TemporaryDirectory(dir=output_dir, prefix=".syntyr-") as temp_dir:
         staging = Path(temp_dir)
-        for site in SITE_NAMES:
-            pages = sorted((SOURCE / site).glob("*.html"))
-            if not pages or not (SOURCE / site / "index.html").is_file():
-                raise ValueError(f"Missing index page for {site}")
+        for site, names in SITE_PAGES.items():
+            pages = [SOURCE / site / name for name in names]
+            for page in pages:
+                if (page.is_symlink() or not page.is_file()
+                        or not page.resolve().is_relative_to(SOURCE.resolve())):
+                    raise ValueError(f"Not a reviewed regular page: {page}")
             destination = output_dir / f"syntyr-{site}.zip"
             with ZipFile(staging / destination.name, "w") as zip_file:
                 _store(zip_file, "assets/syntyr.core.css", core)
