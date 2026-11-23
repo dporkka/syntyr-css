@@ -51,3 +51,6 @@ examples/next-app-router/.next/
 
 # Generated optional portable CMS starter website.
 examples/cms-starter/_site/
+
+# Optional Astro + Keystatic static starter: audited, pinned example lockfile.
+!examples/astro-keystatic/package-lock.json
