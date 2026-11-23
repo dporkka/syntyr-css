@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Syntyr&#x27;s distribution is ordinary, scoped CSS. It does not require a JavaScript runtime, hydration, Sass, PostCSS, browser-specific components, or a…">
-  <meta name="syntyr-source-sha256" content="461e46e260475a31e3e5b3c86e72936529995a9dcdf0fb418ca887091613150e">
+  <meta name="syntyr-source-sha256" content="2b4056ea4baea48e36cb61c559cb713b76cf177c6916a9db34b309f53effae39">
   <meta name="theme-color" content="#f5f7fb">
   <title>Syntyr with static-site generators — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/static-site-generators">
@@ -72,7 +72,7 @@ package archive, or a self-hosted versioned CSS file.</p>
 <td><strong>Hugo</strong></td>
 <td>Serve prebuilt CSS from <code>static/</code> or a Hugo filesystem mount</td>
 <td>Use <code>relURL</code> for assets, not a bare <code>/css/</code> URL on project subpaths</td>
-<td><a href="https://github.com/dporkka/syntyr-css/tree/main/experiments/hugo/">Isolated Hugo proof</a></td>
+<td><a href="https://github.com/dporkka/syntyr-css/tree/main/examples/hugo-cms/">Runnable CMS-driven Hugo starter</a>; <a href="https://github.com/dporkka/syntyr-css/tree/main/experiments/hugo/">isolated docs proof</a></td>
 </tr>
 <tr>
 <td><strong>Jekyll</strong></td>
@@ -141,7 +141,17 @@ layout:</p>
 &lt;main class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot;&gt;...&lt;/main&gt;
 </code></pre>
 <p>Do not use an unprefixed <code>/assets/...</code> URL for GitHub Pages project sites.
-Hugo's own preview script validates its existing rendered Markdown pages
+For an independent, CMS-driven landing page, the
+<a href="https://github.com/dporkka/syntyr-css/tree/main/examples/hugo-cms/">runnable Hugo fixture</a> renders the <strong>same</strong>
+<code>content/pages/home.json</code> as the Git-backed CMS starter, with five native
+semantic HTML blocks and no browser script:</p>
+<pre tabindex="0"><code class="language-sh">python3 scripts/build.py
+python3 scripts/build_hugo_cms_starter.py --hugo hugo --output /tmp/syntyr-hugo-site
+</code></pre>
+<p>It verifies generated CSS and page URLs under <code>/syntyr-hugo/</code> and supports
+<code>--base-url https://example.com/my-project/</code>. Hugo is a build-time tool,
+not a requirement of the Syntyr CSS package.</p>
+<p>Hugo's own preview script validates its existing rendered Markdown pages
 and local links:</p>
 <pre tabindex="0"><code class="language-sh">python3 scripts/verify_hugo_preview.py --hugo /path/to/hugo
 </code></pre>

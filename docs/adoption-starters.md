@@ -41,6 +41,17 @@ npm run build
 npm run verify
 ```
 
+## Hugo + portable CMS JSON
+
+[Source](../examples/hugo-cms/) — Hugo v0.170.0 renders the existing
+CMS starter JSON into static Syntyr sections and verifies project-subpath
+styles and links. Optional Sveltia, Pages CMS or Decap editors can update
+the source file; none run on the public page.
+
+```sh
+python3 scripts/build_hugo_cms_starter.py --hugo hugo --output /tmp/syntyr-hugo-site
+```
+
 For Hugo, Jekyll, Zola, and static Next.js export, see the
 [static-site generator compatibility guide](static-site-generators.md).
 

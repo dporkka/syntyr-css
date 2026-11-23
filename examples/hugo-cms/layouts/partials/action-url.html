@@ -1,0 +1,6 @@
+{{- /* CMS input is validated by Python before Hugo runs. Resolve local links against baseURL. */ -}}
+{{- $url := . -}}
+{{- if hasPrefix $url "/" -}}
+  {{- $url = printf "%s%s" site.Home.RelPermalink (strings.TrimPrefix "/" $url) -}}
+{{- end -}}
+{{- return $url -}}
