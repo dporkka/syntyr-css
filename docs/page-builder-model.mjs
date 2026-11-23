@@ -74,9 +74,15 @@ let GALLERY_DEFINITIONS = new Map();
 let SECTION_DEFINITIONS = new Map();
 const MAX_BLOCKS = 50;
 const MAX_FIELD = 5000;
-// 50 blocks x at most seven 5,000-code-unit fields fit even when JSON escaping
-// expands control characters to six bytes each. Same byte cap on file and parser.
-export const MAX_PROJECT_BYTES = 16 * 1024 * 1024;
+// Project JSON includes embedded raster images for fully portable editor reloads.
+// Bound payload size separately from individual editable fields and ZIP output.
+export const MAX_PROJECT_BYTES = 32 * 1024 * 1024;
+export const MAX_IMAGE_BYTES = 2 * 1024 * 1024;
+const MAX_MEDIA_BYTES = 10 * 1024 * 1024;
+const MAX_IMAGES = 20;
+const CUSTOM_IMAGE = /^custom-[a-f0-9]{64}\.(png|jpg|webp)$/;
+const BUILTIN_ASSET = /^(?:\.\.\/)?assets\/([a-z0-9-]+\.svg)$/;
+const UPLOADED_ASSET = /^assets\/(custom-[a-f0-9]{64}\.(?:png|jpg|webp))$/;
 
 function plainObject(value) {
   return value !== null && typeof value === "object" && !Array.isArray(value);
@@ -88,10 +94,60 @@ function escapeHtml(value) {
   return String(value).replace(/&/g, "&amp;").replace(/</g, "&lt;")
     .replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
 }
-function safeHref(value, allowedAssets = []) {
+function decodeImageAsset(name, dataURL) {
+  const ext = CUSTOM_IMAGE.exec(name);
+  if (!ext || typeof dataURL !== "string")
+    throw new Error("Invalid uploaded image asset name or content");
+  const match = /^data:image\/(png|jpeg|webp);base64,([A-Za-z0-9+/]+={0,2})$/.exec(dataURL);
+  if (!match || (match[2].length % 4) !== 0)
+    throw new Error("Invalid uploaded image MIME or base64");
+  const expectedExt = match[1] === "jpeg" ? "jpg" : match[1];
+  if (ext[1] !== expectedExt)
+    throw new Error("Uploaded image extension and MIME do not match");
+  if (match[2].length > Math.ceil(MAX_IMAGE_BYTES / 3) * 4 + 4)
+    throw new Error("Uploaded image is too large");
+  // Validate the entire base64 alphabet and byte length without decoding
+  // megabytes every time the user edits a page field or previews a document.
+  const encoded = match[2];
+  const padding = encoded.endsWith("==") ? 2 : encoded.endsWith("=") ? 1 : 0;
+  const length = (encoded.length / 4) * 3 - padding;
+  if (length > MAX_IMAGE_BYTES || length < 12)
+    throw new Error("Uploaded image size is invalid or too large");
+  let bytes;
+  try {
+    const header = atob(encoded.slice(0, 16));
+    bytes = Uint8Array.from(header, c => c.charCodeAt(0));
+  } catch { throw new Error("Invalid uploaded image base64"); }
+  const png = match[1] === "png" &&
+    [137,80,78,71,13,10,26,10].every((part,i) => bytes[i] === part);
+  const jpg = match[1] === "jpeg" &&
+    bytes[0] === 255 && bytes[1] === 216 && bytes[2] === 255;
+  const webp = match[1] === "webp" &&
+    [82,73,70,70].every((part,i) => bytes[i] === part) &&
+    [87,69,66,80].every((part,i) => bytes[8+i] === part);
+  if (!png && !jpg && !webp) throw new Error("Uploaded image signature is invalid");
+  return length;
+}
+
+function mediaNameFromPath(value) {
+  return UPLOADED_ASSET.exec(value)?.[1] || null;
+}
+function imageSource(value, allowedAssets, media, assetPrefix, preview) {
+  const builtin = BUILTIN_ASSET.exec(value);
+  if (builtin && allowedAssets.includes(builtin[1]))
+    return assetPrefix + builtin[1];
+  const uploaded = mediaNameFromPath(value);
+  if (uploaded && own(media, uploaded))
+    return preview ? media[uploaded] : assetPrefix + uploaded;
+  return "";
+}
+
+function safeHref(value, allowedAssets = [], media = {}, assetPrefix = "../assets/") {
   const href = value.trim();
-  const asset = /^(?:\.\.\/)?assets\/([a-z0-9-]+\.svg)$/.exec(href);
-  if (asset && allowedAssets.includes(asset[1])) return "../assets/" + asset[1];
+  const asset = BUILTIN_ASSET.exec(href);
+  if (asset && allowedAssets.includes(asset[1])) return assetPrefix + asset[1];
+  const uploaded = mediaNameFromPath(href);
+  if (uploaded && own(media, uploaded)) return assetPrefix + uploaded;
   if (/^#[a-zA-Z][a-zA-Z0-9_-]*$/.test(href)) return href;
   if (/^\/(?!\/)[a-zA-Z0-9_./#?&=%+-]*$/.test(href)) return href;
   if (/^https:\/\/[a-zA-Z0-9.-]+(?::[0-9]+)?(?:[/?#][^\s"'<>]*)?$/i.test(href)) return href;
@@ -130,7 +186,7 @@ function buildGalleryDefinition(entry) {
   const chunks = [];
   const fields = {};
   const fieldKinds = {};
-  const names = { text: 0, href: 0, placeholder: 0 };
+  const names = { text: 0, href: 0, placeholder: 0, src: 0, alt: 0 };
   function pushField(kind, value) {
     const key = kind + (++names[kind]);
     if (Object.keys(fields).length >= 60) throw new Error("Too many gallery fields");
@@ -143,7 +199,7 @@ function buildGalleryDefinition(entry) {
   for (const part of entry.html.split(/(<[^>]*>)/g)) {
     if (!part) continue;
     if (part.startsWith("<")) {
-      const attr = /\s(href|placeholder)="([^"]*)"/g;
+      const attr = /\s(href|placeholder|src|alt)="([^"]*)"/g;
       let cursor = 0;
       let match;
       while ((match = attr.exec(part))) {
@@ -246,11 +302,15 @@ function scopeGalleryIds(html, blockId) {
     }
   ));
 }
-function renderGalleryBlock(block, def, assetPrefix) {
+function renderGalleryBlock(block, def, assetPrefix, media, preview) {
   let html = def.chunks.map(part => {
     if (typeof part === "string") return part;
     const value = block.props[part.field];
-    return escapeHtml(part.kind === "href" ? safeHref(value, def.assetNames) : value);
+    if (part.kind === "href")
+      return escapeHtml(safeHref(value, def.assetNames, media, assetPrefix));
+    if (part.kind === "src")
+      return escapeHtml(imageSource(value, def.assetNames, media, assetPrefix, preview));
+    return escapeHtml(value);
   }).join("");
   // Canonical snippets use ../assets from docs/blocks.html, while exported
   // standalone pages keep all images alongside index.html in assets/.
@@ -262,7 +322,8 @@ function renderGalleryBlock(block, def, assetPrefix) {
   // of the composer-selected theme.
   if (block.type.startsWith(SECTION_PREFIX))
     html = html.replace(/\sdata-syn-theme="studio"/g, "");
-  return '<section class="syn-region" data-syntyr-block-id="' + escapeHtml(block.id) +
+  return '<section class="syn-region" id="block-' + escapeHtml(block.id) +
+    '" data-syntyr-block-id="' + escapeHtml(block.id) +
     '" aria-label="' + escapeHtml(def.label) + '">' +
     scopeGalleryIds(html, block.id) + "</section>";
 }
@@ -295,6 +356,7 @@ export function createDefaultDocument() {
     title: "My Syntyr page",
     description: "",
     language: "en",
+    media: {},
     theme: "studio",
     blocks: [
       createBlock("hero", "hero-1"),
@@ -336,6 +398,17 @@ export function parseDocument(input) {
       !/^[A-Za-z]{2,3}(?:-[A-Za-z0-9]{2,8}){0,3}$/.test(language))
     throw new Error("Invalid page language");
   if (!THEMES.includes(page.theme)) throw new Error("Unknown page theme");
+  const candidateMedia = page.media === undefined ? {} : page.media;
+  if (!plainObject(candidateMedia) || Object.keys(candidateMedia).length > MAX_IMAGES)
+    throw new Error("Invalid uploaded image asset collection");
+  const media = {};
+  let mediaBytes = 0;
+  for (const [name, dataURL] of Object.entries(candidateMedia)) {
+    const bytes = decodeImageAsset(name, dataURL);
+    mediaBytes += bytes;
+    if (mediaBytes > MAX_MEDIA_BYTES) throw new Error("Uploaded images exceed project size limit");
+    media[name] = dataURL;
+  }
   if (!Array.isArray(page.blocks) || page.blocks.length > MAX_BLOCKS)
     throw new Error("Page must contain at most 50 blocks");
   const ids = new Set();
@@ -350,19 +423,29 @@ export function parseDocument(input) {
     if (Object.keys(block).some(key => !["id", "type", "props"].includes(key)))
       throw new Error("Unknown block property");
     if (!plainObject(block.props)) throw new Error("Invalid block properties");
-    const declared = getBlockDefinition(block.type).fields;
+    const definition = getBlockDefinition(block.type);
+    const declared = definition.fields;
     const props = {};
     for (const name of Object.keys(declared)) {
-      if (!own(block.props, name) || typeof block.props[name] !== "string")
+      // Existing syntyr.page.v1 projects predate editable image src/alt slots.
+      // Migrate only those newly introduced fields from the canonical template.
+      // All formerly required fields must still be present and validated.
+      const imageField = ["src", "alt"].includes(definition.fieldKinds?.[name]);
+      const value = own(block.props, name) ? block.props[name] :
+        imageField ? declared[name] : undefined;
+      if (typeof value !== "string")
         throw new Error("Field " + name + " must be a string");
-      if (block.props[name].length > MAX_FIELD) throw new Error("Field " + name + " is too long");
-      props[name] = block.props[name];
+      if (value.length > MAX_FIELD) throw new Error("Field " + name + " is too long");
+      if (definition.fieldKinds?.[name] === "src" &&
+          !imageSource(value, definition.assetNames, media, "assets/", false))
+        throw new Error("Invalid image source: " + name);
+      props[name] = value;
     }
     if (Object.keys(block.props).some(key => !own(declared, key)))
       throw new Error("Unknown block property");
     return { id: block.id, type: block.type, props };
   });
-  return { schema: SCHEMA_VERSION, title: page.title, description, language, theme: page.theme, blocks };
+  return { schema: SCHEMA_VERSION, title: page.title, description, language, theme: page.theme, media, blocks };
 }
 
 export function moveBlock(page, from, to) {
@@ -396,18 +479,78 @@ export function duplicateBlock(page, index, id) {
 }
 
 export function requiredAssets(page) {
+  const normalized = parseDocument(page);
   const names = new Set();
-  for (const block of parseDocument(page).blocks) {
+  for (const block of normalized.blocks) {
     const def = getBlockDefinition(block.type);
-    for (const asset of def.assetNames || []) names.add(asset);
+    for (const [field, kind] of Object.entries(def.fieldKinds || {})) {
+      if (kind !== "src" && kind !== "href") continue;
+      const value = block.props[field];
+      const builtin = BUILTIN_ASSET.exec(value);
+      if (builtin && def.assetNames?.includes(builtin[1])) names.add(builtin[1]);
+      const uploaded = mediaNameFromPath(value);
+      if (uploaded && own(normalized.media, uploaded)) names.add(uploaded);
+    }
   }
   return [...names].sort();
 }
 
-function renderBlock(block, anchor, assetPrefix) {
+export function getImageAssetBytes(page, name) {
+  const normalized = parseDocument(page);
+  if (!own(normalized.media, name)) throw new Error("Unknown uploaded image");
+  decodeImageAsset(name, normalized.media[name]);
+  return Uint8Array.from(atob(normalized.media[name].split(",")[1]), c => c.charCodeAt(0));
+}
+
+function pruneUnusedMedia(page) {
+  const used = new Set();
+  for (const block of page.blocks) {
+    for (const value of Object.values(block.props)) {
+      const name = mediaNameFromPath(value);
+      if (name) used.add(name);
+    }
+  }
+  for (const name of Object.keys(page.media))
+    if (!used.has(name)) delete page.media[name];
+  return page;
+}
+
+export function replaceBlockImage(page, blockId, field, {filename, dataURL}) {
+  const next = parseDocument(page);
+  const block = next.blocks.find(item => item.id === blockId);
+  if (!block) throw new Error("Unknown image block");
+  const definition = getBlockDefinition(block.type);
+  if (definition.fieldKinds?.[field] !== "src")
+    throw new Error("Expected editable image src field");
+  decodeImageAsset(filename, dataURL);
+  const previous = block.props[field];
+  next.media[filename] = dataURL;
+  block.props[field] = "assets/" + filename;
+  for (const [key, kind] of Object.entries(definition.fieldKinds))
+    if (kind === "href" && block.props[key] === previous)
+      block.props[key] = block.props[field];
+  return parseDocument(pruneUnusedMedia(next));
+}
+
+export function restoreBlockImage(page, blockId, field) {
+  const next = parseDocument(page);
+  const block = next.blocks.find(item => item.id === blockId);
+  if (!block) throw new Error("Unknown image block");
+  const definition = getBlockDefinition(block.type);
+  if (definition.fieldKinds?.[field] !== "src")
+    throw new Error("Expected editable image src field");
+  const previous = block.props[field];
+  block.props[field] = definition.fields[field];
+  for (const [key, kind] of Object.entries(definition.fieldKinds))
+    if (kind === "href" && block.props[key] === previous)
+      block.props[key] = block.props[field];
+  return parseDocument(pruneUnusedMedia(next));
+}
+
+function renderBlock(block, anchor, assetPrefix, media, preview) {
   const p = block.props;
   const template = GALLERY_DEFINITIONS.get(block.type) || SECTION_DEFINITIONS.get(block.type);
-  if (template) return renderGalleryBlock(block, template, assetPrefix);
+  if (template) return renderGalleryBlock(block, template, assetPrefix, media, preview);
   const id = ' data-syntyr-block-id="' + escapeHtml(block.id) + '"';
   const sectionAnchor = anchor ? ' id="' + escapeHtml(anchor) + '"' : "";
   switch (block.type) {
@@ -453,12 +596,13 @@ function renderBlock(block, anchor, assetPrefix) {
 
 export function renderSections(page, {previewAssets = false} = {}) {
   const assetPrefix = previewAssets === true ? "../assets/" : "assets/";
+  const normalized = parseDocument(page);
   const anchors = new Set();
-  return parseDocument(page).blocks.map((block) => {
+  return normalized.blocks.map((block) => {
     const base = { hero: "top", features: "features", cta: "contact" }[block.type];
     const anchor = base ? (anchors.has(base) ? "section-" + block.id : base) : "";
     if (base) anchors.add(base);
-    return renderBlock(block, anchor, assetPrefix);
+    return renderBlock(block, anchor, assetPrefix, normalized.media, previewAssets === true);
   }).join("\n");
 }
 

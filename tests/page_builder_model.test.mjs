@@ -131,7 +131,7 @@ test("all valid editor projects, including large and multibyte text, can be reop
 });
 
 test("JSON import is bounded by the same UTF-8 byte limit as the file picker", () => {
-  assert.equal(MAX_PROJECT_BYTES, 16 * 1024 * 1024);
+  assert.equal(MAX_PROJECT_BYTES, 32 * 1024 * 1024);
   const huge = JSON.stringify(createDefaultDocument()) + " ".repeat(MAX_PROJECT_BYTES);
   assert.throws(() => parseDocument(huge), /too large/i);
 });
