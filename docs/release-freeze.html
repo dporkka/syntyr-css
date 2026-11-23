@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="This is the unreleased alpha.5 procedure. Published alpha.4 files are immutable. A passing unit test or automated axe-core scan is not authorization to…">
-  <meta name="syntyr-source-sha256" content="74187f59c561d6f7660a1394afc76847ab1967360d44c563e5502048f9e850f7">
+  <meta name="syntyr-source-sha256" content="2cf4338baebd33b5bc1ed9c8f148b84d8d4c41d183814b8320ec20cce126b7c1">
   <meta name="theme-color" content="#f5f7fb">
   <title>Freezing a Syntyr CSS CDN release safely — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/release-freeze">
@@ -67,7 +67,8 @@ python3 scripts/freeze_site_release.py --apply
 <p>Before authorizing any <strong>separate npm publication</strong>, run <code>python3 scripts/audit_npm_package.py</code> on the exact candidate source to inspect the actual packed bytes and exported CSS paths. This requires npm only in the maintainer environment, not for CSS consumers. The check does not confer release approval or publish anything.</p>
 <p>After freezing, review the manifest diff and source hashes, commit the new immutable snapshot, verify the static-site build, deploy to staging and verify live Cloudflare paths/content hashes/headers. Only then tag and publish the release through the separate release process. <strong>This script does not deploy, tag, enable payments or publish an npm package.</strong></p>
 <h2 id="current-status">Current status</h2>
-<p>The alpha.5 manual reviews are <strong>not signed off</strong>. The latest source accessibility triage identifies 161 inconclusive contrast elements requiring adjudication, plus real zoom, assistive-technology and native high-contrast checks. Until these and brand clearance have evidenced approval, freezing alpha.5 should be blocked.</p>
+<p>The alpha.5 manual reviews are <strong>not signed off</strong>. A historical November 18, 2026 source-only audit in <a href="accessibility-alpha5-review.html">accessibility-alpha5-review.md</a> recorded 165 inconclusive contrast elements at commit <code>70ec764</code>. That count is <strong>not</strong> a measurement of the current source head; intervening commits invalidate any assumption that it remains accurate.</p>
+<p>Before freezing, run the pinned axe and browser checks on the exact candidate SHA, record every incomplete contrast target and adjudication, and separately capture actual zoom, assistive-technology and native high-contrast evidence. Update the review record with the SHA and audit date, <strong>not</strong> a copied historical count. Until manual reviews and brand clearance have evidenced approval, freezing alpha.5 remains blocked. The commercial sale/download gates in <a href="https://github.com/dporkka/syntyr-css/blob/main/business/commercial-launch-gates.md">commercial sale/download gates</a> are separate and remain closed.</p>
         </article>
         <aside class="docs-article-sidebar">
           <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
