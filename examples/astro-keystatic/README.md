@@ -16,7 +16,7 @@ From the Syntyr monorepository checkout:
 
 ```sh
 cd examples/astro-keystatic
-npm ci
+npm ci --include=dev
 npm run build
 npm run verify
 ```
@@ -60,7 +60,7 @@ Do not expose the dev server with a reverse proxy, a tunnel, or a public
    commit the content changes to a feature branch.
 3. Open a pull request and merge only after review. Deploy from the protected
    `main` branch through your hosting provider's **Git integration**
-   (e.g. Cloudflare Pages), using `npm ci && npm run build` from the example
+   (e.g. Cloudflare Pages), using `npm ci --include=dev && npm run build` from the example
    directory and publishing `dist/` with an appropriate site `base`.
 4. The hosting build has **no Keystatic editor or OAuth service**. The Git
    commit is the source of truth; the deployment contains only generated
