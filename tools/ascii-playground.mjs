@@ -82,7 +82,9 @@ $('copy').addEventListener('click',async()=>{
 $('download').addEventListener('click',()=>{
   if(!art||playing||loading) return;
   const mime={txt:'text/plain',html:'text/html',svg:'image/svg+xml'}[format.value];
-  const url=URL.createObjectURL(new Blob([output.value],{type:mime+';charset=utf-8'}));
+  // A saved HTML fragment has no HTTP headers; mark its Unicode encoding in the file.
+  const content=format.value==='html'?['\uFEFF',output.value]:[output.value];
+  const url=URL.createObjectURL(new Blob(content,{type:mime+';charset=utf-8'}));
   const a=document.createElement('a'); a.href=url; a.download='syntyr-ascii.'+format.value; a.click();
   setTimeout(()=>URL.revokeObjectURL(url),1000);
 });

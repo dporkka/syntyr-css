@@ -29,6 +29,14 @@ try:
             with page.expect_download() as result:
                 page.click('#download')
             assert result.value.suggested_filename=='syntyr-ascii.svg'
+            page.select_option('#ramp','braille')
+            page.select_option('#format','html')
+            fragment=page.locator('#export').input_value()
+            assert any('\u2800' <= glyph <= '\u28ff' for glyph in fragment)
+            with page.expect_download() as result:
+                page.click('#download')
+            assert result.value.suggested_filename=='syntyr-ascii.html'
+            assert result.value.path().read_bytes()==b'\xef\xbb\xbf'+fragment.encode('utf-8')
             page.click('#play')
             assert page.locator('#copy').is_disabled()
             page.click('#stop')
@@ -53,4 +61,4 @@ try:
         browser.close()
 finally:
     server.shutdown()
-print('PASS Chromium: mobile/desktop, six-pattern controls, local image conversion, SVG download, reduced motion, no external requests')
+print('PASS Chromium: mobile/desktop, six-pattern controls, local image conversion, SVG and UTF-8 HTML downloads, reduced motion, no external requests')
