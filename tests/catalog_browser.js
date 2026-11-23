@@ -24,6 +24,12 @@ const engines = {chromium, firefox, webkit};
         await page.waitForFunction(() => document.getElementById('catalog-controls').hidden === false);
         const total = await page.locator('.catalog-card').count();
         assert.ok(total >= 32);
+        assert.equal(await page.locator('#catalog-release-filter').inputValue(), 'published-alpha4');
+        assert.equal(await page.locator('.catalog-card:not([hidden])').count(), 42);
+        assert.equal(await page.locator('.catalog-card[aria-labelledby="catalog-viz-bars-title"]:not([hidden])').count(), 0);
+        assert.ok((await page.locator('#catalog-framework-stylesheet').getAttribute('href')).includes('site-releases/0.3.0-alpha.4/'));
+        await page.locator('#catalog-release-filter').selectOption('source-alpha5');
+        assert.equal(await page.locator('.catalog-card:not([hidden])').count(), total);
         for (const id of ['catalog-input-group-title', 'catalog-crm-filters-title',
           'catalog-recovery-state-title', 'catalog-geometry-frame-title', 'catalog-viz-bars-title']) {
           assert.equal(await page.locator(`.catalog-card[aria-labelledby="${id}"]`).count(), 1);
@@ -141,6 +147,13 @@ const engines = {chromium, firefox, webkit};
         assert.ok(fullPage.includes('<link rel="stylesheet" href="/dist/syntyr.core.css">'));
         assert.ok(fullPage.includes('syn-button--primary'));
         assert.equal((fullPage.match(/syntyr.core.css/g) || []).length, 1);
+        await page.locator('#catalog-release-filter').selectOption('published-alpha4');
+        await page.locator('.catalog-card:not([hidden]) .catalog-code-details').first().evaluate(el => {el.open = true;});
+        await page.locator('.catalog-card:not([hidden]) [data-catalog-copy-page]').first().click();
+        const pinnedPage = await page.evaluate(() => window.__catalogCopied);
+        assert.ok(pinnedPage.includes('/v/0.3.0-alpha.4/syntyr.core.css'));
+        assert.ok(!pinnedPage.includes('href="/dist/syntyr.core.css"'));
+        await page.locator('#catalog-release-filter').selectOption('source-alpha5');
         // Optional stylesheet requirements must be complete, not only the
         // primary CSS badge. The meter demo also uses semantic CSS.
         await page.locator('#catalog-search').fill('meter and output');

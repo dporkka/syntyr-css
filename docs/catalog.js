@@ -6,6 +6,9 @@
   const browserFilter = document.getElementById('catalog-browser-filter');
   const moduleFilter = document.getElementById('catalog-module-filter');
   const useCaseFilter = document.getElementById('catalog-use-case-filter');
+  const releaseFilter = document.getElementById('catalog-release-filter');
+  const releaseNote = document.getElementById('catalog-release-note');
+  const frameworkStylesheet = document.getElementById('catalog-framework-stylesheet');
   const controls = document.getElementById('catalog-controls');
   const results = document.getElementById('catalog-results');
   const feedback = document.getElementById("catalog-feedback");
@@ -23,6 +26,7 @@
     const useCases = new Set((card.dataset.catalogUseCases || '').split(/\s+/).filter(Boolean));
     return {
       card,
+      publishedCssCovered: card.dataset.catalogAlpha4 === 'true',
       requiredModules,
       useCases,
       // Detect actual example markup; docs panels/compatibility notes do not count.
@@ -86,7 +90,8 @@
         if (browserFilter) browserFilter.value = 'all';
         if (moduleFilter) moduleFilter.value = 'all';
         if (useCaseFilter) useCaseFilter.value = 'all';
-        updateResults();
+        if (releaseFilter) releaseFilter.value = 'source-alpha5';
+        applyRelease();
       });
     }
   }
@@ -97,12 +102,14 @@
     const feature = browserFilter?.value || 'all';
     const module = moduleFilter?.value || 'all';
     const useCase = useCaseFilter?.value || 'all';
-    for (const {card, terms: text, hasAdditionalNativeApi, requiredModules, useCases} of searchable) {
+    const publishedOnly = releaseFilter?.value === 'published-alpha4';
+    for (const {card, terms: text, hasAdditionalNativeApi, publishedCssCovered, requiredModules, useCases} of searchable) {
       const matchesModule = module === 'all'
         || (module === 'core-only'
           ? requiredModules.size === 1 && requiredModules.has('syntyr.core.css')
           : requiredModules.has(module));
-      const match = (category.value === 'all' || card.dataset.catalogCategory === category.value)
+      const match = (!publishedOnly || publishedCssCovered)
+        && (category.value === 'all' || card.dataset.catalogCategory === category.value)
         && matchesModule
         && (useCase === 'all' || useCases.has(useCase))
         && (feature === 'all' || (feature === 'native-advanced' ? hasAdditionalNativeApi : !hasAdditionalNativeApi))
@@ -119,6 +126,42 @@
   const previewSize = document.getElementById('catalog-preview-size');
   const grid = document.getElementById('catalog-items');
   const root = document.querySelector('.syn-root');
+  const publishedStylesheet = window.location.protocol === 'file:'
+    ? '../site-releases/0.3.0-alpha.4/syntyr.all.css'
+    : '/v/0.3.0-alpha.4/syntyr.all.css';
+  const sourceStylesheet = '../dist/syntyr.all.css';
+  function applyRelease() {
+    const published = releaseFilter?.value === 'published-alpha4';
+    // Switch the real CSS in the preview, not just a status badge.
+    if (frameworkStylesheet) {
+      frameworkStylesheet.setAttribute('href', published ? publishedStylesheet : sourceStylesheet);
+    }
+    if (theme && root) {
+      for (const option of theme.options) {
+        if (!['studio', 'grid', 'noir'].includes(option.value)) option.disabled = published;
+      }
+      if (published && !['studio', 'grid', 'noir'].includes(theme.value)) {
+        theme.value = 'studio';
+        root.dataset.synTheme = theme.value;
+      }
+    }
+    for (const {card, publishedCssCovered} of searchable) {
+      const label = card.querySelector('.catalog-release-label');
+      if (!label) continue;
+      const eligible = published && publishedCssCovered;
+      label.textContent = eligible ? 'alpha.4 CSS checked' : 'alpha.5 preview';
+      label.title = eligible
+        ? 'CSS modules and selectors are present in the immutable alpha.4 release; visual and browser behavior must still be verified.'
+        : 'Preview from the unreleased alpha.5 source candidate';
+    }
+    if (releaseNote) {
+      releaseNote.textContent = published
+        ? 'Published alpha.4: showing only examples with matching frozen CSS modules and class selectors. The gallery uses actual alpha.4 CSS. This is not a visual, accessibility, or interaction certification.'
+        : 'Unreleased alpha.5 source preview: all experimental examples are visible. Copy full page uses source candidate CSS; do not mix it with the published release.';
+    }
+    updateResults();
+  }
+
   if (theme && root) {
     theme.addEventListener("change", () => {
       root.dataset.synTheme = theme.value;
@@ -135,7 +178,8 @@
   browserFilter?.addEventListener("change", updateResults);
   moduleFilter?.addEventListener("change", updateResults);
   useCaseFilter?.addEventListener("change", updateResults);
-  updateResults();
+  releaseFilter?.addEventListener('change', applyRelease);
+  applyRelease();
 
   // Docs-only: create an actual, version-local HTML document rather than
   // implying that a partial component snippet includes its CSS dependencies.
@@ -151,10 +195,18 @@
       if (!knownStylesheets.has(name)) throw new Error('Unknown catalog stylesheet');
       required.add(name);
     }
-    const links = [...required].map(name => `<link rel="stylesheet" href="/dist/${name}">`).join('\n');
+    const published = releaseFilter?.value === 'published-alpha4';
+    if (published && card.dataset.catalogAlpha4 !== 'true') {
+      throw new Error('This example is not covered by the published CSS release');
+    }
+    const prefix = published ? '/v/0.3.0-alpha.4/' : '/dist/';
+    const releaseComment = published
+      ? 'Self-host the pinned 0.3.0-alpha.4 stylesheets in production; class coverage is not an accessibility or behavior guarantee.'
+      : 'Self-host matching unreleased alpha.5 CSS under /dist/ or adjust these paths.';
+    const links = [...required].map(name => `<link rel="stylesheet" href="${prefix}${name}">`).join('\n');
     const heading = card.querySelector('h2')?.textContent || 'Syntyr example';
     const title = heading.replace(/[&<>"']/g, ch => ({'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'}[ch]));
-    return `<!doctype html>\n<html lang="en">\n<head>\n  <meta charset="utf-8">\n  <meta name="viewport" content="width=device-width,initial-scale=1">\n  <title>${title} — Syntyr CSS</title>\n  <!-- Self-host matching unreleased alpha.5 CSS under /dist/ or adjust these paths. -->\n  ${links}\n</head>\n<body class="syn-root" data-syn-theme="studio">\n${markup}\n</body>\n</html>`;
+    return `<!doctype html>\n<html lang="en">\n<head>\n  <meta charset="utf-8">\n  <meta name="viewport" content="width=device-width,initial-scale=1">\n  <title>${title} — Syntyr CSS</title>\n  <!-- ${releaseComment} -->\n  ${links}\n</head>\n<body class="syn-root" data-syn-theme="studio">\n${markup}\n</body>\n</html>`;
   }
 
   for (const card of cards) {
