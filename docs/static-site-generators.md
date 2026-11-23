@@ -14,7 +14,7 @@ package archive, or a self-hosted versioned CSS file.
 
 ## Runnable zero-JavaScript marketing site starter
 
-The [Waypoint SaaS marketing starter](../examples/site-starters/saas-marketing/README.md)
+The [Waypoint SaaS marketing starter](https://github.com/dporkka/syntyr-css/blob/6a6c63c6c7de0fcd1b6382d9184f912f548d7f45/examples/site-starters/saas-marketing/README.md)
 demonstrates how one Syntyr stylesheet can serve a **complete three-page site**:
 a home page with hero, dashboard illustration, feature grid, workflow steps
 and native FAQ; a pricing page; and an about page. All content is explicitly

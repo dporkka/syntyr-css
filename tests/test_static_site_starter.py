@@ -1,12 +1,14 @@
 """Executable contract for the portable, CSS-first SaaS marketing site starter."""
 from __future__ import annotations
 
+import shutil
 import subprocess
 import sys
 import tempfile
 import unittest
 from html.parser import HTMLParser
 from pathlib import Path
+from unittest.mock import patch
 from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -106,6 +108,40 @@ class StaticSiteStarterTests(unittest.TestCase):
             )
             self.assertNotEqual(result.returncode, 0)
             self.assertEqual((output / "keep.txt").read_text(), "do not overwrite")
+
+    def test_export_refuses_a_dangling_destination_symlink(self):
+        with tempfile.TemporaryDirectory() as root:
+            target = Path(root) / "missing"
+            output = Path(root) / "site"
+            try:
+                output.symlink_to(target, target_is_directory=True)
+            except (NotImplementedError, OSError) as exc:
+                self.skipTest(f"Cannot create a directory symlink: {exc}")
+            result = subprocess.run(
+                [sys.executable, str(EXPORTER), "--output", str(output)],
+                cwd=ROOT, capture_output=True, text=True, check=False,
+            )
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("refusing to overwrite", result.stderr)
+            self.assertTrue(output.is_symlink())
+            self.assertFalse(target.exists())
+
+    def test_export_refuses_an_empty_directory_created_during_staging(self):
+        from scripts.export_site_starter import export_saas_marketing
+
+        with tempfile.TemporaryDirectory() as root:
+            output = Path(root) / "site"
+            original_copy = shutil.copyfile
+
+            def copy_and_create_destination(source, target):
+                original_copy(source, target)
+                output.mkdir(exist_ok=True)
+
+            with patch("scripts.export_site_starter.shutil.copyfile", side_effect=copy_and_create_destination):
+                with self.assertRaises(FileExistsError):
+                    export_saas_marketing(output)
+            self.assertEqual(list(output.iterdir()), [])
+            self.assertEqual(list(Path(root).iterdir()), [output])
 
     def test_cloudflare_preview_is_explicitly_allowlisted_and_noindexed(self):
         from scripts.build_cloudflare_site import source_files

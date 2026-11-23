@@ -8,7 +8,11 @@ receive their own exact CSS snapshot under assets/.
 from __future__ import annotations
 
 import argparse
+import ctypes
+import errno
+import os
 import shutil
+import sys
 import tempfile
 from pathlib import Path
 
@@ -18,9 +22,38 @@ ROUTES = ("index.html", "pricing/index.html", "about/index.html")
 CORE = ROOT / "dist/syntyr.core.css"
 
 
+def publish_new_directory(staged: Path, destination: Path) -> None:
+    """Atomically publish a complete directory without replacing any path."""
+    if os.name == "nt":
+        staged.rename(destination)  # Windows rename never replaces the target.
+        return
+
+    libc = ctypes.CDLL(None, use_errno=True)
+    if sys.platform == "linux" and hasattr(libc, "renameat2"):
+        rename = libc.renameat2
+        rename.argtypes = (ctypes.c_int, ctypes.c_char_p, ctypes.c_int, ctypes.c_char_p, ctypes.c_uint)
+        at_fdcwd, rename_noreplace = -100, 1
+        result = rename(at_fdcwd, os.fsencode(staged), at_fdcwd, os.fsencode(destination), rename_noreplace)
+    elif sys.platform == "darwin" and hasattr(libc, "renamex_np"):
+        rename = libc.renamex_np
+        rename.argtypes = (ctypes.c_char_p, ctypes.c_char_p, ctypes.c_uint)
+        rename_excl = 4
+        result = rename(os.fsencode(staged), os.fsencode(destination), rename_excl)
+    else:
+        raise OSError("Atomic export without overwrite is unavailable on this platform")
+
+    if result != 0:
+        error = ctypes.get_errno()
+        if error == errno.EEXIST:
+            raise FileExistsError(f"Destination exists; refusing to overwrite: {destination}")
+        raise OSError(error, os.strerror(error), destination)
+
+
 def export_saas_marketing(destination: Path) -> Path:
-    destination = destination.expanduser().resolve()
-    if destination.exists():
+    destination = destination.expanduser()
+    # Resolve the parent only: the requested leaf may be a dangling symlink.
+    destination = destination.parent.resolve() / destination.name
+    if destination.is_symlink() or destination.exists():
         raise FileExistsError(f"Destination exists; refusing to overwrite: {destination}")
     if not destination.parent.is_dir():
         raise FileNotFoundError(f"Create the output parent directory first: {destination.parent}")
@@ -45,7 +78,7 @@ def export_saas_marketing(destination: Path) -> Path:
             target.parent.mkdir(parents=True, exist_ok=True)
             target.write_text(text, encoding="utf-8")
         # No static generator is required to serve the resulting directory.
-        staged.rename(destination)
+        publish_new_directory(staged, destination)
     return destination
 
 
