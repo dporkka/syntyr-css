@@ -11,7 +11,7 @@ import {
   SITE_SCHEMA_VERSION, createSiteProject, parseSiteProject, addSitePage,
   removeSitePage, setSharedLayout, exportSitePages
 } from "./site-builder-model.mjs";
-import { createStoredZip } from "./page-builder-zip.mjs";
+import { createStoredZip, SITE_ZIP_MAX_ENTRIES } from "./page-builder-zip.mjs";
 import {STARTER_PAGES, createStarterPage} from "./page-builder-starters.mjs";
 
 const byId = (id) => document.getElementById(id);
@@ -696,7 +696,8 @@ byId("builder-export-zip").addEventListener("click", async () => {
       "The original Syntyr CSS and HTML source is MIT-licensed.",
       "https://github.com/dporkka/syntyr-css/blob/main/LICENSE"
     ].join("\n") + "\n"});
-    const archive = createStoredZip(entries);
+    // A site may contain 10 routes with up to 20 uploaded images each.
+    const archive = createStoredZip(entries, project ? {maxEntries: SITE_ZIP_MAX_ENTRIES} : undefined);
     download("syntyr-static-site.zip", archive, "application/zip");
     notify("Static-site ZIP downloaded: " + sitePages.length + " page(s), CSS and " + assets.size + " local images; no JavaScript.");
   } catch (error) {

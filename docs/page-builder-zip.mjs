@@ -2,6 +2,7 @@
 const encoder = new TextEncoder();
 const PERMITTED = /^(?:index\.html|[a-z][a-z0-9-]{0,39}\/index\.html|syntyr\.all\.css|LICENSE|README\.txt|assets\/(?:(?:gallery-[a-z0-9-]+|syntyr-mark)\.svg|custom-[a-f0-9]{64}\.(?:png|jpg|webp)))$/;
 const LIMIT = 32 * 1024 * 1024;
+export const SITE_ZIP_MAX_ENTRIES = 256;
 function crc32(bytes) {
   let crc = 0xffffffff;
   for (const byte of bytes) {
@@ -10,8 +11,9 @@ function crc32(bytes) {
   }
   return (crc ^ 0xffffffff) >>> 0;
 }
-export function createStoredZip(entries, {maxBytes = LIMIT} = {}) {
-  if (!Array.isArray(entries) || !entries.length || entries.length > 128)
+export function createStoredZip(entries, {maxBytes = LIMIT, maxEntries = 128} = {}) {
+  if (!Number.isInteger(maxEntries) || maxEntries < 1 || maxEntries > SITE_ZIP_MAX_ENTRIES ||
+      !Array.isArray(entries) || !entries.length || entries.length > maxEntries)
     throw new Error("Invalid ZIP file count");
   if (!Number.isSafeInteger(maxBytes) || maxBytes < 1 || maxBytes > 0xffffffff)
     throw new Error("Invalid ZIP size limit");
