@@ -1,6 +1,6 @@
 /* Editor-only ZIP packaging; published sites contain zero JavaScript. */
 const encoder = new TextEncoder();
-const PERMITTED = /^(?:index\.html|syntyr\.all\.css|LICENSE|README\.txt|assets\/(?:(?:gallery-[a-z0-9-]+|syntyr-mark)\.svg|custom-[a-f0-9]{64}\.(?:png|jpg|webp)))$/;
+const PERMITTED = /^(?:index\.html|[a-z][a-z0-9-]{0,39}\/index\.html|syntyr\.all\.css|LICENSE|README\.txt|assets\/(?:(?:gallery-[a-z0-9-]+|syntyr-mark)\.svg|custom-[a-f0-9]{64}\.(?:png|jpg|webp)))$/;
 const LIMIT = 32 * 1024 * 1024;
 function crc32(bytes) {
   let crc = 0xffffffff;

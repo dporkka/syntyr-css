@@ -13,7 +13,8 @@ The [visual builder](page-builder.html) is a local-first, optional editing tool 
 - Select sections in the outline or preview, edit text and safe links, reorder with keyboard-accessible **Up, Down, First, Last** buttons or drag-and-drop; duplicate or remove sections. Choose **Add after selected block** when inserting a new section in the middle of a page. Keyboard focus remains in the outline during reordering; native FAQ disclosures open in the preview.
 - Switch among themes available to the unreleased source candidate and preview true 1200px desktop, 760px tablet, and 390px mobile iframe viewports. Narrow canvases scroll rather than silently scaling the device viewport.
 - Undo and redo editing changes (limited in-memory history).
-- Download a **static website ZIP** with `index.html`, the matching `syntyr.all.css`, any self-hosted SVG image assets, the MIT license and a brief publishing README. The ZIP contains **no JavaScript**. Standalone HTML/CSS downloads remain available.
+- Optionally create up to **10 pages** with safe one-segment slugs (such as `about`), switch between them, and edit a synchronized shared native header/footer. The `syntyr.site.v1` JSON project preserves all editable page documents and the shared layout. Removing an inner page does not remove the home page.
+- Download a **static website ZIP** with `index.html`, optional `about/index.html`-style routes, the matching `syntyr.all.css`, any self-hosted SVG image assets, the MIT license and a brief publishing README. Every nested page uses relative CSS/image paths and the ZIP contains **no JavaScript**. Standalone HTML/CSS downloads remain available.
 - Set the page title, optional search-result description (300-character limit), and HTML document language (including Portuguese for Brazil). The exported HTML contains escaped metadata and a correct `lang` attribute for accessibility and SEO. Existing `syntyr.page.v1` JSON projects without these optional settings still import.
 - Download a JSON project and reopen that JSON to restore editability.
 
@@ -22,8 +23,15 @@ The builder runs entirely in your browser. It does not upload projects or requir
 ## Static-first export and assets
 
 Page descriptions are optional and do not guarantee a search-engine snippet.
-The builder currently exports a single HTML document, not a multipage site
-or sitemap. Language tags on the HTML element describe the document language,
+The default builder exports a single HTML document. Adding a page or enabling
+shared layouts opts into a multi-page site project (up to ten pages), exported
+as root `index.html` and `slug/index.html` files. The builder does not yet
+generate a sitemap, edit route-condition templates, support nested route slugs,
+or implement content-driven dynamic templates. The **Download HTML** control
+still exports only the currently selected page; use the ZIP for a multi-page
+site. The CSS and local image paths are relative to the page depth. Links with
+leading `/` are origin-root absolute and need correct hosting; verify site
+navigation after publishing. Language tags on the HTML element describe the document language,
 but do **not** translate your content automatically.
 
 The optional browser-based builder uses JavaScript **only as an authoring tool**.
@@ -87,7 +95,7 @@ placing saved strings in different locations. Preserve an exported HTML copy
 for long-term rendering when the optional source catalog changes. The manifest is an **unreleased alpha.5 source candidate**; these
 examples are not promised in the published alpha.4 release.
 
-The document schema is syntyr.page.v1, with schema, title, theme, optional description/language and an optional embedded media asset map, plus an ordered array of id, type, and props blocks. The canonical validation and renderer are in page-builder-model.mjs, a dependency-free ESM module with no browser globals.
+Single-page projects retain the `syntyr.page.v1` schema with title, theme, optional description/language and media, plus ordered id/type/props blocks. Multi-page projects use `syntyr.site.v1` with a list of slug/page-document entries and two optional shared native blocks (`header` and `footer`). No arbitrary HTML templates are accepted from project JSON. Both formats can be reopened. The canonical validation and renderer are in page-builder-model.mjs, a dependency-free ESM module with no browser globals.
 
 The exported index.html uses ordinary HTML sections, anchors, buttons-styled links, native FAQ disclosures, and existing syn-* classes. The local syntyr.all.css stylesheet must be hosted next to it; the page does not contain React, a builder script, or Syntyr editor dependencies. You can instead load CSS modules required by your chosen components using the [distribution guide](distribution.md).
 
@@ -106,7 +114,7 @@ This experimental tool is deliberately separate from the MIT CSS core. It uses o
 
 Run from repository root:
 
-    node --test tests/page_builder_model.test.mjs tests/page_builder_gallery.test.mjs tests/page_builder_sections.test.mjs tests/page_builder_zip.test.mjs tests/page_builder_custom_media.test.mjs tests/page_builder_starters.test.mjs
+    node --test tests/page_builder_model.test.mjs tests/page_builder_gallery.test.mjs tests/page_builder_sections.test.mjs tests/page_builder_zip.test.mjs tests/page_builder_custom_media.test.mjs tests/page_builder_starters.test.mjs tests/site_builder_model.test.mjs
     python3 scripts/build_section_composer.py --check
     python3 -m unittest tests.test_cloudflare_site -v
     python3 scripts/build_cloudflare_site.py --check
@@ -114,6 +122,7 @@ Run from repository root:
 For the optional browser smoke test:
 
     python3 tests/page_builder_browser.py
+    python3 tests/site_builder_browser.py
     python3 tests/page_builder_sections_browser.py
     python3 tests/page_builder_starter_media_browser.py
     python3 tests/static_sections_mobile_browser.py
