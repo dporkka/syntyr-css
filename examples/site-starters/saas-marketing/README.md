@@ -43,6 +43,17 @@ stylesheet as `assets/syntyr.core.css` and rewrites the page links, so the
 exported site works offline without npm, a CDN, or the original repository.
 The exporter refuses to overwrite an existing destination.
 
+## Deploy to hosting providers
+
+The reusable, independently deployable site (without publishing the repository
+root or affecting the separate SaaS Admin Starter) has [Vercel, Netlify, Render,
+Cloudflare Pages, GitHub Pages and static hosting instructions](../../../deploy/saas-marketing/README.md).
+
+```sh
+python3 scripts/build_saas_marketing_site.py
+python3 scripts/build_saas_marketing_site.py --check
+```
+
 ## Customize
 
 1. Replace the fictional Waypoint name, product claims, plan prices and metrics.

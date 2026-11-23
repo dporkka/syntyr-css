@@ -63,7 +63,7 @@ stylesheets.
 
 ## Live gallery and installation
 
-* [Three-page SaaS marketing site starter](examples/site-starters/saas-marketing/README.md): original responsive hero, features, workflow, pricing, about and native FAQs; [live source preview](https://syntyr-css.pages.dev/examples/site-starters/saas-marketing/) and dependency-free offline export with `scripts/export_site_starter.py`. Illustrative alpha.5 source, not a commercial SaaS product.
+* [Three-page SaaS marketing site starter](examples/site-starters/saas-marketing/README.md): original responsive hero, features, workflow, pricing, about and native FAQs; [live source preview](https://syntyr-css.pages.dev/examples/site-starters/saas-marketing/) and dependency-free offline export with `scripts/export_site_starter.py`; [separate Vercel/Netlify deployment guide](deploy/saas-marketing/README.md). Illustrative alpha.5 source, not a commercial SaaS product.
 
 
 - [Live website on Cloudflare](https://syntyr-css.pages.dev/)
