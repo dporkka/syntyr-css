@@ -3,6 +3,8 @@ from __future__ import annotations
 import json
 from pathlib import Path
 import shutil
+import subprocess
+import sys
 from tempfile import TemporaryDirectory
 import unittest
 
@@ -57,6 +59,21 @@ class AstroKeystaticSiteTests(unittest.TestCase):
         self.assertIn("syn-root", content)
         self.assertIn("aria-labelledby", content)
         self.assertNotIn("set:html", content)
+
+    def test_verifier_cli_accepts_root_assets_with_explicit_base(self):
+        with TemporaryDirectory() as tmp:
+            output = Path(tmp)
+            (output / "index.html").write_text(
+                '<link rel="stylesheet" href="/site.css"><main class="syn-root"></main>',
+                encoding="utf-8",
+            )
+            (output / "site.css").write_text(".syn-root {}", encoding="utf-8")
+            command = [sys.executable, str(ROOT / "scripts/verify_astro_keystatic.py"), tmp]
+            default = subprocess.run(command, capture_output=True, text=True)
+            self.assertNotEqual(default.returncode, 0)
+            self.assertIn("Stylesheet URL ignores base path", default.stderr)
+            root = subprocess.run(command + ["--base-path", "/"], capture_output=True, text=True)
+            self.assertEqual(root.returncode, 0, root.stderr)
 
     def test_verifier_rejects_extra_editor_route_even_when_script_free(self):
         if not (SITE / "dist").is_dir():

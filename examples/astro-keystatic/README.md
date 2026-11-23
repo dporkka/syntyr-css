@@ -30,12 +30,21 @@ contract (Hero, Features, Pricing, FAQ and CTA), and generates a temporary
 HTML with autoescaped content. Unknown fields, unsafe URLs, or duplicate
 section anchors fail the export before Astro begins.
 
-This fixture deliberately sets `base: '/syntyr-astro-keystatic/'` to test
-project-subpath deployment. Its CSS and local links are base-aware. When
-serving a local preview, ensure the output is mounted at that path; for
-**Cloudflare Pages at the domain root**, change the base to `'/'`, update the verifier's `--base-path` argument to `/`, and
-publish the `dist/` directory directly. Do not deploy this subpath fixture
-unchanged to a root-only site; its assets would load from the wrong URL.
+<!-- coderabbit-ai-generated:v1 -->
+
+<!-- coderabbit-ai-generated-section:v1:454d1687cc1d8ab485ae78b3810f984f3333ac37e94f38acf512b342d27f1a37 -->
+
+This fixture uses `base: '/syntyr-astro-keystatic/'`. Mount its output at
+that path when previewing or hosting it. For **Cloudflare Pages at the domain
+root**, set `base: '/'` in `astro.config.mjs`, then run:
+
+```sh
+npm run build && npm run verify -- --base-path /
+```
+
+Publish `dist/` only after verification passes.
+
+<!-- /coderabbit-ai-generated:v1 -->
 
 ## Optional local editor
 
@@ -56,17 +65,24 @@ Do not expose the dev server with a reverse proxy, a tunnel, or a public
 
 ## Git-backed publishing without GitHub Actions
 
-1. Edit the checked-in content using `npm run dev:editor` on an authorized
-   developer workstation.
-2. Run `npm run build && npm run verify`, review the changed JSON, and
-   commit the content changes to a feature branch.
-3. Open a pull request and merge only after review. Deploy from the protected
-   `main` branch through your hosting provider's **Git integration**
-   (e.g. Cloudflare Pages), using `npm ci --include=dev && npm run build` from the example
-   directory and publishing `dist/` with an appropriate site `base`.
-4. The hosting build has **no Keystatic editor or OAuth service**. The Git
-   commit is the source of truth; the deployment contains only generated
-   HTML and CSS.
+<!-- coderabbit-ai-generated:v1 -->
+
+<!-- coderabbit-ai-generated-section:v1:5674b9748a5dd80440e091ceafc3289b57240b7c8af05436b2fd97b5225a0661 -->
+
+1. Run `npm run dev:editor` on an authorized developer workstation and edit
+   the checked-in content.
+2. Build and verify locally, review the changed JSON, and commit it to a
+   feature branch. Open a pull request and merge only after review.
+3. In your hosting provider's **Git integration**, build from the protected
+   `main` branch. In the example directory, use
+   `npm ci --include=dev && npm run build && npm run verify`. If you change
+   Astro's mount path, give the verifier that path with leading and trailing
+   slashes, for example `npm run verify -- --base-path /` at the domain root.
+4. Publish `dist/` only after the entire command succeeds. The Git commit is
+   the source of truth. The output contains only generated HTML and CSS, with
+   no Keystatic editor or OAuth service.
+
+<!-- /coderabbit-ai-generated:v1 -->
 
 A separately hosted Keystatic **GitHub storage** editor can be added if
 nontechnical collaborators need remote editing, but it requires a GitHub App,

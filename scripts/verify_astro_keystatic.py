@@ -19,9 +19,9 @@ EDITOR_PARTS = frozenset(("keystatic", "admin", "api"))
 SCRIPT_SUFFIXES = frozenset((".js", ".mjs", ".cjs"))
 
 
-def verify_public_site(destination: Path) -> int:
+def verify_public_site(destination: Path, *, base_path: str = BASE) -> int:
     root = Path(destination).resolve()
-    count = verify_static_site(root, base_path=BASE)
+    count = verify_static_site(root, base_path=base_path)
     pages = sorted(p.relative_to(root).as_posix() for p in root.rglob("*.html"))
     if pages != ["index.html"]:
         raise AssertionError(f"unexpected HTML route(s) in public output: {pages}")
@@ -41,6 +41,7 @@ def verify_public_site(destination: Path) -> int:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("destination", type=Path, help="Astro dist directory")
+    parser.add_argument("--base-path", default=BASE, help="Published mount path, including trailing slash")
     args = parser.parse_args()
-    verified = verify_public_site(args.destination)
+    verified = verify_public_site(args.destination, base_path=args.base_path)
     print(f"PASS: {verified} HTML page, local CSS, no JS, no Keystatic/editor/API output")
