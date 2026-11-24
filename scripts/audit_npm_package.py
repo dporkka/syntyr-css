@@ -33,6 +33,7 @@ def expected_files(root: Path) -> dict[str, Path]:
         "integrations/dropdown/menu.mjs",
         "metadata/css-contract.v1.json",
         "metadata/component-gallery.v1.json",
+        "metadata/agent-workflow.v1.json",
         # Opt-in companions are explicitly exported but never required by CSS.
         "dist/syntyr.animate.mjs",
         "dist/syntyr.animate.d.mts",

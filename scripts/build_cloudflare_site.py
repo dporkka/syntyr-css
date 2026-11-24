@@ -357,6 +357,7 @@ def source_files(site_url: str = SITE_URL, *, include_cloudflare_headers: bool =
         ROOT / "llms-full.txt",
         ROOT / "metadata/components.json",
         ROOT / "metadata/component-gallery.v1.json",
+        ROOT / "metadata/agent-workflow.v1.json",
         ROOT / "metadata/catalog-release-compatibility.v1.json",
         ROOT / "metadata/section-composer.v1.json",
         # Public, generated, dependency-free mobile design tokens and copy-owned source.
@@ -380,6 +381,7 @@ def source_files(site_url: str = SITE_URL, *, include_cloudflare_headers: bool =
         ROOT / "integrations/headless/interactions.css",
         ROOT / "integrations/htmx/syntyr.htmx.css",
         ROOT / "examples/ansi_cli.py",
+        ROOT / "examples/agent-workflow.html",
         ROOT / "examples/animation-demo.mjs",
         ROOT / "examples/copy-demo.mjs",
         ROOT / "examples/resizable-workspace.mjs",

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Syntyr works with ChatGPT, Codex, Claude Code, Cursor and other agents that generate HTML or framework markup. No Syntyr-specific service, account, MCP…">
-  <meta name="syntyr-source-sha256" content="3f62d7fb0729870fee041f35371a96fb3fa5a0a358f6cc6f6c24365cc65d2012">
+  <meta name="syntyr-source-sha256" content="f5363869e071aeceefc394d16d5f6d1ca95c8a37689e4ebb838f8a7c296448ad">
   <meta name="theme-color" content="#f5f7fb">
   <title>Using Syntyr with coding agents — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/agent-integration">
@@ -121,6 +121,37 @@ python3 scripts/build_cloudflare_site.py --check
 <p>The consolidated reference is deterministic and checked in CI through the Python test suite. The Cloudflare publisher uses a strict allowlist, so exposing new documentation does not expose internal files or business planning documents.</p>
 <h2 id="what-syntyr-does-not-do">What Syntyr does not do</h2>
 <p>Syntyr styles browser HTML/CSS. It does not supply a JavaScript component runtime, chart rendering engine, AI API, CRUD handlers, form submission or remote data access. The optional local read-only MCP adapter is a separate developer tool, never a CSS runtime dependency. Use your existing application technology for those responsibilities.</p>
+<h2 id="human-approval-and-agent-run-ui">Human approval and agent-run UI</h2>
+<p>The unreleased v0.3.0-alpha.5 source candidate includes an agent workflow
+template and JSON contract. The template follows the
+<a href="../examples/workflow-operations.html">workflow operations example</a>: it uses
+core steps and status labels for progress, panels and layout classes for
+approval and outcomes, and native forms for decisions. These resources are
+not part of published alpha.4.</p>
+<ul>
+<li><a href="../examples/agent-workflow.html">Copyable native HTML integration template</a></li>
+<li><a href="../metadata/agent-workflow.v1.json">Structured, allowlisted component contract</a></li>
+<li>Load <code>dist/syntyr.core.css</code> and keep the <code>.syn-root</code> scope.</li>
+<li>Render the actual plan and readable state on the <strong>server</strong>. The JSON states
+describe host workflow data. Map a completed step to <code>data-syn-state=&quot;complete&quot;</code>,
+a failed step to <code>data-syn-state=&quot;error&quot;</code>, and the current step to
+<code>aria-current=&quot;step&quot;</code>. Never use colors, CSS or generated prose as proof
+that an action happened.</li>
+<li>Bind both approve and reject buttons to a real POST endpoint. The application
+must verify authentication, tenant permissions, CSRF, run state and immutable
+action parameters, then process decisions idempotently and write an audit log.
+The example's <code>{{ csrf_token }}</code> and <code>/agent-runs/run-42/decisions</code> are
+integration placeholders, <strong>not</strong> functioning endpoints.</li>
+<li>Escape and validate all agent-generated and external text; do not interpolate
+model-generated HTML, JavaScript, CSS or unverified URLs into the page.</li>
+<li>After a decision, show the real outcome and recovery options. For dynamic
+updates, implement carefully scoped live announcements in the host app.
+For a no-JavaScript server flow, a standard POST/redirect/GET cycle works.</li>
+</ul>
+<p>The JSON contract describes safe presentational vocabulary, <strong>not</strong> an A2UI
+implementation or a secure executor. A host may map an external structured
+UI protocol into these trusted components only after validating the input
+against its own allowlist and authorization rules.</p>
         </article>
         <aside class="docs-article-sidebar">
           <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
@@ -132,6 +163,7 @@ python3 scripts/build_cloudflare_site.py --check
 <a class="docs-article-toc-link docs-article-toc-2" href="#documentation-formats-html-for-people-markdown-for-agents">Documentation formats: HTML for people, Markdown for agents</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#validation-and-maintenance">Validation and maintenance</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#what-syntyr-does-not-do">What Syntyr does not do</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#human-approval-and-agent-run-ui">Human approval and agent-run UI</a>
           </nav>
           <details class="docs-article-toc-mobile">
             <summary>On this page <span>Jump to section</span></summary>
@@ -144,6 +176,7 @@ python3 scripts/build_cloudflare_site.py --check
 <a class="docs-article-toc-link docs-article-toc-2" href="#documentation-formats-html-for-people-markdown-for-agents">Documentation formats: HTML for people, Markdown for agents</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#validation-and-maintenance">Validation and maintenance</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#what-syntyr-does-not-do">What Syntyr does not do</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#human-approval-and-agent-run-ui">Human approval and agent-run UI</a>
             </nav>
           </details>
         </aside>

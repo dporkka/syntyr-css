@@ -103,7 +103,9 @@ For browser readers, use the [human-readable HTML documentation directory](https
 - [Deployed mobile performance audit](https://syntyr-css.pages.dev/docs/live-performance-audit.md): Reproducible LCP, caching, CSP and accessibility evidence for the hosted business and SaaS examples.
 - [Optional visualization styles](https://syntyr-css.pages.dev/docs/viz.md): SVG/HTML rendering and boundaries.
 - [Optional geospatial map UI](https://syntyr-css.pages.dev/docs/geo.md): Renderer-neutral markers, legends, accessibility, and a repo-only Python standard-library GET-filtering demo with district drill-down, and a developer-only real-MapLibre map/list/inspector browser harness (with app-owned state and server-owned authorization requirements); alpha.5 source only.
-- [How to use Syntyr with coding agents](https://syntyr-css.pages.dev/docs/agent-integration.md): Recommended prompts, retrieval and validation.
+- [How to use Syntyr with coding agents](https://syntyr-css.pages.dev/docs/agent-integration.md): Recommended prompts, retrieval, validation, and host responsibilities for agent workflows.
+- [Agent workflow integration template](https://syntyr-css.pages.dev/examples/agent-workflow.html): Native HTML and existing Syntyr classes for plans, progress, explicit human decisions and outcomes (unreleased v0.3.0-alpha.5 source candidate; not part of published alpha.4).
+- [Agent workflow contract](https://syntyr-css.pages.dev/metadata/agent-workflow.v1.json): Machine-readable host states, markup and approval responsibilities (unreleased v0.3.0-alpha.5 source candidate; not part of published alpha.4).
 
 ## Commercial research (not for sale)
 
