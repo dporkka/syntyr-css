@@ -420,6 +420,7 @@ def source_files(site_url: str = SITE_URL, *, include_cloudflare_headers: bool =
         "css-clamp-generator.html", "responsive-design-tester.html",
         "site.css", "logic.mjs", "site.mjs",
         "ascii-playground.html", "ascii-playground.css", "ascii-playground.mjs", "ascii-logic.mjs",
+        "ascii-interactive.html", "ascii-interactive.mjs", "ascii-interactive-demo.mjs",
     )
     paths.extend(ROOT / "tools" / name for name in public_tools)
     # Self-hosted, exact-version HTMX; docs-only, excluded from npm and core bundles.
