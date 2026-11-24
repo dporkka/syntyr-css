@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Free ASCII art generator, image-to-ASCII converter and text logo maker. Customize glyphs and dithering; export TXT, HTML or SVG without uploading images.">
+  <title>Free ASCII Art Generator, Image Converter &amp; Text Logos — Syntyr</title>
+  <link rel="icon" href="../assets/syntyr-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="site.css">
+  <link rel="stylesheet" href="ascii-playground.css">
+  <script type="module" src="ascii-playground.mjs"></script>
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <a class="syn-button tool-skip" href="#main">Skip to main content</a>
+  <div class="tool-shell">
+    <header class="tool-header">
+      <a class="tool-brand" href="../index.html">SYNTYR <span>/ ASCII Lab</span></a>
+      <nav class="tool-nav" aria-label="Tools navigation"><a href="index.html">All tools</a><a href="../examples/ascii.html">CSS effects</a><a href="../docs/form-builder.html">Forms</a></nav>
+    </header>
+    <main id="main">
+      <section class="tool-hero">
+        <p class="tool-eyebrow">Local-first / character graphics</p>
+        <h1>Free ASCII art generator</h1>
+        <p class="tool-lede">Generate procedural character patterns, text logos or convert a local image into ASCII art. Adjust the density and palette, then export portable, static artwork. No file upload or account.</p>
+        <noscript><p>This interactive tool requires JavaScript. Visit the <a href="../examples/ascii.html">static CSS effects gallery</a> for no-script examples.</p></noscript>
+      </section>
+      <div class="ascii-workspace">
+        <section class="tool-card" aria-labelledby="settings-title">
+          <h2 id="settings-title">Controls</h2>
+          <fieldset id="ascii-controls" disabled class="tool-form">
+            <legend>Artwork settings</legend>
+            <label class="tool-field">Source<select id="source"><option value="pattern">Procedural pattern</option><option value="image">Local image</option><option value="logo">Text logo</option></select></label>
+            <label id="pattern-field" class="tool-field">Pattern<select id="pattern"><option value="torus">Torus</option><option value="sphere">Sphere</option><option value="wave">Wave</option><option value="plasma">Plasma</option><option value="rain">Digital rain</option><option value="radar">Radar</option></select></label>
+            <label id="image-field" class="tool-field" hidden>Image (PNG, JPEG, WebP; 10 MB max)<input id="image" type="file" accept="image/png,image/jpeg,image/webp"></label>
+            <label id="logo-field" class="tool-field" hidden>Logo text<input id="logo-text" type="text" maxlength="24" value="SYNTYR"></label>
+            <label id="logo-style-field" class="tool-field" hidden>Logo style<select id="logo-style"><option value="block">Solid blocks</option><option value="hash">Hash</option><option value="dot">Dots</option></select></label>
+            <label id="ramp-field" class="tool-field">Character set<select id="ramp"><option value="ascii">Classic ASCII</option><option value="blocks">Blocks</option><option value="braille">Braille glyphs</option><option value="binary">Binary</option><option value="custom">Custom ramp</option></select></label>
+            <label id="custom-field" class="tool-field" hidden>Custom glyphs (light to dark, 2–32 distinct)<input id="custom-ramp" value=" .:-=+*#%@" maxlength="32" autocomplete="off"></label>
+            <label id="columns-field" class="tool-field">Columns <output id="columns-value" for="columns">64</output><input id="columns" type="range" min="16" max="160" step="2" value="64"></label>
+            <label class="tool-field">Color<input id="color" type="color" value="#76e7f7"></label>
+            <label id="dither-field" class="tool-field" hidden>Dithering<select id="dither"><option value="none">None</option><option value="bayer">Ordered (Bayer 4×4)</option><option value="floyd">Floyd–Steinberg</option></select></label>
+            <label id="invert-field" hidden><input id="invert" type="checkbox"> Invert image luminance</label>
+            <div class="tool-actions"><button class="syn-button syn-button--outline" id="play" type="button">Animate for 5 seconds</button><button class="syn-button syn-button--outline" id="stop" type="button" disabled>Stop</button></div>
+            <p class="tool-help">Motion starts only on request and is unavailable when reduced motion is enabled. Exports capture a static frame.</p>
+          </fieldset>
+        </section>
+        <section class="tool-card" aria-labelledby="preview-title">
+          <h2 id="preview-title">Live preview</h2>
+          <div class="ascii-preview" aria-hidden="true" tabindex="-1"><pre id="preview" aria-hidden="true">.:-=+*#%@</pre></div>
+          <p id="dimensions" class="tool-help">64 columns</p>
+          <label class="tool-field">Export format<select id="format"><option value="txt">Plain text</option><option value="html">Standalone HTML fragment</option><option value="svg">SVG image</option></select></label>
+          <label class="tool-field">Export code<textarea id="export" readonly rows="5" spellcheck="false"></textarea></label>
+          <div class="tool-actions"><button class="syn-button syn-button--primary" type="button" id="copy" disabled>Copy output</button><button class="syn-button syn-button--outline" type="button" id="download" disabled>Download file</button></div>
+          <p id="status" class="tool-status" role="status" aria-live="polite"></p>
+        </section>
+      </div>
+      <section aria-labelledby="ascii-use-cases" class="syn-stack">
+        <h2 id="ascii-use-cases">Create character art for different projects</h2>
+        <div class="syn-grid">
+          <article class="tool-card"><h3>Convert an image to ASCII</h3><p>Choose Local image, select a PNG, JPEG or WebP from your device, and adjust columns. Try Floyd–Steinberg for photographic shading or Bayer for a repeating retro texture. Export the result as text, HTML or SVG.</p></article>
+          <article class="tool-card"><h3>Generate ASCII text and logo art</h3><p>Choose Text logo, enter up to 24 letters, digits, spaces or hyphens, and select blocks, hash marks or dots. Copy the result into a README, CLI banner or terminal interface.</p></article>
+          <article class="tool-card"><h3>Build ASCII effects for websites</h3><p>Choose a procedural pattern such as a torus, radar or digital rain. Export a static frame or adapt one of the <a href="../examples/ascii-heroes.html">copyable ASCII hero sections</a>. For decorative motion, follow the <a href="../docs/ascii-effects.html">CSS accessibility guide</a>.</p></article>
+        </div>
+      </section>
+      <section class="tool-notes"><div><h2>How image conversion works</h2><p>Your browser downsamples the image and maps luminance to a glyph ramp, using an approximate monospace character aspect ratio. The file stays on your device. Braille mode uses density glyphs, not a dot-level Braille encoding. Transparent pixels are composited against black before inversion. Use Bayer for regular ordered texture or Floyd–Steinberg for error diffusion. Custom ramps accept printable ASCII, block and Braille characters.</p><p>Art is decorative by default. Add a meaningful text alternative if an exported graphic conveys information.</p></div><aside><h2>Use with Syntyr</h2><p><a href="../docs/ascii-effects.html">ASCII CSS guide</a> · <a href="../examples/ascii.html">Character art gallery</a> · <a href="../examples/ascii-heroes.html">Hero sections</a> · <a href="../docs/catalog.html">Component catalog</a></p></aside></section>
+    </main>
+    <footer class="tool-footer"><span>Free, local-first design utilities.</span><a href="index.html">All free tools</a></footer>
+  </div>
+</body>
+</html>

@@ -28,11 +28,11 @@ GUIDES = tuple(name for name in PUBLIC_DOCS if name.endswith(".md"))
 SECTIONS = (
     ("FAQ and comparisons", ("faq", "compare", "compare-tailwind", "compare-bootstrap",
                              "compare-shadcn", "compare-daisyui", "compare-pico", "compare-native-css")),
-    ("Start here", ("ai-quickstart", "distribution", "package-managers", "from-pico",
+    ("Start here", ("ai-quickstart", "launch-status", "distribution", "package-managers", "from-pico",
                     "adoption-starters", "components", "data-tables", "data-grid",
                     "recipes", "app-screens", "native-patterns", "native-workflows", "semantic-components", "composition-adoption", "component-recipes",
                     "email-components")),
-    ("Design system", ("design-principles", "theme-customization", "visual-intensity", "geometry-terminal", "symbols", "viz", "geo", "blocks-guide", "premium-compositions", "component-authoring")),
+    ("Design system", ("design-principles", "theme-customization", "visual-intensity", "geometry-terminal", "symbols", "ascii-effects", "viz", "geo", "blocks-guide", "premium-compositions", "component-authoring")),
     ("Integrations", ("framework-integrations", "htmx-components", "site-builders", "wordpress", "shopify", "wix", "webflow", "framer", "squarespace", "ghost", "hubspot", "drupal", "joomla", "carrd", "duda", "tilda", "mobile-frameworks", "headless-interactions", "clipboard", "lit-integration", "radix-integration", "shadcn-integration", "ecosystem-integrations", "editor-integration", "figma-component-kit", "vertigo-integration", "rust-saas-integration", "saas-cli-business")),
     ("Accessibility and performance", ("accessibility", "accessibility-alpha5-review", "progressive-enhancement", "native-browser-apis", "progressive-loading", "performance-and-polish", "performance-validation", "live-performance-audit", "visual-regression")),
     ("Maintainer and reference", ("agent-integration", "api-stability", "cloudflare-hosting", "nulang-cloud-hosting", "site-generator-decision", "design-research-linear-resend", "design-reference-matrix", "tailwind-research", "selective-builds", "release-readiness-ecosystem")),

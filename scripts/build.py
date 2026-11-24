@@ -131,13 +131,14 @@ def distributions():
         'syntyr.motion.css': ('motion.css',),
         'syntyr.geometry.css': ('geometry.css',),
         'syntyr.symbols.css': ('symbols.css',),
+        'syntyr.ascii.css': ('ascii.css',),
         'syntyr.viz.css': ('viz.css',),
         'syntyr.geo.css': ('geo.css',),
         'syntyr.data-grid.css': ('data-grid.css',),
         'syntyr.utilities.css': ('utilities.css',),
         'syntyr.print.css': ('print.css',),
         'syntyr.css': core + ('effects.css',),
-        'syntyr.all.css': core + ('semantic.css', 'recipes.css', 'native-recipes.css', 'email.css', 'geometry.css', 'symbols.css', 'effects.css', 'motion.css', 'viz.css', 'geo.css', 'data-grid.css', 'utilities.css', 'print.css', 'server.css'),
+        'syntyr.all.css': core + ('semantic.css', 'recipes.css', 'native-recipes.css', 'email.css', 'geometry.css', 'symbols.css', 'ascii.css', 'effects.css', 'motion.css', 'viz.css', 'geo.css', 'data-grid.css', 'utilities.css', 'print.css', 'server.css'),
         **preset_distributions(),
     }
     return primary

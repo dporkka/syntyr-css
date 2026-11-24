@@ -1121,6 +1121,50 @@
       ]
     },
     {
+      "name": "editorial-intro-split",
+      "type": "registry:item",
+      "title": "Editorial intro with context panel",
+      "description": "An editorial introduction with primary actions and a contextual checklist beside it.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://syntyr-css.pages.dev/registry/r/core.json"
+      ],
+      "files": [
+        {
+          "path": "blocks/snippets/editorial-intro-split.html",
+          "type": "registry:file",
+          "target": "~/syntyr/blocks/editorial-intro-split.html"
+        },
+        {
+          "path": "LICENSE",
+          "type": "registry:file",
+          "target": "~/syntyr/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "article-toc",
+      "type": "registry:item",
+      "title": "Article with contents sidebar",
+      "description": "A long-form article and real anchor-linked table of contents in a wrapping sidecar.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://syntyr-css.pages.dev/registry/r/core.json"
+      ],
+      "files": [
+        {
+          "path": "blocks/snippets/article-toc.html",
+          "type": "registry:file",
+          "target": "~/syntyr/blocks/article-toc.html"
+        },
+        {
+          "path": "LICENSE",
+          "type": "registry:file",
+          "target": "~/syntyr/LICENSE"
+        }
+      ]
+    },
+    {
       "name": "case-study-preview",
       "type": "registry:item",
       "title": "Case-study teaser",
@@ -1178,6 +1222,138 @@
           "path": "blocks/snippets/site-footer.html",
           "type": "registry:file",
           "target": "~/syntyr/blocks/site-footer.html"
+        },
+        {
+          "path": "LICENSE",
+          "type": "registry:file",
+          "target": "~/syntyr/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "header-centered",
+      "type": "registry:item",
+      "title": "Centered editorial header",
+      "description": "Centered brand, horizontal links, and a secondary call to action.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://syntyr-css.pages.dev/registry/r/core.json"
+      ],
+      "files": [
+        {
+          "path": "blocks/snippets/header-centered.html",
+          "type": "registry:file",
+          "target": "~/syntyr/blocks/header-centered.html"
+        },
+        {
+          "path": "LICENSE",
+          "type": "registry:file",
+          "target": "~/syntyr/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "header-split",
+      "type": "registry:item",
+      "title": "Two-row product header",
+      "description": "Separate utility and product navigation with a prominent action.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://syntyr-css.pages.dev/registry/r/core.json"
+      ],
+      "files": [
+        {
+          "path": "blocks/snippets/header-split.html",
+          "type": "registry:file",
+          "target": "~/syntyr/blocks/header-split.html"
+        },
+        {
+          "path": "LICENSE",
+          "type": "registry:file",
+          "target": "~/syntyr/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "header-disclosure",
+      "type": "registry:item",
+      "title": "Native disclosure header",
+      "description": "Compact brand and expandable keyboard-accessible menu without JavaScript.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://syntyr-css.pages.dev/registry/r/core.json"
+      ],
+      "files": [
+        {
+          "path": "blocks/snippets/header-disclosure.html",
+          "type": "registry:file",
+          "target": "~/syntyr/blocks/header-disclosure.html"
+        },
+        {
+          "path": "LICENSE",
+          "type": "registry:file",
+          "target": "~/syntyr/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "footer-compact",
+      "type": "registry:item",
+      "title": "Compact single-row footer",
+      "description": "Space-saving brand, legal links and disclosure in a wrapping row.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://syntyr-css.pages.dev/registry/r/core.json"
+      ],
+      "files": [
+        {
+          "path": "blocks/snippets/footer-compact.html",
+          "type": "registry:file",
+          "target": "~/syntyr/blocks/footer-compact.html"
+        },
+        {
+          "path": "LICENSE",
+          "type": "registry:file",
+          "target": "~/syntyr/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "footer-sitemap",
+      "type": "registry:item",
+      "title": "Four-column sitemap footer",
+      "description": "Responsive product, resource, company and legal navigation groups.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://syntyr-css.pages.dev/registry/r/core.json"
+      ],
+      "files": [
+        {
+          "path": "blocks/snippets/footer-sitemap.html",
+          "type": "registry:file",
+          "target": "~/syntyr/blocks/footer-sitemap.html"
+        },
+        {
+          "path": "LICENSE",
+          "type": "registry:file",
+          "target": "~/syntyr/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "footer-newsletter",
+      "type": "registry:item",
+      "title": "Newsletter and links footer",
+      "description": "Email subscription example beside site links; requires a host-owned backend.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://syntyr-css.pages.dev/registry/r/core.json"
+      ],
+      "files": [
+        {
+          "path": "blocks/snippets/footer-newsletter.html",
+          "type": "registry:file",
+          "target": "~/syntyr/blocks/footer-newsletter.html"
         },
         {
           "path": "LICENSE",
@@ -1930,6 +2106,50 @@
       ]
     },
     {
+      "name": "decision-guide",
+      "type": "registry:item",
+      "title": "Three-path decision guide",
+      "description": "A responsive choice of three service approaches with visible criteria and tradeoffs.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://syntyr-css.pages.dev/registry/r/core.json"
+      ],
+      "files": [
+        {
+          "path": "blocks/snippets/decision-guide.html",
+          "type": "registry:file",
+          "target": "~/syntyr/blocks/decision-guide.html"
+        },
+        {
+          "path": "LICENSE",
+          "type": "registry:file",
+          "target": "~/syntyr/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "faq-sidecar",
+      "type": "registry:item",
+      "title": "FAQs with a contact sidebar",
+      "description": "Native expandable answers alongside a clear contact path.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://syntyr-css.pages.dev/registry/r/core.json"
+      ],
+      "files": [
+        {
+          "path": "blocks/snippets/faq-sidecar.html",
+          "type": "registry:file",
+          "target": "~/syntyr/blocks/faq-sidecar.html"
+        },
+        {
+          "path": "LICENSE",
+          "type": "registry:file",
+          "target": "~/syntyr/LICENSE"
+        }
+      ]
+    },
+    {
       "name": "careers-listings",
       "type": "registry:item",
       "title": "Careers and open positions",
@@ -1943,6 +2163,28 @@
           "path": "blocks/snippets/careers-listings.html",
           "type": "registry:file",
           "target": "~/syntyr/blocks/careers-listings.html"
+        },
+        {
+          "path": "LICENSE",
+          "type": "registry:file",
+          "target": "~/syntyr/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "principles-columns",
+      "type": "registry:item",
+      "title": "Three-column principles section",
+      "description": "Organizational principles with concrete explanations in a responsive grid.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://syntyr-css.pages.dev/registry/r/core.json"
+      ],
+      "files": [
+        {
+          "path": "blocks/snippets/principles-columns.html",
+          "type": "registry:file",
+          "target": "~/syntyr/blocks/principles-columns.html"
         },
         {
           "path": "LICENSE",
@@ -2070,6 +2312,28 @@
       ]
     },
     {
+      "name": "resource-index",
+      "type": "registry:item",
+      "title": "Grouped resource topic index",
+      "description": "A documentation and resource hub with grouped descriptive navigation links.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://syntyr-css.pages.dev/registry/r/core.json"
+      ],
+      "files": [
+        {
+          "path": "blocks/snippets/resource-index.html",
+          "type": "registry:file",
+          "target": "~/syntyr/blocks/resource-index.html"
+        },
+        {
+          "path": "LICENSE",
+          "type": "registry:file",
+          "target": "~/syntyr/LICENSE"
+        }
+      ]
+    },
+    {
       "name": "press-highlights",
       "type": "registry:item",
       "title": "News and press highlights",
@@ -2083,6 +2347,50 @@
           "path": "blocks/snippets/press-highlights.html",
           "type": "registry:file",
           "target": "~/syntyr/blocks/press-highlights.html"
+        },
+        {
+          "path": "LICENSE",
+          "type": "registry:file",
+          "target": "~/syntyr/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "feature-rows",
+      "type": "registry:item",
+      "title": "Stacked feature story rows",
+      "description": "Two narrative feature rows with contextual detail cards and destination links.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://syntyr-css.pages.dev/registry/r/core.json"
+      ],
+      "files": [
+        {
+          "path": "blocks/snippets/feature-rows.html",
+          "type": "registry:file",
+          "target": "~/syntyr/blocks/feature-rows.html"
+        },
+        {
+          "path": "LICENSE",
+          "type": "registry:file",
+          "target": "~/syntyr/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "impact-narrative",
+      "type": "registry:item",
+      "title": "Metrics with explanatory narrative",
+      "description": "Contextualized illustrative metrics paired with interpretation and source guidance.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://syntyr-css.pages.dev/registry/r/core.json"
+      ],
+      "files": [
+        {
+          "path": "blocks/snippets/impact-narrative.html",
+          "type": "registry:file",
+          "target": "~/syntyr/blocks/impact-narrative.html"
         },
         {
           "path": "LICENSE",

@@ -52,6 +52,10 @@ Track **net contribution**, not gross orders: subtract tax obligations, payment 
 
 The current source documents **no** approved trademark clearance, final executable commercial license, all-screen manual accessibility sign-off, complete buyer package, completed payments/taxes/refund procedure or tested end-to-end order and delivery. Follow `commercial-launch-gates.md`; payment links must remain disabled until every gate is verified. A private screenshot is not a purchasable product or proof of backend functionality.
 
+## Quote-based integration route (source candidate, 2026-11-22)
+
+A separate public **Integration Services** page is proposed for qualified developers and agencies with an immediate project and a budget. It links from the homepage product showcase, products comparison, Pro and Studio research pages. It offers a private email inquiry for explicitly scoped HTML/CSS implementation and backend-template adaptation. This is a custom service opportunity, not a paid template checkout, a fixed-price order, an accepted project or evidence that a lead was received. Syntyr Core remains free and MIT-licensed; existing premium purchase and delivery gates are unchanged. Track real received inquiries and signed work separately from mailto intent. No website JavaScript, tracking beacon, lead database or third-party endpoint is added.
+
 ## Next experiments to rank
 
 1. **High:** qualified buyer outreach and 10 actual conversations; catalog expansion without buyer evidence is low leverage.

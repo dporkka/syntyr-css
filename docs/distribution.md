@@ -155,6 +155,8 @@ layout helpers and `syntyr.print.css` for print-friendly reports. System-aware
 Grid/Studio `data-syn-theme="auto"` is already included in core CSS, with
 no additional stylesheet or runtime JavaScript. See the
 [progressive-enhancement guide](progressive-enhancement.md) for examples.
+The optional source-candidate `syntyr.ascii.css` composes with symbols for [ASCII effects](ascii-effects.md); it is not in the published alpha.4 release.
+
 The optional `syntyr.symbols.css` adds BYO-SVG icon sizing, literal Unicode styling and ASCII/box-drawing alignment without shipping fonts or icons; see [symbols and accessibility](symbols.md).
 
 `syntyr.semantic-bundle.css` bundles core and semantic styles with scoped opt-in.

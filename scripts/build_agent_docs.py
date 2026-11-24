@@ -33,6 +33,7 @@ SOURCES = (
     "docs/visual-intensity.md",
     "docs/visual-composition.md",
     "docs/geometry-terminal.md",
+    "docs/ascii-effects.md",
     "docs/viz.md",
     "docs/geo.md",
     "docs/accessibility.md",

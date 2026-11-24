@@ -4,7 +4,7 @@ from html.parser import HTMLParser
 from scripts.build_cloudflare_site import source_files, SITE_URL
 
 PAGES = ('index.html', 'color-contrast-checker.html', 'css-theme-generator.html',
-         'css-clamp-generator.html', 'responsive-design-tester.html')
+         'css-clamp-generator.html', 'responsive-design-tester.html', 'ascii-playground.html')
 
 class FreeToolsTests(unittest.TestCase):
     @classmethod
@@ -21,10 +21,20 @@ class FreeToolsTests(unittest.TestCase):
             self.assertIn('<title>', html, path)
             self.assertIn(f'<link rel="canonical" href="{SITE_URL}/tools/' + ('' if filename == 'index.html' else filename.removesuffix('.html')) + '">', html)
             self.assertIn('href="index.html"', html, path)
-        for asset in ('site.css', 'site.mjs', 'logic.mjs'):
+        for asset in ('site.css', 'site.mjs', 'logic.mjs', 'ascii-playground.css', 'ascii-playground.mjs', 'ascii-logic.mjs'):
             self.assertIn('tools/' + asset, self.files)
         self.assertIn(f'{SITE_URL}/tools/</loc>', sitemap)
         self.assertIn(f'{SITE_URL}/tools/color-contrast-checker</loc>', sitemap)
+
+    def test_ascii_tool_search_intents_have_unique_indexable_content(self):
+        page = self.files['tools/ascii-playground.html'].decode()
+        sitemap = self.files['sitemap.xml'].decode()
+        self.assertIn(f'{SITE_URL}/tools/ascii-playground</loc>', sitemap)
+        self.assertIn('<h1>Free ASCII art generator</h1>', page)
+        for intent in ('image to ASCII', 'ASCII text and logo', 'ASCII effects for websites'):
+            self.assertIn(intent, page)
+        self.assertIn('href="../examples/ascii-heroes.html"', page)
+        self.assertNotIn('name="robots" content="noindex', page)
 
     def test_tools_linked_from_home_and_docs(self):
         self.assertIn('href="tools/"', self.files['index.html'].decode())

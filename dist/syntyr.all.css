@@ -432,6 +432,27 @@
     &.syn-prose { max-width: 65ch; font: 400 var(--syn-type-body)/var(--syn-leading-body) var(--syn-font-ui); }
     &.syn-prose > :where(* + *) { margin-block-start: var(--syn-space-2); }
     &.syn-prose > :where(h2, h3, h4) { margin-block-start: var(--syn-space-4); }
+    /* Explicit native content lists for core-only consumers. Native list markers,
+       numbering, reversed/start/value semantics and wrapping remain intact. */
+    &.syn-list {
+      margin-block: var(--syn-space-2);
+      padding-inline-start: 1.5rem;
+      max-inline-size: 100%;
+      line-height: var(--syn-leading-body);
+    }
+    &.syn-list > li {
+      margin-block: var(--syn-list-item-gap, .35rem);
+      padding-inline-start: .125rem;
+      overflow-wrap: anywhere;
+    }
+    &.syn-list > li::marker { color: var(--syn-text-subtle); }
+    &.syn-list--accent > li::marker { color: var(--syn-accent); }
+    &.syn-list--compact { --syn-list-item-gap: .15rem; }
+    &.syn-list :is(ul, ol) {
+      margin-block: var(--syn-space-1);
+      padding-inline-start: 1.5rem;
+      max-inline-size: 100%;
+    }
     &.syn-lede { max-width: 56ch; color: var(--syn-muted); }
     &.syn-muted { color: var(--syn-text-subtle); }
     &.syn-mono { font-family: var(--syn-mono); font-variant-numeric: tabular-nums; }
@@ -993,7 +1014,12 @@
     &.syn-price-card > .syn-button { margin-block-start: auto; }
     &.syn-price-value { margin: 0; color: var(--syn-text); font: 650 clamp(2rem, 5vw, 3rem)/1.1 var(--syn-mono); font-variant-numeric: tabular-nums; }
     &.syn-price-value small { color: var(--syn-muted); font: 400 .9rem var(--syn-font); }
-    &.syn-feature-list { display: grid; gap: .6rem; padding-inline-start: 1.2rem; margin: 0 0 var(--syn-space-3); color: var(--syn-muted); }
+    /* Marketing/pricing features need legible body contrast, not subdued text. */
+    &.syn-feature-list {
+      display: grid; gap: var(--syn-feature-list-gap, .6rem);
+      padding-inline-start: 1.5rem; margin: 0 0 var(--syn-space-3);
+      color: var(--syn-text); line-height: var(--syn-leading-body);
+    }
     &.syn-feature-list li::marker { color: var(--syn-accent); }
       &.syn-breadcrumbs ol { display: flex; align-items: center; flex-wrap: wrap; gap: .5rem; list-style: none; padding: 0; margin: 0; }
     &.syn-breadcrumbs li { display: inline-flex; align-items: center; gap: .5rem; min-width: 0; }
@@ -1190,7 +1216,7 @@
     &.syn-list-row {
       display: flex; gap: var(--syn-space-2); align-items: center;
       min-block-size: var(--syn-control-height);
-      min-inline-size: 0; padding: var(--syn-space-2);
+      min-inline-size: 0; padding: var(--syn-list-row-padding, var(--syn-space-2));
       color: var(--syn-text); text-decoration: none; overflow-wrap: anywhere;
     }
     &.syn-list-group > :where(li + li, .syn-list-row + .syn-list-row) { border-block-start: 1px solid var(--syn-border-default); }
@@ -1467,8 +1493,17 @@
     max-inline-size: 100%;
   }
   :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(li:not([class]), li[data-syn-semantic])) {
-    margin-block: .25rem;
+    margin-block: var(--syn-list-item-gap, .25rem);
     overflow-wrap: anywhere;
+  }
+  /* Nested lists retain their browser-native disc/circle/square and decimal
+     hierarchy. Only their local vertical rhythm is reduced; no marker reset. */
+  :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(
+    :is(ul:not([class]), ol:not([class]), menu:not([class]), ul[data-syn-semantic], ol[data-syn-semantic], menu[data-syn-semantic])
+    :is(ul:not([class]), ol:not([class]), menu:not([class]), ul[data-syn-semantic], ol[data-syn-semantic], menu[data-syn-semantic])
+  ) {
+    margin-block: var(--syn-space-1);
+    padding-inline-start: 1.5rem;
   }
   :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(dl:not([class]), dl[data-syn-semantic])) {
     margin-block: var(--syn-space-2);
@@ -3072,6 +3107,84 @@
   }
   :where(.syn-root .syn-ascii--accent, .syn-root.syn-ascii--accent) { color: var(--syn-accent, currentColor); }
   :where(.syn-root .syn-ascii--muted, .syn-root.syn-ascii--muted) { color: var(--syn-muted, currentColor); }
+}
+/* Optional ASCII effects. Compose with .syn-ascii from symbols.css.
+   Actual character art is supplied in HTML; no fonts, generated data or runtime. */
+@layer syn.symbols {
+  :where(.syn-root, .syn-root *) {
+    &.syn-ascii--compact {
+      font-size: var(--syn-ascii-font-size, .75rem);
+      line-height: var(--syn-ascii-line-height, 1.15);
+      letter-spacing: var(--syn-ascii-spacing, 0);
+    }
+    &.syn-ascii--phosphor {
+      color: var(--syn-ascii-color, var(--syn-accent, currentColor));
+      text-shadow: 0 0 .6em color-mix(in srgb, currentColor var(--syn-glow-alpha, 12%), transparent);
+    }
+    /* Fading and motion are restricted to explicitly decorative artwork. */
+    &.syn-ascii--gradient:where([aria-hidden="true"]) {
+      mask-image: linear-gradient(135deg, transparent, #000 35%, #000 65%, transparent);
+    }
+    &.syn-ascii--dither:where([aria-hidden="true"]) {
+      opacity: var(--syn-ascii-opacity, .7);
+    }
+    &.syn-ascii--scan:where([aria-hidden="true"]) {
+      mask-image: repeating-linear-gradient(to bottom, #000 0 3px, #0009 3px 4px);
+    }
+    &.syn-ascii--banner {
+      font-weight: 700;
+      color: var(--syn-ascii-color, var(--syn-accent, currentColor));
+    }
+    &.syn-ascii--cursor {
+      border-inline-end: .55em solid currentColor;
+      display: inline-block;
+    }
+    /* Animate only a decorative child/artwork, never actual status or copy.
+       A one-shot effect completes in <= 5s even with a custom duration. */
+    &.syn-ascii--typewriter:where([aria-hidden="true"]) {
+      animation: syn-ascii-reveal min(var(--syn-ascii-duration, 2s), 5s) steps(var(--syn-ascii-steps, 24), end) both;
+    }
+    &.syn-ascii--wave:where([aria-hidden="true"]) {
+      animation: syn-ascii-wave min(var(--syn-ascii-duration, 3s), 5s) ease-in-out both;
+    }
+    &.syn-ascii--rain:where([aria-hidden="true"]) {
+      animation: syn-ascii-rain min(var(--syn-ascii-duration, 3s), 5s) ease-out both;
+    }
+    &.syn-ascii--decode:where([aria-hidden="true"]) {
+      animation: syn-ascii-decode min(var(--syn-ascii-duration, 1s), 5s) steps(5, end) both;
+    }
+    &.syn-ascii--loader:where([aria-hidden="true"]) {
+      display: inline-block;
+      animation: syn-ascii-loader min(var(--syn-ascii-duration, 2s), 5s) steps(8, end) both;
+    }
+    @media (prefers-reduced-motion: reduce), (forced-colors: active), (prefers-contrast: more), print {
+      &.syn-ascii--typewriter, &.syn-ascii--wave, &.syn-ascii--rain,
+      &.syn-ascii--decode, &.syn-ascii--loader { animation: none; }
+      &.syn-ascii--gradient, &.syn-ascii--scan { mask-image: none; }
+      &.syn-ascii--dither { opacity: 1; }
+      &.syn-ascii--phosphor { text-shadow: none; }
+    }
+    @media print {
+      &.syn-ascii--phosphor, &.syn-ascii--banner { color: inherit; }
+    }
+  }
+  @keyframes syn-ascii-reveal {
+    from { clip-path: inset(0 100% 0 0); }
+    to { clip-path: inset(0); }
+  }
+  @keyframes syn-ascii-wave {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-.3em); }
+  }
+  @keyframes syn-ascii-rain {
+    from { transform: translateY(-.65em); opacity: .35; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  @keyframes syn-ascii-decode {
+    from { letter-spacing: .1em; }
+    to { letter-spacing: var(--syn-ascii-spacing, 0); }
+  }
+  @keyframes syn-ascii-loader { to { transform: rotate(360deg); } }
 }
 /* Optional static effects. */
 @layer syn.effects {

@@ -435,6 +435,7 @@ For optional effects, load `syntyr.effects.css`. `syntyr.css` is the convenient 
 | Panels | `.syn-panel`, `.syn-panel--cut` | unclassed `article` |
 | Layout | `.syn-page` (viewport-height opt-in), `.syn-shell`, `.syn-header`, `.syn-grid`, `.syn-layout`, `.syn-inline`, `.syn-sidecar`, `.syn-stack` | normal CSS layout |
 | Typography | `.syn-logo`, `.syn-eyebrow`, `.syn-title`, `.syn-section-heading`, `.syn-heading`, `.syn-lede`, `.syn-mono`, `.syn-caption`, `.syn-muted` | native heading/text |
+| Content lists | `.syn-list`, optional `.syn-list--compact` and `.syn-list--accent` | unclassed `ul` / `ol` in semantic mode |
 | Status | `.syn-badge`, `.syn-badge--accent`, `.syn-status` and semantic variants, `.syn-alert`, `.syn-alert--danger`, `.syn-meter` on `progress` | native `progress` |
 | Forms | `.syn-form`, `.syn-label`, `.syn-input`, `.syn-select`, `.syn-textarea`, `.syn-check`, `.syn-fieldset`, `.syn-help`, `.syn-error` | unclassed form controls |
 | Email UI (optional) | `.syn-email-signup`, `.syn-email-inbox`, `.syn-email-message`, `.syn-email-compose`, `.syn-email-preferences` | Native forms and mailbox navigation; see [email components](email-components.md) |
@@ -497,6 +498,38 @@ Use native button `popovertarget="id"` to control a popover and `commandfor="id"
 
 For component-level package imports and optional native UI recipes, see
 [native patterns](native-patterns.md).
+
+### Content lists and grouped rows (alpha.5 source candidate)
+
+Use an ordinary `<ul>` or `<ol>` inside `.syn-semantic` for native list
+spacing, nesting and markers. When loading **core only**, opt into the same
+scoped list presentation with `.syn-list`. It preserves native bullet shapes,
+ordered numbering (`start`, `reversed`, `value`), writing direction and
+screen-reader list semantics. `.syn-list--compact` reduces vertical item gaps
+and `.syn-list--accent` colors the top-level markers; both are optional.
+Set `--syn-list-item-gap` locally to override the item rhythm.
+
+```html
+<ul class="syn-list syn-list--accent">
+  <li>Accessible headings</li>
+  <li>Native nested lists
+    <ul><li>First detail</li><li>Second detail</li></ul>
+  </li>
+</ul>
+<ol class="syn-list syn-list--compact" start="9">
+  <li>Review</li><li>Publish</li>
+</ol>
+```
+
+`.syn-feature-list` is a legible, accent-marked list intended for pricing and
+features; override its row gap with `--syn-feature-list-gap`. The distinct
+`.syn-list-group` is for markerless grouped navigation or collection rows.
+Customize row density by setting `--syn-list-row-padding` on a containing
+`.syn-list-group` rather than creating a new component. When removing markers
+with `list-style: none`, Safari/VoiceOver may not expose the list as a list;
+add `role="list"` to the native `ul` or `ol` if list semantics are intended.
+Do **not** apply a global marker reset or use fake list text in place of
+semantic list markup.
 
 ## Standard low-entropy component inventory
 
@@ -3082,6 +3115,8 @@ layout helpers and `syntyr.print.css` for print-friendly reports. System-aware
 Grid/Studio `data-syn-theme="auto"` is already included in core CSS, with
 no additional stylesheet or runtime JavaScript. See the
 [progressive-enhancement guide](progressive-enhancement.md) for examples.
+The optional source-candidate `syntyr.ascii.css` composes with symbols for [ASCII effects](ascii-effects.md); it is not in the published alpha.4 release.
+
 The optional `syntyr.symbols.css` adds BYO-SVG icon sizing, literal Unicode styling and ASCII/box-drawing alignment without shipping fonts or icons; see [symbols and accessibility](symbols.md).
 
 `syntyr.semantic-bundle.css` bundles core and semantic styles with scoped opt-in.
@@ -3256,6 +3291,7 @@ reviewed consistently before `1.0.0`. It is not a new compatibility guarantee.
 | New `.syn-field`, `.syn-field-row`, `.syn-field-body`, `.syn-input-group`, `.syn-input-addon` form compositions | Experimental prerelease core additions | Evaluate for v1 stabilization after browser/accessibility review |
 | Documented `--syn-*` design-token names | Public prerelease API | Stable names, not fixed default values |
 | New documented component-local layout variables | Experimental alpha.5 opt-in API | Evaluate for stability after responsive review |
+| `.syn-list`, `.syn-list--compact`, `.syn-list--accent` and list-local gap/padding properties | Experimental alpha.5 core additions; semantic mode keeps native markers | Evaluate accessibility, nested rhythm and RTL before v1 |
 | `--syn-space-fluid-1` through `--syn-space-fluid-4` | Experimental alpha.5 opt-in tokens; bounded fluid spacing with fixed-unit fallback; no default layout changes | Evaluate browser behavior and typography/zoom interaction before v1 |
 | `data-syn-color-space="oklch"` | Experimental alpha.5 presentation opt-in | Evaluate perceptual color/contrast before v1 |
 | `data-syn-theme` and documented `data-syn-*` state hooks | Public prerelease API | Stable names and meanings |
@@ -3464,7 +3500,7 @@ snippets and an optional **Copy full page** action that includes the
 **actual required stylesheets**, the document shell and `.syn-root` theme
 scope. Copying uses docs-only JavaScript; view the ordinary HTML source
 without JavaScript. For complete layouts, choose the existing
-[85 MIT blocks](blocks.html) instead of rebuilding a pricing or dashboard
+[99 MIT blocks](blocks.html) instead of rebuilding a pricing or dashboard
 section from scratch.
 
 The full-page option expects you to self-host the same **unreleased alpha.5**
@@ -4853,7 +4889,25 @@ metadata, not an executable preset installer, stylesheet, or published API.
 For density/intensity, apply the indicated `data-syn-density` and
 `data-syn-intensity` attributes on the Syntyr scope. A custom radius uses
 `--syn-radius` and `--syn-panel-radius`; the default option preserves each
-base theme's geometry. The documentation script and clipboard enhancement are
+base theme's geometry. The editor also supports **site-wide color roles** (background, card surface,
+primary/secondary text, accent, on-accent), three system-font typography
+pairings (default, editorial, technical), and three spacing rhythms
+(balanced, tight, airy). The page preview includes header, feature,
+form and footer sections; it is a visual sample, not a live deployment.
+Generated CSS uses only the existing `--syn-*` variables. The optional
+JSON preset retains `schema_version: 1` and adds `typography` and
+`spacing` metadata; older consumers may ignore these optional fields.
+Typography uses locally available system fonts, not network-loaded files.
+
+Color changes are scoped to the selected theme. Switching themes resets
+the six color inputs to that palette's values but preserves your selected
+typography, spacing, radius, intensity and density; the **Reset palette
+colors** action does the same. The contrast indicators inspect button
+foreground, body text on both background and surface, and muted text on
+surface. They are advisory; other contrast combinations, graphics and focus
+states require testing in the consuming application.
+
+The documentation script and clipboard enhancement are
 not included in Syntyr's distributed CSS. Test the resulting palette and
 control contrast in the consuming application.
 
@@ -5441,6 +5495,71 @@ python3 tests/browser_matrix.py --browsers chromium firefox webkit
 ```
 
 See [the frame + terminal example](../examples/geometry-terminal.html). Browser checks are developer-only; the distributed CSS still has zero runtime JS or dependencies.
+
+---
+
+## Source: docs/ascii-effects.md
+
+Original: https://syntyr-css.pages.dev/docs/ascii-effects.md
+
+# ASCII effects (optional)
+
+Source candidate only (alpha.5); not available in published alpha.4. Load core, symbols, then ASCII effects. For an npm package built from this candidate:
+
+```html
+<link rel="stylesheet" href="dist/syntyr.core.css">
+<link rel="stylesheet" href="dist/syntyr.symbols.css">
+<link rel="stylesheet" href="dist/syntyr.ascii.css">
+```
+
+For a plain HTML site, copy the installed CSS files from the package’s `node_modules/@syntyr/css/dist/` directory into the served `dist/` directory (or adjust the URLs to your public asset path). npm installation does not serve files automatically. In a bundler, import the package CSS instead. Or import `@syntyr/css/ascii.css` alongside core and symbols. The selective build accepts `--modules symbols,ascii`. The all bundle includes both; core and cinematic preset remain unchanged.
+
+[Open the interactive generator and image converter](../tools/ascii-playground.html) (optional site-only JavaScript; exports are static). The generator supports ordered Bayer and Floyd–Steinberg dithering, custom glyph ramps and a five-row original text logo alphabet. [Copy three CSS-only hero sections](../examples/ascii-heroes.html). [Open the ASCII effects lab](../examples/ascii.html) for original, copyable character art. CSS only styles literal DOM text; it does not generate random characters, calculate a chart, perform real typing, decode text, or convert media. Use existing symbols for geometry and native progress or textual equivalents for status.
+
+```html
+<div class="syn-root" data-syn-theme="grid">
+  <p>System online</p>
+  <pre class="syn-ascii syn-ascii--compact syn-ascii--phosphor syn-ascii--scan"
+       aria-hidden="true" tabindex="-1">[#####.....] 50%</pre>
+  <p>Example completion: 50%</p>
+</div>
+```
+
+| Modifier | Purpose |
+| --- | --- |
+| `syn-ascii--compact` | Compact character-cell typography |
+| `syn-ascii--phosphor` | Theme-aware text and glow; respects intensity's glow token |
+| `syn-ascii--gradient` | Decorative diagonal fade |
+| `syn-ascii--dither` | Decorative opacity for literal character-density textures |
+| `syn-ascii--scan` | Decorative horizontal scanline mask |
+| `syn-ascii--banner` | Accent-colored, bold text art |
+| `syn-ascii--cursor` | Static terminal block cursor |
+| `syn-ascii--typewriter` | One-shot stepped visual reveal |
+| `syn-ascii--wave` | One-shot vertical movement of a field |
+| `syn-ascii--rain` | One-shot entrance of a precomputed character stream |
+| `syn-ascii--decode` | One-shot stepped letter-spacing reveal; not character substitution |
+| `syn-ascii--loader` | One-shot rotation of a supplied symbol; not an application loading state |
+
+Use `--syn-ascii-color`, `--syn-ascii-font-size`, `--syn-ascii-line-height`, `--syn-ascii-spacing`, `--syn-ascii-opacity`, `--syn-ascii-duration` and `--syn-ascii-steps` on the root or artwork as appropriate. Use positive durations and step counts. Effects are static unless a motion modifier is explicitly attached to an element marked `aria-hidden="true"`; motion lasts no longer than five seconds and does not repeat. Reduced motion, forced colors, increased contrast and print disable motion, masks, and glow.
+
+Keep meaningful text visible outside decorative art. Avoid focusable children inside hidden art. Keep scrollable meaningful code outside these decorative patterns; never replace actual progress, errors or status with a character image. Quiet intensity turns off the phosphor glow via the existing token; omit decorative motion classes for quiet application surfaces. Do not stack multiple motion or masking modifiers; each owns a single CSS property.
+
+For new designs, compose existing `syn-ascii`, geometric frames, theme tokens and semantic HTML before adding a modifier. This module adds only treatments not supplied by the existing alignment and panel utilities. Procedural animation, real text scrambling and media conversion are deferred to optional tooling.
+
+## Optional build-time ASCII CLI
+
+From a checkout of this source candidate, with Node.js 22 or later, run the dependency-free CLI. It reuses the playground's deterministic renderer and export logic. It is a source-checkout tool, not part of the published npm CSS package or browser runtime.
+
+```sh
+node scripts/ascii.mjs --help
+node scripts/ascii.mjs pattern torus --columns 80 --rows 24 --ramp blocks --time 1 > torus.txt
+node scripts/ascii.mjs logo SYNTYR --style hash --format svg > wordmark.svg
+node scripts/ascii.mjs image photo.ppm --columns 80 --dither floyd --format html > photo.html
+```
+
+The image command reads local 8-bit Netpbm PGM/PPM files (P2, P3, P5, P6), up to 16 MiB and four million source pixels. For PNG, JPEG and WebP, use the browser playground or convert locally to PGM/PPM with an existing image editor. The CLI does not install a decoder or fetch URLs. It writes artwork to stdout and diagnostics to stderr; invalid input exits nonzero. HTML output starts with a UTF-8 BOM for saved documents. SVG and HTML are escaped, use a validated solid hex color, and need no JavaScript. As with the browser tool, glyph-cell aspect and intensity are approximations.
+
+Use these commands for static sites, README banners and reproducible build steps. Keep ordinary text alternatives for meaningful artwork. The CSS package has no CLI or Node dependency.
 
 ---
 

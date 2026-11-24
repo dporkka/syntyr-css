@@ -82,9 +82,69 @@
       "description": "Accent appearance variant of the ascii component; see symbols.css for styles."
     },
     {
+      "name": "syn-ascii--banner",
+      "module": "ascii.css",
+      "description": "Banner appearance variant of the ascii component; see ascii.css for styles."
+    },
+    {
+      "name": "syn-ascii--compact",
+      "module": "ascii.css",
+      "description": "Compact appearance variant of the ascii component; see ascii.css for styles."
+    },
+    {
+      "name": "syn-ascii--cursor",
+      "module": "ascii.css",
+      "description": "Cursor appearance variant of the ascii component; see ascii.css for styles."
+    },
+    {
+      "name": "syn-ascii--decode",
+      "module": "ascii.css",
+      "description": "Decode appearance variant of the ascii component; see ascii.css for styles."
+    },
+    {
+      "name": "syn-ascii--dither",
+      "module": "ascii.css",
+      "description": "Dither appearance variant of the ascii component; see ascii.css for styles."
+    },
+    {
+      "name": "syn-ascii--gradient",
+      "module": "ascii.css",
+      "description": "Gradient appearance variant of the ascii component; see ascii.css for styles."
+    },
+    {
+      "name": "syn-ascii--loader",
+      "module": "ascii.css",
+      "description": "Loader appearance variant of the ascii component; see ascii.css for styles."
+    },
+    {
       "name": "syn-ascii--muted",
       "module": "symbols.css",
       "description": "Muted appearance variant of the ascii component; see symbols.css for styles."
+    },
+    {
+      "name": "syn-ascii--phosphor",
+      "module": "ascii.css",
+      "description": "Phosphor appearance variant of the ascii component; see ascii.css for styles."
+    },
+    {
+      "name": "syn-ascii--rain",
+      "module": "ascii.css",
+      "description": "Rain appearance variant of the ascii component; see ascii.css for styles."
+    },
+    {
+      "name": "syn-ascii--scan",
+      "module": "ascii.css",
+      "description": "Scan appearance variant of the ascii component; see ascii.css for styles."
+    },
+    {
+      "name": "syn-ascii--typewriter",
+      "module": "ascii.css",
+      "description": "Typewriter appearance variant of the ascii component; see ascii.css for styles."
+    },
+    {
+      "name": "syn-ascii--wave",
+      "module": "ascii.css",
+      "description": "Wave appearance variant of the ascii component; see ascii.css for styles."
     },
     {
       "name": "syn-atmosphere",
@@ -1077,9 +1137,24 @@
       "description": "Lead paragraph typography beneath a heading."
     },
     {
+      "name": "syn-list",
+      "module": "components/typography.css",
+      "description": "Scoped native bullet or numbered list for core-only consumers."
+    },
+    {
+      "name": "syn-list--accent",
+      "module": "components/typography.css",
+      "description": "Accent-colored top-level list markers; native numbering preserved."
+    },
+    {
+      "name": "syn-list--compact",
+      "module": "components/typography.css",
+      "description": "Reduced vertical item rhythm for native list content."
+    },
+    {
       "name": "syn-list-group",
       "module": "components/patterns.css",
-      "description": "Grouped list presentation; preserve semantic list markup."
+      "description": "Grouped markerless navigation or collection list; keep list semantics."
     },
     {
       "name": "syn-list-row",
@@ -2482,6 +2557,11 @@
       "name": "--syn-line",
       "module": "tokens.css",
       "description": "Line design token from tokens.css; override in the appropriate Syntyr scope when needed."
+    },
+    {
+      "name": "--syn-list-item-gap",
+      "module": "components/typography.css",
+      "description": "List item gap design token from components/typography.css; override in the appropriate Syntyr scope when needed."
     },
     {
       "name": "--syn-media-card-ratio",

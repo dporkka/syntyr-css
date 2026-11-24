@@ -92,6 +92,20 @@
       "notes": "Choose native headings and accessible labels."
     },
     {
+      "name": "Content list",
+      "module": "syntyr.core.css",
+      "elements": [
+        "ul",
+        "ol"
+      ],
+      "classes": [
+        "syn-list",
+        "syn-list--compact",
+        "syn-list--accent"
+      ],
+      "notes": "Native list markers and order preserved. Use in core-only scopes; semantic mode handles unclassed lists."
+    },
+    {
       "name": "Form fields",
       "module": "syntyr.core.css",
       "elements": [
@@ -1989,10 +2003,11 @@
         "span"
       ],
       "classes": [
+        "syn-page-link",
         "syn-pagination"
       ],
       "native_feature_requirements": [],
-      "html": "<nav class=\"syn-pagination\" aria-label=\"Example result pages\">\n  <a href=\"catalog.html?page=1\" rel=\"prev\">Previous</a>\n  <a href=\"catalog.html?page=1\">1</a>\n  <span aria-current=\"page\">2</span>\n  <a href=\"catalog.html?page=3\">3</a>\n  <a href=\"catalog.html?page=3\" rel=\"next\">Next</a>\n</nav>"
+      "html": "<nav class=\"syn-pagination\" aria-label=\"Example result pages\">\n  <a class=\"syn-page-link\" href=\"catalog.html?page=1\" rel=\"prev\">Previous</a>\n  <a class=\"syn-page-link\" href=\"catalog.html?page=1\">1</a>\n  <span class=\"syn-page-link\" aria-current=\"page\">2</span>\n  <a class=\"syn-page-link\" href=\"catalog.html?page=3\">3</a>\n  <a class=\"syn-page-link\" href=\"catalog.html?page=3\" rel=\"next\">Next</a>\n</nav>"
     },
     {
       "id": "catalog-contact-title",

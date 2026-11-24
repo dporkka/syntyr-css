@@ -41,6 +41,17 @@ npm run build
 npm run verify
 ```
 
+## Hugo + portable CMS JSON
+
+[Source](../examples/hugo-cms/) — Hugo v0.170.0 renders the existing
+CMS starter JSON into static Syntyr sections and verifies project-subpath
+styles and links. Optional Sveltia, Pages CMS or Decap editors can update
+the source file; none run on the public page.
+
+```sh
+python3 scripts/build_hugo_cms_starter.py --hugo hugo --output /tmp/syntyr-hugo-site
+```
+
 For Hugo, Jekyll, Zola, and static Next.js export, see the
 [static-site generator compatibility guide](static-site-generators.md).
 
@@ -78,3 +89,29 @@ after npm release. Generated assets, caches and dependencies are ignored.
 
 The Syntyr core package itself still requires no Node, Astro, Tailwind or
 other runtime dependency.
+
+## Keystatic and Payload CMS content adapters
+
+[Keystatic](../examples/cms-keystatic/README.md) and
+[Payload CMS 3](../examples/cms-payload/README.md) offer optional typed
+editor schemas for the **same Syntyr CMS v1 content**. Neither adapter is a
+runtime dependency of `@syntyr/css`. Both have Python standard-library
+conversion tests; the TypeScript configs can be type-checked independently.
+
+The host applications provide editing and authorization; Syntyr validates
+and renders the resulting content during a static build. See
+[the CMS integration guide](cms-integration.md) for conversion commands and
+security boundaries.
+
+## Astro + Keystatic static website
+
+[Runnable source](https://github.com/dporkka/syntyr-css/tree/main/examples/astro-keystatic/)
+— an Astro marketing site that consumes the exact portable CMS JSON exported
+from a Keystatic homepage singleton. Build verification checks base-prefixed
+local CSS and browser scripts; its fixture-specific verifier additionally
+rejects extra HTML pages, any Keystatic/admin/API artifacts, and JavaScript files.
+
+The Keystatic editor is explicitly opted into **local development only**.
+Content changes can be reviewed through Git pull requests and deployed via a
+hosting provider's Git integration. No public editor server, GitHub Actions
+workflow, or new CSS-core dependency is required.

@@ -441,6 +441,26 @@
       ]
     },
     {
+      "id": "editorial-intro-split",
+      "title": "Editorial intro with context panel",
+      "description": "An editorial introduction with primary actions and a contextual checklist beside it.",
+      "category": "Editorial",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-layout-intro-heading\">\n  <div class=\"syn-sidecar\">\n    <div class=\"syn-stack\">\n      <p class=\"syn-eyebrow\">A CLEARER APPROACH</p>\n      <h2 class=\"syn-heading\" id=\"syn-layout-intro-heading\">Start with the problem, not the platform.</h2>\n      <p class=\"syn-lede\">Design work becomes easier when the people, constraints and desired outcomes are visible from the beginning.</p>\n      <div class=\"syn-inline\">\n        <a class=\"syn-button syn-button--primary\" href=\"/approach\">Explore our approach</a>\n        <a class=\"syn-button syn-button--outline\" href=\"/work\">See example projects</a>\n      </div>\n    </div>\n    <aside class=\"syn-panel syn-stack\" aria-label=\"What to expect\">\n      <p class=\"syn-eyebrow\">AT A GLANCE</p>\n      <h3 class=\"syn-heading\">Focus on what matters</h3>\n      <ul class=\"syn-feature-list\">\n        <li>Understand the audience</li>\n        <li>Choose measurable goals</li>\n        <li>Keep decisions documented</li>\n      </ul>\n    </aside>\n  </div>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "article-toc",
+      "title": "Article with contents sidebar",
+      "description": "A long-form article and real anchor-linked table of contents in a wrapping sidecar.",
+      "category": "Editorial",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-layout-article-heading\">\n  <p class=\"syn-eyebrow\">PRACTICAL GUIDE</p>\n  <h2 class=\"syn-heading\" id=\"syn-layout-article-heading\">A practical way to write clearer product pages</h2>\n  <p class=\"syn-lede\">An article and an in-page contents list that reflow without a JavaScript scroll handler.</p>\n  <div class=\"syn-sidecar\">\n    <article class=\"syn-stack\" aria-label=\"Guide content\">\n      <section class=\"syn-stack\" aria-labelledby=\"syn-layout-article-summary\">\n        <h3 id=\"syn-layout-article-summary\">Begin with one question</h3>\n        <p>What does a reader need to understand or accomplish here? Put the answer near the beginning, using familiar language and a meaningful heading.</p>\n        <p>Provide context without burying the action beneath decorative content.</p>\n      </section>\n      <section class=\"syn-stack\" aria-labelledby=\"syn-layout-article-practices\">\n        <h3 id=\"syn-layout-article-practices\">Make the next step obvious</h3>\n        <p>Group related material, keep link names descriptive, and prefer short paragraphs when scanning is likely.</p>\n        <ul class=\"syn-feature-list\"><li>Use one heading per idea.</li><li>Explain unfamiliar terminology.</li><li>Offer a clear path forward.</li></ul>\n        <p><a href=\"/guides/content\">Read the full content guide</a></p>\n      </section>\n    </article>\n    <aside class=\"syn-panel syn-stack\">\n      <nav aria-label=\"On this page\">\n        <strong>On this page</strong>\n        <ol class=\"syn-stack\">\n          <li><a href=\"#syn-layout-article-summary\">Begin with one question</a></li>\n          <li><a href=\"#syn-layout-article-practices\">Make the next step obvious</a></li>\n        </ol>\n      </nav>\n      <p class=\"syn-caption\">The in-page links target real headings; adjust IDs when copying more than once.</p>\n    </aside>\n  </div>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
       "id": "case-study-preview",
       "title": "Case-study teaser",
       "description": "A project outcome summary with challenges, solution and next action.",
@@ -471,6 +491,66 @@
       ]
     },
     {
+      "id": "header-centered",
+      "title": "Centered editorial header",
+      "description": "Centered brand, horizontal links, and a secondary call to action.",
+      "category": "Navigation",
+      "html": "<header class=\"syn-root syn-region syn-stack\" data-syn-theme=\"studio\" aria-label=\"Example centered site header\">\n  <div class=\"syn-inline\" style=\"--syn-inline-justify:center\">\n    <a class=\"syn-logo\" href=\"/home\">Mosaic Collective</a>\n  </div>\n  <nav class=\"syn-nav syn-inline\" style=\"--syn-inline-justify:center\" aria-label=\"Primary navigation\">\n    <a href=\"/work\">Our work</a>\n    <a href=\"/approach\">Approach</a>\n    <a href=\"/team\">Team</a>\n    <a href=\"/journal\">Journal</a>\n  </nav>\n  <div class=\"syn-inline\" style=\"--syn-inline-justify:center\">\n    <a class=\"syn-button syn-button--outline\" href=\"/contact\">Let's talk</a>\n  </div>\n</header>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "header-split",
+      "title": "Two-row product header",
+      "description": "Separate utility and product navigation with a prominent action.",
+      "category": "Navigation",
+      "html": "<header class=\"syn-root syn-region syn-stack\" data-syn-theme=\"studio\" aria-label=\"Example two-row site header\">\n  <div class=\"syn-inline\" style=\"--syn-inline-justify:space-between\">\n    <a class=\"syn-logo\" href=\"/home\">Atlas Platform</a>\n    <nav class=\"syn-inline\" aria-label=\"Utility navigation\">\n      <a class=\"syn-list-row\" href=\"/help\">Help</a>\n      <a class=\"syn-list-row\" href=\"/login\">Sign in</a>\n    </nav>\n  </div>\n  <div class=\"syn-header\" style=\"--syn-header-padding-block:0.5rem\">\n    <nav class=\"syn-nav\" aria-label=\"Primary navigation\">\n      <a href=\"/product\">Product</a>\n      <a href=\"/solutions\">Solutions</a>\n      <a href=\"/pricing\">Pricing</a>\n      <a href=\"/docs\">Docs</a>\n    </nav>\n    <a class=\"syn-button syn-button--primary\" href=\"/start\">Start free</a>\n  </div>\n</header>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "header-disclosure",
+      "title": "Native disclosure header",
+      "description": "Compact brand and expandable keyboard-accessible menu without JavaScript.",
+      "category": "Navigation",
+      "html": "<header class=\"syn-root syn-region syn-stack\" data-syn-theme=\"studio\" aria-label=\"Example disclosure site header\">\n  <div class=\"syn-inline\" style=\"--syn-inline-justify:space-between\">\n    <a class=\"syn-logo\" href=\"/home\">Northstar Journal</a>\n    <a class=\"syn-button syn-button--outline\" href=\"/subscribe\">Subscribe</a>\n  </div>\n  <details class=\"syn-details\">\n    <summary>Explore the site</summary>\n    <nav class=\"syn-nav\" aria-label=\"Primary navigation\">\n      <a href=\"/stories\">Stories</a>\n      <a href=\"/topics\">Topics</a>\n      <a href=\"/about\">About</a>\n      <a href=\"/contact\">Contact</a>\n    </nav>\n  </details>\n</header>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "footer-compact",
+      "title": "Compact single-row footer",
+      "description": "Space-saving brand, legal links and disclosure in a wrapping row.",
+      "category": "Navigation",
+      "html": "<footer class=\"syn-root syn-region syn-stack\" data-syn-theme=\"studio\" aria-label=\"Example compact site footer\">\n  <div class=\"syn-inline\" style=\"--syn-inline-justify:space-between\">\n    <a class=\"syn-logo\" href=\"/home\">Northstar Studio</a>\n    <nav class=\"syn-inline\" aria-label=\"Footer navigation\">\n      <a class=\"syn-list-row\" href=\"/work\">Work</a>\n      <a class=\"syn-list-row\" href=\"/contact\">Contact</a>\n      <a class=\"syn-list-row\" href=\"/privacy\">Privacy</a>\n    </nav>\n  </div>\n  <p class=\"syn-caption\">Example company information. Replace links and legal details before publishing.</p>\n</footer>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "footer-sitemap",
+      "title": "Four-column sitemap footer",
+      "description": "Responsive product, resource, company and legal navigation groups.",
+      "category": "Navigation",
+      "html": "<footer class=\"syn-root syn-region syn-stack\" data-syn-theme=\"studio\" aria-label=\"Example sitemap site footer\">\n  <div class=\"syn-grid\" style=\"--syn-grid-min:12rem\">\n    <section aria-labelledby=\"syn-sitemap-about\">\n      <h2 class=\"syn-heading\" id=\"syn-sitemap-about\">Atlas Platform</h2>\n      <p class=\"syn-muted\">A clearer way to manage your work.</p>\n    </section>\n    <nav class=\"syn-stack\" aria-label=\"Product links\">\n      <strong>Product</strong>\n      <a class=\"syn-list-row\" href=\"/features\">Features</a>\n      <a class=\"syn-list-row\" href=\"/pricing\">Pricing</a>\n      <a class=\"syn-list-row\" href=\"/integrations\">Integrations</a>\n    </nav>\n    <nav class=\"syn-stack\" aria-label=\"Resources links\">\n      <strong>Resources</strong>\n      <a class=\"syn-list-row\" href=\"/docs\">Documentation</a>\n      <a class=\"syn-list-row\" href=\"/guides\">Guides</a>\n      <a class=\"syn-list-row\" href=\"/support\">Support</a>\n    </nav>\n    <nav class=\"syn-stack\" aria-label=\"Company and legal links\">\n      <strong>Company</strong>\n      <a class=\"syn-list-row\" href=\"/about\">About</a>\n      <a class=\"syn-list-row\" href=\"/privacy\">Privacy</a>\n      <a class=\"syn-list-row\" href=\"/terms\">Terms</a>\n    </nav>\n  </div>\n  <p class=\"syn-caption\">Example links and company details; replace before publishing.</p>\n</footer>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "footer-newsletter",
+      "title": "Newsletter and links footer",
+      "description": "Email subscription example beside site links; requires a host-owned backend.",
+      "category": "Navigation",
+      "html": "<footer class=\"syn-root syn-region syn-stack\" data-syn-theme=\"studio\" aria-label=\"Example newsletter site footer\">\n  <div class=\"syn-grid\">\n    <section class=\"syn-stack\" aria-labelledby=\"syn-newsletter-footer-title\">\n      <h2 class=\"syn-heading\" id=\"syn-newsletter-footer-title\">The Field Notes</h2>\n      <p class=\"syn-muted\">Occasional ideas for more thoughtful digital products.</p>\n      <form class=\"syn-stack\" action=\"/newsletter/subscribe\" method=\"post\">\n        <label class=\"syn-label\" for=\"syn-footer-newsletter-email\">Email address</label>\n        <div class=\"syn-inline\">\n          <input class=\"syn-input\" id=\"syn-footer-newsletter-email\" name=\"email\" type=\"email\" autocomplete=\"email\" required>\n          <button class=\"syn-button syn-button--primary\" type=\"submit\">Subscribe</button>\n        </div>\n        <p class=\"syn-caption\">Example form only. Connect server validation, consent, CSRF protection and unsubscribe handling.</p>\n      </form>\n    </section>\n    <nav class=\"syn-stack\" aria-label=\"Footer navigation\">\n      <strong>Explore</strong>\n      <a class=\"syn-list-row\" href=\"/articles\">Articles</a>\n      <a class=\"syn-list-row\" href=\"/about\">About</a>\n      <a class=\"syn-list-row\" href=\"/contact\">Contact</a>\n      <a class=\"syn-list-row\" href=\"/privacy\">Privacy</a>\n    </nav>\n  </div>\n  <p class=\"syn-caption\">Illustrative business and subscription details; replace before publishing.</p>\n</footer>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
       "id": "mega-navigation",
       "title": "Native expandable mega menu",
       "description": "Keyboard-friendly disclosure with grouped destination links and no menu runtime.",
@@ -486,7 +566,7 @@
       "title": "Documentation page",
       "description": "Documentation navigation, breadcrumb and article content.",
       "category": "Technical",
-      "html": "<section class=\"syn-root syn-shell\" data-syn-theme=\"studio\" aria-labelledby=\"syn-docs-heading\">\n  <nav class=\"syn-breadcrumbs\" aria-label=\"Breadcrumb\"><ol><li><a href=\"/docs\">Docs</a></li><li aria-current=\"page\">Getting started</li></ol></nav>\n  <div class=\"syn-sidecar\">\n    <article><h2 class=\"syn-title\" id=\"syn-docs-heading\">Getting started</h2>\n      <p>Import the version-pinned stylesheet and wrap your application in a Syntyr root.</p>\n      <pre class=\"syn-code\"><code>&lt;main class=\"syn-root\"&gt;Hello world&lt;/main&gt;</code></pre>\n      <h3 id=\"syn-docs-next\">Next steps</h3><p>Explore composable components and semantic forms.</p>\n      <a href=\"/docs/components\">Browse components</a>\n    </article>\n    <nav class=\"syn-panel\" aria-label=\"Documentation sections\"><h2 class=\"syn-heading\">Guides</h2>\n      <ul class=\"syn-list-group\">\n        <li><a class=\"syn-list-row\" href=\"/docs/start\" aria-current=\"page\">Getting started</a></li>\n        <li><a class=\"syn-list-row\" href=\"/docs/components\">Components</a></li>\n        <li><a class=\"syn-list-row\" href=\"/docs/themes\">Themes</a></li>\n      </ul>\n    </nav>\n  </div>\n</section>",
+      "html": "<section class=\"syn-root syn-shell\" data-syn-theme=\"studio\" aria-labelledby=\"syn-docs-heading\">\n  <nav class=\"syn-breadcrumbs\" aria-label=\"Breadcrumb\"><ol><li><a href=\"/docs\">Docs</a></li><li aria-current=\"page\">Getting started</li></ol></nav>\n  <div class=\"syn-sidecar\">\n    <article><h2 class=\"syn-title\" id=\"syn-docs-heading\">Getting started</h2>\n      <p>Import the version-pinned stylesheet and wrap your application in a Syntyr root.</p>\n      <pre class=\"syn-code\"><code>&lt;main class=\"syn-root\"&gt;Hello world&lt;/main&gt;</code></pre>\n      <h3 id=\"syn-docs-next\">Next steps</h3><p>Explore composable components and semantic forms.</p>\n      <a href=\"/docs/components\">Browse components</a>\n    </article>\n    <nav class=\"syn-panel\" aria-label=\"Documentation sections\"><h2 class=\"syn-heading\">Guides</h2>\n      <ul class=\"syn-list-group\" role=\"list\">\n        <li><a class=\"syn-list-row\" href=\"/docs/start\" aria-current=\"page\">Getting started</a></li>\n        <li><a class=\"syn-list-row\" href=\"/docs/components\">Components</a></li>\n        <li><a class=\"syn-list-row\" href=\"/docs/themes\">Themes</a></li>\n      </ul>\n    </nav>\n  </div>\n</section>",
       "required_stylesheets": [
         "syntyr.core.css"
       ]
@@ -749,7 +829,7 @@
       "title": "Company milestones timeline",
       "description": "A chronological history using native dates and an ordered vertical sequence.",
       "category": "Services",
-      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-milestones-heading\">\n  <p class=\"syn-eyebrow\">OUR HISTORY / EXAMPLE DATES</p>\n  <h2 class=\"syn-heading\" id=\"syn-milestones-heading\">How the work evolved</h2>\n  <ol class=\"syn-steps syn-steps--vertical\">\n    <li class=\"syn-step\"><div><time datetime=\"2023\">2023</time><h3 class=\"syn-step-label\">Started with research</h3><p class=\"syn-step-detail\">A small team mapping practical needs and constraints.</p></div></li>\n    <li class=\"syn-step\"><div><time datetime=\"2024\">2024</time><h3 class=\"syn-step-label\">Built the first tools</h3><p class=\"syn-step-detail\">Shared design patterns and accessible front-end foundations.</p></div></li>\n    <li class=\"syn-step\"><div><time datetime=\"2025\">2025</time><h3 class=\"syn-step-label\">Expanded the practice</h3><p class=\"syn-step-detail\">More services, clearer documentation and repeatable delivery.</p></div></li>\n  </ol>\n  <p class=\"syn-caption\">Illustrative history; replace dates and claims before publishing.</p>\n</section>",
+      "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-milestones-heading\">\n  <p class=\"syn-eyebrow\">OUR HISTORY / EXAMPLE DATES</p>\n  <h2 class=\"syn-heading\" id=\"syn-milestones-heading\">How the work evolved</h2>\n  <ol class=\"syn-steps syn-steps--vertical\" role=\"list\">\n    <li class=\"syn-step\"><div><time datetime=\"2023\">2023</time><h3 class=\"syn-step-label\">Started with research</h3><p class=\"syn-step-detail\">A small team mapping practical needs and constraints.</p></div></li>\n    <li class=\"syn-step\"><div><time datetime=\"2024\">2024</time><h3 class=\"syn-step-label\">Built the first tools</h3><p class=\"syn-step-detail\">Shared design patterns and accessible front-end foundations.</p></div></li>\n    <li class=\"syn-step\"><div><time datetime=\"2025\">2025</time><h3 class=\"syn-step-label\">Expanded the practice</h3><p class=\"syn-step-detail\">More services, clearer documentation and repeatable delivery.</p></div></li>\n  </ol>\n  <p class=\"syn-caption\">Illustrative history; replace dates and claims before publishing.</p>\n</section>",
       "required_stylesheets": [
         "syntyr.core.css"
       ]
@@ -805,11 +885,41 @@
       ]
     },
     {
+      "id": "decision-guide",
+      "title": "Three-path decision guide",
+      "description": "A responsive choice of three service approaches with visible criteria and tradeoffs.",
+      "category": "Services",
+      "html": "<section class=\"syn-root syn-region syn-stack\" data-syn-theme=\"studio\" aria-labelledby=\"syn-layout-decision-heading\">\n  <p class=\"syn-eyebrow\">FIND YOUR STARTING POINT</p>\n  <h2 class=\"syn-heading\" id=\"syn-layout-decision-heading\">Choose the approach that fits your next goal.</h2>\n  <p class=\"syn-lede\">Three paths with explicit tradeoffs, not a simulated selector.</p>\n  <div class=\"syn-grid\" style=\"--syn-grid-min:15rem\">\n    <article class=\"syn-panel syn-stack\">\n      <h3 class=\"syn-heading\">Explore</h3>\n      <p>Useful when requirements are still changing and you need to test an idea.</p>\n      <ul class=\"syn-feature-list\"><li>Small initial scope</li><li>Room to learn</li></ul>\n      <a class=\"syn-button syn-button--outline\" href=\"/services/discovery\">Discovery details</a>\n    </article>\n    <article class=\"syn-panel syn-stack\">\n      <h3 class=\"syn-heading\">Build</h3>\n      <p>Useful when the problem is understood and the workflow is ready to implement.</p>\n      <ul class=\"syn-feature-list\"><li>Defined milestones</li><li>Reviewable deliverables</li></ul>\n      <a class=\"syn-button syn-button--outline\" href=\"/services/build\">Build details</a>\n    </article>\n    <article class=\"syn-panel syn-stack\">\n      <h3 class=\"syn-heading\">Improve</h3>\n      <p>Useful when an existing service needs fewer bottlenecks and clearer feedback.</p>\n      <ul class=\"syn-feature-list\"><li>Baseline first</li><li>Measured iteration</li></ul>\n      <a class=\"syn-button syn-button--outline\" href=\"/services/improve\">Improvement details</a>\n    </article>\n  </div>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "faq-sidecar",
+      "title": "FAQs with a contact sidebar",
+      "description": "Native expandable answers alongside a clear contact path.",
+      "category": "Services",
+      "html": "<section class=\"syn-root syn-region syn-stack\" data-syn-theme=\"studio\" aria-labelledby=\"syn-layout-faq-heading\">\n  <p class=\"syn-eyebrow\">COMMON QUESTIONS</p>\n  <h2 class=\"syn-heading\" id=\"syn-layout-faq-heading\">Answers, with a direct way to ask more.</h2>\n  <div class=\"syn-sidecar\">\n    <div class=\"syn-stack\">\n      <details class=\"syn-details\">\n        <summary>What belongs in the initial brief?</summary>\n        <p>A concise description of the audience, the problem, constraints and a useful definition of success.</p>\n      </details>\n      <details class=\"syn-details\">\n        <summary>Can we begin with a small scope?</summary>\n        <p>A narrowly defined first step can make assumptions easier to verify. Agree on boundaries before implementation.</p>\n      </details>\n      <details class=\"syn-details\">\n        <summary>How should progress be communicated?</summary>\n        <p>Use a predictable review rhythm, explicit owners and documented decisions so context is not lost.</p>\n      </details>\n    </div>\n    <aside class=\"syn-panel syn-stack\" aria-labelledby=\"syn-layout-faq-contact\">\n      <h3 class=\"syn-heading\" id=\"syn-layout-faq-contact\">Still have a question?</h3>\n      <p>Share the outcome you need and the constraints that matter most.</p>\n      <a class=\"syn-button syn-button--primary\" href=\"/contact\">Contact the team</a>\n      <p class=\"syn-caption\">Replace the example contact route before publishing.</p>\n    </aside>\n  </div>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
       "id": "careers-listings",
       "title": "Careers and open positions",
       "description": "Readable role summaries with clear application routes and example-data disclosure.",
       "category": "Company",
       "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"careers-heading\">\n  <p class=\"syn-eyebrow\">CAREERS / OPEN ROLES</p>\n  <h2 id=\"careers-heading\" class=\"syn-heading\">Do meaningful work with us.</h2>\n  <p class=\"syn-muted\">Illustrative roles only. Replace with actual openings, location or remote policy, and transparent employment details.</p>\n  <ul class=\"syn-stack\">\n    <li class=\"syn-panel\">\n      <div class=\"syn-sidecar\">\n        <div><h3 class=\"syn-heading\">Product designer</h3><p class=\"syn-muted\">Design · Remote eligible · Full-time</p></div>\n        <a class=\"syn-button\" href=\"/careers/product-designer\">View role details</a>\n      </div>\n    </li>\n    <li class=\"syn-panel\">\n      <div class=\"syn-sidecar\">\n        <div><h3 class=\"syn-heading\">Customer success specialist</h3><p class=\"syn-muted\">Customer success · Hybrid · Full-time</p></div>\n        <a class=\"syn-button\" href=\"/careers/customer-success-specialist\">View role details</a>\n      </div>\n    </li>\n    <li class=\"syn-panel\">\n      <div class=\"syn-sidecar\">\n        <div><h3 class=\"syn-heading\">Software engineer</h3><p class=\"syn-muted\">Engineering · Remote eligible · Full-time</p></div>\n        <a class=\"syn-button\" href=\"/careers/software-engineer\">View role details</a>\n      </div>\n    </li>\n  </ul>\n  <p><a href=\"/careers\">Browse all open positions</a></p>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "principles-columns",
+      "title": "Three-column principles section",
+      "description": "Organizational principles with concrete explanations in a responsive grid.",
+      "category": "Company",
+      "html": "<section class=\"syn-root syn-region syn-stack\" data-syn-theme=\"studio\" aria-labelledby=\"syn-layout-principles-heading\">\n  <p class=\"syn-eyebrow\">WHAT GUIDES OUR WORK</p>\n  <h2 class=\"syn-heading\" id=\"syn-layout-principles-heading\">Three principles, one consistent standard.</h2>\n  <p class=\"syn-lede\">Give organizational values substance with practical descriptions, not abstract slogans.</p>\n  <ol class=\"syn-grid\" style=\"--syn-grid-min:16rem\">\n    <li class=\"syn-panel syn-stack\">\n      <h3 class=\"syn-heading\">Understand first</h3>\n      <p>Map the real problem, constraints and affected people before committing to a solution.</p>\n    </li>\n    <li class=\"syn-panel syn-stack\">\n      <h3 class=\"syn-heading\">Favor clear systems</h3>\n      <p>Choose accessible interfaces and maintainable components over short-lived decoration.</p>\n    </li>\n    <li class=\"syn-panel syn-stack\">\n      <h3 class=\"syn-heading\">Improve deliberately</h3>\n      <p>Document outcomes and change direction when evidence suggests a better approach.</p>\n    </li>\n  </ol>\n  <div class=\"syn-inline\">\n    <a class=\"syn-button syn-button--outline\" href=\"/company/about\">More about the company</a>\n    <a class=\"syn-button\" href=\"/company/team\">Meet the team</a>\n  </div>\n</section>",
       "required_stylesheets": [
         "syntyr.core.css"
       ]
@@ -855,11 +965,41 @@
       ]
     },
     {
+      "id": "resource-index",
+      "title": "Grouped resource topic index",
+      "description": "A documentation and resource hub with grouped descriptive navigation links.",
+      "category": "Publishing",
+      "html": "<section class=\"syn-root syn-region syn-stack\" data-syn-theme=\"studio\" aria-labelledby=\"syn-layout-resource-heading\">\n  <p class=\"syn-eyebrow\">LEARN AT YOUR PACE</p>\n  <h2 class=\"syn-heading\" id=\"syn-layout-resource-heading\">Resources organized by what you want to do.</h2>\n  <p class=\"syn-lede\">A grouped topic index using real links, without a pretend search box or client-side filtering.</p>\n  <div class=\"syn-grid\" style=\"--syn-grid-min:16rem\">\n    <nav class=\"syn-panel syn-stack\" aria-label=\"Getting started resources\">\n      <h3 class=\"syn-heading\">Get started</h3>\n      <p>Start with the fundamentals and the quickest path to a first result.</p>\n      <a class=\"syn-list-row\" href=\"/guides/quickstart\">Quickstart guide</a>\n      <a class=\"syn-list-row\" href=\"/guides/basics\">Core concepts</a>\n      <a class=\"syn-list-row\" href=\"/guides/checklist\">Launch checklist</a>\n    </nav>\n    <nav class=\"syn-panel syn-stack\" aria-label=\"Best practice resources\">\n      <h3 class=\"syn-heading\">Go deeper</h3>\n      <p>Patterns for teams ready to refine existing workflows.</p>\n      <a class=\"syn-list-row\" href=\"/guides/accessibility\">Accessibility practices</a>\n      <a class=\"syn-list-row\" href=\"/guides/performance\">Performance guide</a>\n      <a class=\"syn-list-row\" href=\"/guides/maintenance\">Maintenance notes</a>\n    </nav>\n    <nav class=\"syn-panel syn-stack\" aria-label=\"Support resources\">\n      <h3 class=\"syn-heading\">Find help</h3>\n      <p>Get unblocked using real documentation or a human support path.</p>\n      <a class=\"syn-list-row\" href=\"/support/questions\">Common questions</a>\n      <a class=\"syn-list-row\" href=\"/support/contact\">Contact support</a>\n      <a class=\"syn-list-row\" href=\"/updates\">Product updates</a>\n    </nav>\n  </div>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
       "id": "press-highlights",
       "title": "News and press highlights",
       "description": "A dated editorial summary grid with descriptive story destinations.",
       "category": "Marketing",
       "html": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-press-highlights\">\n  <p class=\"syn-eyebrow\">FROM THE JOURNAL / EXAMPLES</p>\n  <h2 class=\"syn-heading\" id=\"syn-press-highlights\">Recent stories and announcements</h2>\n  <p class=\"syn-muted\">These are fictional editorial examples, not actual press mentions or endorsements.</p>\n  <div class=\"syn-grid\">\n    <article class=\"syn-panel\"><p class=\"syn-caption\"><time datetime=\"2026-09-15\">September 15, 2026</time></p><h3>Why readable layouts matter</h3><p>Practical notes on clarity, hierarchy and useful content.</p><a href=\"/news/layout-clarity\">Read sample story</a></article>\n    <article class=\"syn-panel\"><p class=\"syn-caption\"><time datetime=\"2026-10-02\">October 2, 2026</time></p><h3>Building better resource pages</h3><p>Make helpful information easy to discover and keep current.</p><a href=\"/news/resource-pages\">Read sample story</a></article>\n    <article class=\"syn-panel\"><p class=\"syn-caption\"><time datetime=\"2026-10-23\">October 23, 2026</time></p><h3>Creating an accessible launch</h3><p>Use native controls, tested navigation and clear feedback.</p><a href=\"/news/accessible-launch\">Read sample story</a></article>\n  </div>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "feature-rows",
+      "title": "Stacked feature story rows",
+      "description": "Two narrative feature rows with contextual detail cards and destination links.",
+      "category": "Marketing",
+      "html": "<section class=\"syn-root syn-region syn-stack\" data-syn-theme=\"studio\" aria-labelledby=\"syn-layout-feature-rows-heading\">\n  <p class=\"syn-eyebrow\">HOW THE WORK FLOWS</p>\n  <h2 class=\"syn-heading\" id=\"syn-layout-feature-rows-heading\">One story, two complementary capabilities</h2>\n  <div class=\"syn-stack\">\n    <article class=\"syn-sidecar\">\n      <div class=\"syn-stack\">\n        <h3 class=\"syn-heading\">01 / Plan with context</h3>\n        <p>Bring the brief, relevant decisions and open questions together before work begins.</p>\n        <a href=\"/features/planning\">Explore planning features</a>\n      </div>\n      <div class=\"syn-panel syn-stack\">\n        <strong>Planning checklist</strong>\n        <ul class=\"syn-feature-list\"><li>Define the outcome</li><li>Capture requirements</li><li>Assign next steps</li></ul>\n      </div>\n    </article>\n    <article class=\"syn-sidecar\">\n      <div class=\"syn-stack\">\n        <h3 class=\"syn-heading\">02 / Report what changed</h3>\n        <p>Present progress as a readable narrative, with evidence and next actions close at hand.</p>\n        <a href=\"/features/reporting\">Explore reporting features</a>\n      </div>\n      <div class=\"syn-panel syn-stack\">\n        <strong>Update summary</strong>\n        <ul class=\"syn-feature-list\">\n          <li>Progress: example review</li>\n          <li>Next step: share findings</li>\n        </ul>\n      </div>\n    </article>\n  </div>\n  <p class=\"syn-caption\">Illustrative workflow and sample labels; connect real data where appropriate.</p>\n</section>",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "id": "impact-narrative",
+      "title": "Metrics with explanatory narrative",
+      "description": "Contextualized illustrative metrics paired with interpretation and source guidance.",
+      "category": "Marketing",
+      "html": "<section class=\"syn-root syn-region syn-stack\" data-syn-theme=\"studio\" aria-labelledby=\"syn-layout-impact-heading\">\n  <p class=\"syn-eyebrow\">MEASURING IMPACT</p>\n  <h2 class=\"syn-heading\" id=\"syn-layout-impact-heading\">Put numbers next to their meaning.</h2>\n  <div class=\"syn-sidecar\">\n    <div class=\"syn-stack\">\n      <h3 class=\"syn-heading\">From observation to a useful decision</h3>\n      <p>Strong reporting combines a small set of measures with the context needed to interpret them. Explain the source, the time period and what happens next.</p>\n      <p class=\"syn-muted\">The figures in this demo are hypothetical; they are not customer results or product performance claims.</p>\n      <a class=\"syn-button syn-button--outline\" href=\"/methods\">Learn about measurement</a>\n    </div>\n    <div class=\"syn-panel syn-stack\">\n      <div class=\"syn-grid\" style=\"--syn-grid-min:9rem\">\n        <div class=\"syn-stat\"><p class=\"syn-stat-label\">Example tasks</p><p class=\"syn-stat-value\">24</p></div>\n        <div class=\"syn-stat\"><p class=\"syn-stat-label\">Example reviewed</p><p class=\"syn-stat-value\">18</p></div>\n        <div class=\"syn-stat\"><p class=\"syn-stat-label\">Example remaining</p><p class=\"syn-stat-value\">6</p></div>\n      </div>\n      <p class=\"syn-caption\">Illustrative numbers only. Replace with sourced, dated data.</p>\n    </div>\n  </div>\n</section>",
       "required_stylesheets": [
         "syntyr.core.css"
       ]
