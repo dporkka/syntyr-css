@@ -22,7 +22,7 @@ The **published immutable release** is v0.3.0-alpha.4 (Grid, Noir, Studio). The 
 - [Framework integrations](https://syntyr-css.pages.dev/docs/framework-integrations.md): HTMX, server templates, React and other stacks.
 - [Theme tokens and customization](https://syntyr-css.pages.dev/docs/theme-customization.md): Supported design token overrides.
 - [Visual-intensity and frame-composition guide](https://syntyr-css.pages.dev/docs/visual-intensity.md): Quiet, standard and cinematic effects; zero-JavaScript geometry rules (alpha.5 candidate).
-- [Accessibility guide](https://syntyr-css.pages.dev/docs/accessibility.md): Practical verification.
+- [Accessibility guide](https://syntyr-css.pages.dev/docs/accessibility.md): Practical verification, including alpha.5 candidate validation and remaining manual gates.
 - [Optional visualization styles](https://syntyr-css.pages.dev/docs/viz.md): SVG/HTML rendering and boundaries.
 - [How to use Syntyr with coding agents](https://syntyr-css.pages.dev/docs/agent-integration.md): Recommended prompts, retrieval and validation.
 

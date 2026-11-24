@@ -56,6 +56,7 @@ class AgentDocsTests(unittest.TestCase):
         self.assertIn("https://syntyr-css.pages.dev/docs/ai-quickstart.md", index)
         self.assertIn("https://syntyr-css.pages.dev/llms-full.txt", index)
         self.assertIn("0.3.0-alpha.4", index)
+        self.assertIn("alpha.5 candidate validation and remaining manual gates", index)
         for name in ("llms-full.txt", "docs/components.md", "docs/distribution.md",
                      "docs/api-stability.md", "docs/ai-quickstart.md"):
             self.assertIn(name, published)
