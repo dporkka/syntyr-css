@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Source candidate only (alpha.5); not available in published alpha.4. Load core, symbols, then ASCII effects. For an npm package built from this candidate:">
-  <meta name="syntyr-source-sha256" content="cf8136a3e42b276ed6d30a980b7d448087852f73095eb654a7d1b8a9a595408a">
+  <meta name="syntyr-source-sha256" content="bef9b9a40c743052a605fcb4822647554b2e34b6d86759c2724c6b46579173a2">
   <meta name="theme-color" content="#f5f7fb">
   <title>ASCII effects (optional) — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/ascii-effects">
@@ -124,17 +124,33 @@ node scripts/ascii.mjs image photo.ppm --columns 80 --dither floyd --format html
 <p>The renderer is bounded to 160 columns by 100 rows, uses fixed low-resolution meshes, and has no WebGL, external assets or dependency. It shares the existing opt-in five-second animation and static export controls; reduced-motion settings disable playback. The following reproducible CLI command renders a single frame:</p>
 <pre tabindex="0"><code class="language-sh">node scripts/ascii.mjs pattern torus-3d --columns 80 --rows 30 --time 1.5 --format svg &gt; torus.svg
 </code></pre>
+<h2 id="full-color-ascii-image-conversion">Full-color ASCII image conversion</h2>
+<p>Select <strong>Preserve image RGB colors</strong> after choosing a local image. Character density still follows luminance, inversion and the selected dithering method; each glyph receives the original sampled RGB color composited against black. Inversion changes density, not hue. Color is an approximation at the selected character resolution, not a pixel-accurate reproduction.</p>
+<ul>
+<li>TXT preserves characters only; color is intentionally omitted.</li>
+<li>HTML uses consecutive equal-color spans and escaped text.</li>
+<li>SVG uses colored text spans; no scripts or remote assets.</li>
+<li>ANSI truecolor uses standard 24-bit foreground SGR sequences, with a reset at the end of every row. Open the file in a truecolor-capable terminal (preferably with a dark background); ordinary text editors may show escape sequences. ANSI also supports the single selected color for patterns and logos.</li>
+</ul>
+<p>The source-checkout CLI accepts the same image-color option:</p>
+<pre tabindex="0"><code class="language-sh">node scripts/ascii.mjs image photo.ppm --columns 100 --image-colors --dither floyd --format svg &gt; photo.svg
+node scripts/ascii.mjs image photo.ppm --image-colors --format ansi &gt; photo.ansi
+cat photo.ansi
+</code></pre>
+<p>The existing grid and file-size bounds remain unchanged. No image uploads, package changes or runtime dependencies.</p>
         </article>
         <aside class="docs-article-sidebar">
           <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#optional-build-time-ascii-cli">Optional build-time ASCII CLI</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#3d-procedural-artwork">3D procedural artwork</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#full-color-ascii-image-conversion">Full-color ASCII image conversion</a>
           </nav>
           <details class="docs-article-toc-mobile">
             <summary>On this page <span>Jump to section</span></summary>
             <nav aria-label="On this page (mobile)">
 <a class="docs-article-toc-link docs-article-toc-2" href="#optional-build-time-ascii-cli">Optional build-time ASCII CLI</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#3d-procedural-artwork">3D procedural artwork</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#full-color-ascii-image-conversion">Full-color ASCII image conversion</a>
             </nav>
           </details>
         </aside>

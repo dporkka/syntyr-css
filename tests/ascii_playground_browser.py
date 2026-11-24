@@ -90,6 +90,35 @@ try:
             assert page.locator('#download').is_disabled()
             page.fill('#custom-ramp',' .#')
             assert page.locator('#copy').is_enabled()
+            # Color mode uses DOM text nodes and per-run numeric RGB styles.
+            page.select_option('#ramp','blocks')
+            page.uncheck('#invert')
+            page.select_option('#dither','none')
+            rgb_png=page.evaluate("""() => {const c=document.createElement('canvas');c.width=32;c.height=16;const x=c.getContext('2d');x.fillStyle='red';x.fillRect(0,0,16,16);x.fillStyle='lime';x.fillRect(16,0,16,16);return [...Uint8Array.from(atob(c.toDataURL().split(',')[1]),s=>s.charCodeAt(0))]}""")
+            page.locator('#image').set_input_files({'name':'rgb.png','mimeType':'image/png','buffer':bytes(rgb_png)})
+            page.wait_for_function("document.querySelector('#status').textContent==='Image converted locally.'")
+            plain=page.locator('#export').input_value()
+            page.check('#image-colors')
+            assert page.locator('#color-field').is_hidden()
+            assert page.locator('#preview span').count()>0
+            assert page.locator('#export').input_value()==plain
+            page.select_option('#format','svg')
+            assert '#ff0000' in page.locator('#export').input_value()
+            assert '#00ff00' in page.locator('#export').input_value()
+            page.select_option('#format','html')
+            assert 'color:#ff0000' in page.locator('#export').input_value()
+            page.select_option('#format','ansi')
+            ansi=page.locator('#export').input_value()
+            assert chr(27)+'[38;2;255;0;0m' in ansi
+            assert chr(27)+'[38;2;0;255;0m' in ansi
+            with page.expect_download() as result:
+                page.click('#download')
+            assert result.value.suggested_filename=='syntyr-ascii.ansi'
+            assert result.value.path().read_bytes()==ansi.encode('utf-8')
+            page.uncheck('#image-colors')
+            assert page.locator('#color-field').is_visible()
+            assert page.locator('#preview span').count()==0
+            page.select_option('#format','txt')
             page.select_option('#source','logo')
             page.fill('#logo-text','TEST')
             page.select_option('#logo-style','hash')
@@ -108,4 +137,4 @@ try:
         browser.close()
 finally:
     server.shutdown()
-print('PASS Chromium: mobile/desktop, ten-pattern controls and 3D animation, local image conversion, SVG and UTF-8 HTML downloads, reduced motion, no external requests')
+print('PASS Chromium: mobile/desktop, ten-pattern controls and 3D animation, local RGB image conversion, ANSI/SVG and UTF-8 HTML downloads, reduced motion, no external requests')

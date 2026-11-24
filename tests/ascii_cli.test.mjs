@@ -72,6 +72,24 @@ test('CLI renders the same 3D frame as the browser engine',()=>{
   assert.match(cli('--help').stdout,/torus-3d/);
 });
 
+test('CLI image RGB and terminal export are opt-in; plain text remains stable',()=>{
+  const dir=mkdtempSync(join(tmpdir(),'syntyr-rgb-'));
+  try{
+    const f=join(dir,'rgb.ppm');writeFileSync(f,'P3\n2 1\n255\n255 0 0 0 255 0\n');
+    const plain=cli('image',f,'--columns','2','--ramp','blocks');
+    const color=cli('image',f,'--columns','2','--ramp','blocks','--image-colors');
+    assert.equal(color.status,0,color.stderr);assert.equal(color.stdout,plain.stdout);
+    const ansi=cli('image',f,'--columns','2','--ramp','blocks','--image-colors','--format','ansi');
+    assert.equal(ansi.status,0,ansi.stderr);
+    assert.match(ansi.stdout,/\x1b\[38;2;255;0;0m/);
+    assert.match(ansi.stdout,/\x1b\[38;2;0;255;0m/);
+    assert.match(ansi.stdout,/\x1b\[0m\n$/);
+    const svg=cli('image',f,'--columns','2','--image-colors','--format','svg');
+    assert.equal(svg.status,0,svg.stderr);assert.match(svg.stdout,/#ff0000/);
+    assert.notEqual(cli('logo','TEST','--image-colors').status,0);
+  }finally{rmSync(dir,{recursive:true,force:true});}
+});
+
 test('raw Netpbm header comments do not consume the first raster byte',()=>{
   const dir=mkdtempSync(join(tmpdir(),'syntyr-ascii-comment-'));
   try{

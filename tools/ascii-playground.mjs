@@ -1,19 +1,19 @@
-import { gridSize, pixelsToAscii, renderPattern, exportArt, customRamp, renderLogo } from './ascii-logic.mjs';
+import { gridSize, pixelsToAscii, pixelsToColorAscii, colorRuns, renderPattern, exportArt, customRamp, renderLogo } from './ascii-logic.mjs';
 const $ = id => document.getElementById(id);
 const source=$('source'), pattern=$('pattern'), ramp=$('ramp'), columns=$('columns'), color=$('color'), invert=$('invert'), format=$('format');
 const preview=$('preview'), output=$('export'), status=$('status');
 const motion=matchMedia('(prefers-reduced-motion: reduce)');
-let bitmap=null, loadVersion=0, art='', playing=false, raf=0, start=0, last=0, loading=false;
+let bitmap=null, loadVersion=0, art='', colors=null, playing=false, raf=0, start=0, last=0, loading=false;
 function setStatus(message) { status.textContent=message; }
 function syncActions() {
   $('play').disabled=source.value!=='pattern'||motion.matches||playing||!art;
   $('stop').disabled=!playing;
   $('copy').disabled=$('download').disabled=!art||playing||loading;
 }
-function syncExport() { output.value=art?exportArt(art,format.value,color.value):''; syncActions(); }
+function syncExport() { output.value=art?exportArt(art,format.value,color.value,colors):''; syncActions(); }
 function draw(time=0) {
   try { return drawFrame(time); } catch(error) {
-    art=''; preview.textContent='No preview'; $('dimensions').textContent='Invalid settings';
+    art=''; colors=null; preview.textContent='No preview'; $('dimensions').textContent='Invalid settings';
     syncExport(); setStatus(error.message);
     return false;
   }
@@ -22,6 +22,7 @@ function drawFrame(time=0) {
   const cols=Number(columns.value);
   $('columns-value').value=String(cols);
   let size;
+  colors=null;
   const chosenRamp=source.value!=='logo'&&ramp.value==='custom'?customRamp($('custom-ramp').value):ramp.value;
   if(source.value==='logo') {
     art=renderLogo($('logo-text').value,$('logo-style').value);
@@ -32,12 +33,21 @@ function drawFrame(time=0) {
     const canvas=document.createElement('canvas'); canvas.width=size.cols; canvas.height=size.rows;
     const ctx=canvas.getContext('2d',{willReadFrequently:true});
     ctx.drawImage(bitmap,0,0,size.cols,size.rows);
-    art=pixelsToAscii(ctx.getImageData(0,0,size.cols,size.rows).data,size.cols,size.rows,chosenRamp,invert.checked,$('dither').value);
+    const pixels=ctx.getImageData(0,0,size.cols,size.rows).data;
+    if($('image-colors').checked)({art,colors}=pixelsToColorAscii(pixels,size.cols,size.rows,chosenRamp,invert.checked,$('dither').value));
+    else art=pixelsToAscii(pixels,size.cols,size.rows,chosenRamp,invert.checked,$('dither').value);
   } else {
     size={cols,rows:Math.min(100,Math.max(8,Math.round(cols*.38)))};
     art=renderPattern(pattern.value,size.cols,size.rows,chosenRamp,time);
   }
-  preview.textContent=art;
+  if(colors){
+    const fragment=document.createDocumentFragment();
+    colorRuns(art,colors).forEach((row,i)=>{
+      if(i)fragment.append(document.createTextNode('\n'));
+      for(const run of row){const span=document.createElement('span');span.style.color=run.color;span.textContent=run.text;fragment.append(span);}
+    });
+    preview.replaceChildren(fragment);
+  }else preview.textContent=art;
   preview.style.color=color.value;
   $('dimensions').textContent=size.cols+' columns × '+size.rows+' rows';
   if(!playing) syncExport();
@@ -64,14 +74,15 @@ motion.addEventListener('change',()=>{if(motion.matches) stop('Reduced motion en
 document.addEventListener('visibilitychange',()=>{if(document.hidden) stop();});
 function syncFields() {
   const imageMode=source.value==='image', logoMode=source.value==='logo';
-  $('image-field').hidden=$('invert-field').hidden=$('dither-field').hidden=!imageMode;
+  $('image-field').hidden=$('invert-field').hidden=$('dither-field').hidden=$('image-colors-field').hidden=!imageMode;
+  $('color-field').hidden=imageMode&&$('image-colors').checked;
   $('logo-field').hidden=$('logo-style-field').hidden=!logoMode;
   $('pattern-field').hidden=source.value!=='pattern';
   $('columns-field').hidden=$('ramp-field').hidden=logoMode;
   $('custom-field').hidden=logoMode||ramp.value!=='custom';
 }
 source.addEventListener('change',()=>{ stop(); syncFields(); setStatus(''); draw(); });
-for(const control of [pattern,ramp,columns,color,invert,$('custom-ramp'),$('dither'),$('logo-text'),$('logo-style')])
+for(const control of [pattern,ramp,columns,color,invert,$('custom-ramp'),$('dither'),$('logo-text'),$('logo-style'),$('image-colors')])
   control.addEventListener('input',()=>{stop();syncFields();setStatus('');draw();});
 format.addEventListener('change',syncExport);
 $('image').addEventListener('change',async()=>{
@@ -99,7 +110,7 @@ $('copy').addEventListener('click',async()=>{
 });
 $('download').addEventListener('click',()=>{
   if(!art||playing||loading) return;
-  const mime={txt:'text/plain',html:'text/html',svg:'image/svg+xml'}[format.value];
+  const mime={txt:'text/plain',html:'text/html',svg:'image/svg+xml',ansi:'text/plain'}[format.value];
   // A saved HTML fragment has no HTTP headers; mark its Unicode encoding in the file.
   const content=format.value==='html'?['\uFEFF',output.value]:[output.value];
   const url=URL.createObjectURL(new Blob(content,{type:mime+';charset=utf-8'}));
