@@ -61,6 +61,18 @@ export function pixelsToAscii(rgba, cols, rows, rampName, invert=false, dither='
   }
   return result.join('\n');
 }
+// Preserve the monochrome density algorithm; color is independent of inversion
+// and dithering. RGB samples are composited against black like luminance.
+export function pixelsToColorAscii(rgba,cols,rows,rampName,invert=false,dither='none') {
+  const art=pixelsToAscii(rgba,cols,rows,rampName,invert,dither);
+  const colors=new Uint8ClampedArray(cols*rows*3);
+  for(let i=0;i<cols*rows;i++){
+    const alpha=rgba[i*4+3]/255;
+    for(let c=0;c<3;c++)colors[i*3+c]=rgba[i*4+c]*alpha;
+  }
+  return {art,colors};
+}
+
 // Small fixed meshes: generated once, projected afresh per frame. Depth is
 // reciprocal camera-space z, interpolated in screen space for solid triangles.
 const shapes3d = new Set(['torus-3d','sphere-3d','cube-3d','wireframe-3d']);
@@ -192,14 +204,49 @@ export function renderPattern(kind,cols,rows,rampName,time=0) {
   return result.join('\n');
 }
 const escape = value=>value.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#39;');
-export function exportArt(art,format,color) {
+// Restrict export runs to known numeric colors; no user-supplied CSS or ANSI
+// control codes. Group consecutive same-color cells within each row.
+export function colorRuns(art,colors) {
+  if(typeof art!=='string'||art.length>17000||!(colors instanceof Uint8Array||colors instanceof Uint8ClampedArray))
+    throw new RangeError('Invalid colored artwork');
+  const lines=art.split('\n');
+  if(lines.length>100||lines.some(line=>Array.from(line).length>160)||
+     colors.length!==lines.reduce((n,line)=>n+Array.from(line).length,0)*3)
+    throw new RangeError('Invalid color grid');
+  let i=0;
+  return lines.map(line=>{
+    const runs=[];
+    for(const glyph of line){
+      const r=colors[i++],g=colors[i++],b=colors[i++];
+      const color='#'+[r,g,b].map(v=>v.toString(16).padStart(2,'0')).join('');
+      const last=runs.at(-1);
+      if(last?.color===color)last.text+=glyph;
+      else runs.push({text:glyph,color,r,g,b});
+    }
+    return runs;
+  });
+}
+export function exportArt(art,format,color,colors=null) {
   if(typeof art!=='string'||art.length>17000||!/^#[0-9a-f]{6}$/i.test(color)) throw new RangeError('Invalid art or color');
+  const runs=colors===null?null:colorRuns(art,colors);
   if(format==='txt') return art;
   const safe=escape(art);
-  if(format==='html') return '<pre style="color:'+color+';background:#080e14;font:12px/1.5 monospace;white-space:pre;overflow:auto;font-variant-ligatures:none" aria-hidden="true">'+safe+'</pre>\n<!-- Add a meaningful text alternative if this art conveys information. -->';
+  if(format==='ansi') {
+    // Disallow any embedded terminal commands, including C0/C1 controls.
+    if(/[\x00-\x09\x0b-\x1f\x7f-\x9f]/u.test(art))throw new RangeError('Invalid terminal characters');
+    const rgb=[1,3,5].map(i=>parseInt(color.slice(i,i+2),16));
+    const esc=String.fromCharCode(27);
+    const prefix=(r,g,b)=>esc+'[38;2;'+r+';'+g+';'+b+'m';
+    return (runs?runs.map(row=>row.map(run=>prefix(run.r,run.g,run.b)+run.text).join('')):
+      art.split('\n').map(line=>prefix(...rgb)+line)).map(line=>line+esc+'[0m').join('\n');
+  }
+  if(format==='html') {
+    const body=runs?runs.map(row=>row.map(run=>'<span style="color:'+run.color+'">'+escape(run.text)+'</span>').join('')).join('\n'):safe;
+    return '<pre style="color:'+color+';background:#080e14;font:12px/1.5 monospace;white-space:pre;overflow:auto;font-variant-ligatures:none" aria-hidden="true" tabindex="-1">'+body+'</pre>\n<!-- Add a meaningful text alternative if this art conveys information. -->';
+  }
   if(format==='svg') {
     const lines=art.split('\n'), width=Math.max(1,...lines.map(line=>Array.from(line).length))*8+16, height=lines.length*16+16;
-    return '<svg xmlns="http://www.w3.org/2000/svg" width="'+width+'" height="'+height+'" viewBox="0 0 '+width+' '+height+'" role="img" aria-label="ASCII artwork"><rect width="100%" height="100%" fill="#080e14"/><g fill="'+color+'" font-family="monospace" font-size="13" xml:space="preserve">'+lines.map((line,i)=>'<text x="8" y="'+(19+i*16)+'">'+escape(line)+'</text>').join('')+'</g></svg>';
+    return '<svg xmlns="http://www.w3.org/2000/svg" width="'+width+'" height="'+height+'" viewBox="0 0 '+width+' '+height+'" role="img" aria-label="ASCII artwork"><rect width="100%" height="100%" fill="#080e14"/><g fill="'+color+'" font-family="monospace" font-size="13" xml:space="preserve">'+lines.map((line,i)=>'<text x="8" y="'+(19+i*16)+'">'+(runs?runs[i].map(run=>'<tspan fill="'+run.color+'">'+escape(run.text)+'</tspan>').join(''):escape(line))+'</text>').join('')+'</g></svg>';
   }
   throw new RangeError('Unknown export format');
 }

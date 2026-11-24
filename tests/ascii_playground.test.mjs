@@ -88,3 +88,33 @@ test('3D geometry is deterministic, perspective-scaled, bounded and rotates',()=
   assert.throws(()=>renderPattern('cube-3d',161,30,'ascii',0));
   assert.throws(()=>renderPattern('cube-3d',80,30,'ascii',NaN));
 });
+
+test('RGB image cells preserve density and composite alpha against black',async()=>{
+  const {pixelsToColorAscii}=await import('../tools/ascii-logic.mjs');
+  const rgba=Uint8ClampedArray.from([255,0,0,255,0,255,0,128,0,0,255,0,255,255,255,255]);
+  const frame=pixelsToColorAscii(rgba,2,2,'blocks',false,'bayer');
+  assert.equal(frame.art,pixelsToAscii(rgba,2,2,'blocks',false,'bayer'));
+  assert.deepEqual([...frame.colors],[255,0,0,0,128,0,0,0,0,255,255,255]);
+  const flipped=pixelsToColorAscii(rgba,2,2,'blocks',true);
+  assert.deepEqual([...flipped.colors],[...frame.colors]);
+  assert.notEqual(flipped.art,pixelsToAscii(rgba,2,2,'blocks'));
+  assert.throws(()=>pixelsToColorAscii(rgba,1,1,'blocks'));
+});
+test('colored export groups runs, escapes markup and resets ANSI terminal state',()=>{
+  const colors=Uint8Array.from([255,0,0,255,0,0,0,128,0,0,0,255]);
+  const art='<&\n>█';
+  const html=exportArt(art,'html','#abcdef',colors);
+  assert.match(html,/<span style="color:#ff0000">&lt;&amp;<\/span>/);
+  assert.match(html,/#008000/);
+  assert.match(html,/&gt;/);
+  const svg=exportArt(art,'svg','#abcdef',colors);
+  assert.match(svg,/<tspan fill="#ff0000">&lt;&amp;<\/tspan>/);
+  assert.match(svg,/#0000ff/);
+  assert.equal(exportArt(art,'txt','#abcdef',colors),art);
+  const ansi=exportArt(art,'ansi','#abcdef',colors);
+  assert.equal(ansi,'\x1b[38;2;255;0;0m<&\x1b[0m\n\x1b[38;2;0;128;0m>\x1b[38;2;0;0;255m█\x1b[0m');
+  assert.equal(exportArt('X','ansi','#abcdef'),'\x1b[38;2;171;205;239mX\x1b[0m');
+  assert.throws(()=>exportArt('\x1b[31m','ansi','#abcdef'));
+  assert.throws(()=>exportArt('x','html','#abcdef',Uint8Array.from([1,2])));
+  assert.throws(()=>exportArt('x','svg','#abcdef',['bad',2,3]));
+});

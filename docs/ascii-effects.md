@@ -66,3 +66,21 @@ The renderer is bounded to 160 columns by 100 rows, uses fixed low-resolution me
 ```sh
 node scripts/ascii.mjs pattern torus-3d --columns 80 --rows 30 --time 1.5 --format svg > torus.svg
 ```
+
+## Full-color ASCII image conversion
+
+Select **Preserve image RGB colors** after choosing a local image. Character density still follows luminance, inversion and the selected dithering method; each glyph receives the original sampled RGB color composited against black. Inversion changes density, not hue. Color is an approximation at the selected character resolution, not a pixel-accurate reproduction.
+
+- TXT preserves characters only; color is intentionally omitted.
+- HTML uses consecutive equal-color spans and escaped text.
+- SVG uses colored text spans; no scripts or remote assets.
+- ANSI truecolor uses standard 24-bit foreground SGR sequences, with a reset at the end of every row. Open the file in a truecolor-capable terminal (preferably with a dark background); ordinary text editors may show escape sequences. ANSI also supports the single selected color for patterns and logos.
+
+The source-checkout CLI accepts the same image-color option:
+```sh
+node scripts/ascii.mjs image photo.ppm --columns 100 --image-colors --dither floyd --format svg > photo.svg
+node scripts/ascii.mjs image photo.ppm --image-colors --format ansi > photo.ansi
+cat photo.ansi
+```
+
+The existing grid and file-size bounds remain unchanged. No image uploads, package changes or runtime dependencies.

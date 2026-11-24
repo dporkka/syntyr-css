@@ -2,14 +2,14 @@
 // Optional source-checkout build tool. Nothing is added to the CSS runtime.
 import {openSync, fstatSync, readSync, closeSync, constants} from 'node:fs';
 import {parseArgs} from 'node:util';
-import {customRamp, gridSize, pixelsToAscii, renderLogo, renderPattern, exportArt} from '../tools/ascii-logic.mjs';
+import {customRamp, gridSize, pixelsToAscii, pixelsToColorAscii, renderLogo, renderPattern, exportArt} from '../tools/ascii-logic.mjs';
 
 const HELP = 'Syntyr ASCII build tool (Node 22+)\n\n'
   +'  node scripts/ascii.mjs pattern <torus|sphere|wave|plasma|rain|radar|torus-3d|sphere-3d|cube-3d|wireframe-3d> [--columns 64] [--rows 24] [--time 0]\n'
   +'  node scripts/ascii.mjs logo <text> [--style block|hash|dot]\n'
-  +'  node scripts/ascii.mjs image <file.pgm|file.ppm> [--columns 64] [--dither none|bayer|floyd] [--invert]\n\n'
+  +'  node scripts/ascii.mjs image <file.pgm|file.ppm> [--columns 64] [--dither none|bayer|floyd] [--invert] [--image-colors]\n\n'
   +'  pattern/image: --ramp ascii|blocks|braille|binary OR --custom-ramp " .#"\n'
-  +'  all modes: --format txt|html|svg --color "#76e7f7"\n'
+  +'  all modes: --format txt|html|svg|ansi --color "#76e7f7"\n'
   +'  Art is written to stdout; errors to stderr. Redirect output to save a file.\n'
   +'  Image mode accepts P2/P3/P5/P6 Netpbm, 8-bit samples, max 16 MiB and 4 million pixels.\n';
 
@@ -99,7 +99,7 @@ const rampOptions={ramp:{type:'string'},'custom-ramp':{type:'string'},columns:{t
 const byMode={
   pattern:{...common,...rampOptions,rows:{type:'string',default:'24'},time:{type:'string',default:'0'}},
   logo:{...common,style:{type:'string',default:'block'}},
-  image:{...common,...rampOptions,dither:{type:'string',default:'none'},invert:{type:'boolean',default:false}}
+  image:{...common,...rampOptions,dither:{type:'string',default:'none'},invert:{type:'boolean',default:false},'image-colors':{type:'boolean',default:false}}
 };
 function whole(value,label,min,max) {
   if(!/^[0-9]+$/.test(value)||Number(value)<min||Number(value)>max)throw new Error(label+' out of range');
@@ -112,8 +112,8 @@ function run(args) {
   const {values:v,positionals:p}=parseArgs({args,options:byMode[mode],allowPositionals:true,strict:true});
   if(p.length!==1)throw new Error('Provide exactly one source argument');
   if(v.ramp!==undefined&&v['custom-ramp']!==undefined)throw new Error('Choose one glyph ramp');
-  if(!['txt','html','svg'].includes(v.format)||!/^#[0-9a-f]{6}$/i.test(v.color))throw new Error('Invalid format or color');
-  let art;
+  if(!['txt','html','svg','ansi'].includes(v.format)||!/^#[0-9a-f]{6}$/i.test(v.color))throw new Error('Invalid format or color');
+  let art,colors=null;
   if(mode==='logo')art=renderLogo(p[0],v.style);
   else {
     const ramp=v['custom-ramp']===undefined?(v.ramp??'ascii'):customRamp(v['custom-ramp']);
@@ -125,10 +125,12 @@ function run(args) {
     } else {
       const image=parsePNM(readBounded(p[0]));
       const size=gridSize(image.width,image.height,cols);
-      art=pixelsToAscii(sampleImage(image,size.cols,size.rows),size.cols,size.rows,ramp,v.invert,v.dither);
+      const pixels=sampleImage(image,size.cols,size.rows);
+      if(v['image-colors'])({art,colors}=pixelsToColorAscii(pixels,size.cols,size.rows,ramp,v.invert,v.dither));
+      else art=pixelsToAscii(pixels,size.cols,size.rows,ramp,v.invert,v.dither);
     }
   }
-  const output=exportArt(art,v.format,v.color);
+  const output=exportArt(art,v.format,v.color,colors);
   // HTML files redirected from stdout need an encoding marker; copied browser fragments remain unchanged.
   process.stdout.write((v.format==='html'?'\uFEFF':'')+output+'\n');
 }
