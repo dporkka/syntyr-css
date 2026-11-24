@@ -4,7 +4,7 @@ from html.parser import HTMLParser
 from scripts.build_cloudflare_site import source_files, SITE_URL
 
 PAGES = ('index.html', 'color-contrast-checker.html', 'css-theme-generator.html',
-         'css-clamp-generator.html', 'responsive-design-tester.html')
+         'css-clamp-generator.html', 'responsive-design-tester.html', 'ascii-playground.html')
 
 class FreeToolsTests(unittest.TestCase):
     @classmethod
@@ -21,7 +21,7 @@ class FreeToolsTests(unittest.TestCase):
             self.assertIn('<title>', html, path)
             self.assertIn(f'<link rel="canonical" href="{SITE_URL}/tools/' + ('' if filename == 'index.html' else filename.removesuffix('.html')) + '">', html)
             self.assertIn('href="index.html"', html, path)
-        for asset in ('site.css', 'site.mjs', 'logic.mjs'):
+        for asset in ('site.css', 'site.mjs', 'logic.mjs', 'ascii-playground.css', 'ascii-playground.mjs', 'ascii-logic.mjs'):
             self.assertIn('tools/' + asset, self.files)
         self.assertIn(f'{SITE_URL}/tools/</loc>', sitemap)
         self.assertIn(f'{SITE_URL}/tools/color-contrast-checker</loc>', sitemap)
