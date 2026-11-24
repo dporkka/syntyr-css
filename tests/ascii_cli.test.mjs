@@ -64,3 +64,21 @@ test('all four Netpbm formats and UTF-8 export behave consistently',()=>{
     assert.notEqual(bad.status,0);
   }finally{rmSync(dir,{recursive:true,force:true});}
 });
+
+test('raw Netpbm header comments do not consume the first raster byte',()=>{
+  const dir=mkdtempSync(join(tmpdir(),'syntyr-ascii-comment-'));
+  try{
+    for(const [magic,pixels] of [['P5',[35,255]],['P6',[35,35,35,255,255,255]]]){
+      const f=join(dir,magic);
+      writeFileSync(f,Buffer.concat([Buffer.from(magic+'\n2 1\n255# final comment\n'),Buffer.from(pixels)]));
+      const r=cli('image',f,'--columns','2','--ramp','blocks');
+      assert.equal(r.status,0,r.stderr);
+      const expected=r.stdout;
+      writeFileSync(f,Buffer.concat([Buffer.from(magic+'\n2 1\n255\n'),Buffer.from(pixels)]));
+      assert.equal(cli('image',f,'--columns','2','--ramp','blocks').stdout,expected);
+    }
+    const f=join(dir,'truncated');
+    writeFileSync(f,'P5\n1 1\n255# no separator');
+    assert.notEqual(cli('image',f).status,0);
+  }finally{rmSync(dir,{recursive:true,force:true});}
+});

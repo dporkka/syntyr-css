@@ -60,6 +60,9 @@ function parsePNM(bytes) {
   const channels=magic==='P3'||magic==='P6'?3:1, count=width*height*channels;
   let samples;
   if(magic==='P5'||magic==='P6') {
+    // Only a comment immediately adjacent to maxval belongs to the header.
+    // Never scan past the raster separator: '#' and whitespace may be pixels.
+    if(bytes[i]===35)while(i<bytes.length&&bytes[i]!==10&&bytes[i]!==13)i++;
     if(!ws(bytes[i])) throw new Error('Missing raster separator');
     // A raw raster begins after exactly one separator byte (or CRLF).
     if(bytes[i]===13&&bytes[i+1]===10&&bytes.length-i-2===count)i+=2;else i++;
