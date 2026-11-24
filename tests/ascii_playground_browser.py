@@ -24,6 +24,17 @@ try:
             original = page.locator('#export').input_value()
             page.select_option('#pattern','plasma')
             assert page.locator('#export').input_value()!=original
+            for shape in ('torus-3d','sphere-3d','cube-3d','wireframe-3d'):
+                page.select_option('#pattern',shape)
+                art=page.locator('#export').input_value()
+                assert art.strip()
+                assert len(art.splitlines())==24
+            page.select_option('#pattern','cube-3d')
+            frame=page.locator('#preview').text_content()
+            page.click('#play')
+            page.wait_for_function("(frame) => document.querySelector('#preview').textContent !== frame", arg=frame)
+            page.click('#stop')
+            assert page.locator('#export').input_value()!=frame
             page.select_option('#format','svg')
             assert '<svg' in page.locator('#export').input_value()
             with page.expect_download() as result:
@@ -97,4 +108,4 @@ try:
         browser.close()
 finally:
     server.shutdown()
-print('PASS Chromium: mobile/desktop, six-pattern controls, local image conversion, SVG and UTF-8 HTML downloads, reduced motion, no external requests')
+print('PASS Chromium: mobile/desktop, ten-pattern controls and 3D animation, local image conversion, SVG and UTF-8 HTML downloads, reduced motion, no external requests')

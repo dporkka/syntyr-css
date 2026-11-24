@@ -61,11 +61,106 @@ export function pixelsToAscii(rgba, cols, rows, rampName, invert=false, dither='
   }
   return result.join('\n');
 }
+// Small fixed meshes: generated once, projected afresh per frame. Depth is
+// reciprocal camera-space z, interpolated in screen space for solid triangles.
+const shapes3d = new Set(['torus-3d','sphere-3d','cube-3d','wireframe-3d']);
+function makeSurface(kind) {
+  const vertices=[], triangles=[], nu=40, nv=24;
+  for(let u=0;u<=nu;u++) for(let v=0;v<=nv;v++) {
+    const a=u/nu*2*Math.PI, b=v/nv*(kind==='torus-3d'?2*Math.PI:Math.PI);
+    const ca=Math.cos(a),sa=Math.sin(a),cb=Math.cos(b),sb=Math.sin(b);
+    if(kind==='torus-3d') {
+      vertices.push([(1+.38*cb)*ca,(1+.38*cb)*sa,.38*sb,cb*ca,cb*sa,sb]);
+    } else {
+      vertices.push([1.25*sb*ca,1.25*cb,1.25*sb*sa,sb*ca,cb,sb*sa]);
+    }
+  }
+  for(let u=0;u<nu;u++) for(let v=0;v<nv;v++) {
+    const a=u*(nv+1)+v,b=a+nv+1;
+    triangles.push([a,b,a+1],[b,b+1,a+1]);
+  }
+  return {vertices,triangles};
+}
+function makeCube() {
+  const vertices=[],triangles=[];
+  for(let axis=0;axis<3;axis++) for(const sign of [-1,1]) {
+    const start=vertices.length;
+    for(const [u,v] of [[-1,-1],[1,-1],[1,1],[-1,1]]) {
+      const p=[0,0,0],n=[0,0,0];
+      p[axis]=sign*.85;p[(axis+1)%3]=u*.85;p[(axis+2)%3]=v*.85;n[axis]=sign;
+      vertices.push([...p,...n]);
+    }
+    triangles.push([start,start+1,start+2],[start,start+2,start+3]);
+  }
+  return {vertices,triangles};
+}
+const meshes={
+  'torus-3d':makeSurface('torus-3d'),
+  'sphere-3d':makeSurface('sphere-3d'),
+  'cube-3d':makeCube()
+};
+const wireVertices=Array.from({length:8},(_,i)=>[i&1?.85:-.85,i&2?.85:-.85,i&4?.85:-.85]);
+const wireEdges=wireVertices.flatMap((_,i)=>[1,2,4].filter(bit=>(i&bit)===0).map(bit=>[i,i|bit]));
+function render3D(kind,cols,rows,ramp,time) {
+  const cells=Array(cols*rows).fill(ramp[0]), depth=new Float64Array(cells.length);
+  const ax=.45+time*.7, ay=.35+time*.53;
+  const cx=Math.cos(ax),sx=Math.sin(ax),cy=Math.cos(ay),sy=Math.sin(ay);
+  const scale=Math.min(cols/2,rows)*1.45;
+  function rotate(x,y,z) {
+    const yy=y*cx-z*sx, zz=y*sx+z*cx;
+    return [x*cy+zz*sy,yy,-x*sy+zz*cy];
+  }
+  function project(p) {
+    const [x,y,z]=rotate(...p.slice(0,3)), q=1/(5+z);
+    return [(cols-1)/2+2*scale*x*q,(rows-1)/2-scale*y*q,q];
+  }
+  function plot(x,y,z,shade) {
+    if(x<0||x>=cols||y<0||y>=rows)return;
+    const i=y*cols+x;
+    if(z>depth[i]) {
+      depth[i]=z;
+      cells[i]=ramp[Math.max(1,Math.round(clamp(shade,0,1)*(ramp.length-1)))];
+    }
+  }
+  if(kind==='wireframe-3d') {
+    // Transparent wireframe: intentionally shows rear edges as well.
+    const points=wireVertices.map(project);
+    for(const [a,b] of wireEdges) {
+      const p=points[a],q=points[b],steps=Math.max(1,Math.ceil(Math.max(Math.abs(q[0]-p[0]),Math.abs(q[1]-p[1]))));
+      for(let i=0;i<=steps;i++) {
+        const t=i/steps,z=p[2]+(q[2]-p[2])*t;
+        plot(Math.round(p[0]+(q[0]-p[0])*t),Math.round(p[1]+(q[1]-p[1])*t),z,clamp((z-.15)*11, .25,1));
+      }
+    }
+  } else {
+    const {vertices,triangles}=meshes[kind],points=vertices.map(project);
+    const shades=vertices.map(p=>{
+      const [x,y,z]=rotate(...p.slice(3));
+      return .15+.85*Math.max(0,-.4*x+.55*y-.73*z);
+    });
+    const edge=(a,b,x,y)=>(b[0]-a[0])*(y-a[1])-(b[1]-a[1])*(x-a[0]);
+    for(const [a,b,c] of triangles) {
+      const p=points[a],q=points[b],r=points[c],area=edge(p,q,r[0],r[1]);
+      if(Math.abs(area)<1e-9)continue;
+      const minX=Math.max(0,Math.ceil(Math.min(p[0],q[0],r[0]))),maxX=Math.min(cols-1,Math.floor(Math.max(p[0],q[0],r[0])));
+      const minY=Math.max(0,Math.ceil(Math.min(p[1],q[1],r[1]))),maxY=Math.min(rows-1,Math.floor(Math.max(p[1],q[1],r[1])));
+      for(let y=minY;y<=maxY;y++)for(let x=minX;x<=maxX;x++){
+        const w0=edge(q,r,x,y)/area,w1=edge(r,p,x,y)/area,w2=1-w0-w1;
+        if(w0< -1e-8||w1< -1e-8||w2< -1e-8)continue;
+        const z=w0*p[2]+w1*q[2]+w2*r[2];
+        const shade=(w0*p[2]*shades[a]+w1*q[2]*shades[b]+w2*r[2]*shades[c])/z;
+        plot(x,y,z,shade);
+      }
+    }
+  }
+  return Array.from({length:rows},(_,y)=>cells.slice(y*cols,(y+1)*cols).join('')).join('\n');
+}
 export function renderPattern(kind,cols,rows,rampName,time=0) {
   validateGrid(cols,rows);
-  if (!['sphere','torus','wave','plasma','rain','radar'].includes(kind) || !Number.isFinite(time))
+  if ((!shapes3d.has(kind)&&!['sphere','torus','wave','plasma','rain','radar'].includes(kind)) || !Number.isFinite(time))
     throw new RangeError('Unknown pattern or time');
   const ramp=glyphs(rampName), result=[];
+  if(shapes3d.has(kind))return render3D(kind,cols,rows,ramp,time);
   for(let y=0;y<rows;y++) {
     let line='';
     for(let x=0;x<cols;x++) {

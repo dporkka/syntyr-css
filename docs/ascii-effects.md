@@ -56,3 +56,13 @@ node scripts/ascii.mjs image photo.ppm --columns 80 --dither floyd --format html
 The image command reads local 8-bit Netpbm PGM/PPM files (P2, P3, P5, P6), up to 16 MiB and four million source pixels. For PNG, JPEG and WebP, use the browser playground or convert locally to PGM/PPM with an existing image editor. The CLI does not install a decoder or fetch URLs. It writes artwork to stdout and diagnostics to stderr; invalid input exits nonzero. HTML output starts with a UTF-8 BOM for saved documents. SVG and HTML are escaped, use a validated solid hex color, and need no JavaScript. As with the browser tool, glyph-cell aspect and intensity are approximations.
 
 Use these commands for static sites, README banners and reproducible build steps. Keep ordinary text alternatives for meaningful artwork. The CSS package has no CLI or Node dependency.
+
+## 3D procedural artwork
+
+The optional generator and build-time CLI include perspective-projected torus, sphere and cube meshes with a per-character depth buffer and directional lighting. The wireframe cube intentionally shows its rear edges. Select **3D torus**, **3D sphere**, **3D cube** or **3D wireframe cube** in the playground. The original two-dimensional sphere and torus remain available. The sphere is rotationally symmetric, so its rotation is less apparent than that of the cube or torus.
+
+The renderer is bounded to 160 columns by 100 rows, uses fixed low-resolution meshes, and has no WebGL, external assets or dependency. It shares the existing opt-in five-second animation and static export controls; reduced-motion settings disable playback. The following reproducible CLI command renders a single frame:
+
+```sh
+node scripts/ascii.mjs pattern torus-3d --columns 80 --rows 30 --time 1.5 --format svg > torus.svg
+```

@@ -5,7 +5,7 @@ import {parseArgs} from 'node:util';
 import {customRamp, gridSize, pixelsToAscii, renderLogo, renderPattern, exportArt} from '../tools/ascii-logic.mjs';
 
 const HELP = 'Syntyr ASCII build tool (Node 22+)\n\n'
-  +'  node scripts/ascii.mjs pattern <torus|sphere|wave|plasma|rain|radar> [--columns 64] [--rows 24] [--time 0]\n'
+  +'  node scripts/ascii.mjs pattern <torus|sphere|wave|plasma|rain|radar|torus-3d|sphere-3d|cube-3d|wireframe-3d> [--columns 64] [--rows 24] [--time 0]\n'
   +'  node scripts/ascii.mjs logo <text> [--style block|hash|dot]\n'
   +'  node scripts/ascii.mjs image <file.pgm|file.ppm> [--columns 64] [--dither none|bayer|floyd] [--invert]\n\n'
   +'  pattern/image: --ramp ascii|blocks|braille|binary OR --custom-ramp " .#"\n'

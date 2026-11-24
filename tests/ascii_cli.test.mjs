@@ -64,3 +64,10 @@ test('all four Netpbm formats and UTF-8 export behave consistently',()=>{
     assert.notEqual(bad.status,0);
   }finally{rmSync(dir,{recursive:true,force:true});}
 });
+
+test('CLI renders the same 3D frame as the browser engine',()=>{
+  const result=cli('pattern','torus-3d','--columns','64','--rows','24','--time','1.5');
+  assert.equal(result.status,0,result.stderr);
+  assert.equal(result.stdout,renderPattern('torus-3d',64,24,'ascii',1.5)+'\n');
+  assert.match(cli('--help').stdout,/torus-3d/);
+});
