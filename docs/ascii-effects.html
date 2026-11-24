@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Source candidate only (alpha.5); not available in published alpha.4. Load core, symbols, then ASCII effects. For an npm package built from this candidate:">
+  <meta name="syntyr-source-sha256" content="c880e48ef725e522abfd07b75898bd31295cc4f00c5600cf7eabb7f827515438">
+  <meta name="theme-color" content="#f5f7fb">
+  <title>ASCII effects (optional) — Syntyr CSS docs</title>
+  <link rel="canonical" href="https://syntyr-css.pages.dev/docs/ascii-effects">
+  <link rel="alternate" type="text/markdown" href="ascii-effects.md" title="Markdown source">
+  <link rel="icon" href="../assets/syntyr-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="docs.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <a class="syn-button docs-skip" href="#doc-main">Skip to guide</a>
+  <div class="syn-shell">
+    <header class="syn-header docs-header">
+      <a class="syn-logo" href="../index.html">SYNTYR / CSS</a>
+      <nav class="syn-nav" aria-label="Documentation navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav>
+      <details class="site-mobile-menu"><summary>Menu</summary><nav aria-label="Mobile navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav></details>
+    </header>
+    <main id="doc-main" class="docs-article-page">
+      <nav class="syn-breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="reference.html">Documentation</a></li><li aria-current="page">ASCII effects (optional)</li></ol></nav>
+      <header class="docs-article-heading">
+        <p class="syn-eyebrow">SYNTYR / DOCUMENTATION</p>
+        <p class="syn-muted">Current source documentation may describe unreleased alpha.5 features. <a href="distribution.html">Check released version compatibility.</a></p>
+        <p class="syn-caption">Prefer a machine-readable version? <a href="ascii-effects.md">Markdown source</a> · <a href="../llms.txt">LLM index</a></p>
+      </header>
+      <div class="docs-article-layout">
+        <article class="docs-prose" aria-label="ASCII effects (optional)">
+<h1 id="ascii-effects-optional">ASCII effects (optional)</h1>
+<p>Source candidate only (alpha.5); not available in published alpha.4. Load core, symbols, then ASCII effects. For an npm package built from this candidate:</p>
+<pre tabindex="0"><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;dist/syntyr.core.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;dist/syntyr.symbols.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;dist/syntyr.ascii.css&quot;&gt;
+</code></pre>
+<p>For a plain HTML site, copy the installed CSS files from the package’s <code>node_modules/@syntyr/css/dist/</code> directory into the served <code>dist/</code> directory (or adjust the URLs to your public asset path). npm installation does not serve files automatically. In a bundler, import the package CSS instead. Or import <code>@syntyr/css/ascii.css</code> alongside core and symbols. The selective build accepts <code>--modules symbols,ascii</code>. The all bundle includes both; core and cinematic preset remain unchanged.</p>
+<p><a href="../examples/ascii.html">Open the ASCII effects lab</a> for original, copyable character art. CSS only styles literal DOM text; it does not generate random characters, calculate a chart, perform real typing, decode text, or convert media. Use existing symbols for geometry and native progress or textual equivalents for status.</p>
+<pre tabindex="0"><code class="language-html">&lt;div class=&quot;syn-root&quot; data-syn-theme=&quot;grid&quot;&gt;
+  &lt;p&gt;System online&lt;/p&gt;
+  &lt;pre class=&quot;syn-ascii syn-ascii--compact syn-ascii--phosphor syn-ascii--scan&quot;
+       aria-hidden=&quot;true&quot; tabindex=&quot;-1&quot;&gt;[#####.....] 50%&lt;/pre&gt;
+  &lt;p&gt;Example completion: 50%&lt;/p&gt;
+&lt;/div&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Modifier</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>syn-ascii--compact</code></td>
+<td>Compact character-cell typography</td>
+</tr>
+<tr>
+<td><code>syn-ascii--phosphor</code></td>
+<td>Theme-aware text and glow; respects intensity's glow token</td>
+</tr>
+<tr>
+<td><code>syn-ascii--gradient</code></td>
+<td>Decorative diagonal fade</td>
+</tr>
+<tr>
+<td><code>syn-ascii--dither</code></td>
+<td>Decorative opacity for literal character-density textures</td>
+</tr>
+<tr>
+<td><code>syn-ascii--scan</code></td>
+<td>Decorative horizontal scanline mask</td>
+</tr>
+<tr>
+<td><code>syn-ascii--banner</code></td>
+<td>Accent-colored, bold text art</td>
+</tr>
+<tr>
+<td><code>syn-ascii--cursor</code></td>
+<td>Static terminal block cursor</td>
+</tr>
+<tr>
+<td><code>syn-ascii--typewriter</code></td>
+<td>One-shot stepped visual reveal</td>
+</tr>
+<tr>
+<td><code>syn-ascii--wave</code></td>
+<td>One-shot vertical movement of a field</td>
+</tr>
+<tr>
+<td><code>syn-ascii--rain</code></td>
+<td>One-shot entrance of a precomputed character stream</td>
+</tr>
+<tr>
+<td><code>syn-ascii--decode</code></td>
+<td>One-shot stepped letter-spacing reveal; not character substitution</td>
+</tr>
+<tr>
+<td><code>syn-ascii--loader</code></td>
+<td>One-shot rotation of a supplied symbol; not an application loading state</td>
+</tr>
+</tbody>
+</table>
+<p>Use <code>--syn-ascii-color</code>, <code>--syn-ascii-font-size</code>, <code>--syn-ascii-line-height</code>, <code>--syn-ascii-spacing</code>, <code>--syn-ascii-opacity</code>, <code>--syn-ascii-duration</code> and <code>--syn-ascii-steps</code> on the root or artwork as appropriate. Use positive durations and step counts. Effects are static unless a motion modifier is explicitly attached to an element marked <code>aria-hidden=&quot;true&quot;</code>; motion lasts no longer than five seconds and does not repeat. Reduced motion, forced colors, increased contrast and print disable motion, masks, and glow.</p>
+<p>Keep meaningful text visible outside decorative art. Avoid focusable children inside hidden art. Keep scrollable meaningful code outside these decorative patterns; never replace actual progress, errors or status with a character image. Quiet intensity turns off the phosphor glow via the existing token; omit decorative motion classes for quiet application surfaces. Do not stack multiple motion or masking modifiers; each owns a single CSS property.</p>
+<p>For new designs, compose existing <code>syn-ascii</code>, geometric frames, theme tokens and semantic HTML before adding a modifier. This module adds only treatments not supplied by the existing alignment and panel utilities. Procedural animation, real text scrambling and media conversion are deferred to optional tooling.</p>
+        </article>
+
+      </div>
+      <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="ascii-effects.md">Markdown source</a></nav>
+    </main>
+    <footer class="syn-header"><span class="syn-caption">SYNTYR CSS · MIT CORE · EXPERIMENTAL</span><a href="../index.html">Home</a></footer>
+  </div>
+</body>
+</html>

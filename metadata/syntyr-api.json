@@ -82,9 +82,69 @@
       "description": "Accent appearance variant of the ascii component; see symbols.css for styles."
     },
     {
+      "name": "syn-ascii--banner",
+      "module": "ascii.css",
+      "description": "Banner appearance variant of the ascii component; see ascii.css for styles."
+    },
+    {
+      "name": "syn-ascii--compact",
+      "module": "ascii.css",
+      "description": "Compact appearance variant of the ascii component; see ascii.css for styles."
+    },
+    {
+      "name": "syn-ascii--cursor",
+      "module": "ascii.css",
+      "description": "Cursor appearance variant of the ascii component; see ascii.css for styles."
+    },
+    {
+      "name": "syn-ascii--decode",
+      "module": "ascii.css",
+      "description": "Decode appearance variant of the ascii component; see ascii.css for styles."
+    },
+    {
+      "name": "syn-ascii--dither",
+      "module": "ascii.css",
+      "description": "Dither appearance variant of the ascii component; see ascii.css for styles."
+    },
+    {
+      "name": "syn-ascii--gradient",
+      "module": "ascii.css",
+      "description": "Gradient appearance variant of the ascii component; see ascii.css for styles."
+    },
+    {
+      "name": "syn-ascii--loader",
+      "module": "ascii.css",
+      "description": "Loader appearance variant of the ascii component; see ascii.css for styles."
+    },
+    {
       "name": "syn-ascii--muted",
       "module": "symbols.css",
       "description": "Muted appearance variant of the ascii component; see symbols.css for styles."
+    },
+    {
+      "name": "syn-ascii--phosphor",
+      "module": "ascii.css",
+      "description": "Phosphor appearance variant of the ascii component; see ascii.css for styles."
+    },
+    {
+      "name": "syn-ascii--rain",
+      "module": "ascii.css",
+      "description": "Rain appearance variant of the ascii component; see ascii.css for styles."
+    },
+    {
+      "name": "syn-ascii--scan",
+      "module": "ascii.css",
+      "description": "Scan appearance variant of the ascii component; see ascii.css for styles."
+    },
+    {
+      "name": "syn-ascii--typewriter",
+      "module": "ascii.css",
+      "description": "Typewriter appearance variant of the ascii component; see ascii.css for styles."
+    },
+    {
+      "name": "syn-ascii--wave",
+      "module": "ascii.css",
+      "description": "Wave appearance variant of the ascii component; see ascii.css for styles."
     },
     {
       "name": "syn-atmosphere",

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Install and self-host Syntyr CSS using versioned stylesheets, optional modules, and immutable releases for production websites.">
-  <meta name="syntyr-source-sha256" content="227c6034d5a1b217558eb22efd5f8b49532ef9819d57a051949b6969ba1ac10a">
+  <meta name="syntyr-source-sha256" content="767b9671506793272de5db16cdfadcd3ae1a1cbd2912b12f6dfeed3f2ef4b066">
   <meta name="theme-color" content="#f5f7fb">
   <title>Syntyr CSS distribution — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/distribution">
@@ -176,7 +176,8 @@ layout helpers and <code>syntyr.print.css</code> for print-friendly reports. Sys
 Grid/Studio <code>data-syn-theme=&quot;auto&quot;</code> is already included in core CSS, with
 no additional stylesheet or runtime JavaScript. See the
 <a href="progressive-enhancement.html">progressive-enhancement guide</a> for examples.
-The optional <code>syntyr.symbols.css</code> adds BYO-SVG icon sizing, literal Unicode styling and ASCII/box-drawing alignment without shipping fonts or icons; see <a href="symbols.html">symbols and accessibility</a>.</p>
+The optional source-candidate <code>syntyr.ascii.css</code> composes with symbols for <a href="ascii-effects.html">ASCII effects</a>; it is not in the published alpha.4 release.</p>
+<p>The optional <code>syntyr.symbols.css</code> adds BYO-SVG icon sizing, literal Unicode styling and ASCII/box-drawing alignment without shipping fonts or icons; see <a href="symbols.html">symbols and accessibility</a>.</p>
 <p><code>syntyr.semantic-bundle.css</code> bundles core and semantic styles with scoped opt-in.
 <code>syntyr.css</code> bundles core and effects. <code>syntyr.all.css</code> bundles all modules
 while still requiring <code>.syn-semantic</code> to opt into semantic element styles.

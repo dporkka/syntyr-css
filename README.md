@@ -153,6 +153,7 @@ stylesheets.
 - [Alpha.5 manual accessibility review checklist](docs/accessibility-alpha5-review.md)
 - [Advanced frame and terminal lab](examples/geometry-terminal.html) with [geometry integration guide](docs/geometry-terminal.md) and [interactive geometry mixer](docs/playground.html#geometry-title)
 - [Quiet / standard / cinematic intensity comparison](examples/intensity-geometry.html) with [composability guide](docs/visual-intensity.md): independent effect controls, composable frame accents, and nested presets without JavaScript
+- [ASCII effects gallery](examples/ascii.html) and [ASCII effects guide](docs/ascii-effects.md): optional source-candidate styling and finite CSS motion, no runtime.
 - [Optional SVG icons, Unicode markers and ASCII/box-drawing demo](examples/symbols.html) with [copy-paste guide](docs/symbols.md)
 - [CSS-only geospatial schematic demo](examples/geo.html) and [renderer-neutral GIS styling guide](docs/geo.md): optional `syntyr.geo.css` map/list/inspector workspace, markers, legends, layers and attribution with no bundled map engine (unreleased source candidate)
 - [Opt-in enterprise data-grid CSS module](docs/data-grid.md), with [static styling example](examples/data-grid.html): framework-neutral, no JavaScript, reusable ARIA states, density and aligned column primitives.

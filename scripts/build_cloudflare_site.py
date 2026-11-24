@@ -317,7 +317,7 @@ PUBLIC_DOCS = (
     "editor-integration.md", "recipes.md", "saas-cli-business.md", "products.html", "pro.html", "studio.html", "integration-services.html",
     "cms-integration.md", "site-generator-decision.md", "static-site-generators.md", "site-builders.md", "tailwind-research.md", "tailwind-alternative.html",
     "wordpress.md", "shopify.md", "wix.md", "webflow.md", "framer.md", "squarespace.md", "ghost.md", "hubspot.md", "drupal.md", "joomla.md", "carrd.md", "duda.md", "tilda.md",
-    "theme-customization.md", "theme-editor.html", "theme-editor.js", "symbols.md",
+    "theme-customization.md", "theme-editor.html", "theme-editor.js", "symbols.md", "ascii-effects.md",
     "vertigo-integration.md", "rust-saas-integration.md", "viz.md", "geo.md",
 )
 
@@ -398,7 +398,7 @@ def source_files(site_url: str = SITE_URL, *, include_cloudflare_headers: bool =
         "saas-admin-starter/index.html", "saas-admin-starter/pipeline.html",
         "saas-admin-starter/customers.html", "saas-admin-starter/billing.html",
         "saas-admin-starter/styles.css", "saas-admin-starter/README.md", "enterprise-compositions.html", "permission-matrix.html", "permission-matrix.css", "crm.html", "resource-workspace.html", "native-workflows.html", "file-lifecycle.html", "resizable-workspace.html", "operation-revisions.html", "saas-workflows.css", "workflow-operations.html", "workflow-operations.css", "premium-compositions.html",
-        "terminal.html", "themes.html", "vertigo-admin.html", "vertigo-resource-workflow.html", "vertigo-resource-workflow.css", "symbols.html",
+        "terminal.html", "themes.html", "vertigo-admin.html", "vertigo-resource-workflow.html", "vertigo-resource-workflow.css", "symbols.html", "ascii.html",
         "viz.html", "geo.html", "data-grid.html", "animation.html", "copy.html",
         "design-benchmarks/marketing.html", "design-benchmarks/crm.html",
         "design-benchmarks/documentation.html", "design-benchmarks/benchmark.css",
