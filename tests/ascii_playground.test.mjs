@@ -63,3 +63,28 @@ test('logo text has predictable five-row geometry and safe fallback', async () =
   assert.throws(()=>renderLogo('<script>','block'));
   assert.throws(()=>renderLogo('A','unknown'));
 });
+
+test('3D geometry is deterministic, perspective-scaled, bounded and rotates',()=>{
+  for(const kind of ['torus-3d','sphere-3d','cube-3d','wireframe-3d']){
+    const art=renderPattern(kind,80,30,'ascii',0);
+    assert.equal(art,renderPattern(kind,80,30,'ascii',0));
+    const lines=art.split('\n');
+    assert.equal(lines.length,30);
+    assert.ok(lines.every(line=>line.length===80));
+    assert.ok([...art].every(c=>c==='\n'||ramps.ascii.includes(c)));
+    assert.ok(art.trim().length>30);
+    assert.equal(lines[0].trim(),'');
+    assert.equal(lines.at(-1).trim(),'');
+    if(kind!=='sphere-3d') assert.notEqual(art,renderPattern(kind,80,30,'ascii',1.2));
+    const tiny=renderPattern(kind,1,1,'blocks',0);
+    assert.equal(tiny.length,1);
+  }
+  const torus=renderPattern('torus-3d',80,30,'blocks',0).split('\n');
+  const sphere=renderPattern('sphere-3d',80,30,'blocks',0).split('\n');
+  assert.equal(torus[15][40],' ');
+  assert.notEqual(sphere[15][40],' ');
+  const cube=renderPattern('cube-3d',80,30,'ascii',0);
+  assert.ok(new Set(cube.replace(/\s/g,'')).size>=2,'lit cube has multiple face intensities');
+  assert.throws(()=>renderPattern('cube-3d',161,30,'ascii',0));
+  assert.throws(()=>renderPattern('cube-3d',80,30,'ascii',NaN));
+});
