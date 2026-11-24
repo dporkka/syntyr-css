@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Source candidate only (alpha.5); not available in published alpha.4. Load core, symbols, then ASCII effects. For an npm package built from this candidate:">
-  <meta name="syntyr-source-sha256" content="e714a957138305f4ee0432b737366d069b7ae3cf2b82d646b88ea9391c36a217">
+  <meta name="syntyr-source-sha256" content="eb0189857a01790da7542708d8445397afffcbcb34c9f53597862b159429a2b2">
   <meta name="theme-color" content="#f5f7fb">
   <title>ASCII effects (optional) — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/ascii-effects">
@@ -110,8 +110,27 @@
 <p>Use <code>--syn-ascii-color</code>, <code>--syn-ascii-font-size</code>, <code>--syn-ascii-line-height</code>, <code>--syn-ascii-spacing</code>, <code>--syn-ascii-opacity</code>, <code>--syn-ascii-duration</code> and <code>--syn-ascii-steps</code> on the root or artwork as appropriate. Use positive durations and step counts. Effects are static unless a motion modifier is explicitly attached to an element marked <code>aria-hidden=&quot;true&quot;</code>; motion lasts no longer than five seconds and does not repeat. Reduced motion, forced colors, increased contrast and print disable motion, masks, and glow.</p>
 <p>Keep meaningful text visible outside decorative art. Avoid focusable children inside hidden art. Keep scrollable meaningful code outside these decorative patterns; never replace actual progress, errors or status with a character image. Quiet intensity turns off the phosphor glow via the existing token; omit decorative motion classes for quiet application surfaces. Do not stack multiple motion or masking modifiers; each owns a single CSS property.</p>
 <p>For new designs, compose existing <code>syn-ascii</code>, geometric frames, theme tokens and semantic HTML before adding a modifier. This module adds only treatments not supplied by the existing alignment and panel utilities. Procedural animation, real text scrambling and media conversion are deferred to optional tooling.</p>
+<h2 id="optional-build-time-ascii-cli">Optional build-time ASCII CLI</h2>
+<p>From a checkout of this source candidate, with Node.js 22 or later, run the dependency-free CLI. It reuses the playground's deterministic renderer and export logic. It is a source-checkout tool, not part of the published npm CSS package or browser runtime.</p>
+<pre tabindex="0"><code class="language-sh">node scripts/ascii.mjs --help
+node scripts/ascii.mjs pattern torus --columns 80 --rows 24 --ramp blocks --time 1 &gt; torus.txt
+node scripts/ascii.mjs logo SYNTYR --style hash --format svg &gt; wordmark.svg
+node scripts/ascii.mjs image photo.ppm --columns 80 --dither floyd --format html &gt; photo.html
+</code></pre>
+<p>The image command reads local 8-bit Netpbm PGM/PPM files (P2, P3, P5, P6), up to 16 MiB and four million source pixels. For PNG, JPEG and WebP, use the browser playground or convert locally to PGM/PPM with an existing image editor. The CLI does not install a decoder or fetch URLs. It writes artwork to stdout and diagnostics to stderr; invalid input exits nonzero. HTML output starts with a UTF-8 BOM for saved documents. SVG and HTML are escaped, use a validated solid hex color, and need no JavaScript. As with the browser tool, glyph-cell aspect and intensity are approximations.</p>
+<p>Use these commands for static sites, README banners and reproducible build steps. Keep ordinary text alternatives for meaningful artwork. The CSS package has no CLI or Node dependency.</p>
         </article>
-
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+<a class="docs-article-toc-link docs-article-toc-2" href="#optional-build-time-ascii-cli">Optional build-time ASCII CLI</a>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#optional-build-time-ascii-cli">Optional build-time ASCII CLI</a>
+            </nav>
+          </details>
+        </aside>
       </div>
       <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="ascii-effects.md">Markdown source</a></nav>
     </main>
