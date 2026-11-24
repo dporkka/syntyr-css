@@ -5546,6 +5546,21 @@ Keep meaningful text visible outside decorative art. Avoid focusable children in
 
 For new designs, compose existing `syn-ascii`, geometric frames, theme tokens and semantic HTML before adding a modifier. This module adds only treatments not supplied by the existing alignment and panel utilities. Procedural animation, real text scrambling and media conversion are deferred to optional tooling.
 
+## Optional build-time ASCII CLI
+
+From a checkout of this source candidate, with Node.js 22 or later, run the dependency-free CLI. It reuses the playground's deterministic renderer and export logic. It is a source-checkout tool, not part of the published npm CSS package or browser runtime.
+
+```sh
+node scripts/ascii.mjs --help
+node scripts/ascii.mjs pattern torus --columns 80 --rows 24 --ramp blocks --time 1 > torus.txt
+node scripts/ascii.mjs logo SYNTYR --style hash --format svg > wordmark.svg
+node scripts/ascii.mjs image photo.ppm --columns 80 --dither floyd --format html > photo.html
+```
+
+The image command reads local 8-bit Netpbm PGM/PPM files (P2, P3, P5, P6), up to 16 MiB and four million source pixels. For PNG, JPEG and WebP, use the browser playground or convert locally to PGM/PPM with an existing image editor. The CLI does not install a decoder or fetch URLs. It writes artwork to stdout and diagnostics to stderr; invalid input exits nonzero. HTML output starts with a UTF-8 BOM for saved documents. SVG and HTML are escaped, use a validated solid hex color, and need no JavaScript. As with the browser tool, glyph-cell aspect and intensity are approximations.
+
+Use these commands for static sites, README banners and reproducible build steps. Keep ordinary text alternatives for meaningful artwork. The CSS package has no CLI or Node dependency.
+
 ---
 
 ## Source: docs/viz.md
