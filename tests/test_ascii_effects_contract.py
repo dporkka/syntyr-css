@@ -36,6 +36,33 @@ class AsciiEffectsContract(unittest.TestCase):
         self.assertIn("aria-hidden=\"true\"", gallery)
         self.assertIn("../examples/ascii.html", (ROOT / "docs/index.html").read_text())
 
+    def test_hero_gallery_copyable_and_script_free(self):
+        from html.parser import HTMLParser
+        class Inspect(HTMLParser):
+            def __init__(self):
+                super().__init__()
+                self.snippets = []
+                self.inside = False
+            def handle_starttag(self, tag, attrs):
+                if tag == "textarea":
+                    self.inside = True
+                    self.snippets.append("")
+            def handle_endtag(self, tag):
+                if tag == "textarea":
+                    self.inside = False
+            def handle_data(self, data):
+                if self.inside:
+                    self.snippets[-1] += data
+        html = (ROOT / "examples/ascii-heroes.html").read_text()
+        parser = Inspect()
+        parser.feed(html)
+        self.assertEqual(len(parser.snippets), 3)
+        self.assertNotIn("<script", html)
+        for snippet in parser.snippets:
+            self.assertIn('class="syn-root syn-region"', snippet)
+            self.assertIn('aria-hidden="true" tabindex="-1"', snippet)
+            self.assertIn('href="/start"', snippet)
+            self.assertIn("<h2", snippet)
     def test_decorative_scroll_art_is_not_in_sequential_tab_order(self):
         from html.parser import HTMLParser
         class Inspect(HTMLParser):

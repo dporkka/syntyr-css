@@ -398,7 +398,7 @@ def source_files(site_url: str = SITE_URL, *, include_cloudflare_headers: bool =
         "saas-admin-starter/index.html", "saas-admin-starter/pipeline.html",
         "saas-admin-starter/customers.html", "saas-admin-starter/billing.html",
         "saas-admin-starter/styles.css", "saas-admin-starter/README.md", "enterprise-compositions.html", "permission-matrix.html", "permission-matrix.css", "crm.html", "resource-workspace.html", "native-workflows.html", "file-lifecycle.html", "resizable-workspace.html", "operation-revisions.html", "saas-workflows.css", "workflow-operations.html", "workflow-operations.css", "premium-compositions.html",
-        "terminal.html", "themes.html", "vertigo-admin.html", "vertigo-resource-workflow.html", "vertigo-resource-workflow.css", "symbols.html", "ascii.html",
+        "terminal.html", "themes.html", "vertigo-admin.html", "vertigo-resource-workflow.html", "vertigo-resource-workflow.css", "symbols.html", "ascii.html", "ascii-heroes.html",
         "viz.html", "geo.html", "data-grid.html", "animation.html", "copy.html",
         "design-benchmarks/marketing.html", "design-benchmarks/crm.html",
         "design-benchmarks/documentation.html", "design-benchmarks/benchmark.css",

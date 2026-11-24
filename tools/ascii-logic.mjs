@@ -6,7 +6,16 @@ export const ramps = Object.freeze({
   binary: ' 01'
 });
 const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
+export function customRamp(value) {
+  if (typeof value !== 'string') throw new RangeError('Enter a character ramp');
+  const chars=Array.from(value);
+  if(chars.length<2||chars.length>32||new Set(chars).size!==chars.length||
+     chars.some(c=>!(/^[ -~]$/u.test(c)||/^[\u2580-\u259f\u2800-\u28ff]$/u.test(c))))
+    throw new RangeError('Use 2–32 distinct ASCII, block or Braille glyphs, light to dark');
+  return chars;
+}
 function glyphs(name) {
+  if(Array.isArray(name)) return customRamp(name.join(''));
   if (!Object.hasOwn(ramps, name)) throw new RangeError('Unknown character set');
   return Array.from(ramps[name]);
 }
@@ -21,16 +30,32 @@ export function gridSize(width, height, columns) {
   const cols = Math.max(1, Math.min(columns, Math.floor(100 / ratio)));
   return {cols, rows:clamp(Math.round(cols*ratio),1,100)};
 }
-export function pixelsToAscii(rgba, cols, rows, rampName, invert=false) {
+export function pixelsToAscii(rgba, cols, rows, rampName, invert=false, dither='none') {
   validateGrid(cols,rows);
   if (rgba.length !== cols*rows*4) throw new RangeError('Pixel count mismatch');
-  const ramp=glyphs(rampName), result=[];
+  if(!['none','bayer','floyd'].includes(dither)) throw new RangeError('Unknown dithering mode');
+  const ramp=glyphs(rampName), result=[], levels=ramp.length-1;
+  const values=new Float64Array(cols*rows);
+  for(let i=0;i<values.length;i++) {
+    const j=i*4, lum=(.2126*rgba[j]+.7152*rgba[j+1]+.0722*rgba[j+2])/255*(rgba[j+3]/255);
+    values[i]=invert?1-lum:lum;
+  }
+  const matrix=[0,8,2,10,12,4,14,6,3,11,1,9,15,7,13,5];
+  const diffuse=(x,y,error,weight)=>{
+    if(x>=0&&x<cols&&y>=0&&y<rows) values[y*cols+x]+=error*weight/16;
+  };
   for(let y=0;y<rows;y++) {
     let line='';
     for(let x=0;x<cols;x++) {
-      const i=(y*cols+x)*4;
-      const lum=(.2126*rgba[i]+.7152*rgba[i+1]+.0722*rgba[i+2])/255*(rgba[i+3]/255);
-      line+=ramp[Math.round(clamp(invert?1-lum:lum,0,1)*(ramp.length-1))];
+      const v=clamp(values[y*cols+x],0,1);
+      const offset=dither==='bayer'?((matrix[(y%4)*4+x%4]+.5)/16-.5)/levels:0;
+      const level=Math.round(clamp(v+offset,0,1)*levels);
+      line+=ramp[level];
+      if(dither==='floyd') {
+        const error=v-level/levels;
+        diffuse(x+1,y,error,7); diffuse(x-1,y+1,error,3);
+        diffuse(x,y+1,error,5); diffuse(x+1,y+1,error,1);
+      }
     }
     result.push(line);
   }
@@ -82,4 +107,29 @@ export function exportArt(art,format,color) {
     return '<svg xmlns="http://www.w3.org/2000/svg" width="'+width+'" height="'+height+'" viewBox="0 0 '+width+' '+height+'" role="img" aria-label="ASCII artwork"><rect width="100%" height="100%" fill="#080e14"/><g fill="'+color+'" font-family="monospace" font-size="13" xml:space="preserve">'+lines.map((line,i)=>'<text x="8" y="'+(19+i*16)+'">'+escape(line)+'</text>').join('')+'</g></svg>';
   }
   throw new RangeError('Unknown export format');
+}
+
+const alphabet=Object.freeze({
+ A:[14,17,31,17,17], B:[30,17,30,17,30], C:[15,16,16,16,15],
+ D:[30,17,17,17,30], E:[31,16,30,16,31], F:[31,16,30,16,16],
+ G:[15,16,19,17,15], H:[17,17,31,17,17], I:[31,4,4,4,31],
+ J:[7,2,2,18,12], K:[17,18,28,18,17], L:[16,16,16,16,31],
+ M:[17,27,21,17,17], N:[17,25,21,19,17], O:[14,17,17,17,14],
+ P:[30,17,30,16,16], Q:[14,17,21,18,13], R:[30,17,30,18,17],
+ S:[15,16,14,1,30], T:[31,4,4,4,4], U:[17,17,17,17,14],
+ V:[17,17,17,10,4], W:[17,17,21,27,17], X:[17,10,4,10,17],
+ Y:[17,10,4,4,4], Z:[31,2,4,8,31],
+ 0:[14,19,21,25,14], 1:[4,12,4,4,14], 2:[14,17,2,4,31],
+ 3:[30,1,14,1,30], 4:[18,18,31,2,2], 5:[31,16,30,1,30],
+ 6:[14,16,30,17,14], 7:[31,1,2,4,8], 8:[14,17,14,17,14],
+ 9:[14,17,15,1,14], ' ':[0,0,0,0,0], '-':[0,0,31,0,0]
+});
+export function renderLogo(text,style='block') {
+  if(typeof text!=='string'||!/^[- A-Za-z0-9]{1,24}$/.test(text)||!text.trim())
+    throw new RangeError('Enter 1–24 letters, digits, spaces or hyphens');
+  const fills={block:'█',hash:'#',dot:'●'};
+  if(!Object.hasOwn(fills,style)) throw new RangeError('Unknown logo style');
+  return Array.from({length:5},(_,y)=>Array.from(text.toUpperCase(),c=>
+    Array.from({length:5},(_,x)=>alphabet[c][y]&(16>>x)?fills[style]:' ').join('')
+  ).join(' ')).join('\n');
 }
