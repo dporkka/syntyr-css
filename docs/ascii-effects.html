@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Source candidate only (alpha.5); not available in published alpha.4. Load core, symbols, then ASCII effects. For an npm package built from this candidate:">
-  <meta name="syntyr-source-sha256" content="bef9b9a40c743052a605fcb4822647554b2e34b6d86759c2724c6b46579173a2">
+  <meta name="syntyr-source-sha256" content="f0c8711f0315aac0d7007d693e7aa735684b7626f70df571e80be558cba25a7d">
   <meta name="theme-color" content="#f5f7fb">
   <title>ASCII effects (optional) — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/ascii-effects">
@@ -138,12 +138,33 @@ node scripts/ascii.mjs image photo.ppm --image-colors --format ansi &gt; photo.a
 cat photo.ansi
 </code></pre>
 <p>The existing grid and file-size bounds remain unchanged. No image uploads, package changes or runtime dependencies.</p>
+<h2 id="optional-interactive-ascii-companion">Optional interactive ASCII companion</h2>
+<p><a href="../tools/ascii-interactive.html">Try five interactive effects</a>: pointer-driven 3D orbit, particles, wave distortion, radar and scroll transitions. Copy the source candidate's two files, <a href="../tools/ascii-interactive.mjs">ascii-interactive.mjs</a> and <a href="../tools/ascii-logic.mjs">ascii-logic.mjs</a>, into the same served directory. This optional ESM companion is not part of the npm CSS package.</p>
+<p>Supply a container, a decorative plain-text pre element, and a native toggle button. The button is initially disabled in static HTML and becomes available only when the companion initializes. Keep meaningful content outside the artwork.</p>
+<pre tabindex="0"><code class="language-html">&lt;section id=&quot;hero&quot; class=&quot;syn-root&quot;&gt;
+  &lt;h2&gt;Build beyond the ordinary&lt;/h2&gt;
+  &lt;button type=&quot;button&quot; aria-pressed=&quot;false&quot; disabled&gt;Enable or disable effect&lt;/button&gt;
+  &lt;pre aria-hidden=&quot;true&quot; tabindex=&quot;-1&quot;&gt;.:-=+*#%@&lt;/pre&gt;
+&lt;/section&gt;
+</code></pre>
+<p>In your own external module:</p>
+<pre tabindex="0"><code class="language-js">import {attachAsciiEffect} from './ascii-interactive.mjs';
+const root = document.querySelector('#hero');
+const effect = attachAsciiEffect({
+  root, art: root.querySelector('pre'),
+  button: root.querySelector('button'),
+  kind: 'orbit', cols: 64, rows: 24
+});
+// Call effect.destroy() when unmounting.
+</code></pre>
+<p>Kinds are orbit, particles, distortion, radar and scroll. The controller uses event-driven rendering at approximately 12 FPS maximum, with no perpetual animation loop. It restores the static fallback when disabled, when the page becomes hidden or when reduced motion, forced colors or increased contrast becomes active. Touch pointer movement is ignored. Scroll effects require activation. Maximum grid is 80 by 32 cells. No network calls, trackers, mandatory JavaScript or new public CSS classes.</p>
         </article>
         <aside class="docs-article-sidebar">
           <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#optional-build-time-ascii-cli">Optional build-time ASCII CLI</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#3d-procedural-artwork">3D procedural artwork</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#full-color-ascii-image-conversion">Full-color ASCII image conversion</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#optional-interactive-ascii-companion">Optional interactive ASCII companion</a>
           </nav>
           <details class="docs-article-toc-mobile">
             <summary>On this page <span>Jump to section</span></summary>
@@ -151,6 +172,7 @@ cat photo.ansi
 <a class="docs-article-toc-link docs-article-toc-2" href="#optional-build-time-ascii-cli">Optional build-time ASCII CLI</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#3d-procedural-artwork">3D procedural artwork</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#full-color-ascii-image-conversion">Full-color ASCII image conversion</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#optional-interactive-ascii-companion">Optional interactive ASCII companion</a>
             </nav>
           </details>
         </aside>

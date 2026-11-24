@@ -113,9 +113,9 @@ const meshes={
 };
 const wireVertices=Array.from({length:8},(_,i)=>[i&1?.85:-.85,i&2?.85:-.85,i&4?.85:-.85]);
 const wireEdges=wireVertices.flatMap((_,i)=>[1,2,4].filter(bit=>(i&bit)===0).map(bit=>[i,i|bit]));
-function render3D(kind,cols,rows,ramp,time) {
+function render3D(kind,cols,rows,ramp,time,pose) {
   const cells=Array(cols*rows).fill(ramp[0]), depth=new Float64Array(cells.length);
-  const ax=.45+time*.7, ay=.35+time*.53;
+  const ax=pose?.pitch??(.45+time*.7), ay=pose?.yaw??(.35+time*.53);
   const cx=Math.cos(ax),sx=Math.sin(ax),cy=Math.cos(ay),sy=Math.sin(ay);
   const scale=Math.min(cols/2,rows)*1.45;
   function rotate(x,y,z) {
@@ -167,12 +167,13 @@ function render3D(kind,cols,rows,ramp,time) {
   }
   return Array.from({length:rows},(_,y)=>cells.slice(y*cols,(y+1)*cols).join('')).join('\n');
 }
-export function renderPattern(kind,cols,rows,rampName,time=0) {
+export function renderPattern(kind,cols,rows,rampName,time=0,pose=null) {
   validateGrid(cols,rows);
   if ((!shapes3d.has(kind)&&!['sphere','torus','wave','plasma','rain','radar'].includes(kind)) || !Number.isFinite(time))
     throw new RangeError('Unknown pattern or time');
   const ramp=glyphs(rampName), result=[];
-  if(shapes3d.has(kind))return render3D(kind,cols,rows,ramp,time);
+  if(pose!==null&&(!Number.isFinite(pose.pitch)||!Number.isFinite(pose.yaw))) throw new RangeError("Invalid orientation");
+  if(shapes3d.has(kind))return render3D(kind,cols,rows,ramp,time,pose);
   for(let y=0;y<rows;y++) {
     let line='';
     for(let x=0;x<cols;x++) {

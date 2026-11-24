@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Five interactive ASCII effects with opt-in motion and static fallback: orbit, particles, distortion, radar and scroll.">
+  <title>Interactive ASCII Effects — Syntyr</title>
+  <link rel="stylesheet" href="../dist/syntyr.core.css"><link rel="stylesheet" href="site.css"><link rel="stylesheet" href="ascii-playground.css">
+  <script type="module" src="ascii-interactive-demo.mjs"></script>
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <div class="tool-shell"><header class="tool-header"><a class="tool-brand" href="../index.html">SYNTYR / INTERACTIVE ASCII</a><nav class="tool-nav"><a href="ascii-playground.html">ASCII generator</a><a href="../docs/ascii-effects.html">Integration guide</a></nav></header>
+  <main class="syn-stack"><section class="tool-hero"><h1>Interactive ASCII effects</h1><p>Enable an effect, then move your pointer or scroll. Each design starts as static artwork. Motion is optional and is disabled for reduced motion, increased contrast and forced colors. All artwork is decorative.</p><noscript><p>JavaScript is disabled. The static artwork remains available.</p></noscript></section>
+<section class="tool-card ascii-effect-card" data-ascii-effect="orbit">
+  <div><p class="tool-eyebrow">Optional effect / orbit</p><h2>Pointer-driven 3D orbit</h2><p>Move the pointer to rotate a shaded torus.</p><button class="syn-button syn-button--outline" type="button" aria-pressed="false" disabled>Enable or disable effect</button></div>
+  <div class="ascii-preview" aria-hidden="true" tabindex="-1"><pre aria-hidden="true">                                                        
+                                                        
+                                                        
+                         %@@@@@@@%%#                    
+                     @@@@%%%%%%%@@@@@%#                 
+                   @@%%%##*****##%%@@@%%#-              
+                 @@%%#*+==-----=+*#%@@@%%#+             
+               %@@%#*+=::..      -*#%@@@%#*=            
+              %@@%#*+-:.           #%@@@%%*+            
+              @@%%#+=:.            #%@@@%#*+:           
+             #@@%%#+-.             %@@@%%#*=            
+             #@@@%#*+:           *%@@@%%#*+-            
+             #%@@@%%#*=        #%@@@@%%#*+-.            
+              #%@@@@%%%%###%%@@@@@@%%##*=-.             
+               #%%@@@@@@@@@@@@@@%%%##*+=:               
+                +##%%%%%%%%%%%%###*+==:.                
+                  =+*########***+==-:                   
+                     --======--::.                      
+                                                        
+                                                        </pre></div>
+</section>
+<section class="tool-card ascii-effect-card" data-ascii-effect="particles">
+  <div><p class="tool-eyebrow">Optional effect / particles</p><h2>Particle field</h2><p>Highlight a deterministic star field near the pointer.</p><button class="syn-button syn-button--outline" type="button" aria-pressed="false" disabled>Enable or disable effect</button></div>
+  <div class="ascii-preview" aria-hidden="true" tabindex="-1"><pre aria-hidden="true">@.      =-% .        :.#   *   ::  +@#  %       . =  .# 
+ :     .+=  :        -:%   *   :- .* %  @       . +  :% 
+ -     .*+  :        =-@   #   -- :# @          : *  -% 
+ -     :**  -.       =-  . %.  == -%       .    - # .-  
+ =     -#*  =:  .    +=  : @:. ++ -%       :    = # :=  
+ +     =%#  +-  :.   *+  -  -: +* =        : .. = %.-+  
+ *   . =@%  +-  -.   #*  -  -: ** +        - :. + @:-*  
+ *   :.+ @  *=  -:   #*  =  =- ## *        = :: *  -=*  
+ #   -:*    #+  =-   %#  +. += %% *        + -- #  -+#  
+ %   --#    %*  +=   @%  *. *+ %@ #    .   + == #  =*%  
+ @   =-#    %*  *=    @  *: *+    %    :   * += %  +*@  
+     +=%     #  *+       #- #*    @   .:   # ++ @  *#   
+   . *+@     %  #*       %= %#        :-   %.**    *%   
+   . **    . @. %#...    @= @%   .    -=   %:##    #@   
+   : #*    :  : @#::.     +  %.  :    -+  . :%#.   %    
+  .- %#    -  :  %:::     *   .  -    =+  . -%%:   @    
+  := @%    -  -  @---     #   :  -    +* .: = @- .      
+  :=  @    =  =   ===     #   -  =    *# :- +  - :      
+  -+.      +  +   ++=     %   =  +    *% -= +  = -     .
+  =*:      *  +.  +++   . @   =  *    #% -= *  + -     :</pre></div>
+</section>
+<section class="tool-card ascii-effect-card" data-ascii-effect="distortion">
+  <div><p class="tool-eyebrow">Optional effect / distortion</p><h2>Wave distortion</h2><p>Bend character waves around the pointer.</p><button class="syn-button syn-button--outline" type="button" aria-pressed="false" disabled>Enable or disable effect</button></div>
+  <div class="ascii-preview" aria-hidden="true" tabindex="-1"><pre aria-hidden="true">                                                        
+                                                        
+                                                        
+                                                        
+                                         .              
+                        :-              =#-             
+   =+:                 -%%=            -%+@             
+  +%%%*+*+.         .:+@+=%            @: -*           +
+ :#::=##*##       :+#%%-  -*          *=   *:          %
+ #:   ....++     .%#*+:    *.       .+#    .#         +:
+:+         #.    #+.       .*    :+*#%.     ++....   :# 
+%          :*   =*          *-  -%%#+:       ##*##=::#: 
++           *- :@            %=+@+:.         .+*+*%%%+  
+             @+%-            =%%-                 :+=   
+             -#=              -:                        
+              .                                         
+                                                        
+                                                        
+                                                        
+                                                        </pre></div>
+</section>
+<section class="tool-card ascii-effect-card" data-ascii-effect="radar">
+  <div><p class="tool-eyebrow">Optional effect / radar</p><h2>Interactive radar</h2><p>Aim the sweep with the pointer.</p><button class="syn-button syn-button--outline" type="button" aria-pressed="false" disabled>Enable or disable effect</button></div>
+  <div class="ascii-preview" aria-hidden="true" tabindex="-1"><pre aria-hidden="true">                                                        
+                                                        
+                                                        
+                  +     +      +   ..+                  
+                                  ......                
+                                 .......:               
+             +  +               ......:+::+             
+               +  +            ....::+:-+--             
+                    +  +      ..+::+--======            
+              +          +   :+==++++*******            
+              +          +    +          +              
+                    +  +        +  +                    
+               +  +                  +  +               
+             +  +                      +  +             
+                                                        
+                                                        
+                  +     +      +     +                  
+                                                        
+                                                        
+                                                        </pre></div>
+</section>
+<section class="tool-card ascii-effect-card" data-ascii-effect="scroll">
+  <div><p class="tool-eyebrow">Optional effect / scroll</p><h2>Scroll transitions</h2><p>Shift the character field as this panel moves through the viewport.</p><button class="syn-button syn-button--outline" type="button" aria-pressed="false" disabled>Enable or disable effect</button></div>
+  <div class="ascii-preview" aria-hidden="true" tabindex="-1"><pre aria-hidden="true">---=*#%@%#+=---=+#%%%%#****##%%%%#**+++++***++++*******+
+::-=+*#*+=-:::-=+*##*+=--:--=+++++====++**+=--::-=+**++=
+.:-==+==-:::::-==++==-..   .:----:...:-=+*++-:. .:-++++-
+:-======--===----===--:::::-=+++=-:...:-+***+-:...-=***+
+++++++++****+=====+****++++*#%%%#*+=-:-=+*#%#*+-::-+#%%#
+**++++*#%%%*+===+*#%%%#*+++*##%%%%#*++=++*#%%#*+=-=+#%@%
+*+===+*#%%#+=--=+#%%%#+=---==+******++++++**##*+=--=*#%%
+=-:::-+*#*+-...-+*#*+=:...:-====-----========+==-::-=+**
+-:...-=**+-:  .-=+*+=:...:-=+++=-:..:-====-------:::-=++
+=-:.:=+*#*=:..:=+**+=-::-===+*#*=-:.:-=+++======--:--=**
++=--=+#%%#+=::=+#%##+===++**#%%#*=--=+*##*++++*++===+*#%
+*+===*#@@%*+--=*#%@%#+===+*#%%%#*+==+*####*******+++*#%%
++==--+*#%#*=-:-=*#%%#+=-:--=+++++===++**++++***+==-=+*#%
+=-:::-=+**+-:..:-+*#*+=:...:--=======-----==++=-::::=+**
+--::::-=+++=:...:-=+++=--::-=+++++=-::.::-=++=-:. .:=+**
+========++++=-----=++++====+*###*+=-:.:-=+*#*+=:..:=*##*
+++******++***+++****++=====+*###*+=---=+#%%%#+=---+*%%%#
+=+**####*+++++*##%%#*+==---=+***++===+*#%@%%*+=-=+*%%%%*
+::-+*###*+--:-=+*#%%#*+=---=+*****+++++****+=---=+**#*++
+. .:=+***+-:. .:-=+**++=--==+****+=--------------=====--</pre></div>
+</section>
+  <p><a href="../docs/ascii-effects.html">Copy the integration recipe</a> · <a href="../examples/ascii-heroes.html">Static hero recipes</a></p></main></div>
+</body></html>

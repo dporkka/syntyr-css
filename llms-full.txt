@@ -5589,6 +5589,35 @@ cat photo.ansi
 
 The existing grid and file-size bounds remain unchanged. No image uploads, package changes or runtime dependencies.
 
+## Optional interactive ASCII companion
+
+[Try five interactive effects](../tools/ascii-interactive.html): pointer-driven 3D orbit, particles, wave distortion, radar and scroll transitions. Copy the source candidate's two files, [ascii-interactive.mjs](../tools/ascii-interactive.mjs) and [ascii-logic.mjs](../tools/ascii-logic.mjs), into the same served directory. This optional ESM companion is not part of the npm CSS package.
+
+Supply a container, a decorative plain-text pre element, and a native toggle button. The button is initially disabled in static HTML and becomes available only when the companion initializes. Keep meaningful content outside the artwork.
+
+```html
+<section id="hero" class="syn-root">
+  <h2>Build beyond the ordinary</h2>
+  <button type="button" aria-pressed="false" disabled>Enable or disable effect</button>
+  <pre aria-hidden="true" tabindex="-1">.:-=+*#%@</pre>
+</section>
+```
+
+In your own external module:
+
+```js
+import {attachAsciiEffect} from './ascii-interactive.mjs';
+const root = document.querySelector('#hero');
+const effect = attachAsciiEffect({
+  root, art: root.querySelector('pre'),
+  button: root.querySelector('button'),
+  kind: 'orbit', cols: 64, rows: 24
+});
+// Call effect.destroy() when unmounting.
+```
+
+Kinds are orbit, particles, distortion, radar and scroll. The controller uses event-driven rendering at approximately 12 FPS maximum, with no perpetual animation loop. It restores the static fallback when disabled, when the page becomes hidden or when reduced motion, forced colors or increased contrast becomes active. Touch pointer movement is ignored. Scroll effects require activation. Maximum grid is 80 by 32 cells. No network calls, trackers, mandatory JavaScript or new public CSS classes.
+
 ---
 
 ## Source: docs/viz.md

@@ -8,3 +8,7 @@
 .ascii-workspace .tool-field { margin-block:.75rem; }
 @media (max-width:53rem) { .ascii-workspace { grid-template-columns:minmax(0,1fr); } }
 @media (forced-colors:active) { .ascii-preview { border-color:CanvasText; } }
+
+/* Interactive hero-like demo cards reuse the existing preview and tool surfaces. */
+.ascii-effect-card { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.5fr); gap:1rem; align-items:center; }
+@media (max-width:53rem) { .ascii-effect-card { grid-template-columns:minmax(0,1fr); } }
