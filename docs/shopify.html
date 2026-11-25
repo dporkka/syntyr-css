@@ -45,14 +45,14 @@
 <li>Duplicate the active theme before editing code in <strong>Online Store → Themes</strong>. In the theme code editor, upload the candidate <code>dist/syntyr.embed.css</code> into <strong>Assets</strong> as <code>syntyr.embed.css</code>.</li>
 <li>Add the following tag <strong>once</strong> inside the <code>&lt;head&gt;</code> of <code>layout/theme.liquid</code>. The asset URL is resolved by Shopify.</li>
 </ol>
-<pre><code class="language-liquid">{{ 'syntyr.embed.css' | asset_url | stylesheet_tag }}
+<pre tabindex="0"><code class="language-liquid">{{ 'syntyr.embed.css' | asset_url | stylesheet_tag }}
 </code></pre>
 <ol start="3">
 <li>Copy the <a href="https://github.com/dporkka/syntyr-css/blob/main/integrations/shopify/sections/syntyr-feature.liquid">Syntyr feature section for Shopify</a> into <strong>Sections</strong> as <code>syntyr-feature.liquid</code>. It uses Shopify <code>section.settings</code> for its heading, descriptive text, button label and URL, with escaped Liquid output.</li>
 <li>Add <strong>Syntyr feature</strong> to a template in the theme editor, fill in its settings, and inspect the storefront preview on desktop and mobile.</li>
 </ol>
 <p><strong>Example of the section's core content:</strong></p>
-<pre><code class="language-liquid">&lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot;&gt;
+<pre tabindex="0"><code class="language-liquid">&lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot;&gt;
   &lt;div class=&quot;syn-panel&quot;&gt;
     &lt;h2 class=&quot;syn-heading&quot;&gt;{{ section.settings.heading | escape }}&lt;/h2&gt;
     &lt;p class=&quot;syn-muted&quot;&gt;{{ section.settings.description | escape }}&lt;/p&gt;
@@ -67,12 +67,23 @@
 <p><strong>Release compatibility:</strong> The immutable <strong>alpha.4</strong> stylesheet <code>syntyr.core.css</code> is published. The <strong>alpha.5</strong> <code>syntyr.embed.css</code> bundle is a candidate build designed for existing themes; it is not part of the alpha.4 release. Build the candidate from the source repository and self-host a version-pinned copy for testing. Never load both bundles together, and verify theme-specific overrides before production rollout. Syntyr is a stylesheet, not an official integration or plug-in from the site platform.</p>
 <p>Explore the <a href="site-builders.html">platform integration overview</a>, <a href="distribution.html">Syntyr distribution and release guide</a>, or <a href="../examples/platform-embed.html">live host-theme example</a>.</p>
         </article>
-        <aside class="docs-article-sidebar"><nav aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#why-use-syntyr-on-shopify">Why use Syntyr on Shopify?</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#how-to-install-syntyr-in-a-shopify-online-store-theme">How to install Syntyr in a Shopify Online Store theme</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#limitations-and-shopify-specific-considerations">Limitations and Shopify-specific considerations</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#verify-the-result-before-publishing">Verify the result before publishing</a>
-        </nav></aside>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#why-use-syntyr-on-shopify">Why use Syntyr on Shopify?</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#how-to-install-syntyr-in-a-shopify-online-store-theme">How to install Syntyr in a Shopify Online Store theme</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#limitations-and-shopify-specific-considerations">Limitations and Shopify-specific considerations</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#verify-the-result-before-publishing">Verify the result before publishing</a>
+            </nav>
+          </details>
+        </aside>
       </div>
       <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="shopify.md">Markdown source</a></nav>
     </main>

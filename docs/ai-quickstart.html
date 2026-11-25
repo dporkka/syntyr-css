@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Install Syntyr CSS with AI coding agents using semantic HTML, real component classes, and version-aware, framework-neutral examples.">
-  <meta name="syntyr-source-sha256" content="4aef64c5ae186dac7a7831df6f8654f85c29b1cd6b0162d2ef1d26e8beaa47d5">
+  <meta name="syntyr-source-sha256" content="d609aeb1831709fc0fa338bfa0902fe9574bf5fd9a2f3ec919c71e08dd47aef8">
   <meta name="theme-color" content="#f5f7fb">
   <title>Syntyr CSS: AI-agent quickstart — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/ai-quickstart">
@@ -62,23 +62,36 @@
 </tbody>
 </table>
 <p>For a production application, copy a tagged CSS release to your own origin and pin its version. The CDN URL below is suitable for an initial prototype:</p>
-<pre><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://syntyr-css.pages.dev/v/0.3.0-alpha.4/syntyr.core.css&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://syntyr-css.pages.dev/v/0.3.0-alpha.4/syntyr.core.css&quot;&gt;
 </code></pre>
 <p>For page-level recipes, load the same <strong>version</strong> of the optional module after core:</p>
-<pre><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://syntyr-css.pages.dev/v/0.3.0-alpha.4/syntyr.core.css&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://syntyr-css.pages.dev/v/0.3.0-alpha.4/syntyr.core.css&quot;&gt;
 &lt;link rel=&quot;stylesheet&quot; href=&quot;https://syntyr-css.pages.dev/v/0.3.0-alpha.4/syntyr.recipes.css&quot;&gt;
 </code></pre>
 <p>Do not combine <code>syntyr.all.css</code> with individual CSS modules; that loads duplicates. A stylesheet is not automatically installed by adding a <code>syn-*</code> class to markup.</p>
 <h3 id="one-file-semantic-html-unreleased-source-only">One-file semantic HTML (unreleased source only)</h3>
 <p>If testing alpha.5 from a local source checkout, <code>syntyr.semantic-bundle.css</code> includes both core and optional semantic rules. Do <strong>not</strong> point a production page at a nonexistent alpha.5 CDN release URL.</p>
-<pre><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.semantic-bundle.css&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.semantic-bundle.css&quot;&gt;
 &lt;main class=&quot;syn-root syn-semantic&quot; data-syn-theme=&quot;studio&quot;&gt;
   &lt;article&gt;&lt;h1&gt;Settings&lt;/h1&gt;&lt;button type=&quot;button&quot;&gt;Save&lt;/button&gt;&lt;/article&gt;
 &lt;/main&gt;
 </code></pre>
 <p>Use <code>.syn-root</code> and <code>.syn-semantic</code> together; the bundle does not globally restyle arbitrary host HTML. Never load it alongside <code>core.css</code> or <code>semantic.css</code>, which would duplicate CSS. <a href="../examples/semantic-starter.html">Complete source demo</a>.</p>
+<h3 id="find-a-matching-source-example-unreleased-candidate-only">Find a matching source example (unreleased candidate only)</h3>
+<p>For work against a verified alpha.5 <strong>source checkout</strong>, read the local
+<code>metadata/component-gallery.v1.json</code> instead of inventing classes:
+filter <code>examples[]</code> by <code>use_cases</code> (for example <code>saas-dashboard</code> or
+<code>forms-workflow</code>), then verify <code>required_stylesheets</code> against what is
+actually installed. Each example includes <code>html</code>, <code>catalog_url</code>,
+<code>playground_url</code>, and <code>native_feature_requirements</code>; browser caveats
+are in <code>native_browser_features</code>. The
+<a href="editor-integration.html#select-html-examples-by-task-and-installed-css">editor integration guide</a>
+provides a standard-library Python selection example. Tags are
+recommendations, not evidence of complete behavior or a compatibility
+certificate. Do not copy unreleased examples into an alpha.4 application
+without checking that the classes and files exist in that release.</p>
 <h2 id="2-generate-valid-html">2. Generate valid HTML</h2>
-<pre><code class="language-html">&lt;main class=&quot;syn-root syn-page&quot; data-syn-theme=&quot;studio&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;main class=&quot;syn-root syn-page&quot; data-syn-theme=&quot;studio&quot;&gt;
   &lt;div class=&quot;syn-shell&quot;&gt;
     &lt;header class=&quot;syn-header&quot;&gt;
       &lt;a href=&quot;/&quot; class=&quot;syn-logo&quot;&gt;Acme&lt;/a&gt;
@@ -94,7 +107,7 @@
 </code></pre>
 <p>All classes in this sample are available from published alpha.4 core. Use an <code>&lt;a&gt;</code> for navigation, a <code>&lt;button&gt;</code> for an action, and functional <code>href</code>/<code>action</code> values rather than dummy <code>#</code> placeholders.</p>
 <h2 id="3-use-responsive-recipes-only-when-their-module-is-loaded">3. Use responsive recipes only when their module is loaded</h2>
-<pre><code class="language-html">&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-label=&quot;Operations overview&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot; aria-label=&quot;Operations overview&quot;&gt;
   &lt;div class=&quot;syn-stats&quot;&gt;
     &lt;article class=&quot;syn-stat&quot;&gt;
       &lt;p class=&quot;syn-stat-label&quot;&gt;Open tickets&lt;/p&gt;
@@ -110,7 +123,7 @@
 <p><code>syn-region</code> and <code>syn-stats</code> are core classes; they use native container queries. The containing region must be an ancestor of the responsive pattern. For application shells, <code>syn-app-shell</code> is in <strong>recipes</strong>, not core.</p>
 <h2 id="4-optional-scoped-semantic-mode">4. Optional scoped semantic mode</h2>
 <p>Load <code>syntyr.semantic.css</code> <strong>after core</strong>, then opt into <code>syn-semantic</code> in a <code>syn-root</code> subtree. Ordinary HTML outside that subtree is unaffected.</p>
-<pre><code class="language-html">&lt;section class=&quot;syn-root syn-semantic&quot; data-syn-theme=&quot;noir&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;section class=&quot;syn-root syn-semantic&quot; data-syn-theme=&quot;noir&quot;&gt;
   &lt;form action=&quot;/login&quot; method=&quot;post&quot;&gt;
     &lt;label for=&quot;email&quot;&gt;Email &lt;input id=&quot;email&quot; name=&quot;email&quot; type=&quot;email&quot; required&gt;&lt;/label&gt;
     &lt;button type=&quot;submit&quot;&gt;Sign in&lt;/button&gt;
@@ -137,15 +150,31 @@
 </ol>
 <p>See <a href="agent-integration.html">agent integration</a> for reusable prompt instructions.</p>
         </article>
-        <aside class="docs-article-sidebar"><nav aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#1-choose-the-correct-version">1. Choose the correct version</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#one-file-semantic-html-unreleased-source-only">One-file semantic HTML (unreleased source only)</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#find-a-matching-source-example-unreleased-candidate-only">Find a matching source example (unreleased candidate only)</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#2-generate-valid-html">2. Generate valid HTML</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#3-use-responsive-recipes-only-when-their-module-is-loaded">3. Use responsive recipes only when their module is loaded</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#4-optional-scoped-semantic-mode">4. Optional scoped semantic mode</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#5-framework-rules-and-accessibility">5. Framework rules and accessibility</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#6-verify-generated-output">6. Verify generated output</a>
-        </nav></aside>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#1-choose-the-correct-version">1. Choose the correct version</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#one-file-semantic-html-unreleased-source-only">One-file semantic HTML (unreleased source only)</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#find-a-matching-source-example-unreleased-candidate-only">Find a matching source example (unreleased candidate only)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#2-generate-valid-html">2. Generate valid HTML</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#3-use-responsive-recipes-only-when-their-module-is-loaded">3. Use responsive recipes only when their module is loaded</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#4-optional-scoped-semantic-mode">4. Optional scoped semantic mode</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#5-framework-rules-and-accessibility">5. Framework rules and accessibility</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#6-verify-generated-output">6. Verify generated output</a>
+            </nav>
+          </details>
+        </aside>
       </div>
       <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="ai-quickstart.md">Markdown source</a></nav>
     </main>

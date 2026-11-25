@@ -41,6 +41,14 @@ Use `.syn-page-header__meta` to group quiet metadata. The shell wraps with nativ
 
 ## 3. Search and command presentation (Raycast-inspired restraint)
 
+A [working, progressively enhanced command launcher](../examples/command-launcher.html)
+reuses these classes without introducing a second visual API. It offers real
+destination links as a **no-JavaScript fallback**; a small, copy-owned optional
+module activates a native `dialog`, Ctrl/⌘ + K, safe text filtering and Escape
+dismissal. This is **navigation**, not a general action executor or ARIA
+combobox: keyboard users Tab through real links. Host applications must own
+authorization, remote search, and mutations. No required Syntyr runtime is added.
+
 `.syn-command-panel`, `.syn-command-group`, `.syn-command-group-label`, `.syn-command-row`, `.syn-command-key`, and `.syn-command-description` are strictly visual.
 
 Use a real `<search>` containing a labeled native GET form for search that works without JavaScript. Use real anchors for navigable destinations, and `<kbd>` for *informational* keyboard shortcut labels. The CSS deliberately does **not** register keyboard shortcuts, implement arrow navigation, filter results, or claim focus trapping. Shortcut activation, a live command index, aria-activedescendant/listbox navigation, dialog focus management, and authorization are **application** responsibilities.

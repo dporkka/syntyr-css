@@ -52,6 +52,23 @@ server. Always verify native semantics, screen readers, text scaling, focus,
 software keyboard and safe areas on real devices before calling the adapter
 production-ready.
 
+## Dependency security boundary (November 2026)
+
+This optional Expo/Jest development fixture pins the transitive
+`minimatch` dependency to **11.0.9** using a fixture-local npm override.
+Several upstream tools otherwise select affected 9.x/10.x versions under
+[GHSA-g3hv-75wg-m249](https://github.com/advisories/GHSA-g3hv-75wg-m249).
+This is a major-version override; after modifying this graph, repeat
+`npm ci`, `npm run typecheck`, `npm test`, and both platform export checks.
+
+**Residual issue:** [GHSA-fc5q-39xc-vjpf](https://github.com/advisories/GHSA-fc5q-39xc-vjpf)
+affects `picomatch` through its current 4.0.7 release, with no patched
+npm version available at this review date. Expo, React Native, and Jest
+pull it transitively. Do not accept untrusted glob patterns in fixture
+build or testing scripts; upgrade and retest promptly when upstream ships
+an actual fix. The high-severity advisory is **not resolved** by the
+`minimatch` override.
+
 ## Scope and maintenance
 
 The fixture must not modify `@syntyr/css` dependencies, exports or core CSS.

@@ -88,6 +88,28 @@ intentionally opts into the grid keyboard model. For noninteractive tables,
 prefer [native server-sortable tables](data-tables.md), and **do not**
 apply `role="grid"` merely to activate visual styling.
 
+## React Aria enterprise resource workflow (optional)
+
+The [runnable React integration](https://github.com/dporkka/syntyr-css/blob/main/examples/headless-react/src/App.tsx) also
+illustrates a small, real in-memory resource workspace: search by name,
+keyboard- and pointer-operated multi-selection, an explicit **Select matching**
+action, a non-mutating selection preview, and a read-only record-details panel.
+It composes React Aria Table with existing Syntyr core and **optional recipes**
+stylesheets; it is **not** a Syntyr CSS runtime dependency.
+
+This fixture loads all three sample records locally. **Matching** means exactly
+the currently loaded, filtered records, not every record in a server database.
+Changing the filter clears the selection and detail view so hidden rows cannot
+be acted on inadvertently. React Aria can emit an `all` selection key; the
+fixture converts it to explicit local IDs instead of carrying a broad token.
+
+For a real paginated/remote inventory, decide whether bulk selection means
+visible page, filtered query, or explicitly selected IDs. Keep the scope and
+count visible, require confirmation for destructive changes, authorize every
+ID/scope server-side, and handle stale filters and result-set changes. Do not
+reuse the local selection logic as a server-wide bulk action. The preview
+button deliberately makes **no** persistent change.
+
 ## Native alternatives that need no headless dependencies
 
 For a short list of links/actions, use HTML `popover` with regular

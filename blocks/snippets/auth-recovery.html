@@ -1,0 +1,13 @@
+<section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-recovery-heading">
+  <div class="syn-panel">
+    <h2 class="syn-heading" id="syn-recovery-heading">Recover account access</h2>
+    <p>Enter the email address associated with your account. If eligible, the service will send a recovery link.</p>
+    <form class="syn-form" method="post" action="/password/forgot">
+      <label class="syn-label" for="syn-recovery-email">Email address</label>
+      <input class="syn-input" id="syn-recovery-email" name="email" type="email" autocomplete="email" required>
+      <button class="syn-button syn-button--primary" type="submit">Request recovery link</button>
+    </form>
+    <p class="syn-help">The server should return a non-enumerating response and enforce token expiry, rate limits and CSRF protection.</p>
+    <a href="/sign-in">Return to sign in</a>
+  </div>
+</section>

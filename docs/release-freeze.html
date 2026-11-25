@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="This is the unreleased alpha.5 procedure. Published alpha.4 files are immutable. A passing unit test or automated axe-core scan is not authorization to…">
-  <meta name="syntyr-source-sha256" content="0e5c36d9399667c3c84485421c5c53fd4f57280cb2dfc81918fe69be84936c8a">
+  <meta name="syntyr-source-sha256" content="2918f1e1d2c7b02fd37b1061fd9eaf20199c2e913a8decbc42b4be45d01dc0c1">
   <meta name="theme-color" content="#f5f7fb">
   <title>Freezing a Syntyr CSS CDN release safely — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/release-freeze">
@@ -56,7 +56,7 @@
 <p>Copy <code>docs/release-approval-template.json</code> to the intentionally untracked <code>release/release-approval.json</code>. Fill the exact release version from <code>VERSION</code> and the complete immutable SHA from <code>git rev-parse HEAD</code>. For <strong>every</strong> required check, change status from <code>pending</code> to <code>pass</code> only after direct assessment, and provide a named <code>reviewer</code> and a specific <code>evidence</code> reference (e.g. a controlled report or issue URL). Do not fill pass statuses just to make a release script succeed.</p>
 <p>The script checks presence, status, version and SHA, <strong>not</strong> the truth of a human attestation or validity of an external link. Retain the approval JSON and referenced artifacts in restricted release records before publication. A reviewer must assess them independently. Do not commit private reports or customer details into the public MIT repository.</p>
 <h2 id="candidate-check-then-freeze">Candidate check, then freeze</h2>
-<pre><code class="language-sh">python3 -m unittest discover -s tests -q
+<pre tabindex="0"><code class="language-sh">python3 -m unittest discover -s tests -q
 python3 scripts/build.py --check
 python3 scripts/build_cloudflare_site.py --check
 python3 scripts/freeze_site_release.py --check
@@ -64,16 +64,29 @@ python3 scripts/freeze_site_release.py --apply
 </code></pre>
 <p>The default command and <code>--check</code> run a <strong>read-only technical preflight</strong>: verify old release hashes, deterministic CSS and the exact allowlist. They do not attest to manual approval. Only <code>--apply</code> changes the repository and fails closed if tracked source is dirty, approval is missing, the approval's SHA/version differs from HEAD, generated CSS is stale, or the release version already exists. An ordinary <code>python3 scripts/package_release.py</code> still builds a <strong>candidate ZIP</strong> without authorization to publish it.</p>
 <p>The freeze command stages only the public CSS distributions declared by the build script in a temporary directory, prepares SHA-256 hashes, and atomically replaces the manifest after placing the new immutable version directory. If an operation fails before manifest publication, it removes the uncommitted version directory and leaves earlier snapshots intact. It never overwrites a frozen version.</p>
+<p>Before authorizing any <strong>separate npm publication</strong>, run <code>python3 scripts/audit_npm_package.py</code> on the exact candidate source to inspect the actual packed bytes and exported CSS paths. This requires npm only in the maintainer environment, not for CSS consumers. The check does not confer release approval or publish anything.</p>
 <p>After freezing, review the manifest diff and source hashes, commit the new immutable snapshot, verify the static-site build, deploy to staging and verify live Cloudflare paths/content hashes/headers. Only then tag and publish the release through the separate release process. <strong>This script does not deploy, tag, enable payments or publish an npm package.</strong></p>
 <h2 id="current-status">Current status</h2>
-<p>The alpha.5 manual reviews are <strong>not signed off</strong>. The latest source accessibility triage identifies 161 inconclusive contrast elements requiring adjudication, plus real zoom, assistive-technology and native high-contrast checks. Until these and brand clearance have evidenced approval, freezing alpha.5 should be blocked.</p>
+<p>The alpha.5 manual reviews are <strong>not signed off</strong>. A historical November 18, 2026 source-only audit in <a href="accessibility-alpha5-review.html">accessibility-alpha5-review.md</a> recorded 165 inconclusive contrast elements at commit <code>70ec764</code>. That count is <strong>not</strong> a measurement of the current source head; intervening commits invalidate any assumption that it remains accurate.</p>
+<p>Before freezing, run the pinned axe and browser checks on the exact candidate SHA, record every incomplete contrast target and adjudication, and separately capture actual zoom, assistive-technology and native high-contrast evidence. Update the review record with the SHA and audit date, <strong>not</strong> a copied historical count. Until manual reviews and brand clearance have evidenced approval, freezing alpha.5 remains blocked. The <a href="https://github.com/dporkka/syntyr-css/blob/main/business/commercial-launch-gates.md">commercial sale/download gates</a> are separate and remain closed.</p>
         </article>
-        <aside class="docs-article-sidebar"><nav aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#preconditions">Preconditions</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#approval-record">Approval record</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#candidate-check-then-freeze">Candidate check, then freeze</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#current-status">Current status</a>
-        </nav></aside>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#preconditions">Preconditions</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#approval-record">Approval record</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#candidate-check-then-freeze">Candidate check, then freeze</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#current-status">Current status</a>
+            </nav>
+          </details>
+        </aside>
       </div>
       <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="release-freeze.md">Markdown source</a></nav>
     </main>

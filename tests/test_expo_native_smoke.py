@@ -25,6 +25,21 @@ class ExpoNativeSmokeTest(unittest.TestCase):
         self.assertNotIn("react-native", core.get("dependencies", {}))
         self.assertNotIn("jest", core.get("devDependencies", {}))
 
+    def test_expo_lock_avoids_minimatch_globparts_dos_range(self):
+        """GHSA-g3hv-75wg-m249 affects minimatch 7.x through 11.0.0."""
+        package = json.loads((FIXTURE / "package.json").read_text())
+        lock = json.loads((FIXTURE / "package-lock.json").read_text())
+        self.assertIn("minimatch", package.get("overrides", {}),
+                      "Pin an explicitly vetted minimatch override for Expo tooling")
+        affected = []
+        for name, meta in lock["packages"].items():
+            if not name.endswith("/node_modules/minimatch") and name != "node_modules/minimatch":
+                continue
+            version = tuple(int(n) for n in meta["version"].split(".")[:3])
+            if (7, 0, 0) <= version < (11, 0, 1):
+                affected.append((name, meta["version"]))
+        self.assertEqual(affected, [], f"GHSA-g3hv-75wg-m249 in lock: {affected}")
+
     @unittest.skipUnless(shutil.which("node"), "Node is optional; Expo sync requires Node")
     def test_source_sync_reuses_exact_canonical_adapter(self):
         with tempfile.TemporaryDirectory() as temp:

@@ -28,7 +28,11 @@ def verify(browser, viewport):
     frame.locator(".syn-panel").wait_for()
     panel_radius = frame.locator(".syn-panel").evaluate("e => getComputedStyle(e).borderTopLeftRadius")
     assert panel_radius == "12px", ("panel radius token not applied", panel_radius)
-    page.locator("#playground-markup").fill('<div id="safe">Edited HTML</div><script>parent.document.body.dataset.injected="yes"</script>')
+    editor = page.locator('#playground-editor-mount .cm-content[contenteditable="true"]')
+    editor.wait_for()
+    editor.click()
+    page.keyboard.press('ControlOrMeta+A')
+    page.keyboard.insert_text('<div id="safe">Edited HTML</div><script>parent.document.body.dataset.injected="yes"</script>')
     frame.locator("#safe").wait_for()
     assert page.locator("body").get_attribute("data-injected") is None, "sandbox permitted parent script injection"
     assert page.locator("body").evaluate("e => e.scrollWidth <= window.innerWidth + 1"), "playground overflows"

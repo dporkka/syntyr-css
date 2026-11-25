@@ -1,0 +1,30 @@
+/* Optional HTMX 2/4 request-state styles for Syntyr-owned markup.
+   App owns HTMX, request lifecycle, accessibility, CSRF and response HTML.
+   Load after syntyr.core.css; NEVER required by a Syntyr bundle.
+   No network assets or JavaScript. */
+
+@layer syn.components {
+  /* Only explicitly opted-in indicators are hidden outside requests.
+     A regular form/link still works without HTMX or JavaScript. */
+  :where(.syn-root) :where(.syn-htmx-indicator) {
+    display: none;
+  }
+
+  :where(.syn-root) :where(.htmx-request .syn-htmx-indicator, .syn-htmx-indicator.htmx-request) {
+    display: inline-flex;
+    align-items: center;
+    gap: .4em;
+  }
+
+  /* Optional visual cue; no blanket opacity change for all swapped content. */
+  :where(.syn-root) :where([data-syn-htmx-transition].htmx-swapping) {
+    opacity: .65;
+    transition: opacity 150ms ease-out;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :where(.syn-root) :where([data-syn-htmx-transition].htmx-swapping) {
+      transition: none;
+    }
+  }
+}

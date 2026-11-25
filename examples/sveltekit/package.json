@@ -1,0 +1,18 @@
+{
+  "name": "syntyr-sveltekit-reference",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite dev",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "node --test test/*.test.mjs"
+  },
+  "devDependencies": {
+    "@sveltejs/adapter-auto": "^8.0.1",
+    "@sveltejs/kit": "^3.3.1",
+    "svelte": "^5.58.0",
+    "vite": "^8.3.8"
+  }
+}

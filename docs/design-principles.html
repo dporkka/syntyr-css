@@ -142,7 +142,7 @@ backend/application is responsible for actual operations, authorization,
 pending-state announcements, validation and persistence. Paths and records
 are illustrative, not implemented service endpoints.</p>
 <h3 id="1-responsive-overview-with-sensible-emphasis">1. Responsive overview with sensible emphasis</h3>
-<pre><code class="language-html">&lt;main class=&quot;syn-root syn-page&quot; data-syn-theme=&quot;studio&quot;
+<pre tabindex="0"><code class="language-html">&lt;main class=&quot;syn-root syn-page&quot; data-syn-theme=&quot;studio&quot;
       data-syn-density=&quot;comfortable&quot;&gt;
   &lt;header&gt;
     &lt;h1&gt;Campaign overview&lt;/h1&gt;
@@ -169,7 +169,7 @@ container query measures the available panel width, not the viewport.
 Display real values from the application rather than assuming CSS can compute
 metrics.</p>
 <h3 id="2-native-get-filter-and-accessible-data-table">2. Native GET filter and accessible data table</h3>
-<pre><code class="language-html">&lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;records-title&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;records-title&quot;&gt;
   &lt;h2 id=&quot;records-title&quot;&gt;Accounts&lt;/h2&gt;
   &lt;form class=&quot;syn-form&quot; method=&quot;get&quot; action=&quot;/accounts&quot;&gt;
     &lt;label class=&quot;syn-label&quot; for=&quot;account-query&quot;&gt;Account name&lt;/label&gt;
@@ -199,7 +199,7 @@ interaction. If the backend filters the table, preserve the user's query and
 announce updated results appropriately. These CSS classes style the native
 elements but never sort, search or persist data.</p>
 <h3 id="3-labeled-settings-with-progressive-disclosure">3. Labeled settings with progressive disclosure</h3>
-<pre><code class="language-html">&lt;main class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;main class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot;&gt;
   &lt;h1&gt;Organization settings&lt;/h1&gt;
   &lt;form class=&quot;syn-form&quot; action=&quot;/settings&quot; method=&quot;post&quot;&gt;
     &lt;fieldset class=&quot;syn-fieldset&quot;&gt;
@@ -242,7 +242,7 @@ additional density are opt-in. Style must never reduce semantic or accessibility
 quality. Respect <code>prefers-reduced-motion</code> and <code>forced-colors</code>.</p>
 <h2 id="automated-check-and-review-protocol">Automated check and review protocol</h2>
 <p>Run the source-level semantic palette check:</p>
-<pre><code class="language-sh">python3 scripts/design_conformance.py
+<pre tabindex="0"><code class="language-sh">python3 scripts/design_conformance.py
 python3 scripts/design_conformance.py --format json
 python3 -m unittest discover -s tests -p 'test_design_conformance.py'
 </code></pre>
@@ -266,7 +266,8 @@ unresolved until checked on their <em>effective painted backgrounds</em>. See th
 <a href="accessibility-alpha5-review.html">alpha.5 review log</a>. Do not claim WCAG
 conformance from this palette report.</p>
         </article>
-        <aside class="docs-article-sidebar"><nav aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#universal-defaults">Universal defaults</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#component-state-contract">Component state contract</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#composition-examples">Composition examples</a>
@@ -276,7 +277,22 @@ conformance from this palette report.</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#deliberate-non-defaults">Deliberate non-defaults</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#automated-check-and-review-protocol">Automated check and review protocol</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#what-automated-checks-do-not-prove">What automated checks do not prove</a>
-        </nav></aside>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#universal-defaults">Universal defaults</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#component-state-contract">Component state contract</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#composition-examples">Composition examples</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#1-responsive-overview-with-sensible-emphasis">1. Responsive overview with sensible emphasis</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#2-native-get-filter-and-accessible-data-table">2. Native GET filter and accessible data table</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#3-labeled-settings-with-progressive-disclosure">3. Labeled settings with progressive disclosure</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#deliberate-non-defaults">Deliberate non-defaults</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#automated-check-and-review-protocol">Automated check and review protocol</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#what-automated-checks-do-not-prove">What automated checks do not prove</a>
+            </nav>
+          </details>
+        </aside>
       </div>
       <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="design-principles.md">Markdown source</a></nav>
     </main>

@@ -88,7 +88,7 @@ must be implemented with native controls.</p>
 </table>
 <h2 id="exact-token-contract">Exact token contract</h2>
 <p>Run from the Syntyr repository root:</p>
-<pre><code class="language-sh">python3 scripts/export_mobile_tokens.py
+<pre tabindex="0"><code class="language-sh">python3 scripts/export_mobile_tokens.py
 python3 scripts/export_mobile_tokens.py --check
 python3 -m unittest discover -s tests -p test_mobile_adapters.py -v
 </code></pre>
@@ -118,7 +118,7 @@ Syntyr-native styling.</p>
 <h2 id="react-native-expo-copy-owned-no-adapter-dependency">React Native / Expo: copy-owned, no adapter dependency</h2>
 <p>In an Expo or bare React Native app, copy both <code>integrations/react-native/*.ts</code>
 files into <code>src/theme/</code>, then use:</p>
-<pre><code class="language-tsx">import { Pressable, StyleSheet, Text, View } from &quot;react-native&quot;;
+<pre tabindex="0"><code class="language-tsx">import { Pressable, StyleSheet, Text, View } from &quot;react-native&quot;;
 import { createSyntyrNativeStyles } from &quot;./theme/styles&quot;;
 
 const styles = StyleSheet.create(createSyntyrNativeStyles(&quot;studio&quot;));
@@ -160,12 +160,12 @@ browser layout features will be compiled correctly.</p>
 <h2 id="flutter">Flutter</h2>
 <p>Declare the copied JSON under <code>flutter/assets/syntyr.tokens.json</code> in
 <code>pubspec.yaml</code>:</p>
-<pre><code class="language-yaml">flutter:
+<pre tabindex="0"><code class="language-yaml">flutter:
   assets:
     - assets/syntyr.tokens.json
 </code></pre>
 <p>In Dart, load once and build the palette for your widgets:</p>
-<pre><code class="language-dart">import 'dart:convert';
+<pre tabindex="0"><code class="language-dart">import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
@@ -193,7 +193,7 @@ duplicating all Syntyr roles; map <code>muted</code>, <code>frame</code>, <code>
 <h2 id="swiftui">SwiftUI</h2>
 <p>Bundle the JSON in the app target, parse it with <code>JSONSerialization</code> or
 <code>Decodable</code>, then convert RGB hex to SwiftUI <code>Color</code>. For example:</p>
-<pre><code class="language-swift">import SwiftUI
+<pre tabindex="0"><code class="language-swift">import SwiftUI
 
 func syntyrColor(_ hex: String) -&gt; Color {
     let value = UInt64(hex.dropFirst(), radix: 16)!
@@ -215,7 +215,7 @@ font size is not a substitute for the user's preferred text size.</p>
 <p>Add the JSON to <code>app/src/main/assets/syntyr.tokens.json</code>, load it through
 <code>context.assets.open(...)</code>, and read <code>themes[themeName].colors</code>.
 For example, once <code>hex</code> is read from the JSON:</p>
-<pre><code class="language-kotlin">import androidx.compose.ui.graphics.Color
+<pre tabindex="0"><code class="language-kotlin">import androidx.compose.ui.graphics.Color
 
 val syntyrSurface = Color(android.graphics.Color.parseColor(hex))
 </code></pre>
@@ -225,7 +225,7 @@ This is a token import route, <strong>not</strong> a verified Compose UI toolkit
 <h2 id="ionic-capacitor">Ionic / Capacitor</h2>
 <p>Ionic and Capacitor usually render HTML/CSS inside a WebView, so use the
 existing <code>dist/syntyr.core.css</code> on HTML nodes within a <code>.syn-root</code>:</p>
-<pre><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/assets/syntyr.core.css&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/assets/syntyr.core.css&quot;&gt;
 &lt;main class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot;&gt;
   &lt;button class=&quot;syn-button syn-button--primary&quot; type=&quot;button&quot;&gt;Continue&lt;/button&gt;
 &lt;/main&gt;
@@ -252,7 +252,8 @@ before claiming full platform certification.</li>
 <a href="https://docs.expo.dev/workflow/web/">Expo Web</a>,
 <a href="https://docs.expo.dev/versions/v55.0.0/config/metro/">Expo CSS limitations</a>.</p>
         </article>
-        <aside class="docs-article-sidebar"><nav aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#exact-token-contract">Exact token contract</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#react-native-expo-copy-owned-no-adapter-dependency">React Native / Expo: copy-owned, no adapter dependency</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#flutter">Flutter</a>
@@ -260,7 +261,20 @@ before claiming full platform certification.</li>
 <a class="docs-article-toc-link docs-article-toc-2" href="#android-jetpack-compose">Android Jetpack Compose</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#ionic-capacitor">Ionic / Capacitor</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#boundary-and-maintenance-policy">Boundary and maintenance policy</a>
-        </nav></aside>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#exact-token-contract">Exact token contract</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#react-native-expo-copy-owned-no-adapter-dependency">React Native / Expo: copy-owned, no adapter dependency</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#flutter">Flutter</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#swiftui">SwiftUI</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#android-jetpack-compose">Android Jetpack Compose</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#ionic-capacitor">Ionic / Capacitor</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#boundary-and-maintenance-policy">Boundary and maintenance policy</a>
+            </nav>
+          </details>
+        </aside>
       </div>
       <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="mobile-frameworks.md">Markdown source</a></nav>
     </main>

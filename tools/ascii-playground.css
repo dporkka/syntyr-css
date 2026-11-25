@@ -1,0 +1,10 @@
+/* Site-only tool layout. Not part of the CSS distribution. */
+.ascii-workspace { display:grid; grid-template-columns:minmax(0, 20rem) minmax(0, 1fr); gap:1rem; margin-block-end:2rem; }
+.ascii-workspace fieldset { min-inline-size:0; border:0; padding:0; }
+.ascii-workspace [hidden] { display:none; }
+.ascii-preview { background:#080e14; border:1px solid var(--syn-frame); border-radius:.5rem; padding:1rem; min-height:15rem; overflow:auto; }
+.ascii-preview pre { font:12px/1.5 ui-monospace,monospace; font-variant-ligatures:none; white-space:pre; margin:0; color:#76e7f7; width:max-content; }
+.ascii-workspace textarea { min-height:6rem; white-space:pre; overflow:auto; }
+.ascii-workspace .tool-field { margin-block:.75rem; }
+@media (max-width:53rem) { .ascii-workspace { grid-template-columns:minmax(0,1fr); } }
+@media (forced-colors:active) { .ascii-preview { border-color:CanvasText; } }

@@ -24,7 +24,7 @@ class NeutralFirstDesign(unittest.TestCase):
         layout = source("src/components/layout.css")
         panel = re.search(r"\.syn-panel\s*\{([^}]+)\}", layout).group(1)
         stage = re.search(r"\.syn-stage\s*\{([^}]+)\}", layout).group(1)
-        self.assertIn("background: var(--syn-surface)", panel)
+        self.assertIn("background: var(--syn-panel-bg, var(--syn-surface))", panel)
         self.assertIn("background: var(--syn-bg)", stage)
         self.assertNotIn("linear-gradient", panel)
         self.assertNotIn("radial-gradient", stage)

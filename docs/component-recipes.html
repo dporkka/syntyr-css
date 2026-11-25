@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="These are MIT-licensed, plain-HTML examples . Copy and modify them without installing a Syntyr CLI, template registry, React, or a JavaScript runtime…">
-  <meta name="syntyr-source-sha256" content="44b6598669ef1b441df0eefea8d8bab361fc71ed67064084720ecbeec4f508fb">
+  <meta name="description" content="Prefer an interactive starting point? The Syntyr Form Customizer generates copyable forms and standalone HTML, with native form submission and no…">
+  <meta name="syntyr-source-sha256" content="58f99991c44d80ad19305264445ba2ebc104f05a32b73725258b983122d0e635">
   <meta name="theme-color" content="#f5f7fb">
   <title>Copy-owned form recipes — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/component-recipes">
@@ -35,10 +35,11 @@
       <div class="docs-article-layout">
         <article class="docs-prose" aria-label="Copy-owned form recipes">
 <h1 id="copy-owned-form-recipes">Copy-owned form recipes</h1>
+<p>Prefer an interactive starting point? The <a href="form-builder.html">Syntyr Form Customizer</a> generates copyable forms and standalone HTML, with native form submission and no JavaScript in the output. Configure a real server endpoint before publishing.</p>
 <p>These are <strong>MIT-licensed, plain-HTML examples</strong>. Copy and modify them without installing a Syntyr CLI, template registry, React, or a JavaScript runtime. Syntyr provides presentation; your browser and application provide behavior.</p>
 <p>Load <code>dist/syntyr.core.css</code> and apply <code>.syn-root</code> on a stable ancestor. Input groups and fields are included in core. The examples below also work in Go/templ, Askama, Django templates, Astro, React, and HTMX.</p>
 <h2 id="1-labeled-field-with-assistance-and-server-side-validation">1. Labeled field with assistance and server-side validation</h2>
-<pre><code class="language-html">&lt;div class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;div class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot;&gt;
   &lt;div class=&quot;syn-field&quot;&gt;
     &lt;label class=&quot;syn-label&quot; for=&quot;email&quot;&gt;Work email&lt;/label&gt;
     &lt;input class=&quot;syn-input&quot; id=&quot;email&quot; name=&quot;email&quot; type=&quot;email&quot;
@@ -51,13 +52,13 @@
 </code></pre>
 <p>Only render <code>aria-invalid=&quot;true&quot;</code> and the error message when the form is actually invalid. Do not use CSS as a substitute for server-side validation. The field class groups presentation; the native <code>label for</code> association supplies the accessible name.</p>
 <h2 id="2-search-field-with-a-connected-button">2. Search field with a connected button</h2>
-<pre><code class="language-html">&lt;search class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot; aria-label=&quot;Search accounts&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;search class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot; aria-label=&quot;Search accounts&quot;&gt;
   &lt;form method=&quot;get&quot; action=&quot;/accounts&quot;&gt;
     &lt;div class=&quot;syn-field&quot;&gt;
       &lt;label class=&quot;syn-label&quot; for=&quot;account-query&quot;&gt;Account name&lt;/label&gt;
       &lt;div class=&quot;syn-input-group&quot;&gt;
         &lt;input class=&quot;syn-input&quot; id=&quot;account-query&quot; name=&quot;q&quot;
-               type=&quot;search&quot; placeholder=&quot;Search accounts&quot;&gt;
+               type=&quot;search&quot; enterkeyhint=&quot;search&quot; placeholder=&quot;Search accounts&quot;&gt;
         &lt;button class=&quot;syn-button syn-button--primary&quot; type=&quot;submit&quot;&gt;Search&lt;/button&gt;
       &lt;/div&gt;
     &lt;/div&gt;
@@ -66,8 +67,17 @@
 </code></pre>
 <p>This is <strong>progressive enhancement</strong>: the GET form submits with <strong>No JavaScript</strong>. An HTMX application may add <code>hx-get</code> and <code>hx-target</code> while preserving <code>action</code>, <code>method</code>, and a server-rendered fallback. The application must implement the endpoint and return actual search results.</p>
 <p>At narrow available widths (12rem or less relative to the current text size), a connected input and submit button stack instead of squeezing the input into a tall, narrow strip. The <code>.syn-input-group</code> itself determines the breakpoint through a CSS container query; no viewport breakpoint, JavaScript, or additional component class is needed. Input groups containing only currency/unit addons keep their existing inline layout. Test long button labels, translations and browser zoom in consuming applications.</p>
+<h3 id="search-results-accessibility-and-enhancement-contract">Search results, accessibility, and enhancement contract</h3>
+<ul>
+<li><strong>Result counts:</strong> On the server, preserve the submitted query, show truthful matches, and use an empty state only when no records match. When an optional live enhancement updates results, announce a concise count in a dedicated <code>role=&quot;status&quot;</code> element with <code>aria-live=&quot;polite&quot;</code>; keep clipboard and other action feedback separate.</li>
+<li><strong>Loading/errors:</strong> Host applications own network cancellation, request ordering, actual loading indicators, error recovery, URL/history state, authorization and pagination. A static composition never claims to filter records.</li>
+<li><strong>IME composition:</strong> Debounced or incremental search must not submit intermediate East Asian input while the user is composing; handle <code>compositionstart</code> / <code>compositionend</code> in the behavior owner. Do not turn native form submission into an inaccessible custom widget.</li>
+<li><strong>Fallbacks:</strong> For simple suggestions, <code>datalist</code> can add browser-provided values, but its rendering and assistive-technology behavior vary across browsers. Use an optional tested combobox adapter for async suggestions, controlled selection, or custom keyboard navigation.</li>
+<li><strong>Reflow and RTL:</strong> Test long translated labels, 320 CSS-pixel widths, 200% and 400% zoom, keyboard focus, forced colors, and <code>dir=&quot;rtl&quot;</code>. Keep the native search clear affordance and never rely on a placeholder as the accessible name.</li>
+<li><strong>Command palettes:</strong> Visual command rows are not working shortcuts or listbox options. Use actual links for destinations; if your application adds a keyboard command index, the behavior owner supplies focus, Escape, selection, permissions, and accessible announcements.</li>
+</ul>
 <h2 id="3-input-addon-currency-and-unit">3. Input addon (currency and unit)</h2>
-<pre><code class="language-html">&lt;div class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;div class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot;&gt;
   &lt;div class=&quot;syn-field&quot;&gt;
     &lt;label class=&quot;syn-label&quot; for=&quot;monthly-budget&quot;&gt;Monthly budget (USD)&lt;/label&gt;
     &lt;div class=&quot;syn-input-group&quot;&gt;
@@ -81,7 +91,7 @@
 </code></pre>
 <p>The unit is included in the label, not only in the decorative addon; assistive technologies must not depend on a symbol alone. Keep addons concise; overly long addons can compress their associated input. For monetary amounts, text plus <code>inputmode=&quot;decimal&quot;</code> avoids native number spinners and floating-point assumptions; the server must parse localized decimal input and validate exact precision. Use <code>type=&quot;number&quot;</code> for quantities where native numeric stepping is appropriate.</p>
 <h2 id="4-container-responsive-horizontal-form">4. Container-responsive horizontal form</h2>
-<pre><code class="language-html">&lt;form class=&quot;syn-root syn-region syn-form&quot; action=&quot;/settings&quot; method=&quot;post&quot;
+<pre tabindex="0"><code class="language-html">&lt;form class=&quot;syn-root syn-region syn-form&quot; action=&quot;/settings&quot; method=&quot;post&quot;
       data-syn-theme=&quot;corporate&quot;&gt;
   &lt;div class=&quot;syn-field-row&quot;&gt;
     &lt;label class=&quot;syn-label&quot; for=&quot;org-name&quot;&gt;Organization&lt;/label&gt;
@@ -100,7 +110,7 @@
 following HTML remains readable and operable without that stylesheet or any
 JavaScript. Render this response <strong>only after a failed submission</strong>, with the
 submitted value preserved and error messages associated with the field.</p>
-<pre><code class="language-html">&lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;account-title&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;account-title&quot;&gt;
   &lt;h2 id=&quot;account-title&quot;&gt;Account settings&lt;/h2&gt;
   &lt;div class=&quot;syn-error-summary&quot; id=&quot;form-errors&quot; tabindex=&quot;-1&quot;
        role=&quot;region&quot; aria-labelledby=&quot;form-errors-title&quot;&gt;
@@ -133,7 +143,7 @@ does not prevent submission or execute server-side validation.</p>
 <h2 id="6-native-readonly-text-fields">6. Native readonly text fields</h2>
 <p>Use the real <code>readonly</code> attribute, not <code>aria-readonly</code> or <code>disabled</code>, when
 text must remain selectable and submit with the form:</p>
-<pre><code class="language-html">&lt;div class=&quot;syn-root syn-field&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;div class=&quot;syn-root syn-field&quot;&gt;
   &lt;label class=&quot;syn-label&quot; for=&quot;reference-id&quot;&gt;Reference ID&lt;/label&gt;
   &lt;input class=&quot;syn-input&quot; id=&quot;reference-id&quot; name=&quot;reference_id&quot;
          value=&quot;WS-1042&quot; readonly&gt;
@@ -151,16 +161,59 @@ do not conceal autofilled values with pseudo-elements or forced-color overrides.
 <li><code>syntyr.semantic.css</code> remains a separate opt-in style for unclassed native HTML. Do not apply it indiscriminately around other component libraries.</li>
 </ul>
 <p>See <a href="../examples/form-composition.html">the static form showcase</a> and the <a href="components.html">main component contract</a>.</p>
+<h2 id="server-owned-validation-and-local-component-variables-alpha5-candidate">Server-owned validation and local component variables (alpha.5 candidate)</h2>
+<p>Syntyr does <strong>not</strong> validate data, track touched fields, submit forms, or
+announce errors automatically. The server should return the invalid form with
+<code>aria-invalid=&quot;true&quot;</code> on the affected field, an associated error via
+<code>aria-describedby</code>, and optionally a visible error summary containing real
+fragment links to the invalid fields. The browser's native <code>:user-invalid</code>
+and <code>:user-valid</code> states style fields after user interaction where supported;
+server-confirmed valid values may opt into
+<code>data-syn-validation=&quot;valid&quot;</code> (a <strong>visual hint</strong>, not ARIA and not proof).
+Do not display success styling on untouched inputs. Never render an error
+summary merely to hide it with CSS; omit it when the form is valid.</p>
+<p>The optional <code>.syn-error-summary</code> class from <code>syntyr.recipes.css</code> leaves the summary visible and readable
+in forced-colors mode. If the server inserts the message following a submit,
+the host application determines focus, announcement and validation logic.</p>
+<p>For one-off app themes, override <strong>component-local CSS custom properties</strong>
+rather than selectors. Examples: <code>--syn-button-bg</code>,
+<code>--syn-button-color</code>, <code>--syn-button-border-color</code>,
+<code>--syn-button-hover-bg</code>, <code>--syn-panel-bg</code>,
+<code>--syn-panel-border-color</code>, <code>--syn-field-bg</code>,
+<code>--syn-field-border-color</code>, <code>--syn-field-valid-border-color</code>,
+and <code>--syn-field-invalid-border-color</code>. All use existing Syntyr theme tokens
+as fallbacks. Set the variables on the actual element or a containing
+theme scope; they do not require Sass or JavaScript. For button color changes,
+choose foreground/hover colors that meet applicable contrast requirements.</p>
+<p><a href="../examples/form-state-contracts.html">See the static example with server-error, valid, disabled and token states</a>.</p>
         </article>
-        <aside class="docs-article-sidebar"><nav aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#1-labeled-field-with-assistance-and-server-side-validation">1. Labeled field with assistance and server-side validation</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#2-search-field-with-a-connected-button">2. Search field with a connected button</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#search-results-accessibility-and-enhancement-contract">Search results, accessibility, and enhancement contract</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#3-input-addon-currency-and-unit">3. Input addon (currency and unit)</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#4-container-responsive-horizontal-form">4. Container-responsive horizontal form</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#5-server-rendered-error-recovery">5. Server-rendered error recovery</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#6-native-readonly-text-fields">6. Native readonly text fields</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#optional-companion-styles">Optional companion styles</a>
-        </nav></aside>
+<a class="docs-article-toc-link docs-article-toc-2" href="#server-owned-validation-and-local-component-variables-alpha5-candidate">Server-owned validation and local component variables (alpha.5 candidate)</a>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#1-labeled-field-with-assistance-and-server-side-validation">1. Labeled field with assistance and server-side validation</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#2-search-field-with-a-connected-button">2. Search field with a connected button</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#search-results-accessibility-and-enhancement-contract">Search results, accessibility, and enhancement contract</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#3-input-addon-currency-and-unit">3. Input addon (currency and unit)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#4-container-responsive-horizontal-form">4. Container-responsive horizontal form</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#5-server-rendered-error-recovery">5. Server-rendered error recovery</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#6-native-readonly-text-fields">6. Native readonly text fields</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#optional-companion-styles">Optional companion styles</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#server-owned-validation-and-local-component-variables-alpha5-candidate">Server-owned validation and local component variables (alpha.5 candidate)</a>
+            </nav>
+          </details>
+        </aside>
       </div>
       <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="component-recipes.md">Markdown source</a></nav>
     </main>

@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Syntyr&#x27;s MIT CSS, themes, and static HTML stay hosting-independent . This is an experimental deployment adapter , not a hosted website builder or a…">
+  <meta name="syntyr-source-sha256" content="e75c3c5ebb41b8a2036816b39b1c081510773574998a543925d60ec33071739b">
+  <meta name="theme-color" content="#f5f7fb">
+  <title>Deploy Syntyr sites to Cloudflare and prepare for Nulang Cloud — Syntyr CSS docs</title>
+  <link rel="canonical" href="https://syntyr-css.pages.dev/docs/nulang-cloud-hosting">
+  <link rel="alternate" type="text/markdown" href="nulang-cloud-hosting.md" title="Markdown source">
+  <link rel="icon" href="../assets/syntyr-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="docs.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <a class="syn-button docs-skip" href="#doc-main">Skip to guide</a>
+  <div class="syn-shell">
+    <header class="syn-header docs-header">
+      <a class="syn-logo" href="../index.html">SYNTYR / CSS</a>
+      <nav class="syn-nav" aria-label="Documentation navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav>
+      <details class="site-mobile-menu"><summary>Menu</summary><nav aria-label="Mobile navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav></details>
+    </header>
+    <main id="doc-main" class="docs-article-page">
+      <nav class="syn-breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="reference.html">Documentation</a></li><li aria-current="page">Deploy Syntyr sites to Cloudflare and prepare for Nulang Cloud</li></ol></nav>
+      <header class="docs-article-heading">
+        <p class="syn-eyebrow">SYNTYR / DOCUMENTATION</p>
+        <p class="syn-muted">Current source documentation may describe unreleased alpha.5 features. <a href="distribution.html">Check released version compatibility.</a></p>
+        <p class="syn-caption">Prefer a machine-readable version? <a href="nulang-cloud-hosting.md">Markdown source</a> · <a href="../llms.txt">LLM index</a></p>
+      </header>
+      <div class="docs-article-layout">
+        <article class="docs-prose" aria-label="Deploy Syntyr sites to Cloudflare and prepare for Nulang Cloud">
+<h1 id="deploy-syntyr-sites-to-cloudflare-and-prepare-for-nulang-cloud">Deploy Syntyr sites to Cloudflare and prepare for Nulang Cloud</h1>
+<p>Syntyr's MIT CSS, themes, and static HTML stay <strong>hosting-independent</strong>.
+This is an <strong>experimental deployment adapter</strong>, not a hosted website builder or
+a production Nulang Cloud static-hosting service.</p>
+<p>Syntyr currently provides two static-site preparation targets:</p>
+<table>
+<thead>
+<tr>
+<th>Target</th>
+<th>Output</th>
+<th>Live deployment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cloudflare</td>
+<td>Identical static directory, preserving <code>_headers</code> and <code>_redirects</code></td>
+<td>Continue using the existing Cloudflare Pages / Workers Static Assets deployment</td>
+</tr>
+<tr>
+<td>Nulang Cloud (experimental)</td>
+<td>Deterministic ZIP plus a SHA-256 file manifest</td>
+<td><strong>Not supported yet</strong>; no static-site ingestion API has been qualified</td>
+</tr>
+</tbody>
+</table>
+<p>Syntyr Premium and Studio assets are <strong>not</strong> included in the public-site
+allowlist; licensing and private assets remain separate from hosting.</p>
+<h2 id="publish-the-syntyr-documentation-site">Publish the Syntyr documentation site</h2>
+<p>The existing Cloudflare path is unchanged:</p>
+<pre tabindex="0"><code class="language-sh">python3 scripts/build.py --check
+python3 -m unittest discover -s tests -q
+python3 scripts/build_cloudflare_site.py
+python3 scripts/build_cloudflare_site.py --check
+</code></pre>
+<p>To stage those files for Cloudflare from an already-reviewed output directory:</p>
+<pre tabindex="0"><code class="language-sh">python3 scripts/static_deploy.py \
+  --provider cloudflare \
+  --site-dir .cloudflare-public \
+  --site-url https://syntyr-css.pages.dev \
+  --output /tmp/syntyr-cloudflare-stage
+</code></pre>
+<p>This <strong>only stages a directory</strong>. Configure your existing host to publish the
+result; it does not authenticate, upload, configure domains, or change DNS.</p>
+<h2 id="prepare-an-experimental-nulang-cloud-bundle">Prepare an experimental Nulang Cloud bundle</h2>
+<p>Build a portable version of the <strong>public Syntyr documentation website</strong> with
+the intended production HTTPS origin. The <code>--portable</code> switch omits
+Cloudflare-only <code>_headers</code> (whose security rules would otherwise be lost on
+another provider) and rewrites canonical, sitemap, and robots URLs.</p>
+<pre tabindex="0"><code class="language-sh">python3 scripts/build_cloudflare_site.py \
+  --portable \
+  --site-url https://example.com \
+  --output /tmp/syntyr-portable-public
+
+python3 scripts/static_deploy.py \
+  --provider nulang-cloud \
+  --experimental-nulang-cloud \
+  --site-dir /tmp/syntyr-portable-public \
+  --site-url https://example.com \
+  --output /tmp/syntyr-nulang-bundle.zip
+</code></pre>
+<p>This produces:</p>
+<ul>
+<li><code>site/</code> containing the reviewed static files, without source-control metadata.</li>
+<li><code>syntyr-deploy.json</code> with schema <code>syntyr.static-site.bundle/v1</code>, expected HTTPS origin, relative file paths, sizes, and SHA-256 digests.</li>
+</ul>
+<p>The ZIP format is a <strong>Syntyr-owned staging contract</strong>, not an official Nulang
+Cloud HTTP API. It does not grant deployment capability or assert that Nulang
+Cloud can currently serve the bundle. There are no required dependencies,
+tokens, network requests, VM provisioning, or deployment charges.</p>
+<p>Atomic ZIP preparation requires an output filesystem supporting <strong>hard links</strong>.
+Filesystems such as exFAT may not support this operation: create the ZIP on a
+compatible local filesystem, verify the receipt, then copy the complete archive
+to the intended destination. If cleanup of the temporary filename fails after
+the hard link is created, the CLI still returns a successful preparation receipt
+with a separate cleanup warning; remove the leftover temporary file manually.</p>
+<p>For a <strong>different Syntyr-based site</strong>, point <code>--site-dir</code> at its reviewed
+static build output (for example, a generated <code>dist/</code> containing
+<code>index.html</code>), rather than at the Syntyr repository or an arbitrary source
+tree. The adapter preserves the site's existing HTML and CSS. It does not
+rewrite hardcoded absolute references in other people's builds.</p>
+<h2 id="safety-and-compatibility">Safety and compatibility</h2>
+<ul>
+<li>Source trees, symlinks, hidden files and sensitive key/credential filenames are rejected.</li>
+<li>Existing output paths are not overwritten, and writing output inside the site source is rejected.</li>
+<li>Site origin must be HTTPS with no path, fragment, userinfo or query.</li>
+<li>The Nulang adapter refuses Cloudflare-specific <code>_headers</code> and <code>_redirects</code> rather than silently dropping required security behavior.</li>
+<li>Nulang's live <code>--publish</code> operation intentionally fails closed; do not advertise this as one-click live hosting.</li>
+</ul>
+<h2 id="requirements-before-enabling-live-nulang-cloud-deployment">Requirements before enabling live Nulang Cloud deployment</h2>
+<p>Nulang Cloud needs a separately implemented, authenticated, tenant-isolated
+static asset ingestion contract, immutable versioning, content integrity
+validation, safe cache headers, HTTPS/custom domains, rollback, quotas,
+deployment receipts and operational recovery tests. The Syntyr adapter should
+consume that existing platform API once qualified; it must not create its own
+hosting control plane, force a Firecracker microVM onto each static website, or
+couple the MIT CSS core to Nulang Cloud.</p>
+<p>Until those requirements are met, <strong>use Cloudflare for production websites</strong>.
+Keep Nulang Cloud hosting experimental and disabled by default.</p>
+        </article>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+<a class="docs-article-toc-link docs-article-toc-2" href="#publish-the-syntyr-documentation-site">Publish the Syntyr documentation site</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#prepare-an-experimental-nulang-cloud-bundle">Prepare an experimental Nulang Cloud bundle</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#safety-and-compatibility">Safety and compatibility</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#requirements-before-enabling-live-nulang-cloud-deployment">Requirements before enabling live Nulang Cloud deployment</a>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#publish-the-syntyr-documentation-site">Publish the Syntyr documentation site</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#prepare-an-experimental-nulang-cloud-bundle">Prepare an experimental Nulang Cloud bundle</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#safety-and-compatibility">Safety and compatibility</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#requirements-before-enabling-live-nulang-cloud-deployment">Requirements before enabling live Nulang Cloud deployment</a>
+            </nav>
+          </details>
+        </aside>
+      </div>
+      <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="nulang-cloud-hosting.md">Markdown source</a></nav>
+    </main>
+    <footer class="syn-header"><span class="syn-caption">SYNTYR CSS · MIT CORE · EXPERIMENTAL</span><a href="../index.html">Home</a></footer>
+  </div>
+</body>
+</html>

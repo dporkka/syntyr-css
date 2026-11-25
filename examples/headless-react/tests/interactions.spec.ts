@@ -91,3 +91,59 @@ test("sortable data grid works from keyboard and keeps focus visible", async ({ 
   await expect(asset).toHaveAttribute("aria-sort", "descending");
   await expect(asset).toBeFocused();
 });
+
+test("inventory filtering constrains selection scope and clears stale selections", async ({ page }) => {
+  await page.goto("/");
+  const filter = page.getByRole("searchbox", { name: "Filter inventory by asset name" });
+  const grid = page.getByRole("grid", { name: "Campaign inventory" });
+
+  await filter.fill("transit");
+  await expect(grid.getByRole("row")).toHaveCount(2);
+  await page.getByRole("button", { name: "Select 1 matching asset" }).click();
+  await expect(grid.getByRole("row", { name: /Transit shelter/ })).toHaveAttribute("aria-selected", "true");
+  await expect(page.getByRole("status", { name: "Inventory selection scope" })).toContainText("1 selected");
+
+  await filter.fill("airport");
+  await expect(grid.getByRole("row")).toHaveCount(2);
+  await expect(grid.getByRole("row", { name: /Airport display/ })).not.toHaveAttribute("aria-selected", "true");
+  await expect(page.getByRole("status", { name: "Inventory selection scope" })).toContainText("0 selected");
+  await expect(page.getByRole("button", { name: "Clear selection" })).toBeDisabled();
+});
+
+test("inventory offers a safe preview action and an accessible record detail view", async ({ page }) => {
+  await page.goto("/");
+  const grid = page.getByRole("grid", { name: "Campaign inventory" });
+  const selectedRow = grid.getByRole("row", { name: /Central billboard/ });
+  await selectedRow.focus();
+  await page.keyboard.press("Space");
+  await expect(selectedRow).toHaveAttribute("aria-selected", "true");
+  await page.getByRole("button", { name: "Preview selection" }).click();
+  await expect(page.locator(".syn-toast-description")).toContainText("1 asset");
+
+  await page.getByRole("button", { name: "View details for Central billboard" }).click();
+  const details = page.getByRole("region", { name: "Asset details" });
+  await expect(details.getByRole("heading", { name: "Central billboard" })).toBeVisible();
+  await expect(details).toContainText("12 faces");
+});
+
+test("inventory empty filter state remains truthful and non-actionable", async ({ page }) => {
+  await page.goto("/");
+  await page.getByRole("searchbox", { name: "Filter inventory by asset name" }).fill("not-an-asset");
+  await expect(page.getByText("No matching assets")).toBeVisible();
+  await expect(page.getByRole("button", { name: "Select 0 matching assets" })).toBeDisabled();
+  await expect(page.getByRole("button", { name: "Preview selection" })).toBeDisabled();
+});
+
+
+test("resource selection stays actionable at 320px with enlarged text", async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 780 });
+  await page.goto("/");
+  await page.addStyleTag({ content: "html { font-size: 64px !important; }" });
+  await page.getByRole("searchbox", { name: "Filter inventory by asset name" }).fill("central");
+  await page.getByRole("button", { name: "Select 1 matching asset" }).click();
+  await expect(page.getByRole("status", { name: "Inventory selection scope" })).toContainText("1 selected");
+  await page.getByRole("button", { name: "View details for Central billboard" }).click();
+  await expect(page.getByRole("region", { name: "Asset details" })).toContainText("12 faces");
+  const overflows = await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth);
+  expect(overflows).toBe(false);
+});

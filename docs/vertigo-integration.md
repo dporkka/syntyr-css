@@ -7,6 +7,18 @@ billing or tenant state was invoked to render the static example.
 The live example is at
 https://dporkka.github.io/syntyr-css/examples/vertigo-admin.html
 
+A separate **private** Vertigo integration has been exercised against a
+local, disposable Go/PostGIS application with two authenticated tenant sessions
+and real generated task CRUD. This is owner-run development evidence, **not**
+a public hosted demo, production certification, shipped Vertigo plugin, or
+commercial bundle. The public example above remains a static illustration;
+no auth, tenant routing, billing, or CRUD backend runs in that page.
+
+We are researching whether separately authored premium application compositions
+would help developers using Go and server-rendered HTML. The existing MIT
+Syntyr CSS and adapters remain free. No paid Vertigo/Syntyr product or checkout
+is currently offered.
+
 ## Why optional, not a hard dependency
 
 Vertigo's Go admin templates in kit/admin/admin.go use an inline stylesheet

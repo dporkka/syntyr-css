@@ -44,7 +44,7 @@
         <p class="syn-eyebrow">GUIDES / HTML-FIRST</p>
         <h1 class="docs-guide-title">Build with less machinery.</h1>
         <p class="syn-lede">Install Syntyr, integrate it into the renderer you already use, and progressively enhance only where interaction is required. These quick references link to complete, readable HTML guides.</p>
-        <p><a class="syn-button syn-button--primary" href="reference.html">Browse the full documentation index</a></p>
+        <p class="syn-inline"><a class="syn-button syn-button--primary" href="how-to.html">Browse task-based How-To guides</a> <a class="syn-button" href="reference.html">Browse full documentation</a></p>
         <nav class="docs-guide-links" aria-label="Guide sections">
           <a href="#installation">Installation</a><a href="#integration">Integrations</a>
           <a href="#customization">Customization</a><a href="#progressive-enhancement">Progressive enhancement</a>
@@ -58,14 +58,14 @@
 &lt;main class="syn-root" data-syn-theme="studio"&gt;
   &lt;button class="syn-button syn-button--primary"&gt;Continue&lt;/button&gt;
 &lt;/main&gt;</code></pre>
-        <p><a href="index.html#install">Download and version guidance</a> · <a href="distribution.html">Full distribution reference</a></p>
+        <p><a href="index.html#install">Download and version guidance</a> · <a href="distribution.html">Full distribution reference</a> · <a href="tailwind-alternative.html">Syntyr vs Tailwind vs plain CSS</a></p>
         <p>Testing the unreleased alpha.5 source? Try the <a href="../examples/semantic-starter.html">one-file semantic HTML starter</a> or read <a href="from-pico.html">how to migrate from Pico.css</a>. The published alpha.4 release uses two separate CSS files; see the guide for compatibility notes.</p>
       </section>
       <section class="docs-section" id="integration" aria-labelledby="integration-guide-title">
         <h2 id="integration-guide-title">02 / Any HTML renderer</h2>
         <p>Syntyr is a presentation layer, not a request client or state manager. Use the same markup with Phoenix LiveView, Laravel Livewire, HTMX, Rails Hotwire/Turbo, Go templ, Django, Astro, React, Vue or Svelte. Native controls work without client-side code; your application owns submission, state and data.</p>
         <p>For server-driven HTML, load the optional <code>syntyr.server.css</code> after core to style native request states without JavaScript. Keep CSS classes on persistent elements, use native forms, and apply <code>data-syn-semantic</code> to opt-in elements that receive transient framework classes.</p>
-        <p><a href="framework-integrations.html">Full framework integration guide</a> · <a href="site-builders.html">WordPress / Shopify / Wix / Webflow / Framer</a> · <a href="mobile-frameworks.html">Mobile and React Native integration</a> · <a href="lit-integration.html">Lit / Web Components guide</a> · <a href="component-authoring.html">Component authoring contract</a> · <a href="../examples/saas-workflows.html">Working SaaS patterns</a></p>
+        <p><a href="framework-integrations.html">Full framework integration guide</a> · <a href="htmx-components.html">HTMX components (12 recipes)</a> · <a href="htmx-playground.html">Live HTMX playground</a> · <a href="site-builders.html">WordPress / Shopify / Wix / Webflow / Framer</a> · <a href="mobile-frameworks.html">Mobile and React Native integration</a> · <a href="lit-integration.html">Lit / Web Components guide</a> · <a href="component-authoring.html">Component authoring contract</a> · <a href="../examples/saas-workflows.html">Working SaaS patterns</a></p>
         <p>For AI coding agents, start from the <a href="../llms.txt">Markdown documentation index</a>; humans can read the <a href="ai-quickstart.html">agent quickstart</a> and <a href="agent-integration.html">integration guide</a> as HTML.</p>
       </section>
       <section class="docs-section" id="customization" aria-labelledby="customization-guide-title">

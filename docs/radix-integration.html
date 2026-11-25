@@ -38,13 +38,13 @@
 <p>Syntyr core remains plain CSS with zero runtime JavaScript and zero React dependencies. Radix is a <strong>separate application choice</strong>. Its components own the accessible name, <strong>ARIA</strong> attributes, focus management, keyboard controls and state updates. Syntyr only adds styling.</p>
 <h2 id="install-and-opt-in">Install and opt in</h2>
 <p>In a React project using Radix Primitives, add a link <strong>after</strong> the core CSS:</p>
-<pre><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.core.css&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.core.css&quot;&gt;
 &lt;link rel=&quot;stylesheet&quot; href=&quot;/css/radix/states.css&quot;&gt;
 </code></pre>
 <p>Copy <a href="../integrations/radix/states.css">the adapter</a> into your project, or reference its repository source. Do not load it when you do not use Radix. It is <strong>not</strong> included in <code>syntyr.all.css</code>, either.</p>
 <p>Wrap the relevant app area in <code>.syn-root</code>. Apply <code>.syn-radix</code> on that root, on a container inside it, <strong>or directly on a stateful Syntyr control</strong> to opt in only that control. If Radix portals content to the document body, set that portal's <code>container</code> inside the styled root, or style the portal explicitly. Do not assume portal content inherits Syntyr tokens when it is mounted outside the root.</p>
 <h2 id="example-controlled-behavior-css-presentation">Example: controlled behavior, CSS presentation</h2>
-<pre><code class="language-jsx">import * as Accordion from &quot;@radix-ui/react-accordion&quot;;
+<pre tabindex="0"><code class="language-jsx">import * as Accordion from &quot;@radix-ui/react-accordion&quot;;
 import * as Toggle from &quot;@radix-ui/react-toggle&quot;;
 
 export function Controls() {
@@ -80,11 +80,21 @@ export function Controls() {
 </ul>
 <p>Related: <a href="component-recipes.html">copy-owned component recipes</a>, <a href="framework-integrations.html">framework integrations</a>.</p>
         </article>
-        <aside class="docs-article-sidebar"><nav aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#install-and-opt-in">Install and opt in</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#example-controlled-behavior-css-presentation">Example: controlled behavior, CSS presentation</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#accessibility-and-compatibility-boundaries">Accessibility and compatibility boundaries</a>
-        </nav></aside>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#install-and-opt-in">Install and opt in</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#example-controlled-behavior-css-presentation">Example: controlled behavior, CSS presentation</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#accessibility-and-compatibility-boundaries">Accessibility and compatibility boundaries</a>
+            </nav>
+          </details>
+        </aside>
       </div>
       <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="radix-integration.md">Markdown source</a></nav>
     </main>

@@ -66,6 +66,12 @@ class OptInWebsiteContractTests(unittest.TestCase):
         page = (ROOT / "docs/index.html").read_text()
         self.assertIn('href="../examples/vertigo-admin.html"', page)
 
+    def test_agent_index_discloses_vertigo_integration_evidence_boundary(self):
+        index = (ROOT / "llms.txt").read_text()
+        self.assertIn("https://syntyr-css.pages.dev/docs/vertigo-integration.md", index)
+        self.assertIn("private", index.lower())
+        self.assertIn("static public", index.lower())
+
     def test_docs_set_realistic_migration_threshold(self):
         strategy = (ROOT / "docs/site-generator-decision.md").read_text()
         for fragment in ("Hugo", "Zola", "GitHub Pages", "Vertigo",

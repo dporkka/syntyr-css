@@ -23,7 +23,11 @@
   "meta": {
     "syntyrVersion": "0.3.0-alpha.5",
     "source": "MIT source candidate",
-    "runtimeJavaScript": false
+    "runtimeJavaScript": false,
+    "fileDigests": {
+      "~/syntyr/css/syntyr.utilities.css": "8c46c9efc7c0ea10d39913ad348826c26ea10ac6d3fbf17e9089be7deb2c35e0",
+      "~/syntyr/LICENSE": "42f56369ac06362dbfe433d2d50b178bf74c369a55ea22337ab40fd9433521bf"
+    }
   },
   "docs": "Experimental source-candidate asset. Review exact version, HTML routes, keyboard behavior and integration before production use."
 }

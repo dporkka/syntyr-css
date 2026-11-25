@@ -26,6 +26,38 @@ Load the published `syntyr.core.css` in your application and use regular HTML:
 Use `data-syn-theme="noir"` for warm amber. Native HTML features
 such as `details`, `dialog` and `popover` don't need framework JavaScript.
 
+## Copyable theme presets (alpha.5 documentation tool)
+
+The [theme editor](theme-editor.html) now previews independently selectable
+theme, visual intensity, control density, and radius, and generates both CSS
+overrides and a portable JSON preset. Copy the JSON into an application-owned
+design configuration or use the CSS immediately. The JSON is declarative
+metadata, not an executable preset installer, stylesheet, or published API.
+For density/intensity, apply the indicated `data-syn-density` and
+`data-syn-intensity` attributes on the Syntyr scope. A custom radius uses
+`--syn-radius` and `--syn-panel-radius`; the default option preserves each
+base theme's geometry. The editor also supports **site-wide color roles** (background, card surface,
+primary/secondary text, accent, on-accent), three system-font typography
+pairings (default, editorial, technical), and three spacing rhythms
+(balanced, tight, airy). The page preview includes header, feature,
+form and footer sections; it is a visual sample, not a live deployment.
+Generated CSS uses only the existing `--syn-*` variables. The optional
+JSON preset retains `schema_version: 1` and adds `typography` and
+`spacing` metadata; older consumers may ignore these optional fields.
+Typography uses locally available system fonts, not network-loaded files.
+
+Color changes are scoped to the selected theme. Switching themes resets
+the six color inputs to that palette's values but preserves your selected
+typography, spacing, radius, intensity and density; the **Reset palette
+colors** action does the same. The contrast indicators inspect button
+foreground, body text on both background and surface, and muted text on
+surface. They are advisory; other contrast combinations, graphics and focus
+states require testing in the consuming application.
+
+The documentation script and clipboard enhancement are
+not included in Syntyr's distributed CSS. Test the resulting palette and
+control contrast in the consuming application.
+
 ## 2. Override tokens using application CSS
 
 Syntyr declares its defaults in named cascade layers. App CSS without a

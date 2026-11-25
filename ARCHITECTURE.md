@@ -8,6 +8,9 @@ smallest working application must need only a local stylesheet and HTML.
 
 1. **Zero CSS runtime dependencies:** no required JavaScript, package manager,
    network fonts, icons, CDN, server, or compiler for consumers.
+   Shipped CSS source cannot use `@import` or reference host/network assets via
+   `url(...)`; bundled data URLs and local SVG fragment references are permitted.
+   These constraints make a pinned, self-hosted stylesheet truly standalone.
 2. **One styling contract:** public selectors use `syn-*`, custom properties
    `--syn-*`, and state/theme attributes `data-syn-*` (with semantic ARIA and
    native HTML states where appropriate). Avoid competing ways to express the
@@ -104,9 +107,12 @@ source inclusion inside a bundle. Components and optional recipes cannot branch 
 `data-syn-theme` or rely on `!important`; palette variations belong in token
 declarations and cascade layers resolve normal precedence. Only tokens and
 existing base, print, and viz theme-context rules may select themed regions. The existing
-`base.css` reduced-motion accessibility exception remains intact.
-`maintenance_policy.py` enforces these rules without CSS compilation or byte
-ceilings.
+`base.css` reduced-motion accessibility exception is confined to the three
+approved scroll/transition/animation overrides inside the reduced-motion media
+query. Every `var(--syn-*)` reference must either resolve to a declared source
+property or supply its own fallback, so a typo does not silently invalidate a
+component declaration. `maintenance_policy.py` enforces these rules without CSS
+compilation or byte ceilings.
 
 Prefer removing duplicate rules and simplifying variants before adding new
 features. Do not add a CSS compiler, framework runtime, NPM dependency,

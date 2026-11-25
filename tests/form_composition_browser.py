@@ -54,6 +54,23 @@ def run():
                         assert button_box["x"] + button_box["width"] <= width + 1, (
                             name, font_size, "submit overflows viewport", button_box)
                     page.evaluate("document.documentElement.style.fontSize = ''")
+                    # A translated action must not consume the searchbox or clip
+                    # the page. The native input/addon recipe remains unchanged.
+                    long_submit = page.locator(".syn-input-group > .syn-button").first
+                    long_submit.evaluate(
+                        "(el) => { el.textContent = 'Rechercher parmi tous les éléments actuellement disponibles dans notre compte'; }"
+                    )
+                    field_box = search.bounding_box()
+                    button_box = long_submit.bounding_box()
+                    assert field_box["width"] >= 9 * 16, (name, "long label compressed search input")
+                    assert button_box["y"] >= field_box["y"] + field_box["height"] - 2, (
+                        name, "long translated action must wrap below search")
+                    assert page.evaluate("document.documentElement.scrollWidth <= document.documentElement.clientWidth + 1"), (
+                        name, "translated action overflows page")
+                    page.locator("body").evaluate("(el) => { el.dir = 'rtl'; }")
+                    assert page.evaluate("document.documentElement.scrollWidth <= document.documentElement.clientWidth + 1"), (
+                        name, "RTL translated action overflows page")
+                    page.locator("body").evaluate("(el) => { el.removeAttribute('dir'); }")
                 if width == 900:
                     page.get_by_label("Account name").fill("Syntyr")
                     page.get_by_role("button", name="Search").click()

@@ -89,6 +89,16 @@ class ThemeLayoutBrowser(unittest.TestCase):
         narrow_width = self.page.locator('.syn-shell').evaluate('(element) => element.getBoundingClientRect().width')
         self.assertAlmostEqual(narrow_width, 311, delta=1)
 
+    def test_panel_padding_inherits_host_override_across_density_scopes(self):
+        padding = self.page.evaluate("""() => {
+          document.documentElement.style.setProperty('--syn-panel-padding', '23px');
+          const wrapper = document.createElement('div');
+          wrapper.innerHTML = '<article class="syn-panel">Regular</article><section data-syn-density="compact"><article class="syn-panel">Compact</article></section>';
+          document.body.append(wrapper);
+          return Array.from(wrapper.querySelectorAll('.syn-panel'), el => getComputedStyle(el).paddingBlockStart);
+        }""")
+        self.assertEqual(padding, ["23px", "23px"])
+
     def test_panel_padding_responds_to_nested_density_and_resets(self):
         paddings = self.page.evaluate("""() => {
           const el = document.createElement('div');

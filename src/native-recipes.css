@@ -30,7 +30,11 @@
   :where(.syn-root.syn-field--floating, .syn-root .syn-field--floating):dir(rtl) > .syn-floating-label {
     transform-origin: right top;
   }
-  :where(.syn-root.syn-field--floating, .syn-root .syn-field--floating) > :where(.syn-input, .syn-textarea):is(:focus, :not(:placeholder-shown)) + .syn-floating-label {
+  /* Keep input-first markup as a fallback, and use :has() to support
+     label-first order without duplicating an accessible label. */
+  :where(.syn-root.syn-field--floating, .syn-root .syn-field--floating) > :where(.syn-input, .syn-textarea):is(:focus, :not(:placeholder-shown)) + .syn-floating-label,
+  :where(.syn-root.syn-field--floating:has(> :is(.syn-input, .syn-textarea):is(:focus, :not(:placeholder-shown))),
+         .syn-root .syn-field--floating:has(> :is(.syn-input, .syn-textarea):is(:focus, :not(:placeholder-shown)))) > .syn-floating-label {
     transform: translateY(-.62rem) scale(.82);
     color: var(--syn-text);
   }
@@ -38,8 +42,8 @@
 
   /* At narrow container sizes (including enlarged root text), restore a
      persistent full-width label above the input. No JS or aria changes.
-     The label follows the input in source for :placeholder-shown support;
-     grid placement makes the visible order match a conventional form. */
+     Named grid rows work with both label-first and input-first markup;
+     browsers without :has() retain input-first animation. */
   @container syn-floating-field (max-width: 21rem) {
     :where(.syn-root.syn-field--floating, .syn-root .syn-field--floating) > :where(.syn-input, .syn-textarea) {
       grid-row: 2;
@@ -128,6 +132,77 @@
     font: inherit;
     color: inherit;
   }
+  /* Resource outline: ordinary nested navigation, NOT an ARIA tree widget.
+     The browser owns details/summary toggling; application owns link targets. */
+  :where(.syn-root.syn-resource-outline, .syn-root .syn-resource-outline) {
+    min-inline-size: 0;
+    color: var(--syn-text);
+  }
+  :where(.syn-root.syn-resource-outline, .syn-root .syn-resource-outline) ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  :where(.syn-root.syn-resource-outline, .syn-root .syn-resource-outline) ul ul {
+    /* Cap nesting at narrow/zoomed viewports; rem-only indents overflow
+       when a user enlarges root text and navigates deeply nested records. */
+    margin-inline-start: min(var(--syn-outline-indent, .8rem), 2vw);
+    padding-inline-start: min(var(--syn-space-2), 2vw);
+    border-inline-start: 1px solid var(--syn-frame);
+  }
+  /* Per-level vw limits alone still consume all available space for 20+
+     nested groups. Stop adding indentation past three visual levels while
+     keeping every list and native details disclosure in the DOM. */
+  :where(.syn-root.syn-resource-outline, .syn-root .syn-resource-outline) ul ul ul ul ul {
+    margin-inline-start: 0;
+    padding-inline-start: 0;
+    border-inline-start: 0;
+  }
+  :where(.syn-root.syn-resource-outline, .syn-root .syn-resource-outline) li {
+    min-inline-size: 0;
+    margin: 0;
+  }
+  :where(.syn-root.syn-resource-outline, .syn-root .syn-resource-outline) :is(summary, a) {
+    box-sizing: border-box;
+    min-block-size: 2.75rem;
+    padding: .55rem .7rem;
+    border-radius: var(--syn-radius);
+    color: inherit;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+  }
+  :where(.syn-root.syn-resource-outline, .syn-root .syn-resource-outline) summary {
+    display: list-item; /* Preserve native disclosure marker and keyboard behavior. */
+    cursor: pointer;
+  }
+  :where(.syn-root.syn-resource-outline, .syn-root .syn-resource-outline) a {
+    display: block;
+    text-decoration: none;
+  }
+  :where(.syn-root.syn-resource-outline, .syn-root .syn-resource-outline) a[aria-current="page"] {
+    background: var(--syn-accent-soft);
+    color: var(--syn-text);
+    font-weight: 650;
+  }
+  :where(.syn-root.syn-resource-outline, .syn-root .syn-resource-outline) :is(summary, a):focus-visible {
+    outline: 2px solid var(--syn-accent);
+    outline-offset: 2px;
+  }
+  @media (hover: hover) {
+    :where(.syn-root.syn-resource-outline, .syn-root .syn-resource-outline) :is(summary, a):hover {
+      background: var(--syn-accent-soft);
+    }
+  }
+  @media (forced-colors: active) {
+    :where(.syn-root.syn-resource-outline, .syn-root .syn-resource-outline) a[aria-current="page"] {
+      background: Highlight;
+      color: HighlightText;
+    }
+    :where(.syn-root.syn-resource-outline, .syn-root .syn-resource-outline) :is(summary, a):focus-visible {
+      outline-color: Highlight;
+    }
+  }
+
   @media (forced-colors: active) {
     :where(.syn-root.syn-timeline, .syn-root .syn-timeline) > li::before,
     :where(.syn-root.syn-code-figure, .syn-root .syn-code-figure) {

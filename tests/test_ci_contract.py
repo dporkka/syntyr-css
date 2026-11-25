@@ -66,6 +66,37 @@ class ContinuousIntegrationContract(unittest.TestCase):
         self.assertIn("git --version", content)
         self.assertLess(content.index(install), content.index("python3 -m unittest discover"))
 
+    def test_maintainer_docs_dependency_is_installed_before_ci_tests(self):
+        # CI's Python package index is blocked; use the Debian package available
+        # to the pinned Python 3.14 image without changing the shipped CSS.
+        install = (
+            "apt-get update && apt-get install -y --no-install-recommends "
+            "git python3-markdown-it && rm -rf /var/lib/apt/lists/*"
+        )
+        verify_version = (
+            """python3 -c 'from importlib.metadata import version; """
+            """assert version("markdown-it-py") == "3.0.0"'"""
+        )
+        for path, runner in (
+            (".woodpecker/quality.yaml", "python3 -m unittest discover -s tests -v"),
+            (".woodpecker/pr-merge.yaml", "python3 scripts/check_merge_candidate.py --base FETCH_HEAD"),
+        ):
+            with self.subTest(workflow=path):
+                content = (ROOT / path).read_text()
+                install_at = active_workflow_command_position(content, install)
+                version_at = active_workflow_command_position(content, verify_version)
+                runner_at = active_workflow_command_position(content, runner)
+                self.assertGreaterEqual(install_at, 0, "Package install must be an active step")
+                self.assertGreaterEqual(version_at, 0, "Version pin check must be active")
+                self.assertGreaterEqual(runner_at, 0, "Test gate must be active")
+                self.assertLess(install_at, version_at)
+                self.assertLess(version_at, runner_at)
+                self.assertIn("\n      PYTHONPATH: /usr/lib/python3/dist-packages\n", content)
+                self.assertNotIn("pip install", content)
+                self.assertEqual(active_workflow_command_position(
+                    content.replace("      - " + install, "      # - " + install), install
+                ), -1, "Commented-out installation must not satisfy the contract")
+
     def test_commented_blocks_command_is_not_an_active_release_step(self):
         command = "python3 tests/blocks_browser.py --browsers chromium firefox webkit"
         self.assertEqual(active_workflow_command_position("#      - " + command, command), -1)

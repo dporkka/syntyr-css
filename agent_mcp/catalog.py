@@ -18,7 +18,7 @@ RELEASES = (PUBLISHED, CANDIDATE)
 MAX_HTML_CHARS = 20_000
 MAX_RESULTS = 40
 
-SELECTOR = re.compile(r"(?<![\w-])\.(syn-[a-zA-Z0-9_-]+)(?![a-zA-Z0-9_-])")
+SELECTOR = re.compile(r"\.(syn-[a-zA-Z0-9_-]+)(?![a-zA-Z0-9_-])")
 TOKEN = re.compile(r"(?<![\w-])(--syn-[a-zA-Z0-9_-]+)\s*:")
 CSS_COMMENT = re.compile(r"/\*.*?\*/", re.S)
 PREFER = (
@@ -27,7 +27,7 @@ PREFER = (
     "syntyr.geometry.css", "syntyr.effects.css", "syntyr.viz.css",
     "syntyr.utilities.css", "syntyr.motion.css", "syntyr.symbols.css",
     "syntyr.native-recipes.css", "syntyr.server.css", "syntyr.print.css",
-    "syntyr.css", "syntyr.all.css",
+    "syntyr.css", "syntyr.all.css", "headless/interactions.css",
 )
 
 
@@ -96,6 +96,13 @@ class SyntyrCatalog:
                     "classes": set(SELECTOR.findall(src)),
                     "tokens": set(TOKEN.findall(src)),
                 }
+        if release == CANDIDATE:
+            adapter = self.root / "integrations/headless/interactions.css"
+            src = CSS_COMMENT.sub("", adapter.read_text(encoding="utf-8"))
+            found["headless/interactions.css"] = {
+                "classes": set(SELECTOR.findall(src)),
+                "tokens": set(TOKEN.findall(src)),
+            }
         if "syntyr.core.css" not in found:
             raise RuntimeError(f"Missing checked-in core stylesheet for {release}")
         classes = set().union(*(v["classes"] for v in found.values()))
@@ -149,6 +156,63 @@ class SyntyrCatalog:
                 self._stylesheet(cls, "class", release) for cls in component["classes"]
             }),
         }, "note": "Syntyr styles native HTML; it does not implement app behavior."}
+
+    def get_interaction_contracts(self, name: str = "", release: str = PUBLISHED):
+        """Describe candidate-only UI anatomy and behavior ownership; never execute."""
+        base = self._release(release)
+        if release != CANDIDATE:
+            raise CatalogError("Interaction contracts are unavailable in the published release; select the source candidate explicitly")
+        manifest = json.loads((self.root / "metadata/interaction-contracts.v1.json").read_text(encoding="utf-8"))
+        if manifest["source_version"] != release or manifest["schema_version"] != 1:
+            raise RuntimeError("Interaction contract metadata version needs review")
+        term = name.strip().casefold()
+        contracts = [c for c in manifest["contracts"] if not term or c["id"] == term]
+        if not contracts:
+            raise CatalogError(f"Unknown interaction contract {name!r}; list contracts without a name")
+        return {**base, "schema_version": manifest["schema_version"],
+                "contracts": contracts, "note": manifest["note"]}
+
+    def get_interaction_recipes(self, contract: str = "", release: str = PUBLISHED):
+        """Discover runnable recipe references, not executable actions or test results."""
+        contracts = self.get_interaction_contracts(contract, release)
+        selected = {item["id"] for item in contracts["contracts"]}
+        all_ids = {item["id"] for item in self.get_interaction_contracts("", release)["contracts"]}
+        manifest = json.loads((self.root / "metadata/interaction-recipes.json").read_text(encoding="utf-8"))
+        if (manifest["schema_version"] != 1 or manifest["source_version"] != release
+                or manifest["release_status"] != "unreleased-source-candidate"):
+            raise RuntimeError("Interaction recipe metadata version needs review")
+        # A recipe may be a fallback or an alternative, not a conforming implementation.
+        links = {
+            "native-select": [("combobox", "fallback")],
+            "native-popover": [("dropdown", "implementation")],
+            "native-modal-dialog": [("dialog", "implementation"), ("disclosure", "example")],
+            "native-table": [("sortable-table", "fallback")],
+            "radix-menu": [("dropdown", "alternative")],
+            "react-aria-combobox": [("combobox", "implementation")],
+            "react-aria-sortable-grid": [("sortable-table", "implementation")],
+            "radix-toast": [],
+        }
+        recipes = manifest["recipes"]
+        if len(recipes) != len(links) or {item["id"] for item in recipes} != set(links):
+            raise RuntimeError("Interaction recipe links need review")
+        if {name for pairs in links.values() for name, _ in pairs} != all_ids:
+            raise RuntimeError("Interaction contract links need review")
+        known = self._catalog(release)["files"]
+        result = []
+        for item in recipes:
+            relations = links[item["id"]]
+            if contract.strip() and not any(name in selected for name, _ in relations):
+                continue
+            stylesheets = sorted({path.removeprefix("dist/").removeprefix("integrations/")
+                                  for path in item["css"]})
+            if not set(stylesheets) <= set(known):
+                raise RuntimeError(f"Recipe stylesheet inventory needs review: {item['id']}")
+            result.append({**item, "stylesheets": stylesheets,
+                           "contract_links": [{"id": name, "relationship": relation}
+                                              for name, relation in relations]})
+        return {**self._release(release), "schema_version": manifest["schema_version"],
+                "recipes": result,
+                "note": "Recipe and test source references, not runtime actions, test results or accessibility certification."}
 
     def lookup_api(self, name: str, release: str = PUBLISHED):
         base = self._release(release)
@@ -212,7 +276,7 @@ class SyntyrCatalog:
             raise CatalogError(f"HTML is too long or invalid (limit {MAX_HTML_CHARS} characters)")
         info = self._catalog(release)
         if not isinstance(stylesheets, (list, type(None))) or not all(isinstance(s, str) for s in (stylesheets or [])):
-            raise CatalogError("stylesheets must be an array of Syntyr CSS filenames")
+            raise CatalogError("stylesheets must be an array of known Syntyr stylesheet identifiers")
         invalid = sorted(set(stylesheets or []) - set(info["files"]))
         if invalid:
             raise CatalogError(f"Unknown stylesheet(s) in {release}: {', '.join(invalid)}")

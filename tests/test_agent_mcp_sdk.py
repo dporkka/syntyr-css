@@ -20,8 +20,24 @@ class AgentMcpSdkTests(unittest.TestCase):
                 names = {tool.name for tool in listing.tools}
                 self.assertGreaterEqual(names, {
                     "search_components", "get_component", "lookup_api",
-                    "get_theme_tokens", "validate_markup",
+                    "get_theme_tokens", "validate_markup", "get_interaction_contracts",
+                    "get_interaction_recipes",
                 })
+                contracts = await client.call_tool("get_interaction_contracts", {
+                    "name": "dialog", "release": "0.3.0-alpha.5",
+                })
+                self.assertFalse(contracts.is_error)
+                self.assertEqual(contracts.structured_content["contracts"][0]["id"], "dialog")
+                recipes = await client.call_tool("get_interaction_recipes", {
+                    "contract": "combobox", "release": "0.3.0-alpha.5",
+                })
+                self.assertFalse(recipes.is_error)
+                self.assertEqual({r["id"] for r in recipes.structured_content["recipes"]},
+                                 {"native-select", "react-aria-combobox"})
+                unavailable_recipes = await client.call_tool("get_interaction_recipes", {})
+                self.assertTrue(unavailable_recipes.is_error)
+                unavailable = await client.call_tool("get_interaction_contracts", {})
+                self.assertTrue(unavailable.is_error)
                 result = await client.call_tool("lookup_api", {
                     "name": "syn-button--primary", "release": "0.3.0-alpha.4",
                 })

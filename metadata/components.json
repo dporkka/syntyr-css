@@ -35,6 +35,20 @@
       "notes": "Choose native headings and accessible labels."
     },
     {
+      "name": "Content list",
+      "module": "syntyr.core.css",
+      "elements": [
+        "ul",
+        "ol"
+      ],
+      "classes": [
+        "syn-list",
+        "syn-list--compact",
+        "syn-list--accent"
+      ],
+      "notes": "Native list markers and order preserved. Use in core-only scopes; semantic mode handles unclassed lists."
+    },
+    {
       "name": "Form fields",
       "module": "syntyr.core.css",
       "elements": [
@@ -174,6 +188,38 @@
       "notes": "Supply textual cell labels, data-syn-level and real data."
     },
     {
+      "name": "Geospatial workspace",
+      "module": "syntyr.geo.css",
+      "elements": [
+        "section",
+        "aside",
+        "figure",
+        "div",
+        "a",
+        "button",
+        "ul"
+      ],
+      "classes": [
+        "syn-geo-shell",
+        "syn-geo-workspace",
+        "syn-geo-sidebar",
+        "syn-geo-viewport",
+        "syn-geo-map",
+        "syn-geo-overlay",
+        "syn-geo-controls",
+        "syn-geo-control",
+        "syn-geo-marker",
+        "syn-geo-marker-layer",
+        "syn-geo-cluster",
+        "syn-geo-legend",
+        "syn-geo-swatch",
+        "syn-geo-scale",
+        "syn-geo-attribution",
+        "syn-geo-data-list"
+      ],
+      "notes": "Optional renderer-neutral CSS; load core then geo. The host renderer owns projection, attribution, marker positions, zooming, clustering and screen-reader data alternatives. See docs/geo.md."
+    },
+    {
       "name": "Advanced geometry frames",
       "module": "syntyr.geometry.css",
       "elements": [
@@ -229,6 +275,104 @@
         "syn-record-fields"
       ],
       "notes": "Unreleased alpha.5, CSS-only optional layouts. Use a GET form, labelled stages, focusable board overflow and definition-list details; application implements filtering and pipeline state."
+    },
+    {
+      "name": "Operation feedback",
+      "module": "syntyr.recipes.css",
+      "elements": [
+        "div",
+        "section",
+        "h2",
+        "h3",
+        "p"
+      ],
+      "classes": [
+        "syn-operation-feedback"
+      ],
+      "notes": "Experimental alpha.5 static presentation only. Host must set true pending, saved, failed, conflict or unsaved state, manage requests, announcements, retry and authorization."
+    },
+    {
+      "name": "Record change pair",
+      "module": "syntyr.recipes.css",
+      "elements": [
+        "dl",
+        "div",
+        "dt",
+        "dd",
+        "span",
+        "del",
+        "ins"
+      ],
+      "classes": [
+        "syn-record-fields",
+        "syn-change-pair",
+        "syn-change-before",
+        "syn-change-after"
+      ],
+      "notes": "Experimental alpha.5 semantic before/after styling nested in existing record fields. Text labels and native del/ins convey changes; backend supplies true revision values and conflict policy."
+    },
+    {
+      "name": "File lifecycle",
+      "module": "syntyr.recipes.css",
+      "elements": [
+        "ol",
+        "li",
+        "div",
+        "span",
+        "strong",
+        "progress"
+      ],
+      "classes": [
+        "syn-file-queue",
+        "syn-file-item",
+        "syn-file-item-header"
+      ],
+      "notes": "Unreleased alpha.5 CSS-only queue snapshots. Native input lives in core; host owns upload progress, failure and completion truth, validation, retry, status announcements and storage."
+    },
+    {
+      "name": "Native dropdowns and menus",
+      "module": "syntyr.core.css",
+      "elements": [
+        "div",
+        "a",
+        "button",
+        "select"
+      ],
+      "classes": [
+        "syn-popover",
+        "syn-dropdown",
+        "syn-dropdown__item",
+        "syn-dropdown__group-label",
+        "syn-dropdown__separator",
+        "syn-dropdown__shortcut",
+        "syn-select--enhanced"
+      ],
+      "notes": "Scriptless action panels use Tab/Escape. Optional @syntyr/css/menu.mjs adds ARIA menu keyboard behavior only when explicitly initialized; see docs/dropdowns.md."
+    },
+    {
+      "name": "Scrollable card rail",
+      "module": "syntyr.recipes.css",
+      "elements": [
+        "div",
+        "section"
+      ],
+      "classes": [
+        "syn-scroll-rail"
+      ],
+      "notes": "Experimental alpha.5. Use a named, keyboard-focusable overflow region. Cards are direct children; native snap without mandatory JS. Configure --syn-scroll-rail-card-width locally."
+    },
+    {
+      "name": "Bento feature grid",
+      "module": "syntyr.recipes.css",
+      "elements": [
+        "div",
+        "article"
+      ],
+      "classes": [
+        "syn-bento-grid",
+        "syn-bento-card--wide"
+      ],
+      "notes": "Experimental alpha.5. Container-aware wide card spans; use meaningful article headings and syn-feature-card for surfaces."
     }
   ],
   "recipes": [

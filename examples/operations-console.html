@@ -18,6 +18,29 @@
       <div class="ops-rail-head">
         <a class="syn-logo" href="../docs/index.html">SYNTYR / OPS</a>
         <span class="syn-caption">WORKSPACE / DEMO ENVIRONMENT</span>
+        <button class="syn-button syn-button--outline ops-workspace-trigger" type="button"
+                popovertarget="ops-workspaces" aria-label="Choose example workspace: Northstar infrastructure">
+          Northstar infrastructure <span aria-hidden="true">▾</span>
+        </button>
+        <div id="ops-workspaces" class="syn-popover ops-action-popover" popover role="dialog"
+             aria-label="Example workspaces">
+          <p class="syn-eyebrow">WORKSPACE / STATIC EXAMPLE</p>
+          <p class="syn-muted">This demonstration does not change your account or grant access to another organization.</p>
+          <nav aria-label="Example workspace destinations">
+            <ul class="ops-action-list">
+              <li><a class="ops-action-link" href="#main" aria-current="true">
+                Northstar infrastructure <span class="syn-status syn-status--success">Current</span>
+              </a></li>
+              <li><a class="ops-action-link" href="#integration">
+                Harbor Analytics <span class="syn-caption">Integration example</span>
+              </a></li>
+            </ul>
+          </nav>
+          <p class="syn-caption">Applications must supply verified destinations for memberships in the authenticated session.</p>
+          <button class="syn-button syn-button--ghost" type="button"
+                  popovertarget="ops-workspaces" popovertargetaction="hide"
+                  aria-label="Close workspace choices">Close</button>
+        </div>
       </div>
       <nav class="syn-app-nav" aria-label="Operations sections">
         <a href="#main" aria-current="page">Overview</a>
@@ -197,6 +220,10 @@
         <details class="syn-details">
           <summary>How do I connect real application data?</summary>
           <p>Render semantic HTML from your Go templates, Rust server, Django application or React components. Replace the example values with escaped server-provided data; use real backend authorization and input validation for operations.</p>
+        </details>
+        <details class="syn-details">
+          <summary>How does a real workspace switcher preserve tenant isolation?</summary>
+          <p>The backend must resolve server-side membership from the authenticated session, render only permitted workspace destinations, and reauthorize every request after navigation. A URL, browser-selected organization, or CSS attribute is never proof of access. This static menu only demonstrates presentation and keyboard-accessible navigation.</p>
         </details>
         <details class="syn-details">
           <summary>Does this require a frontend framework?</summary>

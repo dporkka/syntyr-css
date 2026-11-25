@@ -1,0 +1,443 @@
+/* Optional media and entertainment compositions.
+   CSS-only presentation; consumer HTML owns navigation and media data.
+   Load after syntyr.core.css. Never included in the core/all bundles. */
+@layer syn.recipes {
+  :where(.syn-root).syn-media-shell,
+  :where(.syn-root) .syn-media-shell {
+    --syn-media-gap: clamp(.75rem, 1.8vw, 1.25rem);
+    --syn-media-card-ratio: 2 / 3;
+    --syn-media-rail-item-size: clamp(10rem, 18vw, 14.5rem);
+    min-inline-size: 0;
+    padding-inline: clamp(1rem, 4vw, 3rem);
+    padding-block-end: clamp(3rem, 7vw, 6rem);
+    color: var(--syn-text);
+    background: var(--syn-bg);
+  }
+
+  :where(.syn-root) .syn-media-navigation {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--syn-space-3, 1.125rem);
+    min-block-size: 4.5rem;
+    padding-block: .75rem;
+  }
+  :where(.syn-root) .syn-media-navigation__brand {
+    font: 800 clamp(1rem, 2vw, 1.35rem)/1.2 var(--syn-font-ui, system-ui);
+    color: var(--syn-text);
+    letter-spacing: -.045em;
+    text-decoration: none;
+  }
+  :where(.syn-root) .syn-media-navigation__desktop {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: .25rem;
+  }
+  :where(.syn-root) .syn-media-navigation__mobile { display: none; }
+  :where(.syn-root) .syn-media-navigation__link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .35rem;
+    min-block-size: 2.75rem;
+    min-inline-size: 2.75rem;
+    padding: .65rem .8rem;
+    border-radius: var(--syn-radius);
+    color: var(--syn-muted);
+    text-decoration: none;
+    font: 600 var(--syn-type-sm, .875rem)/1.25 var(--syn-font-ui, system-ui);
+  }
+  :where(.syn-root) .syn-media-navigation__link:where(:hover, [aria-current="page"]) {
+    background: var(--syn-accent-soft);
+    color: var(--syn-accent);
+  }
+  :where(.syn-root) .syn-media-navigation__link:focus-visible {
+    outline: 3px solid var(--syn-focus-ring);
+    outline-offset: 2px;
+  }
+
+  :where(.syn-root) .syn-media-hero {
+    --syn-media-hero-image: radial-gradient(ellipse at 77% 24%, #745d80 0, #302941 36%, #11131d 80%);
+    --syn-media-hero-position: center;
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    align-items: end;
+    min-block-size: clamp(24rem, 53vw, 37rem);
+    overflow: hidden;
+    border-radius: max(.5rem, var(--syn-radius));
+    border: 1px solid var(--syn-border-subtle);
+    color: #fff;
+    background-color: #14121c;
+    background-image: var(--syn-media-hero-image);
+    background-position: var(--syn-media-hero-position);
+    background-size: cover;
+  }
+  :where(.syn-root) .syn-media-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(90deg, rgb(5 7 14 / 96%) 0%, rgb(5 7 14 / 78%) 48%, rgb(5 7 14 / 16%) 100%),
+                linear-gradient(0deg, rgb(5 7 14 / 54%), transparent 45%);
+    pointer-events: none;
+  }
+  :where(.syn-root) .syn-media-hero__content {
+    inline-size: min(100%, 45rem);
+    padding: clamp(1.5rem, 5vw, 4rem);
+  }
+  :where(.syn-root) .syn-media-hero__title {
+    margin-block: .6rem 1rem;
+    font: 800 clamp(2rem, 5.6vw, 4.5rem)/1.04 var(--syn-font-display, system-ui);
+    letter-spacing: -.055em;
+    overflow-wrap: anywhere;
+  }
+  :where(.syn-root) .syn-media-hero__eyebrow {
+    margin: 0;
+    font-size: var(--syn-type-xs, .75rem);
+    font-weight: 800;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: #e8d2fb;
+  }
+  :where(.syn-root) .syn-media-hero__description {
+    max-inline-size: 57ch;
+    color: #f0eef5;
+    line-height: 1.65;
+  }
+  :where(.syn-root) .syn-media-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .75rem;
+    margin-block-start: 1.5rem;
+  }
+  :where(.syn-root) .syn-media-hero__actions a {
+    min-block-size: 2.75rem;
+  }
+
+  :where(.syn-root) .syn-media-section {
+    min-inline-size: 0;
+    margin-block-start: clamp(2rem, 4vw, 3.5rem);
+  }
+  :where(.syn-root) .syn-media-section__heading {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: .75rem 1.5rem;
+    margin-block-end: 1rem;
+  }
+  :where(.syn-root) .syn-media-section__heading :where(h2, h3) {
+    margin: 0;
+    font-size: clamp(1.2rem, 2.2vw, 1.65rem);
+    letter-spacing: -.03em;
+  }
+
+  :where(.syn-root) .syn-media-rail {
+    display: flex;
+    min-inline-size: 0;
+    gap: var(--syn-media-gap, clamp(.75rem, 1.8vw, 1.25rem));
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-inline: contain;
+    scroll-snap-type: inline proximity;
+    scroll-padding-inline: .25rem;
+    padding: .25rem .25rem 1rem;
+    scrollbar-width: thin;
+    scrollbar-color: var(--syn-frame) transparent;
+  }
+  :where(.syn-root) .syn-media-rail > * {
+    flex: 0 0 min(80%, var(--syn-media-rail-item-size, clamp(10rem, 18vw, 14.5rem)));
+    min-inline-size: 0;
+    scroll-snap-align: start;
+  }
+  :where(.syn-root) .syn-media-rail:focus-visible {
+    outline: 3px solid var(--syn-focus-ring);
+    outline-offset: 2px;
+  }
+
+  /* Generated scroll controls: opt-in, no script and no broken buttons in
+     browsers without CSS Overflow 5 + anchor positioning. The original
+     focusable Scroll Snap rail and visible scrollbar remain the fallback. */
+  @supports selector(::scroll-button(inline-start)) and (anchor-name: --syn-media-rail) {
+    :where(.syn-root) .syn-media-rail--controls {
+      anchor-name: --syn-media-rail;
+      scroll-snap-type: inline mandatory;
+    }
+    :where(.syn-root) .syn-media-rail--controls::scroll-button(*) {
+      position: absolute;
+      position-anchor: --syn-media-rail;
+      inset-block-start: calc(anchor(top) + .5rem);
+      display: grid;
+      place-items: center;
+      inline-size: 2.75rem;
+      block-size: 2.75rem;
+      padding: 0;
+      border: 1px solid var(--syn-border-floating);
+      border-radius: var(--syn-radius);
+      color: var(--syn-text);
+      background: var(--syn-surface-floating);
+      box-shadow: var(--syn-shadow-overlay);
+      font: 700 1.5rem/1 var(--syn-font-ui, system-ui);
+      cursor: pointer;
+    }
+    :where(.syn-root) .syn-media-rail--controls::scroll-button(inline-start) {
+      content: "‹" / "Scroll backward";
+      inset-inline-start: calc(anchor(self-start) + .5rem);
+    }
+    :where(.syn-root) .syn-media-rail--controls::scroll-button(inline-end) {
+      content: "›" / "Scroll forward";
+      inset-inline-end: calc(anchor(self-end) + .5rem);
+    }
+    :where(.syn-root) .syn-media-rail--controls:dir(rtl)::scroll-button(inline-start) {
+      content: "→" / "Scroll backward";
+    }
+    :where(.syn-root) .syn-media-rail--controls:dir(rtl)::scroll-button(inline-end) {
+      content: "←" / "Scroll forward";
+    }
+    :where(.syn-root) .syn-media-rail--controls::scroll-button(*):focus-visible {
+      outline: 3px solid var(--syn-focus-ring);
+      outline-offset: 3px;
+    }
+    :where(.syn-root) .syn-media-rail--controls::scroll-button(*):disabled {
+      opacity: .4;
+      cursor: default;
+    }
+  }
+
+  /* Markers are separate opt-in controls: every marked card needs a unique,
+     human-readable label on data-syn-scroll-label. No blank accessible names. */
+  @supports (scroll-marker-group: after) and (anchor-name: --syn-media-rail) {
+    :where(.syn-root) .syn-media-rail--markers {
+      anchor-name: --syn-media-rail;
+      scroll-marker-group: after;
+      margin-block-end: 3.5rem;
+    }
+    :where(.syn-root) .syn-media-rail--markers::scroll-marker-group {
+      position: absolute;
+      position-anchor: --syn-media-rail;
+      inset-block-start: calc(anchor(bottom) + .5rem);
+      justify-self: anchor-center;
+      display: flex;
+      /* Keep every marker reachable inside the rail, even for 30+ cards. */
+      justify-content: safe center;
+      box-sizing: border-box;
+      inline-size: max-content;
+      max-inline-size: min(100%, anchor-size(self-inline, 100%), 30rem);
+      gap: .5rem;
+      padding: .375rem;
+      overflow-x: auto;
+      overflow-y: hidden;
+      overscroll-behavior-inline: contain;
+      scrollbar-width: thin;
+      scrollbar-color: var(--syn-frame) transparent;
+    }
+    :where(.syn-root) .syn-media-rail--markers > [data-syn-scroll-label]::scroll-marker {
+      content: attr(data-syn-scroll-label);
+      box-sizing: border-box;
+      flex: 0 0 1rem;
+      inline-size: 1rem;
+      block-size: 1rem;
+      overflow: hidden;
+      white-space: nowrap;
+      text-indent: 2rem;
+      border: 2px solid var(--syn-frame);
+      border-radius: 50%;
+      background: var(--syn-surface);
+      cursor: pointer;
+    }
+    :where(.syn-root) .syn-media-rail--markers > [data-syn-scroll-label]::scroll-marker:target-current {
+      background: var(--syn-accent);
+      border-color: var(--syn-accent);
+    }
+    :where(.syn-root) .syn-media-rail--markers > [data-syn-scroll-label]::scroll-marker:focus-visible {
+      outline: 3px solid var(--syn-focus-ring);
+      outline-offset: 3px;
+    }
+  }
+
+  :where(.syn-root) .syn-media-card {
+    min-inline-size: 0;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    position: relative;
+  }
+  :where(.syn-root) .syn-media-card__link {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+    border-radius: max(.375rem, var(--syn-radius));
+  }
+  :where(.syn-root) .syn-media-card__link:focus-visible {
+    outline: 3px solid var(--syn-focus-ring);
+    outline-offset: 3px;
+  }
+  :where(.syn-root) .syn-media-card__visual {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    aspect-ratio: var(--syn-media-card-ratio, 2 / 3);
+    border-radius: max(.375rem, var(--syn-radius));
+    background: var(--syn-surface-hi);
+    border: 1px solid var(--syn-border-subtle);
+  }
+  :where(.syn-root) .syn-media-card__visual :where(img, svg) {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+  :where(.syn-root) .syn-media-card__visual::after {
+    content: "";
+    position: absolute;
+    inset: 65% 0 0;
+    pointer-events: none;
+    background: linear-gradient(transparent, rgb(0 0 0 / 55%));
+  }
+  :where(.syn-root) .syn-media-card__badge {
+    position: absolute;
+    z-index: 1;
+    inset-block-end: .65rem;
+    inset-inline-start: .65rem;
+    padding: .25rem .5rem;
+    border-radius: .25rem;
+    font: 700 .75rem/1.25 var(--syn-font-ui, system-ui);
+    color: #fff;
+    background: rgb(5 7 14 / 85%);
+  }
+  :where(.syn-root) .syn-media-card__title {
+    margin: .15rem 0 .2rem;
+    font: 700 var(--syn-type-base, 1rem)/1.35 var(--syn-font-ui, system-ui);
+    overflow-wrap: anywhere;
+  }
+  :where(.syn-root) .syn-media-card__meta {
+    margin: 0;
+    color: var(--syn-muted);
+    font-size: var(--syn-type-sm, .875rem);
+  }
+  :where(.syn-root) .syn-media-card__action {
+    align-self: flex-start;
+    min-block-size: 2.75rem;
+    border: 1px solid var(--syn-border-default);
+    border-radius: var(--syn-radius);
+    padding: .5rem .75rem;
+    color: var(--syn-text);
+    background: var(--syn-surface);
+    cursor: pointer;
+    font: inherit;
+  }
+  :where(.syn-root) .syn-media-card__action:focus-visible {
+    outline: 3px solid var(--syn-focus-ring);
+    outline-offset: 2px;
+  }
+  :where(.syn-root) .syn-media-card__action:where(:hover, :active) {
+    border-color: var(--syn-border-hover);
+    background: var(--syn-surface-hi);
+  }
+
+  :where(.syn-root) .syn-media-search {
+    display: grid;
+    gap: .5rem;
+    max-inline-size: 38rem;
+    margin-block: 1.5rem;
+  }
+  :where(.syn-root) .syn-media-search > label { font-weight: 600; }
+  :where(.syn-root) .syn-media-search input[type="search"] {
+    min-inline-size: 0;
+    min-block-size: 2.75rem;
+    padding: .65rem 1rem;
+    border: 1px solid var(--syn-border-default);
+    border-radius: var(--syn-radius);
+    color: var(--syn-text);
+    background: var(--syn-surface);
+    font: inherit;
+  }
+  :where(.syn-root) .syn-media-search input:focus-visible {
+    outline: 3px solid var(--syn-focus-ring);
+    outline-offset: 2px;
+  }
+
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    :where(.syn-root) .syn-media-card__visual :where(img, svg) {
+      transition: transform var(--syn-duration-standard, 240ms) var(--syn-ease, ease);
+    }
+    :where(.syn-root) .syn-media-card__link:hover .syn-media-card__visual :where(img, svg) {
+      transform: scale(1.045);
+    }
+  }
+  @media (max-width: 48rem) {
+    :where(.syn-root).syn-media-shell,
+    :where(.syn-root) .syn-media-shell {
+      padding-block-end: calc(6.5rem + env(safe-area-inset-bottom, 0px));
+    }
+    :where(.syn-root) .syn-media-navigation__desktop { display: none; }
+    :where(.syn-root) .syn-media-navigation__mobile {
+      position: fixed;
+      z-index: 20;
+      inset-inline: 0;
+      inset-block-end: 0;
+      display: flex;
+      justify-content: space-around;
+      gap: .15rem;
+      padding: .5rem max(.5rem, env(safe-area-inset-left, 0px)) calc(.5rem + env(safe-area-inset-bottom, 0px));
+      border-block-start: 1px solid var(--syn-border-default);
+      background: var(--syn-surface);
+    }
+    :where(.syn-root) .syn-media-navigation__mobile .syn-media-navigation__link {
+      flex: 1 1 0;
+      padding-inline: .2rem;
+      font-size: .78rem;
+      text-align: center;
+    }
+    :where(.syn-root) .syn-media-hero {
+      min-block-size: 30rem;
+      background-position: var(--syn-media-hero-position, center);
+    }
+    :where(.syn-root) .syn-media-hero::before {
+      background: linear-gradient(0deg, rgb(5 7 14 / 96%) 0%, rgb(5 7 14 / 74%) 62%, rgb(5 7 14 / 25%) 100%);
+    }
+    :where(.syn-root) .syn-media-hero__content { padding: 1.5rem; }
+    :where(.syn-root) .syn-media-rail { --syn-media-rail-item-size: 11rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    :where(.syn-root) .syn-media-rail { scroll-behavior: auto; }
+    :where(.syn-root) .syn-media-card__visual :where(img, svg) {
+      transition: none;
+      transform: none;
+    }
+  }
+  @media (forced-colors: active) {
+    :where(.syn-root) .syn-media-hero {
+      color: CanvasText;
+      background: Canvas;
+      border-color: CanvasText;
+    }
+    :where(.syn-root) .syn-media-hero::before { background: none; }
+    :where(.syn-root) .syn-media-hero :where(.syn-media-hero__eyebrow, .syn-media-hero__description) { color: CanvasText; }
+    :where(.syn-root) .syn-media-rail--controls::scroll-button(*) {
+      forced-color-adjust: auto;
+      border-color: ButtonText;
+      color: ButtonText;
+      background: ButtonFace;
+      box-shadow: none;
+    }
+    :where(.syn-root) .syn-media-rail--markers > [data-syn-scroll-label]::scroll-marker {
+      border-color: ButtonText;
+      background: Canvas;
+    }
+    :where(.syn-root) .syn-media-rail--markers > [data-syn-scroll-label]::scroll-marker:target-current {
+      background: Highlight;
+      border-color: Highlight;
+    }
+    :where(.syn-root) .syn-media-card__visual,
+    :where(.syn-root) .syn-media-navigation__mobile,
+    :where(.syn-root) .syn-media-card__action { border-color: CanvasText; }
+    :where(.syn-root) .syn-media-card__badge { forced-color-adjust: none; background: Canvas; color: CanvasText; }
+    :where(.syn-root) :where(.syn-media-card__link, .syn-media-navigation__link, .syn-media-rail, .syn-media-card__action):focus-visible {
+      outline-color: Highlight;
+    }
+  }
+}

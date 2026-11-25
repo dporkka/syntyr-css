@@ -71,6 +71,17 @@ class NativeConsolePatternsTest(unittest.TestCase):
         self.assertIn('href="#deployments"', self.html)
         self.assertIn('href="#activity"', self.html)
 
+    def test_workspace_selector_is_native_and_does_not_claim_to_switch_identity(self):
+        self.assertIn('popovertarget="ops-workspaces"', self.html)
+        self.assertIn('aria-label="Choose example workspace: Northstar infrastructure"', self.html)
+        self.assertIn('id="ops-workspaces"', self.html)
+        self.assertIn('aria-label="Example workspaces"', self.html)
+        self.assertIn('aria-current="true"', self.html)
+        self.assertIn('aria-label="Close workspace choices"', self.html)
+        self.assertIn('href="#integration"', self.html)
+        self.assertIn("server-side membership", self.html)
+        self.assertNotIn('data-tenant-id=', self.html)
+
     def test_release_registry_keeps_example_public(self):
         self.assertIn('"operations-console.html"', (ROOT / "scripts/build_cloudflare_site.py").read_text())
         for name in ("README.md", "docs/index.html"):

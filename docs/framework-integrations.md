@@ -4,6 +4,109 @@ Syntyr is a **CSS presentation layer**, not a state manager, request client, or 
 It has no JavaScript initialization, no required build tool, and no runtime dependency.
 Every example uses the same `syn-` classes, CSS tokens and standard HTML.
 
+## Copy a catalog example into your stack
+
+The [49-example component catalog](catalog.html) has a **Copy HTML** action for
+snippets and an optional **Copy full page** action that includes the
+**actual required stylesheets**, the document shell and `.syn-root` theme
+scope. Copying uses docs-only JavaScript; view the ordinary HTML source
+without JavaScript. For complete layouts, choose the existing
+[99 MIT blocks](blocks.html) instead of rebuilding a pricing or dashboard
+section from scratch.
+
+The full-page option expects you to self-host the same **unreleased alpha.5**
+CSS files under `/dist/`; change those paths if your app uses `/public/css/`,
+`/assets/`, or a build-time import. Do not mix alpha.5 examples with
+published alpha.4 assets. Only load the CSS modules your example names;
+`syntyr.all.css` replaces these modules, not accompanies them.
+
+### Plain HTML or server-rendered partial
+
+Copy the full page, or add core once to your layout:
+
+```html
+<link rel="stylesheet" href="/dist/syntyr.core.css">
+<main class="syn-root" data-syn-theme="studio">
+  <article class="syn-panel">
+    <h1 class="syn-heading">Overview</h1>
+    <a class="syn-button" href="/reports">View reports</a>
+  </article>
+</main>
+```
+
+Use a real server route for `/reports`. For reusable HTML partials, place
+`.syn-root` on an ancestor that survives page/fragment replacements.
+
+### React / Next.js JSX
+
+Copy the component's *markup*, not the full `<!doctype>` page, into JSX.
+Import the CSS once in the application entry or root layout and use
+`className` and `htmlFor` instead of `class` and `for`:
+
+```jsx
+// Import /dist/syntyr.core.css once from the app's supported global CSS entry.
+export function SearchPanel() {
+  return (
+    <section className="syn-root syn-panel" data-syn-theme="studio">
+      <form action="/search" method="get" className="syn-form">
+        <label className="syn-label" htmlFor="search-term">Search records</label>
+        <input className="syn-input" id="search-term" name="q" type="search" />
+        <button className="syn-button" type="submit">Search</button>
+      </form>
+    </section>
+  );
+}
+```
+
+No client component or hydration is necessary just to style a form. The
+application route owns request handling and escaping.
+
+### Vue / Nuxt template
+
+Vue's template retains `class` and `for`; load CSS once using the framework's
+supported CSS entry. Native GET submission still works with scripting off:
+
+```vue
+<template>
+  <section class="syn-root syn-panel" data-syn-theme="studio">
+    <form class="syn-form" method="get" action="/search">
+      <label class="syn-label" for="vue-search">Search records</label>
+      <input class="syn-input" id="vue-search" name="q" type="search">
+      <button class="syn-button" type="submit">Search</button>
+    </form>
+  </section>
+</template>
+```
+
+### HTMX-enhanced native GET
+
+Keep the exact same HTML contract, adding HTMX attributes only if your app
+has deliberately loaded a pinned HTMX runtime:
+
+```html
+<section class="syn-root" data-syn-theme="studio">
+  <form action="/records" method="get" class="syn-form"
+        hx-get="/records" hx-target="#record-results" hx-push-url="true">
+    <label class="syn-label" for="record-query">Records</label>
+    <input class="syn-input" id="record-query" name="q" type="search">
+    <button class="syn-button" type="submit">Find</button>
+  </form>
+  <div id="record-results" aria-live="polite"></div>
+</section>
+```
+
+Without HTMX, this still submits an ordinary GET. With HTMX, the server must
+return a safe HTML fragment for normal HTMX requests, a **complete page** for
+direct navigation and history restoration, and correctly vary cached
+representations. Do not swap the stable `.syn-root`. Read the more detailed
+HTMX behavior and error contracts below before building production search.
+
+Some catalog examples demonstrate static UI rather than complete application
+behavior. Replace demo-relative URLs and duplicate IDs; validate accessibility,
+form submission, CSRF and authorization in your own app. Check the catalog's
+[browser compatibility and fallbacks](catalog.html#catalog-browser-support)
+for `popover`, named disclosures and invoker commands.
+
 ## Choose one styling mode
 
 1. **Explicit classes (recommended for apps):** load `syntyr.core.css`, use
@@ -37,6 +140,8 @@ control stateful, disabled, or accessible by itself.
 For accessible advanced menus, comboboxes and toasts, see the [optional headless interaction guide](headless-interactions.md). All framework JavaScript remains application-owned.
 
 ## HTMX: progressive enhancement
+
+For a dedicated collection of 12 copy-owned patterns (tables, search, forms, dialogs, polling and loading feedback), see the [HTMX components guide](htmx-components.html) and [live server-backed playground](htmx-playground.html). These recipes reuse existing Syntyr classes and an independently removable, CSS-only request-state adapter.
 
 For a **Go standard-library runnable starter** with no third-party Go modules,
 see [examples/go-htmx](https://github.com/dporkka/syntyr-css/tree/main/examples/go-htmx). The default server runs
@@ -133,6 +238,93 @@ while keeping the identical Syntyr CSS, class names, and stable theme root.
 This is not a claim that every HTMX extension or version-specific behavior
 is drop-in compatible.
 
+
+## Composable server HTML components (Go standard library)
+
+Syntyr components do not require a browser runtime or React-style hydration.
+To make server-side **composition** concrete, the
+[Go standard-library component example](https://github.com/dporkka/syntyr-css/tree/main/examples/server-components-go)
+provides five copy-owned `html/template` partials: labeled search field,
+status/error notice, button, result table and pagination. It includes a
+runnable GET-only example and tests for HTML escaping, server validation,
+`aria-describedby`, and encoded query-preserving links. No new stylesheet,
+JavaScript dependency, component protocol or Go library is introduced.
+
+```go-html-template
+<form action="/" method="get" role="search" class="syn-form">
+  {{template "syn.field" .Query}}
+  {{template "syn.button" .SearchButton}}
+</form>
+{{template "syn.table" .Records}}
+{{template "syn.pagination" .Pager}}
+```
+
+The input values come from your server. Each component emits ordinary HTML
+with classes already in `syntyr.core.css`, and `html/template` contextually
+escapes untrusted data. The app owns distinct IDs, request validation, query
+encoding, CSRF for mutation forms, authorization and error status codes.
+For HTMX/Datastar/Turbo responses, render the same partials into fragments,
+but retain full-page rendering for direct navigation and history restoration.
+This is an **example**, not a new Syntyr runtime API or a claim of an official
+adapter for every backend language. See the
+[copyable template README](https://github.com/dporkka/syntyr-css/blob/main/examples/server-components-go/README.md)
+for the complete contract and setup instructions.
+
+### Additional copy-owned server component adapters
+
+The [Go templ adapter](https://github.com/dporkka/syntyr-css/tree/main/examples/server-components-templ)
+uses the same five native HTML component contracts as the Go standard-library
+example, with independent `Field`, `Notice`, `Button`, `Table` and
+`Pagination` components. It has an isolated, pinned `github.com/a-h/templ`
+build-time/runtime module dependency (Go 1.26+); run `templ generate` before
+tests or starting the example. Generated Go code is not checked in.
+
+The [Node.js standard-library adapter](https://github.com/dporkka/syntyr-css/tree/main/examples/server-components-node)
+exposes corresponding composable HTML functions. It requires no npm packages;
+Node owns request routing and escaping, and the example serves a single
+allowlisted CSS asset. Pagination links are root-relative and use
+`URLSearchParams`, not interpolation of arbitrary URLs. Run its built-in
+`node --test` suite to exercise escaped values, safe links, error linkage,
+HTTP methods and GET fallback.
+
+These integrations are **copy-owned examples**, not npm exports or shipped
+runtime packages. They reuse `syntyr.core.css` and the same semantic HTML;
+none adds a JavaScript controller, hydration requirement, new `syn-*` class,
+CSS module or runtime to Syntyr's core. Each server must still handle its own
+user permissions, CSRF defenses for mutations, status codes, and navigation.
+
+### HTMX and Datastar fragments built from the same components
+
+The [Node.js HTML fragment demo](https://github.com/dporkka/syntyr-css/tree/main/examples/server-components-node/fragments)
+reuses the **same copy-owned** `field`, `notice`, `button`, `table` and
+`pagination` functions from the Node.js adapter for both initial HTML pages
+and optional HTMX/Datastar updates. It requires no npm packages or new
+Syntyr component runtime. Run `node examples/server-components-node/fragments/server.mjs`
+from the repo root, after building CSS, to open `/htmx` and `/datastar`.
+
+- **HTMX 2.0.8:** native GET fallback, fragments targeting a stable
+  `#resource-workspace`, `hx-push-url` for searchable history, and complete
+  HTML for `HX-History-Restore-Request`. A tiny app-owned external script
+  explicitly permits swapping *only* server-marked HTTP 422 validation
+  fragments, while normal GET errors retain HTTP 400. Cache output varies
+  by the HTMX request/history headers.
+- **Datastar v1.0.5:** ordinary GET fallback and a pinned, optional
+  enhancement that sends `datastar` JSON signals, receives
+  `event: datastar-patch-elements` through SSE and morphs the same component
+  HTML. Signal input is bounded and type-checked; the serialized SSE patch
+  is flattened to a single `data:` line *after* HTML escaping. `Vary: Accept`
+  distinguishes ordinary pages from SSE. Bad signals receive HTTP 400;
+  field-validation errors for valid SSE requests are represented accessibly
+  inside a successful event response.
+
+In both modes, `.syn-root` persists outside the replaceable fragment;
+existing `syn-*` selectors and tokens are unchanged. Browser scripts belong
+solely to the **demo app** (pinned external URLs in the example), not to
+Syntyr Core. Self-host your browser dependencies and set an appropriate CSP
+before production use. The example handles **read-only GET requests only**;
+server authorization and CSRF protections for writes remain application-owned.
+The [example README](https://github.com/dporkka/syntyr-css/blob/main/examples/server-components-node/fragments/README.md)
+contains reproducible HTTP and optional Chromium browser tests.
 
 ## Server-driven HTML: optional request-state bridge
 
@@ -479,6 +671,28 @@ Import the same CSS once. Bind native classes, `aria-*`, and
 `data-syn-state` using each framework's built-in template syntax.
 Do not wrap simple visual classes in additional runtime components unless the
 application benefits from reusable semantic component boundaries.
+
+### Runnable SvelteKit 3 form-action and nested-layout reference
+
+[examples/sveltekit](https://github.com/dporkka/syntyr-css/tree/main/examples/sveltekit)
+is a self-contained SvelteKit 3 app with a native HTML POST form and optional
+`use:enhance`. It uses existing Syntyr `syn-field`, `syn-error-summary`,
+`syn-operation-feedback`, `syn-app-shell`, `syn-detail-layout`, and
+`syn-panel` classes rather than introducing framework-specific CSS.
+
+The root `+layout.svelte` provides the persistent application shell, while
+`settings/+layout.svelte` composes a nested content and inspector layout.
+A small `AppPanel.svelte` shows Svelte 5 named `actions` and `footer`
+snippets; they are owned by SvelteKit, not by a new Syntyr templating runtime.
+`settings/+page.server.js` handles server validation and sends either
+an action failure or a success acknowledgement. A normal browser POST is
+functional without JavaScript; enhancement only adds in-flight feedback
+and error-summary focus management. The example **does not persist data**
+and is not a production authentication or CSRF implementation.
+
+From the repository root, first generate CSS with `python3 scripts/build.py`,
+then run `cd examples/sveltekit && npm install && npm run test && npm run build`.
+The root Syntyr package still has zero required JavaScript dependencies.
 
 ## Astro, Hugo, Zola, Django, Rails, Go/templ and Rust templates
 

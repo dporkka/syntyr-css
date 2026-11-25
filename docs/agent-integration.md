@@ -28,6 +28,7 @@ runtime dependencies, connect to services, or publish a package:
 
 ```sh
 python3 scripts/syntyr_agent.py init --project /path/to/my-app --json
+python3 scripts/syntyr_agent.py info --project /path/to/my-app --json
 python3 scripts/syntyr_agent.py check --project /path/to/my-app --json /path/to/my-app/page.html
 ```
 
@@ -46,8 +47,16 @@ Choose `--release 0.3.0-alpha.5` only when deliberately testing the
 actually present in the selected CSS files; source-only selectors cannot
 appear in an alpha.4 reference.
 
-`check` validates the installed CSS asset hashes and literal `.html` files
-against that project's pinned release, returning structured, source-located
+`info` is read-only project discovery for coding agents. It reports the configured
+release (published or source candidate), its actual pinned CSS asset hashes and
+integrity statuses, supported themes, and portable Skill/reference paths. Exit
+code **0** means the pinned installation is healthy, **1** means degraded or
+invalid, and **2** means the project was not initialized. Do not infer active
+stylesheet imports or framework support from this inventory: the host
+application must still load and test the appropriate CSS. The command does
+not scan application code or need application dependencies.
+
+`check` validates the installed CSS asset hashes and literal `.html` files\nagainst that project's pinned release, returning structured, source-located
 JSON diagnostics. Its exit codes are **0** for checked and error-free HTML,
 **1** for errors, and **2** for incomplete coverage (for example, JSX/TSX or
 no HTML files). It is not a React/Vue/Svelte parser or a browser accessibility
@@ -102,3 +111,30 @@ The consolidated reference is deterministic and checked in CI through the Python
 ## What Syntyr does not do
 
 Syntyr styles browser HTML/CSS. It does not supply a JavaScript component runtime, chart rendering engine, AI API, CRUD handlers, form submission or remote data access. The optional local read-only MCP adapter is a separate developer tool, never a CSS runtime dependency. Use your existing application technology for those responsibilities.
+
+## Deterministic section composition (source candidate)
+
+From a source checkout, optional Node.js 22+ authoring tooling can discover the
+canonical website section fields and assemble ordinary HTML without a model
+generating arbitrary tags. No npm install or browser-side JavaScript is needed.
+This is separate from the Python-only CSS build and the immutable alpha.4 release.
+
+```sh
+node scripts/compose.mjs --list 0.3.0-alpha.5
+node scripts/compose.mjs <<'JSON'
+{"release":"0.3.0-alpha.5","title":"Product demo","theme":"studio","sections":[{"section_id":"hero-product","fields":{"text2":"A clearer workspace."}},{"section_id":"faq"}]}
+JSON
+```
+
+The JSON result includes an editable `syntyr.page.v1` project, complete HTML,
+required `syntyr.all.css` and a list of local image assets. Save the HTML next
+to the matching candidate stylesheet from `dist/` and copy the listed assets
+from `assets/` into an `assets/` directory alongside the HTML. The source
+model validates field names and values, escapes content, scopes repeated IDs
+and uses its existing safe-link fallback. Section order is preserved. Only
+known canonical sections and 1–50 section instances are accepted.
+
+This generator produces the static section layer; it does not compose or
+install host widget controllers, implement routes/forms, generate production
+copy, or certify accessibility. Review example content and destinations, and
+use the release-pinned markup validator and real browser tests before shipping.

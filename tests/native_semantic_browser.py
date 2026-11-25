@@ -71,6 +71,15 @@ def run():
                             "() => document.documentElement.scrollWidth - document.documentElement.clientWidth"
                         )
                         assert overflow <= 1, (engine, width, size, "enlarged-font overflow", overflow)
+                        for control in ("#design-file", "#design-color"):
+                            element = page.locator(control)
+                            bounds = element.bounding_box()
+                            assert bounds is not None
+                            assert bounds["width"] >= 0 and bounds["x"] + bounds["width"] <= width + 1, (
+                                engine, size, control, "native control exceeded viewport", bounds)
+                        table_region = page.get_by_role("region", name="Example data table")
+                        table_region.focus()
+                        assert table_region.evaluate("(el) => document.activeElement === el")
                         kbd = page.get_by_text("Control+Alt+Shift+ArrowRight", exact=True)
                         rect = kbd.bounding_box()
                         assert rect is not None and rect["width"] <= width - 2, (engine, size, "long kbd overflow", rect)

@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Syntyr supplies styling; native HTML owns ordinary behavior. Use the native primitive that matches the task rather than treating every popup as a menu.">
+  <meta name="syntyr-source-sha256" content="53dd0e0f7e1bcadc2cc569470aee01c25105758066c0368833e2a036cbdf2a85">
+  <meta name="theme-color" content="#f5f7fb">
+  <title>Dropdowns and selects — Syntyr CSS docs</title>
+  <link rel="canonical" href="https://syntyr-css.pages.dev/docs/dropdowns">
+  <link rel="alternate" type="text/markdown" href="dropdowns.md" title="Markdown source">
+  <link rel="icon" href="../assets/syntyr-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="docs.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <a class="syn-button docs-skip" href="#doc-main">Skip to guide</a>
+  <div class="syn-shell">
+    <header class="syn-header docs-header">
+      <a class="syn-logo" href="../index.html">SYNTYR / CSS</a>
+      <nav class="syn-nav" aria-label="Documentation navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav>
+      <details class="site-mobile-menu"><summary>Menu</summary><nav aria-label="Mobile navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav></details>
+    </header>
+    <main id="doc-main" class="docs-article-page">
+      <nav class="syn-breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="reference.html">Documentation</a></li><li aria-current="page">Dropdowns and selects</li></ol></nav>
+      <header class="docs-article-heading">
+        <p class="syn-eyebrow">SYNTYR / DOCUMENTATION</p>
+        <p class="syn-muted">Current source documentation may describe unreleased alpha.5 features. <a href="distribution.html">Check released version compatibility.</a></p>
+        <p class="syn-caption">Prefer a machine-readable version? <a href="dropdowns.md">Markdown source</a> · <a href="../llms.txt">LLM index</a></p>
+      </header>
+      <div class="docs-article-layout">
+        <article class="docs-prose" aria-label="Dropdowns and selects">
+<h1 id="dropdowns-and-selects">Dropdowns and selects</h1>
+<p>Syntyr supplies styling; native HTML owns ordinary behavior. Use the <strong>native</strong> primitive that matches the task rather than treating every popup as a menu.</p>
+<h2 id="choose-the-right-primitive">Choose the right primitive</h2>
+<table>
+<thead>
+<tr>
+<th>Need</th>
+<th>Use</th>
+<th>Keyboard</th>
+<th>Runtime</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Select one value in a form</td>
+<td><code>&lt;select class=&quot;syn-select&quot;&gt;</code></td>
+<td>Native select keys</td>
+<td>None</td>
+</tr>
+<tr>
+<td>Open a set of ordinary links/buttons</td>
+<td><code>[popover].syn-popover.syn-dropdown</code></td>
+<td>Tab and Escape</td>
+<td>None</td>
+</tr>
+<tr>
+<td>Show expandable information</td>
+<td><code>&lt;details class=&quot;syn-details&quot;&gt;</code></td>
+<td>Native disclosure keys</td>
+<td>None</td>
+</tr>
+<tr>
+<td>Desktop-style application menu</td>
+<td>Optional <code>enhanceMenu()</code> adapter</td>
+<td>ArrowDown, ArrowUp, Home, End, typeahead</td>
+<td>Explicit opt-in module</td>
+</tr>
+<tr>
+<td>Select several values in a form</td>
+<td><code>&lt;select class=&quot;syn-select&quot; multiple name=&quot;regions&quot;&gt;</code></td>
+<td>Native multi-select keys</td>
+<td>None</td>
+</tr>
+<tr>
+<td>Autocomplete or hierarchical menu</td>
+<td>Use an accessible, tested application widget</td>
+<td>Full ARIA pattern</td>
+<td>App-owned</td>
+</tr>
+</tbody>
+</table>
+<p>The no-JS example is <a href="https://syntyr-css.pages.dev/examples/dropdowns.html">examples/dropdowns.html</a>. The native Popover API provides light dismissal and Escape behavior in supporting browsers. Older browsers need an alternative if the actions are essential.</p>
+<h2 id="scriptless-action-panel">Scriptless action panel</h2>
+<pre tabindex="0"><code class="language-html">&lt;button type=&quot;button&quot; class=&quot;syn-button&quot; popovertarget=&quot;record-actions&quot;&gt;Actions&lt;/button&gt;
+&lt;div id=&quot;record-actions&quot; popover class=&quot;syn-popover syn-popover--anchored syn-dropdown&quot;&gt;
+  &lt;p class=&quot;syn-dropdown__group-label&quot;&gt;Record&lt;/p&gt;
+  &lt;a class=&quot;syn-dropdown__item&quot; href=&quot;/records/123&quot;&gt;View record&lt;/a&gt;
+  &lt;button type=&quot;button&quot; class=&quot;syn-dropdown__item&quot; popovertarget=&quot;record-actions&quot;
+          popovertargetaction=&quot;hide&quot;&gt;Close&lt;/button&gt;
+&lt;/div&gt;
+</code></pre>
+<p><strong>Do not add <code>role=&quot;menu&quot;</code> to this pattern.</strong> The browser's normal Tab navigation is intentional. Use buttons for actions and links for navigation. <code>aria-disabled=&quot;true&quot;</code> alone does not suppress navigation or handlers; use real <code>disabled</code> buttons or enforce the disabled condition in the application.</p>
+<p>The dropdown CSS supplies compact rows, dividers, group headings, optional keyboard shortcut labels, selected and danger visual treatments, max-block-size scrolling, and a viewport-positioned fallback when anchor positioning is unsupported. Show shortcut hints only for real, implemented keybindings; use <code>aria-hidden=&quot;true&quot;</code> for redundant decorative key glyphs.</p>
+<h2 id="customizable-native-select-experimental">Customizable native select (experimental)</h2>
+<pre tabindex="0"><code class="language-html">&lt;label class=&quot;syn-label&quot; for=&quot;region&quot;&gt;Region
+  &lt;select id=&quot;region&quot; name=&quot;region&quot; class=&quot;syn-select syn-select--enhanced&quot;&gt;
+    &lt;option value=&quot;north&quot;&gt;North&lt;/option&gt;&lt;option value=&quot;south&quot;&gt;South&lt;/option&gt;
+  &lt;/select&gt;
+&lt;/label&gt;
+</code></pre>
+<p>The opt-in <code>base-select</code> appearance and <code>::picker(select)</code> styles are wrapped in <code>@supports (appearance: base-select)</code>. They do not replace the element or its value/submission semantics. Test the actual browser/OS/version you support; custom picker rendering is not uniform across engines. Do not expect arbitrary option markup to work everywhere.</p>
+<h2 id="optional-application-menu-adapter">Optional application menu adapter</h2>
+<p>Only enable this if an application needs WAI-ARIA menu keyboard interactions. This module is <strong>not loaded by the CSS</strong>, and importing it does not auto-initialize menus.</p>
+<pre tabindex="0"><code class="language-html">&lt;button type=&quot;button&quot; class=&quot;syn-button&quot; popovertarget=&quot;editor-menu&quot;&gt;Editor actions&lt;/button&gt;
+&lt;div id=&quot;editor-menu&quot; popover data-syn-menu aria-label=&quot;Editor actions&quot;
+     class=&quot;syn-popover syn-popover--anchored syn-dropdown&quot;&gt;
+  &lt;button type=&quot;button&quot; class=&quot;syn-dropdown__item&quot; data-syn-menu-item&gt;Rename&lt;/button&gt;
+  &lt;button type=&quot;button&quot; class=&quot;syn-dropdown__item&quot; data-syn-menu-item&gt;Duplicate&lt;/button&gt;
+  &lt;button type=&quot;button&quot; class=&quot;syn-dropdown__item&quot; data-syn-menu-item disabled&gt;Archive&lt;/button&gt;
+&lt;/div&gt;
+&lt;script type=&quot;module&quot;&gt;
+  // Copy the exported menu.mjs to your public/assets directory.
+  import { enhanceMenu } from '/assets/syntyr-menu.mjs';
+  const dispose = enhanceMenu(document.getElementById('editor-menu'));
+  // Call dispose() if the host framework unmounts this menu.
+&lt;/script&gt;
+</code></pre>
+<p>The browser-resolvable URL above assumes you have copied the exported
+integrations/dropdown/menu.mjs to /assets/syntyr-menu.mjs in your application.
+When using a bundler instead, import from the package subpath
+@syntyr/css/menu.mjs. Neither path is automatically installed as a public
+URL by the CSS framework. The adapter rejects popover=&quot;manual&quot; because
+manual popovers do not natively dismiss on Escape.</p>
+<p>The adapter sets and restores the trigger's <code>aria-haspopup</code>, <code>aria-controls</code>, and <code>aria-expanded</code> attributes. It enables <code>role=&quot;menu&quot;</code>, menuitem semantics, ArrowDown/ArrowUp navigation, Home/End, typeahead, and initial focus only after it starts. Without JavaScript, the same markup remains a normal set of tabbable controls. Escape uses native popover dismissal. Checkboxes, radio groups, nested submenus and searchable comboboxes are <strong>not</strong> provided; don't use their ARIA roles without implementing and testing their full behavior.</p>
+<h2 id="qa-checklist">QA checklist</h2>
+<p>Test at 320px and 400% zoom, with long translated labels, RTL direction, touch, keyboard-only Tab / Shift+Tab / Escape, and screen reader announcements (NVDA/Firefox, VoiceOver/Safari, or Orca/Firefox). Check selected/disabled items, forced colors, reduced motion, multiple simultaneous menus, and near-viewport-edge anchor placement. Automated assertions are necessary but not a substitute for manual screen reader review.</p>
+        </article>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+<a class="docs-article-toc-link docs-article-toc-2" href="#choose-the-right-primitive">Choose the right primitive</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#scriptless-action-panel">Scriptless action panel</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#customizable-native-select-experimental">Customizable native select (experimental)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#optional-application-menu-adapter">Optional application menu adapter</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#qa-checklist">QA checklist</a>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#choose-the-right-primitive">Choose the right primitive</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#scriptless-action-panel">Scriptless action panel</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#customizable-native-select-experimental">Customizable native select (experimental)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#optional-application-menu-adapter">Optional application menu adapter</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#qa-checklist">QA checklist</a>
+            </nav>
+          </details>
+        </aside>
+      </div>
+      <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="dropdowns.md">Markdown source</a></nav>
+    </main>
+    <footer class="syn-header"><span class="syn-caption">SYNTYR CSS · MIT CORE · EXPERIMENTAL</span><a href="../index.html">Home</a></footer>
+  </div>
+</body>
+</html>

@@ -105,7 +105,9 @@ class NativeInteractionRecipes(unittest.TestCase):
         self.assertIn('native-interactions.html', readme)
         self.assertIn('Native interaction recipes', docs)
         self.assertIn('Application-owned behavior', docs)
-        self.assertIn('16 examples available.', catalog)
+        card_count = catalog.count('class="catalog-card syn-panel"')
+        self.assertGreaterEqual(card_count, 16)
+        self.assertIn(f'{card_count} examples available.', catalog)
         for name in ('Exclusive accordion', 'GET search form', 'Confirmation dialog',
                      'Datalist suggestions', 'Meter and output'):
             with self.subTest(name=name):

@@ -2,6 +2,8 @@
 
 **Experimental v0.3.0-alpha.5 (unreleased candidate)** — framework-neutral, low-dependency, CSS-first styling for modern SaaS apps, professional business websites and optional cinematic Grid/Noir designs.
 
+**What can users install or buy today?** See the [release and commercial readiness overview](docs/launch-status.md). Published alpha.4 remains usable now; alpha.5, npm distribution, and paid kits have separate approval gates.
+
 ## Quick start — published alpha.4
 
 Copy the HTML below into `index.html` and open it in a browser. It uses the
@@ -54,32 +56,48 @@ stylesheets.
 - **Independent visual intensity:** optional `data-syn-intensity="quiet|standard|cinematic"` controls decorative effects without changing the theme, component semantics or runtime JavaScript contract.
 - **Two modes:** explicit component classes, and a Pico-like *optional* `.syn-semantic` mode.
 - **Modular:** separate core, semantic and decorative effects files; includes convenience bundles.
+- **Optional website animations (alpha.5 source):** fade, slide, zoom and emphasis presets with finite/infinite loop controls and a native Web Animations API helper ([guide](docs/animation.md)).
 - **Real navigation and loading states:** semantic breadcrumbs, touch-friendly page links, and static accessible skeleton placeholders.
 - **No installation:** copy prebuilt CSS. Python 3 is used only by maintainers to regenerate it.
-- **Opt-in universal registry (alpha.5 source):** 20 free copy-owned HTML blocks plus 8 CSS modules in shadcn-compatible static JSON; no consumer runtime dependency. See [blocks guide](docs/blocks-guide.md).
+- **Visual page starters + offline images (alpha.5 source):** four editable complete-site starting layouts (portfolio, agency, SaaS, local business); replace original gallery examples with local PNG/JPEG/WebP photos and export a self-contained static ZIP without JavaScript. Editor JSON retains photos. [Builder](docs/page-builder.html).
+- **Static page composition (alpha.5 source):** browse and rearrange all 99 copy-owned sections in the optional visual builder, then download a self-hostable HTML/CSS/image ZIP without application JavaScript. Backend forms remain host-owned. [Builder](docs/page-builder.html).
+- **Opt-in universal registry (alpha.5 source):** 99 copy-owned HTML blocks plus 9 CSS modules in shadcn-compatible static JSON; no consumer runtime dependency. See [blocks guide](docs/blocks-guide.md).
 
 ## Live gallery and installation
 
+* [Three-page SaaS marketing site starter](examples/site-starters/saas-marketing/README.md): original responsive hero, features, workflow, pricing, about and native FAQs; [live source preview](https://syntyr-css.pages.dev/examples/site-starters/saas-marketing/) and dependency-free offline export with `scripts/export_site_starter.py`; [separate Vercel/Netlify deployment guide](deploy/saas-marketing/README.md). Illustrative alpha.5 source, not a commercial SaaS product.
+
+
 - [Live website on Cloudflare](https://syntyr-css.pages.dev/)
+- [Tailwind alternative decision guide](docs/tailwind-alternative.html): honest tradeoffs against Tailwind v4 and plain CSS, free SaaS demos, and HTML-first adoption guidance.
+- [Server-rendered validation states](examples/form-state-contracts.html) and [dependency-aware, collision-safe local registry planner](docs/blocks-guide.md) (unreleased alpha.5 candidate).
 - [Native enterprise data table example](examples/data-tables.html) and [accessible table guide](docs/data-tables.html)
+- [Design resources directory](https://syntyr-css.pages.dev/docs/design-resources.html): curated galleries, design systems, accessibility, typography, motion and Syntyr study priorities.
 - [Component gallery](https://syntyr-css.pages.dev/docs/)
 - [Common HTML and UI example](examples/common-ui.html): navigation links, avatars, chips, list groups, notices and native form controls; no JavaScript
+- [SaaS settings and billing showcase](examples/settings-billing.html): original three-level navigation, annual/monthly price comparison, current-plan states, and responsive billing workspace; static illustrative data, no JavaScript or live subscription actions
 - [Native HTML elements demo](examples/native-elements.html): lists, code, media, forms, progress, and native overlays with optional semantic CSS
-- [20 copy-owned blocks, 12 CSS textures, 6 typography directions, and 24 SVG icons](https://syntyr-css.pages.dev/docs/blocks.html) ([authoring guide](docs/blocks-guide.md))
+- [99 copy-owned blocks, 12 CSS textures, 6 typography directions, and 150 SVG icons](https://syntyr-css.pages.dev/docs/blocks.html) ([authoring guide](docs/blocks-guide.md))
 - [Practical installation, integration and performance guides](https://syntyr-css.pages.dev/docs/guides.html)
-- [Searchable, copyable component catalog](docs/catalog.html)
+- [Task-based How-To tutorials](docs/how-to.html): search 10 native HTML workflows and edit 20 existing MIT blocks in the sandboxed CodeMirror playground (unreleased alpha.5 source candidate)
+- [Searchable, copyable component catalog](docs/catalog.html) with theme and width previews; [generated, portable gallery manifest](metadata/component-gallery.v1.json) for visual builders
+- [Media & Entertainment collection](docs/media-entertainment.md) and [original CSS-only example](examples/media-entertainment.html)
 - [Shared design principles, component-state matrix and native composition patterns](docs/design-principles.md) ([dependency-free 84-pair contrast audit](scripts/design_conformance.py)).
 - [Canonical DESIGN.md contract](DESIGN.md): Google-compatible Studio tokens generated from CSS, component states, accessibility rules, and AI implementation guidance ([sync/check tool](scripts/sync_design_md.py)).
 - [AI / coding agent quickstart](docs/ai-quickstart.md) and [agent integration guide](docs/agent-integration.md) (includes optional offline `init`/`check` CLI for portable consumer Skills and version-pinned HTML validation)
 - [LLM documentation index](llms.txt), [full public reference](llms-full.txt), and [validated curated component manifest](metadata/components.json)
 - [Optional local read-only MCP server](agent_mcp/README.md) (separate Python SDK, no CSS runtime dependency)
-- [Portable Syntyr consumer Agent Skill](agents/syntyr/SKILL.md) (manual opt-in, not automatically installed)
+- [Portable Syntyr consumer Agent Skill](agents/syntyr/SKILL.md) (manual opt-in, not automatically installed); read-only project inventory via `python3 scripts/syntyr_agent.py info --project /path/to/app --json`
 - [Per-component CSS imports and native HTML patterns](docs/native-patterns.md), [static demo](examples/native-recipes.html)
+- [Optional keyboard command launcher](examples/command-launcher.html): existing command-panel CSS with native dialog, safe filtering, Ctrl/⌘ + K, and a script-free destination list (alpha.5 source candidate).
 - [Native interaction recipes](https://syntyr-css.pages.dev/examples/native-interactions.html): exclusive accordions, GET search, dialog confirmations, datalist, meter/output without application JavaScript
 - [Intrinsic sidecar and cluster layouts](docs/composition-adoption.md), [zero-JS example](examples/composition-adoption.html): container-width wrapping and configurable alignment
 - [Runnable Go + html/template + optional HTMX](examples/go-htmx/README.md): native GET fallback, escaped queries and tested HTML fragments
+- [Runnable Go resource workbench](examples/go-resource-workbench/README.md): real server-side filtering, pagination, safe bulk previews and local-only POST edits with signed CSRF form tokens; zero frontend JavaScript
+- [Native and headless interaction recipes](docs/interaction-recipes.md): candidate-only runnable examples, behavior ownership and regression evidence.
 - [Optional headless interactions](docs/headless-interactions.md): accessible Radix menus/toasts and React Aria combobox source example; no core JavaScript dependency
 - [Copy-owned form recipes](docs/component-recipes.md), [live form compositions](https://syntyr-css.pages.dev/examples/form-composition.html), and [optional Radix styling adapter](docs/radix-integration.md)
+- [Form customizer](docs/form-builder.html): build, preview, and export progressively enhanced HTML forms with no JavaScript required on the published form
 - [GitHub Pages mirror](https://dporkka.github.io/syntyr-css/)
 - [Tagged GitHub releases](https://github.com/dporkka/syntyr-css/releases)
 - [Architecture, API stability and low-entropy maintenance policy](ARCHITECTURE.md)
@@ -95,6 +113,7 @@ stylesheets.
 - [Performance and design polish guide (no size gate)](docs/performance-and-polish.md)
 - [Progressive loading and critical CSS decision guide](docs/progressive-loading.md) and [zero-JS performance-first example](examples/performance-first.html)
 - [WordPress, Wix, Shopify, Webflow, Framer and CMS/site-builder installation](docs/site-builders.md) (13 platform-specific SEO guides, unlayered alpha.5 embed CSS, WordPress/Shopify source examples, and host-theme isolation fixture).
+- [Framework-independent CMS starter (Sveltia CMS + Pages CMS)](examples/cms-starter/README.md): portable JSON blocks, native HTML/CSS renderer and optional Git-backed editors ([integration guide](docs/cms-integration.md)); experimental alpha.5 source.
 - [Framework integrations: LiveView, Livewire, Hotwire/Turbo, HTMX, Go templ and frontend stacks](docs/framework-integrations.md)
 - [Mobile integration: React Native / Expo native tokens, plus Flutter, SwiftUI, Compose and Ionic](docs/mobile-frameworks.md) (opt-in alpha.5 source adapter; no native CSS runtime)
 - [Runnable Expo SDK 58 native test fixture](examples/expo-native-smoke/README.md) (native component tests, Android/iOS Metro exports; native simulator/device verification still required)
@@ -112,10 +131,12 @@ stylesheets.
 - [Design research: Linear, Resend, and developer tooling](docs/design-research-linear-resend.md)
 - [Premium CSS-only compositions](docs/premium-compositions.md) and [Studio/Grid/Noir live gallery](examples/premium-compositions.html): layered surfaces, detail inspector, command presentation, timeline, and showcase
 - [Optional interactive theme editor (documentation-only JavaScript)](docs/theme-editor.html)
+- [Optional framework-independent copy interaction](docs/clipboard.md): separate native ESM, no mandatory JS; [runnable HTML demo](examples/copy.html)
 - [Interactive component playground — live prerelease preview](https://8cfcb0ce.syntyr-css.pages.dev/docs/playground.html) ([permanent site URL after merge](https://syntyr-css.pages.dev/docs/playground.html); [HTML source](docs/playground.html))
 - [Agent-readable composition recipes with validated slots, variants and stylesheet requirements](docs/editor-integration.md#agent-ready-composition-recipes)
-- [Editor autocomplete, full component contract and optional static HTML diagnostics](docs/editor-integration.md) (`metadata/syntyr-contract.json`, `scripts/syntyr_check.py`)
+- [Editor autocomplete, full component contract, class/token namespace collision audit and optional static HTML diagnostics](docs/editor-integration.md) (`metadata/syntyr-contract.json`, `scripts/syntyr_check.py`)
 - [Tailwind v4 interoperability, local VS Code extension, and Figma token exports](docs/ecosystem-integrations.md) (opt-in alpha.5 source adapters)
+- [Static-site generators: Astro, Eleventy, Hugo, Jekyll, Zola and Next.js export](docs/static-site-generators.md) ([runnable Eleventy example](examples/eleventy/))
 - [Runnable Tailwind v4, Astro and shadcn-token adoption projects](docs/adoption-starters.md) and [editable Figma component kit pilot](docs/figma-component-kit.md)
 - [Opt-in shadcn/ui semantic token bridge](docs/shadcn-integration.md), [official CLI-generated React/Radix example](examples/syntyr-shadcn-react/), [Chromium visual regression](docs/visual-regression.md), and [release readiness](docs/release-readiness-ecosystem.md)
 - [Accessibility and browser-matrix methodology](docs/accessibility.md)
@@ -133,20 +154,37 @@ stylesheets.
 - [Alpha.5 manual accessibility review checklist](docs/accessibility-alpha5-review.md)
 - [Advanced frame and terminal lab](examples/geometry-terminal.html) with [geometry integration guide](docs/geometry-terminal.md) and [interactive geometry mixer](docs/playground.html#geometry-title)
 - [Quiet / standard / cinematic intensity comparison](examples/intensity-geometry.html) with [composability guide](docs/visual-intensity.md): independent effect controls, composable frame accents, and nested presets without JavaScript
+- [ASCII effects gallery](examples/ascii.html) and [ASCII effects guide](docs/ascii-effects.md): optional source-candidate styling and finite CSS motion, no runtime.
 - [Optional SVG icons, Unicode markers and ASCII/box-drawing demo](examples/symbols.html) with [copy-paste guide](docs/symbols.md)
+- [CSS-only geospatial schematic demo](examples/geo.html) and [renderer-neutral GIS styling guide](docs/geo.md): optional `syntyr.geo.css` map/list/inspector workspace, markers, legends, layers and attribution with no bundled map engine (unreleased source candidate)
 - [Opt-in enterprise data-grid CSS module](docs/data-grid.md), with [static styling example](examples/data-grid.html): framework-neutral, no JavaScript, reusable ARIA states, density and aligned column primitives.
 - [Seven-theme static visualization gallery](examples/viz.html) and [Syntyr Viz guide](docs/viz.md): charts, sparklines, bar lists, status trackers and heatmaps, no runtime JavaScript
 - [Three flagship visual compositions](docs/visual-composition.md): [Studio operations](examples/flagship-studio.html), [Noir editorial](examples/flagship-noir.html), and [Grid control](examples/flagship-grid.html); original, static, zero-JavaScript showcases.
 - [Free production-shaped operations console](examples/operations-console.html): responsive SaaS dashboard composed from existing CSS modules; no backend or runtime JS
 - [Search, filtering, settings and pagination SaaS workflow demonstration](examples/saas-workflows.html): server-ready semantic HTML, static illustrative data, zero JavaScript
+- [SaaS Admin Starter](examples/saas-admin-starter/index.html): four linked, responsive HTML pages for overview, pipeline, customers and billing; read-only sample data, no runtime JavaScript
+- [Role-permissions review matrix](examples/permission-matrix.html): accessible native checkbox/table composition for enterprise authorization UIs; local preview only, no real permissions or JavaScript
+- [Workflow operations compositions](examples/workflow-operations.html): progress steps, expandable activity diagnostics, and human approval queue using existing Syntyr classes; no backend or JavaScript
+- [Operation feedback and revision comparison recipes](examples/operation-revisions.html): five host-owned states and semantic before/after record values using the existing definition-list layout (unreleased alpha.5 source)
+- [Native file lifecycle presentation](examples/file-lifecycle.html): file picker, queued/uploading/completed/failed snapshots, and host-owned upload boundaries (unreleased alpha.5 source)
 - [Vertigo-inspired four-stage resource lifecycle reference](examples/vertigo-resource-workflow.html): schema-driven CRUD visual patterns (index, detail, editor, settings) with zero runtime JavaScript and disabled mutations.
 - [Optional Vertigo admin styling demo](examples/vertigo-admin.html) and [integration guide](docs/vertigo-integration.md)
 - [Optional Rust SaaS Foundation / Askama / HTMX integration guide](docs/rust-saas-integration.md)
+- [Runnable Rust Axum / Askama dashboard starter](examples/rust-axum/README.md) — same-origin embedded CSS, real search and validation, no client JavaScript
 - [Static vs Hugo vs Zola decision](docs/site-generator-decision.md) and [isolated Hugo preview](experiments/hugo/README.md)
 
 The linked alpha.4 release is already published; it does not include the four additional palettes or the optional utilities module. These are in the unreleased alpha.5 source candidate.
 
-Use the release ZIP, copy `dist/syntyr.core.css` into your static assets, and load it with a normal stylesheet link. The **unreleased alpha.5** ZIP candidate also includes `examples/saas.html`, a self-contained offline SaaS demo with relative CSS references (not included in the published alpha.4 archive). No NPM, JS or build step is needed in an application. For package-manager projects, an optional CSS-only `@syntyr/css` manifest is now prepared for an **unpublished** alpha.5 candidate; [test it locally](docs/package-managers.md) until registry ownership and release approval are confirmed. No package installation is required by Syntyr itself.
+Use the release ZIP, copy `dist/syntyr.core.css` into your static assets, and load it with a normal stylesheet link. The **unreleased alpha.5** ZIP candidate also includes `examples/saas.html`, a self-contained offline SaaS demo with relative CSS references (not included in the published alpha.4 archive). The candidate ZIP's interactive `examples/resizable-workspace.html`
+requires a local HTTP server for its optional module: after extracting
+the ZIP, change to `syntyr-css-<version>`, run
+`python3 -m http.server 8000 --bind 127.0.0.1`, and visit
+`http://127.0.0.1:8000/examples/resizable-workspace.html`. Opening it
+directly from `file://` preserves the static layout but browser security
+can prevent interactive resizing. This example-specific JavaScript is
+not part of the Syntyr CSS runtime.
+
+No NPM, JS or build step is needed in an application. For package-manager projects, an optional CSS-only `@syntyr/css` manifest is now prepared for an **unpublished** alpha.5 candidate; [test it locally](docs/package-managers.md) until registry ownership and release approval are confirmed. No package installation is required by Syntyr itself.
 
 ## Documentation for humans and AI agents
 
@@ -165,7 +203,7 @@ The authoring dependency does **not** ship to consumers or run during the static
 
 ## Source checkout demos and experimental modes
 
-For the unreleased alpha.5 source checkout, open [docs/index.html](docs/index.html) in a browser. Try the [SaaS dashboard](examples/saas.html), [business website](examples/business.html), [browser terminal](examples/terminal.html), [Grid console](examples/console.html), [Noir landing page](examples/landing.html), or [Noir pricing demo](examples/pricing.html). The gallery needs no server, Node, NPM, runtime JS or remote fonts.
+For the unreleased alpha.5 source checkout, open [docs/index.html](docs/index.html) in a browser. Try the [SaaS dashboard](examples/saas.html), [enterprise compositions](examples/enterprise-compositions.html), [business website](examples/business.html), [browser terminal](examples/terminal.html), [Grid console](examples/console.html), [Noir landing page](examples/landing.html), or [Noir pricing demo](examples/pricing.html). The gallery needs no server, Node, NPM, runtime JS or remote fonts.
 
 ```html
 <link rel="stylesheet" href="syntyr.core.css">
@@ -273,9 +311,13 @@ For production-oriented examples, load `syntyr.core.css` **then** `syntyr.recipe
 
 All additions are MIT licensed and do not change the core runtime dependency contract. The Studio theme, recipes and CLI palettes are included in the v0.3.0-alpha.4 release.
 
+For dropdowns and native selects, see the [dropdown patterns guide](docs/dropdowns.md) and [scriptless interactive example](examples/dropdowns.html). Action panels stay JavaScript-free; an optional, explicitly initialized ARIA menu adapter is available as `@syntyr/css/menu.mjs` for applications needing arrow-key navigation.
+
 For native platform integration, see the [browser API compatibility and progressive enhancement guide](docs/native-browser-apis.md) and the [script-free native API demo](examples/native-apis.html). The core stays JavaScript-free; native CSS anchors and content-sized textareas are opt-in, and scroll-progress / overlay transitions live in the dedicated motion module.
 
 ## Development and verification
+
+Use Python 3.11 or later to run the full unit test suite.
 
 ```sh
 python3 scripts/build.py
@@ -313,7 +355,7 @@ python3 scripts/check_merge_candidate.py --base FETCH_HEAD
 
 The test checks CSS, editor API metadata, consolidated agent documentation,
 Python contracts, Cloudflare allowlisted assets, and release packaging. It
-leaves the source branch unchanged and requires only Python 3 and Git.
+leaves the source branch unchanged and requires Python 3.11 or later and Git.
 
 **Race boundary:** A passing check proves compatibility with the specific
 base SHA it fetched. It does not protect against another PR landing afterward.
@@ -353,3 +395,7 @@ See [LICENSE](LICENSE).
 - [Console Kit buyer validation, pre-sale release gates and measured metrics](business/commercial-launch-gates.md)
 
 No paid kit has been shipped or put up for sale in this repository. No billing or license-key code is included. The Grid and Noir visual themes are original, not officially affiliated with any entertainment franchise. **SYNTYR is the selected but not trademark-cleared name**, pending documented brand clearance. The preliminary risk screen is not authorization for paid branding.
+
+## Additional native application screens
+
+Five copy-owned [SaaS application screens](docs/app-screens.md) cover onboarding, team membership and invitations, notifications, integrations, and security. They are static HTML/CSS examples built from the existing core and recipes, with no required application JavaScript or live account actions.

@@ -25,7 +25,11 @@
   "meta": {
     "syntyrVersion": "0.3.0-alpha.5",
     "source": "MIT source candidate",
-    "runtimeJavaScript": false
+    "runtimeJavaScript": false,
+    "fileDigests": {
+      "~/syntyr/blocks/metric-overview.html": "791d5e0f88cac093a8011a6ebb0c392491aa24b78a69fa26da5177cd2323f76d",
+      "~/syntyr/LICENSE": "42f56369ac06362dbfe433d2d50b178bf74c369a55ea22337ab40fd9433521bf"
+    }
   },
   "docs": "Experimental source-candidate asset. Review exact version, HTML routes, keyboard behavior and integration before production use."
 }

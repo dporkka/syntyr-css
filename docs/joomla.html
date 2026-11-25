@@ -45,14 +45,14 @@
 <li>Work in a custom or <strong>child site template</strong>, not in an unmodified core template that an update could replace. Copy the candidate <code>dist/syntyr.embed.css</code> into the template's static CSS directory.</li>
 <li>Register <strong>and activate</strong> the stylesheet using Joomla's <strong>Web Asset Manager</strong>. Registering a style in the template's <code>joomla.asset.json</code> only makes the asset known to Joomla; it does <strong>not</strong> load the CSS until you mark it as used. For example, after registering the style under the name <code>syntyr.embed</code>, call the following from your site template's PHP rendering code:</li>
 </ol>
-<pre><code class="language-php">&lt;?php
+<pre tabindex="0"><code class="language-php">&lt;?php
 $wa = $this-&gt;getWebAssetManager();
 $wa-&gt;useStyle('syntyr.embed'); // The name must match the registered style asset.
 ?&gt;
 </code></pre>
 <p>Alternatively, if your template does not use an asset JSON declaration, Joomla supports <code>$wa-&gt;registerAndUseStyle('syntyr.embed', 'YOUR-ASSET-URI.css')</code> to register and enable the style in one call. Replace the URI with the correct template asset URI for your Joomla installation. Confirm the stylesheet <code>&lt;link&gt;</code> is emitted on the rendered page; simply registering a file is insufficient.
 3. Insert a Syntyr component in a custom module or template override that outputs permitted HTML:</p>
-<pre><code class="language-html">&lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;jm-services&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;jm-services&quot;&gt;
   &lt;div class=&quot;syn-panel&quot;&gt;
     &lt;h2 id=&quot;jm-services&quot; class=&quot;syn-heading&quot;&gt;Service directory&lt;/h2&gt;
     &lt;p class=&quot;syn-muted&quot;&gt;A reusable callout in the Joomla site template.&lt;/p&gt;
@@ -71,12 +71,23 @@ $wa-&gt;useStyle('syntyr.embed'); // The name must match the registered style as
 <p><strong>Release compatibility:</strong> The immutable <strong>alpha.4</strong> stylesheet <code>syntyr.core.css</code> is published. The <strong>alpha.5</strong> <code>syntyr.embed.css</code> bundle is a candidate build designed for existing themes; it is not part of the alpha.4 release. Build the candidate from the source repository and self-host a version-pinned copy for testing. Never load both bundles together, and verify theme-specific overrides before production rollout. Syntyr is a stylesheet, not an official integration or plug-in from the site platform.</p>
 <p>Explore the <a href="site-builders.html">platform integration overview</a>, <a href="distribution.html">Syntyr distribution and release guide</a>, or <a href="../examples/platform-embed.html">live host-theme example</a>.</p>
         </article>
-        <aside class="docs-article-sidebar"><nav aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#why-use-syntyr-on-joomla">Why use Syntyr on Joomla?</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#how-to-install-syntyr-in-a-joomla-template">How to install Syntyr in a Joomla template</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#limitations-and-joomla-specific-considerations">Limitations and Joomla-specific considerations</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#verify-the-result-before-publishing">Verify the result before publishing</a>
-        </nav></aside>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#why-use-syntyr-on-joomla">Why use Syntyr on Joomla?</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#how-to-install-syntyr-in-a-joomla-template">How to install Syntyr in a Joomla template</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#limitations-and-joomla-specific-considerations">Limitations and Joomla-specific considerations</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#verify-the-result-before-publishing">Verify the result before publishing</a>
+            </nav>
+          </details>
+        </aside>
       </div>
       <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="joomla.md">Markdown source</a></nav>
     </main>

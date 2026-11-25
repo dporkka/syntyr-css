@@ -26,7 +26,11 @@
   "meta": {
     "syntyrVersion": "0.3.0-alpha.5",
     "source": "MIT source candidate",
-    "runtimeJavaScript": false
+    "runtimeJavaScript": false,
+    "fileDigests": {
+      "~/syntyr/blocks/feature-grid.html": "049b2e59d6da34fffe950ec0cf5e00a7e30e52a225d366aea114c6f7d22889d9",
+      "~/syntyr/LICENSE": "42f56369ac06362dbfe433d2d50b178bf74c369a55ea22337ab40fd9433521bf"
+    }
   },
   "docs": "Experimental source-candidate asset. Review exact version, HTML routes, keyboard behavior and integration before production use."
 }

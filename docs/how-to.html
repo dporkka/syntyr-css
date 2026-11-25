@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Build responsive pricing, FAQs, dashboards, accessible forms, data tables, and SaaS workflows with Syntyr HTML/CSS How-To guides and editable examples.">
+  <title>HTML &amp; CSS How-To Guides — Syntyr CSS</title>
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="docs.css">
+  <link rel="stylesheet" href="how-to.css">
+  <script src="how-to.js" defer></script>
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <a class="syn-button docs-skip" href="#howto-main">Skip to How-To guides</a>
+  <div class="syn-shell">
+    <header class="syn-header docs-header">
+      <a class="syn-logo" href="index.html">SYNTYR / HOW-TO</a>
+      <nav class="syn-nav" aria-label="How-To navigation">
+        <a href="index.html">Gallery</a><a href="catalog.html">Components</a>
+        <a href="blocks.html">Free blocks</a><a href="guides.html">All guides</a>
+        <a href="playground.html">Playground</a>
+      </nav>
+    </header>
+    <main id="howto-main">
+      <section class="docs-section" aria-labelledby="howto-title">
+        <p class="syn-eyebrow">LEARN BY BUILDING / REAL HTML</p>
+        <h1 class="syn-title" id="howto-title">How to build with Syntyr.</h1>
+        <p class="syn-lede">Practical, task-focused steps. Each example opens in the CodeMirror playground so you can edit native HTML, switch themes, and inspect responsive layouts without installing a framework.</p>
+        <p class="syn-caption">The source examples are MIT-licensed and represent the <strong>unreleased alpha.5</strong> candidate. Check <a href="distribution.html">published release compatibility</a>. Syntyr styles interfaces; your application supplies backend behavior, data and authorization.</p>
+        <div id="howto-controls" class="howto-controls" hidden>
+          <label class="syn-label" for="howto-search">FIND A HOW-TO</label>
+          <input class="syn-input" id="howto-search" type="search" autocomplete="off" placeholder="Try pricing, onboarding, tables, forms…" aria-controls="howto-items">
+        </div>
+        <p id="howto-results" class="syn-caption" role="status" aria-live="polite">10 guides available.</p>
+        <p id="howto-empty" class="syn-alert" hidden>No guides match your search. Try another task.</p>
+      </section>
+      <div id="howto-items" class="howto-grid">
+        <article class="syn-panel howto-card" data-howto-keywords="Launch a product page Marketing hero landing page product launch conversion Start with a semantic hero, supporting benefits and two real calls to action." aria-labelledby="howto-hero-product">
+          <span class="syn-badge">Marketing</span>
+          <h2 class="syn-heading" id="howto-hero-product">Launch a product page</h2>
+          <p class="syn-muted">Start with a semantic hero, supporting benefits and two real calls to action.</p>
+          <ol class="howto-steps"><li>Load core and optional recipes CSS; identify the page with a clear heading.</li><li>Customize the headline, benefits and destination links for your product.</li><li>Test the layout on mobile and with reduced-motion preferences.</li></ol>
+          <div class="syn-inline howto-actions">
+            <a class="syn-button syn-button--primary" href="playground.html#component=block-hero-product">Try and edit HTML</a>
+            <a href="blocks-guide.html">How to compose reusable blocks</a>
+          </div>
+          <p class="syn-caption"><a href="blocks.html#block-title-hero-product">View the original MIT block</a> · Source candidate alpha.5</p>
+        </article>
+        <article class="syn-panel howto-card" data-howto-keywords="Build three-tier pricing Marketing pricing plans tiers comparison billing saas Compare plans with readable features and a clearly distinguished option." aria-labelledby="howto-pricing-trio">
+          <span class="syn-badge">Marketing</span>
+          <h2 class="syn-heading" id="howto-pricing-trio">Build three-tier pricing</h2>
+          <p class="syn-muted">Compare plans with readable features and a clearly distinguished option.</p>
+          <ol class="howto-steps"><li>Choose an explicit price and billing period for each plan.</li><li>Use a responsive pricing composition and descriptive feature lists.</li><li>Connect purchase links to your own checkout; CSS cannot charge customers.</li></ol>
+          <div class="syn-inline howto-actions">
+            <a class="syn-button syn-button--primary" href="playground.html#component=block-pricing-trio">Try and edit HTML</a>
+            <a href="recipes.html">How to structure pricing sections</a>
+          </div>
+          <p class="syn-caption"><a href="blocks.html#block-title-pricing-trio">View the original MIT block</a> · Source candidate alpha.5</p>
+        </article>
+        <article class="syn-panel howto-card" data-howto-keywords="Create an accessible FAQ Marketing accordion faq native details disclosure seo Answer common questions using browser-native disclosures." aria-labelledby="howto-faq">
+          <span class="syn-badge">Marketing</span>
+          <h2 class="syn-heading" id="howto-faq">Create an accessible FAQ</h2>
+          <p class="syn-muted">Answer common questions using browser-native disclosures.</p>
+          <ol class="howto-steps"><li>Write one concise question and answer for each disclosure.</li><li>Use native details and summary elements with real headings.</li><li>Verify keyboard operation and ensure answers remain available without JavaScript.</li></ol>
+          <div class="syn-inline howto-actions">
+            <a class="syn-button syn-button--primary" href="playground.html#component=block-faq">Try and edit HTML</a>
+            <a href="native-patterns.html">How to use native disclosures</a>
+          </div>
+          <p class="syn-caption"><a href="blocks.html#block-title-faq">View the original MIT block</a> · Source candidate alpha.5</p>
+        </article>
+        <article class="syn-panel howto-card" data-howto-keywords="Add a dashboard KPI overview Applications dashboard stats metrics responsive analytics reports Present operational metrics with text labels and readable values." aria-labelledby="howto-metric-overview">
+          <span class="syn-badge">Applications</span>
+          <h2 class="syn-heading" id="howto-metric-overview">Add a dashboard KPI overview</h2>
+          <p class="syn-muted">Present operational metrics with text labels and readable values.</p>
+          <ol class="howto-steps"><li>Use a named responsive container around the metric cards.</li><li>Provide meaningful labels, units and real values from the application.</li><li>Test narrow panels and avoid color-only success or failure indicators.</li></ol>
+          <div class="syn-inline howto-actions">
+            <a class="syn-button syn-button--primary" href="playground.html#component=block-metric-overview">Try and edit HTML</a>
+            <a href="recipes.html">How to compose responsive telemetry</a>
+          </div>
+          <p class="syn-caption"><a href="blocks.html#block-title-metric-overview">View the original MIT block</a> · Source candidate alpha.5</p>
+        </article>
+        <article class="syn-panel howto-card" data-howto-keywords="Create a search/filter form Applications search filter get form query toolbar Start with a native GET form that works with server-rendered pages." aria-labelledby="howto-filter-toolbar">
+          <span class="syn-badge">Applications</span>
+          <h2 class="syn-heading" id="howto-filter-toolbar">Create a search/filter form</h2>
+          <p class="syn-muted">Start with a native GET form that works with server-rendered pages.</p>
+          <ol class="howto-steps"><li>Give search and filter fields real labels and names.</li><li>Submit with GET to an implemented results endpoint.</li><li>Preserve query parameters and validate filters on the server.</li></ol>
+          <div class="syn-inline howto-actions">
+            <a class="syn-button syn-button--primary" href="playground.html#component=block-filter-toolbar">Try and edit HTML</a>
+            <a href="component-recipes.html">How to build native form fields</a>
+          </div>
+          <p class="syn-caption"><a href="blocks.html#block-title-filter-toolbar">View the original MIT block</a> · Source candidate alpha.5</p>
+        </article>
+        <article class="syn-panel howto-card" data-howto-keywords="Show an accessible records table Applications table data records overflow caption headers Use a semantic table that remains readable at narrow widths." aria-labelledby="howto-data-table">
+          <span class="syn-badge">Applications</span>
+          <h2 class="syn-heading" id="howto-data-table">Show an accessible records table</h2>
+          <p class="syn-muted">Use a semantic table that remains readable at narrow widths.</p>
+          <ol class="howto-steps"><li>Add a caption and column headers with scope attributes.</li><li>Place the table inside a horizontally scrollable wrapper.</li><li>Sort, paginate and filter with application logic where needed.</li></ol>
+          <div class="syn-inline howto-actions">
+            <a class="syn-button syn-button--primary" href="playground.html#component=block-data-table">Try and edit HTML</a>
+            <a href="data-tables.html">How to style data tables</a>
+          </div>
+          <p class="syn-caption"><a href="blocks.html#block-title-data-table">View the original MIT block</a> · Source candidate alpha.5</p>
+        </article>
+        <article class="syn-panel howto-card" data-howto-keywords="Build account settings Applications account profile settings form validation preferences Create grouped, labeled settings without a JavaScript framework." aria-labelledby="howto-settings-form">
+          <span class="syn-badge">Applications</span>
+          <h2 class="syn-heading" id="howto-settings-form">Build account settings</h2>
+          <p class="syn-muted">Create grouped, labeled settings without a JavaScript framework.</p>
+          <ol class="howto-steps"><li>Associate each form input with a visible label and help text.</li><li>Use a native submit button and preserve input values after errors.</li><li>Implement authorization, CSRF protection and validation on the server.</li></ol>
+          <div class="syn-inline howto-actions">
+            <a class="syn-button syn-button--primary" href="playground.html#component=block-settings-form">Try and edit HTML</a>
+            <a href="component-recipes.html">How to handle form validation</a>
+          </div>
+          <p class="syn-caption"><a href="blocks.html#block-title-settings-form">View the original MIT block</a> · Source candidate alpha.5</p>
+        </article>
+        <article class="syn-panel howto-card" data-howto-keywords="Design an onboarding checklist Applications onboarding checklist steps progressive workflow Show a clear sequence of setup tasks and completion states." aria-labelledby="howto-onboarding-steps">
+          <span class="syn-badge">Applications</span>
+          <h2 class="syn-heading" id="howto-onboarding-steps">Design an onboarding checklist</h2>
+          <p class="syn-muted">Show a clear sequence of setup tasks and completion states.</p>
+          <ol class="howto-steps"><li>List tasks in meaningful order with plain-language descriptions.</li><li>Represent real status with text as well as visual styling.</li><li>Link to implemented tasks and persist progress in the application.</li></ol>
+          <div class="syn-inline howto-actions">
+            <a class="syn-button syn-button--primary" href="playground.html#component=block-onboarding-steps">Try and edit HTML</a>
+            <a href="recipes.html">How to present workflow steps</a>
+          </div>
+          <p class="syn-caption"><a href="blocks.html#block-title-onboarding-steps">View the original MIT block</a> · Source candidate alpha.5</p>
+        </article>
+        <article class="syn-panel howto-card" data-howto-keywords="Publish a service incident notice Technical incident status alert maintenance recovery operations Communicate a system incident without decorative-only warnings." aria-labelledby="howto-incident-notice">
+          <span class="syn-badge">Technical</span>
+          <h2 class="syn-heading" id="howto-incident-notice">Publish a service incident notice</h2>
+          <p class="syn-muted">Communicate a system incident without decorative-only warnings.</p>
+          <ol class="howto-steps"><li>State the affected service and the current operational impact.</li><li>Use a semantic alert/notice with an explicit status description.</li><li>Link to an actual incident update and refresh content from your backend.</li></ol>
+          <div class="syn-inline howto-actions">
+            <a class="syn-button syn-button--primary" href="playground.html#component=block-incident-notice">Try and edit HTML</a>
+            <a href="accessibility.html">How to handle accessible status</a>
+          </div>
+          <p class="syn-caption"><a href="blocks.html#block-title-incident-notice">View the original MIT block</a> · Source candidate alpha.5</p>
+        </article>
+        <article class="syn-panel howto-card" data-howto-keywords="Build an editorial release note Technical changelog blog release notes time date article content Publish dated product updates as normal semantic HTML." aria-labelledby="howto-release-notes">
+          <span class="syn-badge">Technical</span>
+          <h2 class="syn-heading" id="howto-release-notes">Build an editorial release note</h2>
+          <p class="syn-muted">Publish dated product updates as normal semantic HTML.</p>
+          <ol class="howto-steps"><li>Lead with a version and a machine-readable time element.</li><li>Group changes in readable headings and lists.</li><li>Link releases to your changelog and keep dates accurate.</li></ol>
+          <div class="syn-inline howto-actions">
+            <a class="syn-button syn-button--primary" href="playground.html#component=block-release-notes">Try and edit HTML</a>
+            <a href="semantic-components.html">How to structure semantic documents</a>
+          </div>
+          <p class="syn-caption"><a href="blocks.html#block-title-release-notes">View the original MIT block</a> · Source candidate alpha.5</p>
+        </article>
+      </div>
+      <section class="docs-section" aria-labelledby="howto-more">
+        <h2 id="howto-more" class="syn-heading">Continue building</h2>
+        <p>For complete compositions and deployment decisions, explore the <a href="blocks.html">free block gallery</a>, the <a href="component-recipes.html">form and component recipes</a>, and the <a href="site-builders.html">hosting and CMS integration guide</a>. Syntyr does not host sites or execute server actions for you.</p>
+      </section>
+    </main>
+    <footer class="syn-header"><span class="syn-caption">SYNTYR CSS · MIT HTML · OPTIONAL EDITOR</span><a href="index.html">Back to gallery</a></footer>
+  </div>
+</body>
+</html>

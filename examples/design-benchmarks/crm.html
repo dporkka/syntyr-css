@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Original no-JS Syntyr CRM dashboard benchmark."><title>Atlas CRM | Syntyr dashboard benchmark</title>
+<link rel="stylesheet" href="../../dist/syntyr.core.css"><link rel="stylesheet" href="../../dist/syntyr.recipes.css"><link rel="stylesheet" href="benchmark.css"></head>
+<body class="syn-root syn-page" data-syn-theme="studio"><a class="syn-button bench-skip" href="#main">Skip to content</a>
+<div class="syn-app-shell"><aside class="syn-app-rail" aria-label="Workspace sidebar"><a class="syn-logo" href="#main">ATLAS / CRM DEMO</a>
+<nav class="syn-app-nav" aria-label="Workspace navigation"><a href="#main" aria-current="page">Overview</a><a href="#records">Accounts</a><a href="#pipeline">Pipeline</a><a href="#notes">Notes</a></nav><p class="syn-caption">Static illustrative dataset; no backend.</p></aside>
+<main class="syn-workspace" id="main"><header class="syn-app-topbar"><div><p class="syn-eyebrow">OPERATIONS / OVERVIEW</p><h1>Account overview</h1>
+<p class="syn-muted">A practical, responsive enterprise workspace using native HTML and Syntyr CSS.</p></div><a class="syn-button syn-button--primary" href="#records">Browse records</a></header>
+<section class="syn-kpi-grid bench-metrics" aria-label="Illustrative performance metrics"><article class="syn-app-card"><span class="syn-stat-label">OPEN OPPORTUNITIES</span><p class="syn-stat-value">42</p><p class="syn-caption">Sample count</p></article>
+<article class="syn-app-card"><span class="syn-stat-label">PROJECTED REVENUE</span><p class="syn-stat-value">$128k</p><p class="syn-caption">Sample forecast</p></article>
+<article class="syn-app-card"><span class="syn-stat-label">ACTIVE ACCOUNTS</span><p class="syn-stat-value">118</p><p class="syn-caption">Sample count</p></article>
+<article class="syn-app-card"><span class="syn-stat-label">NEEDS REVIEW</span><p class="syn-stat-value">6</p><span class="syn-status syn-status--warning">Action needed</span></article></section>
+<div class="bench-flow"><section class="syn-app-card" id="records" aria-labelledby="records-title"><div class="syn-app-card-header"><h2 id="records-title">Accounts</h2><span class="syn-caption">DEMO DATA / NO FILTER BACKEND</span></div>
+<p class="syn-muted" id="search-help">This GET form demonstrates native browser behavior; submitting a query cannot filter fictional rows without an application server.</p>
+<form class="bench-filter" method="get" action="crm.html#records" aria-describedby="search-help">
+<label class="syn-label" for="account-query">Search accounts<input id="account-query" class="syn-input" type="search" name="query" placeholder="Account name"></label>
+<label class="syn-label" for="account-state">Status<select class="syn-select" id="account-state" name="status"><option value="">All accounts</option><option value="active">Active</option><option value="review">Review</option></select></label>
+<button class="syn-button syn-button--primary" type="submit">Submit query</button></form>
+<div class="syn-table-wrap"><table class="syn-table"><caption>Fictional accounts; filters are not applied in this static preview.</caption>
+<thead><tr><th scope="col">Account</th><th scope="col">Owner</th><th scope="col">Stage</th><th scope="col">Next action</th></tr></thead><tbody>
+<tr><th scope="row">Orion Media</th><td>Jordan</td><td><span class="syn-status syn-status--success">Active</span></td><td>Review renewal brief</td></tr>
+<tr><th scope="row">Pioneer Labs</th><td>Avery</td><td><span class="syn-status syn-status--warning">Review</span></td><td>Schedule walkthrough</td></tr>
+<tr><th scope="row">Harbor North</th><td>Riley</td><td><span class="syn-status syn-status--success">Active</span></td><td>Confirm campaign assets</td></tr>
+</tbody></table></div></section>
+<section class="bench-features" id="pipeline" aria-label="Pipeline highlights"><article class="syn-app-card"><h2>Pipeline</h2><p class="syn-muted">Status text communicates meaning without color alone.</p><span class="syn-status syn-status--success">On schedule</span></article>
+<article class="syn-app-card"><h2>Tasks</h2><p class="syn-muted">Render server-owned states without a client framework.</p></article>
+<article class="syn-app-card" id="notes"><h2>Implementation note</h2><p class="syn-muted">Persistence, authentication, sorting, and filtering require application code.</p></article></section></div>
+<footer class="bench-footer syn-caption">SYNTYR BENCHMARK / STATIC FICTIONAL CRM / NO RUNTIME JAVASCRIPT</footer>
+</main></div></body></html>

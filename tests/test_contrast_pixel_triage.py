@@ -52,6 +52,54 @@ class PixelContrastMath(unittest.TestCase):
         self.assertEqual(good['status'], 'sampled_above_threshold')
         self.assertAlmostEqual(good['minimum_sampled_ratio'], 21)
 
+    @staticmethod
+    def placeholder_item(**overrides):
+        placeholder = {
+            "text": "Search records", "foreground": "rgb(77, 96, 121)",
+            "background": "rgb(255, 255, 255)", "background_image": "none",
+            "opacity": "1", "element_opacity": "1",
+            "font_size_px": 16, "font_weight": 400,
+        }
+        placeholder.update(overrides)
+        return {
+            "page": "fixture.html", "selector": ["#search"],
+            "failure_summary": "placeholder contrast", "viewport_width": 320,
+            "error": "no_visible_text_rect", "fragments": [],
+            "placeholder": placeholder,
+        }
+
+    def test_solid_visible_placeholder_gets_computed_labelled_contrast(self):
+        result = MODULE.score_item(self.placeholder_item(), object())
+        self.assertEqual(result["status"], "computed_placeholder_above_threshold")
+        self.assertGreaterEqual(result["computed_ratio"], 4.5)
+        self.assertIn("computed", result["method"])
+        self.assertNotIn("minimum_sampled_ratio", result)
+
+    def test_low_contrast_placeholder_is_flagged(self):
+        result = MODULE.score_item(
+            self.placeholder_item(foreground="rgb(245, 245, 245)"), object())
+        self.assertEqual(result["status"], "computed_placeholder_below_threshold")
+
+    def test_ambiguous_placeholder_paint_is_unsampled(self):
+        for overrides in (
+            {"background_image": "linear-gradient(red, blue)"},
+            {"opacity": "0.5"},
+            {"element_opacity": "0.2"},
+            {"background": "rgba(255, 255, 255, 0.5)"},
+            {"foreground": "rgba(20, 40, 60, 0.3)"},
+            {"background": "transparent"},
+            {"text": ""},
+        ):
+            with self.subTest(overrides=overrides):
+                result = MODULE.score_item(self.placeholder_item(**overrides), object())
+                self.assertEqual(result["status"], "unsampled")
+
+    def test_capture_only_collects_actual_displayed_placeholders(self):
+        js = MODULE.MEASURE_JS
+        self.assertIn("el.matches(':placeholder-shown')", js)
+        self.assertIn("getComputedStyle(el, '::placeholder')", js)
+        self.assertIn("backgroundImage", js)
+
     def test_summary_keeps_unresolved_distinct_from_sampled(self):
         items = [
             {'status': 'sampled_below_threshold'},

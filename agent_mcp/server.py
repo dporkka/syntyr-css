@@ -45,6 +45,18 @@ def get_component(name: str, release: str = PUBLISHED) -> dict[str, Any]:
 
 
 @server.tool(annotations=READ_ONLY, structured_output=True)
+def get_interaction_contracts(name: str = "", release: str = PUBLISHED) -> dict[str, Any]:
+    """List or inspect candidate-only UI anatomy, state hooks and behavior ownership."""
+    return checked(catalog.get_interaction_contracts, name, release)
+
+
+@server.tool(annotations=READ_ONLY, structured_output=True)
+def get_interaction_recipes(contract: str = "", release: str = PUBLISHED) -> dict[str, Any]:
+    """Discover candidate-only implementation, alternative and fallback recipe references."""
+    return checked(catalog.get_interaction_recipes, contract, release)
+
+
+@server.tool(annotations=READ_ONLY, structured_output=True)
 def lookup_api(name: str, release: str = PUBLISHED) -> dict[str, Any]:
     """Look up a concrete syn-* class or --syn-* token in the chosen release."""
     return checked(catalog.lookup_api, name, release)

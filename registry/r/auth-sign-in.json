@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "auth-sign-in",
+  "type": "registry:item",
+  "title": "Sign-in form",
+  "description": "Native authentication form with accessible labels and recovery link.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://syntyr-css.pages.dev/registry/r/core.json"
+  ],
+  "files": [
+    {
+      "path": "blocks/snippets/auth-sign-in.html",
+      "type": "registry:file",
+      "target": "~/syntyr/blocks/auth-sign-in.html",
+      "content": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-signin-heading\">\n  <div class=\"syn-panel\">\n    <h2 class=\"syn-heading\" id=\"syn-signin-heading\">Sign in to Northstar</h2>\n    <p class=\"syn-muted\">Use your account credentials. Authentication is implemented by your application.</p>\n    <form class=\"syn-form\" method=\"post\" action=\"/sign-in\">\n      <label class=\"syn-label\" for=\"syn-signin-email\">Email address</label>\n      <input class=\"syn-input\" id=\"syn-signin-email\" name=\"email\" type=\"email\" autocomplete=\"username\" required>\n      <label class=\"syn-label\" for=\"syn-signin-password\">Password</label>\n      <input class=\"syn-input\" id=\"syn-signin-password\" name=\"password\" type=\"password\" autocomplete=\"current-password\" required>\n      <button class=\"syn-button syn-button--primary\" type=\"submit\">Sign in</button>\n    </form>\n    <p class=\"syn-caption\"><a href=\"/password/forgot\">Forgot password?</a> · <a href=\"/sign-up\">Create account</a></p>\n  </div>\n</section>\n"
+    },
+    {
+      "path": "LICENSE",
+      "type": "registry:file",
+      "target": "~/syntyr/LICENSE",
+      "content": "MIT License\n\nCopyright (c) 2026 Syntyr CSS contributors\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n"
+    }
+  ],
+  "meta": {
+    "syntyrVersion": "0.3.0-alpha.5",
+    "source": "MIT source candidate",
+    "runtimeJavaScript": false,
+    "fileDigests": {
+      "~/syntyr/blocks/auth-sign-in.html": "8a8ecc2f8e857fed9e0f49a96e0f6a02f1133d1bc9200191a9653690aac2aa04",
+      "~/syntyr/LICENSE": "42f56369ac06362dbfe433d2d50b178bf74c369a55ea22337ab40fd9433521bf"
+    }
+  },
+  "docs": "Experimental source-candidate asset. Review exact version, HTML routes, keyboard behavior and integration before production use."
+}

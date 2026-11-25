@@ -46,7 +46,7 @@
 <li>From <strong>Ghost Admin → Settings → Advanced → Code Injection</strong>, add a stylesheet link to the <strong>Site Header</strong>. A theme developer can instead load it from the theme's <code>default.hbs</code>.</li>
 <li>In a post or page, choose an <strong>HTML card</strong> and paste an independent Syntyr component:</li>
 </ol>
-<pre><code class="language-html">&lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;ghost-member&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;ghost-member&quot;&gt;
   &lt;div class=&quot;syn-panel&quot;&gt;
     &lt;h2 class=&quot;syn-heading&quot; id=&quot;ghost-member&quot;&gt;Member resources&lt;/h2&gt;
     &lt;p class=&quot;syn-muted&quot;&gt;Explore our curated guides and downloads.&lt;/p&gt;
@@ -65,12 +65,23 @@
 <p><strong>Release compatibility:</strong> The immutable <strong>alpha.4</strong> stylesheet <code>syntyr.core.css</code> is published. The <strong>alpha.5</strong> <code>syntyr.embed.css</code> bundle is a candidate build designed for existing themes; it is not part of the alpha.4 release. Build the candidate from the source repository and self-host a version-pinned copy for testing. Never load both bundles together, and verify theme-specific overrides before production rollout. Syntyr is a stylesheet, not an official integration or plug-in from the site platform.</p>
 <p>Explore the <a href="site-builders.html">platform integration overview</a>, <a href="distribution.html">Syntyr distribution and release guide</a>, or <a href="../examples/platform-embed.html">live host-theme example</a>.</p>
         </article>
-        <aside class="docs-article-sidebar"><nav aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#why-use-syntyr-on-ghost">Why use Syntyr on Ghost?</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#how-to-install-syntyr-on-a-ghost-publication">How to install Syntyr on a Ghost publication</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#limitations-and-ghost-specific-considerations">Limitations and Ghost-specific considerations</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#verify-the-result-before-publishing">Verify the result before publishing</a>
-        </nav></aside>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#why-use-syntyr-on-ghost">Why use Syntyr on Ghost?</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#how-to-install-syntyr-on-a-ghost-publication">How to install Syntyr on a Ghost publication</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#limitations-and-ghost-specific-considerations">Limitations and Ghost-specific considerations</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#verify-the-result-before-publishing">Verify the result before publishing</a>
+            </nav>
+          </details>
+        </aside>
       </div>
       <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="ghost.md">Markdown source</a></nav>
     </main>

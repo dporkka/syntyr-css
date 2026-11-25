@@ -39,9 +39,10 @@ class CommercialOfferCatalogTests(unittest.TestCase):
     def test_private_prototype_inventory_is_consistent_with_product_cards(self):
         expected = {
             'console-kit': (12, 36),
-            'pro': (15, 45),
-            'studio': (18, 54),
+            'pro': (25, 75),
+            'studio': (42, 126),
         }
+        self.assertEqual(self.catalog['prototype_inventory_snapshot_date'], '2026-11-18')
         products = {product['id']: product for product in self.catalog['products']}
         for slug, (screens, variants) in expected.items():
             with self.subTest(product=slug):
@@ -57,10 +58,37 @@ class CommercialOfferCatalogTests(unittest.TestCase):
                     re.S,
                 )
                 self.assertIsNotNone(card)
-                self.assertIn(f'{screens} screen types', card.group(1))
-                self.assertIn(f'{variants} static variants', card.group(1))
+                self.assertRegex(card.group(1), rf'(?<![0-9]){screens} screen types\b')
+                self.assertRegex(card.group(1), rf'(?<![0-9]){variants} static variants\b')
+        self.assertIn('Additional Pro application screen types</th><td>—</td><td>—</td><td>13</td><td>13</td>', self.html)
+        self.assertIn('November 18, 2026', self.html)
         self.assertNotIn('prototype_screen_types', products['agency'])
         self.assertNotIn('prototype_screen_types', products['core'])
+
+    def test_counts_with_extra_leading_digit_are_rejected(self):
+        # An expected "25 screen types" must not match "125 screen types".
+        original = 'to 25 screen types and 75 static variants'
+        self.assertIn(original, self.html)
+        class MutatedCatalog(CommercialOfferCatalogTests):
+            def setUp(self):
+                super().setUp()
+                self.html = self.html.replace(original, 'to 125 screen types and 75 static variants', 1)
+
+        mutated = MutatedCatalog('test_private_prototype_inventory_is_consistent_with_product_cards')
+        result = unittest.TestResult()
+        mutated.run(result)  # subTest collects failures in the result, not as exceptions.
+        self.assertTrue(result.failures, 'A prefixed count must invalidate the card')
+
+    def test_studio_offer_describes_three_merged_website_kits(self):
+        studio = next(p for p in self.catalog['products'] if p['id'] == 'studio')
+        self.assertIn('B2B SaaS', studio['description'])
+        self.assertIn('professional-services', studio['description'])
+        self.assertIn('ecommerce', studio['description'])
+        self.assertIn('three original website kits', self.html)
+        self.assertIn('six-page B2B SaaS', self.html)
+        self.assertIn('five-page professional-services', self.html)
+        self.assertIn('four-page ecommerce', self.html)
+        self.assertIn('Website page types (15 kit pages + 2 standalone previews)</th><td>Free examples</td><td>—</td><td>—</td><td>17</td>', self.html)
 
     def test_roadmap_is_clearly_not_a_storefront_or_payment_form(self):
         self.assertIn('NOT FOR SALE', self.html)

@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "newsletter-signup",
+  "type": "registry:item",
+  "title": "Newsletter signup panel",
+  "description": "An accessible subscription form with a native server-backed fallback.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://syntyr-css.pages.dev/registry/r/core.json"
+  ],
+  "files": [
+    {
+      "path": "blocks/snippets/newsletter-signup.html",
+      "type": "registry:file",
+      "target": "~/syntyr/blocks/newsletter-signup.html",
+      "content": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-newsletter\">\n  <div class=\"syn-panel\">\n    <p class=\"syn-eyebrow\">STAY IN THE LOOP</p><h2 id=\"syn-newsletter\" class=\"syn-heading\">A useful note, once a month</h2>\n    <p>Design patterns, maintenance tips and new articles. Unsubscribe at any time.</p>\n    <form class=\"syn-form\" action=\"/newsletter/subscribe\" method=\"post\">\n      <div class=\"syn-field\"><label class=\"syn-label\" for=\"syn-newsletter-email\">Email address</label>\n        <input class=\"syn-input\" type=\"email\" id=\"syn-newsletter-email\" name=\"email\" autocomplete=\"email\" required></div>\n      <button class=\"syn-button syn-button--primary\" type=\"submit\">Subscribe</button>\n    </form>\n    <p class=\"syn-caption\">Connect a real consent-aware endpoint, CSRF protection and confirmation flow before publishing.</p>\n  </div>\n</section>\n"
+    },
+    {
+      "path": "LICENSE",
+      "type": "registry:file",
+      "target": "~/syntyr/LICENSE",
+      "content": "MIT License\n\nCopyright (c) 2026 Syntyr CSS contributors\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n"
+    }
+  ],
+  "meta": {
+    "syntyrVersion": "0.3.0-alpha.5",
+    "source": "MIT source candidate",
+    "runtimeJavaScript": false,
+    "fileDigests": {
+      "~/syntyr/blocks/newsletter-signup.html": "b6a9db6e6b67658ed69e70bbcdd6091bc28d48d7e2873386975668c53ad7097d",
+      "~/syntyr/LICENSE": "42f56369ac06362dbfe433d2d50b178bf74c369a55ea22337ab40fd9433521bf"
+    }
+  },
+  "docs": "Experimental source-candidate asset. Review exact version, HTML routes, keyboard behavior and integration before production use."
+}

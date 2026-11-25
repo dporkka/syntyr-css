@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "social-links",
+  "type": "registry:item",
+  "title": "Community and social links",
+  "description": "A semantic link directory for communities, updates and contact channels.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://syntyr-css.pages.dev/registry/r/core.json"
+  ],
+  "files": [
+    {
+      "path": "blocks/snippets/social-links.html",
+      "type": "registry:file",
+      "target": "~/syntyr/blocks/social-links.html",
+      "content": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-social-links\">\n  <p class=\"syn-eyebrow\">STAY CONNECTED</p>\n  <h2 class=\"syn-heading\" id=\"syn-social-links\">Find the right place to connect.</h2>\n  <p class=\"syn-muted\">Example destinations: replace these routes with your organization's actual public profiles.</p>\n  <nav aria-label=\"Example community destinations\">\n    <ul class=\"syn-grid\">\n      <li class=\"syn-panel\"><h3>Community</h3><p>Questions, conversation and shared ideas.</p><a href=\"/community\">Visit community</a></li>\n      <li class=\"syn-panel\"><h3>Updates</h3><p>Announcements and product notes.</p><a href=\"/updates\">Read updates</a></li>\n      <li class=\"syn-panel\"><h3>Contact</h3><p>Reach our team directly.</p><a href=\"/contact\">Get in touch</a></li>\n    </ul>\n  </nav>\n</section>\n"
+    },
+    {
+      "path": "LICENSE",
+      "type": "registry:file",
+      "target": "~/syntyr/LICENSE",
+      "content": "MIT License\n\nCopyright (c) 2026 Syntyr CSS contributors\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n"
+    }
+  ],
+  "meta": {
+    "syntyrVersion": "0.3.0-alpha.5",
+    "source": "MIT source candidate",
+    "runtimeJavaScript": false,
+    "fileDigests": {
+      "~/syntyr/blocks/social-links.html": "0e2a57dfe8f7daea8718a7206fa4724c9d1ba0bd889e3990a97d8b414eaafa41",
+      "~/syntyr/LICENSE": "42f56369ac06362dbfe433d2d50b178bf74c369a55ea22337ab40fd9433521bf"
+    }
+  },
+  "docs": "Experimental source-candidate asset. Review exact version, HTML routes, keyboard behavior and integration before production use."
+}

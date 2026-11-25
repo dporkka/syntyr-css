@@ -22,6 +22,8 @@ The site retains relative HTML links, component examples, Markdown guides,
 terminal palette JSON, and public CSS assets. The optional documentation-only theme editor has its
 own small JavaScript file; consuming apps and other demos require none.
 
+See [the provider-neutral staging and experimental Nulang Cloud guide](nulang-cloud-hosting.md) for an optional portable artifact workflow. This does not replace the existing production Cloudflare hosting path.
+
 ## Cloudflare hosting
 
 Preferred for new deployments: Cloudflare Workers Static Assets. A simple

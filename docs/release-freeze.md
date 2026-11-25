@@ -35,8 +35,12 @@ The default command and `--check` run a **read-only technical preflight**: verif
 
 The freeze command stages only the public CSS distributions declared by the build script in a temporary directory, prepares SHA-256 hashes, and atomically replaces the manifest after placing the new immutable version directory. If an operation fails before manifest publication, it removes the uncommitted version directory and leaves earlier snapshots intact. It never overwrites a frozen version.
 
+Before authorizing any **separate npm publication**, run `python3 scripts/audit_npm_package.py` on the exact candidate source to inspect the actual packed bytes and exported CSS paths. This requires npm only in the maintainer environment, not for CSS consumers. The check does not confer release approval or publish anything.
+
 After freezing, review the manifest diff and source hashes, commit the new immutable snapshot, verify the static-site build, deploy to staging and verify live Cloudflare paths/content hashes/headers. Only then tag and publish the release through the separate release process. **This script does not deploy, tag, enable payments or publish an npm package.**
 
 ## Current status
 
-The alpha.5 manual reviews are **not signed off**. The latest source accessibility triage identifies 161 inconclusive contrast elements requiring adjudication, plus real zoom, assistive-technology and native high-contrast checks. Until these and brand clearance have evidenced approval, freezing alpha.5 should be blocked.
+The alpha.5 manual reviews are **not signed off**. A historical November 18, 2026 source-only audit in [accessibility-alpha5-review.md](accessibility-alpha5-review.md) recorded 165 inconclusive contrast elements at commit `70ec764`. That count is **not** a measurement of the current source head; intervening commits invalidate any assumption that it remains accurate.
+
+Before freezing, run the pinned axe and browser checks on the exact candidate SHA, record every incomplete contrast target and adjudication, and separately capture actual zoom, assistive-technology and native high-contrast evidence. Update the review record with the SHA and audit date, **not** a copied historical count. Until manual reviews and brand clearance have evidenced approval, freezing alpha.5 remains blocked. The [commercial sale/download gates](https://github.com/dporkka/syntyr-css/blob/main/business/commercial-launch-gates.md) are separate and remain closed.

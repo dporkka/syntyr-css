@@ -81,6 +81,35 @@ class OptionalHeadlessInteractions(unittest.TestCase):
         self.assertIn('sortable data grid works from keyboard', browser)
         self.assertNotIn('react-aria-components', (ROOT / 'package.json').read_text())
 
+    def test_local_enterprise_selection_demo_has_bounded_scope_and_no_core_runtime(self):
+        markup = (ROOT / 'examples/headless-react/src/App.tsx').read_text()
+        browser = (ROOT / 'examples/headless-react/tests/interactions.spec.ts').read_text()
+        example = (ROOT / 'examples/headless-react/src/main.tsx').read_text()
+        guide = (ROOT / 'docs/headless-interactions.md').read_text()
+        for piece in ('selectionMode="multiple"', 'selectionBehavior="toggle"',
+                      'selectedKeys={selectedKeys}', 'onSelectionChange',
+                      'setSelectedKeys(new Set())', 'keys === "all"',
+                      'setInspectedId', 'role="status"', 'Preview selection'):
+            self.assertIn(piece, markup)
+        self.assertIn('inventory filtering constrains selection scope', browser)
+        self.assertIn('inventory offers a safe preview action', browser)
+        self.assertIn('inventory empty filter state', browser)
+        self.assertIn('dist/syntyr.recipes.css', example)
+        self.assertIn('not every record in a server database', guide)
+        self.assertNotIn('react-aria-components', (ROOT / 'package.json').read_text())
+
+    def test_agent_index_discovers_optional_selection_scope_workflow(self):
+        index = (ROOT / 'llms.txt').read_text()
+        entry = next(
+            (line for line in index.splitlines()
+             if '[Optional React Aria resource-selection workflow]' in line),
+            ''
+        )
+        self.assertIn('https://syntyr-css.pages.dev/docs/headless-interactions.md', entry)
+        self.assertIn('local-only', entry)
+        self.assertIn('server-side', entry)
+        self.assertIn('opt-in', entry.lower())
+
     def test_guide_explains_semantics_portals_and_dependencies(self):
         guide = (ROOT / 'docs/headless-interactions.md').read_text()
         for phrase in ('React Aria', 'Radix', 'popover', 'datalist',

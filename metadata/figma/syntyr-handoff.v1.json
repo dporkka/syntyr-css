@@ -1,0 +1,353 @@
+{
+  "schema_version": 1,
+  "source_version": "0.3.0-alpha.5",
+  "root_font_px_assumption": 16,
+  "palette_tokens": [
+    "--syn-bg",
+    "--syn-surface",
+    "--syn-surface-hi",
+    "--syn-text",
+    "--syn-muted",
+    "--syn-accent",
+    "--syn-accent-2",
+    "--syn-on-accent",
+    "--syn-frame",
+    "--syn-frame-strong",
+    "--syn-danger",
+    "--syn-success",
+    "--syn-warning"
+  ],
+  "foundations": [
+    {
+      "css_variable": "--syn-card-padding",
+      "css_value": "var(--syn-space-3)",
+      "figma_px": null,
+      "requires_browser_validation": true
+    },
+    {
+      "css_variable": "--syn-control-height",
+      "css_value": "2.75rem",
+      "figma_px": 44.0,
+      "requires_browser_validation": false
+    },
+    {
+      "css_variable": "--syn-control-padding-block",
+      "css_value": ".7rem",
+      "figma_px": 11.2,
+      "requires_browser_validation": false
+    },
+    {
+      "css_variable": "--syn-cut",
+      "css_value": ".9rem",
+      "figma_px": 14.4,
+      "requires_browser_validation": false
+    },
+    {
+      "css_variable": "--syn-duration-fast",
+      "css_value": "150ms",
+      "figma_px": null,
+      "requires_browser_validation": true
+    },
+    {
+      "css_variable": "--syn-duration-standard",
+      "css_value": "240ms",
+      "figma_px": null,
+      "requires_browser_validation": true
+    },
+    {
+      "css_variable": "--syn-ease",
+      "css_value": "cubic-bezier(.2, .8, .2, 1)",
+      "figma_px": null,
+      "requires_browser_validation": true
+    },
+    {
+      "css_variable": "--syn-ease-enter",
+      "css_value": "cubic-bezier(.16, 1, .3, 1)",
+      "figma_px": null,
+      "requires_browser_validation": true
+    },
+    {
+      "css_variable": "--syn-font",
+      "css_value": "system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif",
+      "figma_px": null,
+      "requires_browser_validation": true
+    },
+    {
+      "css_variable": "--syn-leading-body",
+      "css_value": "1.55",
+      "figma_px": null,
+      "requires_browser_validation": true
+    },
+    {
+      "css_variable": "--syn-line",
+      "css_value": "1.55",
+      "figma_px": null,
+      "requires_browser_validation": true
+    },
+    {
+      "css_variable": "--syn-mono",
+      "css_value": "ui-monospace, SFMono-Regular, Consolas, \"Liberation Mono\", monospace",
+      "figma_px": null,
+      "requires_browser_validation": true
+    },
+    {
+      "css_variable": "--syn-radius",
+      "css_value": ".25rem",
+      "figma_px": 4.0,
+      "requires_browser_validation": false
+    },
+    {
+      "css_variable": "--syn-row-padding-block",
+      "css_value": ".7rem",
+      "figma_px": 11.2,
+      "requires_browser_validation": false
+    },
+    {
+      "css_variable": "--syn-shadow-overlay",
+      "css_value": "0 20px 70px rgb(0 0 0 / 45%)",
+      "figma_px": null,
+      "requires_browser_validation": true
+    },
+    {
+      "css_variable": "--syn-shadow-raised",
+      "css_value": "0 8px 24px rgb(0 0 0 / 12%)",
+      "figma_px": null,
+      "requires_browser_validation": true
+    },
+    {
+      "css_variable": "--syn-shadow-sm",
+      "css_value": "0 1px 3px rgb(0 0 0 / 8%)",
+      "figma_px": null,
+      "requires_browser_validation": true
+    },
+    {
+      "css_variable": "--syn-space-1",
+      "css_value": ".375rem",
+      "figma_px": 6.0,
+      "requires_browser_validation": false
+    },
+    {
+      "css_variable": "--syn-space-2",
+      "css_value": ".75rem",
+      "figma_px": 12.0,
+      "requires_browser_validation": false
+    },
+    {
+      "css_variable": "--syn-space-3",
+      "css_value": "1.125rem",
+      "figma_px": 18.0,
+      "requires_browser_validation": false
+    },
+    {
+      "css_variable": "--syn-space-4",
+      "css_value": "1.75rem",
+      "figma_px": 28.0,
+      "requires_browser_validation": false
+    },
+    {
+      "css_variable": "--syn-space-5",
+      "css_value": "2.5rem",
+      "figma_px": 40.0,
+      "requires_browser_validation": false
+    },
+    {
+      "css_variable": "--syn-space-fluid-1",
+      "css_value": "var(--syn-space-1)",
+      "figma_px": null,
+      "requires_browser_validation": true
+    },
+    {
+      "css_variable": "--syn-space-fluid-2",
+      "css_value": "var(--syn-space-2)",
+      "figma_px": null,
+      "requires_browser_validation": true
+    },
+    {
+      "css_variable": "--syn-space-fluid-3",
+      "css_value": "var(--syn-space-3)",
+      "figma_px": null,
+      "requires_browser_validation": true
+    },
+    {
+      "css_variable": "--syn-space-fluid-4",
+      "css_value": "var(--syn-space-4)",
+      "figma_px": null,
+      "requires_browser_validation": true
+    },
+    {
+      "css_variable": "--syn-tracking-display",
+      "css_value": "-.045em",
+      "figma_px": null,
+      "requires_browser_validation": true
+    },
+    {
+      "css_variable": "--syn-type-base",
+      "css_value": "1rem",
+      "figma_px": 16.0,
+      "requires_browser_validation": false
+    },
+    {
+      "css_variable": "--syn-type-body",
+      "css_value": "var(--syn-type-base)",
+      "figma_px": null,
+      "requires_browser_validation": true
+    },
+    {
+      "css_variable": "--syn-type-display",
+      "css_value": "clamp(2rem, 5.5vw, 4rem)",
+      "figma_px": null,
+      "requires_browser_validation": true
+    },
+    {
+      "css_variable": "--syn-type-heading",
+      "css_value": "clamp(1.15rem, 2.4vw, 1.55rem)",
+      "figma_px": null,
+      "requires_browser_validation": true
+    },
+    {
+      "css_variable": "--syn-type-section",
+      "css_value": "clamp(1.5rem, 1.25rem + 1.25vw, 2.125rem)",
+      "figma_px": null,
+      "requires_browser_validation": true
+    },
+    {
+      "css_variable": "--syn-type-sm",
+      "css_value": ".875rem",
+      "figma_px": 14.0,
+      "requires_browser_validation": false
+    },
+    {
+      "css_variable": "--syn-type-xs",
+      "css_value": ".75rem",
+      "figma_px": 12.0,
+      "requires_browser_validation": false
+    }
+  ],
+  "density": {
+    "compact": {
+      "--syn-card-padding": {
+        "css_variable": "--syn-card-padding",
+        "css_value": "var(--syn-space-2)",
+        "figma_px": null,
+        "requires_browser_validation": true
+      },
+      "--syn-control-height": {
+        "css_variable": "--syn-control-height",
+        "css_value": "2.25rem",
+        "figma_px": 36.0,
+        "requires_browser_validation": false
+      },
+      "--syn-control-padding-block": {
+        "css_variable": "--syn-control-padding-block",
+        "css_value": ".3rem",
+        "figma_px": 4.8,
+        "requires_browser_validation": false
+      },
+      "--syn-row-padding-block": {
+        "css_variable": "--syn-row-padding-block",
+        "css_value": ".4rem",
+        "figma_px": 6.4,
+        "requires_browser_validation": false
+      }
+    },
+    "comfortable": {
+      "--syn-card-padding": {
+        "css_variable": "--syn-card-padding",
+        "css_value": "var(--syn-space-3)",
+        "figma_px": null,
+        "requires_browser_validation": true
+      },
+      "--syn-control-height": {
+        "css_variable": "--syn-control-height",
+        "css_value": "2.75rem",
+        "figma_px": 44.0,
+        "requires_browser_validation": false
+      },
+      "--syn-control-padding-block": {
+        "css_variable": "--syn-control-padding-block",
+        "css_value": ".7rem",
+        "figma_px": 11.2,
+        "requires_browser_validation": false
+      },
+      "--syn-row-padding-block": {
+        "css_variable": "--syn-row-padding-block",
+        "css_value": ".7rem",
+        "figma_px": 11.2,
+        "requires_browser_validation": false
+      }
+    },
+    "spacious": {
+      "--syn-card-padding": {
+        "css_variable": "--syn-card-padding",
+        "css_value": "var(--syn-space-4)",
+        "figma_px": null,
+        "requires_browser_validation": true
+      },
+      "--syn-control-height": {
+        "css_variable": "--syn-control-height",
+        "css_value": "3.25rem",
+        "figma_px": 52.0,
+        "requires_browser_validation": false
+      },
+      "--syn-control-padding-block": {
+        "css_variable": "--syn-control-padding-block",
+        "css_value": ".95rem",
+        "figma_px": 15.2,
+        "requires_browser_validation": false
+      },
+      "--syn-row-padding-block": {
+        "css_variable": "--syn-row-padding-block",
+        "css_value": "1rem",
+        "figma_px": 16.0,
+        "requires_browser_validation": false
+      }
+    }
+  },
+  "components": {
+    "button": {
+      "css_classes": [
+        "syn-button",
+        "syn-button--primary",
+        "syn-button--outline"
+      ],
+      "source_file": "src/components/buttons.css",
+      "canonical_stylesheet": "syntyr.core.css",
+      "figma_state_is_visual_only": true
+    },
+    "input": {
+      "css_classes": [
+        "syn-input",
+        "syn-label",
+        "syn-error"
+      ],
+      "source_file": "src/components/forms.css",
+      "canonical_stylesheet": "syntyr.core.css",
+      "figma_state_is_visual_only": true
+    },
+    "panel": {
+      "css_classes": [
+        "syn-panel"
+      ],
+      "source_file": "src/components/layout.css",
+      "canonical_stylesheet": "syntyr.core.css",
+      "figma_state_is_visual_only": true
+    },
+    "status": {
+      "css_classes": [
+        "syn-status"
+      ],
+      "source_file": "src/components/data.css",
+      "canonical_stylesheet": "syntyr.core.css",
+      "figma_state_is_visual_only": true
+    }
+  },
+  "figma_pilot": {
+    "file_url": "https://www.figma.com/design/Lj8uKUtgJfXMyzVb96x5Q1",
+    "parity_status": "not-verified-live",
+    "verified_color_tokens_per_theme": null,
+    "documented_pilot_color_tokens_per_theme": 9,
+    "required_source_color_tokens_per_theme": 13,
+    "notes": "Prior kit documentation reports partial variables and a compact invalid-input instance. Reinspect live Figma before claiming parity."
+  },
+  "limitations": "This is not a Figma file inspection. Source literals are translated using a 16px root assumption; clamp(), var(), color-mix(), focus rings, accessibility, and rendered geometry need browser plus Figma review."
+}

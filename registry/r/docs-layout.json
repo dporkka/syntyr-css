@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "docs-layout",
+  "type": "registry:item",
+  "title": "Documentation page",
+  "description": "Documentation navigation, breadcrumb and article content.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://syntyr-css.pages.dev/registry/r/core.json"
+  ],
+  "files": [
+    {
+      "path": "blocks/snippets/docs-layout.html",
+      "type": "registry:file",
+      "target": "~/syntyr/blocks/docs-layout.html",
+      "content": "<section class=\"syn-root syn-shell\" data-syn-theme=\"studio\" aria-labelledby=\"syn-docs-heading\">\n  <nav class=\"syn-breadcrumbs\" aria-label=\"Breadcrumb\"><ol><li><a href=\"/docs\">Docs</a></li><li aria-current=\"page\">Getting started</li></ol></nav>\n  <div class=\"syn-sidecar\">\n    <article><h2 class=\"syn-title\" id=\"syn-docs-heading\">Getting started</h2>\n      <p>Import the version-pinned stylesheet and wrap your application in a Syntyr root.</p>\n      <pre class=\"syn-code\"><code>&lt;main class=\"syn-root\"&gt;Hello world&lt;/main&gt;</code></pre>\n      <h3 id=\"syn-docs-next\">Next steps</h3><p>Explore composable components and semantic forms.</p>\n      <a href=\"/docs/components\">Browse components</a>\n    </article>\n    <nav class=\"syn-panel\" aria-label=\"Documentation sections\"><h2 class=\"syn-heading\">Guides</h2>\n      <ul class=\"syn-list-group\" role=\"list\">\n        <li><a class=\"syn-list-row\" href=\"/docs/start\" aria-current=\"page\">Getting started</a></li>\n        <li><a class=\"syn-list-row\" href=\"/docs/components\">Components</a></li>\n        <li><a class=\"syn-list-row\" href=\"/docs/themes\">Themes</a></li>\n      </ul>\n    </nav>\n  </div>\n</section>\n"
+    },
+    {
+      "path": "LICENSE",
+      "type": "registry:file",
+      "target": "~/syntyr/LICENSE",
+      "content": "MIT License\n\nCopyright (c) 2026 Syntyr CSS contributors\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n"
+    }
+  ],
+  "meta": {
+    "syntyrVersion": "0.3.0-alpha.5",
+    "source": "MIT source candidate",
+    "runtimeJavaScript": false,
+    "fileDigests": {
+      "~/syntyr/blocks/docs-layout.html": "2ff194a3534f4a9f7d8cf943c134d0b29e52186cb851501f11cf769498d2ab9a",
+      "~/syntyr/LICENSE": "42f56369ac06362dbfe433d2d50b178bf74c369a55ea22337ab40fd9433521bf"
+    }
+  },
+  "docs": "Experimental source-candidate asset. Review exact version, HTML routes, keyboard behavior and integration before production use."
+}

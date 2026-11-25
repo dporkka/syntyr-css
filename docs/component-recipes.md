@@ -1,5 +1,7 @@
 # Copy-owned form recipes
 
+Prefer an interactive starting point? The [Syntyr Form Customizer](form-builder.html) generates copyable forms and standalone HTML, with native form submission and no JavaScript in the output. Configure a real server endpoint before publishing.
+
 These are **MIT-licensed, plain-HTML examples**. Copy and modify them without installing a Syntyr CLI, template registry, React, or a JavaScript runtime. Syntyr provides presentation; your browser and application provide behavior.
 
 Load `dist/syntyr.core.css` and apply `.syn-root` on a stable ancestor. Input groups and fields are included in core. The examples below also work in Go/templ, Askama, Django templates, Astro, React, and HTMX.
@@ -30,7 +32,7 @@ Only render `aria-invalid="true"` and the error message when the form is actuall
       <label class="syn-label" for="account-query">Account name</label>
       <div class="syn-input-group">
         <input class="syn-input" id="account-query" name="q"
-               type="search" placeholder="Search accounts">
+               type="search" enterkeyhint="search" placeholder="Search accounts">
         <button class="syn-button syn-button--primary" type="submit">Search</button>
       </div>
     </div>
@@ -41,6 +43,15 @@ Only render `aria-invalid="true"` and the error message when the form is actuall
 This is **progressive enhancement**: the GET form submits with **No JavaScript**. An HTMX application may add `hx-get` and `hx-target` while preserving `action`, `method`, and a server-rendered fallback. The application must implement the endpoint and return actual search results.
 
 At narrow available widths (12rem or less relative to the current text size), a connected input and submit button stack instead of squeezing the input into a tall, narrow strip. The `.syn-input-group` itself determines the breakpoint through a CSS container query; no viewport breakpoint, JavaScript, or additional component class is needed. Input groups containing only currency/unit addons keep their existing inline layout. Test long button labels, translations and browser zoom in consuming applications.
+
+### Search results, accessibility, and enhancement contract
+
+- **Result counts:** On the server, preserve the submitted query, show truthful matches, and use an empty state only when no records match. When an optional live enhancement updates results, announce a concise count in a dedicated `role="status"` element with `aria-live="polite"`; keep clipboard and other action feedback separate.
+- **Loading/errors:** Host applications own network cancellation, request ordering, actual loading indicators, error recovery, URL/history state, authorization and pagination. A static composition never claims to filter records.
+- **IME composition:** Debounced or incremental search must not submit intermediate East Asian input while the user is composing; handle `compositionstart` / `compositionend` in the behavior owner. Do not turn native form submission into an inaccessible custom widget.
+- **Fallbacks:** For simple suggestions, `datalist` can add browser-provided values, but its rendering and assistive-technology behavior vary across browsers. Use an optional tested combobox adapter for async suggestions, controlled selection, or custom keyboard navigation.
+- **Reflow and RTL:** Test long translated labels, 320 CSS-pixel widths, 200% and 400% zoom, keyboard focus, forced colors, and `dir="rtl"`. Keep the native search clear affordance and never rely on a placeholder as the accessible name.
+- **Command palettes:** Visual command rows are not working shortcuts or listbox options. Use actual links for destinations; if your application adds a keyboard command index, the behavior owner supplies focus, Escape, selection, permissions, and accessible announcements.
 
 ## 3. Input addon (currency and unit)
 
@@ -145,3 +156,33 @@ do not conceal autofilled values with pseudo-elements or forced-color overrides.
 - `syntyr.semantic.css` remains a separate opt-in style for unclassed native HTML. Do not apply it indiscriminately around other component libraries.
 
 See [the static form showcase](../examples/form-composition.html) and the [main component contract](components.md).
+
+## Server-owned validation and local component variables (alpha.5 candidate)
+
+Syntyr does **not** validate data, track touched fields, submit forms, or
+announce errors automatically. The server should return the invalid form with
+`aria-invalid="true"` on the affected field, an associated error via
+`aria-describedby`, and optionally a visible error summary containing real
+fragment links to the invalid fields. The browser's native `:user-invalid`
+and `:user-valid` states style fields after user interaction where supported;
+server-confirmed valid values may opt into
+`data-syn-validation="valid"` (a **visual hint**, not ARIA and not proof).
+Do not display success styling on untouched inputs. Never render an error
+summary merely to hide it with CSS; omit it when the form is valid.
+
+The optional `.syn-error-summary` class from `syntyr.recipes.css` leaves the summary visible and readable
+in forced-colors mode. If the server inserts the message following a submit,
+the host application determines focus, announcement and validation logic.
+
+For one-off app themes, override **component-local CSS custom properties**
+rather than selectors. Examples: `--syn-button-bg`,
+`--syn-button-color`, `--syn-button-border-color`,
+`--syn-button-hover-bg`, `--syn-panel-bg`,
+`--syn-panel-border-color`, `--syn-field-bg`,
+`--syn-field-border-color`, `--syn-field-valid-border-color`,
+and `--syn-field-invalid-border-color`. All use existing Syntyr theme tokens
+as fallbacks. Set the variables on the actual element or a containing
+theme scope; they do not require Sass or JavaScript. For button color changes,
+choose foreground/hover colors that meet applicable contrast requirements.
+
+[See the static example with server-error, valid, disabled and token states](../examples/form-state-contracts.html).

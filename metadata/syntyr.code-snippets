@@ -45,13 +45,13 @@
     "prefix": "syn-form",
     "scope": "html,javascriptreact,typescriptreact",
     "body": "syn-form",
-    "description": "Syntyr class."
+    "description": "Consistent spacing and structure for semantic HTML forms."
   },
   "Syntyr: syn-input": {
     "prefix": "syn-input",
     "scope": "html,javascriptreact,typescriptreact",
     "body": "syn-input",
-    "description": "Syntyr class."
+    "description": "Native form input styling; use a real input with an associated label."
   },
   "Syntyr: syn-semantic": {
     "prefix": "syn-semantic",

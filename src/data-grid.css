@@ -44,6 +44,20 @@
     overscroll-behavior: contain;
     scrollbar-gutter: stable;
   }
+  /* The viewport is a keyboard scroll target, so it receives the global
+     outset focus ring. `.syn-data-grid` clips with `overflow: hidden` and
+     leaves 1px of clearance against the 3px + 3px ring, which hides the
+     indicator on three sides. Paint the ring on the wrapper that cannot
+     clip it, and drop the inner one so the two never stack. Browsers
+     without :has() keep the previous behaviour instead of losing the ring. */
+  @supports selector(:has(*)) {
+    :where(.syn-root .syn-data-grid:has(> .syn-data-grid__viewport:focus-visible),
+           .syn-root.syn-data-grid:has(> .syn-data-grid__viewport:focus-visible)) {
+      outline: 3px solid var(--syn-focus-ring);
+      outline-offset: 2px;
+    }
+    :where(.syn-root .syn-data-grid__viewport:focus-visible) { outline: none; }
+  }
   :where(.syn-root .syn-data-grid__header) {
     position: sticky;
     inset-block-start: 0;
@@ -118,7 +132,9 @@
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-  :where(.syn-root .syn-data-grid__cell[aria-selected="true"]) {
+  /* Actual interactive grids use aria-selected; this static read-only
+     table example uses a purely presentational data-syn-selected hook. */
+  :where(.syn-root .syn-data-grid__cell:is([aria-selected="true"], [data-syn-selected="true"])) {
     background: var(--syn-grid-selected);
     box-shadow: inset 3px 0 var(--syn-accent);
   }
@@ -184,7 +200,7 @@
     font-variant-numeric: tabular-nums;
   }
   @media (forced-colors: active) {
-    :where(.syn-root .syn-data-grid__cell[aria-selected="true"]) {
+    :where(.syn-root .syn-data-grid__cell:is([aria-selected="true"], [data-syn-selected="true"])) {
       outline: 2px solid Highlight;
       outline-offset: -2px;
       box-shadow: none;

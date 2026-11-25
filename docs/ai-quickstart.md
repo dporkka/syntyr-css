@@ -37,6 +37,21 @@ If testing alpha.5 from a local source checkout, `syntyr.semantic-bundle.css` in
 
 Use `.syn-root` and `.syn-semantic` together; the bundle does not globally restyle arbitrary host HTML. Never load it alongside `core.css` or `semantic.css`, which would duplicate CSS. [Complete source demo](../examples/semantic-starter.html).
 
+### Find a matching source example (unreleased candidate only)
+
+For work against a verified alpha.5 **source checkout**, read the local
+`metadata/component-gallery.v1.json` instead of inventing classes:
+filter `examples[]` by `use_cases` (for example `saas-dashboard` or
+`forms-workflow`), then verify `required_stylesheets` against what is
+actually installed. Each example includes `html`, `catalog_url`,
+`playground_url`, and `native_feature_requirements`; browser caveats
+are in `native_browser_features`. The
+[editor integration guide](editor-integration.md#select-html-examples-by-task-and-installed-css)
+provides a standard-library Python selection example. Tags are
+recommendations, not evidence of complete behavior or a compatibility
+certificate. Do not copy unreleased examples into an alpha.4 application
+without checking that the classes and files exist in that release.
+
 ## 2. Generate valid HTML
 
 ```html

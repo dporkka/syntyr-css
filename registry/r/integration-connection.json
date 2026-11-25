@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "integration-connection",
+  "type": "registry:item",
+  "title": "Integration connection states",
+  "description": "Connection directory with connected, disconnected and error examples.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://syntyr-css.pages.dev/registry/r/core.json",
+    "https://syntyr-css.pages.dev/registry/r/recipes.json"
+  ],
+  "files": [
+    {
+      "path": "blocks/snippets/integration-connection.html",
+      "type": "registry:file",
+      "target": "~/syntyr/blocks/integration-connection.html",
+      "content": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-integrations-connect-title\">\n  <header class=\"syn-page-header\">\n    <div><h2 id=\"syn-integrations-connect-title\" class=\"syn-heading\">Connect your tools</h2>\n      <p class=\"syn-muted\">Connections, permissions and synchronization must be implemented by the host application.</p></div>\n    <a class=\"syn-button syn-button--outline\" href=\"/integrations/logs\">Connection events</a>\n  </header>\n  <div class=\"syn-grid\">\n    <article class=\"syn-panel\" aria-labelledby=\"syn-integration-calendar-title\">\n      <header class=\"syn-app-card-header\"><h3 id=\"syn-integration-calendar-title\">Calendar</h3><span class=\"syn-badge\">Not connected (sample)</span></header>\n      <p>Synchronize project milestones with a calendar provider.</p>\n      <form method=\"post\" action=\"/integrations/calendar/connect\">\n        <button type=\"submit\" class=\"syn-button syn-button--primary\">Connect calendar</button>\n      </form>\n    </article>\n    <article class=\"syn-panel\" aria-labelledby=\"syn-integration-storage-title\">\n      <header class=\"syn-app-card-header\"><h3 id=\"syn-integration-storage-title\">File storage</h3><span class=\"syn-badge\">Connected (sample)</span></header>\n      <p>Organize project files beside relevant records.</p>\n      <a class=\"syn-button syn-button--outline\" href=\"/integrations/storage\">Manage connection</a>\n    </article>\n    <article class=\"syn-panel\" aria-labelledby=\"syn-integration-crm-title\">\n      <header class=\"syn-app-card-header\"><h3 id=\"syn-integration-crm-title\">CRM</h3><span class=\"syn-badge\">Action required (sample)</span></header>\n      <p>Review the connection scope and any last synchronization failure.</p>\n      <a class=\"syn-button syn-button--outline\" href=\"/integrations/crm\">Review status</a>\n    </article>\n  </div>\n  <p class=\"syn-caption\">Consent screens, redirects, tokens and real statuses are not implemented by this HTML snippet.</p>\n</section>\n"
+    },
+    {
+      "path": "LICENSE",
+      "type": "registry:file",
+      "target": "~/syntyr/LICENSE",
+      "content": "MIT License\n\nCopyright (c) 2026 Syntyr CSS contributors\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n"
+    }
+  ],
+  "meta": {
+    "syntyrVersion": "0.3.0-alpha.5",
+    "source": "MIT source candidate",
+    "runtimeJavaScript": false,
+    "fileDigests": {
+      "~/syntyr/blocks/integration-connection.html": "98d2ac2354fb53a97c2009ce64e604f6ffbb9751b7a850604d7f4f3236222674",
+      "~/syntyr/LICENSE": "42f56369ac06362dbfe433d2d50b178bf74c369a55ea22337ab40fd9433521bf"
+    }
+  },
+  "docs": "Experimental source-candidate asset. Review exact version, HTML routes, keyboard behavior and integration before production use."
+}

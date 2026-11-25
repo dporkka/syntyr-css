@@ -61,6 +61,10 @@
         <ul><li>Accessible markup</li><li>Responsive layout</li><li>Theme tokens</li></ul>
         <ol><li>Load core CSS</li><li>Load semantic CSS</li><li>Apply <code>.syn-semantic</code></li></ol>
         <menu><li>Native menu entry</li><li>Another menu entry</li></menu>
+        <h3>Nested list</h3>
+        <ul><li>Parent bullet
+          <ol><li>Numbered detail</li><li>Another numbered detail</li></ol>
+        </li><li>Sibling bullet</li></ul>
         <h3>Term definitions</h3>
         <dl>
           <dt>Intrinsic</dt><dd>Uses the browser's native HTML behavior.</dd>
@@ -92,17 +96,48 @@
         <p><label for="capacity-meter">Capacity utilization</label>
         <meter id="capacity-meter" min="0" max="100" low="25" high="85" optimum="20" value="58">58%</meter></p>
         <p>Job status: <output name="job-status">Ready for processing</output></p>
-        <table>
-          <caption>Sample campaign inventory</caption>
-          <thead><tr><th scope="col">Format</th><th scope="col">Count</th></tr></thead>
-          <tbody><tr><th scope="row">Static</th><td>42</td></tr><tr><th scope="row">Digital</th><td>12</td></tr></tbody>
-        </table>
+        <div class="syn-table-wrap" role="region" aria-label="Sample campaign inventory" tabindex="0">
+          <table>
+            <caption>Sample campaign inventory</caption>
+            <thead><tr><th scope="col">Format</th><th scope="col">Count</th></tr></thead>
+            <tbody><tr><th scope="row">Static</th><td>42</td></tr><tr><th scope="row">Digital</th><td>12</td></tr></tbody>
+          </table>
+        </div>
       </article>
+    </section>
+    <section aria-labelledby="controls-title">
+      <h2 id="controls-title">Native suggestions and grouped choices</h2>
+      <p>This form-controls example does not submit data. A native datalist suggests values but does not restrict them; validate accepted values on the server.</p>
+      <fieldset>
+        <legend>Assignment filters (example)</legend>
+        <label for="native-location">Location with optional suggestions</label>
+        <input id="native-location" name="location" type="text" list="native-location-list" placeholder="Any location">
+        <datalist id="native-location-list">
+          <option value="North district"></option>
+          <option value="Central district"></option>
+          <option value="South district"></option>
+        </datalist>
+        <label for="native-service">Service category</label>
+        <select id="native-service" name="service">
+          <option value="">All services</option>
+          <optgroup label="Field operations">
+            <option value="inspection">Inspection</option>
+            <option value="installation">Installation</option>
+          </optgroup>
+          <optgroup label="Support">
+            <option value="maintenance">Maintenance</option>
+          </optgroup>
+        </select>
+        <p><output for="native-location native-service">Filters have not been applied (static preview).</output></p>
+      </fieldset>
     </section>
     <section aria-labelledby="native-title">
       <h2 id="native-title">Browser-native disclosure and overlays</h2>
       <article>
         <details><summary>Show native disclosure</summary><p>The browser handles expanded state and keyboard interaction.</p></details>
+        <p>Grouped disclosures use the same <code>name</code> attribute. Browsers that support exclusive-open details close the other panel; older browsers may leave both open.</p>
+        <details name="native-review-sections"><summary>Review requested evidence</summary><p>Check identifiers and retention requirements before approving a real work order.</p></details>
+        <details name="native-review-sections"><summary>Review scheduling conditions</summary><p>Check technician authorization, timing and capacity on the server.</p></details>
         <button type="button" popovertarget="sample-popover">Open popover</button>
         <div popover id="sample-popover"><p>Native popover dismissal and focus semantics.</p></div>
         <button type="button" commandfor="sample-dialog" command="show-modal">Open dialog (supported browsers)</button>

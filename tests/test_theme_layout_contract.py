@@ -10,7 +10,7 @@ class ThemeLayoutContract(unittest.TestCase):
         tokens = (ROOT / 'src/tokens.css').read_text()
         bundle = (ROOT / 'dist/syntyr.core.css').read_text()
         for role in ('--syn-page-gutter', '--syn-content-max', '--syn-section-space',
-                     '--syn-content-gap', '--syn-panel-padding'):
+                     '--syn-content-gap', '--syn-panel-padding-default'):
             with self.subTest(role=role):
                 self.assertIn(role + ':', tokens)
                 self.assertIn(role + ':', bundle)
@@ -23,7 +23,7 @@ class ThemeLayoutContract(unittest.TestCase):
         self.assertIn('.syn-root :where(.syn-u-stack > *)', utilities)
         for density in ('compact', 'comfortable', 'spacious'):
             self.assertIn(f'data-syn-density="{density}"', tokens)
-        self.assertEqual(tokens.count('--syn-panel-padding:'), 4)
+        self.assertEqual(tokens.count('--syn-panel-padding-default:'), 4)
 
     def test_composition_rules_are_not_forked_per_theme(self):
         layout = (ROOT / 'src/components/layout.css').read_text()

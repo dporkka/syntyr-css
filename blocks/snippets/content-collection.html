@@ -1,0 +1,47 @@
+<section class="syn-root syn-region syn-stack" data-syn-theme="studio" aria-labelledby="syn-collection-heading">
+  <header class="syn-stack">
+    <p class="syn-eyebrow">THE JOURNAL</p>
+    <h2 class="syn-section-heading" id="syn-collection-heading">Ideas for practical teams</h2>
+    <p class="syn-muted">A reusable archive: the host server supplies matching items and pagination.</p>
+  </header>
+  <form class="syn-filter-bar" method="get" action="/journal" role="search" aria-label="Filter articles">
+    <div class="syn-filter-field syn-filter-field--query">
+      <label class="syn-label" for="syn-collection-search">Search articles</label>
+      <input class="syn-input" id="syn-collection-search" type="search" name="q" placeholder="Search the journal">
+    </div>
+    <div class="syn-filter-field">
+      <label class="syn-label" for="syn-collection-category">Topic</label>
+      <select class="syn-select" id="syn-collection-category" name="category">
+        <option value="">All topics</option>
+        <option value="engineering">Engineering</option>
+        <option value="design">Design</option>
+      </select>
+    </div>
+    <div class="syn-filter-actions"><button class="syn-button syn-button--primary" type="submit">Find articles</button></div>
+  </form>
+  <div class="syn-feature-grid">
+    <article class="syn-feature-card syn-stack">
+      <span class="syn-badge">Engineering</span>
+      <h3 class="syn-heading"><a href="/journal/accessible-forms">Forms that work for everyone</a></h3>
+      <p class="syn-muted">Why native controls are a strong foundation for production forms.</p>
+      <p class="syn-caption"><time datetime="2026-10-19">October 19, 2026</time> · 5 min read</p>
+    </article>
+    <article class="syn-feature-card syn-stack">
+      <span class="syn-badge">Design</span>
+      <h3 class="syn-heading"><a href="/journal/clear-layouts">Make dense pages easier to scan</a></h3>
+      <p class="syn-muted">Build responsive hierarchy using existing layout primitives.</p>
+      <p class="syn-caption"><time datetime="2026-10-26">October 26, 2026</time> · 4 min read</p>
+    </article>
+    <article class="syn-feature-card syn-stack">
+      <span class="syn-badge">Engineering</span>
+      <h3 class="syn-heading"><a href="/journal/steady-components">Components built to last</a></h3>
+      <p class="syn-muted">A practical approach to stable tokens and low-maintenance HTML.</p>
+      <p class="syn-caption"><time datetime="2026-11-02">November 2, 2026</time> · 7 min read</p>
+    </article>
+  </div>
+  <nav class="syn-pagination" aria-label="Pagination">
+    <a class="syn-page-link" href="/journal?page=1" aria-current="page">1</a>
+    <a class="syn-page-link" href="/journal?page=2">2</a>
+    <a class="syn-page-link" href="/journal?page=2" aria-label="Next page">Next</a>
+  </nav>
+</section>

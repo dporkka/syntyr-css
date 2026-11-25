@@ -1,0 +1,554 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Copy HTML patterns for native suggestions, glossaries, highlights, ordered timelines, MathML, resources, disclosures, search, forms and responsive images.">
+  <meta name="syntyr-source-sha256" content="9c69b855882213d3d5325deddd12dba40ecd2c962166ad78c7c41acbdc0c086d">
+  <meta name="theme-color" content="#f5f7fb">
+  <title>Semantic HTML component recipes — Syntyr CSS docs</title>
+  <link rel="canonical" href="https://syntyr-css.pages.dev/docs/semantic-components">
+  <link rel="alternate" type="text/markdown" href="semantic-components.md" title="Markdown source">
+  <link rel="icon" href="../assets/syntyr-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="docs.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <a class="syn-button docs-skip" href="#doc-main">Skip to guide</a>
+  <div class="syn-shell">
+    <header class="syn-header docs-header">
+      <a class="syn-logo" href="../index.html">SYNTYR / CSS</a>
+      <nav class="syn-nav" aria-label="Documentation navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav>
+      <details class="site-mobile-menu"><summary>Menu</summary><nav aria-label="Mobile navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav></details>
+    </header>
+    <main id="doc-main" class="docs-article-page">
+      <nav class="syn-breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="reference.html">Documentation</a></li><li aria-current="page">Semantic HTML component recipes</li></ol></nav>
+      <header class="docs-article-heading">
+        <p class="syn-eyebrow">SYNTYR / DOCUMENTATION</p>
+        <p class="syn-muted">Current source documentation may describe unreleased alpha.5 features. <a href="distribution.html">Check released version compatibility.</a></p>
+        <p class="syn-caption">Prefer a machine-readable version? <a href="semantic-components.md">Markdown source</a> · <a href="../llms.txt">LLM index</a></p>
+      </header>
+      <div class="docs-article-layout">
+        <article class="docs-prose" aria-label="Semantic HTML component recipes">
+<h1 id="semantic-html-component-recipes">Semantic HTML component recipes</h1>
+<p>Build article previews, breadcrumbs, citations, metadata lists, change histories,
+internationalized labels, tables, FAQs, search forms, measured status, and
+responsive media with <strong>native HTML</strong>. Syntyr styles
+these elements without replacing browser semantics or adding a JavaScript runtime.
+These are copy-owned markup compositions in the free MIT core—not new JS widgets.</p>
+<p><a href="../examples/semantic-compositions.html">View the live semantic component gallery</a>.
+For the existing forms, dialogs, search and disclosure patterns, see
+<a href="native-patterns.html">native platform patterns</a>.</p>
+<h2 id="install-semantic-styling">Install semantic styling</h2>
+<p>Load core first, semantic second. Both are plain CSS; styles apply only to a
+<code>.syn-root.syn-semantic</code> element or a <code>.syn-semantic</code> subtree inside
+<code>.syn-root</code>. Classless elements are styled automatically. Add
+<code>data-syn-semantic</code> to classed elements <strong>only</strong> when opting them into the
+semantic rules. A classed element keeps its explicitly chosen component styles.</p>
+<pre tabindex="0"><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/dist/syntyr.core.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;/dist/syntyr.semantic.css&quot;&gt;
+&lt;main class=&quot;syn-root syn-semantic&quot; data-syn-theme=&quot;studio&quot;&gt;
+  &lt;article&gt;&lt;h1&gt;Semantic HTML, styled by Syntyr&lt;/h1&gt;&lt;/article&gt;
+&lt;/main&gt;
+</code></pre>
+<p>Use version-pinned stylesheets from your own deployment in production. These
+examples require <strong>no JavaScript</strong>. Any data lookup, routing, persistence or
+change handling still belongs to the server or host application.</p>
+<h2 id="article-preview-with-publication-date">Article preview with publication date</h2>
+<p>Use <code>article</code> for a self-contained work and <code>time[datetime]</code> for
+machine-readable dates. Avoid <code>article</code> merely to get a bordered card:
+use <code>.syn-panel</code> on an ordinary container instead.</p>
+<pre tabindex="0"><code class="language-html">&lt;article&gt;
+  &lt;header&gt;
+    &lt;h2&gt;&lt;a href=&quot;/notes/semantic-html&quot;&gt;Semantic HTML in practice&lt;/a&gt;&lt;/h2&gt;
+    &lt;p&gt;Published &lt;time datetime=&quot;2026-11-16&quot;&gt;16 November 2026&lt;/time&gt;&lt;/p&gt;
+  &lt;/header&gt;
+  &lt;p&gt;A compact guide to meaningful browser-native markup.&lt;/p&gt;
+  &lt;footer&gt;&lt;small&gt;Documentation team&lt;/small&gt;&lt;/footer&gt;
+&lt;/article&gt;
+</code></pre>
+<h2 id="breadcrumb-navigation">Breadcrumb navigation</h2>
+<p>Use a real <code>nav</code> landmark, an ordered list and <code>aria-current=&quot;page&quot;</code>.
+Syntyr already provides <code>.syn-breadcrumbs</code>; do not create a second breadcrumb
+component or hand-code presentational separator characters.</p>
+<pre tabindex="0"><code class="language-html">&lt;nav class=&quot;syn-breadcrumbs&quot; aria-label=&quot;Breadcrumb&quot;&gt;
+  &lt;ol&gt;
+    &lt;li&gt;&lt;a href=&quot;/&quot;&gt;Home&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;/docs&quot;&gt;Docs&lt;/a&gt;&lt;/li&gt;
+    &lt;li aria-current=&quot;page&quot;&gt;Semantics&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/nav&gt;
+</code></pre>
+<h2 id="definitions-and-structured-metadata">Definitions and structured metadata</h2>
+<p>Use <code>dl</code>, <code>dt</code>, and <code>dd</code> for name/value pairs; <code>data[value]</code> for a
+machine-readable value, <code>abbr[title]</code> for a genuine abbreviation, and
+<code>time[datetime]</code> for dates. Do not use <code>dl</code> merely as a two-column grid.</p>
+<pre tabindex="0"><code class="language-html">&lt;dl&gt;
+  &lt;dt&gt;Plan&lt;/dt&gt;&lt;dd&gt;Team&lt;/dd&gt;
+  &lt;dt&gt;Seats&lt;/dt&gt;&lt;dd&gt;&lt;data value=&quot;12&quot;&gt;12 active seats&lt;/data&gt;&lt;/dd&gt;
+  &lt;dt&gt;Renewal&lt;/dt&gt;&lt;dd&gt;&lt;time datetime=&quot;2027-01-01&quot;&gt;1 January 2027&lt;/time&gt;&lt;/dd&gt;
+  &lt;dt&gt;Availability&lt;/dt&gt;&lt;dd&gt;&lt;abbr title=&quot;Service-level agreement&quot;&gt;SLA&lt;/abbr&gt; 99.9%&lt;/dd&gt;
+&lt;/dl&gt;
+</code></pre>
+<h2 id="quotation-and-source-attribution">Quotation and source attribution</h2>
+<p>Use <code>blockquote</code> for a long quotation and a <code>figure</code> with
+<code>figcaption</code> for its attribution. <code>cite</code> names the <em>work</em>, not its author;
+do not manufacture a URL for the <code>blockquote[cite]</code> attribute.</p>
+<pre tabindex="0"><code class="language-html">&lt;figure&gt;
+  &lt;blockquote&gt;&lt;p&gt;Use the language of the platform before adding an abstraction.&lt;/p&gt;&lt;/blockquote&gt;
+  &lt;figcaption&gt;From &lt;cite&gt;Semantic Design Notes&lt;/cite&gt;&lt;/figcaption&gt;
+&lt;/figure&gt;
+</code></pre>
+<p>A <code>blockquote</code> may alternatively include a <code>footer</code> for supporting
+attribution text. The optional semantic stylesheet styles that footer, without
+changing the surrounding <code>footer</code> elements elsewhere on the page.</p>
+<h2 id="document-revisions">Document revisions</h2>
+<p>The <code>ins</code> and <code>del</code> elements communicate additions and removals. Include a
+valid <code>datetime</code> if the modification date is known. For live collaborative
+editing or audit history, the server remains authoritative.</p>
+<pre tabindex="0"><code class="language-html">&lt;p&gt;Retention: &lt;del datetime=&quot;2026-11-15&quot;&gt;90 days&lt;/del&gt;
+  &lt;ins datetime=&quot;2026-11-16&quot;&gt;120 days&lt;/ins&gt;.&lt;/p&gt;
+</code></pre>
+<h2 id="multilingual-pronunciation-and-bidi-isolation">Multilingual pronunciation and bidi isolation</h2>
+<p>Use <code>ruby</code> and <code>rt</code> for pronunciation annotations; <code>rp</code> supplies text
+fallback in browsers without ruby presentation. Syntyr deliberately does not restyle the
+annotation; the browser owns ruby positioning, text size, and fallback. Use <code>bdi</code> for a
+user-supplied string with unknown direction; <code>bdo</code> intentionally overrides
+direction and should be used only when that behavior is required.</p>
+<pre tabindex="0"><code class="language-html">&lt;p&gt;Character: &lt;ruby&gt;漢&lt;rp&gt;(&lt;/rp&gt;&lt;rt&gt;hàn&lt;/rt&gt;&lt;rp&gt;)&lt;/rp&gt;&lt;/ruby&gt;&lt;/p&gt;
+&lt;p&gt;Author: &lt;bdi&gt;مريم&lt;/bdi&gt; — saved successfully.&lt;/p&gt;
+&lt;p&gt;Deliberate reverse sequence: &lt;bdo dir=&quot;rtl&quot;&gt;ABC&lt;/bdo&gt;&lt;/p&gt;
+</code></pre>
+<h2 id="tabular-totals-with-a-real-footer">Tabular totals with a real footer</h2>
+<p>Keep a caption, column headers with <code>scope=&quot;col&quot;</code>, row headers with
+<code>scope=&quot;row&quot;</code>, and a <code>tfoot</code> summary. The browser owns table semantics;
+Syntyr's optional <code>tfoot</code> styling adds only a separator and weight. For
+complex tables, connect headers using <code>id</code> and <code>headers</code> as needed.</p>
+<pre tabindex="0"><code class="language-html">&lt;table&gt;
+  &lt;caption&gt;Monthly license usage&lt;/caption&gt;
+  &lt;thead&gt;&lt;tr&gt;&lt;th scope=&quot;col&quot;&gt;License&lt;/th&gt;&lt;th scope=&quot;col&quot;&gt;Seats&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;&lt;th scope=&quot;row&quot;&gt;Team&lt;/th&gt;&lt;td&gt;12&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;th scope=&quot;row&quot;&gt;Guest&lt;/th&gt;&lt;td&gt;3&lt;/td&gt;&lt;/tr&gt;
+  &lt;/tbody&gt;
+  &lt;tfoot&gt;&lt;tr&gt;&lt;th scope=&quot;row&quot;&gt;Total&lt;/th&gt;&lt;td&gt;15&lt;/td&gt;&lt;/tr&gt;&lt;/tfoot&gt;
+&lt;/table&gt;
+</code></pre>
+<h2 id="complementary-content">Complementary content</h2>
+<p>A contextual <code>aside</code> is a complementary landmark, not a generic card. Apply
+the existing <code>.syn-panel</code> class when a visual callout is desirable.</p>
+<pre tabindex="0"><code class="language-html">&lt;aside class=&quot;syn-panel&quot; aria-labelledby=&quot;help-title&quot;&gt;
+  &lt;h2 id=&quot;help-title&quot;&gt;Implementation guidance&lt;/h2&gt;
+  &lt;p&gt;Keep routing, translations, and data validation in the host application.&lt;/p&gt;
+&lt;/aside&gt;
+</code></pre>
+<h2 id="in-page-navigation">In-page navigation</h2>
+<p>A <code>nav</code> landmark with an accessible name and a real ordered list doubles as
+an in-page table of contents. Anchor destinations must exist. Do not substitute
+a fake tab interface or JavaScript scrolling for ordinary document navigation.</p>
+<pre tabindex="0"><code class="language-html">&lt;nav aria-label=&quot;On this page&quot;&gt;
+  &lt;ol&gt;
+    &lt;li&gt;&lt;a href=&quot;#offer&quot;&gt;Current offer&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;#notes&quot;&gt;Reference notes&lt;/a&gt;&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/nav&gt;
+&lt;section id=&quot;offer&quot; aria-labelledby=&quot;offer-heading&quot;&gt;
+  &lt;h2 id=&quot;offer-heading&quot;&gt;Current offer&lt;/h2&gt;
+  &lt;p&gt;Native content, no client-side routing required.&lt;/p&gt;
+&lt;/section&gt;
+&lt;section id=&quot;notes&quot; aria-labelledby=&quot;notes-heading&quot;&gt;
+  &lt;h2 id=&quot;notes-heading&quot;&gt;Reference notes&lt;/h2&gt;
+  &lt;p&gt;Each anchor points to a real heading section.&lt;/p&gt;
+&lt;/section&gt;
+</code></pre>
+<h2 id="previous-price-versus-revision">Previous price versus revision</h2>
+<p>Use <code>s</code> for content that is no longer accurate or relevant, such as a
+superseded advertised price; <code>del</code> and <code>ins</code> instead describe <strong>actual
+document edits</strong>. Use <code>data[value]</code> when the application needs a
+machine-readable number, not to indicate currency on its own. Provide the
+currency and billing period in visible text. Price, stock and promotion
+eligibility must still be verified by the server before any transaction.</p>
+<pre tabindex="0"><code class="language-html">&lt;article&gt;
+  &lt;h2&gt;Team plan (example only)&lt;/h2&gt;
+  &lt;p&gt;Example price:
+    &lt;s&gt;&lt;data value=&quot;39&quot;&gt;US$39 per month&lt;/data&gt;&lt;/s&gt;
+    &lt;strong&gt;&lt;data value=&quot;29&quot;&gt;US$29 per month&lt;/data&gt;&lt;/strong&gt;
+  &lt;/p&gt;
+  &lt;p&gt;&lt;small&gt;Illustrative pricing, not a live Syntyr offer.&lt;/small&gt;&lt;/p&gt;
+&lt;/article&gt;
+</code></pre>
+<p>Syntyr's optional semantic layer lightly de-emphasizes <code>s</code> but keeps its
+native strikethrough. This rule remains scoped to classless or explicitly
+opted-in elements inside <code>.syn-semantic</code>.</p>
+<h2 id="footnotes-and-return-links">Footnotes and return links</h2>
+<p>Use a normal <code>sup</code> with an anchor to a numbered <code>ol</code>, then include a
+return link to the reference. This approach works with keyboard navigation,
+screen readers, server-rendered HTML and no custom event handlers. Do not
+put footnote bodies in an inaccessible hover-only tooltip.</p>
+<pre tabindex="0"><code class="language-html">&lt;p&gt;Native links are keyboard accessible
+  &lt;sup id=&quot;note-ref-1&quot;&gt;&lt;a href=&quot;#note-1&quot; aria-label=&quot;Footnote 1&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;.
+&lt;/p&gt;
+&lt;section aria-labelledby=&quot;footnotes-title&quot;&gt;
+  &lt;h2 id=&quot;footnotes-title&quot;&gt;Notes&lt;/h2&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;note-1&quot;&gt;A normal anchor connects the note and reference.
+      &lt;a href=&quot;#note-ref-1&quot;&gt;Return to reference 1&lt;/a&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/section&gt;
+</code></pre>
+<p>Both IDs must be unique to the page, and links must resolve when fragments
+are loaded directly. Keep the note text in the document, not generated solely
+with CSS <code>content</code>.</p>
+<h2 id="technical-notation-and-long-identifiers">Technical notation and long identifiers</h2>
+<p>Prefer the HTML elements that convey meaning: <code>var</code> names a variable,
+<code>samp</code> names program output, <code>kbd</code> represents keyboard input,
+<code>sub</code> and <code>sup</code> retain native baseline notation, and <code>wbr</code> allows
+line breaks within long identifiers. Syntyr deliberately leaves <code>sub</code>,
+<code>sup</code> and <code>wbr</code> layout to the browser.</p>
+<pre tabindex="0"><code class="language-html">&lt;p&gt;Area = &lt;var&gt;width&lt;/var&gt; × &lt;var&gt;height&lt;/var&gt;.
+  Water is H&lt;sub&gt;2&lt;/sub&gt;O; the formula is E = mc&lt;sup&gt;2&lt;/sup&gt;.
+&lt;/p&gt;
+&lt;p&gt;Press &lt;kbd&gt;Enter&lt;/kbd&gt;. The program prints &lt;samp&gt;Ready&lt;/samp&gt;.&lt;/p&gt;
+&lt;p&gt;Example endpoint: &lt;code&gt;api.example.test/&lt;wbr&gt;v1/&lt;wbr&gt;document-exports&lt;/code&gt;&lt;/p&gt;
+</code></pre>
+<p>The domain and endpoint above are placeholders only, not production services.</p>
+<h2 id="grouped-table-headings">Grouped table headings</h2>
+<p>Use <code>colgroup</code> with a real <code>th scope=&quot;colgroup&quot;</code> and subcolumn headings.
+For simple tables, use <code>scope=&quot;col&quot;</code> and <code>scope=&quot;row&quot;</code> instead. Syntyr
+already provides native cell borders and table captions; the optional
+semantic styling adds a subtle <code>thead</code> background and preserves
+high-contrast borders. It does not replace table accessibility semantics.</p>
+<pre tabindex="0"><code class="language-html">&lt;table&gt;
+  &lt;caption&gt;Example monthly accounts&lt;/caption&gt;
+  &lt;colgroup&gt;&lt;col&gt;&lt;/colgroup&gt;
+  &lt;colgroup span=&quot;2&quot;&gt;&lt;/colgroup&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;&lt;th scope=&quot;col&quot; rowspan=&quot;2&quot;&gt;Plan&lt;/th&gt;
+        &lt;th scope=&quot;colgroup&quot; colspan=&quot;2&quot;&gt;Accounts&lt;/th&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;th scope=&quot;col&quot;&gt;Paid&lt;/th&gt;&lt;th scope=&quot;col&quot;&gt;Trial&lt;/th&gt;&lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;&lt;th scope=&quot;row&quot;&gt;Starter&lt;/th&gt;&lt;td&gt;8&lt;/td&gt;&lt;td&gt;3&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;th scope=&quot;row&quot;&gt;Growth&lt;/th&gt;&lt;td&gt;4&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;/tr&gt;
+  &lt;/tbody&gt;
+  &lt;tfoot&gt;&lt;tr&gt;&lt;th scope=&quot;row&quot;&gt;Total&lt;/th&gt;&lt;td&gt;12&lt;/td&gt;&lt;td&gt;5&lt;/td&gt;&lt;/tr&gt;&lt;/tfoot&gt;
+&lt;/table&gt;
+</code></pre>
+<h2 id="contact-details">Contact details</h2>
+<p>An <code>address</code> identifies contact information for a document or its nearest
+<code>article</code> context; it is <strong>not</strong> a generic container for any street
+address. Use a genuine support link or known contact method rather than an
+invented email address. The example below uses the project's actual issue
+tracker.</p>
+<pre tabindex="0"><code class="language-html">&lt;footer&gt;
+  &lt;address&gt;Questions about this guide?
+    &lt;a href=&quot;https://github.com/dporkka/syntyr-css/issues&quot;&gt;
+      Contact the Syntyr maintainers through Issues
+    &lt;/a&gt;.
+  &lt;/address&gt;
+&lt;/footer&gt;
+</code></pre>
+<h2 id="native-faq-disclosure">Native FAQ disclosure</h2>
+<p>Use a <code>details</code> element and its <strong>first child</strong> <code>summary</code> for
+disclosures. Give related items the same <code>name</code> for a browser-native
+single-open accordion. A single group member may start with <code>open</code>; browsers
+close its peers when another member opens. This is an interaction, not a
+tablist, so do not add <code>role=&quot;tab&quot;</code> or extra JavaScript. Keep answers present
+in the document for users and search engines. The optional stylesheet
+distinguishes an opened panel with a soft border.</p>
+<pre tabindex="0"><code class="language-html">&lt;section aria-labelledby=&quot;faq-heading&quot;&gt;
+  &lt;h2 id=&quot;faq-heading&quot;&gt;FAQ&lt;/h2&gt;
+  &lt;details name=&quot;syn-semantic-faq&quot; open&gt;
+    &lt;summary&gt;Does this need JavaScript?&lt;/summary&gt;
+    &lt;p&gt;No. The browser handles open and closed state and keyboard use.&lt;/p&gt;
+  &lt;/details&gt;
+  &lt;details name=&quot;syn-semantic-faq&quot;&gt;
+    &lt;summary&gt;Can I use it in a server-rendered app?&lt;/summary&gt;
+    &lt;p&gt;Yes. Keep the markup on the page and the group name unique.&lt;/p&gt;
+  &lt;/details&gt;
+&lt;/section&gt;
+</code></pre>
+<p>For content that should be visible simultaneously, omit the shared <code>name</code>.
+Do not hide legal, essential or time-critical information behind an unannounced
+disclosure.</p>
+<h2 id="semantic-issue-search">Semantic issue search</h2>
+<p>Use <code>search</code> for the page's search landmark and a native GET form, with a
+visible label and an actual endpoint. This example searches the public Syntyr
+GitHub issue tracker; it works without client-side JavaScript, although
+submitting navigates away to GitHub.</p>
+<pre tabindex="0"><code class="language-html">&lt;search&gt;
+  &lt;form action=&quot;https://github.com/dporkka/syntyr-css/issues&quot; method=&quot;get&quot;&gt;
+    &lt;label for=&quot;issues-query&quot;&gt;Search Syntyr issues&lt;/label&gt;
+    &lt;input id=&quot;issues-query&quot; type=&quot;search&quot; name=&quot;q&quot; required
+           placeholder=&quot;Example: accessibility&quot;&gt;
+    &lt;button type=&quot;submit&quot;&gt;Find issues&lt;/button&gt;
+  &lt;/form&gt;
+&lt;/search&gt;
+</code></pre>
+<p>The host application is responsible for providing a real backend for any
+site-local search. Do not present a demo-only search box as functional.</p>
+<h2 id="grouped-choice-form">Grouped choice form</h2>
+<p>Use <code>fieldset</code> and <code>legend</code> for the shared form prompt, <code>label</code> for
+control identification, and <code>optgroup</code> to group related <code>option</code>
+elements. Native select popup appearance is browser-owned. Here the chosen
+topic is sent as a GET query to the real public issue tracker.</p>
+<pre tabindex="0"><code class="language-html">&lt;form action=&quot;https://github.com/dporkka/syntyr-css/issues&quot; method=&quot;get&quot;&gt;
+  &lt;fieldset&gt;
+    &lt;legend&gt;Browse a topic&lt;/legend&gt;
+    &lt;label for=&quot;issue-topic&quot;&gt;Issue topic&lt;/label&gt;
+    &lt;select name=&quot;q&quot; id=&quot;issue-topic&quot; required&gt;
+      &lt;option value=&quot;&quot;&gt;Choose a topic&lt;/option&gt;
+      &lt;optgroup label=&quot;HTML&quot;&gt;
+        &lt;option value=&quot;semantic&quot;&gt;Semantic HTML&lt;/option&gt;
+        &lt;option value=&quot;accessibility&quot;&gt;Accessibility&lt;/option&gt;
+      &lt;/optgroup&gt;
+      &lt;optgroup label=&quot;Styles&quot;&gt;
+        &lt;option value=&quot;css&quot;&gt;CSS&lt;/option&gt;
+        &lt;option value=&quot;themes&quot;&gt;Themes&lt;/option&gt;
+      &lt;/optgroup&gt;
+    &lt;/select&gt;
+    &lt;button type=&quot;submit&quot;&gt;View matching issues&lt;/button&gt;
+  &lt;/fieldset&gt;
+&lt;/form&gt;
+</code></pre>
+<p>Do not replace <code>fieldset</code> with a visually similar generic container where
+controls genuinely share a question.</p>
+<h2 id="progress-and-measurement">Progress and measurement</h2>
+<p>Use <code>progress[value][max]</code> for progress <strong>toward completion</strong>. Use
+<code>meter[value][min][max]</code> for a bounded measurement such as utilization or a
+rating. The <code>low</code>, <code>high</code> and <code>optimum</code> attributes describe value
+quality, not completion progress. Include an actual <code>label</code> (or equivalent
+accessible name) and visible readable value. <code>output</code> can display a
+server-computed result; it does <strong>not</strong> recalculate automatically in response
+to changing inputs without host logic.</p>
+<pre tabindex="0"><code class="language-html">&lt;section aria-labelledby=&quot;status-heading&quot;&gt;
+  &lt;h2 id=&quot;status-heading&quot;&gt;Illustrative status&lt;/h2&gt;
+  &lt;label for=&quot;review-progress&quot;&gt;Review progress: 7 of 10 complete&lt;/label&gt;
+  &lt;progress id=&quot;review-progress&quot; value=&quot;7&quot; max=&quot;10&quot;&gt;7 of 10&lt;/progress&gt;
+  &lt;label for=&quot;capacity-meter&quot;&gt;Sample capacity: 68%&lt;/label&gt;
+  &lt;meter id=&quot;capacity-meter&quot; value=&quot;68&quot; min=&quot;0&quot; max=&quot;100&quot;
+         low=&quot;30&quot; high=&quot;85&quot; optimum=&quot;70&quot;&gt;68%&lt;/meter&gt;
+  &lt;p&gt;Calculated review total:
+    &lt;output name=&quot;review-total&quot;&gt;7 completed reviews&lt;/output&gt;
+  &lt;/p&gt;
+&lt;/section&gt;
+</code></pre>
+<p>All figures in this example are illustrative rather than live metrics.
+For indeterminate progress, omit <code>value</code> and provide an accompanying
+status message.</p>
+<h2 id="responsive-captioned-media">Responsive captioned media</h2>
+<p>Use <code>picture</code> and <code>source[media][srcset]</code> for browser-driven responsive
+art direction, <code>img</code> with meaningful alternative text and intrinsic
+dimensions to prevent layout shifts, and <code>figure</code> with <code>figcaption</code> when a
+caption belongs to the media. This example switches between two actual
+Syntyr Studio screenshots at narrow widths. There is no carousel or script.</p>
+<pre tabindex="0"><code class="language-html">&lt;figure&gt;
+  &lt;picture&gt;
+    &lt;source media=&quot;(max-width: 600px)&quot;
+            srcset=&quot;../docs/previews/studio-settings.webp&quot;&gt;
+    &lt;img src=&quot;../docs/previews/studio-editor.webp&quot;
+         width=&quot;1120&quot; height=&quot;700&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;
+         alt=&quot;Syntyr Studio interface: settings on small screens and editor on larger screens&quot;&gt;
+  &lt;/picture&gt;
+  &lt;figcaption&gt;Two Syntyr Studio views, selected by viewport width.&lt;/figcaption&gt;
+&lt;/figure&gt;
+</code></pre>
+<p>Supply valid paths relative to the <strong>published page</strong>, not the Markdown
+document location. These paths assume the snippet runs in the examples
+directory as in the live component gallery. If there is no meaningful
+art-direction change, prefer a single responsive <code>img</code> instead.</p>
+<h2 id="native-suggestions-with-datalist">Native suggestions with datalist</h2>
+<p>Use <code>input[list]</code> with an associated <code>datalist</code> when you want to
+<strong>suggest</strong> common text entries without restricting what the user can type.
+Unlike <code>select</code>, it does not create an exhaustive set of choices. The
+<code>input</code> still needs a visible <code>label</code>, a real <code>name</code> for submission, and
+server-side validation. The browser owns how suggestions appear; do not try
+to skin a datalist popup.</p>
+<p>This working example submits a GET query to Syntyr's public issue tracker.</p>
+<pre tabindex="0"><code class="language-html">&lt;form action=&quot;https://github.com/dporkka/syntyr-css/issues&quot; method=&quot;get&quot;&gt;
+  &lt;label for=&quot;topic-suggest&quot;&gt;Search issues (try a suggested topic)&lt;/label&gt;
+  &lt;input id=&quot;topic-suggest&quot; name=&quot;q&quot; type=&quot;search&quot;
+         list=&quot;reference-topic-suggestions&quot; required
+         placeholder=&quot;Type a topic&quot;&gt;
+  &lt;datalist id=&quot;reference-topic-suggestions&quot;&gt;
+    &lt;option value=&quot;semantic&quot;&gt;&lt;/option&gt;
+    &lt;option value=&quot;accessibility&quot;&gt;&lt;/option&gt;
+    &lt;option value=&quot;themes&quot;&gt;&lt;/option&gt;
+    &lt;option value=&quot;typography&quot;&gt;&lt;/option&gt;
+  &lt;/datalist&gt;
+  &lt;button type=&quot;submit&quot;&gt;Search issues on GitHub&lt;/button&gt;
+&lt;/form&gt;
+</code></pre>
+<p><strong>No JavaScript is required</strong> for suggestions. Use <code>select</code> instead when
+the submitted value must come from a finite set.</p>
+<h2 id="glossary-and-abbreviations">Glossary and abbreviations</h2>
+<p>Use a real definition list for a collection of terms and their definitions.
+<code>dfn</code> identifies the term being defined, and <code>abbr[title]</code> expands an
+abbreviation the first time it matters. Do not use <code>dfn</code> as a decorative
+italic treatment or <code>dl</code> as an arbitrary two-column layout.</p>
+<pre tabindex="0"><code class="language-html">&lt;section aria-labelledby=&quot;glossary-heading&quot;&gt;
+  &lt;h2 id=&quot;glossary-heading&quot;&gt;Glossary&lt;/h2&gt;
+  &lt;dl&gt;
+    &lt;dt&gt;&lt;dfn&gt;Native semantics&lt;/dfn&gt;&lt;/dt&gt;
+    &lt;dd&gt;Meaning provided by HTML elements without custom roles.&lt;/dd&gt;
+    &lt;dt&gt;&lt;dfn&gt;ARIA&lt;/dfn&gt;&lt;/dt&gt;
+    &lt;dd&gt;&lt;abbr title=&quot;Accessible Rich Internet Applications&quot;&gt;ARIA&lt;/abbr&gt;
+        extends accessibility semantics only where native HTML is insufficient.&lt;/dd&gt;
+  &lt;/dl&gt;
+&lt;/section&gt;
+</code></pre>
+<h2 id="highlighted-excerpts-and-quotations">Highlighted excerpts and quotations</h2>
+<p><code>mark</code> indicates a relevant excerpt in its current context, such as a
+search match, while <code>q</code> denotes an inline quotation. The <code>cite</code> element
+names the cited <strong>work</strong>, rather than the author or a source URL. Do not
+manually insert quote-mark characters around <code>q</code> when the browser already
+provides them. Syntyr already styles <code>mark</code>, <code>q</code>, and <code>cite</code>; no extra
+components or runtime are necessary.</p>
+<pre tabindex="0"><code class="language-html">&lt;article aria-labelledby=&quot;excerpt-heading&quot;&gt;
+  &lt;h2 id=&quot;excerpt-heading&quot;&gt;Highlighted documentation excerpt&lt;/h2&gt;
+  &lt;p&gt;&lt;mark&gt;Native HTML&lt;/mark&gt; allows browser-owned focus and semantics.&lt;/p&gt;
+  &lt;p&gt;&lt;q&gt;Syntyr styles these elements without replacing browser semantics&lt;/q&gt;
+     — &lt;cite&gt;&lt;a href=&quot;../docs/semantic-components.html&quot;&gt;
+       Semantic HTML component recipes&lt;/a&gt;&lt;/cite&gt;.&lt;/p&gt;
+&lt;/article&gt;
+</code></pre>
+<p>The quoted line comes from this guide's introduction. For search results,
+the server supplies the real match and safely escaped text; never inject
+untrusted HTML into highlighted excerpts.</p>
+<h2 id="chronological-ordered-list">Chronological ordered list</h2>
+<p>Use <code>ol</code> for genuinely ordered events and <code>time[datetime]</code> for dates
+that machines can parse. <code>reversed</code> and <code>start</code> preserve native
+numbering for newest-first sequences; they are not substitutes for sorting
+the data server-side. This checklist is illustrative, <strong>not</strong> an actual
+Syntyr release history.</p>
+<pre tabindex="0"><code class="language-html">&lt;section aria-labelledby=&quot;history-heading&quot;&gt;
+  &lt;h2 id=&quot;history-heading&quot;&gt;Illustrative release steps&lt;/h2&gt;
+  &lt;ol reversed start=&quot;3&quot;&gt;
+    &lt;li&gt;&lt;time datetime=&quot;2026-11-16&quot;&gt;16 November 2026&lt;/time&gt;: Publish examples&lt;/li&gt;
+    &lt;li&gt;&lt;time datetime=&quot;2026-11-15&quot;&gt;15 November 2026&lt;/time&gt;: Validate HTML&lt;/li&gt;
+    &lt;li&gt;&lt;time datetime=&quot;2026-11-14&quot;&gt;14 November 2026&lt;/time&gt;: Draft content&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/section&gt;
+</code></pre>
+<p>Use normal <code>ol</code> without <code>reversed</code> for a conventional chronological
+timeline or instructions progressing from step one.</p>
+<h2 id="mathematical-notation-with-mathml">Mathematical notation with MathML</h2>
+<p>Native <strong>MathML</strong> gives equations structural meaning: <code>math</code>, <code>mrow</code>,
+<code>mi</code>, <code>mn</code>, <code>mo</code>, and <code>msup</code> identify the formula and its parts.
+Include readable explanatory text in a <code>figcaption</code>; avoid images of
+math without meaningful text alternatives. Annotation may preserve
+source notation for compatible tools, but browsers own layout.</p>
+<pre tabindex="0"><code class="language-html">&lt;figure&gt;
+  &lt;math display=&quot;block&quot;&gt;
+    &lt;semantics&gt;
+      &lt;mrow&gt;
+        &lt;msup&gt;&lt;mi&gt;a&lt;/mi&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/msup&gt;
+        &lt;mo&gt;+&lt;/mo&gt;
+        &lt;msup&gt;&lt;mi&gt;b&lt;/mi&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/msup&gt;
+        &lt;mo&gt;=&lt;/mo&gt;
+        &lt;msup&gt;&lt;mi&gt;c&lt;/mi&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/msup&gt;
+      &lt;/mrow&gt;
+      &lt;annotation encoding=&quot;application/x-tex&quot;&gt;a^2 + b^2 = c^2&lt;/annotation&gt;
+    &lt;/semantics&gt;
+  &lt;/math&gt;
+  &lt;figcaption&gt;Example Pythagorean identity: a squared plus b squared equals c squared.&lt;/figcaption&gt;
+&lt;/figure&gt;
+</code></pre>
+<p>MathML is browser-native, <strong>not styled by the optional semantic sheet</strong>.
+Test presentation and accessibility with the actual browsers your users
+need to support.</p>
+<h2 id="resource-command-list">Resource command list</h2>
+<p>A native <code>menu</code> is an unordered list of <strong>commands/actions</strong>, not an ARIA
+application menu with arrow-key behavior. Use actual links for navigation
+actions and <code>button</code> only when it performs an implemented action. Do not
+add <code>role=&quot;menu&quot;</code> unless you intend to implement its complete keyboard
+interaction contract.</p>
+<pre tabindex="0"><code class="language-html">&lt;section aria-labelledby=&quot;resources-heading&quot;&gt;
+  &lt;h2 id=&quot;resources-heading&quot;&gt;Reference actions&lt;/h2&gt;
+  &lt;menu&gt;
+    &lt;li&gt;&lt;a href=&quot;../docs/semantic-components.html&quot;&gt;Read semantic recipes&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;native-elements.html&quot;&gt;Browse native controls&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;https://github.com/dporkka/syntyr-css/issues&quot;&gt;Report an issue&lt;/a&gt;&lt;/li&gt;
+  &lt;/menu&gt;
+&lt;/section&gt;
+</code></pre>
+<p>All destinations are real links. Ordinary <code>ul</code> remains preferable for
+a list of information rather than actions.</p>
+<p><strong>Accessibility and maintenance:</strong> Keep real heading order and link destinations,
+avoid adding redundant ARIA roles to native elements, test browser reflow and
+right-to-left content, and do not add JavaScript just to imitate HTML controls.
+<code>ruby</code>, <code>bdi</code>, <code>bdo</code>, <code>rp</code> and table navigation are browser-owned behavior.</p>
+        </article>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+<a class="docs-article-toc-link docs-article-toc-2" href="#install-semantic-styling">Install semantic styling</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#article-preview-with-publication-date">Article preview with publication date</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#breadcrumb-navigation">Breadcrumb navigation</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#definitions-and-structured-metadata">Definitions and structured metadata</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#quotation-and-source-attribution">Quotation and source attribution</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#document-revisions">Document revisions</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#multilingual-pronunciation-and-bidi-isolation">Multilingual pronunciation and bidi isolation</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#tabular-totals-with-a-real-footer">Tabular totals with a real footer</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#complementary-content">Complementary content</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#in-page-navigation">In-page navigation</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#previous-price-versus-revision">Previous price versus revision</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#footnotes-and-return-links">Footnotes and return links</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#technical-notation-and-long-identifiers">Technical notation and long identifiers</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#grouped-table-headings">Grouped table headings</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#contact-details">Contact details</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#native-faq-disclosure">Native FAQ disclosure</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#semantic-issue-search">Semantic issue search</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#grouped-choice-form">Grouped choice form</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#progress-and-measurement">Progress and measurement</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#responsive-captioned-media">Responsive captioned media</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#native-suggestions-with-datalist">Native suggestions with datalist</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#glossary-and-abbreviations">Glossary and abbreviations</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#highlighted-excerpts-and-quotations">Highlighted excerpts and quotations</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#chronological-ordered-list">Chronological ordered list</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#mathematical-notation-with-mathml">Mathematical notation with MathML</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#resource-command-list">Resource command list</a>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#install-semantic-styling">Install semantic styling</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#article-preview-with-publication-date">Article preview with publication date</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#breadcrumb-navigation">Breadcrumb navigation</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#definitions-and-structured-metadata">Definitions and structured metadata</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#quotation-and-source-attribution">Quotation and source attribution</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#document-revisions">Document revisions</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#multilingual-pronunciation-and-bidi-isolation">Multilingual pronunciation and bidi isolation</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#tabular-totals-with-a-real-footer">Tabular totals with a real footer</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#complementary-content">Complementary content</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#in-page-navigation">In-page navigation</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#previous-price-versus-revision">Previous price versus revision</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#footnotes-and-return-links">Footnotes and return links</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#technical-notation-and-long-identifiers">Technical notation and long identifiers</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#grouped-table-headings">Grouped table headings</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#contact-details">Contact details</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#native-faq-disclosure">Native FAQ disclosure</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#semantic-issue-search">Semantic issue search</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#grouped-choice-form">Grouped choice form</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#progress-and-measurement">Progress and measurement</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#responsive-captioned-media">Responsive captioned media</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#native-suggestions-with-datalist">Native suggestions with datalist</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#glossary-and-abbreviations">Glossary and abbreviations</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#highlighted-excerpts-and-quotations">Highlighted excerpts and quotations</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#chronological-ordered-list">Chronological ordered list</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#mathematical-notation-with-mathml">Mathematical notation with MathML</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#resource-command-list">Resource command list</a>
+            </nav>
+          </details>
+        </aside>
+      </div>
+      <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="semantic-components.md">Markdown source</a></nav>
+    </main>
+    <footer class="syn-header"><span class="syn-caption">SYNTYR CSS · MIT CORE · EXPERIMENTAL</span><a href="../index.html">Home</a></footer>
+  </div>
+</body>
+</html>

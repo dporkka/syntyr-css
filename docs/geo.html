@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Status: experimental and unreleased. The MIT-licensed syntyr.geo.css module styles geospatial application chrome : map workspaces, filters, layers, marker…">
+  <meta name="syntyr-source-sha256" content="177ad701a63d07af30926190d57e8a8f234ed2509c25db6b7db3faca7ad9e0a7">
+  <meta name="theme-color" content="#f5f7fb">
+  <title>Syntyr Geo — renderer-neutral geospatial interface styles — Syntyr CSS docs</title>
+  <link rel="canonical" href="https://syntyr-css.pages.dev/docs/geo">
+  <link rel="alternate" type="text/markdown" href="geo.md" title="Markdown source">
+  <link rel="icon" href="../assets/syntyr-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="docs.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <a class="syn-button docs-skip" href="#doc-main">Skip to guide</a>
+  <div class="syn-shell">
+    <header class="syn-header docs-header">
+      <a class="syn-logo" href="../index.html">SYNTYR / CSS</a>
+      <nav class="syn-nav" aria-label="Documentation navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav>
+      <details class="site-mobile-menu"><summary>Menu</summary><nav aria-label="Mobile navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav></details>
+    </header>
+    <main id="doc-main" class="docs-article-page">
+      <nav class="syn-breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="reference.html">Documentation</a></li><li aria-current="page">Syntyr Geo — renderer-neutral geospatial interface styles</li></ol></nav>
+      <header class="docs-article-heading">
+        <p class="syn-eyebrow">SYNTYR / DOCUMENTATION</p>
+        <p class="syn-muted">Current source documentation may describe unreleased alpha.5 features. <a href="distribution.html">Check released version compatibility.</a></p>
+        <p class="syn-caption">Prefer a machine-readable version? <a href="geo.md">Markdown source</a> · <a href="../llms.txt">LLM index</a></p>
+      </header>
+      <div class="docs-article-layout">
+        <article class="docs-prose" aria-label="Syntyr Geo — renderer-neutral geospatial interface styles">
+<h1 id="syntyr-geo-renderer-neutral-geospatial-interface-styles">Syntyr Geo — renderer-neutral geospatial interface styles</h1>
+<p><strong>Status:</strong> experimental and unreleased. The MIT-licensed <code>syntyr.geo.css</code> module styles geospatial application <strong>chrome</strong>: map workspaces, filters, layers, marker hit targets, selected states, clusters, legends, callouts, scale bars and attribution. No JavaScript, tiles, mapping SDK, fonts, or network assets are included in Syntyr Geo. Load <code>syntyr.core.css</code> first.</p>
+<pre tabindex="0"><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.core.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.geo.css&quot;&gt;
+</code></pre>
+<p>Or, in a package-manager application consuming the <strong>unpublished</strong> alpha.5 candidate, import <code>@syntyr/css/geo.css</code>. The <code>syntyr.all.css</code> bundle already contains Geo; <strong>do not load both</strong>. Neither <code>syntyr.core.css</code> nor <code>syntyr.viz.css</code> includes it.</p>
+<p><strong><a href="../examples/geo.html">Open the synthetic, offline Geo demo</a></strong>. It is a Schematic illustration, <strong>Not to scale</strong>, with fictional records, no tile provider or API keys, and disabled zoom controls. It is not a map renderer.</p>
+<h3 id="optional-python-standard-library-operations-demo-repository-source">Optional Python standard-library operations demo (repository source)</h3>
+<p>The <a href="https://github.com/dporkka/syntyr-css/blob/main/examples/geo_operations_server.py">runnable Geo operations server</a> illustrates <strong>actual server-owned GET filtering and selection</strong> without JavaScript or additional CSS APIs. From a repository checkout run:</p>
+<pre tabindex="0"><code class="language-sh">python3 examples/geo_operations_server.py --port 8765
+</code></pre>
+<p>Open <code>http://127.0.0.1:8765/</code>. It composes the existing <code>syntyr.core.css</code>, <code>syntyr.recipes.css</code> and <code>syntyr.geo.css</code> files into a responsive inventory search, accessible results/inspector, and fictional map schematic. Map coordinates are <strong>illustrative pixel percentages</strong>, not geographic coordinates. The Python file is a <strong>source-only reference</strong> and is not included in the distributable release ZIP. The server binds to localhost and contains fictional in-memory records; it has no credentials, accounts, tenant isolation, authorization, persistence or booking capability. Never expose this sample on a public interface as a production service.</p>
+<h3 id="district-drill-down-and-selection-interaction-contract">District drill-down and selection: interaction contract</h3>
+<p>The optional server example uses <strong>real, browser-native GET navigation</strong> for a small fictional district facet. The new <code>district</code> select and district links share search, status and format filters. District counts are computed after those other filters but before choosing a district, so the number on each link represents the results it would show. There is no JavaScript filtering or hidden application state.</p>
+<table>
+<thead>
+<tr>
+<th>User action</th>
+<th>Native UI and URL state</th>
+<th>What the server must guarantee</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Apply filters</td>
+<td>Labeled <code>search</code> input and <code>select</code> controls, <code>method=&quot;get&quot;</code></td>
+<td>Filter the <strong>list and the schematic markers</strong> from the same result set, recompute summary/counts and prevent stale selected records</td>
+</tr>
+<tr>
+<td>Browse a district</td>
+<td>Named <code>nav</code> of ordinary links with one <code>aria-current=&quot;page&quot;</code></td>
+<td>Retain search, status and format; reset selection before choosing the first visible item</td>
+</tr>
+<tr>
+<td>Select a map marker or an asset</td>
+<td>Link with preserved filters and <code>selected=ID#selection</code></td>
+<td>Inspect only an asset that belongs to the currently filtered district; never reveal an out-of-scope record</td>
+</tr>
+<tr>
+<td>Find a map marker from a record</td>
+<td><code>#map-marker-ID</code> points to a real named anchor</td>
+<td>Preserve a keyboard-reachable target even with JavaScript disabled; do <strong>not</strong> pretend to center a real map camera</td>
+</tr>
+<tr>
+<td>No matching records</td>
+<td>Plain-text status with no markers or inspector</td>
+<td>Clear stale selection and display an actionable filter-reset path</td>
+</tr>
+</tbody>
+</table>
+<p>This contract is <strong>read-only demonstration behavior</strong>, not tenant authorization. The district names and percentages are fictional, not geographic boundaries. A production application must validate parameters and permissions at the data-access layer, rather than treating filtered HTML or the marker list as an access-control boundary. Do not use the diagram's percentage coordinates to simulate real GIS geography.</p>
+<p>Maintainers can optionally verify Chromium/Firefox native GET interaction, district navigation, 320px reflow, enlarged text, RTL markers and forced colors with <code>node tests/geo_operations_server_browser.cjs</code> after installing Playwright <strong>outside</strong> the Syntyr runtime. The script starts and shuts down the localhost Python server automatically. This does not replace manual screen-reader or real browser-zoom review.</p>
+<h2 id="the-boundary-cartographic-behavior-is-an-application-concern">The boundary: cartographic behavior is an application concern</h2>
+<p><strong>Syntyr does not</strong> calculate geographic coordinates, distances, bearings, geodesics, clustering, projections, antimeridian handling, routing or point-in-polygon queries. It cannot fetch or display basemap data, style vector tiles, perform hit testing, handle map keyboard navigation, or ensure geospatial measurement accuracy. Supply your own GIS data, map engine, and attribution. Syntyr only styles HTML around the actual map.</p>
+<p>For interactive maps, integrate an engine such as <a href="https://maplibre.org/maplibre-gl-js/docs/">MapLibre GL JS</a> (vector tiles / WebGL), <a href="https://leafletjs.com/reference">Leaflet</a> (lightweight tiled/DOM maps), or <a href="https://openlayers.org/">OpenLayers</a> (specialized GIS interactions and projections). They are <strong>application dependencies</strong>, not dependencies of Syntyr. Engine-native attribution and copyright/license requirements still apply; never remove provider credits. A decorative CSS attribution surface cannot replace legally required renderer attribution.</p>
+<p>Choose and disclose the projection and coordinate reference system that your data needs (for example WGS 84 longitude/latitude for position inputs); do not assume a visual pixel distance equals a ground distance. Compute scale from the actual renderer viewport, latitude and zoom. Only set <code>data-syn-measured=&quot;true&quot;</code> on <code>.syn-geo-scale</code> when the application has supplied a truthful measured label and bar length. Static examples deliberately say “Not to scale.”</p>
+<h2 id="a-map-ready-responsive-shell">A map-ready, responsive shell</h2>
+<pre tabindex="0"><code class="language-html">&lt;section class=&quot;syn-root syn-geo-shell&quot; data-syn-theme=&quot;studio&quot;&gt;
+  &lt;div class=&quot;syn-geo-workspace&quot;&gt;
+    &lt;aside class=&quot;syn-geo-sidebar&quot; aria-labelledby=&quot;locations-title&quot;&gt;
+      &lt;h2 id=&quot;locations-title&quot;&gt;Locations&lt;/h2&gt;
+      &lt;ul class=&quot;syn-geo-data-list&quot;&gt;
+        &lt;li&gt;&lt;a href=&quot;#location-1&quot;&gt;Site M-12 — operational&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/aside&gt;
+
+    &lt;div class=&quot;syn-geo-viewport&quot; role=&quot;region&quot;
+         aria-label=&quot;Interactive site map; location details are also in the list&quot;&gt;
+      &lt;div id=&quot;site-map&quot; class=&quot;syn-geo-map&quot;&gt;&lt;/div&gt;
+      &lt;div class=&quot;syn-geo-overlay&quot;&gt;
+        &lt;!-- Optional app-owned, functional controls and legend go here. --&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+</code></pre>
+<p>The map mount fills the viewport, while <code>.syn-geo-overlay</code> lets pointer events pass through to the renderer except on Syntyr controls, legends and other interactive children. The workspace uses a <strong>named container query</strong> (<code>syn-geo</code>), so it stacks at narrow <em>container</em> sizes, including in a split dashboard. Set <code>--syn-geo-height</code>, <code>--syn-geo-compact-height</code> and <code>--syn-geo-sidebar-width</code> on an ancestor to customize its dimensions.</p>
+<h3 id="markers-use-the-renderer-to-position-them">Markers: use the renderer to position them</h3>
+<p><code>.syn-geo-marker</code> styles a 44 × 44 CSS-pixel target with a smaller visible glyph. With MapLibre, provide a real native <code>button</code> to <code>new maplibregl.Marker({ element: button })</code>, then set the exact <code>LngLat</code> using <code>.setLngLat([longitude, latitude]).addTo(map)</code>. MapLibre owns the marker's geographic positioning; <strong>do not place engine-managed marker elements inside <code>.syn-geo-marker-layer</code></strong>.</p>
+<p>The pure HTML demo instead places links within <code>.syn-geo-marker-layer</code>; only those children use <code>--syn-geo-x</code> and <code>--syn-geo-y</code> for <em>diagram</em> coordinates, not GIS coordinates. These CSS percentages are expressly not a geographic coordinate API.</p>
+<p>Use <code>data-syn-geo-kind=&quot;route&quot;</code> for square markers or <code>&quot;zone&quot;</code> for rotated-square markers; ordinary sites remain round. <code>data-syn-selected=&quot;true&quot;</code> and <code>aria-current=&quot;location&quot;</code> provide a visible selection ring. <code>.syn-geo-cluster</code> styles an already-computed cluster count; <strong>Syntyr never computes clustering</strong>. An app must wire marker activation and popups, synchronize selection with the detail panel, and support keyboard navigation.</p>
+<h3 id="map-controls-and-overlays">Map controls and overlays</h3>
+<ul>
+<li><code>.syn-geo-controls</code>, <code>.syn-geo-control-group</code>, <code>.syn-geo-control</code> style the application's real <code>button</code> controls. A displayed control must work: wire zoom/pan to the map SDK, otherwise disable it.</li>
+<li><code>.syn-geo-bottom</code>, <code>.syn-geo-legend</code>, <code>.syn-geo-legend-list</code>, <code>.syn-geo-swatch</code> style legends for points, routes, and zones. Always include text labels; swatch shape must not be the only source of meaning.</li>
+<li><code>.syn-geo-callout</code> styles the body of an engine-positioned popup. Use safe DOM APIs and text nodes for untrusted feature labels instead of passing unsafe strings into HTML.</li>
+<li><code>.syn-geo-scale</code> presents a scale label. A measured bar only appears for <code>data-syn-measured=&quot;true&quot;</code> and a renderer-provided <code>--syn-geo-scale-length</code>.</li>
+<li><code>.syn-geo-attribution</code> is a surface treatment for attribution you supply, not a replacement for engine-provided credits.</li>
+<li><code>.syn-geo-layer-list</code> styles labeled checkboxes; connect state to the renderer's visible layer set. Checking a box alone does not change map data.</li>
+<li><code>.syn-geo-data-list</code> provides a navigable, semantic fallback for locations and map features.</li>
+</ul>
+<p>MapLibre and Leaflet already offer their own zoom, scale and attribution controls. Prefer their functional native versions instead of overlaying duplicate, inert Syntyr controls. Avoid covering copyright or the map's navigation affordances.</p>
+<h2 id="theming-and-accessibility">Theming and accessibility</h2>
+<p>All seven Syntyr palettes resolve the nested tokens <code>--syn-geo-land</code>, <code>--syn-geo-water</code>, <code>--syn-geo-road</code>, <code>--syn-geo-parcel</code>, <code>--syn-geo-point</code>, <code>--syn-geo-route</code> and <code>--syn-geo-zone</code>, as well as <code>--syn-geo-floating</code>. These are UI/documentation defaults, <strong>not</strong> standardized GIS symbology, hazard categories or validated cartographic color scales. In a real map, assign purpose-specific and contrast-checked symbology to rendered geospatial layers.</p>
+<p>For screen reader access, keep the meaningful asset list, labels, live states and a real HTML table or equivalent structured alternative <strong>outside</strong> the map canvas. Give every interactive marker an accessible name, make popup actions usable via keyboard, show an explicit focus ring, and announce state changes where appropriate. SVG diagrams used only as illustration may be <code>aria-hidden=&quot;true&quot;</code> when the same information exists in text. Do not rely on hue alone for status or selection.</p>
+<p>Touch targets are at least 44 CSS pixels in the provided controls and markers. Reflow should be audited at 320px and 400% zoom; verify that map overlays do not obscure attribution or details. Forced-colors users get native system-color surfaces and selected-marker outlines. Reduced-motion settings should also be respected by the <strong>map renderer</strong>, including camera transitions and animated geospatial layers.</p>
+<h2 id="product-fit">Product fit</h2>
+<p>Geo deliberately stays in its own CSS module rather than bloating core. Use it for OOH asset inventory maps, real-estate site selection, logistics fleet screens, field operations, municipal dashboards, parcel analysis and geospatial intelligence consoles. Any paid Syntyr Pro templates can compose this free MIT foundation while keeping premium implementation, integrations and domain-specific workflows in a separate licensed product.</p>
+<h2 id="optional-real-maplibre-browser-smoke-maintainers">Optional real-MapLibre browser smoke (maintainers)</h2>
+<p>The repository also includes an intentionally <strong>unpublished, developer-only</strong> MapLibre integration fixture and browser harness. It loads locally installed MapLibre, Playwright and esbuild from a separate host application and bundles them for a temporary localhost page with a <strong>synthetic offline map style</strong>, no external tiles, credentials or real asset data. It is not the Syntyr runtime.</p>
+<p>The <a href="https://github.com/dporkka/syntyr-css/blob/main/tests/fixtures/geo-maplibre.html">fixture HTML</a> and <a href="https://github.com/dporkka/syntyr-css/blob/main/tests/fixtures/geo-maplibre-app.js">application-owned wiring</a> demonstrate the complete <strong>map ↔ list ↔ inspector</strong> contract with three fictional longitude/latitude points:</p>
+<ol>
+<li>The native list links navigate to a real, focusable details section. MapLibre-owned marker <strong>buttons</strong> expose accessible names; Enter and Space select the same record.</li>
+<li>The host app updates exactly one selected record in the list, selected-marker ring, inspector and polite status announcement. List selection calls MapLibre <code>map.jumpTo({center: ...})</code>, using real <code>LngLat</code> positions and the renderer's projection, not <code>--syn-geo-x</code> or CSS percentage coordinates.</li>
+<li>Native status and search controls update both the list and actual MapLibre markers. A hidden/unknown record cannot be selected through the example UI; no-results states clear the inspector and selected markers. Returning to a broader filter keeps the current selection <strong>if it remains visible</strong>.</li>
+<li>The fixture starts with filters and zoom <strong>disabled</strong> until the app wires their behavior. Without JavaScript, the authored list, initial details and explicit <code>noscript</code> explanation remain readable; the list only becomes clickable once the application has wired selection, so it never links inactive sites to unrelated details.</li>
+<li>Browser checks validate real geographic marker projection, zoom, marker/list keyboard activation, selection and empty-state consistency, 44px targets, mobile container reflow, overlay pointer events, 2×/4× root-font stress, forced colors and reduced motion.</li>
+</ol>
+<p><strong>Authorization boundary:</strong> this is <em>not</em> a security implementation. The three fictional points are embedded in test-only JavaScript and are all visible to anyone with the fixture. Client-side filtering and rejecting unknown UI selections do <strong>not</strong> provide authentication, tenant isolation, feature authorization or data privacy. A real OOH/map application must deliver only server-authorized records, enforce per-record and per-tenant permissions at each API or tile endpoint, and verify selection/detail requests server-side. Never load sensitive cross-tenant assets and hope CSS, map layers, or browser filtering hide them. Do not use this synthetic test as evidence that real tenant isolation is working.</p>
+<p><strong>Host-owned design decision:</strong> the fixture uses safe <code>textContent</code> updates instead of interpolating record names into <code>innerHTML</code>, <code>map.jumpTo</code> instead of simulated CSS marker placement, and ordinary browser focus/fragment navigation instead of a custom focus trap. Other applications can use React, HTMX, or plain JavaScript for this orchestration; Syntyr only supplies the optional geospatial presentation styles.</p>
+<pre tabindex="0"><code class="language-sh">SYNTYR_VENDOR_NODE_MODULES=/path/to/installed/node_modules \
+  node tests/geo_maplibre_browser.mjs
+</code></pre>
+<p>Set <code>SYNTYR_GEO_CHROMIUM_PATH</code> if the locally installed Playwright browser revision differs from Playwright's default, or <code>SYNTYR_GEO_SCREENSHOT_DIR</code> to save developer-only screenshots. The harness never runs as a Syntyr consumer dependency. Its static fixture and scripts are <strong>not</strong> published on Cloudflare or in the release ZIP.</p>
+<p><strong>Adacavo integration decision:</strong> prefer borrowing Syntyr Geo layout, legend and accessible map-chrome patterns into the existing MapLibre inventory view <strong>without importing an unreleased Syntyr CSS package</strong>. Retain Adacavo's tenant-safe APIs, actual inventory status colors, source clustering, positioning, map controls and map attribution. Reevaluate package-level integration only after Syntyr's CSS is released and proven stable.</p>
+        </article>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+<a class="docs-article-toc-link docs-article-toc-3" href="#optional-python-standard-library-operations-demo-repository-source">Optional Python standard-library operations demo (repository source)</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#district-drill-down-and-selection-interaction-contract">District drill-down and selection: interaction contract</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#the-boundary-cartographic-behavior-is-an-application-concern">The boundary: cartographic behavior is an application concern</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#a-map-ready-responsive-shell">A map-ready, responsive shell</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#markers-use-the-renderer-to-position-them">Markers: use the renderer to position them</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#map-controls-and-overlays">Map controls and overlays</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#theming-and-accessibility">Theming and accessibility</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#product-fit">Product fit</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#optional-real-maplibre-browser-smoke-maintainers">Optional real-MapLibre browser smoke (maintainers)</a>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-3" href="#optional-python-standard-library-operations-demo-repository-source">Optional Python standard-library operations demo (repository source)</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#district-drill-down-and-selection-interaction-contract">District drill-down and selection: interaction contract</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#the-boundary-cartographic-behavior-is-an-application-concern">The boundary: cartographic behavior is an application concern</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#a-map-ready-responsive-shell">A map-ready, responsive shell</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#markers-use-the-renderer-to-position-them">Markers: use the renderer to position them</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#map-controls-and-overlays">Map controls and overlays</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#theming-and-accessibility">Theming and accessibility</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#product-fit">Product fit</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#optional-real-maplibre-browser-smoke-maintainers">Optional real-MapLibre browser smoke (maintainers)</a>
+            </nav>
+          </details>
+        </aside>
+      </div>
+      <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="geo.md">Markdown source</a></nav>
+    </main>
+    <footer class="syn-header"><span class="syn-caption">SYNTYR CSS · MIT CORE · EXPERIMENTAL</span><a href="../index.html">Home</a></footer>
+  </div>
+</body>
+</html>

@@ -38,7 +38,7 @@
 <p>These are original, MIT-licensed SYNTYR CSS components. They do not replicate entertainment franchise assets or require JavaScript.</p>
 <h2 id="installation">Installation</h2>
 <p>Load only the modules you need. Advanced geometry is separate so ordinary pages do not load its CSS:</p>
-<pre><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.core.css&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.core.css&quot;&gt;
 &lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.geometry.css&quot;&gt;
 &lt;!-- Only for the optional application/terminal layouts: --&gt;
 &lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.recipes.css&quot;&gt;
@@ -46,7 +46,7 @@
 <p>The all-in-one stylesheet includes geometry and recipes already. Do not load it alongside the individual modules.</p>
 <h2 id="seven-independent-frame-profiles">Seven independent frame profiles</h2>
 <p>Use <code>.syn-frame</code> with exactly <strong>one</strong> shape modifier. These can decorate an article, section, or any normal element. The surrounding content stays semantic:</p>
-<pre><code class="language-html">&lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;grid&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;grid&quot;&gt;
   &lt;article class=&quot;syn-panel syn-frame syn-frame--bevel&quot; style=&quot;--syn-frame-cut: 1.5rem&quot;&gt;
     &lt;h2&gt;Monitoring&lt;/h2&gt;
     &lt;p&gt;All systems operational.&lt;/p&gt;
@@ -104,7 +104,7 @@
 </ul>
 <p>The clipped shapes use individually corrected inner polygons to keep diagonal borders closer to their specified perpendicular stroke width. Square steps use the same step size for both polygons. These are <strong>painted frames</strong>, not clipped interactive hit regions; the native element remains a rectangle for layout and focus. Avoid cut sizes larger than the element can accommodate, or strokes as large as the cuts.</p>
 <h3 id="asymmetric-geometry-and-gradient-border-example">Asymmetric geometry and gradient border example</h3>
-<pre><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.core.css&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.core.css&quot;&gt;
 &lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.geometry.css&quot;&gt;
 &lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;grid&quot;&gt;
   &lt;article class=&quot;syn-panel syn-frame syn-frame--facet&quot; style=&quot;
@@ -162,21 +162,34 @@
 <p>The existing <code>.syn-table-emphasis</code> class highlights whichever cell you choose: there is no implicit highlight on the last column. Use <code>.syn-cell--numeric</code> on monetary or numeric cells for right-aligned tabular numbers.</p>
 <p>The native HTML <code>disabled</code> attribute blocks button activation. The ARIA <code>aria-disabled=&quot;true&quot;</code> attribute only communicates a disabled state; it <strong>does not block activation</strong>. Application/server code must enforce disabled behavior. CSS alone cannot guarantee it. For a disabled action that must remain discoverable to keyboard users, preserve focus and handle input appropriately.</p>
 <h2 id="validation">Validation</h2>
-<pre><code class="language-sh">python3 scripts/build.py
+<pre tabindex="0"><code class="language-sh">python3 scripts/build.py
 python3 scripts/build.py --check
 python3 -m unittest discover -s tests -v
 python3 tests/browser_matrix.py --browsers chromium firefox webkit
 </code></pre>
 <p>See <a href="../examples/geometry-terminal.html">the frame + terminal example</a>. Browser checks are developer-only; the distributed CSS still has zero runtime JS or dependencies.</p>
         </article>
-        <aside class="docs-article-sidebar"><nav aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#installation">Installation</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#seven-independent-frame-profiles">Seven independent frame profiles</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#asymmetric-geometry-and-gradient-border-example">Asymmetric geometry and gradient border example</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#browser-terminal">Browser terminal</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#table-and-button-behavior">Table and button behavior</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#validation">Validation</a>
-        </nav></aside>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#installation">Installation</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#seven-independent-frame-profiles">Seven independent frame profiles</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#asymmetric-geometry-and-gradient-border-example">Asymmetric geometry and gradient border example</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#browser-terminal">Browser terminal</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#table-and-button-behavior">Table and button behavior</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#validation">Validation</a>
+            </nav>
+          </details>
+        </aside>
       </div>
       <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="geometry-terminal.md">Markdown source</a></nav>
     </main>

@@ -1,0 +1,2500 @@
+{
+  "schema_version": 1,
+  "source_version": "0.3.0-alpha.5",
+  "completeness": "curated-examples",
+  "source_of_truth": {
+    "components": "metadata/components.json",
+    "examples": "docs/catalog.html",
+    "themes": "metadata/syntyr-api.json"
+  },
+  "scope": "syn-root",
+  "runtime_requirement": "none",
+  "use_case_definitions": {
+    "marketing-site": {
+      "label": "Marketing website",
+      "description": "Landing-page, pricing, trust, and public-site compositions."
+    },
+    "saas-dashboard": {
+      "label": "SaaS dashboard",
+      "description": "Application surfaces, status, metrics, tables, and operations UI."
+    },
+    "forms-workflow": {
+      "label": "Forms and onboarding",
+      "description": "Data entry, search, feedback, and multistep form compositions."
+    },
+    "content-docs": {
+      "label": "Content and documentation",
+      "description": "Editorial content, help, semantic text, and documentation layouts."
+    },
+    "navigation": {
+      "label": "Navigation and discovery",
+      "description": "Site navigation, wayfinding, search, and pagination patterns."
+    }
+  },
+  "adoption_guidance": {
+    "framework_guide": "docs/framework-integrations.html",
+    "required_css_order": [
+      "syntyr.core.css",
+      "then optional files listed by each example's required_stylesheets"
+    ],
+    "stylesheet_rule": "Load required_stylesheets in their listed order; syntyr.all.css replaces, never accompanies, individual modules.",
+    "html_rule": "Place example HTML inside a stable .syn-root; copy IDs only once per document and replace demo links and form actions.",
+    "browser_rule": "Consult native_feature_requirements and native_browser_features fallbacks; an empty list does not guarantee compatibility.",
+    "release_rule": "Unreleased 0.3.0-alpha.5 source candidate; do not assume published alpha.4 includes these examples."
+  },
+  "native_browser_features": {
+    "details-name": {
+      "name": "Exclusive details grouping",
+      "documentation_url": "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details",
+      "fallback": "Individual disclosures work but multiple answers may remain open."
+    },
+    "invoker-commands": {
+      "name": "HTML Invoker Commands",
+      "documentation_url": "https://developer.mozilla.org/en-US/docs/Web/API/Invoker_Commands_API",
+      "fallback": "Provide an accessible link or host-owned dialog opener when commandfor is unsupported."
+    },
+    "popover": {
+      "name": "HTML Popover API",
+      "documentation_url": "https://developer.mozilla.org/en-US/docs/Web/API/Popover_API",
+      "fallback": "Provide important content through a normal link or disclosure when popovers are unsupported."
+    }
+  },
+  "note": "Unreleased source-tree candidate, not a guarantee of published alpha.4 availability. Host applications own behavior, data and validation.",
+  "components": [
+    {
+      "name": "Button",
+      "module": "syntyr.core.css",
+      "elements": [
+        "button",
+        "a"
+      ],
+      "classes": [
+        "syn-button",
+        "syn-button--primary",
+        "syn-button--outline",
+        "syn-button--danger",
+        "syn-button--ghost"
+      ],
+      "notes": "Use button for actions and a for navigation. ARIA states describe real application state."
+    },
+    {
+      "name": "Panel",
+      "module": "syntyr.core.css",
+      "elements": [
+        "article",
+        "section",
+        "div"
+      ],
+      "classes": [
+        "syn-panel",
+        "syn-panel--cut"
+      ],
+      "notes": "Choose native headings and accessible labels."
+    },
+    {
+      "name": "Content list",
+      "module": "syntyr.core.css",
+      "elements": [
+        "ul",
+        "ol"
+      ],
+      "classes": [
+        "syn-list",
+        "syn-list--compact",
+        "syn-list--accent"
+      ],
+      "notes": "Native list markers and order preserved. Use in core-only scopes; semantic mode handles unclassed lists."
+    },
+    {
+      "name": "Form fields",
+      "module": "syntyr.core.css",
+      "elements": [
+        "form",
+        "label",
+        "input",
+        "p"
+      ],
+      "classes": [
+        "syn-form",
+        "syn-label",
+        "syn-input",
+        "syn-error"
+      ],
+      "notes": "Real handlers and field validation belong to the application."
+    },
+    {
+      "name": "Form compositions",
+      "module": "syntyr.core.css",
+      "elements": [
+        "form",
+        "label",
+        "input",
+        "button",
+        "span",
+        "div"
+      ],
+      "classes": [
+        "syn-field",
+        "syn-field-row",
+        "syn-field-body",
+        "syn-input-group",
+        "syn-input-addon"
+      ],
+      "notes": "Unreleased alpha.5 candidate only. Native form behavior, associated labels, server validation; use syn-region for container-responsive rows. The Radix adapter is separately optional."
+    },
+    {
+      "name": "Tables",
+      "module": "syntyr.core.css",
+      "elements": [
+        "div",
+        "table"
+      ],
+      "classes": [
+        "syn-table-wrap",
+        "syn-table",
+        "syn-cell--numeric"
+      ],
+      "notes": "Use proper headers, captions and scroll containers."
+    },
+    {
+      "name": "Stats",
+      "module": "syntyr.core.css",
+      "elements": [
+        "section",
+        "article",
+        "p"
+      ],
+      "classes": [
+        "syn-region",
+        "syn-stats",
+        "syn-stat",
+        "syn-stat-label",
+        "syn-stat-value"
+      ],
+      "notes": "Named container must be an ancestor of responsive children."
+    },
+    {
+      "name": "Navigation",
+      "module": "syntyr.core.css",
+      "elements": [
+        "nav",
+        "ol",
+        "li",
+        "a"
+      ],
+      "classes": [
+        "syn-breadcrumbs",
+        "syn-pagination",
+        "syn-page-link"
+      ],
+      "notes": "Real links and aria-current only for the actual current page."
+    },
+    {
+      "name": "Application shell",
+      "module": "syntyr.recipes.css",
+      "elements": [
+        "div",
+        "aside",
+        "main"
+      ],
+      "classes": [
+        "syn-app-shell",
+        "syn-app-rail",
+        "syn-app-nav",
+        "syn-workspace"
+      ],
+      "notes": "Load optional recipes CSS after core."
+    },
+    {
+      "name": "Marketing hero",
+      "module": "syntyr.recipes.css",
+      "elements": [
+        "section",
+        "h1"
+      ],
+      "classes": [
+        "syn-site-hero",
+        "syn-site-heading"
+      ],
+      "notes": "Load optional recipes CSS after core."
+    },
+    {
+      "name": "Charts",
+      "module": "syntyr.viz.css",
+      "elements": [
+        "figure",
+        "figcaption"
+      ],
+      "classes": [
+        "syn-chart",
+        "syn-chart-title"
+      ],
+      "notes": "Only styling hooks. Generate chart values and SVG geometry yourself."
+    },
+    {
+      "name": "Heatmap",
+      "module": "syntyr.viz.css",
+      "elements": [
+        "div",
+        "span"
+      ],
+      "classes": [
+        "syn-viz-heatmap",
+        "syn-viz-cell"
+      ],
+      "notes": "Supply textual cell labels, data-syn-level and real data."
+    },
+    {
+      "name": "Geospatial workspace",
+      "module": "syntyr.geo.css",
+      "elements": [
+        "section",
+        "aside",
+        "figure",
+        "div",
+        "a",
+        "button",
+        "ul"
+      ],
+      "classes": [
+        "syn-geo-shell",
+        "syn-geo-workspace",
+        "syn-geo-sidebar",
+        "syn-geo-viewport",
+        "syn-geo-map",
+        "syn-geo-overlay",
+        "syn-geo-controls",
+        "syn-geo-control",
+        "syn-geo-marker",
+        "syn-geo-marker-layer",
+        "syn-geo-cluster",
+        "syn-geo-legend",
+        "syn-geo-swatch",
+        "syn-geo-scale",
+        "syn-geo-attribution",
+        "syn-geo-data-list"
+      ],
+      "notes": "Optional renderer-neutral CSS; load core then geo. The host renderer owns projection, attribution, marker positions, zooming, clustering and screen-reader data alternatives. See docs/geo.md."
+    },
+    {
+      "name": "Advanced geometry frames",
+      "module": "syntyr.geometry.css",
+      "elements": [
+        "article",
+        "section",
+        "div"
+      ],
+      "classes": [
+        "syn-frame",
+        "syn-frame--bevel",
+        "syn-frame--notch",
+        "syn-frame--bracket",
+        "syn-frame--accent"
+      ],
+      "notes": "Load optional geometry CSS. One shape per frame; accent emphasis is additive. Refer to visual-intensity.md for pseudo-element ownership and backgrounds."
+    },
+    {
+      "name": "Decorative effects",
+      "module": "syntyr.effects.css",
+      "elements": [
+        "article",
+        "section",
+        "div"
+      ],
+      "classes": [
+        "syn-glow",
+        "syn-grid-effect",
+        "syn-gradient-wash"
+      ],
+      "notes": "Optional CSS only. data-syn-intensity on .syn-root or nested regions selects quiet, standard or cinematic effects without changing semantic state."
+    },
+    {
+      "name": "CRM compositions",
+      "module": "syntyr.recipes.css",
+      "elements": [
+        "form",
+        "label",
+        "div",
+        "section",
+        "ul",
+        "li",
+        "dl"
+      ],
+      "classes": [
+        "syn-filter-bar",
+        "syn-filter-field",
+        "syn-filter-field--query",
+        "syn-filter-actions",
+        "syn-pipeline",
+        "syn-pipeline-lane",
+        "syn-pipeline-list",
+        "syn-pipeline-card",
+        "syn-record-fields"
+      ],
+      "notes": "Unreleased alpha.5, CSS-only optional layouts. Use a GET form, labelled stages, focusable board overflow and definition-list details; application implements filtering and pipeline state."
+    },
+    {
+      "name": "Operation feedback",
+      "module": "syntyr.recipes.css",
+      "elements": [
+        "div",
+        "section",
+        "h2",
+        "h3",
+        "p"
+      ],
+      "classes": [
+        "syn-operation-feedback"
+      ],
+      "notes": "Experimental alpha.5 static presentation only. Host must set true pending, saved, failed, conflict or unsaved state, manage requests, announcements, retry and authorization."
+    },
+    {
+      "name": "Record change pair",
+      "module": "syntyr.recipes.css",
+      "elements": [
+        "dl",
+        "div",
+        "dt",
+        "dd",
+        "span",
+        "del",
+        "ins"
+      ],
+      "classes": [
+        "syn-record-fields",
+        "syn-change-pair",
+        "syn-change-before",
+        "syn-change-after"
+      ],
+      "notes": "Experimental alpha.5 semantic before/after styling nested in existing record fields. Text labels and native del/ins convey changes; backend supplies true revision values and conflict policy."
+    },
+    {
+      "name": "File lifecycle",
+      "module": "syntyr.recipes.css",
+      "elements": [
+        "ol",
+        "li",
+        "div",
+        "span",
+        "strong",
+        "progress"
+      ],
+      "classes": [
+        "syn-file-queue",
+        "syn-file-item",
+        "syn-file-item-header"
+      ],
+      "notes": "Unreleased alpha.5 CSS-only queue snapshots. Native input lives in core; host owns upload progress, failure and completion truth, validation, retry, status announcements and storage."
+    },
+    {
+      "name": "Native dropdowns and menus",
+      "module": "syntyr.core.css",
+      "elements": [
+        "div",
+        "a",
+        "button",
+        "select"
+      ],
+      "classes": [
+        "syn-popover",
+        "syn-dropdown",
+        "syn-dropdown__item",
+        "syn-dropdown__group-label",
+        "syn-dropdown__separator",
+        "syn-dropdown__shortcut",
+        "syn-select--enhanced"
+      ],
+      "notes": "Scriptless action panels use Tab/Escape. Optional @syntyr/css/menu.mjs adds ARIA menu keyboard behavior only when explicitly initialized; see docs/dropdowns.md."
+    },
+    {
+      "name": "Scrollable card rail",
+      "module": "syntyr.recipes.css",
+      "elements": [
+        "div",
+        "section"
+      ],
+      "classes": [
+        "syn-scroll-rail"
+      ],
+      "notes": "Experimental alpha.5. Use a named, keyboard-focusable overflow region. Cards are direct children; native snap without mandatory JS. Configure --syn-scroll-rail-card-width locally."
+    },
+    {
+      "name": "Bento feature grid",
+      "module": "syntyr.recipes.css",
+      "elements": [
+        "div",
+        "article"
+      ],
+      "classes": [
+        "syn-bento-grid",
+        "syn-bento-card--wide"
+      ],
+      "notes": "Experimental alpha.5. Container-aware wide card spans; use meaningful article headings and syn-feature-card for surfaces."
+    }
+  ],
+  "recipes": [
+    {
+      "id": "crm-filter",
+      "description": "Server-driven filter toolbar with wrapping fields and submit/reset actions.",
+      "stylesheets": [
+        "syntyr.core.css",
+        "syntyr.recipes.css"
+      ],
+      "root": {
+        "tag": "form",
+        "classes": [
+          "syn-filter-bar"
+        ]
+      },
+      "slots": [
+        {
+          "name": "field",
+          "tag": "label",
+          "classes": [
+            "syn-filter-field"
+          ],
+          "optional": false,
+          "repeatable": true
+        },
+        {
+          "name": "query",
+          "tag": "label",
+          "classes": [
+            "syn-filter-field",
+            "syn-filter-field--query"
+          ],
+          "optional": true,
+          "repeatable": false
+        },
+        {
+          "name": "actions",
+          "tag": "div",
+          "classes": [
+            "syn-filter-actions"
+          ],
+          "optional": false,
+          "repeatable": false
+        }
+      ],
+      "variants": {
+        "data-syn-density": [
+          "comfortable",
+          "compact"
+        ]
+      },
+      "host_behavior": "Supply method=get, named controls, actual action URL and meaningful reset link. The host filters results; CSS does not execute queries.",
+      "example": "examples/saas-workflows.html"
+    },
+    {
+      "id": "resource-table",
+      "description": "Horizontally scrollable semantic data table with optional numeric cells and native pagination links.",
+      "stylesheets": [
+        "syntyr.core.css"
+      ],
+      "root": {
+        "tag": "div",
+        "classes": [
+          "syn-table-wrap"
+        ]
+      },
+      "slots": [
+        {
+          "name": "table",
+          "tag": "table",
+          "classes": [
+            "syn-table"
+          ],
+          "optional": false,
+          "repeatable": false
+        },
+        {
+          "name": "numeric-cell",
+          "tag": "td",
+          "classes": [
+            "syn-cell--numeric"
+          ],
+          "optional": true,
+          "repeatable": true
+        },
+        {
+          "name": "pagination",
+          "tag": "nav",
+          "classes": [
+            "syn-pagination"
+          ],
+          "optional": true,
+          "repeatable": false
+        }
+      ],
+      "variants": {
+        "data-syn-density": [
+          "comfortable",
+          "compact"
+        ]
+      },
+      "host_behavior": "Provide caption, real th scope associations, keyboard-reachable horizontal overflow where needed, actual page links and server-side sort/filter. CSS does not sort, page or select records.",
+      "example": "examples/saas-workflows.html"
+    },
+    {
+      "id": "app-shell",
+      "description": "Responsive application shell with navigation rail and primary workspace.",
+      "stylesheets": [
+        "syntyr.core.css",
+        "syntyr.recipes.css"
+      ],
+      "root": {
+        "tag": "div",
+        "classes": [
+          "syn-app-shell"
+        ]
+      },
+      "slots": [
+        {
+          "name": "rail",
+          "tag": "aside",
+          "classes": [
+            "syn-app-rail"
+          ],
+          "optional": false,
+          "repeatable": false
+        },
+        {
+          "name": "navigation",
+          "tag": "nav",
+          "classes": [
+            "syn-app-nav"
+          ],
+          "optional": false,
+          "repeatable": false
+        },
+        {
+          "name": "workspace",
+          "tag": "main",
+          "classes": [
+            "syn-workspace"
+          ],
+          "optional": false,
+          "repeatable": false
+        }
+      ],
+      "variants": {
+        "data-syn-theme": [
+          "studio",
+          "grid",
+          "noir"
+        ]
+      },
+      "host_behavior": "Provide labelled navigation, unique main landmark, actual routes and authorization for each destination. Theme must be placed on .syn-root or a scoped ancestor.",
+      "example": "examples/operations-console.html"
+    },
+    {
+      "id": "validated-form",
+      "description": "Labeled field/error compositions for host-validated forms.",
+      "stylesheets": [
+        "syntyr.core.css"
+      ],
+      "root": {
+        "tag": "form",
+        "classes": [
+          "syn-form"
+        ]
+      },
+      "slots": [
+        {
+          "name": "field",
+          "tag": "div",
+          "classes": [
+            "syn-field"
+          ],
+          "optional": false,
+          "repeatable": true
+        },
+        {
+          "name": "label",
+          "tag": "label",
+          "classes": [
+            "syn-label"
+          ],
+          "optional": false,
+          "repeatable": true
+        },
+        {
+          "name": "input",
+          "tag": "input",
+          "classes": [
+            "syn-input"
+          ],
+          "optional": false,
+          "repeatable": true
+        },
+        {
+          "name": "error",
+          "tag": "p",
+          "classes": [
+            "syn-error"
+          ],
+          "optional": true,
+          "repeatable": true
+        }
+      ],
+      "variants": {
+        "data-syn-density": [
+          "comfortable",
+          "compact"
+        ]
+      },
+      "host_behavior": "Host supplies server/client validation, error text, stable error IDs, aria-describedby, aria-invalid and focus to an error summary when submission fails. CSS never performs validation or focus changes.",
+      "example": "examples/form-composition.html"
+    }
+  ],
+  "themes": [
+    "auto",
+    "corporate",
+    "grid",
+    "industrial",
+    "minimal",
+    "noir",
+    "studio",
+    "terminal"
+  ],
+  "examples": [
+    {
+      "id": "catalog-buttons-title",
+      "title": "Buttons",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "Use native buttons for actions; variants change appearance only.",
+      "keywords": [
+        "actions",
+        "controls",
+        "primary",
+        "outline"
+      ],
+      "category": "interactive",
+      "use_cases": [
+        "forms-workflow",
+        "saas-dashboard"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-buttons-title",
+      "playground_url": "docs/playground.html#component=catalog-buttons-title",
+      "elements": [
+        "button",
+        "div"
+      ],
+      "classes": [
+        "syn-button",
+        "syn-button--outline",
+        "syn-button--primary",
+        "syn-inline"
+      ],
+      "native_feature_requirements": [],
+      "html": "<div class=\"syn-inline\">\n  <button type=\"button\" class=\"syn-button syn-button--primary\">Save changes</button>\n  <button type=\"button\" class=\"syn-button syn-button--outline\">Preview</button>\n  <button type=\"button\" class=\"syn-button\" disabled>Disabled</button>\n</div>"
+    },
+    {
+      "id": "catalog-forms-title",
+      "title": "Labeled fields",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "Use real labels and native validation; form submission belongs to your app.",
+      "keywords": [
+        "input",
+        "text",
+        "validation",
+        "form",
+        "accessibility"
+      ],
+      "category": "forms",
+      "use_cases": [
+        "forms-workflow"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-forms-title",
+      "playground_url": "docs/playground.html#component=catalog-forms-title",
+      "elements": [
+        "div",
+        "input",
+        "label",
+        "p"
+      ],
+      "classes": [
+        "syn-form",
+        "syn-help",
+        "syn-input",
+        "syn-label"
+      ],
+      "native_feature_requirements": [],
+      "html": "<div class=\"syn-form\">\n  <label class=\"syn-label\" for=\"catalog-email\">Email address</label>\n  <input class=\"syn-input\" id=\"catalog-email\" type=\"email\" placeholder=\"you@example.com\" required>\n  <p class=\"syn-help\">Use your work email.</p>\n</div>"
+    },
+    {
+      "id": "catalog-native-controls-title",
+      "title": "Native range, file and color",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "One existing input class; native keyboard, picker and file selection behavior.",
+      "keywords": [
+        "native",
+        "range",
+        "file",
+        "color",
+        "slider",
+        "upload",
+        "chooser",
+        "form"
+      ],
+      "category": "forms",
+      "use_cases": [
+        "forms-workflow"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-native-controls-title",
+      "playground_url": "docs/playground.html#component=catalog-native-controls-title",
+      "elements": [
+        "div",
+        "input",
+        "label"
+      ],
+      "classes": [
+        "syn-form",
+        "syn-input",
+        "syn-label"
+      ],
+      "native_feature_requirements": [],
+      "html": "<div class=\"syn-form\" id=\"catalog-native-controls\">\n  <label class=\"syn-label\" for=\"catalog-range\">Threshold</label>\n  <input id=\"catalog-range\" type=\"range\" class=\"syn-input\" min=\"0\" max=\"100\" value=\"60\">\n  <label class=\"syn-label\" for=\"catalog-file\">Attach artwork</label>\n  <input id=\"catalog-file\" type=\"file\" class=\"syn-input\">\n  <label class=\"syn-label\" for=\"catalog-color\">Accent color</label>\n  <input id=\"catalog-color\" type=\"color\" class=\"syn-input\" value=\"#3355aa\">\n</div>"
+    },
+    {
+      "id": "catalog-interaction-card-0",
+      "title": "Exclusive accordion",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "Related disclosures use native details name; no script or custom roles.",
+      "keywords": [
+        "native",
+        "accordion",
+        "faq",
+        "details",
+        "summary",
+        "exclusive",
+        "disclosure"
+      ],
+      "category": "interactive",
+      "use_cases": [
+        "content-docs",
+        "marketing-site"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-interaction-card-0",
+      "playground_url": "docs/playground.html#component=catalog-interaction-card-0",
+      "elements": [
+        "details",
+        "h3",
+        "p",
+        "section",
+        "summary"
+      ],
+      "classes": [
+        "syn-details"
+      ],
+      "native_feature_requirements": [
+        "details-name"
+      ],
+      "html": "<section aria-labelledby=\"catalog-faq-heading\">\n  <h3 id=\"catalog-faq-heading\">Common questions</h3>\n  <details class=\"syn-details\" name=\"catalog-interaction-faq\" open>\n    <summary>Can I use standard HTML?</summary>\n    <p>Yes, Syntyr styles browser-native elements.</p>\n  </details>\n  <details class=\"syn-details\" name=\"catalog-interaction-faq\">\n    <summary>Do I need a JavaScript runtime?</summary>\n    <p>No. Native disclosures handle their own open state.</p>\n  </details>\n</section>"
+    },
+    {
+      "id": "catalog-interaction-card-1",
+      "title": "GET search form",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "Real search landmark and GET submission; the static destination does not filter results.",
+      "keywords": [
+        "native",
+        "search",
+        "get",
+        "landmark",
+        "searchform",
+        "filtering",
+        "server"
+      ],
+      "category": "navigation",
+      "use_cases": [
+        "forms-workflow",
+        "navigation"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-interaction-card-1",
+      "playground_url": "docs/playground.html#component=catalog-interaction-card-1",
+      "elements": [
+        "button",
+        "form",
+        "input",
+        "label",
+        "search"
+      ],
+      "classes": [
+        "syn-button",
+        "syn-button--primary",
+        "syn-form",
+        "syn-input",
+        "syn-label"
+      ],
+      "native_feature_requirements": [],
+      "html": "<search aria-label=\"Search example inventory\">\n  <form class=\"syn-form\" action=\"../examples/native-interactions.html\" method=\"get\">\n    <label class=\"syn-label\" for=\"catalog-inventory-query\">Inventory search</label>\n    <input class=\"syn-input\" id=\"catalog-inventory-query\" type=\"search\"\n           name=\"q\" required placeholder=\"Enter a keyword\">\n    <button class=\"syn-button syn-button--primary\" type=\"submit\">Search</button>\n  </form>\n</search>"
+    },
+    {
+      "id": "catalog-interaction-card-2",
+      "title": "Confirmation dialog",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "Native modal command and dialog-only choices; confirming this preview does not persist changes.",
+      "keywords": [
+        "native",
+        "dialog",
+        "modal",
+        "confirmation",
+        "commandfor",
+        "method",
+        "dialog"
+      ],
+      "category": "interactive",
+      "use_cases": [
+        "forms-workflow",
+        "saas-dashboard"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-interaction-card-2",
+      "playground_url": "docs/playground.html#component=catalog-interaction-card-2",
+      "elements": [
+        "button",
+        "dialog",
+        "div",
+        "form",
+        "h3",
+        "p"
+      ],
+      "classes": [
+        "syn-button",
+        "syn-button--outline",
+        "syn-button--primary",
+        "syn-dialog",
+        "syn-inline"
+      ],
+      "native_feature_requirements": [
+        "invoker-commands"
+      ],
+      "html": "<div class=\"syn-inline\">\n  <button type=\"button\" class=\"syn-button\" commandfor=\"catalog-interaction-dialog\"\n          command=\"show-modal\">Open confirmation</button>\n  <dialog class=\"syn-dialog\" id=\"catalog-interaction-dialog\"\n          aria-labelledby=\"catalog-interaction-dialog-title\">\n    <h3 id=\"catalog-interaction-dialog-title\">Confirm preview?</h3>\n    <p>This static example changes no data.</p>\n    <form method=\"dialog\" class=\"syn-inline\">\n      <button class=\"syn-button syn-button--outline\" type=\"submit\"\n              value=\"cancel\" autofocus>Cancel</button>\n      <button class=\"syn-button syn-button--primary\" type=\"submit\"\n              value=\"confirm\">Confirm preview</button>\n    </form>\n  </dialog>\n</div>"
+    },
+    {
+      "id": "catalog-interaction-card-3",
+      "title": "Datalist suggestions",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "Browser suggestions for a free-text input; not a searchable select or combobox implementation.",
+      "keywords": [
+        "native",
+        "datalist",
+        "suggestions",
+        "autocomplete",
+        "input",
+        "optgroup"
+      ],
+      "category": "forms",
+      "use_cases": [
+        "forms-workflow"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-interaction-card-3",
+      "playground_url": "docs/playground.html#component=catalog-interaction-card-3",
+      "elements": [
+        "datalist",
+        "div",
+        "input",
+        "label",
+        "option"
+      ],
+      "classes": [
+        "syn-form",
+        "syn-input",
+        "syn-label"
+      ],
+      "native_feature_requirements": [],
+      "html": "<div class=\"syn-form\">\n  <label class=\"syn-label\" for=\"catalog-suggested-city\">City</label>\n  <input class=\"syn-input\" id=\"catalog-suggested-city\" name=\"city\"\n         list=\"catalog-city-options\" placeholder=\"Start typing a city\">\n  <datalist id=\"catalog-city-options\">\n    <option value=\"Brasília\"></option>\n    <option value=\"Chicago\"></option>\n    <option value=\"New York\"></option>\n  </datalist>\n</div>"
+    },
+    {
+      "id": "catalog-interaction-card-4",
+      "title": "Meter and output",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css",
+        "syntyr.semantic.css"
+      ],
+      "description": "Native bounded measurements and static server result; calculations belong to the host.",
+      "keywords": [
+        "native",
+        "meter",
+        "output",
+        "capacity",
+        "calculation",
+        "progress",
+        "gauge"
+      ],
+      "category": "data",
+      "use_cases": [
+        "saas-dashboard"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-interaction-card-4",
+      "playground_url": "docs/playground.html#component=catalog-interaction-card-4",
+      "elements": [
+        "div",
+        "label",
+        "meter",
+        "output"
+      ],
+      "classes": [
+        "syn-semantic",
+        "syn-stack"
+      ],
+      "native_feature_requirements": [],
+      "html": "<div class=\"syn-semantic syn-stack\">\n  <label for=\"catalog-capacity-meter\">Utilization</label>\n  <meter id=\"catalog-capacity-meter\" min=\"0\" max=\"100\" low=\"20\"\n         high=\"85\" optimum=\"40\" value=\"68\">68%</meter>\n  <label for=\"catalog-inventory-output\">Matching inventory</label>\n  <output id=\"catalog-inventory-output\" name=\"results\">42 available locations</output>\n</div>"
+    },
+    {
+      "id": "catalog-panels-title",
+      "title": "Panels and token overrides",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "Override component tokens locally without rebuilding the stylesheet.",
+      "keywords": [
+        "surface",
+        "card",
+        "border",
+        "padding",
+        "radius",
+        "css",
+        "variables"
+      ],
+      "category": "layout",
+      "use_cases": [
+        "saas-dashboard",
+        "marketing-site"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-panels-title",
+      "playground_url": "docs/playground.html#component=catalog-panels-title",
+      "elements": [
+        "article",
+        "h3",
+        "p"
+      ],
+      "classes": [
+        "syn-heading",
+        "syn-panel"
+      ],
+      "native_feature_requirements": [],
+      "html": "<article class=\"syn-panel\" style=\"--syn-surface: var(--syn-surface-hi)\">\n  <h3 class=\"syn-heading\">Workspace settings</h3>\n  <p>Use scoped CSS properties to customize an individual panel.</p>\n</article>"
+    },
+    {
+      "id": "catalog-metrics-title",
+      "title": "Responsive metrics",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "A named container lets metrics respond to their parent, not the viewport.",
+      "keywords": [
+        "stats",
+        "grid",
+        "telemetry",
+        "container",
+        "query",
+        "region"
+      ],
+      "category": "data",
+      "use_cases": [
+        "saas-dashboard",
+        "marketing-site"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-metrics-title",
+      "playground_url": "docs/playground.html#component=catalog-metrics-title",
+      "elements": [
+        "article",
+        "div",
+        "section",
+        "span",
+        "strong"
+      ],
+      "classes": [
+        "syn-region",
+        "syn-stat",
+        "syn-stat-label",
+        "syn-stat-value",
+        "syn-stats"
+      ],
+      "native_feature_requirements": [],
+      "html": "<section class=\"syn-region\" aria-label=\"Service metrics\">\n  <div class=\"syn-stats\">\n    <article class=\"syn-stat\"><span class=\"syn-stat-label\">UPTIME</span><strong class=\"syn-stat-value\">99.9%</strong></article>\n    <article class=\"syn-stat\"><span class=\"syn-stat-label\">USERS</span><strong class=\"syn-stat-value\">2,840</strong></article>\n  </div>\n</section>"
+    },
+    {
+      "id": "catalog-tables-title",
+      "title": "Accessible data tables",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "Keep semantic table markup and provide scrolling on narrow screens.",
+      "keywords": [
+        "table",
+        "tabular",
+        "records",
+        "scroll",
+        "responsive",
+        "data"
+      ],
+      "category": "data",
+      "use_cases": [
+        "saas-dashboard"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-tables-title",
+      "playground_url": "docs/playground.html#component=catalog-tables-title",
+      "elements": [
+        "caption",
+        "div",
+        "table",
+        "tbody",
+        "td",
+        "th",
+        "thead",
+        "tr"
+      ],
+      "classes": [
+        "syn-table",
+        "syn-table-wrap"
+      ],
+      "native_feature_requirements": [],
+      "html": "<div class=\"syn-table-wrap\">\n  <table class=\"syn-table\">\n    <caption>Recent deployments</caption>\n    <thead><tr><th scope=\"col\">Build</th><th scope=\"col\">Status</th></tr></thead>\n    <tbody><tr><td>v1.2</td><td>Passed</td></tr><tr><td>v1.1</td><td>Passed</td></tr></tbody>\n  </table>\n</div>"
+    },
+    {
+      "id": "catalog-alerts-title",
+      "title": "Alerts",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "Use visible text and semantic status only for real application updates.",
+      "keywords": [
+        "error",
+        "warning",
+        "info",
+        "status",
+        "important",
+        "notification"
+      ],
+      "category": "interactive",
+      "use_cases": [
+        "saas-dashboard",
+        "forms-workflow"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-alerts-title",
+      "playground_url": "docs/playground.html#component=catalog-alerts-title",
+      "elements": [
+        "div"
+      ],
+      "classes": [
+        "syn-alert",
+        "syn-alert--danger"
+      ],
+      "native_feature_requirements": [],
+      "html": "<div class=\"syn-alert\">Your changes have been saved.</div>\n<div class=\"syn-alert syn-alert--danger\">Could not connect. Try again.</div>"
+    },
+    {
+      "id": "catalog-disclosures-title",
+      "title": "Native disclosure",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "Browser-native disclosure works without custom JavaScript.",
+      "keywords": [
+        "details",
+        "accordion",
+        "faq",
+        "expandable",
+        "summary"
+      ],
+      "category": "interactive",
+      "use_cases": [
+        "content-docs",
+        "marketing-site"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-disclosures-title",
+      "playground_url": "docs/playground.html#component=catalog-disclosures-title",
+      "elements": [
+        "details",
+        "p",
+        "summary"
+      ],
+      "classes": [
+        "syn-details"
+      ],
+      "native_feature_requirements": [],
+      "html": "<details class=\"syn-details\">\n  <summary>What does Syntyr require?</summary>\n  <p>Just CSS and semantic HTML. JavaScript is optional.</p>\n</details>"
+    },
+    {
+      "id": "catalog-breadcrumbs-title",
+      "title": "Breadcrumb navigation",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "Use a real navigation landmark and mark the current page.",
+      "keywords": [
+        "nav",
+        "pages",
+        "route",
+        "links",
+        "aria",
+        "current"
+      ],
+      "category": "navigation",
+      "use_cases": [
+        "navigation",
+        "content-docs"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-breadcrumbs-title",
+      "playground_url": "docs/playground.html#component=catalog-breadcrumbs-title",
+      "elements": [
+        "a",
+        "li",
+        "nav",
+        "ol",
+        "span"
+      ],
+      "classes": [
+        "syn-breadcrumbs"
+      ],
+      "native_feature_requirements": [],
+      "html": "<nav class=\"syn-breadcrumbs\" aria-label=\"Breadcrumb\">\n  <ol>\n    <li><a href=\"/\">Home</a></li>\n    <li><span aria-current=\"page\">Settings</span></li>\n  </ol>\n</nav>"
+    },
+    {
+      "id": "catalog-progress-title",
+      "title": "Progress indicator",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "Native progress exposes a meaningful value to assistive technology.",
+      "keywords": [
+        "meter",
+        "native",
+        "progress",
+        "loading"
+      ],
+      "category": "data",
+      "use_cases": [
+        "saas-dashboard",
+        "forms-workflow"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-progress-title",
+      "playground_url": "docs/playground.html#component=catalog-progress-title",
+      "elements": [
+        "label",
+        "progress"
+      ],
+      "classes": [
+        "syn-label",
+        "syn-meter"
+      ],
+      "native_feature_requirements": [],
+      "html": "<label class=\"syn-label\" for=\"catalog-progress\">Uploading files</label>\n<progress id=\"catalog-progress\" class=\"syn-meter\" value=\"65\" max=\"100\">65%</progress>"
+    },
+    {
+      "id": "catalog-pricing-title",
+      "title": "Pricing cards",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "Container-responsive pricing, with no client-side layout logic.",
+      "keywords": [
+        "plan",
+        "subscriptions",
+        "marketing",
+        "grid",
+        "featured"
+      ],
+      "category": "marketing",
+      "use_cases": [
+        "marketing-site"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-pricing-title",
+      "playground_url": "docs/playground.html#component=catalog-pricing-title",
+      "elements": [
+        "a",
+        "article",
+        "div",
+        "h3",
+        "p",
+        "section"
+      ],
+      "classes": [
+        "syn-button",
+        "syn-button--primary",
+        "syn-price-card",
+        "syn-price-value",
+        "syn-pricing",
+        "syn-region"
+      ],
+      "native_feature_requirements": [],
+      "html": "<section class=\"syn-region\" aria-label=\"Example plans\">\n  <div class=\"syn-pricing\">\n    <article class=\"syn-price-card\"><h3>Starter</h3><p class=\"syn-price-value\">$19</p><a href=\"#catalog-top\" class=\"syn-button\">Explore</a></article>\n    <article class=\"syn-price-card\" data-syn-featured><h3>Pro</h3><p class=\"syn-price-value\">$49</p><a href=\"#catalog-top\" class=\"syn-button syn-button--primary\">Explore</a></article>\n  </div>\n</section>"
+    },
+    {
+      "id": "catalog-typography-and-inline-text-title",
+      "title": "Typography and inline text",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "Use heading hierarchy for meaning, not visual size; mark highlights relevance.",
+      "keywords": [
+        "headings",
+        "heading",
+        "paragraph",
+        "emphasis",
+        "strong",
+        "mark",
+        "small"
+      ],
+      "category": "typography",
+      "use_cases": [
+        "content-docs",
+        "marketing-site"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-typography-and-inline-text-title",
+      "playground_url": "docs/playground.html#component=catalog-typography-and-inline-text-title",
+      "elements": [
+        "em",
+        "h2",
+        "mark",
+        "p",
+        "section",
+        "small",
+        "strong"
+      ],
+      "classes": [
+        "syn-heading"
+      ],
+      "native_feature_requirements": [],
+      "html": "<section aria-label=\"Typography sample\">\n  <h2 class=\"syn-heading\">Design with native text</h2>\n  <p>Combine <strong>importance</strong>, <em>emphasis</em>, and <mark>relevance</mark>.</p>\n  <p><small>Small print belongs in meaningful supporting text.</small></p>\n</section>"
+    },
+    {
+      "id": "catalog-code-and-keyboard-input-title",
+      "title": "Code and keyboard input",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "Use code for tokens, pre for blocks, and kbd for user input.",
+      "keywords": [
+        "code",
+        "pre",
+        "kbd",
+        "developer",
+        "shortcut",
+        "snippet",
+        "monospace"
+      ],
+      "category": "typography",
+      "use_cases": [
+        "content-docs"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-code-and-keyboard-input-title",
+      "playground_url": "docs/playground.html#component=catalog-code-and-keyboard-input-title",
+      "elements": [
+        "code",
+        "kbd",
+        "p",
+        "pre",
+        "section"
+      ],
+      "classes": [],
+      "native_feature_requirements": [],
+      "html": "<section aria-label=\"Code sample\">\n  <p>Press <kbd>Ctrl</kbd> + <kbd>K</kbd> to search.</p>\n  <pre><code>&lt;button type=\"button\"&gt;Save&lt;/button&gt;</code></pre>\n</section>"
+    },
+    {
+      "id": "catalog-ordered-and-unordered-lists-title",
+      "title": "Ordered and unordered lists",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "Use ordered steps for sequences and unordered lists for collections.",
+      "keywords": [
+        "bullets",
+        "list",
+        "ol",
+        "ul",
+        "li",
+        "content",
+        "steps"
+      ],
+      "category": "typography",
+      "use_cases": [
+        "content-docs"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-ordered-and-unordered-lists-title",
+      "playground_url": "docs/playground.html#component=catalog-ordered-and-unordered-lists-title",
+      "elements": [
+        "div",
+        "li",
+        "ol",
+        "ul"
+      ],
+      "classes": [
+        "syn-grid"
+      ],
+      "native_feature_requirements": [],
+      "html": "<div class=\"syn-grid\">\n  <ul><li>Accessible markup</li><li>Scoped styling</li></ul>\n  <ol><li>Add the stylesheet</li><li>Choose a theme</li></ol>\n</div>"
+    },
+    {
+      "id": "catalog-definition-list-title",
+      "title": "Definition list",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "A definition list preserves the association between terms and values.",
+      "keywords": [
+        "description",
+        "terms",
+        "dl",
+        "dt",
+        "dd",
+        "metadata",
+        "key",
+        "value"
+      ],
+      "category": "data",
+      "use_cases": [
+        "content-docs"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-definition-list-title",
+      "playground_url": "docs/playground.html#component=catalog-definition-list-title",
+      "elements": [
+        "dd",
+        "dl",
+        "dt"
+      ],
+      "classes": [],
+      "native_feature_requirements": [],
+      "html": "<dl>\n  <dt>Deployment</dt><dd>Production</dd>\n  <dt>Region</dt><dd>Americas</dd>\n</dl>"
+    },
+    {
+      "id": "catalog-article-with-header-and-footer-title",
+      "title": "Article with header and footer",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "Use a self-contained article for independently meaningful content.",
+      "keywords": [
+        "section",
+        "article",
+        "header",
+        "footer",
+        "landmark",
+        "semantic",
+        "blog"
+      ],
+      "category": "layout",
+      "use_cases": [
+        "content-docs"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-article-with-header-and-footer-title",
+      "playground_url": "docs/playground.html#component=catalog-article-with-header-and-footer-title",
+      "elements": [
+        "article",
+        "footer",
+        "h3",
+        "header",
+        "p",
+        "small"
+      ],
+      "classes": [
+        "syn-panel"
+      ],
+      "native_feature_requirements": [],
+      "html": "<article class=\"syn-panel\">\n  <header><h3>Release notes</h3></header>\n  <p>Native-first components reduce upkeep.</p>\n  <footer><small>Updated November 2026</small></footer>\n</article>"
+    },
+    {
+      "id": "catalog-fieldset-and-choice-inputs-title",
+      "title": "Fieldset and choice inputs",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "A fieldset and legend give related inputs an accessible group name.",
+      "keywords": [
+        "fieldset",
+        "legend",
+        "radio",
+        "checkbox",
+        "label",
+        "choice",
+        "form"
+      ],
+      "category": "forms",
+      "use_cases": [
+        "forms-workflow"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-fieldset-and-choice-inputs-title",
+      "playground_url": "docs/playground.html#component=catalog-fieldset-and-choice-inputs-title",
+      "elements": [
+        "button",
+        "fieldset",
+        "form",
+        "input",
+        "label",
+        "legend"
+      ],
+      "classes": [
+        "syn-button"
+      ],
+      "native_feature_requirements": [],
+      "html": "<form action=\"#catalog-top\" method=\"get\">\n  <fieldset>\n    <legend>Notification frequency</legend>\n    <label><input type=\"radio\" name=\"catalog-frequency\" value=\"daily\" checked> Daily</label>\n    <label><input type=\"radio\" name=\"catalog-frequency\" value=\"weekly\"> Weekly</label>\n  </fieldset>\n  <label><input type=\"checkbox\" name=\"catalog-updates\" checked> Product updates</label>\n  <button type=\"submit\" class=\"syn-button\">Apply</button>\n</form>"
+    },
+    {
+      "id": "catalog-select-and-textarea-title",
+      "title": "Select and textarea",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "Use native select and textarea before introducing custom widgets.",
+      "keywords": [
+        "select",
+        "option",
+        "textarea",
+        "label",
+        "notes",
+        "form",
+        "dropdown"
+      ],
+      "category": "forms",
+      "use_cases": [
+        "forms-workflow"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-select-and-textarea-title",
+      "playground_url": "docs/playground.html#component=catalog-select-and-textarea-title",
+      "elements": [
+        "div",
+        "label",
+        "option",
+        "select",
+        "textarea"
+      ],
+      "classes": [
+        "syn-form",
+        "syn-input",
+        "syn-label"
+      ],
+      "native_feature_requirements": [],
+      "html": "<div class=\"syn-form\">\n  <label class=\"syn-label\" for=\"catalog-role\">Role</label>\n  <select class=\"syn-input\" id=\"catalog-role\">\n    <option>Designer</option><option>Developer</option>\n  </select>\n  <label class=\"syn-label\" for=\"catalog-note\">Notes</label>\n  <textarea class=\"syn-input\" id=\"catalog-note\" rows=\"2\" placeholder=\"Optional details\"></textarea>\n</div>"
+    },
+    {
+      "id": "catalog-dates-and-structured-values-title",
+      "title": "Dates and structured values",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "Encode dates and values for machines while keeping text readable.",
+      "keywords": [
+        "time",
+        "datetime",
+        "data",
+        "value",
+        "machine",
+        "readable",
+        "metadata"
+      ],
+      "category": "data",
+      "use_cases": [
+        "saas-dashboard",
+        "forms-workflow"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-dates-and-structured-values-title",
+      "playground_url": "docs/playground.html#component=catalog-dates-and-structured-values-title",
+      "elements": [
+        "data",
+        "dd",
+        "dl",
+        "dt",
+        "time"
+      ],
+      "classes": [],
+      "native_feature_requirements": [],
+      "html": "<dl>\n  <dt>Launch</dt><dd><time datetime=\"2026-11-16\">November 16, 2026</time></dd>\n  <dt>Seats</dt><dd><data value=\"12\">12 active seats</data></dd>\n</dl>"
+    },
+    {
+      "id": "catalog-responsive-image-with-caption-title",
+      "title": "Responsive image with caption",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "A picture provides art-direction sources; the img provides the fallback and alt text.",
+      "keywords": [
+        "figure",
+        "figcaption",
+        "img",
+        "picture",
+        "source",
+        "responsive",
+        "image",
+        "art",
+        "direction"
+      ],
+      "category": "media",
+      "use_cases": [
+        "marketing-site",
+        "content-docs"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-responsive-image-with-caption-title",
+      "playground_url": "docs/playground.html#component=catalog-responsive-image-with-caption-title",
+      "elements": [
+        "figcaption",
+        "figure",
+        "img",
+        "picture",
+        "source"
+      ],
+      "classes": [],
+      "native_feature_requirements": [],
+      "html": "<figure>\n  <picture>\n    <source media=\"(min-width: 50rem)\" srcset=\"../assets/og-syntyr.png\">\n    <img src=\"../assets/syntyr-mark.svg\" alt=\"Syntyr design system mark\" width=\"240\" height=\"120\" loading=\"lazy\">\n  </picture>\n  <figcaption>Replace these local demo assets with your own images.</figcaption>\n</figure>"
+    },
+    {
+      "id": "catalog-quotation-and-source-title",
+      "title": "Quotation and source",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "Use blockquote for quoted passages and cite for the title of a work.",
+      "keywords": [
+        "blockquote",
+        "cite",
+        "q",
+        "quote",
+        "citation",
+        "figure",
+        "attribution"
+      ],
+      "category": "typography",
+      "use_cases": [
+        "content-docs",
+        "marketing-site"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-quotation-and-source-title",
+      "playground_url": "docs/playground.html#component=catalog-quotation-and-source-title",
+      "elements": [
+        "blockquote",
+        "cite",
+        "figcaption",
+        "figure",
+        "p"
+      ],
+      "classes": [],
+      "native_feature_requirements": [],
+      "html": "<figure>\n  <blockquote><p>Prefer the native browser platform.</p></blockquote>\n  <figcaption>From <cite>Interface Design Notes</cite></figcaption>\n</figure>"
+    },
+    {
+      "id": "catalog-native-popover-title",
+      "title": "Native popover",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "Native popovers preserve browser-managed opening, dismissal, and focus behavior.",
+      "keywords": [
+        "popover",
+        "popovertarget",
+        "overlay",
+        "help",
+        "no",
+        "javascript",
+        "browser"
+      ],
+      "category": "interactive",
+      "use_cases": [
+        "navigation",
+        "saas-dashboard"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-native-popover-title",
+      "playground_url": "docs/playground.html#component=catalog-native-popover-title",
+      "elements": [
+        "button",
+        "div",
+        "p"
+      ],
+      "classes": [
+        "syn-button",
+        "syn-popover"
+      ],
+      "native_feature_requirements": [
+        "popover"
+      ],
+      "html": "<button type=\"button\" class=\"syn-button\" popovertarget=\"catalog-help-popover\">More information</button>\n<div id=\"catalog-help-popover\" popover class=\"syn-popover\">\n  <p>Browser-native popover; no JavaScript component required.</p>\n  <button type=\"button\" class=\"syn-button\" popovertarget=\"catalog-help-popover\" popovertargetaction=\"hide\">Close</button>\n</div>"
+    },
+    {
+      "id": "catalog-input-group-title",
+      "title": "Connected input groups",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "Native text input with a connected visual prefix and an accessible field label.",
+      "keywords": [
+        "form",
+        "composition",
+        "prefix",
+        "addon",
+        "connected",
+        "input"
+      ],
+      "category": "forms",
+      "use_cases": [
+        "forms-workflow"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-input-group-title",
+      "playground_url": "docs/playground.html#component=catalog-input-group-title",
+      "elements": [
+        "div",
+        "input",
+        "label",
+        "p",
+        "span"
+      ],
+      "classes": [
+        "syn-field",
+        "syn-help",
+        "syn-input",
+        "syn-input-addon",
+        "syn-input-group",
+        "syn-label"
+      ],
+      "native_feature_requirements": [],
+      "html": "<div class=\"syn-field\">\n  <label class=\"syn-label\" for=\"catalog-website\">Website URL</label>\n  <div class=\"syn-input-group\">\n    <span class=\"syn-input-addon\" aria-hidden=\"true\">https://</span>\n    <input class=\"syn-input\" id=\"catalog-website\" name=\"website\" type=\"text\" inputmode=\"url\" placeholder=\"example.com\">\n  </div>\n  <p class=\"syn-help\">Enter the host name; validate the full URL in your app.</p>\n</div>"
+    },
+    {
+      "id": "catalog-crm-filters-title",
+      "title": "CRM filter toolbar",
+      "module": "syntyr.recipes.css",
+      "required_stylesheets": [
+        "syntyr.core.css",
+        "syntyr.recipes.css"
+      ],
+      "description": "Optional responsive filter layout. The linked static demo does not implement server-side filtering.",
+      "keywords": [
+        "search",
+        "crm",
+        "filter",
+        "bar",
+        "stage",
+        "records",
+        "toolbar"
+      ],
+      "category": "forms",
+      "use_cases": [
+        "saas-dashboard",
+        "forms-workflow"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-crm-filters-title",
+      "playground_url": "docs/playground.html#component=catalog-crm-filters-title",
+      "elements": [
+        "button",
+        "div",
+        "form",
+        "input",
+        "label",
+        "option",
+        "select"
+      ],
+      "classes": [
+        "syn-button",
+        "syn-button--primary",
+        "syn-filter-actions",
+        "syn-filter-bar",
+        "syn-filter-field",
+        "syn-filter-field--query",
+        "syn-input",
+        "syn-label",
+        "syn-select"
+      ],
+      "native_feature_requirements": [],
+      "html": "<form class=\"syn-filter-bar\" action=\"../examples/crm.html#pipeline\" method=\"get\">\n  <label class=\"syn-label syn-filter-field syn-filter-field--query\" for=\"catalog-account-query\">Account\n    <input class=\"syn-input\" id=\"catalog-account-query\" name=\"query\" type=\"search\" placeholder=\"Search accounts\">\n  </label>\n  <label class=\"syn-label syn-filter-field\" for=\"catalog-stage\">Stage\n    <select class=\"syn-select\" id=\"catalog-stage\" name=\"status\">\n      <option value=\"\">All stages</option>\n      <option value=\"qualified\">Qualified</option>\n    </select>\n  </label>\n  <div class=\"syn-filter-actions\"><button class=\"syn-button syn-button--primary\" type=\"submit\">Apply</button></div>\n</form>"
+    },
+    {
+      "id": "catalog-recovery-state-title",
+      "title": "Empty and recovery state",
+      "module": "syntyr.recipes.css",
+      "required_stylesheets": [
+        "syntyr.core.css",
+        "syntyr.recipes.css"
+      ],
+      "description": "Optional app-state composition. Provide a working destination for any recovery action.",
+      "keywords": [
+        "empty",
+        "no",
+        "results",
+        "recovery",
+        "error",
+        "reset",
+        "action"
+      ],
+      "category": "interactive",
+      "use_cases": [
+        "saas-dashboard",
+        "forms-workflow"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-recovery-state-title",
+      "playground_url": "docs/playground.html#component=catalog-recovery-state-title",
+      "elements": [
+        "a",
+        "h3",
+        "p",
+        "section"
+      ],
+      "classes": [
+        "syn-button",
+        "syn-button--outline",
+        "syn-result-state"
+      ],
+      "native_feature_requirements": [],
+      "html": "<section class=\"syn-result-state\" aria-labelledby=\"catalog-recovery-title\">\n  <h3 id=\"catalog-recovery-title\">No matching records</h3>\n  <p>Try a broader search or review the documentation.</p>\n  <a class=\"syn-button syn-button--outline\" href=\"https://syntyr-css.pages.dev/docs/guides.html\">Browse guides</a>\n</section>"
+    },
+    {
+      "id": "catalog-geometry-frame-title",
+      "title": "Geometry frame",
+      "module": "syntyr.geometry.css",
+      "required_stylesheets": [
+        "syntyr.core.css",
+        "syntyr.geometry.css"
+      ],
+      "description": "An optional decorative bracket frame; content stays semantic HTML.",
+      "keywords": [
+        "decorative",
+        "frame",
+        "bracket",
+        "accent",
+        "geometry",
+        "visual"
+      ],
+      "category": "layout",
+      "use_cases": [
+        "marketing-site"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-geometry-frame-title",
+      "playground_url": "docs/playground.html#component=catalog-geometry-frame-title",
+      "elements": [
+        "article",
+        "h3",
+        "p"
+      ],
+      "classes": [
+        "syn-frame",
+        "syn-frame--bracket",
+        "syn-heading",
+        "syn-panel"
+      ],
+      "native_feature_requirements": [],
+      "html": "<article class=\"syn-panel syn-frame syn-frame--bracket\" aria-labelledby=\"catalog-frame-title\">\n  <h3 class=\"syn-heading\" id=\"catalog-frame-title\">Connection established</h3>\n  <p>Geometry changes presentation, not meaning.</p>\n</article>"
+    },
+    {
+      "id": "catalog-viz-bars-title",
+      "title": "Accessible data bars",
+      "module": "syntyr.viz.css",
+      "required_stylesheets": [
+        "syntyr.core.css",
+        "syntyr.viz.css"
+      ],
+      "description": "Optional CSS-only bars with visible values; your app supplies real measurements.",
+      "keywords": [
+        "visualization",
+        "graph",
+        "chart",
+        "ranked",
+        "bars",
+        "percentages",
+        "data"
+      ],
+      "category": "data",
+      "use_cases": [
+        "saas-dashboard"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-viz-bars-title",
+      "playground_url": "docs/playground.html#component=catalog-viz-bars-title",
+      "elements": [
+        "data",
+        "div",
+        "li",
+        "ol",
+        "span"
+      ],
+      "classes": [
+        "syn-viz-bar",
+        "syn-viz-bar-fill",
+        "syn-viz-bar-label",
+        "syn-viz-bar-track",
+        "syn-viz-bars"
+      ],
+      "native_feature_requirements": [],
+      "html": "<ol class=\"syn-viz-bars\" aria-label=\"Illustrative channel share\">\n  <li class=\"syn-viz-bar\">\n    <div class=\"syn-viz-bar-label\"><span>Direct</span><data value=\"54\">54%</data></div>\n    <div class=\"syn-viz-bar-track\" aria-hidden=\"true\"><span class=\"syn-viz-bar-fill\" style=\"--syn-viz-value: 54\"></span></div>\n  </li>\n  <li class=\"syn-viz-bar\">\n    <div class=\"syn-viz-bar-label\"><span>Agency</span><data value=\"31\">31%</data></div>\n    <div class=\"syn-viz-bar-track\" aria-hidden=\"true\"><span class=\"syn-viz-bar-fill\" style=\"--syn-viz-value: 31\"></span></div>\n  </li>\n</ol>"
+    },
+    {
+      "id": "catalog-primary-nav-title",
+      "title": "Primary navigation",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "A named navigation landmark with a list of real destinations and one current-page indicator.",
+      "keywords": [
+        "primary",
+        "site",
+        "navigation",
+        "landmark",
+        "active",
+        "page",
+        "aria-current",
+        "list"
+      ],
+      "category": "navigation",
+      "use_cases": [
+        "navigation",
+        "marketing-site"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-primary-nav-title",
+      "playground_url": "docs/playground.html#component=catalog-primary-nav-title",
+      "elements": [
+        "a",
+        "li",
+        "nav",
+        "ul"
+      ],
+      "classes": [
+        "syn-inline"
+      ],
+      "native_feature_requirements": [],
+      "html": "<nav aria-label=\"Primary navigation\">\n  <ul class=\"syn-inline\">\n    <li><a href=\"index.html\">Overview</a></li>\n    <li><a href=\"catalog.html\" aria-current=\"page\">Components</a></li>\n    <li><a href=\"guides.html\">Guides</a></li>\n  </ul>\n</nav>"
+    },
+    {
+      "id": "catalog-table-of-contents-title",
+      "title": "On-page table of contents",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "Real fragment links point to heading IDs in the same example; no scroll handler is necessary.",
+      "keywords": [
+        "table",
+        "of",
+        "contents",
+        "jump",
+        "links",
+        "anchor",
+        "section",
+        "navigation",
+        "same",
+        "page"
+      ],
+      "category": "navigation",
+      "use_cases": [
+        "navigation",
+        "content-docs"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-table-of-contents-title",
+      "playground_url": "docs/playground.html#component=catalog-table-of-contents-title",
+      "elements": [
+        "a",
+        "h3",
+        "li",
+        "nav",
+        "p",
+        "section",
+        "ul"
+      ],
+      "classes": [],
+      "native_feature_requirements": [],
+      "html": "<nav aria-label=\"In-page example sections\">\n  <ul>\n    <li><a href=\"#catalog-toc-overview\">Overview</a></li>\n    <li><a href=\"#catalog-toc-notes\">Notes</a></li>\n  </ul>\n</nav>\n<section aria-labelledby=\"catalog-toc-overview\">\n  <h3 id=\"catalog-toc-overview\">Overview</h3>\n  <p>Each section has an addressable heading.</p>\n</section>\n<section aria-labelledby=\"catalog-toc-notes\">\n  <h3 id=\"catalog-toc-notes\">Notes</h3>\n  <p>Native anchors work without JavaScript.</p>\n</section>"
+    },
+    {
+      "id": "catalog-footer-nav-title",
+      "title": "Footer link groups",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "Place a footer within its owning section and name each navigation landmark.",
+      "keywords": [
+        "footer",
+        "contentinfo",
+        "navigation",
+        "about",
+        "legal",
+        "links",
+        "sitemap"
+      ],
+      "category": "navigation",
+      "use_cases": [
+        "navigation",
+        "marketing-site"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-footer-nav-title",
+      "playground_url": "docs/playground.html#component=catalog-footer-nav-title",
+      "elements": [
+        "a",
+        "footer",
+        "h3",
+        "li",
+        "nav",
+        "section",
+        "small",
+        "ul"
+      ],
+      "classes": [
+        "syn-inline"
+      ],
+      "native_feature_requirements": [],
+      "html": "<section aria-labelledby=\"catalog-footer-example-title\">\n  <h3 id=\"catalog-footer-example-title\">Documentation</h3>\n  <footer>\n    <nav aria-label=\"Footer resources\">\n      <ul class=\"syn-inline\">\n        <li><a href=\"guides.html\">Guides</a></li>\n        <li><a href=\"faq.html\">FAQ</a></li>\n        <li><a href=\"distribution.html\">Installation</a></li>\n      </ul>\n    </nav>\n    <small>Example footer — update links for your own site.</small>\n  </footer>\n</section>"
+    },
+    {
+      "id": "catalog-pagination-title",
+      "title": "Pagination navigation",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "Numbered navigation with a clearly identified current page; replace demo query URLs with real routes.",
+      "keywords": [
+        "pagination",
+        "pages",
+        "previous",
+        "next",
+        "rel",
+        "prev",
+        "next",
+        "aria-current"
+      ],
+      "category": "navigation",
+      "use_cases": [
+        "navigation",
+        "saas-dashboard"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-pagination-title",
+      "playground_url": "docs/playground.html#component=catalog-pagination-title",
+      "elements": [
+        "a",
+        "nav",
+        "span"
+      ],
+      "classes": [
+        "syn-page-link",
+        "syn-pagination"
+      ],
+      "native_feature_requirements": [],
+      "html": "<nav class=\"syn-pagination\" aria-label=\"Example result pages\">\n  <a class=\"syn-page-link\" href=\"catalog.html?page=1\" rel=\"prev\">Previous</a>\n  <a class=\"syn-page-link\" href=\"catalog.html?page=1\">1</a>\n  <span class=\"syn-page-link\" aria-current=\"page\">2</span>\n  <a class=\"syn-page-link\" href=\"catalog.html?page=3\">3</a>\n  <a class=\"syn-page-link\" href=\"catalog.html?page=3\" rel=\"next\">Next</a>\n</nav>"
+    },
+    {
+      "id": "catalog-contact-title",
+      "title": "Contact details",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "Use address for the nearest article or section contact; sample contacts are placeholders.",
+      "keywords": [
+        "contact",
+        "address",
+        "email",
+        "phone",
+        "support",
+        "organization",
+        "details"
+      ],
+      "category": "layout",
+      "use_cases": [
+        "marketing-site",
+        "content-docs"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-contact-title",
+      "playground_url": "docs/playground.html#component=catalog-contact-title",
+      "elements": [
+        "a",
+        "address",
+        "h3",
+        "p",
+        "section",
+        "small",
+        "span"
+      ],
+      "classes": [],
+      "native_feature_requirements": [],
+      "html": "<section aria-labelledby=\"catalog-contact-heading\">\n  <h3 id=\"catalog-contact-heading\">Customer support</h3>\n  <address>\n    <a href=\"mailto:support@example.com\">support@example.com</a>\n    <span aria-hidden=\"true\"> · </span>\n    <a href=\"tel:+12025550123\">+1 (202) 555-0123</a>\n  </address>\n  <p><small>Replace example.com and the example telephone number.</small></p>\n</section>"
+    },
+    {
+      "id": "catalog-aside-title",
+      "title": "Section and complementary aside",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "Keep a named content section and related complementary material distinct; sidecar layout is optional.",
+      "keywords": [
+        "section",
+        "sidebar",
+        "complementary",
+        "related",
+        "resources",
+        "aside",
+        "landmark"
+      ],
+      "category": "layout",
+      "use_cases": [
+        "content-docs",
+        "saas-dashboard"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-aside-title",
+      "playground_url": "docs/playground.html#component=catalog-aside-title",
+      "elements": [
+        "a",
+        "aside",
+        "div",
+        "h3",
+        "li",
+        "p",
+        "section",
+        "ul"
+      ],
+      "classes": [
+        "syn-sidecar"
+      ],
+      "native_feature_requirements": [],
+      "html": "<div class=\"syn-sidecar\">\n  <section aria-labelledby=\"catalog-aside-main-heading\">\n    <h3 id=\"catalog-aside-main-heading\">Project overview</h3>\n    <p>Core project content belongs in a named section.</p>\n  </section>\n  <aside aria-labelledby=\"catalog-aside-related-heading\">\n    <h3 id=\"catalog-aside-related-heading\">Related resources</h3>\n    <ul><li><a href=\"guides.html\">Read the guides</a></li></ul>\n  </aside>\n</div>"
+    },
+    {
+      "id": "catalog-heading-group-title",
+      "title": "Heading group",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "Group a title and supporting subtitle without inserting fake heading levels.",
+      "keywords": [
+        "hgroup",
+        "heading",
+        "title",
+        "subtitle",
+        "introduction",
+        "lede",
+        "editorial"
+      ],
+      "category": "typography",
+      "use_cases": [
+        "content-docs"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-heading-group-title",
+      "playground_url": "docs/playground.html#component=catalog-heading-group-title",
+      "elements": [
+        "h3",
+        "hgroup",
+        "p",
+        "section"
+      ],
+      "classes": [
+        "syn-lede"
+      ],
+      "native_feature_requirements": [],
+      "html": "<section aria-labelledby=\"catalog-hgroup-heading\">\n  <hgroup>\n    <h3 id=\"catalog-hgroup-heading\">Product updates</h3>\n    <p class=\"syn-lede\">New releases, written for people.</p>\n  </hgroup>\n  <p>Follow the updates that matter to your team.</p>\n</section>"
+    },
+    {
+      "id": "catalog-event-agenda-title",
+      "title": "Event agenda",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "Machine-readable times in an ordered agenda; the display time zone is explicit.",
+      "keywords": [
+        "agenda",
+        "schedule",
+        "event",
+        "time",
+        "datetime",
+        "ordered",
+        "list",
+        "sessions"
+      ],
+      "category": "data",
+      "use_cases": [
+        "content-docs"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-event-agenda-title",
+      "playground_url": "docs/playground.html#component=catalog-event-agenda-title",
+      "elements": [
+        "h3",
+        "li",
+        "ol",
+        "section",
+        "time"
+      ],
+      "classes": [
+        "syn-stack"
+      ],
+      "native_feature_requirements": [],
+      "html": "<section aria-labelledby=\"catalog-agenda-heading\">\n  <h3 id=\"catalog-agenda-heading\">Workshop schedule</h3>\n  <ol class=\"syn-stack\">\n    <li><time datetime=\"2026-12-03T09:00:00-03:00\">09:00 BRT</time> — Welcome</li>\n    <li><time datetime=\"2026-12-03T10:30:00-03:00\">10:30 BRT</time> — Hands-on session</li>\n    <li><time datetime=\"2026-12-03T12:00:00-03:00\">12:00 BRT</time> — Questions</li>\n  </ol>\n</section>"
+    },
+    {
+      "id": "catalog-table-totals-title",
+      "title": "Table with totals",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "Use caption, scoped column headings and a real table footer for aggregated values.",
+      "keywords": [
+        "table",
+        "caption",
+        "summary",
+        "tfoot",
+        "total",
+        "column",
+        "scope",
+        "numeric"
+      ],
+      "category": "data",
+      "use_cases": [
+        "saas-dashboard"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-table-totals-title",
+      "playground_url": "docs/playground.html#component=catalog-table-totals-title",
+      "elements": [
+        "caption",
+        "div",
+        "table",
+        "tbody",
+        "td",
+        "tfoot",
+        "th",
+        "thead",
+        "tr"
+      ],
+      "classes": [
+        "syn-table",
+        "syn-table-wrap"
+      ],
+      "native_feature_requirements": [],
+      "html": "<div class=\"syn-table-wrap\">\n  <table class=\"syn-table\">\n    <caption>Illustrative monthly orders</caption>\n    <thead><tr><th scope=\"col\">Month</th><th scope=\"col\">Orders</th></tr></thead>\n    <tbody>\n      <tr><th scope=\"row\">January</th><td>12</td></tr>\n      <tr><th scope=\"row\">February</th><td>18</td></tr>\n    </tbody>\n    <tfoot><tr><th scope=\"row\">Total</th><td>30</td></tr></tfoot>\n  </table>\n</div>"
+    },
+    {
+      "id": "catalog-revisions-title",
+      "title": "Revisions and abbreviations",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "Give abbreviations definitions and mark edits with native insertion and deletion elements.",
+      "keywords": [
+        "abbreviation",
+        "definition",
+        "edit",
+        "insert",
+        "delete",
+        "ins",
+        "del",
+        "dfn",
+        "datetime",
+        "revisions"
+      ],
+      "category": "typography",
+      "use_cases": [
+        "content-docs"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-revisions-title",
+      "playground_url": "docs/playground.html#component=catalog-revisions-title",
+      "elements": [
+        "abbr",
+        "del",
+        "dfn",
+        "h3",
+        "ins",
+        "p",
+        "section"
+      ],
+      "classes": [],
+      "native_feature_requirements": [],
+      "html": "<section aria-labelledby=\"catalog-revisions-heading\">\n  <h3 id=\"catalog-revisions-heading\">Release terminology</h3>\n  <p><abbr title=\"Application programming interface\">API</abbr> is the public contract.</p>\n  <p><dfn>Progressive enhancement</dfn> keeps core content usable without scripts.</p>\n  <p>Plan: <del datetime=\"2026-11-20\">Ship a prototype</del>\n     <ins datetime=\"2026-11-22\">Ship a tested component</ins>.</p>\n</section>"
+    },
+    {
+      "id": "catalog-form-help-title",
+      "title": "Form help and validation",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "Built-in constraint validation with a visible description; adapt the example GET endpoint.",
+      "keywords": [
+        "form",
+        "validation",
+        "help",
+        "required",
+        "number",
+        "range",
+        "aria-describedby",
+        "label"
+      ],
+      "category": "forms",
+      "use_cases": [
+        "forms-workflow"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-form-help-title",
+      "playground_url": "docs/playground.html#component=catalog-form-help-title",
+      "elements": [
+        "button",
+        "form",
+        "input",
+        "label",
+        "p"
+      ],
+      "classes": [
+        "syn-button",
+        "syn-button--primary",
+        "syn-form",
+        "syn-help",
+        "syn-input",
+        "syn-label"
+      ],
+      "native_feature_requirements": [],
+      "html": "<form class=\"syn-form\" action=\"catalog.html\" method=\"get\">\n  <label class=\"syn-label\" for=\"catalog-results-limit\">Maximum results</label>\n  <input class=\"syn-input\" id=\"catalog-results-limit\" name=\"limit\"\n         type=\"number\" min=\"1\" max=\"50\" value=\"10\" required\n         aria-describedby=\"catalog-validation-help\">\n  <p class=\"syn-help\" id=\"catalog-validation-help\">Choose a number from 1 to 50.</p>\n  <button class=\"syn-button syn-button--primary\" type=\"submit\">Apply limit</button>\n</form>"
+    },
+    {
+      "id": "catalog-skip-link-title",
+      "title": "Skip navigation link",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "A working skip link moves to real content in the same example.",
+      "keywords": [
+        "skip",
+        "content",
+        "anchor",
+        "keyboard",
+        "accessible"
+      ],
+      "category": "navigation",
+      "use_cases": [
+        "navigation",
+        "content-docs"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-skip-link-title",
+      "playground_url": "docs/playground.html#component=catalog-skip-link-title",
+      "elements": [
+        "a",
+        "div",
+        "h3",
+        "nav",
+        "p",
+        "section"
+      ],
+      "classes": [
+        "syn-button"
+      ],
+      "native_feature_requirements": [],
+      "html": "<div>\n  <a class=\"syn-button\" href=\"#catalog-skip-destination\">Skip to example content</a>\n  <nav aria-label=\"Example introductory links\"><a href=\"guides.html\">Browse guides</a></nav>\n  <section id=\"catalog-skip-destination\" tabindex=\"-1\" aria-labelledby=\"catalog-skip-heading\">\n    <h3 id=\"catalog-skip-heading\">Example main content</h3>\n    <p>Use a matching target ID in your application.</p>\n  </section>\n</div>"
+    },
+    {
+      "id": "catalog-status-list-title",
+      "title": "Status indicator list",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "Use textual status labels that stay understandable without color.",
+      "keywords": [
+        "status",
+        "list",
+        "badges",
+        "semantic",
+        "state",
+        "text"
+      ],
+      "category": "data",
+      "use_cases": [
+        "saas-dashboard"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-status-list-title",
+      "playground_url": "docs/playground.html#component=catalog-status-list-title",
+      "elements": [
+        "h3",
+        "li",
+        "section",
+        "span",
+        "ul"
+      ],
+      "classes": [
+        "syn-badge",
+        "syn-stack"
+      ],
+      "native_feature_requirements": [],
+      "html": "<section aria-labelledby=\"catalog-status-heading\">\n  <h3 id=\"catalog-status-heading\">Workflow status</h3>\n  <ul class=\"syn-stack\">\n    <li><span class=\"syn-badge\">Ready</span> · Draft reviewed</li>\n    <li><span class=\"syn-badge\">Pending</span> · Awaiting approval</li>\n    <li><span class=\"syn-badge\">Needs attention</span> · Missing document</li>\n  </ul>\n</section>"
+    },
+    {
+      "id": "catalog-activity-entry-title",
+      "title": "Activity timeline",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "Use an ordered list with machine-readable timestamps for an activity feed.",
+      "keywords": [
+        "activity",
+        "timeline",
+        "events",
+        "ordered",
+        "time",
+        "feed"
+      ],
+      "category": "data",
+      "use_cases": [
+        "saas-dashboard"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-activity-entry-title",
+      "playground_url": "docs/playground.html#component=catalog-activity-entry-title",
+      "elements": [
+        "h3",
+        "li",
+        "ol",
+        "section",
+        "time"
+      ],
+      "classes": [
+        "syn-stack"
+      ],
+      "native_feature_requirements": [],
+      "html": "<section aria-labelledby=\"catalog-activity-heading\">\n  <h3 id=\"catalog-activity-heading\">Recent activity</h3>\n  <ol class=\"syn-stack\">\n    <li><time datetime=\"2026-11-22T10:00:00Z\">Nov 22, 10:00 UTC</time> — Draft updated</li>\n    <li><time datetime=\"2026-11-21T15:30:00Z\">Nov 21, 15:30 UTC</time> — Review requested</li>\n  </ol>\n</section>"
+    },
+    {
+      "id": "catalog-property-list-title",
+      "title": "Key-value details",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "A definition list for record attributes, not a faux two-column table.",
+      "keywords": [
+        "property",
+        "key",
+        "value",
+        "details",
+        "description",
+        "list",
+        "metadata"
+      ],
+      "category": "data",
+      "use_cases": [
+        "saas-dashboard"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-property-list-title",
+      "playground_url": "docs/playground.html#component=catalog-property-list-title",
+      "elements": [
+        "dd",
+        "dl",
+        "dt",
+        "h3",
+        "section",
+        "time"
+      ],
+      "classes": [],
+      "native_feature_requirements": [],
+      "html": "<section aria-labelledby=\"catalog-property-heading\">\n  <h3 id=\"catalog-property-heading\">Record details</h3>\n  <dl>\n    <dt>Status</dt><dd>Active</dd>\n    <dt>Plan</dt><dd>Starter</dd>\n    <dt>Updated</dt><dd><time datetime=\"2026-11-22\">November 22, 2026</time></dd>\n  </dl>\n</section>"
+    },
+    {
+      "id": "catalog-link-card-title",
+      "title": "Linked resource card",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "A card with one real destination and a meaningful accessible link name.",
+      "keywords": [
+        "resource",
+        "article",
+        "card",
+        "link",
+        "description"
+      ],
+      "category": "layout",
+      "use_cases": [
+        "navigation",
+        "content-docs"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-link-card-title",
+      "playground_url": "docs/playground.html#component=catalog-link-card-title",
+      "elements": [
+        "a",
+        "article",
+        "h3",
+        "p"
+      ],
+      "classes": [
+        "syn-eyebrow",
+        "syn-heading",
+        "syn-panel"
+      ],
+      "native_feature_requirements": [],
+      "html": "<article class=\"syn-panel\">\n  <p class=\"syn-eyebrow\">DOCUMENTATION</p>\n  <h3 class=\"syn-heading\"><a href=\"guides.html\">Getting started guides</a></h3>\n  <p>Find practical examples for integrating native HTML and Syntyr CSS.</p>\n</article>"
+    },
+    {
+      "id": "catalog-section-actions-title",
+      "title": "Section header with actions",
+      "module": "syntyr.core.css",
+      "required_stylesheets": [
+        "syntyr.core.css"
+      ],
+      "description": "A labeled section with actions kept in normal document order.",
+      "keywords": [
+        "section",
+        "header",
+        "toolbar",
+        "actions",
+        "links",
+        "responsive"
+      ],
+      "category": "layout",
+      "use_cases": [
+        "saas-dashboard"
+      ],
+      "catalog_url": "docs/catalog.html#catalog-section-actions-title",
+      "playground_url": "docs/playground.html#component=catalog-section-actions-title",
+      "elements": [
+        "a",
+        "h3",
+        "header",
+        "p",
+        "section"
+      ],
+      "classes": [
+        "syn-button",
+        "syn-button--outline",
+        "syn-inline"
+      ],
+      "native_feature_requirements": [],
+      "html": "<section aria-labelledby=\"catalog-action-section-heading\">\n  <header class=\"syn-inline\">\n    <h3 id=\"catalog-action-section-heading\">Workspace overview</h3>\n    <a class=\"syn-button syn-button--outline\" href=\"guides.html\">View guides</a>\n  </header>\n  <p>Place supporting content after the section heading.</p>\n</section>"
+    }
+  ]
+}

@@ -44,6 +44,159 @@ class NativeSemanticPrimitives(unittest.TestCase):
         self.assertNotIn("<script", html.lower())
         self.assertIn("static example", html.lower())
 
+    def test_native_suggestions_and_grouped_disclosures_are_accessible(self):
+        html = (ROOT / "examples/native-elements.html").read_text()
+        from html.parser import HTMLParser
+
+        class Inputs(HTMLParser):
+            def __init__(self):
+                super().__init__()
+                self.by_id = {}
+                self.selects = {}
+                self.labels = {}
+                self.active_label = None
+                self.details_names = []
+                self.template_depth = 0
+                self.active_select = None
+                self.active_group = None
+                self.service_groups = []
+
+            def handle_starttag(self, tag, attrs):
+                if tag == "template":
+                    self.template_depth += 1
+                    return
+                if self.template_depth:
+                    return
+                attributes = dict(attrs)
+                if tag == "input" and attributes.get("id"):
+                    self.by_id[attributes["id"]] = attributes
+                elif tag == "select":
+                    self.active_select = attributes.get("id")
+                    if self.active_select:
+                        self.selects[self.active_select] = attributes
+                elif tag == "optgroup" and self.active_select == "native-service":
+                    self.active_group = {
+                        "label": attributes.get("label", "").strip(),
+                        "option_count": 0,
+                    }
+                    self.service_groups.append(self.active_group)
+                elif tag == "option" and self.active_group is not None:
+                    self.active_group["option_count"] += 1
+                elif tag == "label":
+                    self.active_label = attributes.get("for")
+                    if self.active_label:
+                        self.labels[self.active_label] = ""
+                elif tag == "details":
+                    self.details_names.append(attributes.get("name"))
+
+            def handle_data(self, data):
+                if not self.template_depth and self.active_label:
+                    self.labels[self.active_label] += data
+
+            def handle_endtag(self, tag):
+                if tag == "template":
+                    self.template_depth -= 1
+                    return
+                if self.template_depth:
+                    return
+                if tag == "label":
+                    self.active_label = None
+                elif tag == "optgroup":
+                    self.active_group = None
+                elif tag == "select":
+                    self.active_select = None
+                    self.active_group = None
+
+        parsed = Inputs()
+        parsed.feed(html)
+        self.assertEqual(parsed.by_id["native-location"].get("list"), "native-location-list")
+        self.assertIn('<datalist id="native-location-list">', html)
+        grouped_options = [group for group in parsed.service_groups
+                           if group["label"] and group["option_count"] > 0]
+        self.assertGreaterEqual(len(grouped_options), 2,
+                                "Service select must contain two labeled, populated groups")
+        self.assertIn("native-service", parsed.selects,
+                      "Service select must exist with the expected ID")
+        self.assertTrue(parsed.labels.get("native-service", "").strip(),
+                        "Service select needs a visible associated label")
+        self.assertEqual(parsed.details_names.count("native-review-sections"), 2)
+        self.assertIn('older browsers may leave both open', html)
+        self.assertNotIn('<script', html.lower())
+        index = (ROOT / "llms.txt").read_text()
+        self.assertIn('datalist/optgroup and named disclosure', index)
+
+    def test_native_form_reflow_uses_capped_controls_and_scroll_region(self):
+        html = (ROOT / "examples/native-elements.html").read_text()
+        css = (ROOT / "src/semantic.css").read_text()
+        from html.parser import HTMLParser
+
+        class TableRegion(HTMLParser):
+            def __init__(self):
+                super().__init__()
+                self.div_depth = 0
+                self.regions = []
+                self.open_regions = []
+
+            def handle_starttag(self, tag, attrs):
+                attributes = dict(attrs)
+                if tag == "div":
+                    self.div_depth += 1
+                    if "syn-table-wrap" in attributes.get("class", "").split():
+                        region = {"depth": self.div_depth, "attrs": attributes,
+                                  "contains_table": False}
+                        self.regions.append(region)
+                        self.open_regions.append(region)
+                elif tag == "table" and self.open_regions:
+                    self.open_regions[-1]["contains_table"] = True
+
+            def handle_endtag(self, tag):
+                if tag == "div":
+                    if (self.open_regions and
+                            self.open_regions[-1]["depth"] == self.div_depth):
+                        self.open_regions.pop()
+                    self.div_depth -= 1
+
+        region = TableRegion()
+        region.feed(html)
+        valid = [entry for entry in region.regions
+                 if entry["contains_table"]
+                 and entry["attrs"].get("role") == "region"
+                 and entry["attrs"].get("aria-label") == "Sample campaign inventory"
+                 and entry["attrs"].get("tabindex") == "0"]
+        self.assertEqual(len(valid), 1,
+                         "The same named, tabbable wrapper must contain the table")
+
+        def declarations_for(unclassed, opted_in):
+            # Require the complete opt-in ancestor before parsing declarations.
+            import re
+            prefix = ":is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is("
+            start = css.index(prefix + unclassed)
+            opening = css.index("{", start)
+            self.assertIn(opted_in, css[start:opening],
+                          "The rule must retain the explicit semantic opt-in alternative")
+            block = css[opening + 1:css.index("}", opening)]
+            return {match.group(1): match.group(2).strip()
+                    for match in re.finditer(r"(?<![\w-])([\w-]+)\s*:\s*([^;{}]+);", block)}
+
+        fieldset = declarations_for("fieldset:not([class])", "fieldset[data-syn-semantic]")
+        color = declarations_for('input[type="color"]:not([class])',
+                                 'input[type="color"][data-syn-semantic]')
+        file = declarations_for('input[type="file"]:not([class])',
+                                'input[type="file"][data-syn-semantic]')
+        self.assertEqual(fieldset.get("padding"), "1rem")
+        self.assertEqual(color.get("inline-size"), "min(4rem, 100%)")
+        self.assertEqual(color.get("min-inline-size"), "0")
+        self.assertEqual(color.get("max-inline-size"), "100%")
+        self.assertEqual(file.get("inline-size"), "100%")
+        self.assertEqual(file.get("min-inline-size"), "0")
+        self.assertEqual(file.get("max-inline-size"), "100%")
+        self.assertEqual(file.get("overflow"), "clip")
+        media = css.split("@media (max-width: 40rem)", 1)[1].split(
+            "@media (forced-colors: active)", 1)[0]
+        self.assertIn(":is(.syn-root.syn-semantic, .syn-root .syn-semantic)", media)
+        self.assertIn(":is(fieldset:not([class]), fieldset[data-syn-semantic])", media)
+        self.assertIn("padding: min(1rem, 5vw)", media)
+
     def test_demo_is_discoverable_and_published_explicitly(self):
         self.assertIn('href="../examples/native-elements.html"', (ROOT / "docs/index.html").read_text())
         self.assertIn('"native-elements.html"', (ROOT / "scripts/build_cloudflare_site.py").read_text())
@@ -87,6 +240,26 @@ class NativeSemanticPrimitives(unittest.TestCase):
         self.assertIn("scrollLeft", browser)
         self.assertIn("mark code", browser)
 
+
+    def test_native_file_and_color_controls_bound_width_at_large_text_sizes(self):
+        css = (ROOT / "src/semantic.css").read_text()
+        file_section = css.split('input[type="file"]:not([class])', 1)[1].split("}", 1)[0]
+        for declaration in ("inline-size: 100%", "min-inline-size: 0",
+                            "max-inline-size: 100%", "overflow: clip"):
+            with self.subTest(declaration=declaration):
+                self.assertIn(declaration, file_section)
+        color_section = css.split('input[type="color"]:not([class])', 1)[1].split("}", 1)[0]
+        for declaration in ("inline-size: min(4rem, 100%)", "min-inline-size: 0",
+                            "max-inline-size: 100%"):
+            self.assertIn(declaration, color_section)
+        self.assertIn("padding: min(1rem, 5vw)", css)
+        html = (ROOT / "examples/native-elements.html").read_text()
+        self.assertIn('aria-label="Sample campaign inventory"', html)
+        self.assertIn('tabindex="0"', html)
+        browser = (ROOT / "tests/native_semantic_browser.py").read_text()
+        self.assertIn('"400%"', browser)
+        self.assertIn('"#design-file"', browser)
+        self.assertIn('"#design-color"', browser)
 
     def test_native_example_is_covered_by_shared_browser_audits(self):
         for script in ("tests/axe_audit.py", "tests/browser_matrix.py", "tests/reflow_test.py"):

@@ -17,15 +17,18 @@
     "./server.css": "./dist/syntyr.server.css",
     "./semantic-bundle.css": "./dist/syntyr.semantic-bundle.css",
     "./recipes.css": "./dist/syntyr.recipes.css",
+    "./media.css": "./dist/syntyr.media.css",
     "./effects.css": "./dist/syntyr.effects.css",
     "./motion.css": "./dist/syntyr.motion.css",
     "./geometry.css": "./dist/syntyr.geometry.css",
     "./symbols.css": "./dist/syntyr.symbols.css",
+    "./ascii.css": "./dist/syntyr.ascii.css",
     "./utilities.css": "./dist/syntyr.utilities.css",
     "./print.css": "./dist/syntyr.print.css",
     "./syntyr.css": "./dist/syntyr.css",
     "./all.css": "./dist/syntyr.all.css",
     "./viz.css": "./dist/syntyr.viz.css",
+    "./geo.css": "./dist/syntyr.geo.css",
     "./data-grid.css": "./dist/syntyr.data-grid.css",
     "./components/tokens.css": "./dist/components/tokens.css",
     "./components/base.css": "./dist/components/base.css",
@@ -42,14 +45,21 @@
     "./tailwind.css": "./integrations/tailwind/syntyr.theme.css",
     "./shadcn.css": "./integrations/shadcn/syntyr.tokens.css",
     "./headless.css": "./integrations/headless/interactions.css",
+    "./htmx.css": "./integrations/htmx/syntyr.htmx.css",
     "./presets/minimal.css": "./dist/presets/minimal.css",
     "./presets/saas.css": "./dist/presets/saas.css",
     "./presets/cinematic.css": "./dist/presets/cinematic.css",
     "./contract.json": "./metadata/css-contract.v1.json",
+    "./gallery.json": "./metadata/component-gallery.v1.json",
     "./animate": {
       "types": "./dist/syntyr.animate.d.mts",
       "default": "./dist/syntyr.animate.mjs"
-    }
+    },
+    "./copy": {
+      "types": "./dist/syntyr.copy.d.mts",
+      "default": "./dist/syntyr.copy.mjs"
+    },
+    "./menu.mjs": "./integrations/dropdown/menu.mjs"
   },
   "sideEffects": [
     "**/*.css"
@@ -59,9 +69,12 @@
     "integrations/tailwind/",
     "integrations/shadcn/",
     "integrations/headless/",
+    "integrations/htmx/",
     "metadata/css-contract.v1.json",
+    "metadata/component-gallery.v1.json",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "integrations/dropdown/"
   ],
   "publishConfig": {
     "access": "public"

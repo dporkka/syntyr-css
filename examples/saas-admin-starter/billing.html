@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Syntyr SaaS Admin Starter: responsive, dependency-free HTML template with example data.">
+  <title>Billing | Syntyr SaaS Admin</title>
+  <link rel="stylesheet" href="../../dist/syntyr.core.css">
+  <link rel="stylesheet" href="../../dist/syntyr.recipes.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="syn-root syn-page starter-page" data-syn-theme="studio">
+  <a class="syn-button starter-skip" href="#main">Skip to content</a>
+  <div class="starter-shell">
+    <aside class="starter-sidebar" aria-label="Workspace sidebar">
+      <a class="starter-brand" href="index.html"><span class="starter-logo">S</span>SYNTYR <span class="syn-muted">/ ATLAS</span></a>
+      <p class="syn-caption">EXAMPLE WORKSPACE • DEMO</p>
+      <nav class="syn-app-nav starter-nav" aria-label="Primary navigation">
+        <a href="index.html">Overview</a>
+        <a href="pipeline.html">Pipeline</a>
+        <a href="customers.html">Customers</a>
+        <a href="billing.html" aria-current="page">Billing</a>
+      </nav>
+      <div class="starter-sidebar-footer"><p class="syn-eyebrow">STATIC STARTER</p><p class="syn-caption">Illustrative data only. No backend, authentication, or persistence.</p><a href="README.md">Implementation notes</a></div>
+    </aside>
+    <main id="main" class="starter-main">
+      <header class="starter-topbar"><div><p class="syn-eyebrow">FINANCE / SUBSCRIPTIONS</p><h1>Billing</h1><p class="syn-muted">Plan, usage and invoice history with no fictitious payment actions.</p></div><span class="starter-avatar" aria-label="Demo account">AT</span></header>
+
+      <div class="starter-columns starter-billing">
+        <section class="syn-app-card" aria-labelledby="plan-heading">
+          <div class="starter-section-head"><div><p class="syn-eyebrow">SUBSCRIPTION</p><h2 id="plan-heading" class="syn-heading">Current plan</h2></div><span class="syn-status syn-status--success">Active</span></div>
+          <p class="starter-plan">Growth <span class="syn-caption">/ sample workspace</span></p><p class="syn-stat-value">$89<span class="starter-period"> / month</span></p>
+          <p class="syn-muted">10 seats and 100,000 API requests per month.</p>
+          <button class="syn-button syn-button--outline" type="button" disabled>Manage subscription (preview)</button>
+          <p class="syn-caption">Illustrative only — no payment provider or subscription management.</p>
+        </section>
+        <section class="syn-app-card" aria-labelledby="usage-heading">
+          <div class="starter-section-head"><div><p class="syn-eyebrow">CURRENT PERIOD</p><h2 id="usage-heading" class="syn-heading">Plan usage</h2></div></div>
+          <label class="syn-label" for="api-usage">API requests: 63,200 of 100,000</label>
+          <progress class="syn-meter" id="api-usage" value="63200" max="100000">63%</progress>
+          <dl class="starter-facts"><div><dt>Seats used</dt><dd>7 / 10</dd></div><div><dt>Period ends</dt><dd><time datetime="2026-11-30">30 Nov 2026</time></dd></div></dl>
+          <p class="syn-caption">Illustrative usage; entitlements must be enforced on the server.</p>
+        </section>
+      </div>
+      <section class="syn-app-card" aria-labelledby="invoices-heading">
+        <div class="starter-section-head"><div><p class="syn-eyebrow">PAYMENT HISTORY</p><h2 id="invoices-heading" class="syn-heading">Invoices</h2></div><span class="syn-caption">Sample invoices, no downloads</span></div>
+        <div class="syn-table-wrap" role="region" aria-label="Invoices, scroll horizontally for more columns" tabindex="0"><table class="syn-table">
+          <caption class="starter-caption">Illustrative invoice identifiers; no real charges</caption>
+          <thead><tr><th scope="col">Invoice</th><th scope="col">Date</th><th scope="col">Amount</th><th scope="col">Status</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">DEMO-003</th><td><time datetime="2026-11-01">1 Nov 2026</time></td><td class="starter-number">$89</td><td><span class="syn-status syn-status--success">Paid</span></td></tr>
+            <tr><th scope="row">DEMO-002</th><td><time datetime="2026-10-01">1 Oct 2026</time></td><td class="starter-number">$89</td><td><span class="syn-status syn-status--success">Paid</span></td></tr>
+            <tr><th scope="row">DEMO-001</th><td><time datetime="2026-09-01">1 Sep 2026</time></td><td class="starter-number">$89</td><td><span class="syn-status syn-status--success">Paid</span></td></tr>
+          </tbody>
+        </table></div>
+      </section>
+      <details class="syn-details starter-table-card"><summary>Connecting real billing</summary><p>Create checkout or portal sessions on your server, verify provider webhook signatures, deduplicate events and reconcile entitlements. Never process payment credentials in this template.</p></details>
+
+      <footer class="syn-caption starter-footer">Syntyr SaaS Admin Starter · MIT · HTML + CSS, zero runtime JavaScript</footer>
+    </main>
+  </div>
+</body>
+</html>

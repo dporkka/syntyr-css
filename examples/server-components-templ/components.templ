@@ -1,0 +1,98 @@
+package main
+
+// Copy-owned Syntyr components: each renders native HTML, never client JS.
+// templ contextually escapes text and attributes; never mark untrusted values safe.
+templ Field(field FieldProps) {
+    if field.Error != "" {
+        <div class="syn-field" data-syn-state="error">
+            <label class="syn-label" for={ field.ID }>{ field.Label }</label>
+            <input class="syn-input" type="search" id={ field.ID } name={ field.Name } value={ field.Value } aria-invalid="true" aria-describedby={ field.ID + "-error" }/>
+            <p class="syn-error" id={ field.ID + "-error" }>{ field.Error }</p>
+        </div>
+    } else {
+        <div class="syn-field">
+            <label class="syn-label" for={ field.ID }>{ field.Label }</label>
+            if field.Help != "" {
+                <input class="syn-input" type="search" id={ field.ID } name={ field.Name } value={ field.Value } aria-describedby={ field.ID + "-help" }/>
+                <p class="syn-help" id={ field.ID + "-help" }>{ field.Help }</p>
+            } else {
+                <input class="syn-input" type="search" id={ field.ID } name={ field.Name } value={ field.Value }/>
+            }
+        </div>
+    }
+}
+
+templ Notice(notice NoticeProps) {
+    if notice.Danger {
+        <p class="syn-alert syn-alert--danger" role="alert">{ notice.Message }</p>
+    } else {
+        <p class="syn-alert" role="status">{ notice.Message }</p>
+    }
+}
+
+templ Button(button ButtonProps) {
+    if button.Submit {
+        <button class={ buttonClass(button.Primary) } type="submit">{ button.Label }</button>
+    } else {
+        <button class={ buttonClass(button.Primary) } type="button">{ button.Label }</button>
+    }
+}
+
+templ Table(records []Record) {
+    if len(records) == 0 {
+        <p role="status">No matching resources.</p>
+    } else {
+        <div class="syn-table-wrap">
+            <table class="syn-table">
+                <caption>Matching resources</caption>
+                <thead><tr><th scope="col">Resource</th><th scope="col">Description</th></tr></thead>
+                <tbody>
+                    for _, record := range records {
+                        <tr><th scope="row">{ record.Title }</th><td>{ record.Description }</td></tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+}
+
+templ Pagination(pager PaginationProps) {
+    <nav aria-label="Resource pages" class="syn-inline">
+        if pager.PrevURL != "" {
+            <a class="syn-button" href={ pager.PrevURL } rel="prev">Previous</a>
+        }
+        <span aria-current="page">{ paginationLabel(pager) }</span>
+        if pager.NextURL != "" {
+            <a class="syn-button" href={ pager.NextURL } rel="next">Next</a>
+        }
+    </nav>
+}
+
+templ Page(data PageData) {
+    <!DOCTYPE html>
+    <html lang="en">
+        <head>
+            <meta charset="utf-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1"/>
+            <title>Server HTML components — Syntyr</title>
+            <link rel="stylesheet" href="/assets/syntyr.core.css"/>
+        </head>
+        <body class="syn-root syn-page" data-syn-theme="studio">
+            <main class="syn-shell syn-stack">
+                <header><h1 class="syn-heading">Syntyr Server Components</h1><p>Composable native HTML generated with Go templ.</p></header>
+                @Notice(data.Notice)
+                <form method="get" action="/" role="search" class="syn-form">
+                    @Field(data.Query)
+                    @Button(data.SearchButton)
+                </form>
+                if data.ShowResults {
+                    <section aria-label="Results" class="syn-stack">
+                        @Table(data.Records)
+                        @Pagination(data.Pager)
+                    </section>
+                }
+                <details><summary>How this works</summary><p>The server renders and escapes content, validates input, and preserves query state. Syntyr only styles native HTML.</p></details>
+            </main>
+        </body>
+    </html>
+}

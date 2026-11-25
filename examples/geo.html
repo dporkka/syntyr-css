@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Syntyr Geo: zero-JS schematic reference for responsive GIS overlays, map legends, and accessible geospatial asset lists.">
+  <title>Syntyr Geo — Field Operations Map</title>
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="../dist/syntyr.geo.css">
+  <style>
+    .geo-page { max-inline-size: 88rem; margin-inline: auto; padding: clamp(.85rem, 2.8vw, 2.5rem); }
+    .geo-header { display: flex; justify-content: space-between; align-items: end; gap: 1.2rem; flex-wrap: wrap; margin-block-end: 1.2rem; }
+    .geo-header h1 { margin: .25rem 0; font-size: clamp(1.6rem, 3vw, 2.6rem); }
+    .geo-header p { max-inline-size: 70ch; margin: .2rem 0; }
+    .geo-kpis { display:grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem),1fr)); gap: .55rem; margin-block: 1.1rem; }
+    .geo-kpi { padding: .8rem 1rem; border: 1px solid var(--syn-frame); border-radius:var(--syn-radius); background:var(--syn-surface); }
+    .geo-kpi strong { display:block; font-size:1.4rem; font-variant-numeric:tabular-nums; }
+    .geo-kpi span { color:var(--syn-muted); font-size:.78rem; }
+    .geo-demo-street { fill:none; stroke:var(--syn-geo-road); stroke-width:21; stroke-linejoin:round; stroke-linecap:round; }
+    .geo-demo-street--minor { stroke-width:9; opacity:.7; }
+    .geo-demo-route { fill:none; stroke:var(--syn-geo-route); stroke-width:6; stroke-dasharray:15 12; stroke-linecap:round; }
+    .geo-demo-district { fill:var(--syn-geo-parcel); stroke:var(--syn-accent); stroke-width:2; stroke-dasharray:6 7; }
+    .geo-demo-grid { stroke:var(--syn-border-subtle); stroke-width:1; }
+    .geo-section { margin-block-start: 1.5rem; }
+    .geo-section h2 { margin-block-end:.65rem; }
+    .geo-note { border-inline-start: 3px solid var(--syn-accent); padding: .65rem 1rem; background:var(--syn-accent-soft); }
+    .geo-skip { position:absolute; inset-block-start:-9rem; inset-inline-start:1rem; z-index:20; }
+    .geo-skip:focus { inset-block-start:1rem; }
+    .geo-asset-table { width:100%; }
+    .geo-asset-table tr:target { outline: 2px solid var(--syn-focus-ring); outline-offset:-2px; }
+    .geo-asset-table td, .geo-asset-table th { padding:.65rem; }
+    @media (prefers-reduced-motion:reduce) { .geo-asset-table tr { scroll-behavior: auto; } }
+  </style>
+</head>
+<body class="syn-root syn-page" data-syn-theme="grid">
+  <a href="#main" class="syn-button geo-skip">Skip to map summary</a>
+  <main id="main" class="geo-page">
+    <header class="geo-header">
+      <div>
+        <p class="syn-eyebrow">SYNTYR / GEO / OPEN SOURCE MODULE</p>
+        <h1>Field operations map</h1>
+        <p class="syn-muted">A responsive GIS interface composition for infrastructure, logistics, outdoor advertising, and location intelligence.</p>
+      </div>
+      <a class="syn-button syn-button--outline" href="../docs/geo.md">Integration guide (Markdown)</a>
+    </header>
+
+    <section class="geo-kpis" aria-label="Synthetic sample operating statistics">
+      <article class="geo-kpi"><span>DEMO ASSETS</span><strong>04</strong></article>
+      <article class="geo-kpi"><span>CORRIDORS</span><strong>02</strong></article>
+      <article class="geo-kpi"><span>ATTENTION</span><strong>01</strong></article>
+      <article class="geo-kpi"><span>MAP ENGINE</span><strong>None</strong></article>
+    </section>
+
+    <div class="syn-geo-shell" data-syn-theme="grid">
+      <div class="syn-geo-workspace">
+        <aside class="syn-geo-sidebar" aria-labelledby="geo-sidebar-title">
+          <p class="syn-eyebrow">NETWORK / SAMPLE</p>
+          <h2 id="geo-sidebar-title">Area inspection</h2>
+          <p class="syn-muted">An illustrative site network. No real locations, coordinates, tiles, or measurements are represented.</p>
+          <h3>Dataset layers</h3>
+          <ul class="syn-geo-layer-list" aria-label="Layers visible in this static drawing">
+            <li><span class="syn-geo-swatch" data-syn-geo-kind="route" aria-hidden="true"></span>Primary route</li>
+            <li><span class="syn-geo-swatch" data-syn-geo-kind="zone" aria-hidden="true"></span>Inspection district</li>
+            <li><span class="syn-geo-swatch" aria-hidden="true"></span>Field assets</li>
+          </ul>
+          <h3>Asset index</h3>
+          <ul class="syn-geo-data-list" aria-label="Jump to asset location markers">
+            <li><a href="#marker-a">M-12 — North exchange</a><span class="syn-caption"> Operational</span></li>
+            <li><a href="#marker-b">R-08 — Transit corridor</a><span class="syn-caption"> Survey</span></li>
+            <li><a href="#marker-c">Z-03 — District boundary</a><span class="syn-caption"> Review</span></li>
+            <li><a href="#marker-group">3 nearby sites — grouped</a><span class="syn-caption"> Synthetic</span></li>
+          </ul>
+          <p class="syn-caption">Zoom controls in the schematic are disabled. A real map renderer supplies panning, zooming, projection, hit-testing and attribution.</p>
+          <a href="#assets" class="syn-button syn-button--primary">Inspect accessible asset data</a>
+        </aside>
+
+        <figure class="syn-geo-viewport" aria-label="Schematic sample network map with four interactive asset markers">
+          <div class="syn-geo-map">
+            <svg viewBox="0 0 1000 630" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+              <defs>
+                <pattern id="geo-grid" width="50" height="50" patternUnits="userSpaceOnUse">
+                  <path d="M 50 0 L 0 0 0 50" class="geo-demo-grid" fill="none"/>
+                </pattern>
+              </defs>
+              <rect width="1000" height="630" fill="var(--syn-geo-land)"/>
+              <path d="M-30 530 Q220 325 405 390 T1060 195 L1060 660 -30 660Z" fill="var(--syn-geo-water)" opacity=".6"/>
+              <rect width="1000" height="630" fill="url(#geo-grid)"/>
+              <path class="geo-demo-district" d="M170 98 410 60 592 192 540 430 285 480 94 304Z"/>
+              <path class="geo-demo-district" d="M668 82 865 130 941 339 806 514 600 427 569 214Z" opacity=".7"/>
+              <path class="geo-demo-street" d="M-50 168 105 238 300 206 473 296 675 261 1010 343"/>
+              <path class="geo-demo-street" d="M160 -40 292 158 316 334 474 475 606 666"/>
+              <path class="geo-demo-street" d="M760 -60 713 126 771 321 875 620"/>
+              <path class="geo-demo-street--minor geo-demo-street" d="M-30 411 205 366 436 391 715 474 1040 461"/>
+              <path class="geo-demo-street--minor geo-demo-street" d="M425 -30 496 123 558 252 507 397 428 650"/>
+              <path class="geo-demo-route" d="M87 244 298 219 476 307 671 270 990 342"/>
+              <g fill="var(--syn-text)" font-family="system-ui,sans-serif" font-size="17" letter-spacing="2" opacity=".6">
+                <text x="97" y="90">SECTOR 01</text><text x="695" y="83">SECTOR 02</text>
+                <text x="620" y="582">ILLUSTRATIVE CORRIDOR</text>
+              </g>
+            </svg>
+          </div>
+
+          <div class="syn-geo-marker-layer">
+            <a class="syn-geo-marker" id="marker-a" href="#asset-a" aria-label="Open M-12 North exchange details" style="--syn-geo-x:29%;--syn-geo-y:34%"></a>
+            <a class="syn-geo-marker" id="marker-b" href="#asset-b" aria-label="Open R-08 Transit corridor details" data-syn-geo-kind="route" style="--syn-geo-x:67%;--syn-geo-y:43%"></a>
+            <a class="syn-geo-marker" id="marker-c" href="#asset-c" aria-label="Open Z-03 District boundary details" data-syn-geo-kind="zone" data-syn-selected="true" style="--syn-geo-x:52%;--syn-geo-y:63%"></a>
+            <a class="syn-geo-marker" id="marker-group" href="#asset-group" aria-label="Open details for three grouped field sites" style="--syn-geo-x:79%;--syn-geo-y:72%"><span class="syn-geo-cluster" aria-hidden="true">3</span></a>
+          </div>
+
+          <div class="syn-geo-overlay">
+            <div class="syn-geo-controls" role="group" aria-label="Map controls preview, unavailable without a map engine">
+              <div class="syn-geo-control-group">
+                <button type="button" class="syn-geo-control" disabled aria-label="Zoom in — unavailable in static preview">+</button>
+                <button type="button" class="syn-geo-control" disabled aria-label="Zoom out — unavailable in static preview">−</button>
+              </div>
+            </div>
+            <div class="syn-geo-bottom">
+              <div class="syn-geo-legend" role="group" aria-label="Map legend">
+                <p class="syn-geo-legend-title">Layer key</p>
+                <ul class="syn-geo-legend-list">
+                  <li><span class="syn-geo-swatch" aria-hidden="true"></span> Field site</li>
+                  <li><span class="syn-geo-swatch" data-syn-geo-kind="route" aria-hidden="true"></span> Route</li>
+                  <li><span class="syn-geo-swatch" data-syn-geo-kind="zone" aria-hidden="true"></span> Inspection zone</li>
+                </ul>
+              </div>
+              <span class="syn-geo-scale">Not to scale</span>
+            </div>
+          </div>
+          <figcaption class="syn-geo-attribution">Schematic illustration / original sample data</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <section class="geo-section" id="assets" aria-labelledby="assets-title">
+      <h2 id="assets-title">Asset details — readable without a map</h2>
+      <p class="syn-muted">Map pins navigate here. All identifiers, labels, and statuses are synthetic; there is no geographic dataset or live tracking.</p>
+      <div class="syn-table-wrap">
+        <table class="syn-table geo-asset-table">
+          <caption>Sample assets represented by the schematic map, in document order</caption>
+          <thead><tr><th scope="col">Asset</th><th scope="col">Classification</th><th scope="col">Status</th><th scope="col">Follow-up</th></tr></thead>
+          <tbody>
+            <tr id="asset-a"><th scope="row">M-12 / North exchange</th><td>Field site</td><td>Operational</td><td>Routine inspection</td></tr>
+            <tr id="asset-b"><th scope="row">R-08 / Transit corridor</th><td>Route</td><td>Survey</td><td>Verify access</td></tr>
+            <tr id="asset-c"><th scope="row">Z-03 / District boundary</th><td>Zone</td><td>Review</td><td>Check delineation</td></tr>
+            <tr id="asset-group"><th scope="row">Grouped / Three sites</th><td>Cluster</td><td>Synthetic</td><td>Open site list in real GIS</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+    <p class="geo-note">Syntyr styles geospatial UI but does not calculate distances, draw basemap tiles, transform coordinates, or implement mapping controls. Connect a GIS renderer to make this operational.</p>
+    <footer class="geo-section syn-caption">MIT-LICENSED SYNTYR GEO / CSS MODULE / SYNTHETIC SCHEMATIC, NOT A GEOGRAPHIC MAP</footer>
+  </main>
+</body>
+</html>

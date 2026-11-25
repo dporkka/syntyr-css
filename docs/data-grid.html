@@ -45,7 +45,7 @@ without loading Syntyr core, provided the required <code>--syn-*</code> color, r
 font tokens are mapped inside a <code>.syn-root</code> subtree.</p>
 <p>This module is not included in <code>syntyr.core.css</code> or <code>syntyr.css</code>; it is opt-in.
 The all-in-one demo bundle includes it. There is <strong>no JavaScript</strong> dependency.</p>
-<pre><code class="language-html">&lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot; data-syn-density=&quot;compact&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot; data-syn-density=&quot;compact&quot;&gt;
   &lt;div class=&quot;syn-data-grid&quot; role=&quot;grid&quot; aria-label=&quot;Inventory&quot;
        aria-rowcount=&quot;2&quot; aria-colcount=&quot;1&quot;&gt;
     &lt;div class=&quot;syn-data-grid__viewport&quot; role=&quot;region&quot; tabindex=&quot;0&quot;
@@ -99,10 +99,19 @@ paste error states need accessible descriptive text and focus management.</p>
 Grid/Noir palettes only when appropriate. Avoid glows or decorative motion
 on data-heavy workspaces.</p>
         </article>
-        <aside class="docs-article-sidebar"><nav aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#installation">Installation</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#api-and-responsibilities">API and responsibilities</a>
-        </nav></aside>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#installation">Installation</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#api-and-responsibilities">API and responsibilities</a>
+            </nav>
+          </details>
+        </aside>
       </div>
       <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="data-grid.md">Markdown source</a></nav>
     </main>

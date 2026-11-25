@@ -72,7 +72,7 @@ alpha.4 CSS.</p>
 emits advisory findings for ordinary table rows
 using ARIA selection and headed data tables without a caption/name.</p>
 <h2 id="keyboard-scrollable-table-example">Keyboard-scrollable table example</h2>
-<pre><code>&lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot; data-syn-density=&quot;compact&quot;&gt;
+<pre tabindex="0"><code>&lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot; data-syn-density=&quot;compact&quot;&gt;
   &lt;div class=&quot;syn-table-wrap syn-table-wrap--scroll&quot;
        role=&quot;region&quot; aria-label=&quot;Quarterly revenue table&quot; tabindex=&quot;0&quot;&gt;
     &lt;table class=&quot;syn-table syn-table--sticky syn-table--striped&quot;&gt;
@@ -96,7 +96,7 @@ stripe color, status color, or pseudo-element arrows as the only signal.</p>
 <h2 id="sorting-is-owned-by-get-and-the-server">Sorting is owned by GET and the server</h2>
 <p>The sorted state must reflect actual data order. When a server-rendered
 application supports sorting, it can render a real link:</p>
-<pre><code>&lt;th scope=&quot;col&quot; aria-sort=&quot;ascending&quot;&gt;
+<pre tabindex="0"><code>&lt;th scope=&quot;col&quot; aria-sort=&quot;ascending&quot;&gt;
   &lt;a class=&quot;syn-table-sort&quot; href=&quot;/invoices?sort=account&amp;amp;direction=desc&quot;&gt;Account&lt;/a&gt;
 &lt;/th&gt;
 </code></pre>
@@ -117,13 +117,25 @@ reader behavior in consuming applications. Do not confuse CSS-only
 presentation with an accessible grid widget implementation. Large
 datasets still need server pagination or selective delivery.</p>
         </article>
-        <aside class="docs-article-sidebar"><nav aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#import-only-what-you-use">Import only what you use</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#highlighting-a-record-without-inventing-grid-semantics">Highlighting a record without inventing grid semantics</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#keyboard-scrollable-table-example">Keyboard-scrollable table example</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#sorting-is-owned-by-get-and-the-server">Sorting is owned by GET and the server</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#accessibility-performance-and-themes">Accessibility, performance, and themes</a>
-        </nav></aside>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#import-only-what-you-use">Import only what you use</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#highlighting-a-record-without-inventing-grid-semantics">Highlighting a record without inventing grid semantics</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#keyboard-scrollable-table-example">Keyboard-scrollable table example</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#sorting-is-owned-by-get-and-the-server">Sorting is owned by GET and the server</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#accessibility-performance-and-themes">Accessibility, performance, and themes</a>
+            </nav>
+          </details>
+        </aside>
       </div>
       <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="data-tables.md">Markdown source</a></nav>
     </main>

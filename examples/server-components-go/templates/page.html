@@ -1,0 +1,29 @@
+{{define "page"}}<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Server HTML components — Syntyr</title>
+  <link rel="stylesheet" href="/assets/syntyr.core.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <main class="syn-shell syn-stack">
+    <header><h1 class="syn-heading">Syntyr Server Components</h1>
+      <p>Composable native HTML generated with Go's standard html/template package.</p></header>
+    {{template "syn.notice" .Notice}}
+    <form method="get" action="/" role="search" class="syn-form">
+      {{template "syn.field" .Query}}
+      {{template "syn.button" .SearchButton}}
+    </form>
+    {{if .ShowResults}}
+    <section aria-label="Results" class="syn-stack">
+      {{template "syn.table" .Records}}
+      {{template "syn.pagination" .Pager}}
+    </section>
+    {{end}}
+    <details><summary>How this works</summary>
+      <p>The server renders and escapes content, validates input, and preserves query state. Syntyr only styles native HTML.</p>
+    </details>
+  </main>
+</body>
+</html>{{end}}

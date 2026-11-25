@@ -86,8 +86,8 @@ class DesignConformanceTest(unittest.TestCase):
         tokens = SOURCE.read_text(encoding="utf-8")
         buttons = (ROOT / "src/components/buttons.css").read_text(encoding="utf-8")
         self.assertIn("--syn-primary-hover-bg: var(--syn-accent);", tokens)
-        self.assertIn("background: var(--syn-primary-hover-bg)", buttons)
-        self.assertIn("color: var(--syn-on-accent)", buttons)
+        self.assertIn("background: var(--syn-button-hover-bg, var(--syn-primary-hover-bg))", buttons)
+        self.assertIn("color: var(--syn-button-hover-color, var(--syn-on-accent))", buttons)
 
 
 if __name__ == "__main__":

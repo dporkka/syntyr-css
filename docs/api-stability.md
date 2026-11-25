@@ -14,13 +14,18 @@ reviewed consistently before `1.0.0`. It is not a new compatibility guarantee.
 | New `.syn-field`, `.syn-field-row`, `.syn-field-body`, `.syn-input-group`, `.syn-input-addon` form compositions | Experimental prerelease core additions | Evaluate for v1 stabilization after browser/accessibility review |
 | Documented `--syn-*` design-token names | Public prerelease API | Stable names, not fixed default values |
 | New documented component-local layout variables | Experimental alpha.5 opt-in API | Evaluate for stability after responsive review |
+| `.syn-list`, `.syn-list--compact`, `.syn-list--accent` and list-local gap/padding properties | Experimental alpha.5 core additions; semantic mode keeps native markers | Evaluate accessibility, nested rhythm and RTL before v1 |
+| `--syn-space-fluid-1` through `--syn-space-fluid-4` | Experimental alpha.5 opt-in tokens; bounded fluid spacing with fixed-unit fallback; no default layout changes | Evaluate browser behavior and typography/zoom interaction before v1 |
 | `data-syn-color-space="oklch"` | Experimental alpha.5 presentation opt-in | Evaluate perceptual color/contrast before v1 |
 | `data-syn-theme` and documented `data-syn-*` state hooks | Public prerelease API | Stable names and meanings |
 | `syntyr.semantic.css` and `.syn-semantic` | Opt-in prerelease API | Stable scoped semantics after audit |
 | `dist/presets/{minimal,saas,cinematic}.css` | Experimental single-file entrypoints | Stabilize names and inclusion contract only after explicit review |
 | `metadata/css-contract.v1.json` | Build artifact-manifest schema v1 | Version schema independently of public CSS API |
+| `syntyr.media.css`: `syn-media-rail--controls`, `syn-media-rail--markers`, `data-syn-scroll-label` | Experimental alpha.5 progressive carousel affordances; require CSS Overflow 5 and anchor positioning | Evaluate cross-browser parity and marker accessibility before v1 |
 | `syntyr.recipes.css`, `syntyr.geometry.css` | Experimental, opt-in | Evaluate for individual stabilization |
 | `syntyr.effects.css`, `syntyr.utilities.css` | Experimental, opt-in | Evaluate for individual stabilization |
+| `syntyr.motion.css` `data-syn-animate` presets, `--syn-animation-*` speed/loop/rotation controls and optional `syntyr.animate.mjs` loops | Experimental alpha.5 opt-in; not published in alpha.4 | Evaluate naming, reduced-motion behavior and semantic exits before stabilization |
+| `syn-logo-marquee`, `syn-logo-marquee__row`, group/track selectors and `--syn-logo-*` tokens | Experimental alpha.5 CSS-only logo strip, not in published alpha.4 | Verify seamless looping, responsive sizing, and reduced-motion fallback before stabilization |
 | `syntyr.css`, `syntyr.all.css` | Public convenience bundles | Maintain documented contents/meaning at v1 |
 | `terminal/palettes.json` | Optional example/palette asset | Separate compatibility decision from CSS |
 | `integrations/`, `examples/`, documentation editor | Non-core adapters/showcases | No automatic CSS-core stability promise |
@@ -133,6 +138,22 @@ Keep long prose wrapping whenever possible; if full columns require sideways
 scrolling, use `.syn-table-wrap` with keyboard reachability and an accessible
 table caption. The published immutable alpha.4 stylesheet is unchanged.
 
+### Alpha.5 component-local styling and registry installation
+
+In unreleased alpha.5, buttons, panels and form controls add optional,
+inherited `--syn-button-*`, `--syn-panel-*` and `--syn-field-*`
+custom-property overrides with their existing theme tokens as fallback.
+Button variants do not require Sass or a separate compiled theme.
+Server-supplied `data-syn-validation="valid"` is presentation-only; valid
+and invalid states do not create validation, focus management, or ARIA
+semantics. The existing opt-in `syn-error-summary` component remains
+the supported form-level error presentation.
+
+The source candidate includes an optional, **local-only** Python registry
+planner. It resolves declared CSS dependencies and checks the current
+source version, SHA-256 hashes and file collisions before any opt-in copy.
+It does not fetch remote code, install a runtime or promise v1 API stability.
+
 ## Compatibility and version policy
 
 - Before v1: breaking prerelease changes are possible; document them in the
@@ -162,3 +183,23 @@ See [`ARCHITECTURE.md`](../ARCHITECTURE.md) for feature-admission criteria,
 layer ownership and dependency boundaries. Optional package integrations may
 provide additional contracts but must never introduce a mandatory core
 runtime dependency.
+
+## Enterprise presentation recipes (unreleased alpha.5)
+
+The optional `syntyr.recipes.css` source candidate adds `.syn-view-switcher`,
+`.syn-sheet` and `.syn-evidence-*` classes. These are experimental opt-in
+CSS selectors, not part of the immutable alpha.4 package and not a guarantee
+of application-level selection, dialog focus management, image verification
+or review workflows. See [recipe contracts](recipes.md).
+
+## Experimental alpha.5 copy-owned composition additions
+
+The optional recipes stylesheet now provides `syn-scroll-rail`,
+`syn-bento-grid`, and `syn-bento-card--wide` for generic card collections
+and feature section layout. They are **source candidate only**, not part
+of the published alpha.4 contract. Existing `syn-media-rail`, `syn-grid`
+and `syn-showcase` remain unchanged. No runtime scripting, event handlers,
+authentication or persistence are introduced by these selectors.
+
+The optional `syn-table--readable` recipe provides table min-width
+without adding JavaScript or changing the base table styles.

@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Scriptless action dropdowns, native selects and disclosure examples in Syntyr CSS.">
+  <title>Syntyr — Native dropdowns</title>
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <div class="syn-shell">
+    <header class="syn-header">
+      <a class="syn-logo" href="../index.html">SYNTYR</a>
+      <nav class="syn-nav" aria-label="Demo navigation">
+        <a href="#actions">Actions</a>
+        <a href="#selection">Selection</a>
+        <a href="../docs/dropdowns.md">Guide</a>
+      </nav>
+    </header>
+    <main>
+      <section class="syn-stage" aria-labelledby="dropdown-heading">
+        <p class="syn-eyebrow">NATIVE INTERACTION / ZERO JAVASCRIPT</p>
+        <h1 class="syn-heading" id="dropdown-heading">Dropdowns without a widget runtime</h1>
+        <p>Use Tab to move between links and buttons in an action panel; use Escape to dismiss it.
+        For a choice in a form, keep the native select. For explanatory content, use details.</p>
+      </section>
+      <div class="syn-grid">
+        <section class="syn-panel" id="actions" aria-labelledby="actions-heading">
+          <h2 class="syn-heading" id="actions-heading">Action panel</h2>
+          <p>Plain links and buttons; this is not an ARIA menu widget.</p>
+          <button class="syn-button" type="button" id="actions-trigger" popovertarget="actions-panel">Record actions ▾</button>
+          <div class="syn-popover syn-popover--anchored syn-dropdown" id="actions-panel"
+               popover role="group" aria-label="Record actions">
+            <p class="syn-dropdown__group-label">Navigate</p>
+            <a class="syn-dropdown__item" href="resources.html">View resources</a>
+            <a class="syn-dropdown__item" href="console.html">Open console</a>
+            <hr class="syn-dropdown__separator">
+            <button class="syn-dropdown__item" type="button" popovertarget="actions-panel"
+                    popovertargetaction="hide">Close menu</button>
+          </div>
+        </section>
+        <section class="syn-panel" id="selection" aria-labelledby="selection-heading">
+          <h2 class="syn-heading" id="selection-heading">Native form select</h2>
+          <form class="syn-form" action="dropdowns.html" method="get">
+            <label class="syn-label" for="demo-theme">Theme
+              <select class="syn-select syn-select--enhanced" id="demo-theme" name="theme">
+                <option value="studio">Studio</option><option value="grid">Grid</option>
+                <option value="noir">Noir</option>
+              </select>
+            </label>
+            <label class="syn-check"><input class="syn-input" type="checkbox" name="alerts">Send alerts</label>
+            <button type="submit" class="syn-button syn-button--primary">Submit demo form</button>
+            <p class="syn-help">Demo only: no settings are saved.</p>
+          </form>
+        </section>
+        <section class="syn-panel" aria-labelledby="details-heading">
+          <h2 class="syn-heading" id="details-heading">Disclosure, not menu</h2>
+          <details class="syn-details">
+            <summary>What if the browser does not support customizable select?</summary>
+            <p>The same native select still works with the browser's default picker.</p>
+          </details>
+        </section>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

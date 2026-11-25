@@ -72,11 +72,55 @@ class DataGridContract(unittest.TestCase):
         self.assertIn('class="syn-data-grid__cell-text"', (ROOT / "examples/data-grid.html").read_text())
         self.assertIn("syn-data-grid__cell-text", (ROOT / "docs/data-grid.md").read_text())
 
+    def test_keyboard_scrollable_viewport_ring_is_not_clipped_by_the_grid(self):
+        """The tabindex="0" viewport gets the global outset focus ring, but
+        `.syn-data-grid` clips it with `overflow: hidden` (1px of room against
+        the 3px + 3px ring). A visible indicator must survive that clip."""
+        css = (ROOT / "src/data-grid.css").read_text()
+        grid = css.split(".syn-data-grid__viewport", 1)[0]
+        self.assertIn("overflow: hidden", grid,
+                      "Precondition: the grid still clips its viewport.")
+        # The wrapper ring and the inner `outline: none` must both live inside
+        # the :has() feature query, or a browser without :has() would lose the
+        # only indicator it has.
+        guarded = css.split("@supports selector(:has(*))", 1)
+        self.assertEqual(len(guarded), 2, "The ring override must be feature-queried.")
+        enhancement = guarded[1].split("\n  }", 1)[0]
+        self.assertRegex(
+            enhancement,
+            r"\.syn-data-grid:has\(>\s*\.syn-data-grid__viewport:focus-visible\)\)?\s*\{[^}]*outline:",
+            "The grid must paint the viewport's focus ring on the wrapper that "
+            "overflow: hidden cannot clip.",
+        )
+        self.assertRegex(
+            enhancement,
+            r"\.syn-data-grid__viewport:focus-visible\)\)?\s*\{\s*outline:\s*none",
+            "The inner outset ring must be removed so the two rings do not stack.",
+        )
+
+    def test_root_self_grid_keeps_visible_keyboard_focus(self):
+        """A grid can itself be .syn-root, not only a descendant of one."""
+        css = (ROOT / "src/data-grid.css").read_text()
+        enhancement = css.split("@supports selector(:has(*))", 1)[1].split("\n  }", 1)[0]
+        self.assertIn(
+            ".syn-root.syn-data-grid:has(> .syn-data-grid__viewport:focus-visible)",
+            enhancement,
+            "Root-self grids must receive the wrapper outline before the inner one is removed.",
+        )
+        self.assertIn(
+            ".syn-root .syn-data-grid:has(> .syn-data-grid__viewport:focus-visible)",
+            enhancement,
+            "Descendant grids must retain their existing wrapper focus treatment.",
+        )
+
     def test_static_html_example_is_self_contained(self):
         example = (ROOT / "examples/data-grid.html").read_text()
         self.assertIn("syntyr.data-grid.css", example)
         self.assertIn("syn-data-grid", example)
-        self.assertIn('role="grid"', example)
+        self.assertIn('role="table"', example)
+        self.assertNotIn('role="grid"', example)
+        self.assertIn('data-syn-selected="true"', example)
+        self.assertIn('[data-syn-selected="true"]', (ROOT / "src/data-grid.css").read_text())
         self.assertIn('role="row" aria-rowindex="1" class="syn-data-grid__header-row"', example)
         self.assertNotIn("<script", example.lower())
 

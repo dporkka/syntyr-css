@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Customize Syntyr CSS themes and design tokens for SaaS dashboards, accessible business applications, and futuristic interfaces.">
-  <meta name="syntyr-source-sha256" content="fefd14b78e2d748b659a26868d106c624ca9146cab26335e7eb6953045520802">
+  <meta name="syntyr-source-sha256" content="d28fa32efe9cc95ec982ab7b5aea35bf352be6bc489178d67a686ca5232277fa">
   <meta name="theme-color" content="#f5f7fb">
   <title>Syntyr theme customization — copy, override, ship — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/theme-customization">
@@ -41,7 +41,7 @@ accessible focus styling and semantic element options.</p>
 <h2 id="1-choose-a-theme">1. Choose a theme</h2>
 <p>Without a <code>data-syn-theme</code> attribute, <code>.syn-root</code> now uses Studio. Select Grid or Noir explicitly for technical/cinematic styles. This change is only in the unreleased alpha.5 candidate; version-pinned alpha.4 assets remain unchanged.</p>
 <p>Load the published <code>syntyr.core.css</code> in your application and use regular HTML:</p>
-<pre><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.core.css&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.core.css&quot;&gt;
 &lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;grid&quot;&gt;
   &lt;article class=&quot;syn-panel syn-panel--cut&quot;&gt;
     &lt;h2 class=&quot;syn-heading&quot;&gt;Sector status&lt;/h2&gt;
@@ -54,11 +54,39 @@ accessible focus styling and semantic element options.</p>
 </code></pre>
 <p>Use <code>data-syn-theme=&quot;noir&quot;</code> for warm amber. Native HTML features
 such as <code>details</code>, <code>dialog</code> and <code>popover</code> don't need framework JavaScript.</p>
+<h2 id="copyable-theme-presets-alpha5-documentation-tool">Copyable theme presets (alpha.5 documentation tool)</h2>
+<p>The <a href="theme-editor.html">theme editor</a> now previews independently selectable
+theme, visual intensity, control density, and radius, and generates both CSS
+overrides and a portable JSON preset. Copy the JSON into an application-owned
+design configuration or use the CSS immediately. The JSON is declarative
+metadata, not an executable preset installer, stylesheet, or published API.
+For density/intensity, apply the indicated <code>data-syn-density</code> and
+<code>data-syn-intensity</code> attributes on the Syntyr scope. A custom radius uses
+<code>--syn-radius</code> and <code>--syn-panel-radius</code>; the default option preserves each
+base theme's geometry. The editor also supports <strong>site-wide color roles</strong> (background, card surface,
+primary/secondary text, accent, on-accent), three system-font typography
+pairings (default, editorial, technical), and three spacing rhythms
+(balanced, tight, airy). The page preview includes header, feature,
+form and footer sections; it is a visual sample, not a live deployment.
+Generated CSS uses only the existing <code>--syn-*</code> variables. The optional
+JSON preset retains <code>schema_version: 1</code> and adds <code>typography</code> and
+<code>spacing</code> metadata; older consumers may ignore these optional fields.
+Typography uses locally available system fonts, not network-loaded files.</p>
+<p>Color changes are scoped to the selected theme. Switching themes resets
+the six color inputs to that palette's values but preserves your selected
+typography, spacing, radius, intensity and density; the <strong>Reset palette
+colors</strong> action does the same. The contrast indicators inspect button
+foreground, body text on both background and surface, and muted text on
+surface. They are advisory; other contrast combinations, graphics and focus
+states require testing in the consuming application.</p>
+<p>The documentation script and clipboard enhancement are
+not included in Syntyr's distributed CSS. Test the resulting palette and
+control contrast in the consuming application.</p>
 <h2 id="2-override-tokens-using-application-css">2. Override tokens using application CSS</h2>
 <p>Syntyr declares its defaults in named cascade layers. App CSS without a
 layer takes precedence over layered author rules regardless of selector specificity.
 Load application overrides <strong>after</strong> the Syntyr stylesheet to reduce surprises:</p>
-<pre><code class="language-css">/* app.css: original tokens, not copied from existing entertainment IP. */
+<pre tabindex="0"><code class="language-css">/* app.css: original tokens, not copied from existing entertainment IP. */
 .syn-root[data-syn-theme=&quot;grid&quot;] {
   --syn-accent: #80dfef;
   --syn-on-accent: #07121a;
@@ -193,7 +221,7 @@ embeds rather than copying a hard-coded width into every theme. Shared
 <code>.syn-feature-grid</code>, and <code>.syn-form</code>; the existing <code>--syn-grid-gap</code> and
 <code>--syn-layout-gap</code> local overrides still take priority. <code>--syn-section-space</code>
 controls site-hero vertical padding and can be overridden per page.</p>
-<pre><code class="language-html">&lt;main class=&quot;syn-root syn-page&quot; data-syn-theme=&quot;studio&quot;
+<pre tabindex="0"><code class="language-html">&lt;main class=&quot;syn-root syn-page&quot; data-syn-theme=&quot;studio&quot;
       style=&quot;--syn-content-max: 64rem; --syn-content-gap: 1.5rem&quot;&gt;
   &lt;div class=&quot;syn-shell&quot;&gt;
     &lt;section class=&quot;syn-stack&quot; aria-labelledby=&quot;intro-title&quot;&gt;
@@ -219,7 +247,7 @@ solely from a good desktop screenshot.</p>
 <p>Scoped component classes: <code>.syn-panel</code>, <code>.syn-button</code>, <code>.syn-table</code>.
 They work with only <code>syntyr.core.css</code>.</p>
 <p>For classless HTML resembling Pico CSS, load <strong>both</strong> files and opt in:</p>
-<pre><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.core.css&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.core.css&quot;&gt;
 &lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.semantic.css&quot;&gt;
 &lt;div class=&quot;syn-root syn-semantic&quot; data-syn-theme=&quot;noir&quot;&gt;
   &lt;article&gt;
@@ -269,7 +297,7 @@ system preference. It relies on native <code>color-scheme: light dark</code> and
 CSS <code>light-dark()</code>, supported by current Chromium, Firefox and WebKit.
 Older engines that lack <code>light-dark()</code> retain the inherited/default
 palette. No preference is stored or read by Syntyr.</p>
-<pre><code class="language-html">&lt;body class=&quot;syn-root syn-page&quot; data-syn-theme=&quot;auto&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;body class=&quot;syn-root syn-page&quot; data-syn-theme=&quot;auto&quot;&gt;
   &lt;section data-syn-theme=&quot;noir&quot;&gt;This remains Noir regardless of OS theme.&lt;/section&gt;
 &lt;/body&gt;
 </code></pre>
@@ -287,7 +315,7 @@ recompute in nested themed regions. Strong borders remain available for
 focus and essential controls. Avoid treating subtle separators as a substitute
 for accessible non-text contrast where boundaries are required.</p>
 <p>To opt into compact operational layouts:</p>
-<pre><code class="language-html">&lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;minimal&quot; data-syn-density=&quot;compact&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;minimal&quot; data-syn-density=&quot;compact&quot;&gt;
   &lt;table class=&quot;syn-table&quot;&gt;&lt;!-- ... semantic rows ... --&gt;&lt;/table&gt;
 &lt;/section&gt;
 </code></pre>
@@ -320,7 +348,7 @@ adjustments without inventing more utility classes. The default styles remain
 unchanged when you do not provide an override. Consumers need <strong>no build step</strong>,
 Tailwind compiler or JavaScript: use a normal stylesheet and optional application
 CSS, or put a local variable on a single component.</p>
-<pre><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.core.css&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.core.css&quot;&gt;
 &lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot;&gt;
   &lt;div class=&quot;syn-grid&quot; style=&quot;--syn-grid-min: 14rem; --syn-grid-gap: 1.25rem&quot;&gt;
     &lt;article class=&quot;syn-panel&quot;&gt;Summary&lt;/article&gt;
@@ -368,7 +396,7 @@ CSS, or put a local variable on a single component.</p>
 and the <code>.syn-detail-layout</code> shell (<code>--syn-detail-gap</code>,
 <code>--syn-detail-main-basis</code>, <code>--syn-detail-main-min</code>,
 <code>--syn-detail-aside-basis</code>, <code>--syn-detail-aside-min</code>).</p>
-<pre><code class="language-html">&lt;form class=&quot;syn-filter-bar&quot; action=&quot;/campaigns&quot; method=&quot;get&quot;
+<pre tabindex="0"><code class="language-html">&lt;form class=&quot;syn-filter-bar&quot; action=&quot;/campaigns&quot; method=&quot;get&quot;
       style=&quot;--syn-filter-gap: 1rem; --syn-filter-field-min: 9rem&quot;&gt;
   &lt;label class=&quot;syn-filter-field&quot;&gt;
     Status
@@ -404,7 +432,7 @@ manual keyboard, zoom, forced-colors and assistive-technology testing.</p>
 <p>Syntyr's seven palette primitives and text/foreground contrast pairs remain
 unchanged. To compare perceptual color mixing on an individual theme region,
 opt in to <code>data-syn-color-space=&quot;oklch&quot;</code>:</p>
-<pre><code class="language-html">&lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot;
+<pre tabindex="0"><code class="language-html">&lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot;
          data-syn-color-space=&quot;oklch&quot;&gt;
   &lt;button class=&quot;syn-button&quot;&gt;Perceptual surface hover&lt;/button&gt;
   &lt;aside data-syn-theme=&quot;grid&quot; data-syn-color-space=&quot;oklch&quot;&gt;
@@ -420,8 +448,10 @@ you intentionally want to compare. Do not generalize this experiment to text
 colors or primary buttons without a contrast audit, and check the resulting
 hover backgrounds against text across all palettes and browser engines.</p>
         </article>
-        <aside class="docs-article-sidebar"><nav aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#1-choose-a-theme">1. Choose a theme</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#copyable-theme-presets-alpha5-documentation-tool">Copyable theme presets (alpha.5 documentation tool)</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#2-override-tokens-using-application-css">2. Override tokens using application CSS</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#page-widths-stack-rhythm-and-density">Page widths, stack rhythm, and density</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#3-independent-visual-intensity">3. Independent visual intensity</a>
@@ -434,7 +464,27 @@ hover backgrounds against text across all palettes and browser engines.</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#component-local-layouts-without-compilation-experimental-alpha5">Component-local layouts without compilation (experimental alpha.5)</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#native-state-styling-and-accessibility">Native state styling and accessibility</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#experimental-opt-in-oklch-mixing">Experimental opt-in OKLCH mixing</a>
-        </nav></aside>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#1-choose-a-theme">1. Choose a theme</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#copyable-theme-presets-alpha5-documentation-tool">Copyable theme presets (alpha.5 documentation tool)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#2-override-tokens-using-application-css">2. Override tokens using application CSS</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#page-widths-stack-rhythm-and-density">Page widths, stack rhythm, and density</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#3-independent-visual-intensity">3. Independent visual intensity</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#4-css-component-mode-versus-native-semantic-mode">4. CSS component mode versus native semantic mode</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#5-responsive-applications-and-accessibility">5. Responsive applications and accessibility</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#seven-theme-palettes-unreleased-alpha5-candidate">Seven theme palettes (unreleased alpha.5 candidate)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#system-palette-no-javascript-experimental">System palette, no JavaScript (experimental)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#typography-density-and-quiet-surfaces">Typography, density, and quiet surfaces</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#semantic-roles-states-and-content-rhythm">Semantic roles, states, and content rhythm</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#component-local-layouts-without-compilation-experimental-alpha5">Component-local layouts without compilation (experimental alpha.5)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#native-state-styling-and-accessibility">Native state styling and accessibility</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#experimental-opt-in-oklch-mixing">Experimental opt-in OKLCH mixing</a>
+            </nav>
+          </details>
+        </aside>
       </div>
       <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="theme-customization.md">Markdown source</a></nav>
     </main>

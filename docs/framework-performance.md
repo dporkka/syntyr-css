@@ -11,6 +11,8 @@ complete dashboard system. Therefore style, layout and LCP comparisons are
 confounded by visual differences. Inspect warnings and screenshots before
 drawing conclusions; further visual parity is necessary for speed claims.
 
+For a controlled **SaaS dashboard** comparison across Syntyr, Tailwind v4, Tailwind+daisyUI and plain CSS, including actual GET filtering, shared visual normalization, browser checks and optional axe-core, see [the dedicated parity benchmark](../benchmarks/frameworks/SAAS_PARITY.md). It makes different tradeoffs from the idiomatic styling benchmark below and cannot support a universal framework-speed ranking.
+
 ## Preparation
 
 From the repository root:

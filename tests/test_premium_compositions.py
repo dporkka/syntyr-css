@@ -48,11 +48,11 @@ class PremiumCompositions(unittest.TestCase):
         self.assertIn('data-syn-theme="studio"', page)
         self.assertIn('data-syn-theme="grid"', page)
         self.assertIn('data-syn-theme="noir"', page)
-        self.assertIn('role="search"', page)
+        self.assertIn('<search aria-label="Search sample actions">', page)
         self.assertIn("<form", page)
         self.assertIn("<kbd", page)
         self.assertIn('<ol class="syn-activity-timeline"', page)
-        self.assertIn('aria-current="true"', page)
+        self.assertNotIn('aria-current="true"', page)
         self.assertIn('aria-label=', page)
         self.assertNotIn("<script", page)
 

@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "content-collection",
+  "type": "registry:item",
+  "title": "Filterable content collection",
+  "description": "Loop-style article cards with real GET search, taxonomy selection and pagination.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://syntyr-css.pages.dev/registry/r/core.json",
+    "https://syntyr-css.pages.dev/registry/r/recipes.json"
+  ],
+  "files": [
+    {
+      "path": "blocks/snippets/content-collection.html",
+      "type": "registry:file",
+      "target": "~/syntyr/blocks/content-collection.html",
+      "content": "<section class=\"syn-root syn-region syn-stack\" data-syn-theme=\"studio\" aria-labelledby=\"syn-collection-heading\">\n  <header class=\"syn-stack\">\n    <p class=\"syn-eyebrow\">THE JOURNAL</p>\n    <h2 class=\"syn-section-heading\" id=\"syn-collection-heading\">Ideas for practical teams</h2>\n    <p class=\"syn-muted\">A reusable archive: the host server supplies matching items and pagination.</p>\n  </header>\n  <form class=\"syn-filter-bar\" method=\"get\" action=\"/journal\" role=\"search\" aria-label=\"Filter articles\">\n    <div class=\"syn-filter-field syn-filter-field--query\">\n      <label class=\"syn-label\" for=\"syn-collection-search\">Search articles</label>\n      <input class=\"syn-input\" id=\"syn-collection-search\" type=\"search\" name=\"q\" placeholder=\"Search the journal\">\n    </div>\n    <div class=\"syn-filter-field\">\n      <label class=\"syn-label\" for=\"syn-collection-category\">Topic</label>\n      <select class=\"syn-select\" id=\"syn-collection-category\" name=\"category\">\n        <option value=\"\">All topics</option>\n        <option value=\"engineering\">Engineering</option>\n        <option value=\"design\">Design</option>\n      </select>\n    </div>\n    <div class=\"syn-filter-actions\"><button class=\"syn-button syn-button--primary\" type=\"submit\">Find articles</button></div>\n  </form>\n  <div class=\"syn-feature-grid\">\n    <article class=\"syn-feature-card syn-stack\">\n      <span class=\"syn-badge\">Engineering</span>\n      <h3 class=\"syn-heading\"><a href=\"/journal/accessible-forms\">Forms that work for everyone</a></h3>\n      <p class=\"syn-muted\">Why native controls are a strong foundation for production forms.</p>\n      <p class=\"syn-caption\"><time datetime=\"2026-10-19\">October 19, 2026</time> · 5 min read</p>\n    </article>\n    <article class=\"syn-feature-card syn-stack\">\n      <span class=\"syn-badge\">Design</span>\n      <h3 class=\"syn-heading\"><a href=\"/journal/clear-layouts\">Make dense pages easier to scan</a></h3>\n      <p class=\"syn-muted\">Build responsive hierarchy using existing layout primitives.</p>\n      <p class=\"syn-caption\"><time datetime=\"2026-10-26\">October 26, 2026</time> · 4 min read</p>\n    </article>\n    <article class=\"syn-feature-card syn-stack\">\n      <span class=\"syn-badge\">Engineering</span>\n      <h3 class=\"syn-heading\"><a href=\"/journal/steady-components\">Components built to last</a></h3>\n      <p class=\"syn-muted\">A practical approach to stable tokens and low-maintenance HTML.</p>\n      <p class=\"syn-caption\"><time datetime=\"2026-11-02\">November 2, 2026</time> · 7 min read</p>\n    </article>\n  </div>\n  <nav class=\"syn-pagination\" aria-label=\"Pagination\">\n    <a class=\"syn-page-link\" href=\"/journal?page=1\" aria-current=\"page\">1</a>\n    <a class=\"syn-page-link\" href=\"/journal?page=2\">2</a>\n    <a class=\"syn-page-link\" href=\"/journal?page=2\" aria-label=\"Next page\">Next</a>\n  </nav>\n</section>\n"
+    },
+    {
+      "path": "LICENSE",
+      "type": "registry:file",
+      "target": "~/syntyr/LICENSE",
+      "content": "MIT License\n\nCopyright (c) 2026 Syntyr CSS contributors\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n"
+    }
+  ],
+  "meta": {
+    "syntyrVersion": "0.3.0-alpha.5",
+    "source": "MIT source candidate",
+    "runtimeJavaScript": false,
+    "fileDigests": {
+      "~/syntyr/blocks/content-collection.html": "20e7fcca9981076d75f2a7e255f2d23f67cd52fa8a2cb0052f132ed7ad570ac7",
+      "~/syntyr/LICENSE": "42f56369ac06362dbfe433d2d50b178bf74c369a55ea22337ab40fd9433521bf"
+    }
+  },
+  "docs": "Experimental source-candidate asset. Review exact version, HTML routes, keyboard behavior and integration before production use."
+}

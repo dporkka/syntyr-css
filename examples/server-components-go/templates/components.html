@@ -1,0 +1,38 @@
+{{/* Copy-owned server components. All values are plain strings escaped by html/template. */}}
+{{define "syn.field"}}
+<div class="syn-field" {{if .Error}}data-syn-state="error"{{end}}>
+  <label class="syn-label" for="{{.ID}}">{{.Label}}</label>
+  <input class="syn-input" type="search" id="{{.ID}}" name="{{.Name}}" value="{{.Value}}"
+         {{if .Error}}aria-invalid="true" aria-describedby="{{.ID}}-error"{{else if .Help}}aria-describedby="{{.ID}}-help"{{end}}>
+  {{if .Error}}<p class="syn-error" id="{{.ID}}-error">{{.Error}}</p>
+  {{else if .Help}}<p class="syn-help" id="{{.ID}}-help">{{.Help}}</p>{{end}}
+</div>
+{{end}}
+
+{{define "syn.notice"}}
+<p class="syn-alert{{if .Danger}} syn-alert--danger{{end}}" role="{{if .Danger}}alert{{else}}status{{end}}">{{.Message}}</p>
+{{end}}
+
+{{define "syn.button"}}
+<button class="syn-button{{if .Primary}} syn-button--primary{{end}}" type="{{if .Submit}}submit{{else}}button{{end}}">{{.Label}}</button>
+{{end}}
+
+{{define "syn.table"}}
+{{if .}}
+<div class="syn-table-wrap">
+  <table class="syn-table">
+    <caption>Matching resources</caption>
+    <thead><tr><th scope="col">Resource</th><th scope="col">Description</th></tr></thead>
+    <tbody>{{range .}}<tr><th scope="row">{{.Title}}</th><td>{{.Description}}</td></tr>{{end}}</tbody>
+  </table>
+</div>
+{{else}}<p role="status">No matching resources.</p>{{end}}
+{{end}}
+
+{{define "syn.pagination"}}
+<nav aria-label="Resource pages" class="syn-inline">
+  {{if .PrevURL}}<a class="syn-button" href="{{.PrevURL}}" rel="prev">Previous</a>{{end}}
+  <span aria-current="page">Page {{.Page}} of {{.Total}}</span>
+  {{if .NextURL}}<a class="syn-button" href="{{.NextURL}}" rel="next">Next</a>{{end}}
+</nav>
+{{end}}

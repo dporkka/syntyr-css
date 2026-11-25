@@ -13,6 +13,7 @@ cd examples/astro
 node --version
 npm install
 npm run build
+npm run verify
 npm run preview
 ```
 
@@ -21,3 +22,10 @@ installing Astro nor using a build step is required for Syntyr consumers.
 
 Check the Astro [upgrade guide](https://docs.astro.build/en/upgrade-astro/)
 before changing major versions, and rerun the example build.
+
+The example deliberately configures `base: '/syntyr-astro/'` and static
+output, verifying that the generated CSS URL retains its deployment prefix.
+Serve `dist/` under that prefix, or change `base` and the verifier argument
+to match your hosting destination. The verifier rejects unexpected scripts
+and missing or unprefixed stylesheets. No third-party runtime is required
+by Syntyr's styles.

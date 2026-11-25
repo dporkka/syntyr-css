@@ -44,11 +44,20 @@ class DocumentationDeliveryTests(unittest.TestCase):
                 "Only non-executable JSON-LD metadata may be embedded in docs"
             )
 
+    def test_release_readiness_summary_is_public_and_discoverable(self):
+        files = source_files()
+        self.assertIn('docs/launch-status.md', files)
+        self.assertIn('docs/launch-status.html', files)
+        self.assertIn(b'href="launch-status.html"', files['docs/reference.html'])
+        page = files['docs/launch-status.html']
+        self.assertIn(b'Published GitHub prerelease</a> with an immutable CDN snapshot', page)
+        self.assertIn(b'https://syntyr-css.pages.dev/docs/launch-status.md', files['llms.txt'])
+
     def test_markdown_table_code_and_links_are_real_html(self):
         files = source_files()
         page = files['docs/components.html'].decode()
         self.assertIn('<table>', page)
-        self.assertIn('<pre><code', page)
+        self.assertIn('<pre tabindex="0"><code', page)
         self.assertIn('href="visual-intensity.html"', page)
         self.assertNotIn('href="visual-intensity.md"', page)
         self.assertIn('id="loading-and-scoping"', page)

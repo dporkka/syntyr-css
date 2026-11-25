@@ -6,6 +6,7 @@ Runs against the actual CSS without adding runtime dependencies. Example:
 import argparse
 import os
 from pathlib import Path
+from contrast_pixel_triage import contrast_ratio, parse_rgb
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -90,8 +91,60 @@ def check(browser, engine):
     finally:
         page.close()
 
+    # Generated documentation code may scroll horizontally. Verify a real
+    # keyboard user can focus and scroll each overflowing pre element.
+    for width in (320, 1280):
+        page = browser.new_page(viewport={"width": width, "height": 800})
+        try:
+            page.goto((ROOT / "docs/design-principles.html").as_uri())
+            code_blocks = page.locator('.docs-prose pre')
+            assert code_blocks.count() == 4, (engine, width, "missing guide code")
+            scrollable = 0
+            for i in range(code_blocks.count()):
+                block = code_blocks.nth(i)
+                info = block.evaluate("e => ({tab:e.tabIndex, overflow:e.scrollWidth>e.clientWidth+1})")
+                assert info['tab'] == 0, (engine, width, i, info)
+                if info['overflow']:
+                    scrollable += 1
+                    block.focus()
+                    assert block.evaluate("e => document.activeElement === e")
+                    assert block.evaluate("e => getComputedStyle(e).outlineStyle !== 'none'")
+                    block.press('ArrowRight')
+                    page.wait_for_function(
+                        "(index) => document.querySelectorAll('.docs-prose pre')[index].scrollLeft > 0",
+                        arg=i, timeout=2000)
+            if width < 768:
+                assert scrollable >= 2, (engine, width, "expected keyboard-scrollable samples")
+        finally:
+            page.close()
+
+    # Public integration guides need keyboard-scrollable code examples,\n    # not only the design-principles page already covered above.
+    for guide in ("docs/accessibility.html", "docs/components.html"):
+        page = browser.new_page(viewport={"width": 320, "height": 800})
+        try:
+            page.goto((ROOT / guide).as_uri())
+            blocks = page.locator(".docs-prose pre")
+            assert blocks.count() >= 2, (engine, guide, "missing code examples")
+            for idx in range(blocks.count()):
+                block = blocks.nth(idx)
+                assert block.evaluate("e => e.tabIndex === 0"), (engine, guide, idx)
+            first_scrollable = next((
+                idx for idx in range(blocks.count())
+                if blocks.nth(idx).evaluate("e => e.scrollWidth > e.clientWidth + 1")
+            ), None)
+            assert first_scrollable is not None, (engine, guide)
+            block = blocks.nth(first_scrollable)
+            block.focus()
+            assert block.evaluate("e => document.activeElement === e")
+            block.press("ArrowRight")
+            page.wait_for_function(
+                "(idx) => document.querySelectorAll('.docs-prose pre')[idx].scrollLeft > 0",
+                arg=first_scrollable, timeout=2000)
+        finally:
+            page.close()
+
     for path, selectors in [
-        ('index.html', ['.site-brand', '.site-nav a', '.site-tertiary-link',
+        ('index.html', ['.site-brand', '.site-nav a', '.site-hero-resources a',
                         '.site-showcase-card > .site-secondary-link', '.site-footer a']),
         ('docs/index.html', ['.docs-header .syn-logo', '.docs-flagship-links a', 'footer.syn-header a']),
     ]:
@@ -106,9 +159,64 @@ def check(browser, engine):
                     assert height >= 24, f"{engine}: undersized {path} {selector} [{idx}]: {height}px"
         finally:
             page.close()
+    # Decorative line placement must never change caption contrast: the
+    # fine-grid caption has an opaque surface in every named theme.
+    for width in (320, 390, 1280):
+        page = browser.new_page(viewport={"width": width, "height": 820},
+                                reduced_motion='reduce')
+        try:
+            page.goto((ROOT / "docs/blocks.html").as_uri())
+            for theme in ('studio', 'grid', 'noir', 'industrial',
+                          'terminal', 'corporate', 'minimal'):
+                page.locator('body').evaluate(
+                    '(e, theme) => e.setAttribute("data-syn-theme", theme)', theme)
+                caption = page.locator('.syn-block-asset--fine-grid > span')
+                colors = caption.evaluate("""e => {
+                    const c = getComputedStyle(e);
+                    return {foreground: c.color, background: c.backgroundColor,
+                            backgroundImage: c.backgroundImage, opacity: c.opacity};
+                }""")
+                fg, bg = parse_rgb(colors['foreground']), parse_rgb(colors['background'])
+                assert fg is not None and bg is not None, (engine, theme, colors)
+                assert colors['backgroundImage'] == 'none' and colors['opacity'] == '1', colors
+                assert contrast_ratio(fg, bg) >= 5.0, (
+                    engine, width, theme, contrast_ratio(fg, bg), colors)
+        finally:
+            page.close()
+
+    # Actual placeholders are painted by the UA, not text nodes. Verify the
+    # real reference pages display opaque, above-threshold computed pairs.
+    for path, selector in (('docs/index.html', '#dispatch'),
+                           ('examples/native-apis.html', '#native-notes')):
+        page = browser.new_page(viewport={"width": 320, "height": 820})
+        try:
+            page.goto((ROOT / path).as_uri())
+            field = page.locator(selector)
+            colors = field.evaluate("""e => {
+                const c = getComputedStyle(e), p = getComputedStyle(e, '::placeholder');
+                return {foreground: p.color, background: c.backgroundColor,
+                        backgroundImage: c.backgroundImage, opacity: p.opacity,
+                        elementOpacity: c.opacity,
+                        visible: e.matches(':placeholder-shown'),
+                        text: e.placeholder};
+            }""")
+            fg, bg = parse_rgb(colors['foreground']), parse_rgb(colors['background'])
+            assert colors['visible'] and colors['text'], (engine, path, colors)
+            assert fg is not None and bg is not None, (engine, path, colors)
+            assert colors['backgroundImage'] == 'none', colors
+            assert colors['opacity'] == '1' and colors['elementOpacity'] == '1', colors
+            assert contrast_ratio(fg, bg) >= 4.5, (engine, path, colors)
+            # Populate a native input. The placeholder must no longer be treated
+            # as displayed; the triage must leave it unresolved.
+            field.fill('Existing response')
+            assert not field.evaluate("e => e.matches(':placeholder-shown')"), (engine, path)
+        finally:
+            page.close()
+
     # Browser forced-colors *emulation* is useful regression coverage, but it
     # does not stand in for a native OS high-contrast screen-reader review.
     for path, selector in (
+        ('docs/blocks.html', '.syn-block-asset--fine-grid > span'),
         ('docs/blocks.html', '.syn-block-asset--dot-field > span'),
         ('docs/blocks.html', '.syn-block-asset--diagonal > span'),
         ('examples/flagship-grid.html', '.flagship-lede'),

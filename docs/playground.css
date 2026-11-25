@@ -26,3 +26,21 @@
   @media (max-width: 60rem) { .playground-geometry-layout { grid-template-columns: minmax(0, 1fr); } }
   @media (max-width: 25rem) { .geometry-corner-grid { grid-template-columns: minmax(0, 1fr); } }
 }
+
+@layer docs {
+  .playground-discovery { display: grid; gap: .75rem; }
+  .playground-discovery .syn-caption, .playground-reference p { margin: 0; }
+  .playground-reference { display: grid; gap: .5rem; padding: 1rem; border: 1px solid var(--syn-border-default); border-radius: var(--syn-radius); background: var(--syn-surface); }
+  .playground-reference h3 { margin: 0; }
+  .playground-token-controls { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+  .playground-token-controls label { min-width: 0; }
+  .playground-token-controls input { display: block; width: 100%; margin-top: .4rem; }
+  .playground-token-controls output { float: right; font-variant-numeric: tabular-nums; }
+  .playground-canvas { width: 100%; overflow-x: auto; padding: .25rem; }
+  .playground-canvas #playground-preview { max-width: none; margin-inline: 0; }
+  #playground-copy-fallback { width: 100%; max-height: 18rem; font: .82rem/1.5 var(--syn-mono); resize: vertical; }
+  #playground-copy-fallback[hidden] { display: none; }
+  .playground-reference code { overflow-wrap: anywhere; }
+  @media (max-width: 35rem) { .playground-token-controls { grid-template-columns: minmax(0, 1fr); } }
+  @media (forced-colors: active) { .playground-reference { border-color: CanvasText; } }
+}

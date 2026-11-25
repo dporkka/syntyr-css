@@ -2,7 +2,7 @@
 
 Status: **experimental v0.3-alpha**, not yet released to a package registry. All CSS and markup are original to this repository; no upstream source code was copied.
 
-Native elements such as `search`, `figure`, `figcaption`, `kbd`, `mark`, `output`, `meter`, and `pre` are styled only in the optional semantic mode. Native classless forms receive vertical spacing, fieldsets group controls, tables can use real `caption` elements, and disclosure summaries retain browser markers and comfortable pointer targets. See [the no-JS native example](../examples/native-elements.html). The regular component-class API and HTML outside `.syn-root` are unchanged.
+Native elements such as `search`, `figure`, `figcaption`, `kbd`, `mark`, `output`, `meter`, and `pre` are styled only in the optional semantic mode. Native classless forms receive vertical spacing, fieldsets group controls, tables can use real `caption` elements, and disclosure summaries retain browser markers and comfortable pointer targets. See [the no-JS native example](../examples/native-elements.html). New [semantic HTML composition recipes](semantic-components.md) show article metadata, native citations, change history, ruby annotations, and table footers, with a [live gallery](../examples/semantic-compositions.html). The regular component-class API and HTML outside `.syn-root` are unchanged.
 
 ## Loading and scoping
 
@@ -55,16 +55,21 @@ For optional effects, load `syntyr.effects.css`. `syntyr.css` is the convenient 
 | Panels | `.syn-panel`, `.syn-panel--cut` | unclassed `article` |
 | Layout | `.syn-page` (viewport-height opt-in), `.syn-shell`, `.syn-header`, `.syn-grid`, `.syn-layout`, `.syn-inline`, `.syn-sidecar`, `.syn-stack` | normal CSS layout |
 | Typography | `.syn-logo`, `.syn-eyebrow`, `.syn-title`, `.syn-section-heading`, `.syn-heading`, `.syn-lede`, `.syn-mono`, `.syn-caption`, `.syn-muted` | native heading/text |
+| Content lists | `.syn-list`, optional `.syn-list--compact` and `.syn-list--accent` | unclassed `ul` / `ol` in semantic mode |
 | Status | `.syn-badge`, `.syn-badge--accent`, `.syn-status` and semantic variants, `.syn-alert`, `.syn-alert--danger`, `.syn-meter` on `progress` | native `progress` |
 | Forms | `.syn-form`, `.syn-label`, `.syn-input`, `.syn-select`, `.syn-textarea`, `.syn-check`, `.syn-fieldset`, `.syn-help`, `.syn-error` | unclassed form controls |
 | Email UI (optional) | `.syn-email-signup`, `.syn-email-inbox`, `.syn-email-message`, `.syn-email-compose`, `.syn-email-preferences` | Native forms and mailbox navigation; see [email components](email-components.md) |
 | Form compositions | `.syn-field`, `.syn-field-row`, `.syn-field-body`, `.syn-input-group`, `.syn-input-addon` | native `form`, `label`, `input`, `button` |
 | Overlays | `.syn-popover` on `[popover]`, `.syn-dialog` on `dialog`, `.syn-details` on `details` | browser defaults |
+| Dropdowns | `.syn-dropdown` on `.syn-popover`, `.syn-dropdown__item`, `.syn-dropdown__group-label`, `.syn-dropdown__separator`, `.syn-dropdown__shortcut`, optional `.syn-select--enhanced` | Native select / disclosure / popover |
 | Data | `.syn-table-wrap`, `.syn-table`, `.syn-cell--wrap`, `.syn-cell--nowrap`, `.syn-cell--numeric` | unclassed `table` |
 | Navigation | `.syn-breadcrumbs`, `.syn-pagination`, `.syn-page-link` | native `<nav>`, `<ol>`, links and `aria-current` |
 | Workflow (unreleased) | `.syn-steps`, `.syn-step`, `.syn-steps--vertical` | ordered `<ol>` and `aria-current="step"` |
 | Loading | `.syn-skeleton`, `.syn-skeleton--short` | decorative placeholders; announce status separately |
 | Effects (optional) | `.syn-grid-effect`, `.syn-glow`, `.syn-scanlines` | none |
+
+For layout composition, the shell defaults to a maximum width of 72rem and a total inline inset of 2rem (normally 1rem per side). Set `--syn-shell-max` and `--syn-shell-inline-inset` on the shell to customize these dimensions. The header supports `--syn-header-gap` and `--syn-header-padding-block`; navigation supports `--syn-nav-gap`. All controls are optional and preserve existing defaults.
+
 
 For wrapping action/filter clusters, use existing `.syn-inline` with optional
 `--syn-inline-align`, `--syn-inline-justify` and `--syn-inline-gap`.
@@ -107,10 +112,44 @@ or use the [editor integration instructions](editor-integration.md).
 
 Optional native browser integrations: `.syn-popover--anchored` for invoker-relative popovers, `.syn-textarea--autosize` for `field-sizing: content`, and (with the optional `syntyr.motion.css` stylesheet) `.syn-popover--transition` and `.syn-reading-progress`. See the [browser API guide](native-browser-apis.md) for compatibility and fallbacks.
 
+See [dropdown and native select patterns](dropdowns.md) for scriptless action panels, customizable selects, and the separately opt-in ARIA menu adapter.
+
 Use native button `popovertarget="id"` to control a popover and `commandfor="id" command="show-modal"` to open a dialog in supporting browsers. This last native dialog invoker API has newer browser support; provide alternate ways to reach important content where needed. Do not build custom ARIA dialog/tab/combobox patterns unless they are tested and necessary.
 
 For component-level package imports and optional native UI recipes, see
 [native patterns](native-patterns.md).
+
+### Content lists and grouped rows (alpha.5 source candidate)
+
+Use an ordinary `<ul>` or `<ol>` inside `.syn-semantic` for native list
+spacing, nesting and markers. When loading **core only**, opt into the same
+scoped list presentation with `.syn-list`. It preserves native bullet shapes,
+ordered numbering (`start`, `reversed`, `value`), writing direction and
+screen-reader list semantics. `.syn-list--compact` reduces vertical item gaps
+and `.syn-list--accent` colors the top-level markers; both are optional.
+Set `--syn-list-item-gap` locally to override the item rhythm.
+
+```html
+<ul class="syn-list syn-list--accent">
+  <li>Accessible headings</li>
+  <li>Native nested lists
+    <ul><li>First detail</li><li>Second detail</li></ul>
+  </li>
+</ul>
+<ol class="syn-list syn-list--compact" start="9">
+  <li>Review</li><li>Publish</li>
+</ol>
+```
+
+`.syn-feature-list` is a legible, accent-marked list intended for pricing and
+features; override its row gap with `--syn-feature-list-gap`. The distinct
+`.syn-list-group` is for markerless grouped navigation or collection rows.
+Customize row density by setting `--syn-list-row-padding` on a containing
+`.syn-list-group` rather than creating a new component. When removing markers
+with `list-style: none`, Safari/VoiceOver may not expose the list as a list;
+add `role="list"` to the native `ul` or `ol` if list semantics are intended.
+Do **not** apply a global marker reset or use fake list text in place of
+semantic list markup.
 
 ## Standard low-entropy component inventory
 
@@ -269,7 +308,7 @@ Syntyr styles common HTML primitives within `.syn-root.syn-semantic` or a `.syn-
 
 The selectors style **unclassed elements only**, or elements explicitly marked `data-syn-semantic`. A classed element is left to its own application styles by default; no global element reset is added. Syntyr does not emulate native dialog or popover activation, file inputs, meters or input validation.
 
-For a copyable page covering the additions, see [native HTML element examples](../examples/native-elements.html). The `commandfor` / `command="show-modal"` dialog button is progressively enhanced, not a guarantee for browsers that lack HTML invoker commands.
+For a copyable page covering the additions, see [native HTML element examples](../examples/native-elements.html). That example also shows labeled `datalist` suggestions, grouped `select`/`optgroup` options, and named `details` disclosures. Native suggestions do not validate accepted values; host applications validate them on the server. Named disclosures are exclusive-open in supporting browsers, with a usable ordinary-details fallback elsewhere. Semantic file/color inputs and fieldsets shrink at enlarged text sizes, while wide tables remain in labeled, keyboard-scrollable regions. The `commandfor` / `command="show-modal"` dialog button is progressively enhanced, not a guarantee for browsers that lack HTML invoker commands.
 
 ```html
 <link rel="stylesheet" href="syntyr.core.css">
@@ -343,7 +382,8 @@ toast lifecycles) belong to the host app, not a CSS runtime.
 | `--syn-accent`, `--syn-on-accent`, `--syn-accent-soft` | Accent and contrast |
 | `--syn-frame`, `--syn-danger` | Borders and warning states |
 | `--syn-font`, `--syn-mono` | System typography |
-| `--syn-space-1` ... `--syn-space-5` | Spacing scale |
+| `--syn-space-1` ... `--syn-space-5` | Stable fixed spacing scale |
+| `--syn-space-fluid-1` ... `--syn-space-fluid-4` | Optional fluid gaps and padding, bounded by adjacent fixed tokens (unreleased alpha.5) |
 | `--syn-cut`, `--syn-radius`, `--syn-line`, `--syn-control-height` | Shape and layout |
 
 Application CSS can override tokens:
@@ -500,5 +540,7 @@ implement step navigation, eligibility checks or server-side transitions.
 Long step descriptions and translated text keep numbered markers aligned at the
 block start so vertical connectors do not cross the marker or its numeral.
 
-See [the zero-JavaScript example](../examples/workflow-steps.html). These classes
-are not included in the published immutable alpha.4 release.
+See [the zero-JavaScript example](../examples/workflow-steps.html) and the
+[composed operations workflow gallery](../examples/workflow-operations.html), which
+reuses these steps with existing activity timelines and approval surfaces.
+These classes are not included in the published immutable alpha.4 release.

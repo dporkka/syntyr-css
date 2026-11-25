@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Syntyr&#x27;s distribution is ordinary, scoped CSS. It does not require a JavaScript runtime, hydration, Sass, PostCSS, browser-specific components, or a…">
+  <meta name="syntyr-source-sha256" content="6d1575575531dd61b8cbd3c2ce3ee25d4ed4afaa5072ccbff574b94453fa8da0">
+  <meta name="theme-color" content="#f5f7fb">
+  <title>Syntyr with static-site generators — Syntyr CSS docs</title>
+  <link rel="canonical" href="https://syntyr-css.pages.dev/docs/static-site-generators">
+  <link rel="alternate" type="text/markdown" href="static-site-generators.md" title="Markdown source">
+  <link rel="icon" href="../assets/syntyr-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="docs.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <a class="syn-button docs-skip" href="#doc-main">Skip to guide</a>
+  <div class="syn-shell">
+    <header class="syn-header docs-header">
+      <a class="syn-logo" href="../index.html">SYNTYR / CSS</a>
+      <nav class="syn-nav" aria-label="Documentation navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav>
+      <details class="site-mobile-menu"><summary>Menu</summary><nav aria-label="Mobile navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav></details>
+    </header>
+    <main id="doc-main" class="docs-article-page">
+      <nav class="syn-breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="reference.html">Documentation</a></li><li aria-current="page">Syntyr with static-site generators</li></ol></nav>
+      <header class="docs-article-heading">
+        <p class="syn-eyebrow">SYNTYR / DOCUMENTATION</p>
+        <p class="syn-muted">Current source documentation may describe unreleased alpha.5 features. <a href="distribution.html">Check released version compatibility.</a></p>
+        <p class="syn-caption">Prefer a machine-readable version? <a href="static-site-generators.md">Markdown source</a> · <a href="../llms.txt">LLM index</a></p>
+      </header>
+      <div class="docs-article-layout">
+        <article class="docs-prose" aria-label="Syntyr with static-site generators">
+<h1 id="syntyr-with-static-site-generators">Syntyr with static-site generators</h1>
+<p>Syntyr's distribution is ordinary, scoped CSS. It does not require a
+JavaScript runtime, hydration, Sass, PostCSS, browser-specific components,
+or a static-site generator integration package. Generate <strong>semantic HTML</strong>
+with your preferred template engine; load one CSS distribution from your
+site's assets and put <code>syn-root</code> on the intended page or region.</p>
+<p><strong>Version boundary:</strong> the source repository currently contains an
+<strong>unreleased</strong> alpha.5 npm package and CSS candidate. The published alpha.4
+assets are different. Do not claim <code>npm install @syntyr/css</code> will fetch
+alpha.5 from the registry; use an actual published, pinned version, a local
+package archive, or a self-hosted versioned CSS file.</p>
+<h2 id="runnable-zero-javascript-marketing-site-starter">Runnable zero-JavaScript marketing site starter</h2>
+<p>The <a href="https://github.com/dporkka/syntyr-css/blob/6a6c63c6c7de0fcd1b6382d9184f912f548d7f45/examples/site-starters/saas-marketing/README.md">Waypoint SaaS marketing starter</a>
+demonstrates how one Syntyr stylesheet can serve a <strong>complete three-page site</strong>:
+a home page with hero, dashboard illustration, feature grid, workflow steps
+and native FAQ; a pricing page; and an about page. All content is explicitly
+fictional. Unlike a source-only snippet, it includes an offline exporter:</p>
+<pre tabindex="0"><code class="language-sh">python3 scripts/export_site_starter.py --output /tmp/waypoint-static
+python3 -m http.server 8000 --directory /tmp/waypoint-static
+</code></pre>
+<p>Open <code>http://localhost:8000/</code>. The export contains its own pinned
+<code>assets/syntyr.core.css</code>, works offline, and uses <strong>no browser JavaScript</strong>.
+The <a href="https://syntyr-css.pages.dev/examples/site-starters/saas-marketing/">public preview</a>
+is available only after the corresponding source change is published.
+It is a starting point for Astro, Hugo or Eleventy composition, <strong>not</strong> a
+prebuilt adapter for any generator. The source candidate remains unreleased.</p>
+<p>The <a href="https://github.com/dporkka/syntyr-css/blob/main/deploy/saas-marketing/README.md">separate marketing-site deployment guide</a>
+adds isolated Vercel and Netlify Git-project settings, plus Render, Cloudflare,
+GitHub Pages and ordinary static-server instructions. Build repeatably with
+<code>python3 scripts/build_saas_marketing_site.py</code>, then publish only
+<code>deploy/saas-marketing/.public</code> (nine allowlisted files). This is separate
+from the repository-root SaaS Admin deployment and does not add a runtime.
+The example remains noindexed until its fictional content is replaced.</p>
+<h2 id="integration-matrix">Integration matrix</h2>
+<table>
+<thead>
+<tr>
+<th>Generator</th>
+<th>Recommended CSS delivery</th>
+<th>Base path / deployment concern</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Astro</strong></td>
+<td><code>import '@syntyr/css/core.css'</code> in an Astro page/layout (local archive or published package)</td>
+<td>Astro <code>base</code> controls generated asset paths; prefer imported CSS to hardcoded root URLs</td>
+<td><a href="https://github.com/dporkka/syntyr-css/tree/main/examples/astro/">Runnable Astro fixture</a></td>
+</tr>
+<tr>
+<td><strong>Eleventy (11ty)</strong></td>
+<td>Copy <code>dist/syntyr.core.css</code> through <code>addPassthroughCopy</code></td>
+<td>Use <code>pathPrefix</code> and Eleventy's <code>url</code> filter</td>
+<td><a href="https://github.com/dporkka/syntyr-css/tree/main/examples/eleventy/">Runnable Eleventy fixture</a></td>
+</tr>
+<tr>
+<td><strong>Hugo</strong></td>
+<td>Serve prebuilt CSS from <code>static/</code> or a Hugo filesystem mount</td>
+<td>Use <code>relURL</code> for assets, not a bare <code>/css/</code> URL on project subpaths</td>
+<td><a href="https://github.com/dporkka/syntyr-css/tree/main/examples/hugo-cms/">Runnable CMS-driven Hugo starter</a>; <a href="https://github.com/dporkka/syntyr-css/tree/main/experiments/hugo/">isolated docs proof</a></td>
+</tr>
+<tr>
+<td><strong>Jekyll</strong></td>
+<td>Copy prebuilt CSS into <code>assets/css/</code>; do not process it as Sass</td>
+<td>Use Liquid <code>relative_url</code> and configure <code>baseurl</code> for GitHub project pages</td>
+<td>Snippet below</td>
+</tr>
+<tr>
+<td><strong>Zola</strong></td>
+<td>Copy prebuilt CSS into <code>static/assets/</code></td>
+<td>Use <code>get_url</code> and a correctly configured <code>base_url</code></td>
+<td>Snippet below</td>
+</tr>
+<tr>
+<td><strong>Next.js static export</strong></td>
+<td>Import package CSS once in <code>app/layout.tsx</code> or host CSS in <code>public/</code></td>
+<td>Configure <code>output: 'export'</code> and <code>basePath</code> for project subpaths</td>
+<td>Notes below</td>
+</tr>
+<tr>
+<td><strong>Gatsby, Docusaurus, VitePress</strong></td>
+<td>Import a single local/package stylesheet in the site's global stylesheet entrypoint</td>
+<td>Respect each generator's deployment base and output asset resolution</td>
+<td>Same HTML and CSS contract</td>
+</tr>
+</tbody>
+</table>
+<p>If you are not using a Node build, <strong>copy the exact released stylesheet into
+your static asset directory</strong>. No npm dependency is needed. For pure HTML
+and native elements, choose <code>syntyr.semantic-bundle.css</code> <em>instead</em> of core
+and opt in with <code>class=&quot;syn-root syn-semantic&quot;</code>. For explicit components,
+load <code>syntyr.core.css</code> once and use classes such as <code>syn-panel</code> and
+<code>syn-button</code>. Do not combine a bundle with its constituent CSS.</p>
+<h2 id="astro">Astro</h2>
+<pre tabindex="0"><code class="language-astro">---
+// examples/astro uses a local file:../.. development dependency.
+import '@syntyr/css/core.css';
+---
+&lt;main class=&quot;syn-root syn-page&quot; data-syn-theme=&quot;studio&quot;&gt;
+  &lt;h1 class=&quot;syn-heading&quot;&gt;Static Astro page&lt;/h1&gt;
+&lt;/main&gt;
+</code></pre>
+<p>The import is build-time CSS processing; no Syntyr script is injected.
+To publish under a subdirectory, set <code>base: '/my-project/'</code> in
+<code>astro.config.mjs</code>. Do not hardcode <code>href=&quot;/assets/...&quot;</code> unless you also
+account for <code>import.meta.env.BASE_URL</code>. See
+<a href="https://docs.astro.build/en/guides/styling/">Astro's CSS guidance</a>
+and <a href="https://docs.astro.build/en/reference/configuration-reference/">base-path configuration</a>.</p>
+<h2 id="eleventy">Eleventy</h2>
+<p>The <a href="https://github.com/dporkka/syntyr-css/tree/main/examples/eleventy/">Eleventy example</a> copies the current dist CSS
+directly to <code>_site/assets/syntyr.core.css</code>; its Nunjucks template uses:</p>
+<pre tabindex="0"><code class="language-njk">&lt;link rel=&quot;stylesheet&quot; href=&quot;{{ '/assets/syntyr.core.css' | url }}&quot;&gt;
+&lt;main class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot;&gt;
+  &lt;h1 class=&quot;syn-heading&quot;&gt;Static site&lt;/h1&gt;
+&lt;/main&gt;
+</code></pre>
+<p><code>pathPrefix: '/syntyr-eleventy/'</code> deliberately tests a project-pages base
+path. Adapt it to your hosting path. No client-side Eleventy JavaScript is
+needed. <a href="https://www.11ty.dev/docs/filters/url/">Eleventy's URL filter</a>
+documents subpath behavior.</p>
+<h2 id="hugo">Hugo</h2>
+<p>Copy <code>dist/syntyr.core.css</code> to <code>static/assets/syntyr.core.css</code>, or use a
+filesystem mount as in <a href="https://github.com/dporkka/syntyr-css/tree/main/experiments/hugo/">the Hugo preview</a>. In a Hugo
+layout:</p>
+<pre tabindex="0"><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;{{ &quot;assets/syntyr.core.css&quot; | relURL }}&quot;&gt;
+&lt;main class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot;&gt;...&lt;/main&gt;
+</code></pre>
+<p>Do not use an unprefixed <code>/assets/...</code> URL for GitHub Pages project sites.
+For an independent, CMS-driven landing page, the
+<a href="https://github.com/dporkka/syntyr-css/tree/main/examples/hugo-cms/">runnable Hugo fixture</a> renders the <strong>same</strong>
+<code>content/pages/home.json</code> as the Git-backed CMS starter, with five native
+semantic HTML blocks and no browser script:</p>
+<pre tabindex="0"><code class="language-sh">python3 scripts/build.py
+python3 scripts/build_hugo_cms_starter.py --hugo hugo --output /tmp/syntyr-hugo-site
+</code></pre>
+<p>It verifies generated CSS and page URLs under <code>/syntyr-hugo/</code> and supports
+<code>--base-url https://example.com/my-project/</code>. Hugo is a build-time tool,
+not a requirement of the Syntyr CSS package.</p>
+<p>Hugo's own preview script validates its existing rendered Markdown pages
+and local links:</p>
+<pre tabindex="0"><code class="language-sh">python3 scripts/verify_hugo_preview.py --hugo /path/to/hugo
+</code></pre>
+<h2 id="jekyll-github-pages">Jekyll / GitHub Pages</h2>
+<p>Jekyll needs only a copied prebuilt asset and native Liquid URL filtering.
+In a consumer Jekyll site's root:</p>
+<pre tabindex="0"><code class="language-sh">mkdir -p assets/css
+cp /path/to/syntyr/dist/syntyr.core.css assets/css/syntyr.core.css
+</code></pre>
+<p>In a layout or page (not inside a verbatim Liquid/raw block):</p>
+<pre tabindex="0"><code class="language-liquid">&lt;link rel=&quot;stylesheet&quot; href=&quot;{{ '/assets/css/syntyr.core.css' | relative_url }}&quot;&gt;
+&lt;main class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot;&gt;...&lt;/main&gt;
+</code></pre>
+<p>If the site lives at <code>https://user.github.io/project/</code>, set
+<code>baseurl: &quot;/project&quot;</code> in <code>_config.yml</code>. Commit the CSS asset with your
+site. Do not put front matter in the CSS file or run it through Jekyll's
+Sass compiler. <a href="https://jekyllrb.com/docs/github-pages/">Jekyll's GitHub Pages guide</a>
+explains <code>relative_url</code>.</p>
+<h2 id="zola">Zola</h2>
+<p>In the consumer site's root:</p>
+<pre tabindex="0"><code class="language-sh">mkdir -p static/assets
+cp /path/to/syntyr/dist/syntyr.core.css static/assets/syntyr.core.css
+</code></pre>
+<p>In a Tera template:</p>
+<pre tabindex="0"><code class="language-tera">&lt;link rel=&quot;stylesheet&quot; href=&quot;{{ get_url(path='assets/syntyr.core.css') }}&quot;&gt;
+&lt;main class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot;&gt;...&lt;/main&gt;
+</code></pre>
+<p>Set <code>base_url = &quot;https://example.com/project/&quot;</code> in <code>config.toml</code> for
+subpath hosting. This URL is resolved at build time; Syntyr does not need
+client JavaScript or a Zola-specific adapter. See <a href="https://www.getzola.org/documentation/templates/">Zola's get_url</a>.</p>
+<h2 id="nextjs-export-gatsby-and-documentation-generators">Next.js export, Gatsby and documentation generators</h2>
+<p>Next.js supports a static-export deployment using <code>output: 'export'</code>
+in <code>next.config.*</code>. Import one Syntyr CSS file from the top-level App Router
+layout and apply <code>syn-root</code> in HTML. Adjust <code>basePath</code> and static assets
+when exporting to a project subpath. <strong>Next.js/Gatsby may ship their own
+hydration JavaScript:</strong> &quot;zero Syntyr runtime JS&quot; does <em>not</em> mean a zero-JS
+site when the generator itself uses client-side code. Gatsby, VitePress
+and Docusaurus can consume the same CSS through their respective global
+style entrypoints; these are integration instructions, not verified build
+fixtures.</p>
+<h2 id="verification-and-failure-modes">Verification and failure modes</h2>
+<p>From the Syntyr repository root:</p>
+<pre tabindex="0"><code class="language-sh">python3 scripts/build.py --check
+python3 -m unittest tests.test_static_site_generators tests.test_adoption_starters
+cd examples/eleventy
+npm install
+npm run build
+npm run verify
+</code></pre>
+<p>The optional Python verifier checks <strong>generated HTML</strong>, not merely source
+templates. It rejects missing/local-unresolvable stylesheets, stylesheet URLs
+that ignore the deployment <strong>base path</strong>, unexpected browser scripts, missing
+<code>syn-root</code> scopes, and CSS output without Syntyr selectors. For a different
+generator, point it at its output and pass its exact mount prefix:</p>
+<pre tabindex="0"><code class="language-sh">python3 scripts/verify_static_generators.py /path/to/site-output --base-path /my-project/
+</code></pre>
+<p>Only run it against pages deliberately built to be JavaScript-free and styled
+with Syntyr; it is not a general-purpose validator for unrelated application
+routes. It checks output correctness but not browser accessibility, responsive
+layout, static exporter security settings, or hosting/CDN rewrite behavior.
+For a visual smoke test, serve the generated output at its configured base
+path and inspect styles/network requests in an actual browser.</p>
+<p><strong>Common pitfalls:</strong> using a root-absolute CSS URL on a subpath deployment;
+importing core plus the semantic bundle (duplicate styles); applying
+<code>syn-semantic</code> globally to an existing third-party theme; unpinned remote
+CDN URLs; and assuming <code>file:../..</code> in a development fixture is a published
+npm package. The Syntyr CSS runtime remains zero dependency regardless of
+the generator chosen.</p>
+        </article>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+<a class="docs-article-toc-link docs-article-toc-2" href="#runnable-zero-javascript-marketing-site-starter">Runnable zero-JavaScript marketing site starter</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#integration-matrix">Integration matrix</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#astro">Astro</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#eleventy">Eleventy</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#hugo">Hugo</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#jekyll-github-pages">Jekyll / GitHub Pages</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#zola">Zola</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#nextjs-export-gatsby-and-documentation-generators">Next.js export, Gatsby and documentation generators</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#verification-and-failure-modes">Verification and failure modes</a>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#runnable-zero-javascript-marketing-site-starter">Runnable zero-JavaScript marketing site starter</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#integration-matrix">Integration matrix</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#astro">Astro</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#eleventy">Eleventy</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#hugo">Hugo</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#jekyll-github-pages">Jekyll / GitHub Pages</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#zola">Zola</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#nextjs-export-gatsby-and-documentation-generators">Next.js export, Gatsby and documentation generators</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#verification-and-failure-modes">Verification and failure modes</a>
+            </nav>
+          </details>
+        </aside>
+      </div>
+      <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="static-site-generators.md">Markdown source</a></nav>
+    </main>
+    <footer class="syn-header"><span class="syn-caption">SYNTYR CSS · MIT CORE · EXPERIMENTAL</span><a href="../index.html">Home</a></footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Syntyr SaaS Admin Starter: responsive, dependency-free HTML template with example data.">
+  <title>Sales pipeline | Syntyr SaaS Admin</title>
+  <link rel="stylesheet" href="../../dist/syntyr.core.css">
+  <link rel="stylesheet" href="../../dist/syntyr.recipes.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="syn-root syn-page starter-page" data-syn-theme="studio">
+  <a class="syn-button starter-skip" href="#main">Skip to content</a>
+  <div class="starter-shell">
+    <aside class="starter-sidebar" aria-label="Workspace sidebar">
+      <a class="starter-brand" href="index.html"><span class="starter-logo">S</span>SYNTYR <span class="syn-muted">/ ATLAS</span></a>
+      <p class="syn-caption">EXAMPLE WORKSPACE • DEMO</p>
+      <nav class="syn-app-nav starter-nav" aria-label="Primary navigation">
+        <a href="index.html">Overview</a>
+        <a href="pipeline.html" aria-current="page">Pipeline</a>
+        <a href="customers.html">Customers</a>
+        <a href="billing.html">Billing</a>
+      </nav>
+      <div class="starter-sidebar-footer"><p class="syn-eyebrow">STATIC STARTER</p><p class="syn-caption">Illustrative data only. No backend, authentication, or persistence.</p><a href="README.md">Implementation notes</a></div>
+    </aside>
+    <main id="main" class="starter-main">
+      <header class="starter-topbar"><div><p class="syn-eyebrow">SALES / OPPORTUNITIES</p><h1>Sales pipeline</h1><p class="syn-muted">Read-only opportunities across the lifecycle; cards link to sample customer records.</p></div><span class="starter-avatar" aria-label="Demo account">AT</span></header>
+
+      <section class="syn-app-card starter-intro" aria-label="Pipeline summary"><div><strong>5 example opportunities</strong><p class="syn-caption">Amounts and statuses are illustrative. No drag-and-drop is implemented.</p></div><span class="syn-status syn-status--warning">Read-only demo</span></section>
+      <div class="syn-pipeline starter-pipeline" tabindex="0" role="group" aria-label="Sales stages — scroll horizontally for more columns">
+        <section class="syn-pipeline-lane" aria-labelledby="stage-new"><h2 id="stage-new" class="syn-heading">New <span class="syn-caption">(2)</span></h2><ul class="syn-pipeline-list">
+          <li class="syn-pipeline-card"><a href="customers.html#customer-northstar">Northstar Labs</a><p class="syn-caption">Workspace expansion</p><p class="starter-deal">$4,800</p><span class="syn-status">Discovery</span></li>
+          <li class="syn-pipeline-card"><a href="customers.html#customer-river">Riverstone</a><p class="syn-caption">Platform evaluation</p><p class="starter-deal">$7,600</p></li>
+        </ul></section>
+        <section class="syn-pipeline-lane" aria-labelledby="stage-qualified"><h2 id="stage-qualified" class="syn-heading">Qualified <span class="syn-caption">(1)</span></h2><ul class="syn-pipeline-list">
+          <li class="syn-pipeline-card"><a href="customers.html#customer-cedar">Cedar Systems</a><p class="syn-caption">Team rollout</p><p class="starter-deal">$12,000</p><span class="syn-status syn-status--success">Validated</span></li>
+        </ul></section>
+        <section class="syn-pipeline-lane" aria-labelledby="stage-proposal"><h2 id="stage-proposal" class="syn-heading">Proposal <span class="syn-caption">(1)</span></h2><ul class="syn-pipeline-list">
+          <li class="syn-pipeline-card"><a href="customers.html#customer-bay">Bayline Group</a><p class="syn-caption">Annual contract</p><p class="starter-deal">$19,200</p><span class="syn-status syn-status--warning">Awaiting reply</span></li>
+        </ul></section>
+        <section class="syn-pipeline-lane" aria-labelledby="stage-won"><h2 id="stage-won" class="syn-heading">Won <span class="syn-caption">(1)</span></h2><ul class="syn-pipeline-list">
+          <li class="syn-pipeline-card"><a href="customers.html#customer-northstar">Northstar Labs</a><p class="syn-caption">Growth plan signed</p><p class="starter-deal">$10,680</p><span class="syn-status syn-status--success">Closed</span></li>
+        </ul></section>
+      </div>
+      <section class="syn-app-card starter-callout" aria-labelledby="rules-heading"><div><h2 id="rules-heading" class="syn-heading">Host-owned workflow</h2><p class="syn-muted">Add authorized stage transitions, validation, concurrency protection and audit events in your backend; CSS never updates records.</p></div></section>
+
+      <footer class="syn-caption starter-footer">Syntyr SaaS Admin Starter · MIT · HTML + CSS, zero runtime JavaScript</footer>
+    </main>
+  </div>
+</body>
+</html>

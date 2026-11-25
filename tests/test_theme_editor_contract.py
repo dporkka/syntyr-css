@@ -30,7 +30,7 @@ class ThemeEditorContract(unittest.TestCase):
         parsed.feed(page)
         for item in ('theme', 'accent', 'on-accent', 'preview', 'contrast-result', 'generated-css', 'reset-theme'):
             self.assertIn(item, parsed.ids)
-        self.assertEqual(len(parsed.color_controls), 2)
+        self.assertEqual(len(parsed.color_controls), 6)
         self.assertIn('theme-editor.js', parsed.assets)
         self.assertIn('../dist/syntyr.core.css', parsed.assets)
         self.assertTrue(all(not x.startswith(('https:', 'http:', '//')) for x in parsed.assets))
@@ -72,6 +72,24 @@ class ThemeEditorContract(unittest.TestCase):
         js = (ROOT / 'docs/theme-editor.js').read_text()
         # The preview is a nested data-syn-theme element; generated overrides must work there.
         self.assertIn('.syn-root [data-syn-theme=', js)
+
+    def test_editor_exports_composable_preset_with_density_and_radius(self):
+        html = (ROOT / 'docs/theme-editor.html').read_text()
+        js = (ROOT / 'docs/theme-editor.js').read_text()
+        parser = EditorMarkup()
+        parser.feed(html)
+        for key in ('density', 'radius', 'generated-preset', 'copy-preset', 'preset-feedback'):
+            self.assertIn(key, parser.ids)
+        for name in ('compact', 'comfortable', 'spacious'):
+            self.assertIn(f'<option value="{name}"', html)
+        self.assertIn('data-syn-density', js)
+        for key in ('typography','spacing','page-bg','surface','body-text','muted-text',
+                    'contrast-background-result','contrast-surface-result','contrast-muted-result'):
+            self.assertIn(key, parser.ids)
+        self.assertIn('--syn-radius', js)
+        self.assertIn('JSON.stringify', js)
+        self.assertIn('navigator.clipboard', js)
+        self.assertNotIn('eval(', js)
 
 
 if __name__ == '__main__':

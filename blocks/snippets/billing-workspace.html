@@ -1,0 +1,45 @@
+<section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-billing-workspace-heading">
+  <header class="syn-collection-toolbar">
+    <div>
+      <h2 id="syn-billing-workspace-heading" class="syn-heading">Workspace and billing</h2>
+      <p class="syn-muted">Illustrative subscription and invoice information, not a payment interface.</p>
+    </div>
+    <a class="syn-button syn-button--outline" href="/billing/payment-method">Manage payment method</a>
+  </header>
+  <div class="syn-layout">
+    <section class="syn-panel" aria-labelledby="syn-billing-plan-heading">
+      <h3 id="syn-billing-plan-heading">Current plan</h3>
+      <dl class="syn-record-fields">
+        <div><dt>Plan</dt><dd>Growth (example)</dd></div>
+        <div><dt>Billing cycle</dt><dd>Monthly</dd></div>
+        <div><dt>Next invoice</dt><dd><time datetime="2027-01-01">January 1, 2027</time></dd></div>
+      </dl>
+      <p><a href="/billing/plans">Compare plans</a></p>
+    </section>
+    <section class="syn-panel" aria-labelledby="syn-billing-settings-heading">
+      <h3 id="syn-billing-settings-heading">Billing contact</h3>
+      <form method="post" action="/billing/settings" class="syn-form">
+        <div class="syn-field">
+          <label class="syn-label" for="syn-billing-email">Billing email</label>
+          <input class="syn-input" type="email" id="syn-billing-email" name="billing_email"
+                 autocomplete="email" value="billing@example.invalid" aria-describedby="syn-billing-help" required>
+          <p id="syn-billing-help" class="syn-help">Your server must validate this address and protect writes against CSRF.</p>
+        </div>
+        <button class="syn-button syn-button--primary" type="submit">Save contact</button>
+      </form>
+    </section>
+  </div>
+  <section class="syn-panel" aria-labelledby="syn-billing-invoices-heading">
+    <h3 id="syn-billing-invoices-heading">Recent invoices</h3>
+    <div class="syn-table-wrap" role="region" aria-label="Recent invoices; scroll horizontally for more columns" tabindex="0">
+      <table class="syn-table">
+        <caption>Illustrative invoice history</caption>
+        <thead><tr><th scope="col">Invoice</th><th scope="col">Date</th><th scope="col">Status</th><th scope="col">Amount</th></tr></thead>
+        <tbody>
+          <tr><th scope="row"><a href="/billing/invoices/inv-102">INV-102</a></th>
+              <td><time datetime="2026-11-01">Nov 1, 2026</time></td><td>Paid</td><td>$149</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</section>

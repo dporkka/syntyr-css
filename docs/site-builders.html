@@ -74,11 +74,11 @@ URL. For production today, alpha.4 <code>syntyr.core.css</code> is published, bu
 layered cascade needs validation against each host theme. Do <strong>not</strong> load both
 core and embed stylesheets together.</p>
 <p>Load the stylesheet once in your page's <code>&lt;head&gt;</code>:</p>
-<pre><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/assets/syntyr.embed.css&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/assets/syntyr.embed.css&quot;&gt;
 </code></pre>
 <p>Then place this content in a platform-provided <strong>visible HTML</strong> block or theme
 template (not in a head-code field):</p>
-<pre><code class="language-html">&lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syntyr-title&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syntyr-title&quot;&gt;
   &lt;div class=&quot;syn-panel&quot;&gt;
     &lt;h2 class=&quot;syn-heading&quot; id=&quot;syntyr-title&quot;&gt;Our services&lt;/h2&gt;
     &lt;p class=&quot;syn-muted&quot;&gt;A self-contained, accessible feature.&lt;/p&gt;
@@ -177,7 +177,7 @@ WordPress.com and managed hosts can restrict theme access and custom code.</p>
 <h3 id="shopify">Shopify</h3>
 <p>Copy the CSS to theme <code>assets/syntyr.embed.css</code>, then load once in
 <code>layout/theme.liquid</code> inside <code>&lt;head&gt;</code>:</p>
-<pre><code class="language-liquid">{{ 'syntyr.embed.css' | asset_url | stylesheet_tag }}
+<pre tabindex="0"><code class="language-liquid">{{ 'syntyr.embed.css' | asset_url | stylesheet_tag }}
 </code></pre>
 <p>Copy <a href="https://github.com/dporkka/syntyr-css/blob/main/integrations/shopify/sections/syntyr-feature.liquid">the Shopify feature section</a>
 into theme <strong>Sections</strong> and insert “Syntyr feature” in the theme editor.
@@ -190,7 +190,7 @@ make it unsuitable for a complete CSS distribution.</p>
 <p>For a visible standalone feature, add an <strong>Embed HTML</strong> element; this is
 an iframe. Paste a complete iframe document containing the stylesheet link
 and Syntyr <code>&lt;section&gt;</code>:</p>
-<pre><code class="language-html">&lt;!doctype html&gt;
+<pre tabindex="0"><code class="language-html">&lt;!doctype html&gt;
 &lt;html lang=&quot;en&quot;&gt;
 &lt;head&gt;
   &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
@@ -254,7 +254,8 @@ for an offline, zero-JavaScript example with a host button outside Syntyr.</p>
 <li>Squarespace: https://support.squarespace.com/hc/en-us/articles/206545567-Add-custom-CSS-to-your-site</li>
 </ul>
         </article>
-        <aside class="docs-article-sidebar"><nav aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#platform-by-platform-setup-guides">Platform-by-platform setup guides</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#pick-the-correct-css">Pick the correct CSS</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#installation-matrix">Installation matrix</a>
@@ -266,7 +267,24 @@ for an offline, zero-JavaScript example with a host button outside Syntyr.</p>
 <a class="docs-article-toc-link docs-article-toc-3" href="#other-builders">Other builders</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#verify-on-the-published-site">Verify on the published site</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#official-platform-references">Official platform references</a>
-        </nav></aside>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#platform-by-platform-setup-guides">Platform-by-platform setup guides</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#pick-the-correct-css">Pick the correct CSS</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#installation-matrix">Installation matrix</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#wordpress">WordPress</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#shopify">Shopify</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#wix-wix-studio">Wix / Wix Studio</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#webflow">Webflow</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#framer">Framer</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#other-builders">Other builders</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#verify-on-the-published-site">Verify on the published site</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#official-platform-references">Official platform references</a>
+            </nav>
+          </details>
+        </aside>
       </div>
       <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="site-builders.md">Markdown source</a></nav>
     </main>

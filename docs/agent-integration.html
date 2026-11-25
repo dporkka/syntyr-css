@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Syntyr works with ChatGPT, Codex, Claude Code, Cursor and other agents that generate HTML or framework markup. No Syntyr-specific service, account, MCP…">
-  <meta name="syntyr-source-sha256" content="8d9f9ce876e561034ce1416dc75149401d4aabe8eb33d308a9a7e0a073c672ac">
+  <meta name="syntyr-source-sha256" content="f76c62b5ebeead5aee6f26a13ae0ac1f7fe14092d2b8f7e9ab3101b74d612252">
   <meta name="theme-color" content="#f5f7fb">
   <title>Using Syntyr with coding agents — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/agent-integration">
@@ -55,7 +55,8 @@
 release-pinned CSS, and a small verified selector reference into an existing app.
 It runs from a Syntyr source checkout and does <strong>not</strong> install any application
 runtime dependencies, connect to services, or publish a package:</p>
-<pre><code class="language-sh">python3 scripts/syntyr_agent.py init --project /path/to/my-app --json
+<pre tabindex="0"><code class="language-sh">python3 scripts/syntyr_agent.py init --project /path/to/my-app --json
+python3 scripts/syntyr_agent.py info --project /path/to/my-app --json
 python3 scripts/syntyr_agent.py check --project /path/to/my-app --json /path/to/my-app/page.html
 </code></pre>
 <p><code>init</code> defaults to the <strong>published, immutable alpha.4 CSS</strong> and writes
@@ -71,8 +72,15 @@ load the copied CSS in their own HTML/framework entrypoint: installation does
 <strong>unreleased source candidate</strong>. The generated <code>api.json</code> lists selectors
 actually present in the selected CSS files; source-only selectors cannot
 appear in an alpha.4 reference.</p>
-<p><code>check</code> validates the installed CSS asset hashes and literal <code>.html</code> files
-against that project's pinned release, returning structured, source-located
+<p><code>info</code> is read-only project discovery for coding agents. It reports the configured
+release (published or source candidate), its actual pinned CSS asset hashes and
+integrity statuses, supported themes, and portable Skill/reference paths. Exit
+code <strong>0</strong> means the pinned installation is healthy, <strong>1</strong> means degraded or
+invalid, and <strong>2</strong> means the project was not initialized. Do not infer active
+stylesheet imports or framework support from this inventory: the host
+application must still load and test the appropriate CSS. The command does
+not scan application code or need application dependencies.</p>
+<p><code>check</code> validates the installed CSS asset hashes and literal <code>.html</code> files\nagainst that project's pinned release, returning structured, source-located
 JSON diagnostics. Its exit codes are <strong>0</strong> for checked and error-free HTML,
 <strong>1</strong> for errors, and <strong>2</strong> for incomplete coverage (for example, JSX/TSX or
 no HTML files). It is not a React/Vue/Svelte parser or a browser accessibility
@@ -105,7 +113,7 @@ checked-in CSS rather than presenting candidate-only selectors as fixes.</p>
 <p>When adding a guide for public consumption, review the explicit <code>PUBLIC_DOCS</code> allowlist in <code>scripts/build_cloudflare_site.py</code>. Regenerate the committed HTML with the maintainer-only generator (<code>python3 scripts/build_doc_pages.py</code>), and verify it with <code>--check</code>. The core static-site and CI builds require no Markdown parsing package or client runtime.</p>
 <h2 id="validation-and-maintenance">Validation and maintenance</h2>
 <p>The repository uses Python standard-library scripts:</p>
-<pre><code class="language-sh">python3 scripts/build_agent_docs.py --check
+<pre tabindex="0"><code class="language-sh">python3 scripts/build_agent_docs.py --check
 python3 scripts/build.py --check
 python3 -m unittest discover -s tests -v
 python3 scripts/build_cloudflare_site.py --check
@@ -113,8 +121,30 @@ python3 scripts/build_cloudflare_site.py --check
 <p>The consolidated reference is deterministic and checked in CI through the Python test suite. The Cloudflare publisher uses a strict allowlist, so exposing new documentation does not expose internal files or business planning documents.</p>
 <h2 id="what-syntyr-does-not-do">What Syntyr does not do</h2>
 <p>Syntyr styles browser HTML/CSS. It does not supply a JavaScript component runtime, chart rendering engine, AI API, CRUD handlers, form submission or remote data access. The optional local read-only MCP adapter is a separate developer tool, never a CSS runtime dependency. Use your existing application technology for those responsibilities.</p>
+<h2 id="deterministic-section-composition-source-candidate">Deterministic section composition (source candidate)</h2>
+<p>From a source checkout, optional Node.js 22+ authoring tooling can discover the
+canonical website section fields and assemble ordinary HTML without a model
+generating arbitrary tags. No npm install or browser-side JavaScript is needed.
+This is separate from the Python-only CSS build and the immutable alpha.4 release.</p>
+<pre tabindex="0"><code class="language-sh">node scripts/compose.mjs --list 0.3.0-alpha.5
+node scripts/compose.mjs &lt;&lt;'JSON'
+{&quot;release&quot;:&quot;0.3.0-alpha.5&quot;,&quot;title&quot;:&quot;Product demo&quot;,&quot;theme&quot;:&quot;studio&quot;,&quot;sections&quot;:[{&quot;section_id&quot;:&quot;hero-product&quot;,&quot;fields&quot;:{&quot;text2&quot;:&quot;A clearer workspace.&quot;}},{&quot;section_id&quot;:&quot;faq&quot;}]}
+JSON
+</code></pre>
+<p>The JSON result includes an editable <code>syntyr.page.v1</code> project, complete HTML,
+required <code>syntyr.all.css</code> and a list of local image assets. Save the HTML next
+to the matching candidate stylesheet from <code>dist/</code> and copy the listed assets
+from <code>assets/</code> into an <code>assets/</code> directory alongside the HTML. The source
+model validates field names and values, escapes content, scopes repeated IDs
+and uses its existing safe-link fallback. Section order is preserved. Only
+known canonical sections and 1–50 section instances are accepted.</p>
+<p>This generator produces the static section layer; it does not compose or
+install host widget controllers, implement routes/forms, generate production
+copy, or certify accessibility. Review example content and destinations, and
+use the release-pinned markup validator and real browser tests before shipping.</p>
         </article>
-        <aside class="docs-article-sidebar"><nav aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#recommended-context-to-supply-an-agent">Recommended context to supply an agent</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#project-level-integration">Project-level integration</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#offline-first-run-agent-setup-source-checkout">Offline first-run agent setup (source checkout)</a>
@@ -123,7 +153,23 @@ python3 scripts/build_cloudflare_site.py --check
 <a class="docs-article-toc-link docs-article-toc-2" href="#documentation-formats-html-for-people-markdown-for-agents">Documentation formats: HTML for people, Markdown for agents</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#validation-and-maintenance">Validation and maintenance</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#what-syntyr-does-not-do">What Syntyr does not do</a>
-        </nav></aside>
+<a class="docs-article-toc-link docs-article-toc-2" href="#deterministic-section-composition-source-candidate">Deterministic section composition (source candidate)</a>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#recommended-context-to-supply-an-agent">Recommended context to supply an agent</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#project-level-integration">Project-level integration</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#offline-first-run-agent-setup-source-checkout">Offline first-run agent setup (source checkout)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#optional-local-mcp-adapter">Optional local MCP adapter</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#documents-and-machine-readable-inventory">Documents and machine-readable inventory</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#documentation-formats-html-for-people-markdown-for-agents">Documentation formats: HTML for people, Markdown for agents</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#validation-and-maintenance">Validation and maintenance</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#what-syntyr-does-not-do">What Syntyr does not do</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#deterministic-section-composition-source-candidate">Deterministic section composition (source candidate)</a>
+            </nav>
+          </details>
+        </aside>
       </div>
       <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="agent-integration.md">Markdown source</a></nav>
     </main>

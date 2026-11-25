@@ -45,12 +45,12 @@
 <li>Check whether your Carrd subscription supports <strong>Embed</strong> elements and custom HTML. The free plan should not be assumed to support these features.</li>
 <li>Host the alpha.5 candidate <code>syntyr.embed.css</code> on an HTTPS origin you control. In an allowed custom-code Embed positioned in the document <strong>Head</strong>, load that asset:</li>
 </ol>
-<pre><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://YOUR-ASSET-HOST.example/syntyr.embed.css&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://YOUR-ASSET-HOST.example/syntyr.embed.css&quot;&gt;
 </code></pre>
 <ol start="3">
 <li>Add an inline, <strong>visible Embed</strong> element where your custom feature should appear. Use normal HTML instead of trying to apply Syntyr classes to Carrd's generated native element markup:</li>
 </ol>
-<pre><code class="language-html">&lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;carrd-pricing&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;carrd-pricing&quot;&gt;
   &lt;div class=&quot;syn-panel&quot;&gt;
     &lt;h2 id=&quot;carrd-pricing&quot; class=&quot;syn-heading&quot;&gt;Simple pricing&lt;/h2&gt;
     &lt;p class=&quot;syn-muted&quot;&gt;A clear product offer on a Carrd page.&lt;/p&gt;
@@ -69,12 +69,23 @@
 <p><strong>Release compatibility:</strong> The immutable <strong>alpha.4</strong> stylesheet <code>syntyr.core.css</code> is published. The <strong>alpha.5</strong> <code>syntyr.embed.css</code> bundle is a candidate build designed for existing themes; it is not part of the alpha.4 release. Build the candidate from the source repository and self-host a version-pinned copy for testing. Never load both bundles together, and verify theme-specific overrides before production rollout. Syntyr is a stylesheet, not an official integration or plug-in from the site platform.</p>
 <p>Explore the <a href="site-builders.html">platform integration overview</a>, <a href="distribution.html">Syntyr distribution and release guide</a>, or <a href="../examples/platform-embed.html">live host-theme example</a>.</p>
         </article>
-        <aside class="docs-article-sidebar"><nav aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#why-use-syntyr-on-carrd">Why use Syntyr on Carrd?</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#how-to-install-syntyr-in-carrd">How to install Syntyr in Carrd</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#limitations-and-carrd-specific-considerations">Limitations and Carrd-specific considerations</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#verify-the-result-before-publishing">Verify the result before publishing</a>
-        </nav></aside>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#why-use-syntyr-on-carrd">Why use Syntyr on Carrd?</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#how-to-install-syntyr-in-carrd">How to install Syntyr in Carrd</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#limitations-and-carrd-specific-considerations">Limitations and Carrd-specific considerations</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#verify-the-result-before-publishing">Verify the result before publishing</a>
+            </nav>
+          </details>
+        </aside>
       </div>
       <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="carrd.md">Markdown source</a></nav>
     </main>

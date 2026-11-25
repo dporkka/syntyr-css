@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "feature-spotlight",
+  "type": "registry:item",
+  "title": "Feature spotlight",
+  "description": "An editorial split section with a concrete feature benefit and a complementary product detail.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://syntyr-css.pages.dev/registry/r/core.json"
+  ],
+  "files": [
+    {
+      "path": "blocks/snippets/feature-spotlight.html",
+      "type": "registry:file",
+      "target": "~/syntyr/blocks/feature-spotlight.html",
+      "content": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"feature-spotlight-heading\">\n  <div class=\"syn-sidecar\">\n    <div>\n      <p class=\"syn-eyebrow\">PRODUCT / FEATURE</p>\n      <h2 class=\"syn-heading\" id=\"feature-spotlight-heading\">Stay on top of every handoff.</h2>\n      <p class=\"syn-lede\">One clear place to review owners, deadlines, and next steps.</p>\n      <a class=\"syn-button syn-button--primary\" href=\"/features\">Explore features</a>\n    </div>\n    <aside class=\"syn-panel\" aria-label=\"Illustrative task status\">\n      <p class=\"syn-caption\">EXAMPLE TASK</p>\n      <h3 class=\"syn-heading\">Review proposal</h3>\n      <p><span class=\"syn-badge\">Ready for review</span></p>\n      <p class=\"syn-muted\">Owner: Sample team · Due: Next week</p>\n    </aside>\n  </div>\n</section>\n"
+    },
+    {
+      "path": "LICENSE",
+      "type": "registry:file",
+      "target": "~/syntyr/LICENSE",
+      "content": "MIT License\n\nCopyright (c) 2026 Syntyr CSS contributors\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n"
+    }
+  ],
+  "meta": {
+    "syntyrVersion": "0.3.0-alpha.5",
+    "source": "MIT source candidate",
+    "runtimeJavaScript": false,
+    "fileDigests": {
+      "~/syntyr/blocks/feature-spotlight.html": "8859b910e82a9438e3c7d353f51e7b27b01e45589b112a8e3d350b6320c16f57",
+      "~/syntyr/LICENSE": "42f56369ac06362dbfe433d2d50b178bf74c369a55ea22337ab40fd9433521bf"
+    }
+  },
+  "docs": "Experimental source-candidate asset. Review exact version, HTML routes, keyboard behavior and integration before production use."
+}

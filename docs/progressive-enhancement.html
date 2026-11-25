@@ -43,7 +43,7 @@ should add polish and optional interactions to working baseline workflows.</p>
 <p>Always use anchors for navigation, buttons for actions, associated labels for
 controls, and native form submission where the application has a server endpoint.
 A GET form below remains usable without HTMX, React, or other client JavaScript:</p>
-<pre><code class="language-html">&lt;form action=&quot;/customers&quot; method=&quot;get&quot; role=&quot;search&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;form action=&quot;/customers&quot; method=&quot;get&quot; role=&quot;search&quot;&gt;
   &lt;label for=&quot;q&quot;&gt;Search customers&lt;/label&gt;
   &lt;input id=&quot;q&quot; name=&quot;q&quot; type=&quot;search&quot; required&gt;
   &lt;button type=&quot;submit&quot; class=&quot;syn-button syn-button--primary&quot;&gt;Search&lt;/button&gt;
@@ -55,7 +55,7 @@ the form still navigates to the server search result. The host owns those routes
 <p>Native <code>details</code> is appropriate for disclosure. For a modal preview, include a
 real navigation route for critical information because <code>commandfor</code> and
 <code>command=&quot;show-modal&quot;</code> are not universally supported in older browsers:</p>
-<pre><code class="language-html">&lt;a href=&quot;/reports/quarterly&quot;&gt;Read full report&lt;/a&gt;
+<pre tabindex="0"><code class="language-html">&lt;a href=&quot;/reports/quarterly&quot;&gt;Read full report&lt;/a&gt;
 &lt;button type=&quot;button&quot; commandfor=&quot;report-preview&quot; command=&quot;show-modal&quot;&gt;
   Preview report
 &lt;/button&gt;
@@ -95,7 +95,7 @@ narrow widths.</p>
 <h2 id="built-in-system-aware-theme">Built-in system-aware theme</h2>
 <p>Load core and set <code>data-syn-theme=&quot;auto&quot;</code>. No separate automatic theme
 stylesheet is needed:</p>
-<pre><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.core.css&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.core.css&quot;&gt;
 &lt;main class=&quot;syn-root&quot; data-syn-theme=&quot;auto&quot;&gt;...&lt;/main&gt;
 </code></pre>
 <p><code>auto</code> uses the Grid palette for dark system preferences and Studio for light.
@@ -106,7 +106,7 @@ Automatic themes use the native <code>light-dark()</code> CSS feature with a com
 fallback; existing tests verify that the palette stays aligned with Grid and Studio.</p>
 <h2 id="opt-in-print-styling">Opt-in print styling</h2>
 <p>Load <code>syntyr.print.css</code> after core when printing reports or invoices:</p>
-<pre><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.core.css&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.core.css&quot;&gt;
 &lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.print.css&quot;&gt;
 </code></pre>
 <p>It uses a readable light palette on paper, drops decorative backgrounds and
@@ -130,7 +130,7 @@ cannot establish WCAG compliance.</li>
 <p>The development-only <code>tests/progressive_browser.py</code> checks computed theme
 colors, nested opt-in themes, semantic-mode isolation, narrow embedded layout,
 print-safe readable data, and disabled print motion in real browser engines:</p>
-<pre><code class="language-sh">python3 tests/progressive_browser.py --browsers chromium firefox webkit
+<pre tabindex="0"><code class="language-sh">python3 tests/progressive_browser.py --browsers chromium firefox webkit
 </code></pre>
 <p>It requires Playwright and installed browser binaries for <strong>development only</strong>.
 For a host without WebKit libraries, use an official matching Playwright
@@ -141,14 +141,27 @@ real browser UI zoom at 200%/400%. CSS <code>zoom</code> and CDP page scale are 
 interchangeable with native browser zoom: page scale may be post-layout.
 Real OS high-contrast and assistive-technology testing must be done manually.</p>
         </article>
-        <aside class="docs-article-sidebar"><nav aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#native-actions-and-server-responses-come-first">Native actions and server responses come first</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#failed-enhancements-are-not-the-same-as-missing-javascript">Failed enhancements are not the same as missing JavaScript</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#built-in-system-aware-theme">Built-in system-aware theme</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#opt-in-print-styling">Opt-in print styling</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#responsive-legible-and-fast">Responsive, legible, and fast</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#cross-engine-regression-verification">Cross-engine regression verification</a>
-        </nav></aside>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#native-actions-and-server-responses-come-first">Native actions and server responses come first</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#failed-enhancements-are-not-the-same-as-missing-javascript">Failed enhancements are not the same as missing JavaScript</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#built-in-system-aware-theme">Built-in system-aware theme</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#opt-in-print-styling">Opt-in print styling</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#responsive-legible-and-fast">Responsive, legible, and fast</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#cross-engine-regression-verification">Cross-engine regression verification</a>
+            </nav>
+          </details>
+        </aside>
       </div>
       <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="progressive-enhancement.md">Markdown source</a></nav>
     </main>

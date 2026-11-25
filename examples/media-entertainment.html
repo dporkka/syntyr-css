@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Original CSS-only entertainment demo using Syntyr cinematic components.">
+  <title>Nocturne Screen — Syntyr Media Collection</title>
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="../dist/syntyr.media.css">
+  <style>
+    .demo-intro { max-inline-size: 62ch; padding-block: 1rem 2rem; }
+    .demo-intro p { color: var(--syn-muted); }
+    .demo-poster-orbit { background: linear-gradient(160deg,#663b72,#071524); }
+    .demo-poster-signal { background: linear-gradient(160deg,#27526c,#091824); }
+    .demo-poster-glass { background: linear-gradient(160deg,#4e3877,#12111a); }
+    .demo-poster-depth { background: linear-gradient(160deg,#174d60,#070f1e); }
+    .demo-poster-horizon { background: linear-gradient(160deg,#b56752,#291728); }
+    .demo-poster-bloom { background: linear-gradient(160deg,#60456d,#10111d); }
+    .demo-footer { margin-block-start:3rem; padding-block:1.5rem; border-block-start:1px solid var(--syn-border-subtle); }
+    .demo-tags { display:flex; flex-wrap:wrap; gap:.5rem; padding:0; list-style:none; }
+    .demo-tags li { border:1px solid rgb(255 255 255 / 45%); border-radius:10rem; padding:.25rem .7rem; font-size:.8rem; }
+  </style>
+</head>
+<body id="top" class="syn-root syn-page syn-media-shell" data-syn-theme="noir">
+  <a class="syn-button" href="#main-content">Skip to content</a>
+  <header class="syn-media-navigation">
+    <a class="syn-media-navigation__brand" href="#top">NOCTURNE / SCREEN</a>
+    <nav class="syn-media-navigation__desktop" aria-label="Primary navigation">
+      <a class="syn-media-navigation__link" href="#top" aria-current="page">Home</a>
+      <a class="syn-media-navigation__link" href="#discover">Discover</a>
+      <a class="syn-media-navigation__link" href="#featured">Featured</a>
+      <a class="syn-media-navigation__link" href="#new">New releases</a>
+    </nav>
+    <nav class="syn-media-navigation__mobile" aria-label="Mobile primary navigation">
+      <a class="syn-media-navigation__link" href="#top" aria-current="page">Home</a>
+      <a class="syn-media-navigation__link" href="#discover">Explore</a>
+      <a class="syn-media-navigation__link" href="#featured">Featured</a>
+      <a class="syn-media-navigation__link" href="#new">New</a>
+    </nav>
+  </header>
+  <main id="main-content">
+    <div class="demo-intro">
+      <p class="syn-eyebrow">SYNTYR MEDIA / ORIGINAL DEMONSTRATION</p>
+      <p>Build an image-first catalog without a UI runtime. All titles and poster illustrations are fictional.</p>
+    </div>
+    <section class="syn-media-hero" aria-labelledby="hero-title"
+      style="--syn-media-hero-image:radial-gradient(ellipse at 80% 25%,#b480bd 0%,#4c3e7a 21%,#15182d 54%,#0c0b13 100%);--syn-media-hero-position:75% center">
+      <div class="syn-media-hero__content">
+        <p class="syn-media-hero__eyebrow">ORIGINAL COLLECTION / SEASON ONE</p>
+        <h1 class="syn-media-hero__title" id="hero-title">The Midnight Atlas</h1>
+        <p class="syn-media-hero__description">Journeys through impossible cities, silent constellations and horizons that refuse to end. A cinematic interface assembled from semantic HTML and CSS.</p>
+        <ul class="demo-tags" aria-label="Collection details"><li>Adventure</li><li>6 stories</li><li>Curated collection</li></ul>
+        <div class="syn-media-hero__actions">
+          <a class="syn-button syn-button--primary" href="#featured">View featured titles</a>
+          <a class="syn-button syn-button--outline" href="#discover">Explore the collection</a>
+        </div>
+      </div>
+    </section>
+    <section class="syn-media-section" id="discover" aria-labelledby="discover-heading">
+      <div class="syn-media-section__heading"><h2 id="discover-heading">Find your next story</h2><span class="syn-muted">CSS-only composition</span></div>
+      <div class="syn-media-search">
+        <label for="catalog-search">Search the collection</label>
+        <input id="catalog-search" type="search" name="query" placeholder="Search titles, genres and people…" disabled aria-describedby="search-description">
+        <p class="syn-muted" id="search-description">Search is disabled in this static example. Connect your own application or server endpoint to enable it.</p>
+      </div>
+    </section>
+    <section class="syn-media-section" id="featured" aria-labelledby="featured-heading">
+      <div class="syn-media-section__heading">
+        <h2 id="featured-heading">Featured stories</h2>
+        <span class="syn-muted">Scroll horizontally or use Tab to reach each title</span>
+      </div>
+      <div class="syn-media-rail syn-media-rail--controls syn-media-rail--markers" role="region" tabindex="0" aria-label="Featured stories, horizontally scrollable">
+        <article class="syn-media-card" data-syn-scroll-label="The Long Orbit">
+          <a href="#new" class="syn-media-card__link" aria-label="The Long Orbit — explore other titles">
+            <div class="syn-media-card__visual demo-poster-orbit">
+              <svg viewBox="0 0 260 390" aria-hidden="true" focusable="false">
+                <defs><linearGradient id="orbit" x2=".9" y2="1"><stop stop-color="#b57cce"/><stop offset="1" stop-color="#4f9dd0"/></linearGradient></defs>
+                <circle cx="145" cy="144" r="85" fill="#31294f"/>
+                <circle cx="145" cy="144" r="63" fill="url(#orbit)"/>
+                <ellipse cx="145" cy="144" rx="115" ry="35" fill="none" stroke="#c9b8d7" stroke-width="5" transform="rotate(-23 145 144)"/>
+                <circle cx="46" cy="55" r="2" fill="#fff"/><circle cx="218" cy="32" r="2" fill="#fff"/>
+                <path d="M0 335L90 274L145 321L203 257L260 310V390H0Z" fill="#111724"/>
+              </svg>
+              <span class="syn-media-card__badge">01 / FEATURED</span>
+            </div>
+            <h3 class="syn-media-card__title">The Long Orbit</h3>
+          </a>
+          <p class="syn-media-card__meta">Sci-fi · 2026</p>
+        </article>
+        <article class="syn-media-card" data-syn-scroll-label="Last Signal">
+          <a href="#new" class="syn-media-card__link" aria-label="Last Signal — explore other titles">
+            <div class="syn-media-card__visual demo-poster-signal">
+              <svg viewBox="0 0 260 390" aria-hidden="true" focusable="false">
+                <rect width="260" height="390" fill="#18334c"/>
+                <circle cx="183" cy="112" r="58" fill="#93b3ce"/>
+                <path d="M0 226L52 174L98 233L150 151L214 237L260 184V390H0Z" fill="#0b1c31"/>
+                <path d="M0 299L91 227L142 285L220 207L260 249V390H0Z" fill="#0a1221"/>
+                <path d="M119 390L142 290L157 390Z" fill="#f3ad7b"/>
+              </svg>
+              <span class="syn-media-card__badge">02 / FEATURED</span>
+            </div>
+            <h3 class="syn-media-card__title">Last Signal</h3>
+          </a>
+          <p class="syn-media-card__meta">Mystery · 2026</p>
+        </article>
+        <article class="syn-media-card" data-syn-scroll-label="City of Glass">
+          <a href="#new" class="syn-media-card__link" aria-label="City of Glass — explore other titles">
+            <div class="syn-media-card__visual demo-poster-glass">
+              <svg viewBox="0 0 260 390" aria-hidden="true" focusable="false">
+                <rect width="260" height="390" fill="#261c47"/>
+                <circle cx="125" cy="125" r="76" fill="#ec9aaf" opacity=".65"/>
+                <path d="M0 390V192h40v-58h38v87h30V96h31v132h28v-70h34v43h59v189z" fill="#11152b"/>
+                <path d="M55 175v150M119 128v210M183 178v180M230 228v116" stroke="#76d4e8" stroke-width="6" opacity=".5"/>
+                <path d="M0 363L260 343" stroke="#cf8cc5" stroke-width="3"/>
+              </svg>
+              <span class="syn-media-card__badge">03 / FEATURED</span>
+            </div>
+            <h3 class="syn-media-card__title">City of Glass</h3>
+          </a>
+          <p class="syn-media-card__meta">Drama · 2026</p>
+        </article>
+        <article class="syn-media-card" data-syn-scroll-label="Blackwater">
+          <a href="#new" class="syn-media-card__link" aria-label="Blackwater — explore other titles">
+            <div class="syn-media-card__visual demo-poster-depth">
+              <svg viewBox="0 0 260 390" aria-hidden="true" focusable="false">
+                <rect width="260" height="390" fill="#0d354b"/>
+                <circle cx="135" cy="95" r="65" fill="#87c9bd" opacity=".65"/>
+                <path d="M0 213Q60 165 132 216T260 214V390H0Z" fill="#0e273e"/>
+                <path d="M0 262Q65 218 130 268T260 265V390H0Z" fill="#081a33"/>
+                <path d="M0 326Q80 284 170 326T260 320V390H0Z" fill="#061326"/>
+              </svg>
+              <span class="syn-media-card__badge">04 / FEATURED</span>
+            </div>
+            <h3 class="syn-media-card__title">Blackwater</h3>
+          </a>
+          <p class="syn-media-card__meta">Thriller · 2026</p>
+        </article>
+        <article class="syn-media-card" data-syn-scroll-label="Sunward">
+          <a href="#new" class="syn-media-card__link" aria-label="Sunward — explore other titles">
+            <div class="syn-media-card__visual demo-poster-horizon">
+              <svg viewBox="0 0 260 390" aria-hidden="true" focusable="false">
+                <rect width="260" height="390" fill="#8e5166"/>
+                <circle cx="134" cy="160" r="80" fill="#eab083"/>
+                <path d="M0 266Q90 219 179 269T260 256V390H0Z" fill="#613451"/>
+                <path d="M0 314Q90 250 176 318T260 312V390H0Z" fill="#3d233d"/>
+                <path d="M0 365Q100 303 177 365T260 350V390H0Z" fill="#271c31"/>
+              </svg>
+              <span class="syn-media-card__badge">05 / FEATURED</span>
+            </div>
+            <h3 class="syn-media-card__title">Sunward</h3>
+          </a>
+          <p class="syn-media-card__meta">Adventure · 2026</p>
+        </article>
+        <article class="syn-media-card" data-syn-scroll-label="Static Bloom">
+          <a href="#new" class="syn-media-card__link" aria-label="Static Bloom — explore other titles">
+            <div class="syn-media-card__visual demo-poster-bloom">
+              <svg viewBox="0 0 260 390" aria-hidden="true" focusable="false">
+                <rect width="260" height="390" fill="#332447"/>
+                <g fill="#9c8bd6"><ellipse cx="130" cy="135" rx="30" ry="92"/><ellipse cx="130" cy="135" rx="30" ry="92" transform="rotate(60 130 135)"/><ellipse cx="130" cy="135" rx="30" ry="92" transform="rotate(120 130 135)"/></g>
+                <circle cx="130" cy="135" r="32" fill="#edbdaa"/>
+                <path d="M130 171v219" stroke="#99b4ae" stroke-width="6"/>
+                <path d="M130 274Q65 207 42 252Q66 310 130 274ZM130 315Q190 264 216 308Q180 348 130 315Z" fill="#557a7b"/>
+              </svg>
+              <span class="syn-media-card__badge">06 / FEATURED</span>
+            </div>
+            <h3 class="syn-media-card__title">Static Bloom</h3>
+          </a>
+          <p class="syn-media-card__meta">Fantasy · 2026</p>
+        </article>
+      </div>
+    </section>
+    <section class="syn-media-section" id="new" aria-labelledby="new-heading">
+      <div class="syn-media-section__heading"><h2 id="new-heading">New releases</h2><a href="#featured">Back to featured</a></div>
+      <div class="syn-grid" style="--syn-grid-min:14rem">
+        <article class="syn-panel"><p class="syn-eyebrow">01 / WORLDS</p><h3>Stories worth exploring</h3><p>Recombine this pattern for a book library, portfolio, gallery or product showcase.</p></article>
+        <article class="syn-panel"><p class="syn-eyebrow">02 / PERFORMANCE</p><h3>Static by default</h3><p>Responsive card rails use native scroll, keyboard focus and CSS scroll-snap.</p></article>
+        <article class="syn-panel"><p class="syn-eyebrow">03 / ACCESSIBILITY</p><h3>Designed for everyone</h3><p>Supports zoom, forced colors, reduced motion and independent link focus.</p></article>
+      </div>
+    </section>
+  </main>
+  <footer class="demo-footer">
+    <p>Fictional art and titles. No streaming, downloads or accounts are provided.</p>
+    <p><a href="../docs/media-entertainment.html">Read the implementation guide</a> · <a href="../docs/index.html">Syntyr documentation</a></p>
+  </footer>
+</body>
+</html>

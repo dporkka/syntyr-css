@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="Explore server-ready HTML business workflow layouts with file inputs, linked records and form controls. Fictional records; no backend or persistent actions included.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Native business workflows — Syntyr</title>
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="../dist/syntyr.recipes.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <a class="syn-button" href="#main">Skip to workspace</a>
+  <main class="syn-workspace" id="main">
+    <header class="syn-page-header">
+      <div>
+        <h1>Native business workflows</h1>
+        <p>Fictional records and server-ready markup. No JavaScript, upload endpoint, or persistence in this static example.</p>
+      </div>
+    </header>
+    <div class="syn-detail-layout">
+      <aside class="syn-detail-aside syn-app-card" aria-labelledby="folders-title">
+        <h2 id="folders-title">Resource folders</h2>
+        <nav aria-label="Browse resources">
+          <ul>
+            <li>
+              <details class="syn-details" open>
+                <summary>North region</summary>
+                <ul><li><a href="#record-rs204">RS-204 — Main Street</a></li></ul>
+              </details>
+            </li>
+            <li>
+              <details class="syn-details">
+                <summary>West region</summary>
+                <ul><li><a href="#record-rs088">RS-088 — River Road</a></li></ul>
+              </details>
+            </li>
+          </ul>
+        </nav>
+        <p class="syn-help">Disclosure groups expand with native keyboard controls. Links jump to the corresponding detail record.</p>
+      </aside>
+      <section class="syn-detail-main" aria-label="Record details">
+        <article class="syn-app-card" id="record-rs204" tabindex="-1" aria-labelledby="record-heading">
+          <header class="syn-page-header">
+            <div>
+              <h2 id="record-heading">RS-204 — Main Street</h2>
+              <p>Example edit form with an attachment picker and two explicit submit intents.</p>
+            </div>
+          </header>
+          <form id="resource-editor" class="syn-form" method="post" action="/resources/rs-204" enctype="multipart/form-data">
+            <div class="syn-field">
+              <label for="resource-title">Display name</label>
+              <input class="syn-input" id="resource-title" name="title" value="Main Street" required>
+            </div>
+            <div class="syn-upload-field">
+              <label for="resource-files">Attachments</label>
+              <input class="syn-input" id="resource-files" name="attachments" type="file"
+                     accept="image/png,image/jpeg,application/pdf" multiple aria-describedby="upload-help">
+              <p id="upload-help" class="syn-help">PNG, JPEG or PDF. Files are not uploaded here. An application must validate type, file size and authorization on the server.</p>
+              <p><strong>Existing attachments</strong></p>
+              <ul><li>Site photo.jpg — example existing file</li></ul>
+            </div>
+          </form>
+          <footer class="syn-form-actions">
+            <p class="syn-help">Demo only — server implementation required before saving.</p>
+            <div class="syn-form-actions__buttons">
+              <button class="syn-button" form="resource-editor" type="submit"
+                      name="intent" value="save" disabled>Save</button>
+              <button class="syn-button syn-button--primary" form="resource-editor" type="submit"
+                      name="intent" value="save-close" disabled>Save and close</button>
+            </div>
+          </footer>
+        </article>
+        <article class="syn-app-card" id="record-rs088" tabindex="-1" aria-labelledby="other-heading">
+          <h2 id="other-heading">RS-088 — River Road</h2>
+          <dl>
+            <dt>Region</dt><dd>West</dd>
+            <dt>Status</dt><dd>Requires review</dd>
+          </dl>
+          <p class="syn-help">This second record remains visible in the static HTML. A real server can render the selected record instead.</p>
+        </article>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Reference Syntyr CSS components, class names, design tokens, scopes, and semantic HTML patterns for lightweight application interfaces.">
-  <meta name="syntyr-source-sha256" content="0e651b406defc797338c46ea8ec195557a84ade031fb0c24768f8522c3ea0305">
+  <meta name="syntyr-source-sha256" content="92189e28f016620379e705d8a2025fe2b3f91b4510f617158f9bfde3df0bc009">
   <meta name="theme-color" content="#f5f7fb">
   <title>Syntyr CSS component and token contract — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/components">
@@ -36,16 +36,16 @@
         <article class="docs-prose" aria-label="Syntyr CSS component and token contract">
 <h1 id="syntyr-css-component-and-token-contract">Syntyr CSS component and token contract</h1>
 <p>Status: <strong>experimental v0.3-alpha</strong>, not yet released to a package registry. All CSS and markup are original to this repository; no upstream source code was copied.</p>
-<p>Native elements such as <code>search</code>, <code>figure</code>, <code>figcaption</code>, <code>kbd</code>, <code>mark</code>, <code>output</code>, <code>meter</code>, and <code>pre</code> are styled only in the optional semantic mode. Native classless forms receive vertical spacing, fieldsets group controls, tables can use real <code>caption</code> elements, and disclosure summaries retain browser markers and comfortable pointer targets. See <a href="../examples/native-elements.html">the no-JS native example</a>. The regular component-class API and HTML outside <code>.syn-root</code> are unchanged.</p>
+<p>Native elements such as <code>search</code>, <code>figure</code>, <code>figcaption</code>, <code>kbd</code>, <code>mark</code>, <code>output</code>, <code>meter</code>, and <code>pre</code> are styled only in the optional semantic mode. Native classless forms receive vertical spacing, fieldsets group controls, tables can use real <code>caption</code> elements, and disclosure summaries retain browser markers and comfortable pointer targets. See <a href="../examples/native-elements.html">the no-JS native example</a>. New <a href="semantic-components.html">semantic HTML composition recipes</a> show article metadata, native citations, change history, ruby annotations, and table footers, with a <a href="../examples/semantic-compositions.html">live gallery</a>. The regular component-class API and HTML outside <code>.syn-root</code> are unchanged.</p>
 <h2 id="loading-and-scoping">Loading and scoping</h2>
 <p>For the explicitly classed API (no automatic unclassed element styles):</p>
-<pre><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;syntyr.core.css&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;syntyr.core.css&quot;&gt;
 &lt;body class=&quot;syn-root syn-page&quot; data-syn-theme=&quot;grid&quot;&gt;
   &lt;button class=&quot;syn-button syn-button--primary&quot;&gt;Run&lt;/button&gt;
 &lt;/body&gt;
 </code></pre>
 <p>For Pico-like semantic markup, add the optional file <strong>after</strong> core and mark the subtree. Unclassed elements style automatically; opt in class-changing elements with <code>data-syn-semantic</code>:</p>
-<pre><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;syntyr.core.css&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;syntyr.core.css&quot;&gt;
 &lt;link rel=&quot;stylesheet&quot; href=&quot;syntyr.semantic.css&quot;&gt;
 &lt;section class=&quot;syn-root syn-semantic&quot; data-syn-theme=&quot;studio&quot;&gt;
   &lt;article&gt;
@@ -101,6 +101,11 @@ the surrounding label should provide additional activation area.</p>
 <td>native heading/text</td>
 </tr>
 <tr>
+<td>Content lists</td>
+<td><code>.syn-list</code>, optional <code>.syn-list--compact</code> and <code>.syn-list--accent</code></td>
+<td>unclassed <code>ul</code> / <code>ol</code> in semantic mode</td>
+</tr>
+<tr>
 <td>Status</td>
 <td><code>.syn-badge</code>, <code>.syn-badge--accent</code>, <code>.syn-status</code> and semantic variants, <code>.syn-alert</code>, <code>.syn-alert--danger</code>, <code>.syn-meter</code> on <code>progress</code></td>
 <td>native <code>progress</code></td>
@@ -124,6 +129,11 @@ the surrounding label should provide additional activation area.</p>
 <td>Overlays</td>
 <td><code>.syn-popover</code> on <code>[popover]</code>, <code>.syn-dialog</code> on <code>dialog</code>, <code>.syn-details</code> on <code>details</code></td>
 <td>browser defaults</td>
+</tr>
+<tr>
+<td>Dropdowns</td>
+<td><code>.syn-dropdown</code> on <code>.syn-popover</code>, <code>.syn-dropdown__item</code>, <code>.syn-dropdown__group-label</code>, <code>.syn-dropdown__separator</code>, <code>.syn-dropdown__shortcut</code>, optional <code>.syn-select--enhanced</code></td>
+<td>Native select / disclosure / popover</td>
 </tr>
 <tr>
 <td>Data</td>
@@ -152,6 +162,7 @@ the surrounding label should provide additional activation area.</p>
 </tr>
 </tbody>
 </table>
+<p>For layout composition, the shell defaults to a maximum width of 72rem and a total inline inset of 2rem (normally 1rem per side). Set <code>--syn-shell-max</code> and <code>--syn-shell-inline-inset</code> on the shell to customize these dimensions. The header supports <code>--syn-header-gap</code> and <code>--syn-header-padding-block</code>; navigation supports <code>--syn-nav-gap</code>. All controls are optional and preserve existing defaults.</p>
 <p>For wrapping action/filter clusters, use existing <code>.syn-inline</code> with optional
 <code>--syn-inline-align</code>, <code>--syn-inline-justify</code> and <code>--syn-inline-gap</code>.
 For a main region followed by an aside, <code>.syn-sidecar</code> wraps intrinsically
@@ -167,7 +178,7 @@ The existing flex/grid/spacing helpers are unchanged. Load the optional
 module only when it is needed.</p>
 <p>Customize individual components with custom properties rather than a new
 set of modifiers:</p>
-<pre><code class="language-html">&lt;article class=&quot;syn-panel&quot;
+<pre tabindex="0"><code class="language-html">&lt;article class=&quot;syn-panel&quot;
          style=&quot;--syn-panel-padding:1.5rem; --syn-panel-radius:.75rem;
                 --syn-panel-border-width:2px&quot;&gt;
   &lt;button class=&quot;syn-button&quot;
@@ -185,9 +196,37 @@ These values are local CSS custom properties, not compile-time settings.
 Inspect <code>metadata/syntyr-api.json</code> for the machine-readable API index,
 or use the <a href="editor-integration.html">editor integration instructions</a>.</p>
 <p>Optional native browser integrations: <code>.syn-popover--anchored</code> for invoker-relative popovers, <code>.syn-textarea--autosize</code> for <code>field-sizing: content</code>, and (with the optional <code>syntyr.motion.css</code> stylesheet) <code>.syn-popover--transition</code> and <code>.syn-reading-progress</code>. See the <a href="native-browser-apis.html">browser API guide</a> for compatibility and fallbacks.</p>
+<p>See <a href="dropdowns.html">dropdown and native select patterns</a> for scriptless action panels, customizable selects, and the separately opt-in ARIA menu adapter.</p>
 <p>Use native button <code>popovertarget=&quot;id&quot;</code> to control a popover and <code>commandfor=&quot;id&quot; command=&quot;show-modal&quot;</code> to open a dialog in supporting browsers. This last native dialog invoker API has newer browser support; provide alternate ways to reach important content where needed. Do not build custom ARIA dialog/tab/combobox patterns unless they are tested and necessary.</p>
 <p>For component-level package imports and optional native UI recipes, see
 <a href="native-patterns.html">native patterns</a>.</p>
+<h3 id="content-lists-and-grouped-rows-alpha5-source-candidate">Content lists and grouped rows (alpha.5 source candidate)</h3>
+<p>Use an ordinary <code>&lt;ul&gt;</code> or <code>&lt;ol&gt;</code> inside <code>.syn-semantic</code> for native list
+spacing, nesting and markers. When loading <strong>core only</strong>, opt into the same
+scoped list presentation with <code>.syn-list</code>. It preserves native bullet shapes,
+ordered numbering (<code>start</code>, <code>reversed</code>, <code>value</code>), writing direction and
+screen-reader list semantics. <code>.syn-list--compact</code> reduces vertical item gaps
+and <code>.syn-list--accent</code> colors the top-level markers; both are optional.
+Set <code>--syn-list-item-gap</code> locally to override the item rhythm.</p>
+<pre tabindex="0"><code class="language-html">&lt;ul class=&quot;syn-list syn-list--accent&quot;&gt;
+  &lt;li&gt;Accessible headings&lt;/li&gt;
+  &lt;li&gt;Native nested lists
+    &lt;ul&gt;&lt;li&gt;First detail&lt;/li&gt;&lt;li&gt;Second detail&lt;/li&gt;&lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol class=&quot;syn-list syn-list--compact&quot; start=&quot;9&quot;&gt;
+  &lt;li&gt;Review&lt;/li&gt;&lt;li&gt;Publish&lt;/li&gt;
+&lt;/ol&gt;
+</code></pre>
+<p><code>.syn-feature-list</code> is a legible, accent-marked list intended for pricing and
+features; override its row gap with <code>--syn-feature-list-gap</code>. The distinct
+<code>.syn-list-group</code> is for markerless grouped navigation or collection rows.
+Customize row density by setting <code>--syn-list-row-padding</code> on a containing
+<code>.syn-list-group</code> rather than creating a new component. When removing markers
+with <code>list-style: none</code>, Safari/VoiceOver may not expose the list as a list;
+add <code>role=&quot;list&quot;</code> to the native <code>ul</code> or <code>ol</code> if list semantics are intended.
+Do <strong>not</strong> apply a global marker reset or use fake list text in place of
+semantic list markup.</p>
 <h2 id="standard-low-entropy-component-inventory">Standard low-entropy component inventory</h2>
 <p><strong>Standard does not mean a CSS class for every HTML element.</strong> Use
 <code>syntyr.core.css</code> for explicitly classed components and
@@ -292,7 +331,7 @@ opt-in, scoped under <code>.syn-root</code>, and use the existing theme tokens. 
 <p>Use <code>&lt;fieldset&gt;</code> and <code>&lt;legend&gt;</code> to give radio/checkbox groups a name.
 <code>.syn-choice-card</code> is a real <code>&lt;label&gt;</code>, not an ARIA radio substitute.
 Compose a responsive layout with existing <code>.syn-grid</code>:</p>
-<pre><code class="language-html">&lt;fieldset class=&quot;syn-fieldset&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;fieldset class=&quot;syn-fieldset&quot;&gt;
   &lt;legend&gt;Choose a plan&lt;/legend&gt;
   &lt;div class=&quot;syn-grid&quot;&gt;
     &lt;label class=&quot;syn-choice-card&quot;&gt;
@@ -314,7 +353,7 @@ Keep the actual radio visible and focusable. No manually synchronized
 Syntyr inputs and their field label. A server can additionally render
 <code>data-syn-state=&quot;error&quot;</code> on <code>.syn-field</code> to style the field consistently
 before user interaction, without changing browser validity or hiding the error:</p>
-<pre><code class="language-html">&lt;div class=&quot;syn-field&quot; data-syn-state=&quot;error&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;div class=&quot;syn-field&quot; data-syn-state=&quot;error&quot;&gt;
   &lt;label class=&quot;syn-label&quot; for=&quot;email&quot;&gt;Email&lt;/label&gt;
   &lt;input class=&quot;syn-input&quot; id=&quot;email&quot; name=&quot;email&quot; type=&quot;email&quot; required
          aria-invalid=&quot;true&quot; aria-describedby=&quot;email-help email-error&quot;&gt;
@@ -331,7 +370,7 @@ This pattern works without JavaScript.</p>
 <p>Use <code>.syn-filter-choices</code> to display a group of <code>.syn-chip</code> labels backed by
 real named radio/checkbox inputs. A wrapping filter group should be inside a
 named fieldset in a normal GET form:</p>
-<pre><code class="language-html">&lt;form action=&quot;/campaigns&quot; method=&quot;get&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;form action=&quot;/campaigns&quot; method=&quot;get&quot;&gt;
   &lt;fieldset class=&quot;syn-fieldset&quot;&gt;
     &lt;legend&gt;Campaign status&lt;/legend&gt;
     &lt;div class=&quot;syn-filter-choices&quot;&gt;
@@ -402,8 +441,8 @@ forced colors, mobile overflow, and actual server form behavior in consumers.</p
 </tbody>
 </table>
 <p>The selectors style <strong>unclassed elements only</strong>, or elements explicitly marked <code>data-syn-semantic</code>. A classed element is left to its own application styles by default; no global element reset is added. Syntyr does not emulate native dialog or popover activation, file inputs, meters or input validation.</p>
-<p>For a copyable page covering the additions, see <a href="../examples/native-elements.html">native HTML element examples</a>. The <code>commandfor</code> / <code>command=&quot;show-modal&quot;</code> dialog button is progressively enhanced, not a guarantee for browsers that lack HTML invoker commands.</p>
-<pre><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;syntyr.core.css&quot;&gt;
+<p>For a copyable page covering the additions, see <a href="../examples/native-elements.html">native HTML element examples</a>. That example also shows labeled <code>datalist</code> suggestions, grouped <code>select</code>/<code>optgroup</code> options, and named <code>details</code> disclosures. Native suggestions do not validate accepted values; host applications validate them on the server. Named disclosures are exclusive-open in supporting browsers, with a usable ordinary-details fallback elsewhere. Semantic file/color inputs and fieldsets shrink at enlarged text sizes, while wide tables remain in labeled, keyboard-scrollable regions. The <code>commandfor</code> / <code>command=&quot;show-modal&quot;</code> dialog button is progressively enhanced, not a guarantee for browsers that lack HTML invoker commands.</p>
+<pre tabindex="0"><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;syntyr.core.css&quot;&gt;
 &lt;link rel=&quot;stylesheet&quot; href=&quot;syntyr.semantic.css&quot;&gt;
 &lt;main class=&quot;syn-root syn-semantic&quot;&gt;
   &lt;dl&gt;&lt;dt&gt;Availability&lt;/dt&gt;&lt;dd&gt;12 active screens&lt;/dd&gt;&lt;/dl&gt;
@@ -475,7 +514,7 @@ APIs. <strong>Not every HTML element benefits from a CSS reset.</strong></p>
 </table>
 <p>Try the <a href="../examples/common-ui.html">CSS-only common UI example</a> and the
 <a href="../examples/native-elements.html">existing native elements example</a>.</p>
-<pre><code class="language-html">&lt;nav class=&quot;syn-nav-tabs&quot; aria-label=&quot;Account sections&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;nav class=&quot;syn-nav-tabs&quot; aria-label=&quot;Account sections&quot;&gt;
   &lt;ul&gt;
     &lt;li&gt;&lt;a href=&quot;/settings&quot; aria-current=&quot;page&quot;&gt;Settings&lt;/a&gt;&lt;/li&gt;
     &lt;li&gt;&lt;a href=&quot;/billing&quot;&gt;Billing&lt;/a&gt;&lt;/li&gt;
@@ -523,7 +562,11 @@ toast lifecycles) belong to the host app, not a CSS runtime.</p>
 </tr>
 <tr>
 <td><code>--syn-space-1</code> ... <code>--syn-space-5</code></td>
-<td>Spacing scale</td>
+<td>Stable fixed spacing scale</td>
+</tr>
+<tr>
+<td><code>--syn-space-fluid-1</code> ... <code>--syn-space-fluid-4</code></td>
+<td>Optional fluid gaps and padding, bounded by adjacent fixed tokens (unreleased alpha.5)</td>
 </tr>
 <tr>
 <td><code>--syn-cut</code>, <code>--syn-radius</code>, <code>--syn-line</code>, <code>--syn-control-height</code></td>
@@ -532,7 +575,7 @@ toast lifecycles) belong to the host app, not a CSS runtime.</p>
 </tbody>
 </table>
 <p>Application CSS can override tokens:</p>
-<pre><code class="language-css">/* Unlayered CSS overrides the library's layered defaults. */
+<pre tabindex="0"><code class="language-css">/* Unlayered CSS overrides the library's layered defaults. */
 .my-surface { --syn-accent: #a9f890; }
 </code></pre>
 <h2 id="optional-charts-and-microvisualizations">Optional charts and microvisualizations</h2>
@@ -554,7 +597,7 @@ fetch data or require a renderer. Read <a href="viz.html">Syntyr Viz</a> and ope
 </ul>
 <h2 id="distribution-behavior">Distribution behavior</h2>
 <p>The repository now includes an <strong>optional CSS-only <code>package.json</code> for package-manager distribution</strong>; there is still no Node runtime requirement, bundling dependency, or mandatory package manager. A standard Python 3 build script creates deterministic concatenated CSS and validates exact committed outputs (see <a href="package-managers.html">optional package-manager guide</a>):</p>
-<pre><code class="language-sh">python3 scripts/build.py
+<pre tabindex="0"><code class="language-sh">python3 scripts/build.py
 python3 scripts/build.py --check
 python3 -m unittest discover -s tests -v
 </code></pre>
@@ -562,12 +605,12 @@ python3 -m unittest discover -s tests -v
 <p>MIT; this version is original work, not a fork or copy of Pico CSS, Chota or Open Props. If future work ports code from an upstream library, preserve that project's copyright and MIT notices and document the relevant files in <code>THIRD_PARTY_NOTICES.md</code>.</p>
 <h2 id="embedded-versus-full-page-usage">Embedded versus full-page usage</h2>
 <p><code>syn-root</code> provides a bounded styling context. Add <code>syn-page</code> <strong>only for full-page experiences</strong>. This separation prevents an embedded themed widget from unexpectedly forcing a viewport-height section.</p>
-<pre><code class="language-html">&lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;noir&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;noir&quot;&gt;
   &lt;div class=&quot;syn-panel&quot;&gt;This can be embedded inside an existing application.&lt;/div&gt;
 &lt;/section&gt;
 </code></pre>
 <p>For invalid form controls, associate error text through native labeling and <code>aria-describedby</code>, and set <code>aria-invalid=&quot;true&quot;</code> for server-provided errors. <code>syn-error</code> changes text color; do not rely on color alone to communicate invalid state.</p>
-<pre><code class="language-html">&lt;label class=&quot;syn-label&quot; for=&quot;email&quot;&gt;Email&lt;/label&gt;
+<pre tabindex="0"><code class="language-html">&lt;label class=&quot;syn-label&quot; for=&quot;email&quot;&gt;Email&lt;/label&gt;
 &lt;input class=&quot;syn-input&quot; id=&quot;email&quot; type=&quot;email&quot; aria-invalid=&quot;true&quot; aria-describedby=&quot;email-error&quot;&gt;
 &lt;p class=&quot;syn-error&quot; id=&quot;email-error&quot;&gt;Enter a valid email address.&lt;/p&gt;
 </code></pre>
@@ -677,7 +720,7 @@ Classless checkbox and radio labels align their controls inline when
 <code>.syn-region</code> <strong>ancestor</strong> for a horizontal layout at wide <em>container</em> widths;
 the narrow presentation is vertical. Use <code>.syn-steps--vertical</code> to keep a
 vertical layout at every width.</p>
-<pre><code class="language-html">&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot;&gt;
   &lt;h2&gt;Workspace setup&lt;/h2&gt;
   &lt;ol class=&quot;syn-steps&quot; role=&quot;list&quot; aria-label=&quot;Workspace setup progress&quot;&gt;
     &lt;li class=&quot;syn-step&quot; data-syn-state=&quot;complete&quot;&gt;
@@ -699,13 +742,17 @@ Never use colors alone to communicate completion or failure. CSS cannot
 implement step navigation, eligibility checks or server-side transitions.
 Long step descriptions and translated text keep numbered markers aligned at the
 block start so vertical connectors do not cross the marker or its numeral.</p>
-<p>See <a href="../examples/workflow-steps.html">the zero-JavaScript example</a>. These classes
-are not included in the published immutable alpha.4 release.</p>
+<p>See <a href="../examples/workflow-steps.html">the zero-JavaScript example</a> and the
+<a href="../examples/workflow-operations.html">composed operations workflow gallery</a>, which
+reuses these steps with existing activity timelines and approval surfaces.
+These classes are not included in the published immutable alpha.4 release.</p>
         </article>
-        <aside class="docs-article-sidebar"><nav aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#loading-and-scoping">Loading and scoping</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#components">Components</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#optional-composition-utilities-and-component-overrides">Optional composition utilities and component overrides</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#content-lists-and-grouped-rows-alpha5-source-candidate">Content lists and grouped rows (alpha.5 source candidate)</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#standard-low-entropy-component-inventory">Standard low-entropy component inventory</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#native-choices-filters-and-rich-list-rows-alpha5-source-candidate">Native choices, filters and rich list rows (alpha.5 source candidate)</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#choice-cards">Choice cards</a>
@@ -727,7 +774,38 @@ are not included in the published immutable alpha.4 release.</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#visual-role-examples">Visual role examples</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#progressive-rendering-extensions">Progressive rendering extensions</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#workflow-steps-source-candidate-only">Workflow steps (source candidate only)</a>
-        </nav></aside>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#loading-and-scoping">Loading and scoping</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#components">Components</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#optional-composition-utilities-and-component-overrides">Optional composition utilities and component overrides</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#content-lists-and-grouped-rows-alpha5-source-candidate">Content lists and grouped rows (alpha.5 source candidate)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#standard-low-entropy-component-inventory">Standard low-entropy component inventory</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#native-choices-filters-and-rich-list-rows-alpha5-source-candidate">Native choices, filters and rich list rows (alpha.5 source candidate)</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#choice-cards">Choice cards</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#validation-browser-and-server">Validation (browser and server)</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#native-filter-choices">Native filter choices</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#rich-collection-rows">Rich collection rows</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#neutral-first-visual-styling">Neutral-first visual styling</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#native-html-elements-optional-semantic-mode">Native HTML elements (optional semantic mode)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#additional-common-ui-elements-and-semantic-html">Additional common UI elements and semantic HTML</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#theme-tokens">Theme tokens</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#optional-charts-and-microvisualizations">Optional charts and microvisualizations</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#accessibility-and-performance-contracts">Accessibility and performance contracts</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#distribution-behavior">Distribution behavior</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#licensing-and-provenance">Licensing and provenance</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#embedded-versus-full-page-usage">Embedded versus full-page usage</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#v03-compositional-patterns-no-build-step">v0.3 compositional patterns (no build step)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#optional-saas-business-and-cli-compositions-development-branch">Optional SaaS, business and CLI compositions (development branch)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#minimalist-compositions-experimental">Minimalist compositions (experimental)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#visual-role-examples">Visual role examples</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#progressive-rendering-extensions">Progressive rendering extensions</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#workflow-steps-source-candidate-only">Workflow steps (source candidate only)</a>
+            </nav>
+          </details>
+        </aside>
       </div>
       <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="components.md">Markdown source</a></nav>
     </main>

@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Semantic HTML components and copyable examples: native search suggestions, glossaries, highlights, MathML, timelines, FAQ, forms, responsive media and tables.">
+  <title>Semantic HTML component gallery — Syntyr CSS</title>
+  <link rel="icon" href="../assets/syntyr-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="../dist/syntyr.semantic.css">
+</head>
+<body class="syn-root syn-page syn-semantic" data-syn-theme="studio">
+  <a href="#main">Skip to main content</a>
+  <header class="syn-header">
+    <a class="syn-logo" href="../index.html">SYNTYR / CSS</a>
+    <nav aria-label="Gallery navigation" class="syn-nav">
+      <a href="../docs/index.html">Docs</a>
+      <a href="../docs/semantic-components.html">Copy HTML recipes</a>
+      <a href="native-elements.html">Native controls</a>
+    </nav>
+  </header>
+  <main class="syn-shell" id="main">
+    <nav class="syn-breadcrumbs" aria-label="Breadcrumb">
+      <ol>
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../docs/index.html">Docs</a></li>
+        <li aria-current="page">Semantic components</li>
+      </ol>
+    </nav>
+    <h1>Semantic HTML components</h1>
+    <p>Copy-owned native markup for publishing and SaaS interfaces. No JavaScript, custom widgets, or client-side framework is needed for these examples.</p>
+    <p><a href="../docs/semantic-components.html">View copyable source and usage guidance</a></p>
+    <details>
+      <summary>Browse all semantic examples</summary>
+      <nav aria-label="On this page">
+      <ol>
+        <li><a href="#pricing-title">Example price</a></li>
+        <li><a href="#footnotes-title">Footnotes</a></li>
+        <li><a href="#technical-title">Technical notation</a></li>
+        <li><a href="#grouped-title">Grouped table</a></li>
+        <li><a href="#contact-title">Contact details</a></li>
+        <li><a href="#faq-title">FAQ disclosures</a></li>
+        <li><a href="#search-title">Issue search</a></li>
+        <li><a href="#choices-title">Grouped form</a></li>
+        <li><a href="#status-title">Progress and measurement</a></li>
+        <li><a href="#media-title">Responsive media</a></li>
+        <li><a href="#suggestions-title">Autocomplete suggestions</a></li>
+        <li><a href="#glossary-title">Terminology and glossary</a></li>
+        <li><a href="#excerpt-title">Highlighted excerpt</a></li>
+        <li><a href="#chronology-title">Ordered release steps</a></li>
+        <li><a href="#math-title">MathML expression</a></li>
+        <li><a href="#resources-title">Resource commands</a></li>
+      </ol>
+      </nav>
+    </details>
+
+    <section aria-labelledby="article-title">
+      <h2 id="article-title">Article preview and byline</h2>
+      <article>
+        <header>
+          <h3><a href="../blog/accessible-native-html.html">Accessible native HTML</a></h3>
+          <p>Published <time datetime="2026-11-16">16 November 2026</time></p>
+        </header>
+        <p>Use HTML structure that search engines, assistive technologies and browsers already understand.</p>
+        <footer><small>Documentation / native markup</small></footer>
+      </article>
+    </section>
+
+    <section aria-labelledby="meta-title">
+      <h2 id="meta-title">Metadata and definition list</h2>
+      <article>
+        <h3>Workspace details</h3>
+        <dl>
+          <dt>Plan</dt><dd>Team</dd>
+          <dt>Seats</dt><dd><data value="12">12 active seats</data></dd>
+          <dt>Renewal</dt><dd><time datetime="2027-01-01">1 January 2027</time></dd>
+          <dt>Availability</dt><dd><abbr title="Service-level agreement">SLA</abbr> 99.9%</dd>
+        </dl>
+      </article>
+    </section>
+
+    <section aria-labelledby="quote-title">
+      <h2 id="quote-title">Quotation with attribution</h2>
+      <article>
+        <figure>
+          <blockquote>
+            <p>Use the language of the platform before adding an abstraction.</p>
+          </blockquote>
+          <figcaption>From <cite>Semantic Design Notes</cite></figcaption>
+        </figure>
+        <blockquote>
+          <p>Let the browser do the work it already does well.</p>
+          <footer>— Native UI field guide</footer>
+        </blockquote>
+      </article>
+    </section>
+
+    <section aria-labelledby="revision-title">
+      <h2 id="revision-title">Revision history</h2>
+      <article>
+        <h3>Updated retention policy</h3>
+        <p>Retention: <del datetime="2026-11-15">90 days</del>
+          <ins datetime="2026-11-16">120 days</ins>.</p>
+        <p>The server owns the actual revision history; these elements label an editorial change.</p>
+      </article>
+    </section>
+
+    <section aria-labelledby="language-title">
+      <h2 id="language-title">Ruby annotations and bidirectional text</h2>
+      <article>
+        <p>Pronunciation: <ruby>漢<rp>(</rp><rt>hàn</rt><rp>)</rp></ruby></p>
+        <p>Display name with unknown direction: <bdi>مريم</bdi> — saved successfully.</p>
+        <p>Deliberate direction override: <bdo dir="rtl">ABC</bdo></p>
+        <p>The browser preserves annotation layout and isolates bidirectional names.</p>
+      </article>
+    </section>
+
+    <section aria-labelledby="table-title">
+      <h2 id="table-title">Tabular totals</h2>
+      <article>
+        <table>
+          <caption>Monthly license usage</caption>
+          <thead><tr><th scope="col">License</th><th scope="col">Seats</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Team</th><td>12</td></tr>
+            <tr><th scope="row">Guest</th><td>3</td></tr>
+          </tbody>
+          <tfoot><tr><th scope="row">Total</th><td>15</td></tr></tfoot>
+        </table>
+        <p>Native caption and row/column header relationships remain intact.</p>
+      </article>
+    </section>
+
+    <section aria-labelledby="pricing-title">
+      <h2 id="pricing-title">Previous price versus editorial revision</h2>
+      <article>
+        <h3>Team plan — demonstration only</h3>
+        <p>Example price: <s><data value="39">US$39 per month</data></s>
+          <strong><data value="29">US$29 per month</data></strong></p>
+        <p><small>Illustrative prices, not a live Syntyr offer. Use
+          <code>&lt;s&gt;</code> for an outdated advertised price and
+          <code>&lt;del&gt;</code> for a documented change.</small></p>
+      </article>
+    </section>
+
+    <section aria-labelledby="footnotes-title">
+      <h2 id="footnotes-title">Linked footnotes and return navigation</h2>
+      <article>
+        <h3>Browser-native references</h3>
+        <p>Every reference works without scripts
+          <sup id="note-ref-1"><a href="#note-1" aria-label="Footnote 1">1</a></sup>.</p>
+        <section aria-labelledby="notes-heading">
+          <h4 id="notes-heading">Reference notes</h4>
+          <ol>
+            <li id="note-1">Ordinary document links also work with assistive technology.
+              <a href="#note-ref-1">Return to reference 1</a>.</li>
+          </ol>
+        </section>
+      </article>
+    </section>
+
+    <section aria-labelledby="technical-title">
+      <hgroup>
+        <h2 id="technical-title">Technical notation</h2>
+        <p>Built-in semantics for formulas, input, output and long paths.</p>
+      </hgroup>
+      <article>
+        <p>Area = <var>width</var> × <var>height</var>.
+          Water is H<sub>2</sub>O; E = mc<sup>2</sup>.</p>
+        <p>Press <kbd>Enter</kbd>. The program prints <samp>Ready</samp>.</p>
+        <p>Example endpoint: <code>api.example.test/<wbr>v1/<wbr>document-exports</code></p>
+        <p><small>These paths are placeholders; no API is contacted.</small></p>
+      </article>
+    </section>
+
+    <section aria-labelledby="grouped-title">
+      <h2 id="grouped-title">Grouped table headings</h2>
+      <article>
+        <table>
+          <caption>Example monthly accounts</caption>
+          <colgroup><col></colgroup>
+          <colgroup span="2"></colgroup>
+          <thead>
+            <tr><th scope="col" rowspan="2">Plan</th><th scope="colgroup" colspan="2">Accounts</th></tr>
+            <tr><th scope="col">Paid</th><th scope="col">Trial</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Starter</th><td>8</td><td>3</td></tr>
+            <tr><th scope="row">Growth</th><td>4</td><td>2</td></tr>
+          </tbody>
+          <tfoot><tr><th scope="row">Total</th><td>12</td><td>5</td></tr></tfoot>
+        </table>
+        <p>Header relationships remain native; Syntyr adds only presentation.</p>
+      </article>
+    </section>
+
+    <section aria-labelledby="contact-title">
+      <h2 id="contact-title">Contact information for a document</h2>
+      <article>
+        <h3>Maintainer contact</h3>
+        <address>
+          Questions about the Syntyr guide?
+          <a href="https://github.com/dporkka/syntyr-css/issues">Contact maintainers through GitHub Issues</a>.
+        </address>
+        <p>An <code>&lt;address&gt;</code> represents contact details, not arbitrary postal data.</p>
+      </article>
+    </section>
+
+    <section aria-labelledby="faq-title">
+      <h2 id="faq-title">Native FAQ accordion</h2>
+      <article>
+        <h3>Common questions</h3>
+        <details name="syn-semantic-faq" open>
+          <summary>Does this require JavaScript?</summary>
+          <p>No. The browser handles disclosure state, keyboard input and closing sibling items.</p>
+        </details>
+        <details name="syn-semantic-faq">
+          <summary>Can I use it with server-rendered HTML?</summary>
+          <p>Yes. A native disclosure works in plain HTML, Django, Rails, Go templates and more.</p>
+        </details>
+        <details name="syn-semantic-faq">
+          <summary>Can multiple answers remain open?</summary>
+          <p>Yes. Omit the shared <code>name</code> attribute to allow independent panels.</p>
+        </details>
+      </article>
+    </section>
+
+    <section aria-labelledby="search-title">
+      <h2 id="search-title">Semantic search landmark</h2>
+      <article>
+        <h3>Search the public Syntyr issue tracker</h3>
+        <search>
+          <form action="https://github.com/dporkka/syntyr-css/issues" method="get">
+            <label for="semantic-issues-query">Search Syntyr issues</label>
+            <input id="semantic-issues-query" type="search" name="q" required
+                   list="reference-topic-suggestions" placeholder="Example: accessibility">
+            <button type="submit">Find issues on GitHub</button>
+          </form>
+        </search>
+        <p><small>Submitting opens GitHub's public issue search. No local search index or JavaScript required.</small></p>
+      </article>
+    </section>
+
+    <section aria-labelledby="choices-title">
+      <h2 id="choices-title">Grouped choice form</h2>
+      <article>
+        <h3>Browse Syntyr topics</h3>
+        <form action="https://github.com/dporkka/syntyr-css/issues" method="get">
+          <fieldset>
+            <legend>Browse an issue topic</legend>
+            <label for="semantic-issue-topic">Issue topic</label>
+            <select name="q" id="semantic-issue-topic" required>
+              <option value="">Choose a topic</option>
+              <optgroup label="Native HTML">
+                <option value="semantic">Semantic HTML</option>
+                <option value="accessibility">Accessibility</option>
+              </optgroup>
+              <optgroup label="Styles">
+                <option value="css">CSS</option>
+                <option value="themes">Themes</option>
+              </optgroup>
+            </select>
+            <button type="submit">View matching issues</button>
+          </fieldset>
+        </form>
+      </article>
+    </section>
+
+    <section aria-labelledby="status-title">
+      <h2 id="status-title">Progress, measurement and computed output</h2>
+      <article>
+        <h3>Illustrative status — not live metrics</h3>
+        <label for="semantic-review-progress">Review progress: 7 of 10 complete</label>
+        <progress id="semantic-review-progress" value="7" max="10">7 of 10</progress>
+        <label for="semantic-capacity-meter">Sample capacity: 68%</label>
+        <meter id="semantic-capacity-meter" value="68" min="0" max="100"
+               low="30" high="85" optimum="70">68%</meter>
+        <p>Calculated review total:
+          <output name="semantic-review-total">7 completed reviews</output>
+        </p>
+        <p><small>Progress measures completion; a meter measures a bounded value. Server-rendered output does not auto-update without host logic.</small></p>
+      </article>
+    </section>
+
+    <section aria-labelledby="media-title">
+      <h2 id="media-title">Responsive image with caption</h2>
+      <article>
+        <h3>Art-directed screenshot</h3>
+        <figure>
+          <picture>
+            <source media="(max-width: 600px)"
+                    srcset="../docs/previews/studio-settings.webp">
+            <img src="../docs/previews/studio-editor.webp" width="1120" height="700"
+                 loading="lazy" decoding="async"
+                 alt="Syntyr Studio interface: settings on small screens and editor on larger screens">
+          </picture>
+          <figcaption>Two existing Syntyr Studio screenshots, selected using native media queries.</figcaption>
+        </figure>
+      </article>
+    </section>
+
+    <section aria-labelledby="suggestions-title">
+      <h2 id="suggestions-title">Native search suggestions</h2>
+      <article>
+        <h3>Autocomplete from a datalist</h3>
+        <p>The <a href="#semantic-issues-query">existing issue search</a> now suggests
+          relevant topics; users can still type any query.</p>
+        <datalist id="reference-topic-suggestions">
+          <option value="semantic"></option>
+          <option value="accessibility"></option>
+          <option value="themes"></option>
+          <option value="typography"></option>
+        </datalist>
+        <p><small>The browser owns suggestion rendering. The server validates submitted text.</small></p>
+      </article>
+    </section>
+
+    <section aria-labelledby="glossary-title">
+      <h2 id="glossary-title">Glossary of semantic terms</h2>
+      <article>
+        <h3 id="glossary-heading">Native HTML glossary</h3>
+        <dl>
+          <dt><dfn>Native semantics</dfn></dt>
+          <dd>Meaning provided by HTML elements without custom roles.</dd>
+          <dt><dfn>ARIA</dfn></dt>
+          <dd><abbr title="Accessible Rich Internet Applications">ARIA</abbr>
+            extends semantics only where the native element is insufficient.</dd>
+        </dl>
+      </article>
+    </section>
+
+    <section aria-labelledby="excerpt-title">
+      <h2 id="excerpt-title">Highlighted search excerpt</h2>
+      <article aria-labelledby="excerpt-heading">
+        <h3 id="excerpt-heading">Highlighted documentation excerpt</h3>
+        <p><mark>Native HTML</mark> retains browser-owned focus and semantics.</p>
+        <p><q>Syntyr styles these elements without replacing browser semantics</q>
+          — <cite><a href="../docs/semantic-components.html">Semantic HTML component recipes</a></cite>.</p>
+      </article>
+    </section>
+
+    <section aria-labelledby="chronology-title">
+      <h2 id="chronology-title">Reverse chronological steps</h2>
+      <article>
+        <h3>Illustrative release steps (not real release history)</h3>
+        <ol reversed start="3">
+          <li><time datetime="2026-11-16">16 November 2026</time>: Publish examples</li>
+          <li><time datetime="2026-11-15">15 November 2026</time>: Validate HTML</li>
+          <li><time datetime="2026-11-14">14 November 2026</time>: Draft content</li>
+        </ol>
+      </article>
+    </section>
+
+    <section aria-labelledby="math-title">
+      <h2 id="math-title">Native mathematical notation</h2>
+      <article>
+        <h3>Structured MathML</h3>
+        <figure>
+          <math display="block">
+            <semantics>
+              <mrow>
+                <msup><mi>a</mi><mn>2</mn></msup>
+                <mo>+</mo>
+                <msup><mi>b</mi><mn>2</mn></msup>
+                <mo>=</mo>
+                <msup><mi>c</mi><mn>2</mn></msup>
+              </mrow>
+              <annotation encoding="application/x-tex">a^2 + b^2 = c^2</annotation>
+            </semantics>
+          </math>
+          <figcaption>Example Pythagorean identity: a squared plus b squared equals c squared.</figcaption>
+        </figure>
+        <p><small>Native MathML is laid out by the browser, with a readable caption.</small></p>
+      </article>
+    </section>
+
+    <section aria-labelledby="resources-title">
+      <h2 id="resources-title">Resource command list</h2>
+      <article>
+        <h3>Documentation actions</h3>
+        <menu>
+          <li><a href="../docs/semantic-components.html">Read semantic recipes</a></li>
+          <li><a href="native-elements.html">Browse native controls</a></li>
+          <li><a href="https://github.com/dporkka/syntyr-css/issues">Report an issue</a></li>
+        </menu>
+        <p><small>This is a native list of actions, not an ARIA application menu.</small></p>
+      </article>
+    </section>
+
+    <aside class="syn-panel" aria-labelledby="aside-title">
+      <h2 id="aside-title">About these compositions</h2>
+      <p>An aside contains complementary information, not primary article content. The existing Syntyr panel class adds the visual boundary; no custom aside component is needed.</p>
+      <p>See <a href="../docs/semantic-components.html">copyable recipes</a> and <a href="native-interactions.html">native interactions</a>.</p>
+    </aside>
+  </main>
+  <footer class="syn-shell">
+    <p><small>Syntyr CSS — native semantics, optional visual layer.</small></p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Static Syntyr operation feedback and record revision comparison recipes.">
+  <title>Syntyr — Operation feedback and record revisions</title>
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="../dist/syntyr.recipes.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <a class="syn-button" href="#main">Skip to main content</a>
+  <main id="main" class="syn-shell syn-flow">
+    <header class="syn-page-header">
+      <div>
+        <p class="syn-eyebrow">SYNTYR / PRERELEASE RECIPES</p>
+        <h1>Operation feedback and record revisions</h1>
+        <p class="syn-muted">Five independent, illustrative snapshots and a read-only before/after comparison.</p>
+      </div>
+      <a class="syn-button" href="../docs/recipes.html">Read the integration recipe</a>
+    </header>
+
+    <section class="syn-app-card syn-flow" aria-labelledby="state-heading">
+      <h2 id="state-heading">Operation feedback states</h2>
+      <p class="syn-caption">Static examples only; these states do not change, and this page is not connected to a server. No save or retry action is available.</p>
+      <section class="syn-operation-feedback" data-syn-state="unsaved" aria-labelledby="unsaved-title">
+        <h3 id="unsaved-title">Unsaved changes</h3>
+        <p>Edits to the review form have not been submitted.</p>
+      </section>
+      <section class="syn-operation-feedback" data-syn-state="pending" aria-labelledby="pending-title">
+        <h3 id="pending-title">Saving changes</h3>
+        <p>Example pending state; an actual application must manage its request lifecycle.</p>
+      </section>
+      <section class="syn-operation-feedback" data-syn-state="saved" aria-labelledby="saved-title">
+        <h3 id="saved-title">Changes saved</h3>
+        <p>Example confirmation; a real application must confirm successful persistence before showing it.</p>
+      </section>
+      <section class="syn-operation-feedback" data-syn-state="failed" aria-labelledby="failed-title">
+        <h3 id="failed-title">Save failed</h3>
+        <p>Example failure; preserve user input and provide an actual recovery path in a live application.</p>
+      </section>
+      <section class="syn-operation-feedback" data-syn-state="conflict" aria-labelledby="conflict-title">
+        <h3 id="conflict-title">Revision conflict</h3>
+        <p>Example stale-version conflict; compare changes before attempting another server-authorized update.</p>
+      </section>
+    </section>
+
+    <section class="syn-app-card syn-flow" aria-labelledby="history-heading">
+      <header>
+        <h2 id="history-heading">Record revision comparison</h2>
+        <p class="syn-muted">Illustrative changes by the operations team on
+          <time datetime="2026-11-17">17 November 2026</time>. This read-only snapshot is not an audit log.</p>
+      </header>
+      <dl class="syn-record-fields">
+        <div>
+          <dt>Campaign title</dt>
+          <dd>
+            <div class="syn-change-pair">
+              <span class="syn-change-before"><small>Previous</small><del>Autumn launch</del></span>
+              <span class="syn-change-after"><small>Updated</small><ins>Winter campaign</ins></span>
+            </div>
+          </dd>
+        </div>
+        <div>
+          <dt>Approval status</dt>
+          <dd>
+            <div class="syn-change-pair">
+              <span class="syn-change-before"><small>Previous</small><del>Pending review</del></span>
+              <span class="syn-change-after"><small>Updated</small><ins>Approved</ins></span>
+            </div>
+          </dd>
+        </div>
+        <div>
+          <dt>Optional note added</dt>
+          <dd>
+            <div class="syn-change-pair">
+              <span class="syn-change-after"><small>Added</small><ins>Verify the installation photographs.</ins></span>
+            </div>
+          </dd>
+        </div>
+        <div>
+          <dt>Withdrawn note</dt>
+          <dd>
+            <div class="syn-change-pair">
+              <span class="syn-change-before"><small>Removed</small><del>Call the field technician.</del></span>
+            </div>
+          </dd>
+        </div>
+      </dl>
+    </section>
+    <p class="syn-caption">The host application must supply authoritative values, concurrency control, authorization, persistence, and any live announcements. Styling does not change data.</p>
+  </main>
+</body>
+</html>

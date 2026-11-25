@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Compare Syntyr CSS, Tailwind v4 and plain CSS for server-rendered SaaS dashboards. See tradeoffs, complete free demos, honest limitations and no-build installation.">
+  <meta name="theme-color" content="#f5f7fb">
+  <link rel="canonical" href="https://syntyr-css.pages.dev/docs/tailwind-alternative">
+  <link rel="icon" href="../assets/syntyr-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="docs.css">
+  <title>Syntyr vs Tailwind CSS and plain CSS — Syntyr CSS docs</title>
+  <style>
+    /* Page-specific styles, never part of Syntyr's distributed CSS contract. */
+    .alternative-hero { padding-block: clamp(2rem, 6vw, 5rem) 2rem; max-inline-size: 74rem; }
+    .alternative-hero h1 { max-inline-size: 20ch; font-size: clamp(2.5rem, 6vw, 4.8rem); line-height: 1.06; letter-spacing: -.055em; }
+    .alternative-hero .syn-lede { max-inline-size: 68ch; }
+    .alternative-actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-block: 1.5rem; }
+    .alternative-section { padding-block: 2rem; max-inline-size: 76rem; }
+    .alternative-section h2 { font-size: clamp(1.5rem, 3.5vw, 2.2rem); }
+    .alternative-table-wrap { max-inline-size: 100%; overflow-x: auto; border: 1px solid var(--syn-frame); }
+    .alternative-table { border-collapse: collapse; width: 100%; min-inline-size: 43rem; }
+    .alternative-table th, .alternative-table td { text-align: start; vertical-align: top; padding: .85rem 1rem; border-block-end: 1px solid var(--syn-frame); overflow-wrap: anywhere; }
+    .alternative-table th { background: var(--syn-surface-hi); font-weight: 650; }
+    .alternative-table tbody tr:last-child td, .alternative-table tbody tr:last-child th { border-block-end: 0; }
+    .alternative-table caption { text-align: start; padding: .65rem 1rem; color: var(--syn-muted); }
+    .alternative-choices { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); gap: 1rem; margin-block: 1.5rem; }
+    .alternative-choices article { min-inline-size: 0; }
+    .alternative-choices h3 { margin-block-end: .5rem; }
+    .alternative-choices ul { padding-inline-start: 1.25rem; }
+    .alternative-choices li { margin-block: .45rem; }
+    .alternative-code { max-inline-size: 100%; overflow-x: auto; padding: 1rem; background: var(--syn-surface-recessed); border: 1px solid var(--syn-frame); font: .85rem/1.6 var(--syn-mono); }
+    .alternative-note { border-inline-start: .2rem solid var(--syn-accent); padding: .8rem 1rem; background: var(--syn-surface); }
+    .alternative-links { display: flex; flex-wrap: wrap; gap: .7rem 1.4rem; }
+    .alternative-links a { min-block-size: 2.75rem; display: inline-flex; align-items: center; }
+    @media (forced-colors: active) { .alternative-note, .alternative-table-wrap, .alternative-code { border-color: CanvasText; } }
+  </style>
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <a class="syn-button docs-skip" href="#alternative-main">Skip to comparison</a>
+  <div class="syn-shell">
+    <header class="syn-header docs-header">
+      <a class="syn-logo" href="../index.html">SYNTYR / CSS</a>
+      <nav class="syn-nav" aria-label="Primary navigation">
+        <a href="../index.html">Home</a>
+        <a href="guides.html">Guides</a>
+        <a href="catalog.html">Components</a>
+        <a href="products.html">Products</a>
+      </nav>
+      <details class="site-mobile-menu">
+        <summary>Menu</summary>
+        <nav aria-label="Mobile navigation">
+          <a href="../index.html">Home</a>
+          <a href="guides.html">Guides</a>
+          <a href="catalog.html">Components</a>
+          <a href="products.html">Products</a>
+        </nav>
+      </details>
+    </header>
+    <main id="alternative-main">
+      <section class="alternative-hero" aria-labelledby="alternative-title">
+        <p class="syn-eyebrow">CSS FRAMEWORK DECISION GUIDE / NOV 2026</p>
+        <h1 id="alternative-title">A Tailwind alternative for HTML-first applications.</h1>
+        <p class="syn-lede">Syntyr is a small, framework-neutral styling system built from ordinary CSS. It is best for teams that want reusable SaaS interface patterns without a required CSS compilation step. Tailwind and plain CSS remain better choices for plenty of projects.</p>
+        <div class="alternative-actions">
+          <a class="syn-button syn-button--primary" href="../examples/operations-console.html">Explore free operations console</a>
+          <a class="syn-button syn-button--outline" href="distribution.html">Get the free MIT core</a>
+          <a class="syn-button" href="framework-integrations.html">Server framework integrations</a>
+        </div>
+        <p class="syn-muted">Syntyr is currently an experimental prerelease. The published alpha.4 and unreleased alpha.5 source candidate differ; verify the exact asset you adopt. No benchmark or conversion-rate advantage is claimed.</p>
+      </section>
+      <section class="alternative-section" aria-labelledby="comparison-title">
+        <h2 id="comparison-title">Syntyr vs Tailwind v4 vs plain CSS</h2>
+        <p>Different approaches solve different problems. These are architectural distinctions, not measured speed rankings.</p>
+        <div class="alternative-table-wrap" role="region" aria-label="CSS approach comparison" tabindex="0">
+          <table class="alternative-table">
+            <caption>Practical choices for new and existing web applications.</caption>
+            <thead><tr><th scope="col">Consideration</th><th scope="col">Syntyr CSS</th><th scope="col">Tailwind CSS v4</th><th scope="col">Plain CSS</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">How you author UI</th><td>Semantic HTML with named component classes, plus optional scoped classless mode.</td><td>Utility classes composed directly in HTML or components.</td><td>Any selectors and components you define.</td></tr>
+              <tr><th scope="row">Setup</th><td>Use a version-pinned precompiled stylesheet; no consumer build tool required.</td><td>Usually compiled for production. A standalone CLI is available without installing Node.js.</td><td>Link a CSS file directly; optional tooling is your choice.</td></tr>
+              <tr><th scope="row">JavaScript</th><td>No runtime JavaScript requirement for styling. App behavior remains yours.</td><td>Generated styles need no runtime JavaScript. Interactive behavior remains yours.</td><td>None required for styling; interactive behavior remains yours.</td></tr>
+              <tr><th scope="row">Design defaults</th><td>Presets, tokens, accessible-state patterns and SaaS compositions.</td><td>Utility scales and design tokens; teams compose their own UI or add a kit.</td><td>Full control, but components and design decisions start from scratch.</td></tr>
+              <tr><th scope="row">Ecosystem and maturity</th><td>Experimental, small ecosystem and more limited component coverage.</td><td>Large established tooling, documentation and community ecosystem.</td><td>Universal web standard; no vendor ecosystem needed.</td></tr>
+              <tr><th scope="row">Customization</th><td>Native --syn-* properties, cascade layers and scoped styles.</td><td>CSS-first theme configuration and utilities; custom CSS works alongside them.</td><td>Native custom properties, layers, selectors and full cascade control.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <section class="alternative-section" aria-labelledby="decision-title">
+        <h2 id="decision-title">Which approach should you choose?</h2>
+        <div class="alternative-choices">
+          <article class="syn-panel">
+            <h3>Choose Syntyr for HTML-first SaaS</h3>
+            <ul>
+              <li>You render HTML with Go, Rails, Django, Phoenix, Laravel, HTMX or a similar stack.</li>
+              <li>You need cohesive forms, dashboards, navigation and status presentations quickly.</li>
+              <li>You prefer versioned CSS files, scoped design tokens and little build maintenance.</li>
+            </ul>
+            <p><a href="../examples/saas-workflows.html">Inspect free SaaS workflows</a></p>
+          </article>
+          <article class="syn-panel">
+            <h3>When Tailwind is a better choice</h3>
+            <ul>
+              <li>Your team already works efficiently with Tailwind utilities and shared components.</li>
+              <li>You rely on Tailwind's broad ecosystem, plugins, tooling and AI-generated examples.</li>
+              <li>A utility-first approach improves consistency across contributors.</li>
+            </ul>
+            <p><a href="https://tailwindcss.com/docs/installation/tailwind-cli">Tailwind's official CLI documentation</a></p>
+          </article>
+          <article class="syn-panel">
+            <h3>When plain CSS is enough</h3>
+            <ul>
+              <li>The website is small, brand-specific or already has a stable design system.</li>
+              <li>You want total control and have no need for standardized components.</li>
+              <li>Any extra framework would be more code and process than the application warrants.</li>
+            </ul>
+            <p><a href="performance-validation.html">How to measure the actual tradeoffs</a></p>
+          </article>
+        </div>
+        <p class="alternative-note">Already have a working Tailwind or plain CSS system? Do not migrate purely to remove a dependency. Compare maintenance cost, real-page CSS delivery, accessibility and the effort of the next interface change.</p>
+      </section>
+      <section class="alternative-section" aria-labelledby="try-title">
+        <h2 id="try-title">Try Syntyr without changing your stack</h2>
+        <p>Copy <code>syntyr.core.css</code> from a <a href="distribution.html">published, immutable release</a> into your own app's assets. This sample uses the published component-class approach:</p>
+        <pre class="alternative-code"><code>&lt;link rel="stylesheet" href="/css/syntyr.core.css"&gt;
+&lt;section class="syn-root" data-syn-theme="studio"&gt;
+  &lt;article class="syn-panel"&gt;
+    &lt;h2&gt;Account overview&lt;/h2&gt;
+    &lt;p&gt;Review your current workspace.&lt;/p&gt;
+    &lt;a class="syn-button syn-button--primary" href="/accounts"&gt;View accounts&lt;/a&gt;
+  &lt;/article&gt;
+&lt;/section&gt;</code></pre>
+        <p>For low-class semantic HTML, the <strong>unreleased alpha.5 source candidate</strong> offers a single-file <code>syntyr.semantic-bundle.css</code> and opt-in <code>syn-semantic</code> styling. It is not part of the published alpha.4 distribution. See the <a href="../examples/semantic-starter.html">semantic starter</a> and <a href="tailwind-research.html">engineering comparison</a> before adopting a prerelease contract.</p>
+        <p>Syntyr does not implement application logic, authentication, data fetching or client-side interactions. Its no runtime JavaScript styling contract does not imply every application can function without JavaScript.</p>
+        <div class="alternative-links">
+          <a href="../examples/operations-console.html">Free dashboard demo</a>
+          <a href="../examples/saas-workflows.html">Form and workflow patterns</a>
+          <a href="framework-integrations.html">Go, Phoenix, Rails, Django and HTMX</a>
+          <a href="products.html">Free vs proposed products</a>
+        </div>
+      </section>
+      <section class="alternative-section" aria-labelledby="evidence-title">
+        <h2 id="evidence-title">Verify claims with real code</h2>
+        <p>The free examples contain fictional data and no connected backend. Product prices on the <a href="products.html">roadmap page</a> are research hypotheses, not active offers. Compare your own page and tasks rather than using GitHub stars or unverified productivity multipliers.</p>
+        <p>Building a real application? <a href="https://github.com/dporkka/syntyr-css/issues/3">Join the public design-partner feedback pilot</a> to review actual markup, component gaps and integration friction. This is a request for feedback, not a paid preorder or guarantee of support.</p>
+        <p>Sources: <a href="https://tailwindcss.com/docs/theme">Tailwind v4 theme variables</a>, <a href="https://tailwindcss.com/docs/installation/tailwind-cli">Tailwind CLI</a>, <a href="tailwind-research.html">Syntyr architectural rationale</a> and <a href="performance-validation.html">Syntyr reproducible measurement guidance</a>. These document features and tradeoffs, not a claimed winner.</p>
+      </section>
+    </main>
+    <footer class="syn-header"><span class="syn-caption">SYNTYR CSS · MIT CORE · EXPERIMENTAL</span><a href="../index.html">Home</a></footer>
+  </div>
+</body>
+</html>

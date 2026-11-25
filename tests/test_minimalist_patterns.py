@@ -16,7 +16,7 @@ class MinimalistPatternsContract(unittest.TestCase):
 
     def test_auto_palette_remains_in_sync_with_named_studio_and_grid(self):
         import re
-        from test_v05_contract import theme_rules
+        from test_theme_utility_contract import theme_rules
         css = (ROOT / "src/tokens.css").read_text()
         start = css.index('.syn-root[data-syn-theme="auto"]')
         auto = css[css.index("{", start) + 1:css.index("}", start)]

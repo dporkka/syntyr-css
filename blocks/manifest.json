@@ -290,6 +290,1182 @@
         "releases",
         "updates"
       ]
+    },
+    {
+      "id": "resource-workspace",
+      "category": "Applications",
+      "title": "Resource management workspace",
+      "description": "Server-ready resource search, record table, pagination and empty state.",
+      "modules": [
+        "core",
+        "recipes"
+      ],
+      "tags": [
+        "saas",
+        "resources",
+        "crud",
+        "admin",
+        "operations"
+      ]
+    },
+    {
+      "id": "crm-workspace",
+      "category": "Applications",
+      "title": "CRM pipeline workspace",
+      "description": "Accessible native deal stages, filters and links with no drag runtime.",
+      "modules": [
+        "core",
+        "recipes"
+      ],
+      "tags": [
+        "saas",
+        "crm",
+        "pipeline",
+        "deals",
+        "sales"
+      ]
+    },
+    {
+      "id": "billing-workspace",
+      "category": "Applications",
+      "title": "Billing and settings workspace",
+      "description": "Subscription details, invoice history and a server-owned billing contact form.",
+      "modules": [
+        "core",
+        "recipes"
+      ],
+      "tags": [
+        "saas",
+        "billing",
+        "settings",
+        "invoices",
+        "forms"
+      ]
+    },
+    {
+      "id": "auth-sign-in",
+      "category": "Applications",
+      "title": "Sign-in form",
+      "description": "Native authentication form with accessible labels and recovery link.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "authentication",
+        "login",
+        "form"
+      ]
+    },
+    {
+      "id": "auth-recovery",
+      "category": "Applications",
+      "title": "Account recovery",
+      "description": "Email recovery request presentation with security integration notes.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "authentication",
+        "recovery",
+        "password"
+      ]
+    },
+    {
+      "id": "error-recovery",
+      "category": "Applications",
+      "title": "Error recovery view",
+      "description": "Actionable error state without fake success or client-side retry.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "error",
+        "recovery",
+        "status"
+      ]
+    },
+    {
+      "id": "empty-state",
+      "category": "Applications",
+      "title": "Empty collection state",
+      "description": "Clear primary action and filter recovery guidance.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "empty",
+        "no-results",
+        "onboarding"
+      ]
+    },
+    {
+      "id": "comparison-table",
+      "category": "Marketing",
+      "title": "Features comparison table",
+      "description": "A semantic comparison matrix that can scroll within narrow containers.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "comparison",
+        "features",
+        "matrix"
+      ]
+    },
+    {
+      "id": "integrations-grid",
+      "category": "Marketing",
+      "title": "Integration directory grid",
+      "description": "A grid of documented integration entry points and benefits.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "integrations",
+        "directory",
+        "apps"
+      ]
+    },
+    {
+      "id": "newsletter-signup",
+      "category": "Marketing",
+      "title": "Newsletter signup panel",
+      "description": "An accessible subscription form with a native server-backed fallback.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "newsletter",
+        "email",
+        "lead"
+      ]
+    },
+    {
+      "id": "announcement-banner",
+      "category": "Marketing",
+      "title": "Site announcement strip",
+      "description": "A lightweight product or event announcement with a contextual destination.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "announcement",
+        "promotion",
+        "notice"
+      ]
+    },
+    {
+      "id": "logo-wall",
+      "category": "Marketing",
+      "title": "Partner logo text wall",
+      "description": "A compact text-only partner strip with no unlicensed logos.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "logos",
+        "partners",
+        "trust"
+      ]
+    },
+    {
+      "id": "process-steps",
+      "category": "Services",
+      "title": "How it works steps",
+      "description": "An ordered and accessible sequence for explaining a service.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "process",
+        "steps",
+        "workflow"
+      ]
+    },
+    {
+      "id": "services-grid",
+      "category": "Services",
+      "title": "Service offerings grid",
+      "description": "A services section with clear descriptions and destination links.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "agency",
+        "services",
+        "business"
+      ]
+    },
+    {
+      "id": "service-areas",
+      "category": "Services",
+      "title": "Service coverage cards",
+      "description": "A service-area section suitable for local and regional businesses.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "locations",
+        "local",
+        "services"
+      ]
+    },
+    {
+      "id": "portfolio-grid",
+      "category": "Portfolio",
+      "title": "Selected work grid",
+      "description": "An accessible project gallery without fragile image dependencies.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "portfolio",
+        "projects",
+        "work"
+      ]
+    },
+    {
+      "id": "team-grid",
+      "category": "Services",
+      "title": "Team introduction cards",
+      "description": "A team directory section without invented portraits or credentials.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "team",
+        "people",
+        "about"
+      ]
+    },
+    {
+      "id": "contact-quote",
+      "category": "Services",
+      "title": "Project inquiry form",
+      "description": "A labeled contact form with appropriate native inputs and privacy guidance.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "contact",
+        "lead",
+        "inquiry"
+      ]
+    },
+    {
+      "id": "article-featured",
+      "category": "Editorial",
+      "title": "Featured editorial story",
+      "description": "A prominent lead article with an accessible summary and a real reading link.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "blog",
+        "featured",
+        "editorial"
+      ]
+    },
+    {
+      "id": "article-grid",
+      "category": "Editorial",
+      "title": "Article and news grid",
+      "description": "A responsive collection of dated articles with titles and excerpts.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "blog",
+        "news",
+        "posts",
+        "cards"
+      ]
+    },
+    {
+      "id": "article-detail",
+      "category": "Editorial",
+      "title": "Long-form article layout",
+      "description": "A semantic article header, readable paragraphs and related links.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "article",
+        "blog",
+        "reading"
+      ]
+    },
+    {
+      "id": "author-profile",
+      "category": "Editorial",
+      "title": "Author bio card",
+      "description": "A concise author introduction with a clearly labeled profile link.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "author",
+        "bio",
+        "profile"
+      ]
+    },
+    {
+      "id": "editorial-intro-split",
+      "category": "Editorial",
+      "title": "Editorial intro with context panel",
+      "description": "An editorial introduction with primary actions and a contextual checklist beside it.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "intro",
+        "split",
+        "editorial",
+        "landing"
+      ]
+    },
+    {
+      "id": "article-toc",
+      "category": "Editorial",
+      "title": "Article with contents sidebar",
+      "description": "A long-form article and real anchor-linked table of contents in a wrapping sidecar.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "article",
+        "contents",
+        "sidebar",
+        "reading"
+      ]
+    },
+    {
+      "id": "case-study-preview",
+      "category": "Portfolio",
+      "title": "Case-study teaser",
+      "description": "A project outcome summary with challenges, solution and next action.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "case-study",
+        "portfolio",
+        "results"
+      ]
+    },
+    {
+      "id": "site-header",
+      "category": "Navigation",
+      "title": "Responsive site header",
+      "description": "A compact brand, navigation and call-to-action header with native links.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "header",
+        "navigation",
+        "website"
+      ]
+    },
+    {
+      "id": "site-footer",
+      "category": "Navigation",
+      "title": "Multi-column site footer",
+      "description": "A reusable footer with separate navigation groups and business information.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "footer",
+        "links",
+        "website"
+      ]
+    },
+    {
+      "id": "header-centered",
+      "category": "Navigation",
+      "title": "Centered editorial header",
+      "description": "Centered brand, horizontal links, and a secondary call to action.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "header",
+        "centered",
+        "editorial",
+        "navigation"
+      ]
+    },
+    {
+      "id": "header-split",
+      "category": "Navigation",
+      "title": "Two-row product header",
+      "description": "Separate utility and product navigation with a prominent action.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "header",
+        "utility",
+        "two-row",
+        "saas"
+      ]
+    },
+    {
+      "id": "header-disclosure",
+      "category": "Navigation",
+      "title": "Native disclosure header",
+      "description": "Compact brand and expandable keyboard-accessible menu without JavaScript.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "header",
+        "details",
+        "mobile",
+        "disclosure"
+      ]
+    },
+    {
+      "id": "footer-compact",
+      "category": "Navigation",
+      "title": "Compact single-row footer",
+      "description": "Space-saving brand, legal links and disclosure in a wrapping row.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "footer",
+        "compact",
+        "minimal",
+        "legal"
+      ]
+    },
+    {
+      "id": "footer-sitemap",
+      "category": "Navigation",
+      "title": "Four-column sitemap footer",
+      "description": "Responsive product, resource, company and legal navigation groups.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "footer",
+        "sitemap",
+        "columns",
+        "links"
+      ]
+    },
+    {
+      "id": "footer-newsletter",
+      "category": "Navigation",
+      "title": "Newsletter and links footer",
+      "description": "Email subscription example beside site links; requires a host-owned backend.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "footer",
+        "newsletter",
+        "subscription",
+        "form"
+      ]
+    },
+    {
+      "id": "mega-navigation",
+      "category": "Navigation",
+      "title": "Native expandable mega menu",
+      "description": "Keyboard-friendly disclosure with grouped destination links and no menu runtime.",
+      "modules": [
+        "core",
+        "recipes"
+      ],
+      "tags": [
+        "mega menu",
+        "navigation",
+        "disclosure",
+        "site"
+      ]
+    },
+    {
+      "id": "docs-layout",
+      "category": "Technical",
+      "title": "Documentation page",
+      "description": "Documentation navigation, breadcrumb and article content.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "documentation",
+        "sidebar",
+        "technical"
+      ]
+    },
+    {
+      "id": "content-collection",
+      "category": "Publishing",
+      "title": "Filterable content collection",
+      "description": "Loop-style article cards with real GET search, taxonomy selection and pagination.",
+      "modules": [
+        "core",
+        "recipes"
+      ],
+      "tags": [
+        "loop grid",
+        "archive",
+        "blog",
+        "category",
+        "filters"
+      ]
+    },
+    {
+      "id": "product-collection",
+      "category": "Commerce",
+      "title": "Product collection cards",
+      "description": "Product catalog cards with explicit price and detail links.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "ecommerce",
+        "products",
+        "catalog"
+      ]
+    },
+    {
+      "id": "category-showcase",
+      "category": "Commerce",
+      "title": "Shop category highlights",
+      "description": "A merchandise category section with links instead of fabricated checkout controls.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "shop",
+        "categories",
+        "merchandising"
+      ]
+    },
+    {
+      "id": "feature-spotlight",
+      "category": "Marketing",
+      "title": "Feature spotlight",
+      "description": "An editorial split section with a concrete feature benefit and a complementary product detail.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "feature",
+        "spotlight",
+        "split",
+        "landing",
+        "layout"
+      ]
+    },
+    {
+      "id": "trust-assurance",
+      "category": "Marketing",
+      "title": "Trust and assurance section",
+      "description": "Transparent questions to ask about security, reliability, and data handling; not certification claims.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "trust",
+        "security",
+        "assurance",
+        "compliance",
+        "marketing"
+      ]
+    },
+    {
+      "id": "event-registration",
+      "category": "Marketing",
+      "title": "Event registration section",
+      "description": "An agenda and accessible native signup form; your server must implement registration.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "event",
+        "registration",
+        "webinar",
+        "signup",
+        "marketing",
+        "form"
+      ]
+    },
+    {
+      "id": "help-center",
+      "category": "Applications",
+      "title": "Help center landing",
+      "description": "A searchable-looking help index built from real navigation links, not a fake search control.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "help",
+        "support",
+        "knowledgebase",
+        "navigation",
+        "layout"
+      ]
+    },
+    {
+      "id": "notification-center",
+      "category": "Applications",
+      "title": "Notification center",
+      "description": "Time-ordered notifications with visible status labels and real detail destinations.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "inbox",
+        "alerts",
+        "notification",
+        "activity",
+        "layout"
+      ]
+    },
+    {
+      "id": "api-endpoint-reference",
+      "category": "Technical",
+      "title": "API endpoint reference",
+      "description": "Readable example request and response, with method, route, and JSON; your API owns behavior.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "api",
+        "endpoint",
+        "documentation",
+        "technical",
+        "code"
+      ]
+    },
+    {
+      "id": "scrollable-card-rail",
+      "category": "Marketing",
+      "title": "Scrollable product card rail",
+      "description": "An accessible, CSS-only horizontal collection for feature, portfolio or editorial cards.",
+      "modules": [
+        "core",
+        "recipes"
+      ],
+      "tags": [
+        "carousel",
+        "scroll",
+        "cards",
+        "features"
+      ]
+    },
+    {
+      "id": "bento-feature-grid",
+      "category": "Marketing",
+      "title": "Responsive bento feature grid",
+      "description": "A container-aware asymmetric feature section using composable cards.",
+      "modules": [
+        "core",
+        "recipes"
+      ],
+      "tags": [
+        "bento",
+        "features",
+        "grid"
+      ]
+    },
+    {
+      "id": "hero-product-preview",
+      "category": "Marketing",
+      "title": "Product screenshot hero",
+      "description": "Split-screen product hero with semantic CSS-only mock dashboard content.",
+      "modules": [
+        "core",
+        "recipes"
+      ],
+      "tags": [
+        "hero",
+        "product",
+        "showcase"
+      ]
+    },
+    {
+      "id": "feature-spotlight-detail",
+      "category": "Marketing",
+      "title": "Split feature detail spotlight",
+      "description": "Full split section with illustration, record details and activity timeline.",
+      "modules": [
+        "core",
+        "recipes"
+      ],
+      "tags": [
+        "features",
+        "showcase",
+        "split"
+      ]
+    },
+    {
+      "id": "customer-case-study",
+      "category": "Marketing",
+      "title": "Customer case study detail",
+      "description": "A complete editorial case-study layout with honest illustrative metrics.",
+      "modules": [
+        "core",
+        "recipes"
+      ],
+      "tags": [
+        "case-study",
+        "story",
+        "social-proof"
+      ]
+    },
+    {
+      "id": "pricing-comparison",
+      "category": "Marketing",
+      "title": "Pricing and feature comparison",
+      "description": "Plan cards and a keyboard-scrollable semantic comparison table.",
+      "modules": [
+        "core",
+        "recipes"
+      ],
+      "tags": [
+        "pricing",
+        "comparison",
+        "plans"
+      ]
+    },
+    {
+      "id": "auth-sign-up",
+      "category": "Applications",
+      "title": "Account registration screen",
+      "description": "Native sign-up form and next-step guidance with real host routes.",
+      "modules": [
+        "core",
+        "recipes"
+      ],
+      "tags": [
+        "auth",
+        "sign-up",
+        "forms"
+      ]
+    },
+    {
+      "id": "resource-crud",
+      "category": "Applications",
+      "title": "Resource create and browse screen",
+      "description": "Filterable records, detail navigation and native create form.",
+      "modules": [
+        "core",
+        "recipes"
+      ],
+      "tags": [
+        "crud",
+        "resources",
+        "table"
+      ]
+    },
+    {
+      "id": "organization-members",
+      "category": "Applications",
+      "title": "Team and invitation management",
+      "description": "Workspace roster, role information and a native invite form.",
+      "modules": [
+        "core",
+        "recipes"
+      ],
+      "tags": [
+        "organization",
+        "team",
+        "roles"
+      ]
+    },
+    {
+      "id": "billing-usage",
+      "category": "Applications",
+      "title": "Subscription and usage overview",
+      "description": "Plan details, native metering and invoice history.",
+      "modules": [
+        "core",
+        "recipes"
+      ],
+      "tags": [
+        "billing",
+        "usage",
+        "subscription"
+      ]
+    },
+    {
+      "id": "integration-connection",
+      "category": "Applications",
+      "title": "Integration connection states",
+      "description": "Connection directory with connected, disconnected and error examples.",
+      "modules": [
+        "core",
+        "recipes"
+      ],
+      "tags": [
+        "integrations",
+        "connections",
+        "status"
+      ]
+    },
+    {
+      "id": "developer-api-settings",
+      "category": "Applications",
+      "title": "API key and webhook settings",
+      "description": "Masked API-key metadata, secure-endpoint form and documentation routes.",
+      "modules": [
+        "core",
+        "recipes"
+      ],
+      "tags": [
+        "api-keys",
+        "webhooks",
+        "developer"
+      ]
+    },
+    {
+      "id": "image-gallery",
+      "category": "Portfolio",
+      "title": "Responsive image gallery",
+      "description": "Four original local illustrations in a CSS-only responsive gallery with native full-image links.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "gallery",
+        "images",
+        "photography",
+        "portfolio"
+      ]
+    },
+    {
+      "id": "image-story",
+      "category": "Marketing",
+      "title": "Image and story split",
+      "description": "A media-and-copy section with semantic figure, responsive image and action.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "image",
+        "story",
+        "about",
+        "feature"
+      ]
+    },
+    {
+      "id": "testimonials-grid",
+      "category": "Marketing",
+      "title": "Testimonials grid",
+      "description": "Three sample quotation cards with clear demo-only attribution.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "testimonials",
+        "reviews",
+        "social-proof"
+      ]
+    },
+    {
+      "id": "milestone-timeline",
+      "category": "Services",
+      "title": "Company milestones timeline",
+      "description": "A chronological history using native dates and an ordered vertical sequence.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "timeline",
+        "history",
+        "about",
+        "milestones"
+      ]
+    },
+    {
+      "id": "event-agenda",
+      "category": "Services",
+      "title": "Event agenda",
+      "description": "A schedule of talks and sessions with native time elements.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "events",
+        "agenda",
+        "schedule",
+        "conference"
+      ]
+    },
+    {
+      "id": "company-story",
+      "category": "Company",
+      "title": "Company story and milestones",
+      "description": "An accessible company introduction with mission copy and an ordered story timeline.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "about",
+        "story",
+        "company",
+        "mission"
+      ]
+    },
+    {
+      "id": "customer-reviews",
+      "category": "Marketing",
+      "title": "Customer review grid",
+      "description": "Original attributed review cards with an explicit sample-content disclosure.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "reviews",
+        "testimonials",
+        "social proof"
+      ]
+    },
+    {
+      "id": "use-case-showcase",
+      "category": "Marketing",
+      "title": "Industry and use-case showcase",
+      "description": "Audience-specific benefits with real destination links and honest example content.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "solutions",
+        "industries",
+        "use cases",
+        "cards"
+      ]
+    },
+    {
+      "id": "locations-hours",
+      "category": "Services",
+      "title": "Locations and opening hours",
+      "description": "Semantic multi-location contacts with structured hours and accessibility links.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "locations",
+        "hours",
+        "local business",
+        "contact"
+      ]
+    },
+    {
+      "id": "decision-guide",
+      "category": "Services",
+      "title": "Three-path decision guide",
+      "description": "A responsive choice of three service approaches with visible criteria and tradeoffs.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "decision",
+        "comparison",
+        "services",
+        "paths"
+      ]
+    },
+    {
+      "id": "faq-sidecar",
+      "category": "Services",
+      "title": "FAQs with a contact sidebar",
+      "description": "Native expandable answers alongside a clear contact path.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "faq",
+        "questions",
+        "sidebar",
+        "contact"
+      ]
+    },
+    {
+      "id": "careers-listings",
+      "category": "Company",
+      "title": "Careers and open positions",
+      "description": "Readable role summaries with clear application routes and example-data disclosure.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "careers",
+        "jobs",
+        "recruiting",
+        "hiring"
+      ]
+    },
+    {
+      "id": "principles-columns",
+      "category": "Company",
+      "title": "Three-column principles section",
+      "description": "Organizational principles with concrete explanations in a responsive grid.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "principles",
+        "values",
+        "company",
+        "columns"
+      ]
+    },
+    {
+      "id": "feature-disclosures",
+      "category": "Marketing",
+      "title": "Native feature switcher",
+      "description": "Exclusive browser-native disclosures for feature storytelling without a script.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "features",
+        "accordion",
+        "progressive enhancement",
+        "no javascript"
+      ]
+    },
+    {
+      "id": "hero-photo",
+      "category": "Marketing",
+      "title": "Photographic hero section",
+      "description": "An image-led introduction with a meaningful action and figure caption.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "hero",
+        "image",
+        "landing",
+        "photography"
+      ]
+    },
+    {
+      "id": "before-after",
+      "category": "Portfolio",
+      "title": "Before and after image comparison",
+      "description": "Two semantic, responsive photos with accessible full-image links; no scripted comparison slider.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "before",
+        "after",
+        "portfolio",
+        "images"
+      ]
+    },
+    {
+      "id": "resource-downloads",
+      "category": "Publishing",
+      "title": "Free resources and downloads",
+      "description": "Native download links to reusable illustrations in a flexible resource grid.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "resources",
+        "downloads",
+        "files",
+        "library"
+      ]
+    },
+    {
+      "id": "resource-index",
+      "category": "Publishing",
+      "title": "Grouped resource topic index",
+      "description": "A documentation and resource hub with grouped descriptive navigation links.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "resources",
+        "index",
+        "documentation",
+        "navigation"
+      ]
+    },
+    {
+      "id": "press-highlights",
+      "category": "Marketing",
+      "title": "News and press highlights",
+      "description": "A dated editorial summary grid with descriptive story destinations.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "press",
+        "mentions",
+        "news",
+        "announcements"
+      ]
+    },
+    {
+      "id": "feature-rows",
+      "category": "Marketing",
+      "title": "Stacked feature story rows",
+      "description": "Two narrative feature rows with contextual detail cards and destination links.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "features",
+        "story",
+        "rows",
+        "content"
+      ]
+    },
+    {
+      "id": "impact-narrative",
+      "category": "Marketing",
+      "title": "Metrics with explanatory narrative",
+      "description": "Contextualized illustrative metrics paired with interpretation and source guidance.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "metrics",
+        "story",
+        "stats",
+        "explanation"
+      ]
+    },
+    {
+      "id": "social-links",
+      "category": "Navigation",
+      "title": "Community and social links",
+      "description": "A semantic link directory for communities, updates and contact channels.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "social",
+        "community",
+        "links",
+        "follow"
+      ]
+    },
+    {
+      "id": "product-specifications",
+      "category": "Commerce",
+      "title": "Product specifications table",
+      "description": "Accessible product details in a named, keyboard-scrollable semantic table.",
+      "modules": [
+        "core"
+      ],
+      "tags": [
+        "product",
+        "details",
+        "specifications",
+        "commerce"
+      ]
     }
   ]
 }

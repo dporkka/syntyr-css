@@ -85,6 +85,26 @@ class DesignPrinciplesDocs(unittest.TestCase):
         self.assertIn("focus-visible", buttons[2])
         self.assertIn("disabled", buttons[2])
 
+    def test_generated_code_examples_are_keyboard_scrollable_with_visible_focus(self):
+        class CodeBlocks(HTMLParser):
+            def __init__(self):
+                super().__init__()
+                self.blocks = []
+
+            def handle_starttag(self, tag, attrs):
+                if tag == "pre":
+                    self.blocks.append(dict(attrs))
+
+        parser = CodeBlocks()
+        parser.feed((ROOT / "docs/design-principles.html").read_text(encoding="utf-8"))
+        self.assertEqual(len(parser.blocks), 4)
+        for attrs in parser.blocks:
+            self.assertEqual(attrs.get("tabindex"), "0", attrs)
+            self.assertNotIn("role", attrs)  # Retain native code semantics.
+        css = (ROOT / "docs/docs.css").read_text(encoding="utf-8")
+        self.assertIn(".docs-prose pre:focus-visible", css)
+        self.assertIn("outline-offset", css)
+
     def test_html_recipes_use_referentially_sound_semantic_markup_and_real_hooks(self):
         guide = GUIDE.read_text(encoding="utf-8")
         snippets = re.findall(r"```html\n(.*?)\n```", guide, re.DOTALL)

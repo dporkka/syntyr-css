@@ -48,6 +48,34 @@ The Figma MCP request quota was reached during this iteration. Remaining
 work requires additional tool access and review rather than guessing at
 the resulting canvas.
 
+## Source-derived design handoff (code-side)
+
+The candidate now generates [a versioned Figma handoff contract](../metadata/figma/syntyr-handoff.v1.json)
+from the **actual Syntyr CSS source**, alongside the existing seven palette
+token files. Its foundation entries include the original CSS expression,
+a 16px-root pixel value **only for literal rem/px sizes**, and a
+`requires_browser_validation` flag for expressions such as `clamp()` and
+`var()`. Density-mode control heights are derived independently. Component
+entries reference the CSS selectors and source files rather than inventing
+Figma component state values.
+
+```sh
+python3 scripts/export_figma_handoff.py
+python3 scripts/export_figma_handoff.py --check
+python3 -m unittest discover -s tests -p test_figma_handoff.py -v
+```
+
+**Designer reconciliation path:** compare each mode's 13 exported palette
+colors with the variables currently present in Figma; import missing roles
+without duplicating existing variables. Confirm spacing, typography, native
+controls, and the compact invalid-input instance against rendered CSS at
+real browser zoom. Check that button and input variants use variable bindings,
+reusable component instances and correct focus/disabled states.
+
+This contract is **not** live Figma synchronization or a parity certificate.
+Figma editing was blocked by Starter-plan MCP tool limits during this pass.
+The existing native kit, including its known defects, was not modified.
+
 ## Remaining designer release gates
 
 1. Repair the invalid input preview width and accurate focus-visible rings.

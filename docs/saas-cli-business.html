@@ -64,7 +64,7 @@
 </table>
 <p>Use Grid/Noir selectively—most enterprise interfaces benefit more from Studio's low-noise hierarchy than extensive neon decoration. <strong>All themes remain MIT licensed.</strong></p>
 <h2 id="start-with-a-modern-business-or-saas-ui">Start with a modern business or SaaS UI</h2>
-<pre><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.core.css&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.core.css&quot;&gt;
 &lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.recipes.css&quot;&gt;
 &lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot;&gt;
   &lt;div class=&quot;syn-kpi-grid&quot;&gt;
@@ -91,7 +91,7 @@
 <li><code>ansi</code>: 16 hex RGB colors, ordered by ANSI indices 0–15 (standard black/red/green/yellow/blue/magenta/cyan/white followed by bright variants).</li>
 <li>CLI output: use foreground ANSI SGR sequences if supported, but <strong>never assume your application can control the user's terminal background</strong>.</li>
 </ul>
-<pre><code class="language-bash">python3 examples/ansi_cli.py --theme studio
+<pre tabindex="0"><code class="language-bash">python3 examples/ansi_cli.py --theme studio
 python3 examples/ansi_cli.py --theme grid --no-color
 python3 examples/ansi_cli.py --theme noir | cat  # plain text, not ANSI
 </code></pre>
@@ -109,12 +109,23 @@ python3 examples/ansi_cli.py --theme noir | cat  # plain text, not ANSI
 <h2 id="commercial-boundaries">Commercial boundaries</h2>
 <p>The core, all three themes, reusable recipes, terminal palettes, documentation and these example pages are MIT licensed. Future paid offerings should be <strong>separately authored end-to-end page templates</strong> (complete dashboards, vertical SaaS apps or professionally composed marketing pages), not gated primitive classes or paid accessibility fixes.</p>
         </article>
-        <aside class="docs-article-sidebar"><nav aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#start-with-a-modern-business-or-saas-ui">Start with a modern business or SaaS UI</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#real-terminal-applications-go-rust-python-etc">Real terminal applications (Go, Rust, Python, etc.)</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#accessibility-and-performance">Accessibility and performance</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#commercial-boundaries">Commercial boundaries</a>
-        </nav></aside>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#start-with-a-modern-business-or-saas-ui">Start with a modern business or SaaS UI</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#real-terminal-applications-go-rust-python-etc">Real terminal applications (Go, Rust, Python, etc.)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#accessibility-and-performance">Accessibility and performance</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#commercial-boundaries">Commercial boundaries</a>
+            </nav>
+          </details>
+        </aside>
       </div>
       <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="saas-cli-business.md">Markdown source</a></nav>
     </main>

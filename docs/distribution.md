@@ -48,6 +48,24 @@ navigation and mutations to your own server. The already published **alpha.4**
 release does *not* contain this packaged example; the next alpha.5 release
 has not been published yet.
 
+## Command launcher ZIP example (unreleased alpha.5)
+
+The optional command launcher example points to three standalone HTML
+examples included in the release ZIP: the preset preview, native resource
+outline, and SaaS dashboard. Both the script-free navigation and enhanced
+native-dialog links resolve without fetching any unbundled docs assets.
+
+For the interactive Ctrl/Command+K module, serve the extracted alpha.5
+release directory over local HTTP, as explained for the resizable workspace
+above. From the extracted ZIP's top-level folder, run:
+
+    python3 -m http.server 8000 --bind 127.0.0.1
+
+Open http://127.0.0.1:8000/examples/command-launcher.html.
+The native navigation stays usable without JavaScript on a file:// URL, but
+the optional module may be blocked by browser file-origin restrictions.
+No server is necessary for the static examples/saas.html preview.
+
 ## One-file semantic starter (unreleased alpha.5 source)
 
 For a Pico-like HTML workflow, `dist/syntyr.semantic-bundle.css` combines core and semantic CSS into a single file. Copy it to your static assets, then opt in on the region you want styled:
@@ -137,6 +155,8 @@ layout helpers and `syntyr.print.css` for print-friendly reports. System-aware
 Grid/Studio `data-syn-theme="auto"` is already included in core CSS, with
 no additional stylesheet or runtime JavaScript. See the
 [progressive-enhancement guide](progressive-enhancement.md) for examples.
+The optional source-candidate `syntyr.ascii.css` composes with symbols for [ASCII effects](ascii-effects.md); it is not in the published alpha.4 release.
+
 The optional `syntyr.symbols.css` adds BYO-SVG icon sizing, literal Unicode styling and ASCII/box-drawing alignment without shipping fonts or icons; see [symbols and accessibility](symbols.md).
 
 `syntyr.semantic-bundle.css` bundles core and semantic styles with scoped opt-in.

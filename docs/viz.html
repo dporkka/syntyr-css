@@ -39,7 +39,7 @@
 charts and small, server-renderable data visualizations in all seven Syntyr
 themes. It does not compute chart geometry, ingest data, perform interactions,
 supply a JavaScript runtime, or require a frontend framework.</p>
-<pre><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.core.css&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.core.css&quot;&gt;
 &lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.viz.css&quot;&gt;
 </code></pre>
 <p>Alternatively load <code>syntyr.all.css</code> by itself. Do <strong>not</strong> load the all-in-one
@@ -79,7 +79,7 @@ contain Viz.</p>
 Always check contrast and series distinguishability after palette changes.
 Color is not an adequate standalone representation of categories or status.
 Use text, patterns, line types, legends and accessible values.</p>
-<pre><code class="language-html">&lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot;&gt;
   &lt;figure class=&quot;syn-chart&quot; style=&quot;--syn-chart-1: #2458c6;&quot;&gt;
     &lt;figcaption class=&quot;syn-chart-title&quot;&gt;Weekly signups&lt;/figcaption&gt;
     &lt;!-- Supply SVG, a server-side renderer, or a client chart here. --&gt;
@@ -92,7 +92,7 @@ Use text, patterns, line types, legends and accessible values.</p>
 points. For a time series, the HTML generator computes the polyline/area and
 includes an accessible name. Use SVG <code>&lt;title&gt;</code> or <code>aria-label</code> and make the
 numerical values inspectable in a nearby table or list.</p>
-<pre><code class="language-html">&lt;figure class=&quot;syn-chart&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;figure class=&quot;syn-chart&quot;&gt;
   &lt;figcaption class=&quot;syn-chart-title&quot;&gt;Revenue, Jan–Jun&lt;/figcaption&gt;
   &lt;svg class=&quot;syn-viz-sparkline&quot; viewBox=&quot;0 0 240 60&quot; role=&quot;img&quot;
        aria-label=&quot;Revenue increased from 20 to 54 thousand dollars&quot;&gt;
@@ -113,7 +113,7 @@ values. <code>--syn-viz-value</code> is a number on a 0–100 scale, not a perce
 string. The CSS clamps it into that interval. <strong>Validate and escape values
 at the rendering boundary.</strong> This is presentation only, not a semantic
 <code>progress</code> or <code>meter</code> control.</p>
-<pre><code class="language-html">&lt;ol class=&quot;syn-viz-bars&quot; aria-label=&quot;Revenue mix&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;ol class=&quot;syn-viz-bars&quot; aria-label=&quot;Revenue mix&quot;&gt;
   &lt;li class=&quot;syn-viz-bar&quot;&gt;
     &lt;div class=&quot;syn-viz-bar-label&quot;&gt;
       &lt;span&gt;Direct&lt;/span&gt;&lt;data value=&quot;72&quot;&gt;72%&lt;/data&gt;
@@ -128,7 +128,7 @@ at the rendering boundary.</strong> This is presentation only, not a semantic
 <p>This represents a series of discrete periods, not a live network monitor.
 Each segment needs <strong>real semantic text</strong> even when a screen reader reads
 its visual color differently.</p>
-<pre><code class="language-html">&lt;ol class=&quot;syn-viz-tracker&quot; aria-label=&quot;Past three days&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;ol class=&quot;syn-viz-tracker&quot; aria-label=&quot;Past three days&quot;&gt;
   &lt;li data-syn-state=&quot;healthy&quot;&gt;&lt;span class=&quot;syn-viz-sr-only&quot;&gt;Mon: Healthy&lt;/span&gt;&lt;/li&gt;
   &lt;li data-syn-state=&quot;degraded&quot;&gt;&lt;span class=&quot;syn-viz-sr-only&quot;&gt;Tue: Degraded&lt;/span&gt;&lt;/li&gt;
   &lt;li data-syn-state=&quot;down&quot;&gt;&lt;span class=&quot;syn-viz-sr-only&quot;&gt;Wed: Down&lt;/span&gt;&lt;/li&gt;
@@ -142,7 +142,7 @@ Do not depend on color alone to convey a critical state.</p>
 columns; each cell uses one of five levels, <code>0</code> through <code>4</code>.
 The default is twelve columns. For small screens, the grid scrolls rather
 than reducing each cell below its minimum width.</p>
-<pre><code class="language-html">&lt;div class=&quot;syn-viz-heatmap&quot; style=&quot;--syn-viz-columns: 3;&quot;
+<pre tabindex="0"><code class="language-html">&lt;div class=&quot;syn-viz-heatmap&quot; style=&quot;--syn-viz-columns: 3;&quot;
      role=&quot;group&quot; aria-label=&quot;Three days of activity&quot;&gt;
   &lt;span class=&quot;syn-viz-cell&quot; data-syn-level=&quot;0&quot;&gt;
     &lt;span class=&quot;syn-viz-sr-only&quot;&gt;Mon: no activity&lt;/span&gt;
@@ -189,7 +189,8 @@ not impose arbitrary CSS size budgets. Use the library's existing deterministic
 build and performance tests and measure real browser behavior.</p>
 <p>Try the <a href="../examples/viz.html">seven-theme static Viz gallery</a>.</p>
         </article>
-        <aside class="docs-article-sidebar"><nav aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#chart-token-api">Chart token API</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#four-microvisualizations">Four microvisualizations</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#1-svg-sparkline">1. SVG sparkline</a>
@@ -198,7 +199,21 @@ build and performance tests and measure real browser behavior.</p>
 <a class="docs-article-toc-link docs-article-toc-3" href="#4-activity-heatmap">4. Activity heatmap</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#generic-chart-styling-and-integrations">Generic chart styling and integrations</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#accessibility-and-performance">Accessibility and performance</a>
-        </nav></aside>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#chart-token-api">Chart token API</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#four-microvisualizations">Four microvisualizations</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#1-svg-sparkline">1. SVG sparkline</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#2-ranked-bar-list">2. Ranked bar list</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#3-status-tracker">3. Status tracker</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#4-activity-heatmap">4. Activity heatmap</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#generic-chart-styling-and-integrations">Generic chart styling and integrations</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#accessibility-and-performance">Accessibility and performance</a>
+            </nav>
+          </details>
+        </aside>
       </div>
       <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="viz.md">Markdown source</a></nav>
     </main>

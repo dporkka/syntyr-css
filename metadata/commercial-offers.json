@@ -2,7 +2,7 @@
   "schema_version": 1,
   "catalog_status": "research-not-a-storefront",
   "currency": "USD",
-  "last_reviewed": "2026-11-16",
+  "last_reviewed": "2026-11-18",
   "note": "Research concepts only. Prices for non-core products are hypotheses, not offers. No payment is accepted and no premium customer deliverables are available. The MIT framework stays free.",
   "products": [
     {
@@ -41,10 +41,10 @@
       "billing_model": "one-time-proposed",
       "license_status": "draft-not-operative",
       "deliverable_ready": false,
-      "description": "Private source/preview candidate extending Console Kit to 15 SaaS screen types and 45 static variants, including work orders, dispatch scheduling and revenue intelligence. An optional localhost-only Go resource edit example is included in the private preview source; it is not a production backend.",
+      "description": "Private source/preview candidate with 25 SaaS and operations screen types and 75 static theme variants. Includes governance, developer tools and collaboration screens, plus an optional local-only Go resource workflow reference. No live backend or authorized commercial download.",
       "details_url": "../docs/products.html",
-      "prototype_screen_types": 15,
-      "prototype_theme_variants": 45,
+      "prototype_screen_types": 25,
+      "prototype_theme_variants": 75,
       "prototype_status": "private-source-candidate"
     },
     {
@@ -56,10 +56,10 @@
       "billing_model": "one-time-proposed",
       "license_status": "draft-not-operative",
       "deliverable_ready": false,
-      "description": "Private source/preview candidate extending Pro to 18 screen types and 54 static variants, including original homepage, pricing and case study designs. Includes the same local-only Go resource reference, not a hosted service.",
+      "description": "Private source/preview candidate with all 25 Pro application screen types plus 17 website page types (15 pages in three original B2B SaaS, professional-services and ecommerce kits and two additional standalone previews), for 126 themed static pages. Storefront checkout is an illustrative screen only; no live orders, payments or hosted editor.",
       "details_url": "../docs/products.html",
-      "prototype_screen_types": 18,
-      "prototype_theme_variants": 54,
+      "prototype_screen_types": 42,
+      "prototype_theme_variants": 126,
       "prototype_status": "private-source-candidate"
     },
     {
@@ -74,5 +74,6 @@
       "description": "Proposed agency/team licensing, future releases and team-oriented support subject to demand validation.",
       "details_url": "../docs/products.html"
     }
-  ]
+  ],
+  "prototype_inventory_snapshot_date": "2026-11-18"
 }

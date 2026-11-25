@@ -1,0 +1,17 @@
+{
+  "name": "syntyr-eleventy-example",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "build": "eleventy",
+    "serve": "eleventy --serve",
+    "verify": "python3 ../../scripts/verify_static_generators.py _site --base-path /syntyr-eleventy/"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.2"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

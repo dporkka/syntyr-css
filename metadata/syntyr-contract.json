@@ -18,13 +18,16 @@
     "presets/minimal.css",
     "presets/saas.css",
     "syntyr.all.css",
+    "syntyr.ascii.css",
     "syntyr.core.css",
     "syntyr.css",
     "syntyr.data-grid.css",
     "syntyr.effects.css",
     "syntyr.email.css",
     "syntyr.embed.css",
+    "syntyr.geo.css",
     "syntyr.geometry.css",
+    "syntyr.media.css",
     "syntyr.motion.css",
     "syntyr.native-recipes.css",
     "syntyr.print.css",
@@ -40,7 +43,7 @@
     {
       "name": "syn-actions",
       "module": "components/buttons.css",
-      "description": "Syntyr CSS class (components/buttons.css).",
+      "description": "Flexibly spaced action buttons or links; actions still need native behavior.",
       "stylesheets": [
         "components/buttons.css",
         "presets/cinematic.css",
@@ -56,7 +59,7 @@
     {
       "name": "syn-activity-list",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Activity list presentation in the recipes.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -67,7 +70,7 @@
     {
       "name": "syn-activity-timeline",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Activity timeline presentation in the recipes.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -78,7 +81,7 @@
     {
       "name": "syn-alert",
       "module": "components/typography.css",
-      "description": "Syntyr CSS class (components/typography.css).",
+      "description": "Inline informational or status notice; write the message in readable text.",
       "stylesheets": [
         "components/typography.css",
         "presets/cinematic.css",
@@ -94,7 +97,7 @@
     {
       "name": "syn-alert--danger",
       "module": "components/typography.css",
-      "description": "Syntyr CSS class (components/typography.css).",
+      "description": "Danger-state variant of a text-based alert.",
       "stylesheets": [
         "components/typography.css",
         "presets/cinematic.css",
@@ -110,7 +113,7 @@
     {
       "name": "syn-alert--success",
       "module": "components/typography.css",
-      "description": "Syntyr CSS class (components/typography.css).",
+      "description": "Success-state variant of a text-based alert.",
       "stylesheets": [
         "components/typography.css",
         "presets/cinematic.css",
@@ -126,7 +129,7 @@
     {
       "name": "syn-alert--warning",
       "module": "components/typography.css",
-      "description": "Syntyr CSS class (components/typography.css).",
+      "description": "Warning-state variant of a text-based alert.",
       "stylesheets": [
         "components/typography.css",
         "presets/cinematic.css",
@@ -140,9 +143,19 @@
       ]
     },
     {
+      "name": "syn-animate--loop",
+      "module": "motion.css",
+      "description": "Loop appearance variant of the animate component; see motion.css for styles.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "syntyr.all.css",
+        "syntyr.motion.css"
+      ]
+    },
+    {
       "name": "syn-app-card",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "App card presentation in the recipes.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -153,7 +166,7 @@
     {
       "name": "syn-app-card-header",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "App card header presentation in the recipes.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -164,7 +177,7 @@
     {
       "name": "syn-app-nav",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Navigation region styling for an application workspace.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -175,7 +188,7 @@
     {
       "name": "syn-app-rail",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "App rail presentation in the recipes.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -186,7 +199,7 @@
     {
       "name": "syn-app-shell",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Application shell layout for navigation and main content.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -197,7 +210,7 @@
     {
       "name": "syn-app-topbar",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "App topbar presentation in the recipes.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -208,7 +221,7 @@
     {
       "name": "syn-ascii",
       "module": "symbols.css",
-      "description": "Syntyr CSS class (symbols.css).",
+      "description": "Ascii presentation in the symbols.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "syntyr.all.css",
@@ -218,17 +231,80 @@
     {
       "name": "syn-ascii--accent",
       "module": "symbols.css",
-      "description": "Syntyr CSS class (symbols.css).",
+      "description": "Accent appearance variant of the ascii component; see symbols.css for styles.",
       "stylesheets": [
         "presets/cinematic.css",
         "syntyr.all.css",
         "syntyr.symbols.css"
+      ]
+    },
+    {
+      "name": "syn-ascii--banner",
+      "module": "ascii.css",
+      "description": "Banner appearance variant of the ascii component; see ascii.css for styles.",
+      "stylesheets": [
+        "syntyr.all.css",
+        "syntyr.ascii.css"
+      ]
+    },
+    {
+      "name": "syn-ascii--compact",
+      "module": "ascii.css",
+      "description": "Compact appearance variant of the ascii component; see ascii.css for styles.",
+      "stylesheets": [
+        "syntyr.all.css",
+        "syntyr.ascii.css"
+      ]
+    },
+    {
+      "name": "syn-ascii--cursor",
+      "module": "ascii.css",
+      "description": "Cursor appearance variant of the ascii component; see ascii.css for styles.",
+      "stylesheets": [
+        "syntyr.all.css",
+        "syntyr.ascii.css"
+      ]
+    },
+    {
+      "name": "syn-ascii--decode",
+      "module": "ascii.css",
+      "description": "Decode appearance variant of the ascii component; see ascii.css for styles.",
+      "stylesheets": [
+        "syntyr.all.css",
+        "syntyr.ascii.css"
+      ]
+    },
+    {
+      "name": "syn-ascii--dither",
+      "module": "ascii.css",
+      "description": "Dither appearance variant of the ascii component; see ascii.css for styles.",
+      "stylesheets": [
+        "syntyr.all.css",
+        "syntyr.ascii.css"
+      ]
+    },
+    {
+      "name": "syn-ascii--gradient",
+      "module": "ascii.css",
+      "description": "Gradient appearance variant of the ascii component; see ascii.css for styles.",
+      "stylesheets": [
+        "syntyr.all.css",
+        "syntyr.ascii.css"
+      ]
+    },
+    {
+      "name": "syn-ascii--loader",
+      "module": "ascii.css",
+      "description": "Loader appearance variant of the ascii component; see ascii.css for styles.",
+      "stylesheets": [
+        "syntyr.all.css",
+        "syntyr.ascii.css"
       ]
     },
     {
       "name": "syn-ascii--muted",
       "module": "symbols.css",
-      "description": "Syntyr CSS class (symbols.css).",
+      "description": "Muted appearance variant of the ascii component; see symbols.css for styles.",
       "stylesheets": [
         "presets/cinematic.css",
         "syntyr.all.css",
@@ -236,9 +312,54 @@
       ]
     },
     {
+      "name": "syn-ascii--phosphor",
+      "module": "ascii.css",
+      "description": "Phosphor appearance variant of the ascii component; see ascii.css for styles.",
+      "stylesheets": [
+        "syntyr.all.css",
+        "syntyr.ascii.css"
+      ]
+    },
+    {
+      "name": "syn-ascii--rain",
+      "module": "ascii.css",
+      "description": "Rain appearance variant of the ascii component; see ascii.css for styles.",
+      "stylesheets": [
+        "syntyr.all.css",
+        "syntyr.ascii.css"
+      ]
+    },
+    {
+      "name": "syn-ascii--scan",
+      "module": "ascii.css",
+      "description": "Scan appearance variant of the ascii component; see ascii.css for styles.",
+      "stylesheets": [
+        "syntyr.all.css",
+        "syntyr.ascii.css"
+      ]
+    },
+    {
+      "name": "syn-ascii--typewriter",
+      "module": "ascii.css",
+      "description": "Typewriter appearance variant of the ascii component; see ascii.css for styles.",
+      "stylesheets": [
+        "syntyr.all.css",
+        "syntyr.ascii.css"
+      ]
+    },
+    {
+      "name": "syn-ascii--wave",
+      "module": "ascii.css",
+      "description": "Wave appearance variant of the ascii component; see ascii.css for styles.",
+      "stylesheets": [
+        "syntyr.all.css",
+        "syntyr.ascii.css"
+      ]
+    },
+    {
       "name": "syn-atmosphere",
       "module": "effects.css",
-      "description": "Syntyr CSS class (effects.css).",
+      "description": "Atmosphere presentation in the effects.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "syntyr.all.css",
@@ -249,7 +370,7 @@
     {
       "name": "syn-avatar",
       "module": "components/patterns.css",
-      "description": "Syntyr CSS class (components/patterns.css).",
+      "description": "Compact avatar presentation; provide meaningful image alternatives.",
       "stylesheets": [
         "components/patterns.css",
         "presets/cinematic.css",
@@ -265,7 +386,7 @@
     {
       "name": "syn-avatar--lg",
       "module": "components/patterns.css",
-      "description": "Syntyr CSS class (components/patterns.css).",
+      "description": "Large-size variant of avatar presentation.",
       "stylesheets": [
         "components/patterns.css",
         "presets/cinematic.css",
@@ -281,7 +402,7 @@
     {
       "name": "syn-avatar--sm",
       "module": "components/patterns.css",
-      "description": "Syntyr CSS class (components/patterns.css).",
+      "description": "Small-size variant of avatar presentation.",
       "stylesheets": [
         "components/patterns.css",
         "presets/cinematic.css",
@@ -297,7 +418,7 @@
     {
       "name": "syn-avatar-stack",
       "module": "components/patterns.css",
-      "description": "Syntyr CSS class (components/patterns.css).",
+      "description": "Avatar stack presentation in the components/patterns.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "components/patterns.css",
         "presets/cinematic.css",
@@ -313,7 +434,7 @@
     {
       "name": "syn-badge",
       "module": "components/typography.css",
-      "description": "Syntyr CSS class (components/typography.css).",
+      "description": "Compact status or category label; do not rely on color alone.",
       "stylesheets": [
         "components/typography.css",
         "presets/cinematic.css",
@@ -329,7 +450,7 @@
     {
       "name": "syn-badge--accent",
       "module": "components/typography.css",
-      "description": "Syntyr CSS class (components/typography.css).",
+      "description": "Accent-emphasis variant of a badge or status label.",
       "stylesheets": [
         "components/typography.css",
         "presets/cinematic.css",
@@ -343,9 +464,31 @@
       ]
     },
     {
+      "name": "syn-bento-card--wide",
+      "module": "recipes.css",
+      "description": "Span two bento tracks only when the parent container has enough room.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
+      "name": "syn-bento-grid",
+      "module": "recipes.css",
+      "description": "Optional container-aware card grid for responsive feature compositions.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
       "name": "syn-body",
       "module": "components/typography.css",
-      "description": "Syntyr CSS class (components/typography.css).",
+      "description": "Body presentation in the components/typography.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "components/typography.css",
         "presets/cinematic.css",
@@ -361,7 +504,7 @@
     {
       "name": "syn-breadcrumbs",
       "module": "components/patterns.css",
-      "description": "Syntyr CSS class (components/patterns.css).",
+      "description": "Breadcrumb navigation styling; use a real navigation list.",
       "stylesheets": [
         "components/patterns.css",
         "presets/cinematic.css",
@@ -377,7 +520,7 @@
     {
       "name": "syn-bulk-actions",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Bulk actions presentation in the recipes.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -404,7 +547,7 @@
     {
       "name": "syn-button--danger",
       "module": "components/buttons.css",
-      "description": "Syntyr CSS class (components/buttons.css).",
+      "description": "Danger-emphasis variant for destructive actions; confirmation is host-owned.",
       "stylesheets": [
         "components/buttons.css",
         "presets/cinematic.css",
@@ -420,7 +563,23 @@
     {
       "name": "syn-button--ghost",
       "module": "components/buttons.css",
-      "description": "Syntyr CSS class (components/buttons.css).",
+      "description": "Low-emphasis ghost button appearance for native buttons or links.",
+      "stylesheets": [
+        "components/buttons.css",
+        "presets/cinematic.css",
+        "presets/minimal.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.core.css",
+        "syntyr.css",
+        "syntyr.embed.css",
+        "syntyr.semantic-bundle.css"
+      ]
+    },
+    {
+      "name": "syn-button--icon",
+      "module": "components/buttons.css",
+      "description": "Icon-only button variant; provide an accessible name.",
       "stylesheets": [
         "components/buttons.css",
         "presets/cinematic.css",
@@ -436,7 +595,7 @@
     {
       "name": "syn-button--outline",
       "module": "components/buttons.css",
-      "description": "Syntyr CSS class (components/buttons.css).",
+      "description": "Outlined button variant for secondary actions.",
       "stylesheets": [
         "components/buttons.css",
         "presets/cinematic.css",
@@ -468,7 +627,7 @@
     {
       "name": "syn-button--small",
       "module": "components/buttons.css",
-      "description": "Syntyr CSS class (components/buttons.css).",
+      "description": "Compact-size button variant; preserve accessible interaction targets.",
       "stylesheets": [
         "components/buttons.css",
         "presets/cinematic.css",
@@ -484,7 +643,7 @@
     {
       "name": "syn-button-group",
       "module": "components/patterns.css",
-      "description": "Syntyr CSS class (components/patterns.css).",
+      "description": "Grouped buttons or action links; each retains native semantics.",
       "stylesheets": [
         "components/patterns.css",
         "presets/cinematic.css",
@@ -500,7 +659,7 @@
     {
       "name": "syn-caption",
       "module": "components/typography.css",
-      "description": "Syntyr CSS class (components/typography.css).",
+      "description": "Secondary caption text for supporting context.",
       "stylesheets": [
         "components/typography.css",
         "presets/cinematic.css",
@@ -516,7 +675,7 @@
     {
       "name": "syn-cell--nowrap",
       "module": "components/data.css",
-      "description": "Syntyr CSS class (components/data.css).",
+      "description": "Nowrap appearance variant of the cell component; see components/data.css for styles.",
       "stylesheets": [
         "components/data.css",
         "presets/cinematic.css",
@@ -532,7 +691,7 @@
     {
       "name": "syn-cell--numeric",
       "module": "components/data.css",
-      "description": "Syntyr CSS class (components/data.css).",
+      "description": "Numeric appearance variant of the cell component; see components/data.css for styles.",
       "stylesheets": [
         "components/data.css",
         "presets/cinematic.css",
@@ -548,7 +707,7 @@
     {
       "name": "syn-cell--wrap",
       "module": "components/data.css",
-      "description": "Syntyr CSS class (components/data.css).",
+      "description": "Wrap appearance variant of the cell component; see components/data.css for styles.",
       "stylesheets": [
         "components/data.css",
         "presets/cinematic.css",
@@ -562,9 +721,42 @@
       ]
     },
     {
+      "name": "syn-change-after",
+      "module": "recipes.css",
+      "description": "Updated or added revision value with visible text label.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
+      "name": "syn-change-before",
+      "module": "recipes.css",
+      "description": "Previous or removed revision value with visible text label.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
+      "name": "syn-change-pair",
+      "module": "recipes.css",
+      "description": "Responsive before/after value pair for existing semantic record fields.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
       "name": "syn-chart",
       "module": "viz.css",
-      "description": "Syntyr CSS class (viz.css).",
+      "description": "Chart presentation in the viz.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.viz.css"
@@ -573,7 +765,7 @@
     {
       "name": "syn-chart-axis",
       "module": "viz.css",
-      "description": "Syntyr CSS class (viz.css).",
+      "description": "Chart axis presentation in the viz.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.viz.css"
@@ -582,7 +774,7 @@
     {
       "name": "syn-chart-grid",
       "module": "viz.css",
-      "description": "Syntyr CSS class (viz.css).",
+      "description": "Chart grid presentation in the viz.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.viz.css"
@@ -591,7 +783,7 @@
     {
       "name": "syn-chart-key",
       "module": "viz.css",
-      "description": "Syntyr CSS class (viz.css).",
+      "description": "Chart key presentation in the viz.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.viz.css"
@@ -600,7 +792,7 @@
     {
       "name": "syn-chart-legend",
       "module": "viz.css",
-      "description": "Syntyr CSS class (viz.css).",
+      "description": "Chart legend presentation in the viz.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.viz.css"
@@ -609,7 +801,7 @@
     {
       "name": "syn-chart-legend-item",
       "module": "viz.css",
-      "description": "Syntyr CSS class (viz.css).",
+      "description": "Chart legend item presentation in the viz.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.viz.css"
@@ -618,7 +810,7 @@
     {
       "name": "syn-chart-title",
       "module": "viz.css",
-      "description": "Syntyr CSS class (viz.css).",
+      "description": "Chart title presentation in the viz.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.viz.css"
@@ -627,7 +819,7 @@
     {
       "name": "syn-chart-tooltip",
       "module": "viz.css",
-      "description": "Syntyr CSS class (viz.css).",
+      "description": "Chart tooltip presentation in the viz.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.viz.css"
@@ -636,7 +828,7 @@
     {
       "name": "syn-check",
       "module": "components/forms.css",
-      "description": "Syntyr CSS class (components/forms.css).",
+      "description": "Inline label layout for native checkbox or radio inputs; state remains native.",
       "stylesheets": [
         "components/forms.css",
         "presets/cinematic.css",
@@ -652,7 +844,7 @@
     {
       "name": "syn-chip",
       "module": "components/patterns.css",
-      "description": "Syntyr CSS class (components/patterns.css).",
+      "description": "Compact metadata chip or filter label; state is host-owned.",
       "stylesheets": [
         "components/patterns.css",
         "presets/cinematic.css",
@@ -668,7 +860,7 @@
     {
       "name": "syn-choice-card",
       "module": "components/patterns.css",
-      "description": "Syntyr CSS class (components/patterns.css).",
+      "description": "Choice card presentation in the components/patterns.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "components/patterns.css",
         "presets/cinematic.css",
@@ -684,7 +876,7 @@
     {
       "name": "syn-code",
       "module": "components/typography.css",
-      "description": "Syntyr CSS class (components/typography.css).",
+      "description": "Inline or block code presentation; preserve native code semantics.",
       "stylesheets": [
         "components/typography.css",
         "presets/cinematic.css",
@@ -700,7 +892,7 @@
     {
       "name": "syn-code-figure",
       "module": "native-recipes.css",
-      "description": "Syntyr CSS class (native-recipes.css).",
+      "description": "Code figure presentation in the native-recipes.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/saas.css",
         "syntyr.all.css",
@@ -708,9 +900,25 @@
       ]
     },
     {
+      "name": "syn-code-scroll",
+      "module": "components/data.css",
+      "description": "Code scroll presentation in the components/data.css module; use semantic HTML and consult its component example.",
+      "stylesheets": [
+        "components/data.css",
+        "presets/cinematic.css",
+        "presets/minimal.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.core.css",
+        "syntyr.css",
+        "syntyr.embed.css",
+        "syntyr.semantic-bundle.css"
+      ]
+    },
+    {
       "name": "syn-collection-actions",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Collection actions presentation in the recipes.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -721,7 +929,7 @@
     {
       "name": "syn-collection-toolbar",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Collection toolbar presentation in the recipes.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -732,7 +940,7 @@
     {
       "name": "syn-command-description",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Command description presentation in the recipes.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -743,7 +951,7 @@
     {
       "name": "syn-command-group",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Command group presentation in the recipes.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -754,7 +962,7 @@
     {
       "name": "syn-command-group-label",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Command group label presentation in the recipes.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -765,7 +973,7 @@
     {
       "name": "syn-command-key",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Command key presentation in the recipes.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -776,7 +984,7 @@
     {
       "name": "syn-command-panel",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Command panel presentation in the recipes.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -787,7 +995,7 @@
     {
       "name": "syn-command-row",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Command row presentation in the recipes.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -798,7 +1006,7 @@
     {
       "name": "syn-command-search",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Command search presentation in the recipes.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -809,7 +1017,7 @@
     {
       "name": "syn-cta-band",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Cta band presentation in the recipes.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -820,7 +1028,7 @@
     {
       "name": "syn-data-grid",
       "module": "data-grid.css",
-      "description": "Syntyr CSS class (data-grid.css).",
+      "description": "Enterprise data-grid presentation; selection, sorting and virtualization are host-owned.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.data-grid.css"
@@ -829,7 +1037,7 @@
     {
       "name": "syn-data-grid__cell",
       "module": "data-grid.css",
-      "description": "Syntyr CSS class (data-grid.css).",
+      "description": "Data-grid cell part; use the data-grid structure and accessible row semantics.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.data-grid.css"
@@ -838,7 +1046,7 @@
     {
       "name": "syn-data-grid__cell--numeric",
       "module": "data-grid.css",
-      "description": "Syntyr CSS class (data-grid.css).",
+      "description": "Cell part of the data grid component with numeric styling; see data-grid.css for markup.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.data-grid.css"
@@ -847,7 +1055,7 @@
     {
       "name": "syn-data-grid__cell-text",
       "module": "data-grid.css",
-      "description": "Syntyr CSS class (data-grid.css).",
+      "description": "Cell text part of the data grid component; see data-grid.css for markup.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.data-grid.css"
@@ -856,7 +1064,7 @@
     {
       "name": "syn-data-grid__columnheader",
       "module": "data-grid.css",
-      "description": "Syntyr CSS class (data-grid.css).",
+      "description": "Column-header part of a data grid; real sorting is host-owned.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.data-grid.css"
@@ -865,7 +1073,7 @@
     {
       "name": "syn-data-grid__editor",
       "module": "data-grid.css",
-      "description": "Syntyr CSS class (data-grid.css).",
+      "description": "Editor part of the data grid component; see data-grid.css for markup.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.data-grid.css"
@@ -874,7 +1082,7 @@
     {
       "name": "syn-data-grid__footer",
       "module": "data-grid.css",
-      "description": "Syntyr CSS class (data-grid.css).",
+      "description": "Footer part of the data grid component; see data-grid.css for markup.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.data-grid.css"
@@ -883,7 +1091,7 @@
     {
       "name": "syn-data-grid__header",
       "module": "data-grid.css",
-      "description": "Syntyr CSS class (data-grid.css).",
+      "description": "Header part of the data grid component; see data-grid.css for markup.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.data-grid.css"
@@ -892,7 +1100,7 @@
     {
       "name": "syn-data-grid__header-row",
       "module": "data-grid.css",
-      "description": "Syntyr CSS class (data-grid.css).",
+      "description": "Header row part of the data grid component; see data-grid.css for markup.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.data-grid.css"
@@ -901,7 +1109,7 @@
     {
       "name": "syn-data-grid__loading",
       "module": "data-grid.css",
-      "description": "Syntyr CSS class (data-grid.css).",
+      "description": "Loading part of the data grid component; see data-grid.css for markup.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.data-grid.css"
@@ -910,7 +1118,7 @@
     {
       "name": "syn-data-grid__row",
       "module": "data-grid.css",
-      "description": "Syntyr CSS class (data-grid.css).",
+      "description": "Data-grid row part; keyboard behavior and selection are host-owned.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.data-grid.css"
@@ -919,7 +1127,7 @@
     {
       "name": "syn-data-grid__status",
       "module": "data-grid.css",
-      "description": "Syntyr CSS class (data-grid.css).",
+      "description": "Status part of the data grid component; see data-grid.css for markup.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.data-grid.css"
@@ -928,7 +1136,7 @@
     {
       "name": "syn-data-grid__toolbar",
       "module": "data-grid.css",
-      "description": "Syntyr CSS class (data-grid.css).",
+      "description": "Toolbar part of the data grid component; see data-grid.css for markup.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.data-grid.css"
@@ -937,7 +1145,7 @@
     {
       "name": "syn-data-grid__viewport",
       "module": "data-grid.css",
-      "description": "Syntyr CSS class (data-grid.css).",
+      "description": "Viewport part of the data grid component; see data-grid.css for markup.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.data-grid.css"
@@ -946,7 +1154,7 @@
     {
       "name": "syn-defer-section",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Defer section presentation in the recipes.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -957,7 +1165,7 @@
     {
       "name": "syn-detail-aside",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Detail aside presentation in the recipes.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -968,7 +1176,7 @@
     {
       "name": "syn-detail-layout",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Detail layout presentation in the recipes.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -979,7 +1187,7 @@
     {
       "name": "syn-detail-main",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Detail main presentation in the recipes.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -990,7 +1198,7 @@
     {
       "name": "syn-details",
       "module": "components/overlays.css",
-      "description": "Syntyr CSS class (components/overlays.css).",
+      "description": "Native details/summary disclosure styling; use real HTML details.",
       "stylesheets": [
         "components/overlays.css",
         "presets/cinematic.css",
@@ -1006,7 +1214,7 @@
     {
       "name": "syn-dialog",
       "module": "components/overlays.css",
-      "description": "Syntyr CSS class (components/overlays.css).",
+      "description": "Native dialog presentation; opening and focus behavior are browser/host-owned.",
       "stylesheets": [
         "components/overlays.css",
         "presets/cinematic.css",
@@ -1022,7 +1230,7 @@
     {
       "name": "syn-dialog--transition",
       "module": "motion.css",
-      "description": "Syntyr CSS class (motion.css).",
+      "description": "Transition appearance variant of the dialog component; see motion.css for styles.",
       "stylesheets": [
         "presets/cinematic.css",
         "syntyr.all.css",
@@ -1032,7 +1240,7 @@
     {
       "name": "syn-display",
       "module": "components/typography.css",
-      "description": "Syntyr CSS class (components/typography.css).",
+      "description": "Large display typography for prominent page headings.",
       "stylesheets": [
         "components/typography.css",
         "presets/cinematic.css",
@@ -1048,7 +1256,7 @@
     {
       "name": "syn-divider-label",
       "module": "components/patterns.css",
-      "description": "Syntyr CSS class (components/patterns.css).",
+      "description": "Divider label presentation in the components/patterns.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "components/patterns.css",
         "presets/cinematic.css",
@@ -1062,9 +1270,89 @@
       ]
     },
     {
+      "name": "syn-dropdown",
+      "module": "components/overlays.css",
+      "description": "Dropdown presentation in the components/overlays.css module; use semantic HTML and consult its component example.",
+      "stylesheets": [
+        "components/overlays.css",
+        "presets/cinematic.css",
+        "presets/minimal.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.core.css",
+        "syntyr.css",
+        "syntyr.embed.css",
+        "syntyr.semantic-bundle.css"
+      ]
+    },
+    {
+      "name": "syn-dropdown__group-label",
+      "module": "components/overlays.css",
+      "description": "Group label part of the dropdown component; see components/overlays.css for markup.",
+      "stylesheets": [
+        "components/overlays.css",
+        "presets/cinematic.css",
+        "presets/minimal.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.core.css",
+        "syntyr.css",
+        "syntyr.embed.css",
+        "syntyr.semantic-bundle.css"
+      ]
+    },
+    {
+      "name": "syn-dropdown__item",
+      "module": "components/overlays.css",
+      "description": "Item part of the dropdown component; see components/overlays.css for markup.",
+      "stylesheets": [
+        "components/overlays.css",
+        "presets/cinematic.css",
+        "presets/minimal.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.core.css",
+        "syntyr.css",
+        "syntyr.embed.css",
+        "syntyr.semantic-bundle.css"
+      ]
+    },
+    {
+      "name": "syn-dropdown__separator",
+      "module": "components/overlays.css",
+      "description": "Separator part of the dropdown component; see components/overlays.css for markup.",
+      "stylesheets": [
+        "components/overlays.css",
+        "presets/cinematic.css",
+        "presets/minimal.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.core.css",
+        "syntyr.css",
+        "syntyr.embed.css",
+        "syntyr.semantic-bundle.css"
+      ]
+    },
+    {
+      "name": "syn-dropdown__shortcut",
+      "module": "components/overlays.css",
+      "description": "Shortcut part of the dropdown component; see components/overlays.css for markup.",
+      "stylesheets": [
+        "components/overlays.css",
+        "presets/cinematic.css",
+        "presets/minimal.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.core.css",
+        "syntyr.css",
+        "syntyr.embed.css",
+        "syntyr.semantic-bundle.css"
+      ]
+    },
+    {
       "name": "syn-email-body",
       "module": "email.css",
-      "description": "Syntyr CSS class (email.css).",
+      "description": "Email body presentation in the email.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.email.css"
@@ -1073,7 +1361,7 @@
     {
       "name": "syn-email-code",
       "module": "email.css",
-      "description": "Syntyr CSS class (email.css).",
+      "description": "Email code presentation in the email.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.email.css"
@@ -1082,7 +1370,7 @@
     {
       "name": "syn-email-compose",
       "module": "email.css",
-      "description": "Syntyr CSS class (email.css).",
+      "description": "Email compose presentation in the email.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.email.css"
@@ -1091,7 +1379,7 @@
     {
       "name": "syn-email-inbox",
       "module": "email.css",
-      "description": "Syntyr CSS class (email.css).",
+      "description": "Email inbox presentation in the email.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.email.css"
@@ -1100,7 +1388,7 @@
     {
       "name": "syn-email-item",
       "module": "email.css",
-      "description": "Syntyr CSS class (email.css).",
+      "description": "Email item presentation in the email.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.email.css"
@@ -1109,7 +1397,7 @@
     {
       "name": "syn-email-layout",
       "module": "email.css",
-      "description": "Syntyr CSS class (email.css).",
+      "description": "Email layout presentation in the email.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.email.css"
@@ -1118,7 +1406,7 @@
     {
       "name": "syn-email-main",
       "module": "email.css",
-      "description": "Syntyr CSS class (email.css).",
+      "description": "Email main presentation in the email.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.email.css"
@@ -1127,7 +1415,7 @@
     {
       "name": "syn-email-message",
       "module": "email.css",
-      "description": "Syntyr CSS class (email.css).",
+      "description": "Email message presentation in the email.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.email.css"
@@ -1136,7 +1424,7 @@
     {
       "name": "syn-email-message-header",
       "module": "email.css",
-      "description": "Syntyr CSS class (email.css).",
+      "description": "Email message header presentation in the email.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.email.css"
@@ -1145,7 +1433,7 @@
     {
       "name": "syn-email-meta",
       "module": "email.css",
-      "description": "Syntyr CSS class (email.css).",
+      "description": "Email meta presentation in the email.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.email.css"
@@ -1154,7 +1442,7 @@
     {
       "name": "syn-email-preferences",
       "module": "email.css",
-      "description": "Syntyr CSS class (email.css).",
+      "description": "Email preferences presentation in the email.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.email.css"
@@ -1163,7 +1451,7 @@
     {
       "name": "syn-email-preview",
       "module": "email.css",
-      "description": "Syntyr CSS class (email.css).",
+      "description": "Email preview presentation in the email.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.email.css"
@@ -1172,7 +1460,7 @@
     {
       "name": "syn-email-recipient-list",
       "module": "email.css",
-      "description": "Syntyr CSS class (email.css).",
+      "description": "Email recipient list presentation in the email.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.email.css"
@@ -1181,7 +1469,7 @@
     {
       "name": "syn-email-sidebar",
       "module": "email.css",
-      "description": "Syntyr CSS class (email.css).",
+      "description": "Email sidebar presentation in the email.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.email.css"
@@ -1190,7 +1478,7 @@
     {
       "name": "syn-email-signup",
       "module": "email.css",
-      "description": "Syntyr CSS class (email.css).",
+      "description": "Email signup presentation in the email.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.email.css"
@@ -1199,7 +1487,7 @@
     {
       "name": "syn-email-subject",
       "module": "email.css",
-      "description": "Syntyr CSS class (email.css).",
+      "description": "Email subject presentation in the email.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.email.css"
@@ -1208,7 +1496,7 @@
     {
       "name": "syn-email-time",
       "module": "email.css",
-      "description": "Syntyr CSS class (email.css).",
+      "description": "Email time presentation in the email.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.email.css"
@@ -1217,7 +1505,7 @@
     {
       "name": "syn-email-workspace",
       "module": "email.css",
-      "description": "Syntyr CSS class (email.css).",
+      "description": "Email workspace presentation in the email.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.email.css"
@@ -1226,7 +1514,7 @@
     {
       "name": "syn-empty",
       "module": "components/patterns.css",
-      "description": "Syntyr CSS class (components/patterns.css).",
+      "description": "Empty-state content presentation; provide meaningful guidance or recovery actions.",
       "stylesheets": [
         "components/patterns.css",
         "presets/cinematic.css",
@@ -1242,7 +1530,7 @@
     {
       "name": "syn-error",
       "module": "components/forms.css",
-      "description": "Syntyr CSS class (components/forms.css).",
+      "description": "Visible form error text; associate with the relevant form control.",
       "stylesheets": [
         "components/forms.css",
         "presets/cinematic.css",
@@ -1258,7 +1546,84 @@
     {
       "name": "syn-error-summary",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Form validation summary presentation; host provides actual errors and focus.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
+      "name": "syn-evidence-actions",
+      "module": "recipes.css",
+      "description": "Evidence actions presentation in the recipes.css module; use semantic HTML and consult its component example.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
+      "name": "syn-evidence-body",
+      "module": "recipes.css",
+      "description": "Evidence body presentation in the recipes.css module; use semantic HTML and consult its component example.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
+      "name": "syn-evidence-card",
+      "module": "recipes.css",
+      "description": "Semantic figure-based evidence review presentation with captions and metadata, not a media viewer.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
+      "name": "syn-evidence-grid",
+      "module": "recipes.css",
+      "description": "Evidence grid presentation in the recipes.css module; use semantic HTML and consult its component example.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
+      "name": "syn-evidence-media",
+      "module": "recipes.css",
+      "description": "Evidence media presentation in the recipes.css module; use semantic HTML and consult its component example.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
+      "name": "syn-evidence-media--placeholder",
+      "module": "recipes.css",
+      "description": "Placeholder appearance variant of the evidence media component; see recipes.css for styles.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
+      "name": "syn-evidence-meta",
+      "module": "recipes.css",
+      "description": "Evidence meta presentation in the recipes.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -1269,7 +1634,7 @@
     {
       "name": "syn-eyebrow",
       "module": "components/typography.css",
-      "description": "Syntyr CSS class (components/typography.css).",
+      "description": "Eyebrow presentation in the components/typography.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "components/typography.css",
         "presets/cinematic.css",
@@ -1285,7 +1650,7 @@
     {
       "name": "syn-feature-card",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Feature card presentation in the recipes.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -1296,7 +1661,7 @@
     {
       "name": "syn-feature-grid",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Feature grid presentation in the recipes.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -1307,7 +1672,7 @@
     {
       "name": "syn-feature-list",
       "module": "components/patterns.css",
-      "description": "Syntyr CSS class (components/patterns.css).",
+      "description": "Feature list presentation in the components/patterns.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "components/patterns.css",
         "presets/cinematic.css",
@@ -1323,7 +1688,7 @@
     {
       "name": "syn-field",
       "module": "components/form-composition.css",
-      "description": "Syntyr CSS class (components/form-composition.css).",
+      "description": "Form field group for a native control, label, and optional help or error text.",
       "stylesheets": [
         "components/form-composition.css",
         "presets/cinematic.css",
@@ -1339,7 +1704,7 @@
     {
       "name": "syn-field--floating",
       "module": "native-recipes.css",
-      "description": "Syntyr CSS class (native-recipes.css).",
+      "description": "Floating appearance variant of the field component; see native-recipes.css for styles.",
       "stylesheets": [
         "presets/saas.css",
         "syntyr.all.css",
@@ -1349,7 +1714,7 @@
     {
       "name": "syn-field-body",
       "module": "components/form-composition.css",
-      "description": "Syntyr CSS class (components/form-composition.css).",
+      "description": "Field body presentation in the components/form-composition.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "components/form-composition.css",
         "presets/cinematic.css",
@@ -1365,7 +1730,7 @@
     {
       "name": "syn-field-row",
       "module": "components/form-composition.css",
-      "description": "Syntyr CSS class (components/form-composition.css).",
+      "description": "Responsive row composition for related form fields.",
       "stylesheets": [
         "components/form-composition.css",
         "presets/cinematic.css",
@@ -1381,7 +1746,7 @@
     {
       "name": "syn-fieldset",
       "module": "components/forms.css",
-      "description": "Syntyr CSS class (components/forms.css).",
+      "description": "Native fieldset styling; retain a meaningful legend.",
       "stylesheets": [
         "components/forms.css",
         "presets/cinematic.css",
@@ -1392,6 +1757,39 @@
         "syntyr.css",
         "syntyr.embed.css",
         "syntyr.semantic-bundle.css"
+      ]
+    },
+    {
+      "name": "syn-file-item",
+      "module": "recipes.css",
+      "description": "File queue entry with host-owned queued, uploading, complete or failed state.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
+      "name": "syn-file-item-header",
+      "module": "recipes.css",
+      "description": "Flexible file name and visible status header for queue entries.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
+      "name": "syn-file-queue",
+      "module": "recipes.css",
+      "description": "Optional ordered file lifecycle list; not an upload engine.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.recipes.css"
       ]
     },
     {
@@ -1419,7 +1817,7 @@
     {
       "name": "syn-filter-choices",
       "module": "components/patterns.css",
-      "description": "Syntyr CSS class (components/patterns.css).",
+      "description": "Filter choices presentation in the components/patterns.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "components/patterns.css",
         "presets/cinematic.css",
@@ -1446,7 +1844,7 @@
     {
       "name": "syn-filter-field--query",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Query appearance variant of the filter field component; see recipes.css for styles.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -1457,7 +1855,7 @@
     {
       "name": "syn-floating-label",
       "module": "native-recipes.css",
-      "description": "Syntyr CSS class (native-recipes.css).",
+      "description": "Floating label appearance; keep the input's accessible label.",
       "stylesheets": [
         "presets/saas.css",
         "syntyr.all.css",
@@ -1467,7 +1865,7 @@
     {
       "name": "syn-flow",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Flow presentation in the recipes.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -1478,7 +1876,7 @@
     {
       "name": "syn-fluid-display",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Fluid display presentation in the recipes.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -1489,7 +1887,7 @@
     {
       "name": "syn-fluid-lede",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Fluid lede presentation in the recipes.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -1500,7 +1898,7 @@
     {
       "name": "syn-form",
       "module": "components/forms.css",
-      "description": "Syntyr CSS class (components/forms.css).",
+      "description": "Consistent spacing and structure for semantic HTML forms.",
       "stylesheets": [
         "components/forms.css",
         "presets/cinematic.css",
@@ -1514,9 +1912,31 @@
       ]
     },
     {
+      "name": "syn-form-actions",
+      "module": "recipes.css",
+      "description": "Form submit/cancel action layout; server validation remains host-owned.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
+      "name": "syn-form-actions__buttons",
+      "module": "recipes.css",
+      "description": "Buttons part of the form actions component; see recipes.css for markup.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
       "name": "syn-frame",
       "module": "geometry.css",
-      "description": "Syntyr CSS class (geometry.css).",
+      "description": "Frame presentation in the geometry.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "syntyr.all.css",
@@ -1536,7 +1956,7 @@
     {
       "name": "syn-frame--bevel",
       "module": "geometry.css",
-      "description": "Syntyr CSS class (geometry.css).",
+      "description": "Bevel appearance variant of the frame component; see geometry.css for styles.",
       "stylesheets": [
         "presets/cinematic.css",
         "syntyr.all.css",
@@ -1546,7 +1966,7 @@
     {
       "name": "syn-frame--bracket",
       "module": "geometry.css",
-      "description": "Syntyr CSS class (geometry.css).",
+      "description": "Bracket appearance variant of the frame component; see geometry.css for styles.",
       "stylesheets": [
         "presets/cinematic.css",
         "syntyr.all.css",
@@ -1556,7 +1976,7 @@
     {
       "name": "syn-frame--circuit",
       "module": "geometry.css",
-      "description": "Syntyr CSS class (geometry.css).",
+      "description": "Circuit appearance variant of the frame component; see geometry.css for styles.",
       "stylesheets": [
         "presets/cinematic.css",
         "syntyr.all.css",
@@ -1576,7 +1996,7 @@
     {
       "name": "syn-frame--industrial",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Industrial appearance variant of the frame component; see recipes.css for styles.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -1587,7 +2007,7 @@
     {
       "name": "syn-frame--inset",
       "module": "geometry.css",
-      "description": "Syntyr CSS class (geometry.css).",
+      "description": "Inset appearance variant of the frame component; see geometry.css for styles.",
       "stylesheets": [
         "presets/cinematic.css",
         "syntyr.all.css",
@@ -1597,7 +2017,7 @@
     {
       "name": "syn-frame--notch",
       "module": "geometry.css",
-      "description": "Syntyr CSS class (geometry.css).",
+      "description": "Notch appearance variant of the frame component; see geometry.css for styles.",
       "stylesheets": [
         "presets/cinematic.css",
         "syntyr.all.css",
@@ -1607,7 +2027,7 @@
     {
       "name": "syn-frame--precision",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Precision appearance variant of the frame component; see recipes.css for styles.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -1618,7 +2038,7 @@
     {
       "name": "syn-frame--soft",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Soft appearance variant of the frame component; see recipes.css for styles.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -1637,6 +2057,204 @@
       ]
     },
     {
+      "name": "syn-geo-attribution",
+      "module": "geo.css",
+      "description": "Optional attribution surface; preserve map provider credits.",
+      "stylesheets": [
+        "syntyr.all.css",
+        "syntyr.geo.css"
+      ]
+    },
+    {
+      "name": "syn-geo-bottom",
+      "module": "geo.css",
+      "description": "Geo bottom presentation in the geo.css module; use semantic HTML and consult its component example.",
+      "stylesheets": [
+        "syntyr.all.css",
+        "syntyr.geo.css"
+      ]
+    },
+    {
+      "name": "syn-geo-callout",
+      "module": "geo.css",
+      "description": "Geo callout presentation in the geo.css module; use semantic HTML and consult its component example.",
+      "stylesheets": [
+        "syntyr.all.css",
+        "syntyr.geo.css"
+      ]
+    },
+    {
+      "name": "syn-geo-cluster",
+      "module": "geo.css",
+      "description": "Geo cluster presentation in the geo.css module; use semantic HTML and consult its component example.",
+      "stylesheets": [
+        "syntyr.all.css",
+        "syntyr.geo.css"
+      ]
+    },
+    {
+      "name": "syn-geo-control",
+      "module": "geo.css",
+      "description": "Geo control presentation in the geo.css module; use semantic HTML and consult its component example.",
+      "stylesheets": [
+        "syntyr.all.css",
+        "syntyr.geo.css"
+      ]
+    },
+    {
+      "name": "syn-geo-control-group",
+      "module": "geo.css",
+      "description": "Geo control group presentation in the geo.css module; use semantic HTML and consult its component example.",
+      "stylesheets": [
+        "syntyr.all.css",
+        "syntyr.geo.css"
+      ]
+    },
+    {
+      "name": "syn-geo-controls",
+      "module": "geo.css",
+      "description": "Geo controls presentation in the geo.css module; use semantic HTML and consult its component example.",
+      "stylesheets": [
+        "syntyr.all.css",
+        "syntyr.geo.css"
+      ]
+    },
+    {
+      "name": "syn-geo-data-list",
+      "module": "geo.css",
+      "description": "Geo data list presentation in the geo.css module; use semantic HTML and consult its component example.",
+      "stylesheets": [
+        "syntyr.all.css",
+        "syntyr.geo.css"
+      ]
+    },
+    {
+      "name": "syn-geo-layer-list",
+      "module": "geo.css",
+      "description": "Geo layer list presentation in the geo.css module; use semantic HTML and consult its component example.",
+      "stylesheets": [
+        "syntyr.all.css",
+        "syntyr.geo.css"
+      ]
+    },
+    {
+      "name": "syn-geo-legend",
+      "module": "geo.css",
+      "description": "Readable, labeled map legend; host must provide layer semantics.",
+      "stylesheets": [
+        "syntyr.all.css",
+        "syntyr.geo.css"
+      ]
+    },
+    {
+      "name": "syn-geo-legend-list",
+      "module": "geo.css",
+      "description": "Geo legend list presentation in the geo.css module; use semantic HTML and consult its component example.",
+      "stylesheets": [
+        "syntyr.all.css",
+        "syntyr.geo.css"
+      ]
+    },
+    {
+      "name": "syn-geo-legend-title",
+      "module": "geo.css",
+      "description": "Geo legend title presentation in the geo.css module; use semantic HTML and consult its component example.",
+      "stylesheets": [
+        "syntyr.all.css",
+        "syntyr.geo.css"
+      ]
+    },
+    {
+      "name": "syn-geo-map",
+      "module": "geo.css",
+      "description": "Map renderer mount surface; actual projection and map behavior belong to host.",
+      "stylesheets": [
+        "syntyr.all.css",
+        "syntyr.geo.css"
+      ]
+    },
+    {
+      "name": "syn-geo-marker",
+      "module": "geo.css",
+      "description": "44px visual marker target; renderer-managed marker positions stay renderer-managed.",
+      "stylesheets": [
+        "syntyr.all.css",
+        "syntyr.geo.css"
+      ]
+    },
+    {
+      "name": "syn-geo-marker-layer",
+      "module": "geo.css",
+      "description": "Static diagram overlay for percentage-positioned markers, not for renderer-managed markers.",
+      "stylesheets": [
+        "syntyr.all.css",
+        "syntyr.geo.css"
+      ]
+    },
+    {
+      "name": "syn-geo-overlay",
+      "module": "geo.css",
+      "description": "Pointer-transparent overlay for application-owned map controls and legends.",
+      "stylesheets": [
+        "syntyr.all.css",
+        "syntyr.geo.css"
+      ]
+    },
+    {
+      "name": "syn-geo-scale",
+      "module": "geo.css",
+      "description": "Scale presentation; actual scale and bar width require a real map renderer.",
+      "stylesheets": [
+        "syntyr.all.css",
+        "syntyr.geo.css"
+      ]
+    },
+    {
+      "name": "syn-geo-shell",
+      "module": "geo.css",
+      "description": "Named CSS container for map-based workspace layouts; use with core plus optional geo CSS.",
+      "stylesheets": [
+        "syntyr.all.css",
+        "syntyr.geo.css"
+      ]
+    },
+    {
+      "name": "syn-geo-sidebar",
+      "module": "geo.css",
+      "description": "Geo sidebar presentation in the geo.css module; use semantic HTML and consult its component example.",
+      "stylesheets": [
+        "syntyr.all.css",
+        "syntyr.geo.css"
+      ]
+    },
+    {
+      "name": "syn-geo-swatch",
+      "module": "geo.css",
+      "description": "Geo swatch presentation in the geo.css module; use semantic HTML and consult its component example.",
+      "stylesheets": [
+        "syntyr.all.css",
+        "syntyr.geo.css"
+      ]
+    },
+    {
+      "name": "syn-geo-viewport",
+      "module": "geo.css",
+      "description": "Geo viewport presentation in the geo.css module; use semantic HTML and consult its component example.",
+      "stylesheets": [
+        "syntyr.all.css",
+        "syntyr.geo.css"
+      ]
+    },
+    {
+      "name": "syn-geo-workspace",
+      "module": "geo.css",
+      "description": "Responsive GIS sidebar plus map viewport; stacks based on container width.",
+      "stylesheets": [
+        "syntyr.all.css",
+        "syntyr.geo.css"
+      ]
+    },
+    {
       "name": "syn-glow",
       "module": "effects.css",
       "description": "Opt-in themed shadow; decoration controlled by data-syn-intensity.",
@@ -1650,7 +2268,7 @@
     {
       "name": "syn-gradient-wash",
       "module": "effects.css",
-      "description": "Syntyr CSS class (effects.css).",
+      "description": "Gradient wash presentation in the effects.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "syntyr.all.css",
@@ -1677,7 +2295,7 @@
     {
       "name": "syn-grid-effect",
       "module": "effects.css",
-      "description": "Syntyr CSS class (effects.css).",
+      "description": "Grid effect presentation in the effects.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "syntyr.all.css",
@@ -1688,7 +2306,7 @@
     {
       "name": "syn-header",
       "module": "components/layout.css",
-      "description": "Syntyr CSS class (components/layout.css).",
+      "description": "Header presentation in the components/layout.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "components/layout.css",
         "presets/cinematic.css",
@@ -1704,7 +2322,7 @@
     {
       "name": "syn-heading",
       "module": "components/typography.css",
-      "description": "Syntyr CSS class (components/typography.css).",
+      "description": "Default component or card heading typography.",
       "stylesheets": [
         "components/typography.css",
         "presets/cinematic.css",
@@ -1720,7 +2338,7 @@
     {
       "name": "syn-help",
       "module": "components/forms.css",
-      "description": "Syntyr CSS class (components/forms.css).",
+      "description": "Supporting form help text; connect it with aria-describedby where appropriate.",
       "stylesheets": [
         "components/forms.css",
         "presets/cinematic.css",
@@ -1736,7 +2354,7 @@
     {
       "name": "syn-horizon",
       "module": "effects.css",
-      "description": "Syntyr CSS class (effects.css).",
+      "description": "Horizon presentation in the effects.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "syntyr.all.css",
@@ -1747,7 +2365,7 @@
     {
       "name": "syn-icon",
       "module": "symbols.css",
-      "description": "Syntyr CSS class (symbols.css).",
+      "description": "Icon presentation in the symbols.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "syntyr.all.css",
@@ -1755,9 +2373,175 @@
       ]
     },
     {
+      "name": "syn-icon--bounce",
+      "module": "symbols.css",
+      "description": "Bounce appearance variant of the icon component; see symbols.css for styles.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "syntyr.all.css",
+        "syntyr.symbols.css"
+      ]
+    },
+    {
+      "name": "syn-icon--flash",
+      "module": "symbols.css",
+      "description": "Flash appearance variant of the icon component; see symbols.css for styles.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "syntyr.all.css",
+        "syntyr.symbols.css"
+      ]
+    },
+    {
+      "name": "syn-icon--flip",
+      "module": "symbols.css",
+      "description": "Flip appearance variant of the icon component; see symbols.css for styles.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "syntyr.all.css",
+        "syntyr.symbols.css"
+      ]
+    },
+    {
+      "name": "syn-icon--float",
+      "module": "symbols.css",
+      "description": "Float appearance variant of the icon component; see symbols.css for styles.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "syntyr.all.css",
+        "syntyr.symbols.css"
+      ]
+    },
+    {
+      "name": "syn-icon--heartbeat",
+      "module": "symbols.css",
+      "description": "Heartbeat appearance variant of the icon component; see symbols.css for styles.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "syntyr.all.css",
+        "syntyr.symbols.css"
+      ]
+    },
+    {
+      "name": "syn-icon--nudge-left",
+      "module": "symbols.css",
+      "description": "Nudge left appearance variant of the icon component; see symbols.css for styles.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "syntyr.all.css",
+        "syntyr.symbols.css"
+      ]
+    },
+    {
+      "name": "syn-icon--nudge-right",
+      "module": "symbols.css",
+      "description": "Nudge right appearance variant of the icon component; see symbols.css for styles.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "syntyr.all.css",
+        "syntyr.symbols.css"
+      ]
+    },
+    {
+      "name": "syn-icon--on-interact",
+      "module": "symbols.css",
+      "description": "On interact appearance variant of the icon component; see symbols.css for styles.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "syntyr.all.css",
+        "syntyr.symbols.css"
+      ]
+    },
+    {
+      "name": "syn-icon--ping",
+      "module": "symbols.css",
+      "description": "Ping appearance variant of the icon component; see symbols.css for styles.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "syntyr.all.css",
+        "syntyr.symbols.css"
+      ]
+    },
+    {
+      "name": "syn-icon--pop",
+      "module": "symbols.css",
+      "description": "Pop appearance variant of the icon component; see symbols.css for styles.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "syntyr.all.css",
+        "syntyr.symbols.css"
+      ]
+    },
+    {
+      "name": "syn-icon--pulse",
+      "module": "symbols.css",
+      "description": "Pulse appearance variant of the icon component; see symbols.css for styles.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "syntyr.all.css",
+        "syntyr.symbols.css"
+      ]
+    },
+    {
+      "name": "syn-icon--shake",
+      "module": "symbols.css",
+      "description": "Shake appearance variant of the icon component; see symbols.css for styles.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "syntyr.all.css",
+        "syntyr.symbols.css"
+      ]
+    },
+    {
+      "name": "syn-icon--spin",
+      "module": "symbols.css",
+      "description": "Spin appearance variant of the icon component; see symbols.css for styles.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "syntyr.all.css",
+        "syntyr.symbols.css"
+      ]
+    },
+    {
+      "name": "syn-icon--swing",
+      "module": "symbols.css",
+      "description": "Swing appearance variant of the icon component; see symbols.css for styles.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "syntyr.all.css",
+        "syntyr.symbols.css"
+      ]
+    },
+    {
+      "name": "syn-icon--wiggle",
+      "module": "symbols.css",
+      "description": "Wiggle appearance variant of the icon component; see symbols.css for styles.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "syntyr.all.css",
+        "syntyr.symbols.css"
+      ]
+    },
+    {
+      "name": "syn-image-gallery",
+      "module": "components/patterns.css",
+      "description": "Image gallery presentation in the components/patterns.css module; use semantic HTML and consult its component example.",
+      "stylesheets": [
+        "components/patterns.css",
+        "presets/cinematic.css",
+        "presets/minimal.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.core.css",
+        "syntyr.css",
+        "syntyr.embed.css",
+        "syntyr.semantic-bundle.css"
+      ]
+    },
+    {
       "name": "syn-inline",
       "module": "components/layout.css",
-      "description": "Syntyr CSS class (components/layout.css).",
+      "description": "Inline, wrapping layout for small groups of peers.",
       "stylesheets": [
         "components/layout.css",
         "presets/cinematic.css",
@@ -1773,7 +2557,7 @@
     {
       "name": "syn-input",
       "module": "components/forms.css",
-      "description": "Syntyr CSS class (components/forms.css).",
+      "description": "Native form input styling; use a real input with an associated label.",
       "stylesheets": [
         "components/forms.css",
         "presets/cinematic.css",
@@ -1789,7 +2573,7 @@
     {
       "name": "syn-input-addon",
       "module": "components/form-composition.css",
-      "description": "Syntyr CSS class (components/form-composition.css).",
+      "description": "Input addon presentation in the components/form-composition.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "components/form-composition.css",
         "presets/cinematic.css",
@@ -1805,7 +2589,7 @@
     {
       "name": "syn-input-group",
       "module": "components/form-composition.css",
-      "description": "Syntyr CSS class (components/form-composition.css).",
+      "description": "Input and addon grouping; form behavior remains native or host-owned.",
       "stylesheets": [
         "components/form-composition.css",
         "presets/cinematic.css",
@@ -1821,7 +2605,7 @@
     {
       "name": "syn-kpi-grid",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Responsive grid of key performance indicator cards or metrics.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -1832,7 +2616,7 @@
     {
       "name": "syn-label",
       "module": "components/forms.css",
-      "description": "Syntyr CSS class (components/forms.css).",
+      "description": "Visible form label styling; use native label/for association.",
       "stylesheets": [
         "components/forms.css",
         "presets/cinematic.css",
@@ -1848,7 +2632,7 @@
     {
       "name": "syn-layout",
       "module": "components/layout.css",
-      "description": "Syntyr CSS class (components/layout.css).",
+      "description": "Responsive multi-column layout with token-configurable minimum widths.",
       "stylesheets": [
         "components/layout.css",
         "presets/cinematic.css",
@@ -1864,7 +2648,55 @@
     {
       "name": "syn-lede",
       "module": "components/typography.css",
-      "description": "Syntyr CSS class (components/typography.css).",
+      "description": "Lead paragraph typography beneath a heading.",
+      "stylesheets": [
+        "components/typography.css",
+        "presets/cinematic.css",
+        "presets/minimal.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.core.css",
+        "syntyr.css",
+        "syntyr.embed.css",
+        "syntyr.semantic-bundle.css"
+      ]
+    },
+    {
+      "name": "syn-list",
+      "module": "components/typography.css",
+      "description": "Scoped native bullet or numbered list for core-only consumers.",
+      "stylesheets": [
+        "components/typography.css",
+        "presets/cinematic.css",
+        "presets/minimal.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.core.css",
+        "syntyr.css",
+        "syntyr.embed.css",
+        "syntyr.semantic-bundle.css"
+      ]
+    },
+    {
+      "name": "syn-list--accent",
+      "module": "components/typography.css",
+      "description": "Accent-colored top-level list markers; native numbering preserved.",
+      "stylesheets": [
+        "components/typography.css",
+        "presets/cinematic.css",
+        "presets/minimal.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.core.css",
+        "syntyr.css",
+        "syntyr.embed.css",
+        "syntyr.semantic-bundle.css"
+      ]
+    },
+    {
+      "name": "syn-list--compact",
+      "module": "components/typography.css",
+      "description": "Reduced vertical item rhythm for native list content.",
       "stylesheets": [
         "components/typography.css",
         "presets/cinematic.css",
@@ -1880,7 +2712,7 @@
     {
       "name": "syn-list-group",
       "module": "components/patterns.css",
-      "description": "Syntyr CSS class (components/patterns.css).",
+      "description": "Grouped markerless navigation or collection list; keep list semantics.",
       "stylesheets": [
         "components/patterns.css",
         "presets/cinematic.css",
@@ -1896,7 +2728,7 @@
     {
       "name": "syn-list-row",
       "module": "components/patterns.css",
-      "description": "Syntyr CSS class (components/patterns.css).",
+      "description": "List row presentation in the components/patterns.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "components/patterns.css",
         "presets/cinematic.css",
@@ -1912,7 +2744,7 @@
     {
       "name": "syn-list-row__actions",
       "module": "components/patterns.css",
-      "description": "Syntyr CSS class (components/patterns.css).",
+      "description": "Actions part of the list row component; see components/patterns.css for markup.",
       "stylesheets": [
         "components/patterns.css",
         "presets/cinematic.css",
@@ -1928,7 +2760,7 @@
     {
       "name": "syn-list-row__body",
       "module": "components/patterns.css",
-      "description": "Syntyr CSS class (components/patterns.css).",
+      "description": "Body part of the list row component; see components/patterns.css for markup.",
       "stylesheets": [
         "components/patterns.css",
         "presets/cinematic.css",
@@ -1944,7 +2776,7 @@
     {
       "name": "syn-list-row__media",
       "module": "components/patterns.css",
-      "description": "Syntyr CSS class (components/patterns.css).",
+      "description": "Media part of the list row component; see components/patterns.css for markup.",
       "stylesheets": [
         "components/patterns.css",
         "presets/cinematic.css",
@@ -1960,7 +2792,7 @@
     {
       "name": "syn-logo",
       "module": "components/typography.css",
-      "description": "Syntyr CSS class (components/typography.css).",
+      "description": "Logo presentation in the components/typography.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "components/typography.css",
         "presets/cinematic.css",
@@ -1974,9 +2806,275 @@
       ]
     },
     {
+      "name": "syn-logo-marquee",
+      "module": "motion.css",
+      "description": "Logo marquee presentation in the motion.css module; use semantic HTML and consult its component example.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "syntyr.all.css",
+        "syntyr.motion.css"
+      ]
+    },
+    {
+      "name": "syn-logo-marquee__group",
+      "module": "motion.css",
+      "description": "Group part of the logo marquee component; see motion.css for markup.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "syntyr.all.css",
+        "syntyr.motion.css"
+      ]
+    },
+    {
+      "name": "syn-logo-marquee__row",
+      "module": "motion.css",
+      "description": "Row part of the logo marquee component; see motion.css for markup.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "syntyr.all.css",
+        "syntyr.motion.css"
+      ]
+    },
+    {
+      "name": "syn-logo-marquee__track",
+      "module": "motion.css",
+      "description": "Track part of the logo marquee component; see motion.css for markup.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "syntyr.all.css",
+        "syntyr.motion.css"
+      ]
+    },
+    {
+      "name": "syn-logo-marquee__wordmark",
+      "module": "motion.css",
+      "description": "Wordmark part of the logo marquee component; see motion.css for markup.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "syntyr.all.css",
+        "syntyr.motion.css"
+      ]
+    },
+    {
+      "name": "syn-media-card",
+      "module": "media.css",
+      "description": "Media card presentation in the media.css module; use semantic HTML and consult its component example.",
+      "stylesheets": [
+        "syntyr.media.css"
+      ]
+    },
+    {
+      "name": "syn-media-card__action",
+      "module": "media.css",
+      "description": "Action part of the media card component; see media.css for markup.",
+      "stylesheets": [
+        "syntyr.media.css"
+      ]
+    },
+    {
+      "name": "syn-media-card__badge",
+      "module": "media.css",
+      "description": "Badge part of the media card component; see media.css for markup.",
+      "stylesheets": [
+        "syntyr.media.css"
+      ]
+    },
+    {
+      "name": "syn-media-card__link",
+      "module": "media.css",
+      "description": "Link part of the media card component; see media.css for markup.",
+      "stylesheets": [
+        "syntyr.media.css"
+      ]
+    },
+    {
+      "name": "syn-media-card__meta",
+      "module": "media.css",
+      "description": "Meta part of the media card component; see media.css for markup.",
+      "stylesheets": [
+        "syntyr.media.css"
+      ]
+    },
+    {
+      "name": "syn-media-card__title",
+      "module": "media.css",
+      "description": "Title part of the media card component; see media.css for markup.",
+      "stylesheets": [
+        "syntyr.media.css"
+      ]
+    },
+    {
+      "name": "syn-media-card__visual",
+      "module": "media.css",
+      "description": "Visual part of the media card component; see media.css for markup.",
+      "stylesheets": [
+        "syntyr.media.css"
+      ]
+    },
+    {
+      "name": "syn-media-figure",
+      "module": "components/patterns.css",
+      "description": "Media figure presentation in the components/patterns.css module; use semantic HTML and consult its component example.",
+      "stylesheets": [
+        "components/patterns.css",
+        "presets/cinematic.css",
+        "presets/minimal.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.core.css",
+        "syntyr.css",
+        "syntyr.embed.css",
+        "syntyr.semantic-bundle.css"
+      ]
+    },
+    {
+      "name": "syn-media-hero",
+      "module": "media.css",
+      "description": "Media hero presentation in the media.css module; use semantic HTML and consult its component example.",
+      "stylesheets": [
+        "syntyr.media.css"
+      ]
+    },
+    {
+      "name": "syn-media-hero__actions",
+      "module": "media.css",
+      "description": "Actions part of the media hero component; see media.css for markup.",
+      "stylesheets": [
+        "syntyr.media.css"
+      ]
+    },
+    {
+      "name": "syn-media-hero__content",
+      "module": "media.css",
+      "description": "Content part of the media hero component; see media.css for markup.",
+      "stylesheets": [
+        "syntyr.media.css"
+      ]
+    },
+    {
+      "name": "syn-media-hero__description",
+      "module": "media.css",
+      "description": "Description part of the media hero component; see media.css for markup.",
+      "stylesheets": [
+        "syntyr.media.css"
+      ]
+    },
+    {
+      "name": "syn-media-hero__eyebrow",
+      "module": "media.css",
+      "description": "Eyebrow part of the media hero component; see media.css for markup.",
+      "stylesheets": [
+        "syntyr.media.css"
+      ]
+    },
+    {
+      "name": "syn-media-hero__title",
+      "module": "media.css",
+      "description": "Title part of the media hero component; see media.css for markup.",
+      "stylesheets": [
+        "syntyr.media.css"
+      ]
+    },
+    {
+      "name": "syn-media-navigation",
+      "module": "media.css",
+      "description": "Media navigation presentation in the media.css module; use semantic HTML and consult its component example.",
+      "stylesheets": [
+        "syntyr.media.css"
+      ]
+    },
+    {
+      "name": "syn-media-navigation__brand",
+      "module": "media.css",
+      "description": "Brand part of the media navigation component; see media.css for markup.",
+      "stylesheets": [
+        "syntyr.media.css"
+      ]
+    },
+    {
+      "name": "syn-media-navigation__desktop",
+      "module": "media.css",
+      "description": "Desktop part of the media navigation component; see media.css for markup.",
+      "stylesheets": [
+        "syntyr.media.css"
+      ]
+    },
+    {
+      "name": "syn-media-navigation__link",
+      "module": "media.css",
+      "description": "Link part of the media navigation component; see media.css for markup.",
+      "stylesheets": [
+        "syntyr.media.css"
+      ]
+    },
+    {
+      "name": "syn-media-navigation__mobile",
+      "module": "media.css",
+      "description": "Mobile part of the media navigation component; see media.css for markup.",
+      "stylesheets": [
+        "syntyr.media.css"
+      ]
+    },
+    {
+      "name": "syn-media-rail",
+      "module": "media.css",
+      "description": "Media rail presentation in the media.css module; use semantic HTML and consult its component example.",
+      "stylesheets": [
+        "syntyr.media.css"
+      ]
+    },
+    {
+      "name": "syn-media-rail--controls",
+      "module": "media.css",
+      "description": "Opt-in native CSS carousel previous/next buttons; Scroll Snap remains usable without CSS Overflow 5 support.",
+      "stylesheets": [
+        "syntyr.media.css"
+      ]
+    },
+    {
+      "name": "syn-media-rail--markers",
+      "module": "media.css",
+      "description": "Opt-in native CSS position markers; label each direct child with data-syn-scroll-label.",
+      "stylesheets": [
+        "syntyr.media.css"
+      ]
+    },
+    {
+      "name": "syn-media-search",
+      "module": "media.css",
+      "description": "Media search presentation in the media.css module; use semantic HTML and consult its component example.",
+      "stylesheets": [
+        "syntyr.media.css"
+      ]
+    },
+    {
+      "name": "syn-media-section",
+      "module": "media.css",
+      "description": "Media section presentation in the media.css module; use semantic HTML and consult its component example.",
+      "stylesheets": [
+        "syntyr.media.css"
+      ]
+    },
+    {
+      "name": "syn-media-section__heading",
+      "module": "media.css",
+      "description": "Heading part of the media section component; see media.css for markup.",
+      "stylesheets": [
+        "syntyr.media.css"
+      ]
+    },
+    {
+      "name": "syn-media-shell",
+      "module": "media.css",
+      "description": "Media shell presentation in the media.css module; use semantic HTML and consult its component example.",
+      "stylesheets": [
+        "syntyr.media.css"
+      ]
+    },
+    {
       "name": "syn-meter",
       "module": "components/data.css",
-      "description": "Syntyr CSS class (components/data.css).",
+      "description": "Meter presentation in the components/data.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "components/data.css",
         "presets/cinematic.css",
@@ -1992,7 +3090,7 @@
     {
       "name": "syn-metric",
       "module": "components/typography.css",
-      "description": "Syntyr CSS class (components/typography.css).",
+      "description": "Emphasized numeric or measurement presentation with meaningful text.",
       "stylesheets": [
         "components/typography.css",
         "presets/cinematic.css",
@@ -2008,7 +3106,7 @@
     {
       "name": "syn-mono",
       "module": "components/typography.css",
-      "description": "Syntyr CSS class (components/typography.css).",
+      "description": "Mono presentation in the components/typography.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "components/typography.css",
         "presets/cinematic.css",
@@ -2024,7 +3122,7 @@
     {
       "name": "syn-muted",
       "module": "components/typography.css",
-      "description": "Syntyr CSS class (components/typography.css).",
+      "description": "Lower-emphasis supporting text; maintain readable contrast.",
       "stylesheets": [
         "components/typography.css",
         "presets/cinematic.css",
@@ -2040,7 +3138,7 @@
     {
       "name": "syn-nav",
       "module": "components/layout.css",
-      "description": "Syntyr CSS class (components/layout.css).",
+      "description": "Navigation link group styling; use semantic nav and links.",
       "stylesheets": [
         "components/layout.css",
         "presets/cinematic.css",
@@ -2056,7 +3154,7 @@
     {
       "name": "syn-nav-tabs",
       "module": "components/patterns.css",
-      "description": "Syntyr CSS class (components/patterns.css).",
+      "description": "Tab-like navigation styling; use links for pages, not fake ARIA tabs.",
       "stylesheets": [
         "components/patterns.css",
         "presets/cinematic.css",
@@ -2070,9 +3168,20 @@
       ]
     },
     {
+      "name": "syn-operation-feedback",
+      "module": "recipes.css",
+      "description": "Optional host-managed operation feedback with truthful state text.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
       "name": "syn-page",
       "module": "base.css",
-      "description": "Syntyr CSS class (base.css).",
+      "description": "Page presentation in the base.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "components/base.css",
         "presets/cinematic.css",
@@ -2088,7 +3197,7 @@
     {
       "name": "syn-page-header",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Page heading and action area layout for applications.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -2099,7 +3208,7 @@
     {
       "name": "syn-page-header__actions",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Actions part of the page header component; see recipes.css for markup.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -2110,7 +3219,7 @@
     {
       "name": "syn-page-header__meta",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Meta part of the page header component; see recipes.css for markup.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -2121,7 +3230,7 @@
     {
       "name": "syn-page-link",
       "module": "components/patterns.css",
-      "description": "Syntyr CSS class (components/patterns.css).",
+      "description": "Page link presentation in the components/patterns.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "components/patterns.css",
         "presets/cinematic.css",
@@ -2137,7 +3246,7 @@
     {
       "name": "syn-pagination",
       "module": "components/patterns.css",
-      "description": "Syntyr CSS class (components/patterns.css).",
+      "description": "Pagination link and control presentation; host performs page changes.",
       "stylesheets": [
         "components/patterns.css",
         "presets/cinematic.css",
@@ -2169,7 +3278,7 @@
     {
       "name": "syn-panel--cut",
       "module": "components/layout.css",
-      "description": "Syntyr CSS class (components/layout.css).",
+      "description": "Cut appearance variant of the panel component; see components/layout.css for styles.",
       "stylesheets": [
         "components/layout.css",
         "presets/cinematic.css",
@@ -2185,7 +3294,7 @@
     {
       "name": "syn-panel--raised",
       "module": "components/layout.css",
-      "description": "Syntyr CSS class (components/layout.css).",
+      "description": "Raised-surface visual variant of a panel.",
       "stylesheets": [
         "components/layout.css",
         "presets/cinematic.css",
@@ -2234,7 +3343,7 @@
     {
       "name": "syn-pipeline-list",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Pipeline list presentation in the recipes.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -2245,7 +3354,7 @@
     {
       "name": "syn-popover",
       "module": "components/overlays.css",
-      "description": "Syntyr CSS class (components/overlays.css).",
+      "description": "Native popover presentation; opening, focus and dismissal are host-owned.",
       "stylesheets": [
         "components/overlays.css",
         "presets/cinematic.css",
@@ -2261,7 +3370,7 @@
     {
       "name": "syn-popover--anchored",
       "module": "components/overlays.css",
-      "description": "Syntyr CSS class (components/overlays.css).",
+      "description": "Anchored appearance variant of the popover component; see components/overlays.css for styles.",
       "stylesheets": [
         "components/overlays.css",
         "presets/cinematic.css",
@@ -2277,7 +3386,7 @@
     {
       "name": "syn-popover--transition",
       "module": "motion.css",
-      "description": "Syntyr CSS class (motion.css).",
+      "description": "Transition appearance variant of the popover component; see motion.css for styles.",
       "stylesheets": [
         "presets/cinematic.css",
         "syntyr.all.css",
@@ -2287,7 +3396,7 @@
     {
       "name": "syn-price-card",
       "module": "components/patterns.css",
-      "description": "Syntyr CSS class (components/patterns.css).",
+      "description": "Price card presentation in the components/patterns.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "components/patterns.css",
         "presets/cinematic.css",
@@ -2303,7 +3412,7 @@
     {
       "name": "syn-price-value",
       "module": "components/patterns.css",
-      "description": "Syntyr CSS class (components/patterns.css).",
+      "description": "Price value presentation in the components/patterns.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "components/patterns.css",
         "presets/cinematic.css",
@@ -2319,7 +3428,7 @@
     {
       "name": "syn-pricing",
       "module": "components/patterns.css",
-      "description": "Syntyr CSS class (components/patterns.css).",
+      "description": "Responsive pricing card composition; commercial data is host-owned.",
       "stylesheets": [
         "components/patterns.css",
         "presets/cinematic.css",
@@ -2335,7 +3444,7 @@
     {
       "name": "syn-print-hide",
       "module": "print.css",
-      "description": "Syntyr CSS class (print.css).",
+      "description": "Print hide presentation in the print.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.print.css"
@@ -2344,7 +3453,7 @@
     {
       "name": "syn-prose",
       "module": "components/typography.css",
-      "description": "Syntyr CSS class (components/typography.css).",
+      "description": "Readable long-form article typography with scoped content rhythm.",
       "stylesheets": [
         "components/typography.css",
         "presets/cinematic.css",
@@ -2360,7 +3469,7 @@
     {
       "name": "syn-reading",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Reading presentation in the recipes.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -2371,7 +3480,7 @@
     {
       "name": "syn-reading-progress",
       "module": "motion.css",
-      "description": "Syntyr CSS class (motion.css).",
+      "description": "Reading progress presentation in the motion.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "syntyr.all.css",
@@ -2406,9 +3515,63 @@
       ]
     },
     {
+      "name": "syn-resizable-workspace",
+      "module": "recipes.css",
+      "description": "Resizable workspace presentation in the recipes.css module; use semantic HTML and consult its component example.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
+      "name": "syn-resizable-workspace__pane",
+      "module": "recipes.css",
+      "description": "Pane part of the resizable workspace component; see recipes.css for markup.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
+      "name": "syn-resizable-workspace__panes",
+      "module": "recipes.css",
+      "description": "Panes part of the resizable workspace component; see recipes.css for markup.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
+      "name": "syn-resizable-workspace__separator",
+      "module": "recipes.css",
+      "description": "Separator part of the resizable workspace component; see recipes.css for markup.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
+      "name": "syn-resource-outline",
+      "module": "native-recipes.css",
+      "description": "Resource outline presentation in the native-recipes.css module; use semantic HTML and consult its component example.",
+      "stylesheets": [
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.native-recipes.css"
+      ]
+    },
+    {
       "name": "syn-result-state",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Result state presentation in the recipes.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -2435,7 +3598,7 @@
     {
       "name": "syn-rule",
       "module": "components/typography.css",
-      "description": "Syntyr CSS class (components/typography.css).",
+      "description": "Rule presentation in the components/typography.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "components/typography.css",
         "presets/cinematic.css",
@@ -2451,7 +3614,7 @@
     {
       "name": "syn-scanlines",
       "module": "effects.css",
-      "description": "Syntyr CSS class (effects.css).",
+      "description": "Scanlines presentation in the effects.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "syntyr.all.css",
@@ -2460,9 +3623,20 @@
       ]
     },
     {
+      "name": "syn-scroll-rail",
+      "module": "recipes.css",
+      "description": "Optional, keyboard-scrollable card rail with native scroll snapping; host owns any arrow controls or filtering.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
       "name": "syn-section-heading",
       "module": "components/typography.css",
-      "description": "Syntyr CSS class (components/typography.css).",
+      "description": "Section heading presentation in the components/typography.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "components/typography.css",
         "presets/cinematic.css",
@@ -2478,7 +3652,23 @@
     {
       "name": "syn-select",
       "module": "components/forms.css",
-      "description": "Syntyr CSS class (components/forms.css).",
+      "description": "Native HTML select styling; provide a label and valid options.",
+      "stylesheets": [
+        "components/forms.css",
+        "presets/cinematic.css",
+        "presets/minimal.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.core.css",
+        "syntyr.css",
+        "syntyr.embed.css",
+        "syntyr.semantic-bundle.css"
+      ]
+    },
+    {
+      "name": "syn-select--enhanced",
+      "module": "components/forms.css",
+      "description": "Enhanced appearance variant of the select component; see components/forms.css for styles.",
       "stylesheets": [
         "components/forms.css",
         "presets/cinematic.css",
@@ -2505,9 +3695,53 @@
       ]
     },
     {
+      "name": "syn-sheet",
+      "module": "recipes.css",
+      "description": "Native popover or dialog side-sheet presentation; browser and host own opening, focus, and close behavior.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
+      "name": "syn-sheet-body",
+      "module": "recipes.css",
+      "description": "Sheet body presentation in the recipes.css module; use semantic HTML and consult its component example.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
+      "name": "syn-sheet-footer",
+      "module": "recipes.css",
+      "description": "Sheet footer presentation in the recipes.css module; use semantic HTML and consult its component example.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
+      "name": "syn-sheet-header",
+      "module": "recipes.css",
+      "description": "Heading and close-action area inside a native sheet.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
       "name": "syn-shell",
       "module": "components/layout.css",
-      "description": "Syntyr CSS class (components/layout.css).",
+      "description": "Constrained page-width container for a whole page or section.",
       "stylesheets": [
         "components/layout.css",
         "presets/cinematic.css",
@@ -2523,7 +3757,7 @@
     {
       "name": "syn-showcase",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Showcase presentation in the recipes.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -2534,7 +3768,7 @@
     {
       "name": "syn-showcase-copy",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Showcase copy presentation in the recipes.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -2545,7 +3779,7 @@
     {
       "name": "syn-showcase-visual",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Showcase visual presentation in the recipes.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -2556,7 +3790,7 @@
     {
       "name": "syn-sidebar",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Sidebar navigation or supporting-content layout.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -2567,7 +3801,7 @@
     {
       "name": "syn-sidecar",
       "module": "components/layout.css",
-      "description": "Syntyr CSS class (components/layout.css).",
+      "description": "Sidecar presentation in the components/layout.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "components/layout.css",
         "presets/cinematic.css",
@@ -2583,7 +3817,7 @@
     {
       "name": "syn-site-heading",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Site heading presentation in the recipes.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -2594,7 +3828,7 @@
     {
       "name": "syn-site-heading--editorial",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Editorial appearance variant of the site heading component; see recipes.css for styles.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -2605,7 +3839,7 @@
     {
       "name": "syn-site-hero",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Site hero presentation in the recipes.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -2616,7 +3850,7 @@
     {
       "name": "syn-skeleton",
       "module": "components/patterns.css",
-      "description": "Syntyr CSS class (components/patterns.css).",
+      "description": "Visual loading placeholder; do not mistake styling for live loading state.",
       "stylesheets": [
         "components/patterns.css",
         "presets/cinematic.css",
@@ -2632,7 +3866,7 @@
     {
       "name": "syn-skeleton--short",
       "module": "components/patterns.css",
-      "description": "Syntyr CSS class (components/patterns.css).",
+      "description": "Short appearance variant of the skeleton component; see components/patterns.css for styles.",
       "stylesheets": [
         "components/patterns.css",
         "presets/cinematic.css",
@@ -2648,7 +3882,7 @@
     {
       "name": "syn-split",
       "module": "components/patterns.css",
-      "description": "Syntyr CSS class (components/patterns.css).",
+      "description": "Split presentation in the components/patterns.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "components/patterns.css",
         "presets/cinematic.css",
@@ -2664,7 +3898,7 @@
     {
       "name": "syn-stack",
       "module": "components/layout.css",
-      "description": "Syntyr CSS class (components/layout.css).",
+      "description": "Vertical layout with consistent, token-configurable spacing.",
       "stylesheets": [
         "components/layout.css",
         "presets/cinematic.css",
@@ -2680,7 +3914,7 @@
     {
       "name": "syn-stage",
       "module": "components/layout.css",
-      "description": "Syntyr CSS class (components/layout.css).",
+      "description": "Stage presentation in the components/layout.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "components/layout.css",
         "presets/cinematic.css",
@@ -2696,7 +3930,7 @@
     {
       "name": "syn-stage-header",
       "module": "components/layout.css",
-      "description": "Syntyr CSS class (components/layout.css).",
+      "description": "Stage header presentation in the components/layout.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "components/layout.css",
         "presets/cinematic.css",
@@ -2712,7 +3946,7 @@
     {
       "name": "syn-stat",
       "module": "components/patterns.css",
-      "description": "Syntyr CSS class (components/patterns.css).",
+      "description": "Single metric with value and explanatory label.",
       "stylesheets": [
         "components/patterns.css",
         "presets/cinematic.css",
@@ -2728,7 +3962,7 @@
     {
       "name": "syn-stat-label",
       "module": "components/patterns.css",
-      "description": "Syntyr CSS class (components/patterns.css).",
+      "description": "Stat label presentation in the components/patterns.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "components/patterns.css",
         "presets/cinematic.css",
@@ -2744,7 +3978,7 @@
     {
       "name": "syn-stat-value",
       "module": "components/patterns.css",
-      "description": "Syntyr CSS class (components/patterns.css).",
+      "description": "Stat value presentation in the components/patterns.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "components/patterns.css",
         "presets/cinematic.css",
@@ -2776,7 +4010,7 @@
     {
       "name": "syn-status",
       "module": "components/data.css",
-      "description": "Syntyr CSS class (components/data.css).",
+      "description": "Concise status label; include text independent of color.",
       "stylesheets": [
         "components/data.css",
         "presets/cinematic.css",
@@ -2792,7 +4026,7 @@
     {
       "name": "syn-status--danger",
       "module": "components/data.css",
-      "description": "Syntyr CSS class (components/data.css).",
+      "description": "Danger appearance variant of the status component; see components/data.css for styles.",
       "stylesheets": [
         "components/data.css",
         "presets/cinematic.css",
@@ -2808,7 +4042,7 @@
     {
       "name": "syn-status--success",
       "module": "components/data.css",
-      "description": "Syntyr CSS class (components/data.css).",
+      "description": "Success appearance variant of the status component; see components/data.css for styles.",
       "stylesheets": [
         "components/data.css",
         "presets/cinematic.css",
@@ -2824,7 +4058,7 @@
     {
       "name": "syn-status--warning",
       "module": "components/data.css",
-      "description": "Syntyr CSS class (components/data.css).",
+      "description": "Warning appearance variant of the status component; see components/data.css for styles.",
       "stylesheets": [
         "components/data.css",
         "presets/cinematic.css",
@@ -2840,7 +4074,7 @@
     {
       "name": "syn-step",
       "module": "components/patterns.css",
-      "description": "Syntyr CSS class (components/patterns.css).",
+      "description": "Single item in a semantic process or progress sequence.",
       "stylesheets": [
         "components/patterns.css",
         "presets/cinematic.css",
@@ -2856,7 +4090,7 @@
     {
       "name": "syn-step-detail",
       "module": "components/patterns.css",
-      "description": "Syntyr CSS class (components/patterns.css).",
+      "description": "Step detail presentation in the components/patterns.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "components/patterns.css",
         "presets/cinematic.css",
@@ -2872,7 +4106,7 @@
     {
       "name": "syn-step-label",
       "module": "components/patterns.css",
-      "description": "Syntyr CSS class (components/patterns.css).",
+      "description": "Step label presentation in the components/patterns.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "components/patterns.css",
         "presets/cinematic.css",
@@ -2888,7 +4122,7 @@
     {
       "name": "syn-steps",
       "module": "components/patterns.css",
-      "description": "Syntyr CSS class (components/patterns.css).",
+      "description": "Process sequence layout; status progression is host-owned.",
       "stylesheets": [
         "components/patterns.css",
         "presets/cinematic.css",
@@ -2904,7 +4138,7 @@
     {
       "name": "syn-steps--vertical",
       "module": "components/patterns.css",
-      "description": "Syntyr CSS class (components/patterns.css).",
+      "description": "Vertical appearance variant of the steps component; see components/patterns.css for styles.",
       "stylesheets": [
         "components/patterns.css",
         "presets/cinematic.css",
@@ -2920,7 +4154,7 @@
     {
       "name": "syn-surface--accent",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Accent appearance variant of the surface component; see recipes.css for styles.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -2931,7 +4165,7 @@
     {
       "name": "syn-surface--floating",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Floating appearance variant of the surface component; see recipes.css for styles.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -2942,7 +4176,7 @@
     {
       "name": "syn-surface--lift",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Lift appearance variant of the surface component; see recipes.css for styles.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -2953,7 +4187,7 @@
     {
       "name": "syn-surface--raised",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Raised appearance variant of the surface component; see recipes.css for styles.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -2964,7 +4198,7 @@
     {
       "name": "syn-surface--recessed",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Recessed appearance variant of the surface component; see recipes.css for styles.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -2975,7 +4209,7 @@
     {
       "name": "syn-switcher",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Switcher presentation in the recipes.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -2986,7 +4220,7 @@
     {
       "name": "syn-symbol",
       "module": "symbols.css",
-      "description": "Syntyr CSS class (symbols.css).",
+      "description": "Symbol presentation in the symbols.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "syntyr.all.css",
@@ -2996,7 +4230,7 @@
     {
       "name": "syn-symbol--accent",
       "module": "symbols.css",
-      "description": "Syntyr CSS class (symbols.css).",
+      "description": "Accent appearance variant of the symbol component; see symbols.css for styles.",
       "stylesheets": [
         "presets/cinematic.css",
         "syntyr.all.css",
@@ -3006,7 +4240,7 @@
     {
       "name": "syn-symbol--muted",
       "module": "symbols.css",
-      "description": "Syntyr CSS class (symbols.css).",
+      "description": "Muted appearance variant of the symbol component; see symbols.css for styles.",
       "stylesheets": [
         "presets/cinematic.css",
         "syntyr.all.css",
@@ -3016,7 +4250,7 @@
     {
       "name": "syn-table",
       "module": "components/data.css",
-      "description": "Syntyr CSS class (components/data.css).",
+      "description": "Native HTML table styling; preserve th, scope, and proper headers.",
       "stylesheets": [
         "components/data.css",
         "presets/cinematic.css",
@@ -3032,7 +4266,18 @@
     {
       "name": "syn-table--compact",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Compact-density native table variant.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
+      "name": "syn-table--readable",
+      "module": "recipes.css",
+      "description": "Optional min-width table presentation; use inside a keyboard-focusable syn-table-wrap region for narrow screens.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -3043,7 +4288,7 @@
     {
       "name": "syn-table--sticky",
       "module": "components/data.css",
-      "description": "Syntyr CSS class (components/data.css).",
+      "description": "Sticky-header table presentation; check scroll and reflow behavior.",
       "stylesheets": [
         "components/data.css",
         "presets/cinematic.css",
@@ -3059,7 +4304,7 @@
     {
       "name": "syn-table--striped",
       "module": "components/data.css",
-      "description": "Syntyr CSS class (components/data.css).",
+      "description": "Alternating row background variant for a native table.",
       "stylesheets": [
         "components/data.css",
         "presets/cinematic.css",
@@ -3075,7 +4320,7 @@
     {
       "name": "syn-table-emphasis",
       "module": "components/data.css",
-      "description": "Syntyr CSS class (components/data.css).",
+      "description": "Table emphasis presentation in the components/data.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "components/data.css",
         "presets/cinematic.css",
@@ -3091,7 +4336,7 @@
     {
       "name": "syn-table-sort",
       "module": "components/data.css",
-      "description": "Syntyr CSS class (components/data.css).",
+      "description": "Table sort presentation in the components/data.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "components/data.css",
         "presets/cinematic.css",
@@ -3107,7 +4352,7 @@
     {
       "name": "syn-table-wrap",
       "module": "components/data.css",
-      "description": "Syntyr CSS class (components/data.css).",
+      "description": "Responsive overflow wrapper for a native table.",
       "stylesheets": [
         "components/data.css",
         "presets/cinematic.css",
@@ -3123,7 +4368,7 @@
     {
       "name": "syn-table-wrap--scroll",
       "module": "components/data.css",
-      "description": "Syntyr CSS class (components/data.css).",
+      "description": "Scroll appearance variant of the table wrap component; see components/data.css for styles.",
       "stylesheets": [
         "components/data.css",
         "presets/cinematic.css",
@@ -3139,7 +4384,7 @@
     {
       "name": "syn-terminal",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Terminal presentation in the recipes.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -3150,7 +4395,7 @@
     {
       "name": "syn-terminal-bar",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Terminal bar presentation in the recipes.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -3161,7 +4406,7 @@
     {
       "name": "syn-terminal-body",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Terminal body presentation in the recipes.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -3172,7 +4417,7 @@
     {
       "name": "syn-terminal-command",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Terminal command presentation in the recipes.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -3183,7 +4428,7 @@
     {
       "name": "syn-terminal-cursor",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Terminal cursor presentation in the recipes.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -3194,7 +4439,7 @@
     {
       "name": "syn-terminal-dots",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Terminal dots presentation in the recipes.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -3205,7 +4450,7 @@
     {
       "name": "syn-terminal-error",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Terminal error presentation in the recipes.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -3216,7 +4461,7 @@
     {
       "name": "syn-terminal-line",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Terminal line presentation in the recipes.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -3227,7 +4472,7 @@
     {
       "name": "syn-terminal-meta",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Terminal meta presentation in the recipes.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -3238,7 +4483,7 @@
     {
       "name": "syn-terminal-muted",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Terminal muted presentation in the recipes.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -3249,7 +4494,7 @@
     {
       "name": "syn-terminal-output",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Terminal output presentation in the recipes.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -3260,7 +4505,7 @@
     {
       "name": "syn-terminal-path",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Terminal path presentation in the recipes.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -3271,7 +4516,7 @@
     {
       "name": "syn-terminal-prompt",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Terminal prompt presentation in the recipes.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -3282,7 +4527,7 @@
     {
       "name": "syn-terminal-success",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Terminal success presentation in the recipes.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -3293,7 +4538,7 @@
     {
       "name": "syn-terminal-title",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Terminal title presentation in the recipes.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -3304,7 +4549,7 @@
     {
       "name": "syn-terminal-warning",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Terminal warning presentation in the recipes.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -3315,7 +4560,7 @@
     {
       "name": "syn-text-support",
       "module": "components/typography.css",
-      "description": "Syntyr CSS class (components/typography.css).",
+      "description": "Text support presentation in the components/typography.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "components/typography.css",
         "presets/cinematic.css",
@@ -3331,7 +4576,7 @@
     {
       "name": "syn-textarea",
       "module": "components/forms.css",
-      "description": "Syntyr CSS class (components/forms.css).",
+      "description": "Native multiline text field styling; pair with a label.",
       "stylesheets": [
         "components/forms.css",
         "presets/cinematic.css",
@@ -3347,7 +4592,7 @@
     {
       "name": "syn-textarea--autosize",
       "module": "components/forms.css",
-      "description": "Syntyr CSS class (components/forms.css).",
+      "description": "Autosize appearance variant of the textarea component; see components/forms.css for styles.",
       "stylesheets": [
         "components/forms.css",
         "presets/cinematic.css",
@@ -3363,7 +4608,7 @@
     {
       "name": "syn-timeline",
       "module": "native-recipes.css",
-      "description": "Syntyr CSS class (native-recipes.css).",
+      "description": "Chronological event or activity layout; preserve event text and order.",
       "stylesheets": [
         "presets/saas.css",
         "syntyr.all.css",
@@ -3373,7 +4618,7 @@
     {
       "name": "syn-title",
       "module": "components/typography.css",
-      "description": "Syntyr CSS class (components/typography.css).",
+      "description": "Title presentation in the components/typography.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "components/typography.css",
         "presets/cinematic.css",
@@ -3389,7 +4634,7 @@
     {
       "name": "syn-toolbar",
       "module": "components/patterns.css",
-      "description": "Syntyr CSS class (components/patterns.css).",
+      "description": "Aligned row of controls and actions; keyboard interactions are host-owned.",
       "stylesheets": [
         "components/patterns.css",
         "presets/cinematic.css",
@@ -3405,7 +4650,7 @@
     {
       "name": "syn-u-between",
       "module": "utilities.css",
-      "description": "Syntyr CSS class (utilities.css).",
+      "description": "Optional between utility; load utilities.css when used.",
       "stylesheets": [
         "presets/saas.css",
         "syntyr.all.css",
@@ -3415,7 +4660,7 @@
     {
       "name": "syn-u-center",
       "module": "utilities.css",
-      "description": "Syntyr CSS class (utilities.css).",
+      "description": "Optional center utility; load utilities.css when used.",
       "stylesheets": [
         "presets/saas.css",
         "syntyr.all.css",
@@ -3435,7 +4680,7 @@
     {
       "name": "syn-u-gap-1",
       "module": "utilities.css",
-      "description": "Syntyr CSS class (utilities.css).",
+      "description": "Optional gap 1 utility; load utilities.css when used.",
       "stylesheets": [
         "presets/saas.css",
         "syntyr.all.css",
@@ -3445,7 +4690,7 @@
     {
       "name": "syn-u-gap-2",
       "module": "utilities.css",
-      "description": "Syntyr CSS class (utilities.css).",
+      "description": "Optional gap 2 utility; load utilities.css when used.",
       "stylesheets": [
         "presets/saas.css",
         "syntyr.all.css",
@@ -3455,7 +4700,7 @@
     {
       "name": "syn-u-gap-3",
       "module": "utilities.css",
-      "description": "Syntyr CSS class (utilities.css).",
+      "description": "Optional gap 3 utility; load utilities.css when used.",
       "stylesheets": [
         "presets/saas.css",
         "syntyr.all.css",
@@ -3465,7 +4710,7 @@
     {
       "name": "syn-u-grid",
       "module": "utilities.css",
-      "description": "Syntyr CSS class (utilities.css).",
+      "description": "Optional grid utility; load utilities.css when used.",
       "stylesheets": [
         "presets/saas.css",
         "syntyr.all.css",
@@ -3475,7 +4720,7 @@
     {
       "name": "syn-u-inline",
       "module": "utilities.css",
-      "description": "Syntyr CSS class (utilities.css).",
+      "description": "Optional inline utility; load utilities.css when used.",
       "stylesheets": [
         "presets/saas.css",
         "syntyr.all.css",
@@ -3485,7 +4730,7 @@
     {
       "name": "syn-u-max-reading",
       "module": "utilities.css",
-      "description": "Syntyr CSS class (utilities.css).",
+      "description": "Optional max reading utility; load utilities.css when used.",
       "stylesheets": [
         "presets/saas.css",
         "syntyr.all.css",
@@ -3495,7 +4740,7 @@
     {
       "name": "syn-u-min-w-0",
       "module": "utilities.css",
-      "description": "Syntyr CSS class (utilities.css).",
+      "description": "Optional min w 0 utility; load utilities.css when used.",
       "stylesheets": [
         "presets/saas.css",
         "syntyr.all.css",
@@ -3505,7 +4750,7 @@
     {
       "name": "syn-u-mt-1",
       "module": "utilities.css",
-      "description": "Syntyr CSS class (utilities.css).",
+      "description": "Optional mt 1 utility; load utilities.css when used.",
       "stylesheets": [
         "presets/saas.css",
         "syntyr.all.css",
@@ -3515,7 +4760,7 @@
     {
       "name": "syn-u-mt-2",
       "module": "utilities.css",
-      "description": "Syntyr CSS class (utilities.css).",
+      "description": "Optional mt 2 utility; load utilities.css when used.",
       "stylesheets": [
         "presets/saas.css",
         "syntyr.all.css",
@@ -3525,7 +4770,7 @@
     {
       "name": "syn-u-mt-3",
       "module": "utilities.css",
-      "description": "Syntyr CSS class (utilities.css).",
+      "description": "Optional mt 3 utility; load utilities.css when used.",
       "stylesheets": [
         "presets/saas.css",
         "syntyr.all.css",
@@ -3535,7 +4780,7 @@
     {
       "name": "syn-u-overflow-auto",
       "module": "utilities.css",
-      "description": "Syntyr CSS class (utilities.css).",
+      "description": "Optional overflow auto utility; load utilities.css when used.",
       "stylesheets": [
         "presets/saas.css",
         "syntyr.all.css",
@@ -3545,7 +4790,7 @@
     {
       "name": "syn-u-p-1",
       "module": "utilities.css",
-      "description": "Syntyr CSS class (utilities.css).",
+      "description": "Optional p 1 utility; load utilities.css when used.",
       "stylesheets": [
         "presets/saas.css",
         "syntyr.all.css",
@@ -3555,7 +4800,7 @@
     {
       "name": "syn-u-p-2",
       "module": "utilities.css",
-      "description": "Syntyr CSS class (utilities.css).",
+      "description": "Optional p 2 utility; load utilities.css when used.",
       "stylesheets": [
         "presets/saas.css",
         "syntyr.all.css",
@@ -3565,7 +4810,7 @@
     {
       "name": "syn-u-p-3",
       "module": "utilities.css",
-      "description": "Syntyr CSS class (utilities.css).",
+      "description": "Optional p 3 utility; load utilities.css when used.",
       "stylesheets": [
         "presets/saas.css",
         "syntyr.all.css",
@@ -3575,7 +4820,7 @@
     {
       "name": "syn-u-sr-only",
       "module": "utilities.css",
-      "description": "Syntyr CSS class (utilities.css).",
+      "description": "Screen-reader-only text utility; retains content for assistive technology.",
       "stylesheets": [
         "presets/saas.css",
         "syntyr.all.css",
@@ -3585,7 +4830,7 @@
     {
       "name": "syn-u-stack",
       "module": "utilities.css",
-      "description": "Syntyr CSS class (utilities.css).",
+      "description": "Optional stack utility; load utilities.css when used.",
       "stylesheets": [
         "presets/saas.css",
         "syntyr.all.css",
@@ -3595,7 +4840,7 @@
     {
       "name": "syn-u-text-center",
       "module": "utilities.css",
-      "description": "Syntyr CSS class (utilities.css).",
+      "description": "Optional text center utility; load utilities.css when used.",
       "stylesheets": [
         "presets/saas.css",
         "syntyr.all.css",
@@ -3615,7 +4860,7 @@
     {
       "name": "syn-u-wrap",
       "module": "utilities.css",
-      "description": "Syntyr CSS class (utilities.css).",
+      "description": "Optional wrap utility; load utilities.css when used.",
       "stylesheets": [
         "presets/saas.css",
         "syntyr.all.css",
@@ -3623,9 +4868,31 @@
       ]
     },
     {
+      "name": "syn-upload-field",
+      "module": "recipes.css",
+      "description": "File-selection field presentation; native input or host owns file upload.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
+      "name": "syn-view-switcher",
+      "module": "recipes.css",
+      "description": "Server-selected view links or host-controlled view buttons; the host owns selection and navigation.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
       "name": "syn-viz-bar",
       "module": "viz.css",
-      "description": "Syntyr CSS class (viz.css).",
+      "description": "Viz bar presentation in the viz.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.viz.css"
@@ -3634,7 +4901,7 @@
     {
       "name": "syn-viz-bar-fill",
       "module": "viz.css",
-      "description": "Syntyr CSS class (viz.css).",
+      "description": "Viz bar fill presentation in the viz.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.viz.css"
@@ -3643,7 +4910,7 @@
     {
       "name": "syn-viz-bar-label",
       "module": "viz.css",
-      "description": "Syntyr CSS class (viz.css).",
+      "description": "Viz bar label presentation in the viz.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.viz.css"
@@ -3652,7 +4919,7 @@
     {
       "name": "syn-viz-bar-track",
       "module": "viz.css",
-      "description": "Syntyr CSS class (viz.css).",
+      "description": "Viz bar track presentation in the viz.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.viz.css"
@@ -3661,7 +4928,7 @@
     {
       "name": "syn-viz-bars",
       "module": "viz.css",
-      "description": "Syntyr CSS class (viz.css).",
+      "description": "Viz bars presentation in the viz.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.viz.css"
@@ -3670,7 +4937,7 @@
     {
       "name": "syn-viz-cell",
       "module": "viz.css",
-      "description": "Syntyr CSS class (viz.css).",
+      "description": "Viz cell presentation in the viz.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.viz.css"
@@ -3679,7 +4946,7 @@
     {
       "name": "syn-viz-heatmap",
       "module": "viz.css",
-      "description": "Syntyr CSS class (viz.css).",
+      "description": "Viz heatmap presentation in the viz.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.viz.css"
@@ -3688,7 +4955,7 @@
     {
       "name": "syn-viz-sparkline",
       "module": "viz.css",
-      "description": "Syntyr CSS class (viz.css).",
+      "description": "Viz sparkline presentation in the viz.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.viz.css"
@@ -3697,7 +4964,7 @@
     {
       "name": "syn-viz-sparkline-area",
       "module": "viz.css",
-      "description": "Syntyr CSS class (viz.css).",
+      "description": "Viz sparkline area presentation in the viz.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.viz.css"
@@ -3706,7 +4973,7 @@
     {
       "name": "syn-viz-sparkline-path",
       "module": "viz.css",
-      "description": "Syntyr CSS class (viz.css).",
+      "description": "Viz sparkline path presentation in the viz.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.viz.css"
@@ -3715,7 +4982,7 @@
     {
       "name": "syn-viz-sr-only",
       "module": "viz.css",
-      "description": "Syntyr CSS class (viz.css).",
+      "description": "Viz sr only presentation in the viz.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.viz.css"
@@ -3724,7 +4991,7 @@
     {
       "name": "syn-viz-tracker",
       "module": "viz.css",
-      "description": "Syntyr CSS class (viz.css).",
+      "description": "Viz tracker presentation in the viz.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.viz.css"
@@ -3733,7 +5000,7 @@
     {
       "name": "syn-workspace",
       "module": "recipes.css",
-      "description": "Syntyr CSS class (recipes.css).",
+      "description": "Responsive application workspace layout with primary and supporting regions.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -3762,7 +5029,7 @@
     {
       "name": "--syn-accent-2",
       "module": "tokens.css",
-      "description": "Syntyr CSS property (tokens.css).",
+      "description": "Accent 2 design token from tokens.css; override in the appropriate Syntyr scope when needed.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -3778,7 +5045,7 @@
     {
       "name": "--syn-accent-soft",
       "module": "tokens.css",
-      "description": "Syntyr CSS property (tokens.css).",
+      "description": "Accent soft design token from tokens.css; override in the appropriate Syntyr scope when needed.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -3792,9 +5059,29 @@
       ]
     },
     {
+      "name": "--syn-animation-iterations",
+      "module": "motion.css",
+      "description": "Animation iterations design token from motion.css; override in the appropriate Syntyr scope when needed.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "syntyr.all.css",
+        "syntyr.motion.css"
+      ]
+    },
+    {
+      "name": "--syn-animation-keyframes",
+      "module": "motion.css",
+      "description": "Animation keyframes design token from motion.css; override in the appropriate Syntyr scope when needed.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "syntyr.all.css",
+        "syntyr.motion.css"
+      ]
+    },
+    {
       "name": "--syn-avatar-size",
       "module": "components/patterns.css",
-      "description": "Syntyr CSS property (components/patterns.css).",
+      "description": "Avatar size design token from components/patterns.css; override in the appropriate Syntyr scope when needed.",
       "stylesheets": [
         "components/patterns.css",
         "presets/cinematic.css",
@@ -3810,7 +5097,7 @@
     {
       "name": "--syn-bg",
       "module": "tokens.css",
-      "description": "Theme background.",
+      "description": "Theme background color for the scoped Syntyr root.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -3826,7 +5113,7 @@
     {
       "name": "--syn-border-default",
       "module": "tokens.css",
-      "description": "Syntyr CSS property (tokens.css).",
+      "description": "Border default design token from tokens.css; override in the appropriate Syntyr scope when needed.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -3842,7 +5129,7 @@
     {
       "name": "--syn-border-floating",
       "module": "tokens.css",
-      "description": "Syntyr CSS property (tokens.css).",
+      "description": "Border floating design token from tokens.css; override in the appropriate Syntyr scope when needed.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -3858,7 +5145,7 @@
     {
       "name": "--syn-border-focus",
       "module": "tokens.css",
-      "description": "Syntyr CSS property (tokens.css).",
+      "description": "Border focus design token from tokens.css; override in the appropriate Syntyr scope when needed.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -3874,7 +5161,7 @@
     {
       "name": "--syn-border-hover",
       "module": "tokens.css",
-      "description": "Syntyr CSS property (tokens.css).",
+      "description": "Border hover design token from tokens.css; override in the appropriate Syntyr scope when needed.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -3890,7 +5177,7 @@
     {
       "name": "--syn-border-subtle",
       "module": "tokens.css",
-      "description": "Syntyr CSS property (tokens.css).",
+      "description": "Border subtle design token from tokens.css; override in the appropriate Syntyr scope when needed.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -3906,7 +5193,7 @@
     {
       "name": "--syn-bracket-size",
       "module": "geometry.css",
-      "description": "Syntyr CSS property (geometry.css).",
+      "description": "Bracket size design token from geometry.css; override in the appropriate Syntyr scope when needed.",
       "stylesheets": [
         "presets/cinematic.css",
         "syntyr.all.css",
@@ -3948,7 +5235,7 @@
     {
       "name": "--syn-card-padding",
       "module": "tokens.css",
-      "description": "Syntyr CSS property (tokens.css).",
+      "description": "Card padding design token from tokens.css; override in the appropriate Syntyr scope when needed.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -3964,7 +5251,7 @@
     {
       "name": "--syn-chart-1",
       "module": "viz.css",
-      "description": "Syntyr CSS property (viz.css).",
+      "description": "Chart presentation design token chart 1; provide non-color chart labels.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.viz.css"
@@ -3973,7 +5260,7 @@
     {
       "name": "--syn-chart-2",
       "module": "viz.css",
-      "description": "Syntyr CSS property (viz.css).",
+      "description": "Chart presentation design token chart 2; provide non-color chart labels.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.viz.css"
@@ -3982,7 +5269,7 @@
     {
       "name": "--syn-chart-3",
       "module": "viz.css",
-      "description": "Syntyr CSS property (viz.css).",
+      "description": "Chart presentation design token chart 3; provide non-color chart labels.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.viz.css"
@@ -3991,7 +5278,7 @@
     {
       "name": "--syn-chart-4",
       "module": "viz.css",
-      "description": "Syntyr CSS property (viz.css).",
+      "description": "Chart presentation design token chart 4; provide non-color chart labels.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.viz.css"
@@ -4000,7 +5287,7 @@
     {
       "name": "--syn-chart-axis",
       "module": "viz.css",
-      "description": "Syntyr CSS property (viz.css).",
+      "description": "Chart presentation design token chart axis; provide non-color chart labels.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.viz.css"
@@ -4009,7 +5296,7 @@
     {
       "name": "--syn-chart-grid",
       "module": "viz.css",
-      "description": "Syntyr CSS property (viz.css).",
+      "description": "Chart presentation design token chart grid; provide non-color chart labels.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.viz.css"
@@ -4018,7 +5305,7 @@
     {
       "name": "--syn-chart-tooltip-bg",
       "module": "viz.css",
-      "description": "Syntyr CSS property (viz.css).",
+      "description": "Chart presentation design token chart tooltip bg; provide non-color chart labels.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.viz.css"
@@ -4027,7 +5314,7 @@
     {
       "name": "--syn-content-gap",
       "module": "tokens.css",
-      "description": "Syntyr CSS property (tokens.css).",
+      "description": "Content gap design token from tokens.css; override in the appropriate Syntyr scope when needed.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -4043,7 +5330,7 @@
     {
       "name": "--syn-content-max",
       "module": "tokens.css",
-      "description": "Syntyr CSS property (tokens.css).",
+      "description": "Content max design token from tokens.css; override in the appropriate Syntyr scope when needed.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -4059,7 +5346,7 @@
     {
       "name": "--syn-control-height",
       "module": "tokens.css",
-      "description": "Syntyr CSS property (tokens.css).",
+      "description": "Shared native form control height; check accessible target sizing.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -4075,7 +5362,7 @@
     {
       "name": "--syn-control-padding-block",
       "module": "tokens.css",
-      "description": "Syntyr CSS property (tokens.css).",
+      "description": "Vertical padding used by shared form controls.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -4091,7 +5378,7 @@
     {
       "name": "--syn-cut",
       "module": "tokens.css",
-      "description": "Syntyr CSS property (tokens.css).",
+      "description": "Cut design token from tokens.css; override in the appropriate Syntyr scope when needed.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -4107,7 +5394,7 @@
     {
       "name": "--syn-danger",
       "module": "tokens.css",
-      "description": "Syntyr CSS property (tokens.css).",
+      "description": "Semantic danger color; do not communicate errors through color alone.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -4178,7 +5465,7 @@
     {
       "name": "--syn-duration-fast",
       "module": "tokens.css",
-      "description": "Syntyr CSS property (tokens.css).",
+      "description": "Motion duration token duration fast; respect user reduced-motion preferences.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -4194,7 +5481,7 @@
     {
       "name": "--syn-duration-standard",
       "module": "tokens.css",
-      "description": "Syntyr CSS property (tokens.css).",
+      "description": "Motion duration token duration standard; respect user reduced-motion preferences.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -4210,7 +5497,7 @@
     {
       "name": "--syn-ease",
       "module": "tokens.css",
-      "description": "Syntyr CSS property (tokens.css).",
+      "description": "Motion easing token ease; use only for optional transitions.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -4226,7 +5513,7 @@
     {
       "name": "--syn-ease-enter",
       "module": "tokens.css",
-      "description": "Syntyr CSS property (tokens.css).",
+      "description": "Motion easing token ease enter; use only for optional transitions.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -4237,6 +5524,17 @@
         "syntyr.css",
         "syntyr.embed.css",
         "syntyr.semantic-bundle.css"
+      ]
+    },
+    {
+      "name": "--syn-file-edge",
+      "module": "recipes.css",
+      "description": "File edge design token from recipes.css; override in the appropriate Syntyr scope when needed.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.recipes.css"
       ]
     },
     {
@@ -4275,7 +5573,7 @@
     {
       "name": "--syn-fluid-display-size",
       "module": "recipes.css",
-      "description": "Syntyr CSS property (recipes.css).",
+      "description": "Fluid display size design token from recipes.css; override in the appropriate Syntyr scope when needed.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -4286,7 +5584,7 @@
     {
       "name": "--syn-focus-ring",
       "module": "tokens.css",
-      "description": "Syntyr CSS property (tokens.css).",
+      "description": "Focus indication styling for keyboard-visible focus states.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -4302,7 +5600,7 @@
     {
       "name": "--syn-font",
       "module": "tokens.css",
-      "description": "Syntyr CSS property (tokens.css).",
+      "description": "Font design token from tokens.css; override in the appropriate Syntyr scope when needed.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -4318,7 +5616,7 @@
     {
       "name": "--syn-font-display",
       "module": "tokens.css",
-      "description": "Syntyr CSS property (tokens.css).",
+      "description": "Font family used for display headings.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -4334,7 +5632,7 @@
     {
       "name": "--syn-font-ui",
       "module": "tokens.css",
-      "description": "Syntyr CSS property (tokens.css).",
+      "description": "Font family used by common interface controls and components.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -4350,7 +5648,7 @@
     {
       "name": "--syn-frame",
       "module": "tokens.css",
-      "description": "Syntyr CSS property (tokens.css).",
+      "description": "Default frame or border color within the current theme.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -4456,7 +5754,7 @@
     {
       "name": "--syn-frame-shape",
       "module": "geometry.css",
-      "description": "Syntyr CSS property (geometry.css).",
+      "description": "Frame shape design token from geometry.css; override in the appropriate Syntyr scope when needed.",
       "stylesheets": [
         "presets/cinematic.css",
         "syntyr.all.css",
@@ -4476,7 +5774,7 @@
     {
       "name": "--syn-frame-strong",
       "module": "tokens.css",
-      "description": "Syntyr CSS property (tokens.css).",
+      "description": "Frame strong design token from tokens.css; override in the appropriate Syntyr scope when needed.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -4487,6 +5785,87 @@
         "syntyr.css",
         "syntyr.embed.css",
         "syntyr.semantic-bundle.css"
+      ]
+    },
+    {
+      "name": "--syn-geo-floating",
+      "module": "geo.css",
+      "description": "Geo floating design token from geo.css; override in the appropriate Syntyr scope when needed.",
+      "stylesheets": [
+        "syntyr.all.css",
+        "syntyr.geo.css"
+      ]
+    },
+    {
+      "name": "--syn-geo-land",
+      "module": "geo.css",
+      "description": "Geo land design token from geo.css; override in the appropriate Syntyr scope when needed.",
+      "stylesheets": [
+        "syntyr.all.css",
+        "syntyr.geo.css"
+      ]
+    },
+    {
+      "name": "--syn-geo-marker-color",
+      "module": "geo.css",
+      "description": "Geo marker color design token from geo.css; override in the appropriate Syntyr scope when needed.",
+      "stylesheets": [
+        "syntyr.all.css",
+        "syntyr.geo.css"
+      ]
+    },
+    {
+      "name": "--syn-geo-parcel",
+      "module": "geo.css",
+      "description": "Geo parcel design token from geo.css; override in the appropriate Syntyr scope when needed.",
+      "stylesheets": [
+        "syntyr.all.css",
+        "syntyr.geo.css"
+      ]
+    },
+    {
+      "name": "--syn-geo-point",
+      "module": "geo.css",
+      "description": "Geo point design token from geo.css; override in the appropriate Syntyr scope when needed.",
+      "stylesheets": [
+        "syntyr.all.css",
+        "syntyr.geo.css"
+      ]
+    },
+    {
+      "name": "--syn-geo-road",
+      "module": "geo.css",
+      "description": "Geo road design token from geo.css; override in the appropriate Syntyr scope when needed.",
+      "stylesheets": [
+        "syntyr.all.css",
+        "syntyr.geo.css"
+      ]
+    },
+    {
+      "name": "--syn-geo-route",
+      "module": "geo.css",
+      "description": "Geo route design token from geo.css; override in the appropriate Syntyr scope when needed.",
+      "stylesheets": [
+        "syntyr.all.css",
+        "syntyr.geo.css"
+      ]
+    },
+    {
+      "name": "--syn-geo-water",
+      "module": "geo.css",
+      "description": "Geo water design token from geo.css; override in the appropriate Syntyr scope when needed.",
+      "stylesheets": [
+        "syntyr.all.css",
+        "syntyr.geo.css"
+      ]
+    },
+    {
+      "name": "--syn-geo-zone",
+      "module": "geo.css",
+      "description": "Geo zone design token from geo.css; override in the appropriate Syntyr scope when needed.",
+      "stylesheets": [
+        "syntyr.all.css",
+        "syntyr.geo.css"
       ]
     },
     {
@@ -4524,7 +5903,7 @@
     {
       "name": "--syn-grid-density-pad-inline",
       "module": "data-grid.css",
-      "description": "Syntyr CSS property (data-grid.css).",
+      "description": "Grid density pad inline design token from data-grid.css; override in the appropriate Syntyr scope when needed.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.data-grid.css"
@@ -4533,7 +5912,7 @@
     {
       "name": "--syn-grid-density-row-block",
       "module": "data-grid.css",
-      "description": "Syntyr CSS property (data-grid.css).",
+      "description": "Grid density row block design token from data-grid.css; override in the appropriate Syntyr scope when needed.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.data-grid.css"
@@ -4542,7 +5921,7 @@
     {
       "name": "--syn-grid-edge",
       "module": "data-grid.css",
-      "description": "Syntyr CSS property (data-grid.css).",
+      "description": "Grid edge design token from data-grid.css; override in the appropriate Syntyr scope when needed.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.data-grid.css"
@@ -4551,7 +5930,7 @@
     {
       "name": "--syn-grid-focus",
       "module": "data-grid.css",
-      "description": "Syntyr CSS property (data-grid.css).",
+      "description": "Grid focus design token from data-grid.css; override in the appropriate Syntyr scope when needed.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.data-grid.css"
@@ -4576,7 +5955,7 @@
     {
       "name": "--syn-grid-hover",
       "module": "data-grid.css",
-      "description": "Syntyr CSS property (data-grid.css).",
+      "description": "Grid hover design token from data-grid.css; override in the appropriate Syntyr scope when needed.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.data-grid.css"
@@ -4601,7 +5980,7 @@
     {
       "name": "--syn-grid-muted",
       "module": "data-grid.css",
-      "description": "Syntyr CSS property (data-grid.css).",
+      "description": "Grid muted design token from data-grid.css; override in the appropriate Syntyr scope when needed.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.data-grid.css"
@@ -4610,7 +5989,7 @@
     {
       "name": "--syn-grid-pad-inline",
       "module": "data-grid.css",
-      "description": "Syntyr CSS property (data-grid.css).",
+      "description": "Grid pad inline design token from data-grid.css; override in the appropriate Syntyr scope when needed.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.data-grid.css"
@@ -4619,7 +5998,7 @@
     {
       "name": "--syn-grid-row-block",
       "module": "data-grid.css",
-      "description": "Syntyr CSS property (data-grid.css).",
+      "description": "Grid row block design token from data-grid.css; override in the appropriate Syntyr scope when needed.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.data-grid.css"
@@ -4628,7 +6007,7 @@
     {
       "name": "--syn-grid-selected",
       "module": "data-grid.css",
-      "description": "Syntyr CSS property (data-grid.css).",
+      "description": "Grid selected design token from data-grid.css; override in the appropriate Syntyr scope when needed.",
       "stylesheets": [
         "syntyr.all.css",
         "syntyr.data-grid.css"
@@ -4648,6 +6027,16 @@
         "syntyr.css",
         "syntyr.embed.css",
         "syntyr.semantic-bundle.css"
+      ]
+    },
+    {
+      "name": "--syn-icon-motion-keyframes",
+      "module": "symbols.css",
+      "description": "Icon motion keyframes design token from symbols.css; override in the appropriate Syntyr scope when needed.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "syntyr.all.css",
+        "syntyr.symbols.css"
       ]
     },
     {
@@ -4723,7 +6112,7 @@
     {
       "name": "--syn-leading-body",
       "module": "tokens.css",
-      "description": "Syntyr CSS property (tokens.css).",
+      "description": "Leading body design token from tokens.css; override in the appropriate Syntyr scope when needed.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -4739,7 +6128,7 @@
     {
       "name": "--syn-line",
       "module": "tokens.css",
-      "description": "Syntyr CSS property (tokens.css).",
+      "description": "Line design token from tokens.css; override in the appropriate Syntyr scope when needed.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -4753,9 +6142,65 @@
       ]
     },
     {
+      "name": "--syn-list-item-gap",
+      "module": "components/typography.css",
+      "description": "List item gap design token from components/typography.css; override in the appropriate Syntyr scope when needed.",
+      "stylesheets": [
+        "components/typography.css",
+        "presets/cinematic.css",
+        "presets/minimal.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.core.css",
+        "syntyr.css",
+        "syntyr.embed.css",
+        "syntyr.semantic-bundle.css"
+      ]
+    },
+    {
+      "name": "--syn-media-card-ratio",
+      "module": "media.css",
+      "description": "Media card ratio design token from media.css; override in the appropriate Syntyr scope when needed.",
+      "stylesheets": [
+        "syntyr.media.css"
+      ]
+    },
+    {
+      "name": "--syn-media-gap",
+      "module": "media.css",
+      "description": "Media gap design token from media.css; override in the appropriate Syntyr scope when needed.",
+      "stylesheets": [
+        "syntyr.media.css"
+      ]
+    },
+    {
+      "name": "--syn-media-hero-image",
+      "module": "media.css",
+      "description": "Media hero image design token from media.css; override in the appropriate Syntyr scope when needed.",
+      "stylesheets": [
+        "syntyr.media.css"
+      ]
+    },
+    {
+      "name": "--syn-media-hero-position",
+      "module": "media.css",
+      "description": "Media hero position design token from media.css; override in the appropriate Syntyr scope when needed.",
+      "stylesheets": [
+        "syntyr.media.css"
+      ]
+    },
+    {
+      "name": "--syn-media-rail-item-size",
+      "module": "media.css",
+      "description": "Media rail item size design token from media.css; override in the appropriate Syntyr scope when needed.",
+      "stylesheets": [
+        "syntyr.media.css"
+      ]
+    },
+    {
       "name": "--syn-mono",
       "module": "tokens.css",
-      "description": "Syntyr CSS property (tokens.css).",
+      "description": "Mono design token from tokens.css; override in the appropriate Syntyr scope when needed.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -4771,7 +6216,7 @@
     {
       "name": "--syn-muted",
       "module": "tokens.css",
-      "description": "Syntyr CSS property (tokens.css).",
+      "description": "Subdued text color for secondary content; retain readable contrast.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -4801,9 +6246,20 @@
       ]
     },
     {
+      "name": "--syn-operation-edge",
+      "module": "recipes.css",
+      "description": "Operation edge design token from recipes.css; override in the appropriate Syntyr scope when needed.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
       "name": "--syn-page-gutter",
       "module": "tokens.css",
-      "description": "Syntyr CSS property (tokens.css).",
+      "description": "Page gutter design token from tokens.css; override in the appropriate Syntyr scope when needed.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -4834,8 +6290,24 @@
     },
     {
       "name": "--syn-panel-padding",
-      "module": "tokens.css",
+      "module": "components/layout.css",
       "description": "Per-panel padding; defaults to the existing fluid panel padding.",
+      "stylesheets": [
+        "components/layout.css",
+        "presets/cinematic.css",
+        "presets/minimal.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.core.css",
+        "syntyr.css",
+        "syntyr.embed.css",
+        "syntyr.semantic-bundle.css"
+      ]
+    },
+    {
+      "name": "--syn-panel-padding-default",
+      "module": "tokens.css",
+      "description": "Panel padding default design token from tokens.css; override in the appropriate Syntyr scope when needed.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -4867,7 +6339,7 @@
     {
       "name": "--syn-primary-hover-bg",
       "module": "tokens.css",
-      "description": "Syntyr CSS property (tokens.css).",
+      "description": "Primary hover bg design token from tokens.css; override in the appropriate Syntyr scope when needed.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -4883,7 +6355,7 @@
     {
       "name": "--syn-radius",
       "module": "tokens.css",
-      "description": "Syntyr CSS property (tokens.css).",
+      "description": "Common corner radius for compatible components.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -4899,7 +6371,7 @@
     {
       "name": "--syn-reading-width",
       "module": "recipes.css",
-      "description": "Syntyr CSS property (recipes.css).",
+      "description": "Reading width design token from recipes.css; override in the appropriate Syntyr scope when needed.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -4910,7 +6382,7 @@
     {
       "name": "--syn-row-padding-block",
       "module": "tokens.css",
-      "description": "Syntyr CSS property (tokens.css).",
+      "description": "Row padding block design token from tokens.css; override in the appropriate Syntyr scope when needed.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -4942,7 +6414,7 @@
     {
       "name": "--syn-section-space",
       "module": "tokens.css",
-      "description": "Syntyr CSS property (tokens.css).",
+      "description": "Section space design token from tokens.css; override in the appropriate Syntyr scope when needed.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -4958,7 +6430,7 @@
     {
       "name": "--syn-shadow-overlay",
       "module": "tokens.css",
-      "description": "Syntyr CSS property (tokens.css).",
+      "description": "Overlay elevation shadow used by appropriate floating surfaces.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -4974,7 +6446,7 @@
     {
       "name": "--syn-shadow-raised",
       "module": "tokens.css",
-      "description": "Syntyr CSS property (tokens.css).",
+      "description": "Shadow treatment for visually elevated surfaces.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -4990,7 +6462,7 @@
     {
       "name": "--syn-shadow-sm",
       "module": "tokens.css",
-      "description": "Syntyr CSS property (tokens.css).",
+      "description": "Surface shadow design token shadow sm; reserve elevation for meaningful hierarchy.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -5004,9 +6476,20 @@
       ]
     },
     {
+      "name": "--syn-sheet-width",
+      "module": "recipes.css",
+      "description": "Maximum inline width of an optional record sheet; defaults to 30rem.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.recipes.css"
+      ]
+    },
+    {
       "name": "--syn-space-1",
       "module": "tokens.css",
-      "description": "Syntyr CSS property (tokens.css).",
+      "description": "Spacing scale token 1; use for consistent layout spacing.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -5022,7 +6505,7 @@
     {
       "name": "--syn-space-2",
       "module": "tokens.css",
-      "description": "Syntyr CSS property (tokens.css).",
+      "description": "Spacing scale token 2; use for consistent layout spacing.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -5038,7 +6521,7 @@
     {
       "name": "--syn-space-3",
       "module": "tokens.css",
-      "description": "Syntyr CSS property (tokens.css).",
+      "description": "Spacing scale token 3; use for consistent layout spacing.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -5054,7 +6537,7 @@
     {
       "name": "--syn-space-4",
       "module": "tokens.css",
-      "description": "Syntyr CSS property (tokens.css).",
+      "description": "Spacing scale token 4; use for consistent layout spacing.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -5070,7 +6553,71 @@
     {
       "name": "--syn-space-5",
       "module": "tokens.css",
-      "description": "Syntyr CSS property (tokens.css).",
+      "description": "Spacing scale token 5; use for consistent layout spacing.",
+      "stylesheets": [
+        "components/tokens.css",
+        "presets/cinematic.css",
+        "presets/minimal.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.core.css",
+        "syntyr.css",
+        "syntyr.embed.css",
+        "syntyr.semantic-bundle.css"
+      ]
+    },
+    {
+      "name": "--syn-space-fluid-1",
+      "module": "tokens.css",
+      "description": "Spacing scale token fluid-1; use for consistent layout spacing.",
+      "stylesheets": [
+        "components/tokens.css",
+        "presets/cinematic.css",
+        "presets/minimal.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.core.css",
+        "syntyr.css",
+        "syntyr.embed.css",
+        "syntyr.semantic-bundle.css"
+      ]
+    },
+    {
+      "name": "--syn-space-fluid-2",
+      "module": "tokens.css",
+      "description": "Spacing scale token fluid-2; use for consistent layout spacing.",
+      "stylesheets": [
+        "components/tokens.css",
+        "presets/cinematic.css",
+        "presets/minimal.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.core.css",
+        "syntyr.css",
+        "syntyr.embed.css",
+        "syntyr.semantic-bundle.css"
+      ]
+    },
+    {
+      "name": "--syn-space-fluid-3",
+      "module": "tokens.css",
+      "description": "Spacing scale token fluid-3; use for consistent layout spacing.",
+      "stylesheets": [
+        "components/tokens.css",
+        "presets/cinematic.css",
+        "presets/minimal.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.core.css",
+        "syntyr.css",
+        "syntyr.embed.css",
+        "syntyr.semantic-bundle.css"
+      ]
+    },
+    {
+      "name": "--syn-space-fluid-4",
+      "module": "tokens.css",
+      "description": "Spacing scale token fluid-4; use for consistent layout spacing.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -5102,7 +6649,7 @@
     {
       "name": "--syn-stage-pad",
       "module": "components/layout.css",
-      "description": "Syntyr CSS property (components/layout.css).",
+      "description": "Stage pad design token from components/layout.css; override in the appropriate Syntyr scope when needed.",
       "stylesheets": [
         "components/layout.css",
         "presets/cinematic.css",
@@ -5118,7 +6665,7 @@
     {
       "name": "--syn-success",
       "module": "tokens.css",
-      "description": "Syntyr CSS property (tokens.css).",
+      "description": "Semantic success color for positive states.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -5134,7 +6681,7 @@
     {
       "name": "--syn-surface",
       "module": "tokens.css",
-      "description": "Syntyr CSS property (tokens.css).",
+      "description": "Primary surface color for panels and grouped content.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -5150,7 +6697,7 @@
     {
       "name": "--syn-surface-floating",
       "module": "tokens.css",
-      "description": "Syntyr CSS property (tokens.css).",
+      "description": "Surface floating design token from tokens.css; override in the appropriate Syntyr scope when needed.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -5166,7 +6713,7 @@
     {
       "name": "--syn-surface-hi",
       "module": "tokens.css",
-      "description": "Syntyr CSS property (tokens.css).",
+      "description": "Surface hi design token from tokens.css; override in the appropriate Syntyr scope when needed.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -5182,7 +6729,7 @@
     {
       "name": "--syn-surface-hover",
       "module": "tokens.css",
-      "description": "Syntyr CSS property (tokens.css).",
+      "description": "Surface hover design token from tokens.css; override in the appropriate Syntyr scope when needed.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -5198,7 +6745,7 @@
     {
       "name": "--syn-surface-interactive",
       "module": "tokens.css",
-      "description": "Syntyr CSS property (tokens.css).",
+      "description": "Surface interactive design token from tokens.css; override in the appropriate Syntyr scope when needed.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -5214,7 +6761,7 @@
     {
       "name": "--syn-surface-pressed",
       "module": "tokens.css",
-      "description": "Syntyr CSS property (tokens.css).",
+      "description": "Surface pressed design token from tokens.css; override in the appropriate Syntyr scope when needed.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -5230,7 +6777,7 @@
     {
       "name": "--syn-surface-raised",
       "module": "tokens.css",
-      "description": "Syntyr CSS property (tokens.css).",
+      "description": "Raised surface color for elevated interface regions.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -5246,7 +6793,7 @@
     {
       "name": "--syn-surface-recessed",
       "module": "tokens.css",
-      "description": "Syntyr CSS property (tokens.css).",
+      "description": "Recessed surface color for inset interface regions.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -5262,7 +6809,7 @@
     {
       "name": "--syn-terminal-bg",
       "module": "recipes.css",
-      "description": "Syntyr CSS property (recipes.css).",
+      "description": "Terminal bg design token from recipes.css; override in the appropriate Syntyr scope when needed.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -5273,7 +6820,7 @@
     {
       "name": "--syn-terminal-fg",
       "module": "recipes.css",
-      "description": "Syntyr CSS property (recipes.css).",
+      "description": "Terminal fg design token from recipes.css; override in the appropriate Syntyr scope when needed.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -5284,7 +6831,7 @@
     {
       "name": "--syn-terminal-muted",
       "module": "recipes.css",
-      "description": "Syntyr CSS property (recipes.css).",
+      "description": "Terminal muted design token from recipes.css; override in the appropriate Syntyr scope when needed.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -5295,7 +6842,7 @@
     {
       "name": "--syn-terminal-prompt",
       "module": "recipes.css",
-      "description": "Syntyr CSS property (recipes.css).",
+      "description": "Terminal prompt design token from recipes.css; override in the appropriate Syntyr scope when needed.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -5306,7 +6853,7 @@
     {
       "name": "--syn-text",
       "module": "tokens.css",
-      "description": "Default text color.",
+      "description": "Default foreground text color; check contrast against the current surface.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -5322,7 +6869,7 @@
     {
       "name": "--syn-text-subtle",
       "module": "tokens.css",
-      "description": "Syntyr CSS property (tokens.css).",
+      "description": "Text subtle design token from tokens.css; override in the appropriate Syntyr scope when needed.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -5338,7 +6885,7 @@
     {
       "name": "--syn-tracking-display",
       "module": "tokens.css",
-      "description": "Syntyr CSS property (tokens.css).",
+      "description": "Tracking display design token from tokens.css; override in the appropriate Syntyr scope when needed.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -5354,7 +6901,7 @@
     {
       "name": "--syn-type-base",
       "module": "tokens.css",
-      "description": "Syntyr CSS property (tokens.css).",
+      "description": "Typography scale role type base; use consistently within the theme.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -5370,7 +6917,7 @@
     {
       "name": "--syn-type-body",
       "module": "tokens.css",
-      "description": "Syntyr CSS property (tokens.css).",
+      "description": "Body typography size role; override consistently across components.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -5386,7 +6933,7 @@
     {
       "name": "--syn-type-display",
       "module": "tokens.css",
-      "description": "Syntyr CSS property (tokens.css).",
+      "description": "Large display typography size role for emphasized headings.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -5402,7 +6949,7 @@
     {
       "name": "--syn-type-heading",
       "module": "tokens.css",
-      "description": "Syntyr CSS property (tokens.css).",
+      "description": "Heading typography size role for component and page hierarchy.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -5418,7 +6965,7 @@
     {
       "name": "--syn-type-lede",
       "module": "recipes.css",
-      "description": "Syntyr CSS property (recipes.css).",
+      "description": "Typography scale role type lede; use consistently within the theme.",
       "stylesheets": [
         "presets/cinematic.css",
         "presets/saas.css",
@@ -5429,7 +6976,7 @@
     {
       "name": "--syn-type-section",
       "module": "tokens.css",
-      "description": "Syntyr CSS property (tokens.css).",
+      "description": "Section-heading typography size role.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -5445,7 +6992,7 @@
     {
       "name": "--syn-type-sm",
       "module": "tokens.css",
-      "description": "Syntyr CSS property (tokens.css).",
+      "description": "Typography scale role type sm; use consistently within the theme.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -5461,7 +7008,7 @@
     {
       "name": "--syn-type-xs",
       "module": "tokens.css",
-      "description": "Syntyr CSS property (tokens.css).",
+      "description": "Typography scale role type xs; use consistently within the theme.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -5477,7 +7024,7 @@
     {
       "name": "--syn-warning",
       "module": "tokens.css",
-      "description": "Syntyr CSS property (tokens.css).",
+      "description": "Semantic warning color for attention states.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",
@@ -5521,6 +7068,17 @@
         "syntyr.embed.css",
         "syntyr.semantic-bundle.css"
       ]
+    },
+    {
+      "name": "--syn-workspace-leading",
+      "module": "recipes.css",
+      "description": "Workspace leading design token from recipes.css; override in the appropriate Syntyr scope when needed.",
+      "stylesheets": [
+        "presets/cinematic.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.recipes.css"
+      ]
     }
   ],
   "themes": [
@@ -5560,13 +7118,20 @@
     "data-syn-state": [
       "active",
       "complete",
+      "conflict",
       "degraded",
       "down",
       "error",
+      "failed",
       "healthy",
       "loading",
+      "pending",
+      "queued",
+      "saved",
       "selected",
-      "unknown"
+      "unknown",
+      "unsaved",
+      "uploading"
     ]
   },
   "components": [
@@ -5599,6 +7164,20 @@
         "syn-panel--cut"
       ],
       "notes": "Choose native headings and accessible labels."
+    },
+    {
+      "name": "Content list",
+      "module": "syntyr.core.css",
+      "elements": [
+        "ul",
+        "ol"
+      ],
+      "classes": [
+        "syn-list",
+        "syn-list--compact",
+        "syn-list--accent"
+      ],
+      "notes": "Native list markers and order preserved. Use in core-only scopes; semantic mode handles unclassed lists."
     },
     {
       "name": "Form fields",
@@ -5740,6 +7319,38 @@
       "notes": "Supply textual cell labels, data-syn-level and real data."
     },
     {
+      "name": "Geospatial workspace",
+      "module": "syntyr.geo.css",
+      "elements": [
+        "section",
+        "aside",
+        "figure",
+        "div",
+        "a",
+        "button",
+        "ul"
+      ],
+      "classes": [
+        "syn-geo-shell",
+        "syn-geo-workspace",
+        "syn-geo-sidebar",
+        "syn-geo-viewport",
+        "syn-geo-map",
+        "syn-geo-overlay",
+        "syn-geo-controls",
+        "syn-geo-control",
+        "syn-geo-marker",
+        "syn-geo-marker-layer",
+        "syn-geo-cluster",
+        "syn-geo-legend",
+        "syn-geo-swatch",
+        "syn-geo-scale",
+        "syn-geo-attribution",
+        "syn-geo-data-list"
+      ],
+      "notes": "Optional renderer-neutral CSS; load core then geo. The host renderer owns projection, attribution, marker positions, zooming, clustering and screen-reader data alternatives. See docs/geo.md."
+    },
+    {
       "name": "Advanced geometry frames",
       "module": "syntyr.geometry.css",
       "elements": [
@@ -5795,6 +7406,104 @@
         "syn-record-fields"
       ],
       "notes": "Unreleased alpha.5, CSS-only optional layouts. Use a GET form, labelled stages, focusable board overflow and definition-list details; application implements filtering and pipeline state."
+    },
+    {
+      "name": "Operation feedback",
+      "module": "syntyr.recipes.css",
+      "elements": [
+        "div",
+        "section",
+        "h2",
+        "h3",
+        "p"
+      ],
+      "classes": [
+        "syn-operation-feedback"
+      ],
+      "notes": "Experimental alpha.5 static presentation only. Host must set true pending, saved, failed, conflict or unsaved state, manage requests, announcements, retry and authorization."
+    },
+    {
+      "name": "Record change pair",
+      "module": "syntyr.recipes.css",
+      "elements": [
+        "dl",
+        "div",
+        "dt",
+        "dd",
+        "span",
+        "del",
+        "ins"
+      ],
+      "classes": [
+        "syn-record-fields",
+        "syn-change-pair",
+        "syn-change-before",
+        "syn-change-after"
+      ],
+      "notes": "Experimental alpha.5 semantic before/after styling nested in existing record fields. Text labels and native del/ins convey changes; backend supplies true revision values and conflict policy."
+    },
+    {
+      "name": "File lifecycle",
+      "module": "syntyr.recipes.css",
+      "elements": [
+        "ol",
+        "li",
+        "div",
+        "span",
+        "strong",
+        "progress"
+      ],
+      "classes": [
+        "syn-file-queue",
+        "syn-file-item",
+        "syn-file-item-header"
+      ],
+      "notes": "Unreleased alpha.5 CSS-only queue snapshots. Native input lives in core; host owns upload progress, failure and completion truth, validation, retry, status announcements and storage."
+    },
+    {
+      "name": "Native dropdowns and menus",
+      "module": "syntyr.core.css",
+      "elements": [
+        "div",
+        "a",
+        "button",
+        "select"
+      ],
+      "classes": [
+        "syn-popover",
+        "syn-dropdown",
+        "syn-dropdown__item",
+        "syn-dropdown__group-label",
+        "syn-dropdown__separator",
+        "syn-dropdown__shortcut",
+        "syn-select--enhanced"
+      ],
+      "notes": "Scriptless action panels use Tab/Escape. Optional @syntyr/css/menu.mjs adds ARIA menu keyboard behavior only when explicitly initialized; see docs/dropdowns.md."
+    },
+    {
+      "name": "Scrollable card rail",
+      "module": "syntyr.recipes.css",
+      "elements": [
+        "div",
+        "section"
+      ],
+      "classes": [
+        "syn-scroll-rail"
+      ],
+      "notes": "Experimental alpha.5. Use a named, keyboard-focusable overflow region. Cards are direct children; native snap without mandatory JS. Configure --syn-scroll-rail-card-width locally."
+    },
+    {
+      "name": "Bento feature grid",
+      "module": "syntyr.recipes.css",
+      "elements": [
+        "div",
+        "article"
+      ],
+      "classes": [
+        "syn-bento-grid",
+        "syn-bento-card--wide"
+      ],
+      "notes": "Experimental alpha.5. Container-aware wide card spans; use meaningful article headings and syn-feature-card for surfaces."
     }
   ],
   "recipes": [

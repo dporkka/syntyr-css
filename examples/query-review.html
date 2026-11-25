@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Native GET filter chips and accessible record review composition using Syntyr CSS.">
+  <title>Filter query and record review — Syntyr CSS</title>
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="../dist/syntyr.recipes.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <a class="syn-button" href="#main">Skip to example</a>
+  <main id="main" class="syn-shell syn-stack">
+    <header class="syn-page-header">
+      <div>
+        <p class="syn-eyebrow">Syntyr / Enterprise workflows</p>
+        <h1>Inventory filters and record review</h1>
+        <p class="syn-muted">Static server-rendered snapshot with fictional records. The host server must implement filtering, authorization, counts and edit routes; this HTML alone never changes results.</p>
+      </div>
+      <a class="syn-button" href="../docs/recipes.md">Read recipe source (Markdown)</a>
+    </header>
+
+    <section class="syn-app-card" aria-labelledby="filters-heading">
+      <h2 id="filters-heading">Find inventory</h2>
+      <!-- Copy to a real /inventory route. Selected values must be rendered from
+           validated server-side query state; these are illustrative values only. -->
+      <form class="syn-filter-bar" method="get" action="query-review.html" aria-label="Filter inventory">
+        <label class="syn-filter-field syn-filter-field--query" for="inventory-query">
+          Search
+          <input class="syn-input" id="inventory-query" name="query" type="search" value="Central" autocomplete="off">
+        </label>
+        <label class="syn-filter-field" for="inventory-status">
+          Status
+          <select class="syn-input" id="inventory-status" name="status">
+            <option value="">Any status</option>
+            <option value="active" selected>Active</option>
+            <option value="maintenance">Maintenance</option>
+          </select>
+        </label>
+        <label class="syn-filter-field" for="inventory-owner">
+          Owner
+          <select class="syn-input" id="inventory-owner" name="owner">
+            <option value="">Any owner</option>
+            <option value="me" selected>Me</option>
+            <option value="team">Team</option>
+          </select>
+        </label>
+        <div class="syn-filter-actions">
+          <button class="syn-button syn-button--primary" type="submit">Apply filters</button>
+          <a class="syn-button" href="query-review.html">Reset</a>
+        </div>
+      </form>
+
+      <section aria-labelledby="applied-heading">
+        <h3 id="applied-heading">Applied filters</h3>
+        <div class="syn-filter-choices" role="group" aria-label="Remove applied filters">
+          <!-- Each link removes exactly one named parameter and keeps the other
+               server-selected filters; the host must encode values safely. -->
+          <a class="syn-chip" href="?query=Central&amp;owner=me" aria-label="Remove status filter: Active">Status: Active · Remove</a>
+          <a class="syn-chip" href="?query=Central&amp;status=active" aria-label="Remove owner filter: Me">Owner: Me · Remove</a>
+          <a class="syn-chip" href="query-review.html">Clear all filters</a>
+        </div>
+        <p class="syn-help">Applied-filter links are ordinary navigation, not JavaScript widgets. In this static demo they do not filter the illustrative record below.</p>
+      </section>
+    </section>
+
+    <section class="syn-app-card" aria-labelledby="review-heading">
+      <h2 id="review-heading">Review inventory record</h2>
+      <p class="syn-muted">Use real description-list terms and links for field-level editing. Never make a non-interactive value look like an input.</p>
+      <dl class="syn-record-fields">
+        <div><dt>Inventory ID</dt><dd>101</dd></div>
+        <div><dt>Name</dt><dd>Central Station North</dd></div>
+        <div><dt>Status</dt><dd>Active · <a href="#edit-status">Edit status</a></dd></div>
+        <div><dt>Owner</dt><dd>Me · <a href="#edit-owner">Edit owner</a></dd></div>
+        <div><dt>Last reviewed</dt><dd><time datetime="2026-11-17">17 November 2026</time></dd></div>
+      </dl>
+      <details class="syn-details" open>
+        <summary>Editing preview — requires a host server</summary>
+        <p class="syn-help">The review links target these example fields. Controls are deliberately disabled because no backend is present; a real application must implement validation and persistence.</p>
+        <fieldset disabled>
+          <legend>Illustrative editable fields (disabled)</legend>
+          <label id="edit-status" for="preview-status">Status
+            <select class="syn-input" id="preview-status" name="status">
+              <option selected>Active</option>
+              <option>Maintenance</option>
+            </select>
+          </label>
+          <label id="edit-owner" for="preview-owner">Owner
+            <input class="syn-input" id="preview-owner" name="owner" value="Me">
+          </label>
+        </fieldset>
+      </details>
+    </section>
+  </main>
+</body>
+</html>

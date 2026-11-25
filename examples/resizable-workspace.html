@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Optional resizable workspace with pointer and keyboard support and a static CSS fallback.">
+  <title>Resizable workspace — Syntyr CSS</title>
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="../dist/syntyr.recipes.css">
+  <script type="module" src="./resizable-workspace.mjs"></script>
+</head>
+<body class="syn-root" data-syn-theme="studio">
+  <main class="syn-shell" style="overflow-wrap:anywhere">
+    <header>
+      <p class="syn-eyebrow">ENTERPRISE / OPTIONAL INTERACTIONS</p>
+      <h1 class="syn-title">Resizable workspace</h1>
+      <p class="syn-lede">Use arrow keys or drag the separator to resize on wide screens.</p>
+    </header>
+    <section class="syn-resizable-workspace" aria-label="Inventory and details" data-syn-resizable>
+      <div class="syn-resizable-workspace__panes">
+        <section class="syn-resizable-workspace__pane" id="asset-list" aria-labelledby="asset-heading">
+          <h2 class="syn-heading" id="asset-heading">Inventory</h2>
+          <p>Choose an asset. Both panes remain visible without JavaScript.</p>
+          <ul>
+            <li>Downtown billboard</li>
+            <li>Airport digital face</li>
+            <li>Transit shelter</li>
+          </ul>
+        </section>
+        <div class="syn-resizable-workspace__separator" hidden tabindex="-1" role="separator"
+             aria-label="Resize inventory and detail panes"
+             aria-orientation="vertical" aria-controls="asset-list asset-detail"
+             aria-valuemin="20" aria-valuemax="70" aria-valuenow="35" aria-valuetext="Inventory pane 35 percent"></div>
+        <section class="syn-resizable-workspace__pane" id="asset-detail" aria-labelledby="asset-detail-heading">
+          <h2 class="syn-heading" id="asset-detail-heading">Asset details</h2>
+          <dl class="syn-record-fields">
+            <div><dt>Site</dt><dd>Downtown billboard</dd></div>
+            <div><dt>Availability</dt><dd>Open</dd></div>
+            <div><dt>Format</dt><dd>Static billboard</dd></div>
+          </dl>
+          <p class="syn-muted">Demonstration only: no data changes or saved preferences.</p>
+        </section>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

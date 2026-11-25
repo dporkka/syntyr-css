@@ -4,6 +4,18 @@ This prerelease Syntyr example uses original CSS, not upstream Blades source.
 All patterns retain native HTML semantics and need **no runtime JavaScript**.
 For a live static preview, see [the native recipe example (live alpha.5 source preview)](https://syntyr-css.pages.dev/examples/native-recipes.html).
 
+## Native visibility is authoritative
+
+Inside `.syn-root`, use the browser's `hidden` attribute to remove an element
+from layout even when it also has `.syn-button`, `.syn-grid`, or semantic styles.
+Syntyr's base layer preserves that native state. For find-in-page reveals, use
+`hidden="until-found"`: the browser retains the element in layout and may
+reveal it on search or fragment navigation. Use a layout-containing box:
+do not force `display: none`, `display: inline`, or
+`display: contents`. Those values prevent find-in-page reveal;
+prefer a block, grid, or flex container. Do not replace these states with
+`aria-hidden`, which does not hide an element visually or from keyboard focus.
+
 ## Native interaction recipes
 
 The standard library includes the following **five native interaction
@@ -54,6 +66,49 @@ Test keyboard interaction, forced colors, zoom/reflow, and real product
 copy in the target browsers. **Application-owned behavior** includes
 search filtering, validation on the server, destructive action
 authorization, and live calculations; none are provided by CSS.
+
+## Native horizontal carousels
+
+The existing opt-in `syntyr.media.css` module supplies
+`syn-media-rail--controls` for browser-generated previous/next buttons and
+`syn-media-rail--markers` for optional position markers. The underlying
+`syn-media-rail` continues to scroll and snap without those features.
+Every marked direct child must provide a localized `data-syn-scroll-label`
+for its accessible marker name.
+
+[Copy the script-free example](https://syntyr-css.pages.dev/examples/media-entertainment.html) and read
+[compatibility details and the full recipe](https://syntyr-css.pages.dev/docs/media-entertainment.md).
+Do not replace real ARIA tab widgets with CSS markers, or claim that markers
+provide autoplay, filtering, infinite looping or application state.
+
+## Resource outline (nested native navigation)
+
+A **Resource outline** is a CSS-only, progressively enhanced way to browse
+hierarchical folders, account groups and assets. Load `syntyr.core.css` and
+the optional `syntyr.native-recipes.css`; put `.syn-resource-outline`
+on a labeled `<nav>` within `.syn-root`. Use nested unordered lists,
+native disclosure via `<details><summary>` for expandable groups, and real
+links for destinations. Mark exactly the current destination with
+`aria-current="page"`. Use `open` on parent details when the current
+record is nested inside them. Lists remain navigable when JavaScript is off.
+
+This is **not an ARIA tree** widget: it deliberately avoids `role="tree"`,
+roving tabindex, arrow-key claims or JS-managed selection. The browser
+provides native disclosure keyboard semantics (Tab, Enter/Space).
+A full WAI-ARIA treeview requires additional headless interaction logic
+and real assistive-technology testing; it does not belong in CSS.
+For moving resources, permissions, lazy loading, remote filtering, and drag
+and drop, the **application** must implement authorized behavior. No CSS
+state alone conveys permission to move an item.
+
+See [the script-free resource outline example](../examples/resource-outline.html).
+The nesting uses logical inline spacing to work in both LTR and RTL;
+after three visual indentation levels it stops adding horizontal offset so
+very deep folders remain readable at narrow widths and 400% zoom; semantic
+list hierarchy and native disclosures remain intact. Long names wrap rather
+than being silently truncated. Keep the
+selected location visible, ensure all links have real destinations,
+and test browser focus, high zoom, and forced colors in the host app.
 
 ## Individually importable CSS
 
@@ -152,6 +207,39 @@ in consuming applications.
 Use only for text-like controls that implement placeholder-shown. Avoid for
 date, color, select, checkbox, radio and unsupported types. Validate contrast
 and long translated labels in the actual application.
+
+### Label-first floating fields
+
+Use the same native label and input in either source order:
+
+~~~html
+<div class="syn-field syn-field--floating">
+  <label class="syn-floating-label" for="company">Company</label>
+  <input class="syn-input" id="company" name="company" placeholder=" " autocomplete="organization">
+</div>
+~~~
+
+Modern browsers use :has() to float label-first markup when the input is
+focused or filled. Input-first markup remains the fallback for older engines.
+Keep a real for/id association; placeholder text is not an accessible label.
+At narrow container widths, both orders become a traditional stacked field.
+
+### Native file feedback and search controls
+
+Plain file inputs in .syn-semantic preserve their native file picker.
+For aria-invalid="true", Syntyr adds a visible error border to the file
+input even when the user-agent default has no border. Use a real explanation
+associated with aria-describedby; CSS does not perform validation or upload.
+The native search clear affordance is preserved with inline-end padding
+in both explicit .syn-input and scoped classless modes.
+
+~~~html
+<div class="syn-semantic">
+  <label for="proof">Proof-of-posting photo</label>
+  <input type="file" id="proof" aria-invalid="true" aria-describedby="proof-error">
+  <small id="proof-error" class="syn-error">Upload a photo to continue.</small>
+</div>
+~~~
 
 ## Semantic timelines and captioned code
 

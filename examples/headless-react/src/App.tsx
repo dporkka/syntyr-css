@@ -18,19 +18,37 @@ const assets: Asset[] = [
 export default function App() {
   const nextNotice = useRef(0);
   const [notices, setNotices] = useState<Notice[]>([]);
+  const [inventoryQuery, setInventoryQuery] = useState("");
+  const [selectedKeys, setSelectedKeys] = useState<Set<string>>(new Set());
+  const [inspectedId, setInspectedId] = useState<string | null>(null);
   const [sortDescriptor, setSortDescriptor] = useState<SortDescriptor>({
     column: "asset",
     direction: "ascending"
   });
+  // This demonstration contains every asset locally. In a paginated app, never
+  // interpret "matching" as all server-side matches without an explicit API scope.
+  const matchingAssets = useMemo(() => {
+    const query = inventoryQuery.trim().toLocaleLowerCase();
+    return assets.filter((item) => item.asset.toLocaleLowerCase().includes(query));
+  }, [inventoryQuery]);
   const sortedAssets = useMemo(() => {
     const direction = sortDescriptor.direction === "descending" ? -1 : 1;
-    return [...assets].sort((a, b) => {
+    return [...matchingAssets].sort((a, b) => {
       const comparison = sortDescriptor.column === "faces"
         ? a.faces - b.faces
         : a.asset.localeCompare(b.asset);
       return direction * comparison || a.asset.localeCompare(b.asset);
     });
-  }, [sortDescriptor]);
+  }, [matchingAssets, sortDescriptor]);
+  const inspectedAsset = assets.find((item) => item.id === inspectedId);
+  const scopeCount = matchingAssets.length;
+
+  function filterInventory(query: string) {
+    setInventoryQuery(query);
+    // Clearing on scope changes prevents hidden records remaining selected.
+    setSelectedKeys(new Set());
+    setInspectedId(null);
+  }
 
   function notify(title: string, message: string, tone: Notice["tone"] = "success") {
     const id = ++nextNotice.current;
@@ -109,12 +127,74 @@ export default function App() {
             The application orders this illustrative in-memory dataset; Syntyr
             supplies the existing table presentation.
           </p>
+          <div className="syn-filter-bar">
+            <label className="syn-filter-field syn-filter-field--query" htmlFor="inventory-filter">
+              Filter inventory by asset name
+              <input
+                id="inventory-filter"
+                className="syn-input"
+                type="search"
+                value={inventoryQuery}
+                onChange={(event) => filterInventory(event.target.value)}
+                placeholder="Filter the three local records"
+              />
+            </label>
+          </div>
+          <div className="syn-bulk-actions">
+            <p role="status" aria-label="Inventory selection scope" aria-live="polite">
+              {selectedKeys.size} selected · {scopeCount} matching (local data only)
+            </p>
+            <div className="syn-collection-actions">
+              <button
+                className="syn-button"
+                type="button"
+                disabled={scopeCount === 0}
+                onClick={() => setSelectedKeys(new Set(matchingAssets.map((item) => item.id)))}
+              >
+                Select {scopeCount} matching {scopeCount === 1 ? "asset" : "assets"}
+              </button>
+              <button
+                className="syn-button"
+                type="button"
+                disabled={selectedKeys.size === 0}
+                onClick={() => setSelectedKeys(new Set())}
+              >
+                Clear selection
+              </button>
+              <button
+                className="syn-button"
+                type="button"
+                disabled={selectedKeys.size === 0}
+                onClick={() => notify(
+                  "Selection preview",
+                  `${selectedKeys.size} asset${selectedKeys.size === 1 ? "" : "s"} selected locally; no data changed.`
+                )}
+              >
+                Preview selection
+              </button>
+            </div>
+          </div>
+          <p className="syn-help">
+            Click a row or press Space to select. Selection always applies only to the
+            current locally loaded results and is cleared when the filter changes.
+            No server-side bulk operation is performed.
+          </p>
           <div className="syn-table-wrap" role="region" aria-label="Scrollable inventory">
             <Table
               className="syn-table syn-table--striped"
               aria-label="Campaign inventory"
               sortDescriptor={sortDescriptor}
               onSortChange={setSortDescriptor}
+              selectionMode="multiple"
+              selectionBehavior="toggle"
+              selectedKeys={selectedKeys}
+              onSelectionChange={(keys) => {
+                const visible = new Set(matchingAssets.map((item) => item.id));
+                // React Aria's "all" means every currently rendered row, not
+                // unseen server records. Resolve it to explicit local IDs.
+                const next = keys === "all" ? visible : new Set(Array.from(keys, String));
+                setSelectedKeys(new Set([...next].filter((key) => visible.has(key))));
+              }}
             >
               <TableHeader>
                 <Column id="asset" isRowHeader allowsSorting>
@@ -123,17 +203,38 @@ export default function App() {
                 <Column id="faces" allowsSorting>
                   <span className="syn-table-sort">Faces</span>
                 </Column>
+                <Column id="details">Details</Column>
               </TableHeader>
               <TableBody items={sortedAssets}>
                 {(item) => (
                   <Row id={item.id}>
                     <Cell>{item.asset}</Cell>
                     <Cell>{item.faces}</Cell>
+                    <Cell>
+                      <Button
+                        className="syn-button syn-button--small"
+                        onPress={() => setInspectedId(item.id)}
+                      >
+                        View details for {item.asset}
+                      </Button>
+                    </Cell>
                   </Row>
                 )}
               </TableBody>
             </Table>
           </div>
+          {scopeCount === 0 && <p role="status" className="syn-result-state">No matching assets</p>}
+          <aside className="syn-panel" role="region" aria-label="Asset details">
+            {inspectedAsset ? (
+              <>
+                <h3>{inspectedAsset.asset}</h3>
+                <p>{inspectedAsset.faces} faces</p>
+                <p className="syn-help">Read-only local record preview. No backend changes.</p>
+              </>
+            ) : (
+              <p className="syn-muted">Choose View details on a record to inspect it.</p>
+            )}
+          </aside>
         </section>
 
         <section className="syn-panel" aria-labelledby="toast-heading">

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="syntyr.animate.mjs is an opt-in, dependency-free ES module for application-triggered motion. It delegates timing and compositing to the native Web…">
-  <meta name="syntyr-source-sha256" content="385d3fd354ba976509175a6ccb3465b449fe326f0a04b9e7e77c66f77c8fb371">
+  <meta name="syntyr-source-sha256" content="cf0bfd0a33da2941c05b2bc092532b90cc4c83d8f7c542851be95f65086881ac">
   <meta name="theme-color" content="#f5f7fb">
   <title>Optional Syntyr animation library — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/animation">
@@ -47,14 +47,14 @@ observe viewport entry; either add-on can be used without the other.</p>
 <p>Copy <code>dist/syntyr.animate.mjs</code> and, if desired, <code>dist/syntyr.core.css</code> to
 your own static directory. The module needs no bundler and runs in evergreen
 browsers that support ES modules.</p>
-<pre><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.core.css&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.core.css&quot;&gt;
 &lt;main class=&quot;syn-root&quot;&gt;
   &lt;button id=&quot;show&quot; type=&quot;button&quot;&gt;Animate card&lt;/button&gt;
   &lt;article id=&quot;card&quot;&gt;Card content stays visible without JavaScript.&lt;/article&gt;
 &lt;/main&gt;
 &lt;script type=&quot;module&quot; src=&quot;/js/animation-demo.mjs&quot;&gt;&lt;/script&gt;
 </code></pre>
-<pre><code class="language-js">// /js/animation-demo.mjs
+<pre tabindex="0"><code class="language-js">// /js/animation-demo.mjs
 import { animate, stagger, observeReveals } from '/js/syntyr.animate.mjs';
 
 document.querySelector('#show')?.addEventListener('click', () =&gt; {
@@ -72,7 +72,7 @@ const disconnect = observeReveals(document);
 </code></pre>
 <p>When the experimental <code>@syntyr/css</code> npm package is published, the module
 also has a dedicated typed subpath:</p>
-<pre><code class="language-js">import { animate } from '@syntyr/css/animate';
+<pre tabindex="0"><code class="language-js">import { animate } from '@syntyr/css/animate';
 </code></pre>
 <p>That subpath exposes only the optional animation code and matching TypeScript
 declarations. The default package import remains the CSS entrypoint.</p>
@@ -103,10 +103,29 @@ declarations. The default package import remains the CSS entrypoint.</p>
 </tr>
 </tbody>
 </table>
-<p>Presets are <code>fade</code> (opacity), <code>enter</code> (opacity plus individual <code>translate</code>),
-and <code>scale</code> (opacity plus individual <code>scale</code>). There is no infinite or
-autoplay animation preset. <code>enter</code> supports <code>direction: 'up' | 'down' | 'left' | 'right'</code> and <code>distance: '.75rem'</code>. Use <code>scaleFrom</code> to override the
-initial scale.</p>
+<p>Presets include <code>fade-in</code>, <code>fade-out</code>, <code>slide-up</code>, <code>slide-down</code>,
+<code>slide-left</code>, <code>slide-right</code>, <code>zoom-in</code>, <code>zoom-out</code>, <code>pop</code>, <code>bounce</code>,
+<code>pulse</code>, <code>shake</code>, <code>rotate-in</code>, <code>flip-in</code> and <code>rotate</code>. The existing <code>fade</code>,
+<code>enter</code> and <code>scale</code> aliases remain supported. <code>enter</code> takes
+<code>direction: 'up' | 'down' | 'left' | 'right'</code> (direction of entrance),
+while named <code>slide-*</code> presets specify travel direction.
+Use <code>distance</code> and <code>scaleFrom</code> to customize supported effects.</p>
+<p><strong>Playback controls:</strong> <code>iterations: 3</code> repeats three times;
+<code>loop: true</code> (or <code>iterations: Infinity</code>) repeats indefinitely.
+Repetition is <strong>off by default</strong> (<code>iterations: 1</code>).
+Use <code>iterationDirection: 'alternate'</code> to reverse every other cycle.
+Also supported: <code>normal</code>, <code>reverse</code>, <code>alternate-reverse</code>.
+<code>loop: true</code> and <code>iterations</code> cannot both be set;
+invalid counts/directions throw <code>TypeError</code>. The native Animation
+returned by <code>animate()</code> exposes <code>pause()</code>, <code>play()</code> and <code>cancel()</code>.</p>
+<p><strong>Speed and rotation:</strong> <code>speed: 2</code> runs at double speed; <code>speed: .5</code>
+runs at half speed. The value is a positive finite multiplier of
+native playback rate, and defaults to <code>--syn-animation-speed</code> or <code>1</code>.
+<code>rotation: -360</code> makes the <code>rotate</code> preset spin counterclockwise
+(<code>360</code> degrees is the default clockwise turn). The JavaScript
+options are also available through <code>stagger()</code>.
+Use <code>iterationDirection: 'reverse'</code> to reverse an entire
+animation sequence, including its keyframe progression.</p>
 <p>All presets accept <code>duration</code> and <code>delay</code> in milliseconds and <code>easing</code>
 as a CSS timing function. <code>stagger</code> additionally accepts <code>interval</code> in
 milliseconds. The module reads existing CSS custom properties when options
@@ -115,6 +134,26 @@ are omitted: <code>--syn-motion-duration</code> (220ms default),
 <code>--syn-motion-scale-from</code> (.96), and <code>--syn-ease-out</code>
 (<code>cubic-bezier(.22, 1, .36, 1)</code>). These defaults also work without a Syntyr
 stylesheet, and per-element CSS tokens can override them.</p>
+<p>The CSS token <code>--syn-animation-iterations: 3</code> (or <code>infinite</code>) can
+supply the JS helper's default repetition count. Explicit options win.
+<code>stagger()</code> accepts repetition options; <code>observeReveals()</code> always
+uses a single cycle, even when the CSS token requests looping.</p>
+<pre tabindex="0"><code class="language-js">const running = animate(card, 'rotate', {
+  loop: true, speed: 2, rotation: 360, duration: 900,
+});
+running?.pause();
+running?.play();
+running?.cancel();
+
+animate(card, 'slide-up', {
+  iterations: 3, iterationDirection: 'alternate', duration: 300,
+});
+
+// Exit effects are visual, not semantic hiding:
+const exit = animate(card, 'fade-out', { duration: 220, iterations: 1 });
+if (exit) exit.finished.then(() =&gt; { card.hidden = true; }).catch(() =&gt; {});
+else card.hidden = true; // Reduced-motion and missing-API fallback
+</code></pre>
 <p>Unknown presets and invalid directions throw <code>TypeError</code>; missing target,
 missing Web Animations API, or a reduced-motion preference return <code>null</code>
 without modifying the DOM. Prefer <code>animation?.cancel()</code> for interruption and
@@ -122,13 +161,13 @@ without modifying the DOM. Prefer <code>animation?.cancel()</code> for interrupt
 rejects its promise). Animation properties are released at the end rather
 than persisting a hidden or transformed element.</p>
 <h2 id="viewport-reveals">Viewport reveals</h2>
-<pre><code class="language-html">&lt;section class=&quot;syn-root&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;section class=&quot;syn-root&quot;&gt;
   &lt;h2&gt;Visible with CSS alone&lt;/h2&gt;
   &lt;p data-syn-reveal=&quot;enter&quot;&gt;Animate on first viewport entry.&lt;/p&gt;
   &lt;p data-syn-reveal=&quot;fade&quot;&gt;Fade when first seen.&lt;/p&gt;
 &lt;/section&gt;
 </code></pre>
-<pre><code class="language-js">import { observeReveals } from '/js/syntyr.animate.mjs';
+<pre tabindex="0"><code class="language-js">import { observeReveals } from '/js/syntyr.animate.mjs';
 const disconnect = observeReveals(document);
 </code></pre>
 <p>No <code>IntersectionObserver</code> is created automatically; call <code>observeReveals</code>
@@ -150,27 +189,379 @@ management, ARIA announcements, or actual state-change notifications.</li>
 layout dimensions. Avoid animating essential text and high-density data,
 where fading can temporarily reduce readability. An element with custom
 individual transform properties may need a wrapper for composition.</li>
-<li>The module uses one-shot <code>fill: 'none'</code> and <code>iterations: 1</code>, so focus and
-disabled states cannot remain overridden by a completed animation.</li>
+<li>The module defaults to <code>fill: 'none'</code> and <code>iterations: 1</code>.
+A fade-out resets to visible CSS state unless your application
+separately removes/hides the content. Loops also use <code>fill: 'none'</code>;
+cancel long-running effects on component teardown.</li>
 <li>For layout changes, prefer native View Transitions where available. For
 interactive scrubbing and complex timelines, use a specialized animation
 engine <em>outside</em> Syntyr instead of expanding this low-level module.</li>
 </ul>
 <h2 id="verification">Verification</h2>
-<pre><code class="language-sh">node --test tests/animate.test.mjs
+<pre tabindex="0"><code class="language-sh">node --test tests/animate.test.mjs
+# Optional local Chromium smoke test; install Playwright separately
+python3 tests/website_animation_browser.py
 python3 scripts/build.py --check
 python3 -m unittest discover -s tests -v
 </code></pre>
 <p>Node is for the optional JavaScript behavior tests, <strong>not</strong> for building
 Syntyr or using the CSS library. The production JS is copied byte-for-byte
 by Syntyr's existing Python build, allowing deterministic release checks.</p>
+<h2 id="website-animation-presets-css-only">Website animation presets (CSS only)</h2>
+<p><code>syntyr.motion.css</code> provides <strong>15 opt-in, non-scroll-linked website
+animations</strong>. No JavaScript or animation framework is needed. Only
+elements with <code>data-syn-animate</code> animate, independently of the
+<code>data-syn-scroll</code> view timeline and the optional icon animations.
+These are <strong>unreleased alpha.5 source candidate</strong> features.</p>
+<pre tabindex="0"><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.core.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.motion.css&quot;&gt;
+&lt;main class=&quot;syn-root&quot;&gt;
+  &lt;h2 data-syn-animate=&quot;fade-in&quot;&gt;Welcome back&lt;/h2&gt;
+  &lt;div class=&quot;syn-panel&quot; data-syn-animate=&quot;slide-up&quot;&gt;
+    CSS-only entrance.
+  &lt;/div&gt;
+  &lt;span class=&quot;syn-badge&quot; data-syn-animate=&quot;pulse&quot;
+        style=&quot;--syn-animation-iterations: 3;
+               --syn-animation-duration: 800ms&quot;&gt;Three pulses&lt;/span&gt;
+  &lt;span class=&quot;syn-badge syn-animate--loop&quot; data-syn-animate=&quot;bounce&quot;
+        aria-hidden=&quot;true&quot;
+        style=&quot;--syn-animation-duration: 1200ms;
+               --syn-animation-direction: alternate&quot;&gt;●&lt;/span&gt;
+  &lt;span class=&quot;syn-badge syn-animate--loop&quot;
+        data-syn-animate=&quot;rotate&quot; aria-hidden=&quot;true&quot;
+        style=&quot;--syn-animation-duration: 1.2s;
+               --syn-animation-speed: 2;
+               --syn-animation-rotation: -360deg&quot;&gt;◌&lt;/span&gt;
+&lt;/main&gt;
+</code></pre>
+<h3 id="available-effects">Available effects</h3>
+<table>
+<thead>
+<tr>
+<th>Animation</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>data-syn-animate=&quot;fade-in&quot;</code></td>
+<td>Gentle opacity entrance</td>
+</tr>
+<tr>
+<td><code>data-syn-animate=&quot;fade-out&quot;</code></td>
+<td>Visual opacity exit</td>
+</tr>
+<tr>
+<td><code>data-syn-animate=&quot;slide-up&quot;</code></td>
+<td>Move upward into place</td>
+</tr>
+<tr>
+<td><code>data-syn-animate=&quot;slide-down&quot;</code></td>
+<td>Move downward into place</td>
+</tr>
+<tr>
+<td><code>data-syn-animate=&quot;slide-left&quot;</code></td>
+<td>Move leftward into place</td>
+</tr>
+<tr>
+<td><code>data-syn-animate=&quot;slide-right&quot;</code></td>
+<td>Move rightward into place</td>
+</tr>
+<tr>
+<td><code>data-syn-animate=&quot;zoom-in&quot;</code></td>
+<td>Scale up and appear</td>
+</tr>
+<tr>
+<td><code>data-syn-animate=&quot;zoom-out&quot;</code></td>
+<td>Scale down and disappear</td>
+</tr>
+<tr>
+<td><code>data-syn-animate=&quot;pop&quot;</code></td>
+<td>Brief overshoot entrance</td>
+</tr>
+<tr>
+<td><code>data-syn-animate=&quot;bounce&quot;</code></td>
+<td>Vertical bounce</td>
+</tr>
+<tr>
+<td><code>data-syn-animate=&quot;pulse&quot;</code></td>
+<td>Gentle scale emphasis</td>
+</tr>
+<tr>
+<td><code>data-syn-animate=&quot;shake&quot;</code></td>
+<td>Horizontal shake</td>
+</tr>
+<tr>
+<td><code>data-syn-animate=&quot;rotate&quot;</code></td>
+<td>Complete turn, clockwise or counterclockwise</td>
+</tr>
+<tr>
+<td><code>data-syn-animate=&quot;rotate-in&quot;</code></td>
+<td>Rotate gently into view</td>
+</tr>
+<tr>
+<td><code>data-syn-animate=&quot;flip-in&quot;</code></td>
+<td>3D Y-axis entrance</td>
+</tr>
+</tbody>
+</table>
+<h3 id="timing-and-loop-controls">Timing and loop controls</h3>
+<table>
+<thead>
+<tr>
+<th>CSS variable</th>
+<th>Default</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--syn-animation-duration</code></td>
+<td><code>420ms</code></td>
+<td>Duration of each cycle</td>
+</tr>
+<tr>
+<td><code>--syn-animation-speed</code></td>
+<td><code>1</code></td>
+<td>Positive speed multiplier: <code>0.5</code> slow, <code>2</code> fast (modern CSS typed arithmetic)</td>
+</tr>
+<tr>
+<td><code>--syn-animation-delay</code></td>
+<td><code>0ms</code></td>
+<td>Delay before start</td>
+</tr>
+<tr>
+<td><code>--syn-animation-easing</code></td>
+<td><code>ease-out</code></td>
+<td>Timing function</td>
+</tr>
+<tr>
+<td><code>--syn-animation-iterations</code></td>
+<td><code>1</code></td>
+<td>Count or <code>infinite</code></td>
+</tr>
+<tr>
+<td><code>--syn-animation-direction</code></td>
+<td><code>normal</code></td>
+<td><code>normal</code> / <code>reverse</code> / <code>alternate</code> / <code>alternate-reverse</code></td>
+</tr>
+<tr>
+<td><code>--syn-animation-play-state</code></td>
+<td><code>running</code></td>
+<td><code>running</code> or <code>paused</code></td>
+</tr>
+<tr>
+<td><code>--syn-animation-fill-mode</code></td>
+<td><code>none</code></td>
+<td>Native CSS fill mode</td>
+</tr>
+<tr>
+<td><code>--syn-animation-distance</code></td>
+<td><code>1rem</code></td>
+<td>Slide / bounce distance</td>
+</tr>
+<tr>
+<td><code>--syn-animation-scale</code></td>
+<td><code>.94</code></td>
+<td>Zoom start or end scale</td>
+</tr>
+<tr>
+<td><code>--syn-animation-rotation</code></td>
+<td><code>360deg</code></td>
+<td>Rotation angle; set <code>-360deg</code> for counterclockwise</td>
+</tr>
+</tbody>
+</table>
+<p><code>syn-animate--loop</code> is shorthand for an infinite iteration count.
+Set <code>--syn-animation-iterations: 2</code> or any positive CSS iteration count
+to make a finite loop. Combine with
+<code>--syn-animation-direction: alternate</code> to avoid abrupt jumps.
+A host can pause via <code>--syn-animation-play-state: paused</code> without
+shipping a Syntyr runtime. <code>--syn-animation-speed: 2</code> halves the cycle
+duration; <code>--syn-animation-speed: 0.5</code> doubles it. Modern CSS engines
+with typed arithmetic support the multiplier directly. Browsers without
+typed CSS division retain the explicit <code>--syn-animation-duration</code>
+instead. CSS users can always set that duration directly for universal
+speed control. The CSS speed multiplier changes cycle duration but
+does not change delay; native JavaScript playback rate changes the
+animation clock (including delays).</p>
+<p><strong>Accessibility:</strong> Animations do not create a hidden baseline state.
+Under <code>prefers-reduced-motion: reduce</code> all presets and loops are
+disabled. <code>fade-out</code> and <code>zoom-out</code> are visual only: by default,
+they return to visible state afterward, because fill is <code>none</code>.
+When dismissing a dialog, button or actionable content, update the
+DOM/HTML state and focus as well—opacity or
+<code>animation-fill-mode: forwards</code> is not a semantic hide.
+Keep infinite loops decorative and avoid moving essential text.</p>
+<h2 id="responsive-two-row-logo-marquee-css-only">Responsive two-row logo marquee (CSS only)</h2>
+<p>The optional <code>syntyr.motion.css</code> module includes a seamless, continuous
+logo marquee for landing pages, customer galleries and partner strips.
+The <code>.syn-logo-marquee</code> wrapper holds two <code>.syn-logo-marquee__row</code>
+elements, each containing a <code>.syn-logo-marquee__track</code> and two matching
+<code>.syn-logo-marquee__group</code> lists. One row moves left and the other right;
+each row has adjustable speed and direction. <strong>No JavaScript</strong> or
+animation library is needed, and no logos, fonts, or network assets are
+bundled with Syntyr. This is an <strong>unreleased alpha.5 source candidate</strong>.</p>
+<h3 id="copy-and-paste-html">Copy-and-paste HTML</h3>
+<p>Load <code>syntyr.motion.css</code> alongside the chosen Syntyr core stylesheet.
+Replace the sample paths and logo names with your own, and repeat
+each row's <em>exact same group</em> once. The second copy must remain
+<code>aria-hidden=&quot;true&quot;</code> and <code>inert</code> so assistive technology and keyboard
+navigation never encounter duplicate logos or links.</p>
+<pre tabindex="0"><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.core.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.motion.css&quot;&gt;
+
+&lt;section class=&quot;syn-root syn-logo-marquee&quot; aria-label=&quot;Our customers&quot;
+         style=&quot;--syn-logo-gap: 2rem; --syn-logo-height: 2rem&quot;&gt;
+  &lt;!-- Row 1: leftward, 30 seconds per cycle --&gt;
+  &lt;div class=&quot;syn-logo-marquee__row&quot; data-syn-logo-direction=&quot;left&quot;
+       style=&quot;--syn-logo-duration: 30s&quot;&gt;
+    &lt;div class=&quot;syn-logo-marquee__track&quot;&gt;
+      &lt;ul class=&quot;syn-logo-marquee__group&quot;&gt;
+        &lt;li&gt;&lt;img src=&quot;/logos/acme.svg&quot; alt=&quot;Acme&quot; width=&quot;120&quot; height=&quot;40&quot;&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;img src=&quot;/logos/north.svg&quot; alt=&quot;North&quot; width=&quot;120&quot; height=&quot;40&quot;&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;img src=&quot;/logos/orbit.svg&quot; alt=&quot;Orbit&quot; width=&quot;120&quot; height=&quot;40&quot;&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+      &lt;!-- Identical second copy; purely decorative --&gt;
+      &lt;ul class=&quot;syn-logo-marquee__group&quot; aria-hidden=&quot;true&quot; inert&gt;
+        &lt;li&gt;&lt;img src=&quot;/logos/acme.svg&quot; alt=&quot;&quot; width=&quot;120&quot; height=&quot;40&quot;&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;img src=&quot;/logos/north.svg&quot; alt=&quot;&quot; width=&quot;120&quot; height=&quot;40&quot;&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;img src=&quot;/logos/orbit.svg&quot; alt=&quot;&quot; width=&quot;120&quot; height=&quot;40&quot;&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;!-- Row 2: rightward, 40 seconds per cycle (1.5× speed) --&gt;
+  &lt;div class=&quot;syn-logo-marquee__row&quot; data-syn-logo-direction=&quot;right&quot;
+       style=&quot;--syn-logo-duration: 40s; --syn-logo-speed: 1.5&quot;&gt;
+    &lt;div class=&quot;syn-logo-marquee__track&quot;&gt;
+      &lt;ul class=&quot;syn-logo-marquee__group&quot;&gt;
+        &lt;li&gt;&lt;img src=&quot;/logos/lumen.svg&quot; alt=&quot;Lumen&quot; width=&quot;120&quot; height=&quot;40&quot;&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;img src=&quot;/logos/pixel.svg&quot; alt=&quot;Pixel&quot; width=&quot;120&quot; height=&quot;40&quot;&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;img src=&quot;/logos/zenith.svg&quot; alt=&quot;Zenith&quot; width=&quot;120&quot; height=&quot;40&quot;&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+      &lt;ul class=&quot;syn-logo-marquee__group&quot; aria-hidden=&quot;true&quot; inert&gt;
+        &lt;li&gt;&lt;img src=&quot;/logos/lumen.svg&quot; alt=&quot;&quot; width=&quot;120&quot; height=&quot;40&quot;&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;img src=&quot;/logos/pixel.svg&quot; alt=&quot;&quot; width=&quot;120&quot; height=&quot;40&quot;&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;img src=&quot;/logos/zenith.svg&quot; alt=&quot;&quot; width=&quot;120&quot; height=&quot;40&quot;&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+</code></pre>
+<p>Rows accept <code>data-syn-logo-direction=&quot;left&quot;</code> (the default) or
+<code>data-syn-logo-direction=&quot;right&quot;</code>. Set the duration and multiplier on
+each row independently, or set shared defaults on the root.
+The layout adapts to narrow and wide viewports using container query
+units, flexible logo widths, and gap variables; small lists expand to
+fill each row, while long lists keep their intrinsic width.
+The exact visual loop uses two <em>identical</em> groups and shifts the
+combined track by <strong>half its width</strong>, so there is no abrupt reset.
+Keep both copies in the <strong>same order with matching sizing</strong>; differing
+logos or reordered items cause a visible seam.</p>
+<h3 id="maintaining-one-source-list-optional-enhancement">Maintaining one source list (optional enhancement)</h3>
+<p>If logos change frequently, generate the two identical lists from one array
+in your SSR/CMS template instead of editing both by hand. You can also
+render <strong>one</strong> group per row and use this small, optional enhancement to
+duplicate it after load. With JavaScript disabled, the original logos remain
+visible and the incomplete track stays still; CSS-only copied markup above
+needs <strong>no</strong> JavaScript.</p>
+<pre tabindex="0"><code class="language-js">// Copy into your own local module. Run after rendering the logo rows.
+for (const row of document.querySelectorAll('.syn-root .syn-logo-marquee__row')) {
+  const track = row.querySelector(':scope &gt; .syn-logo-marquee__track');
+  const source = track?.querySelector(':scope &gt; .syn-logo-marquee__group:only-child');
+  if (!source) continue; // Idempotent: never duplicate again
+  const copy = source.cloneNode(true);
+  copy.setAttribute('aria-hidden', 'true');
+  copy.inert = true;
+  copy.querySelectorAll('[id]').forEach(node =&gt; node.removeAttribute('id'));
+  copy.querySelectorAll('img').forEach(image =&gt; { image.alt = ''; });
+  track.append(copy);
+}
+</code></pre>
+<p>This optional snippet has no imports or dependencies. Host it locally to
+satisfy sites with strict Content Security Policy; do not attach event
+listeners or forms to decorative duplicates. For server-rendered pages,
+duplicating the same template fragment twice avoids JavaScript entirely.</p>
+<h3 id="style-and-playback-variables">Style and playback variables</h3>
+<table>
+<thead>
+<tr>
+<th>Variable</th>
+<th>Default</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--syn-logo-duration</code></td>
+<td><code>32s</code></td>
+<td>Baseline duration for one full pass (lower = faster)</td>
+</tr>
+<tr>
+<td><code>--syn-logo-speed</code></td>
+<td><code>1</code></td>
+<td>Positive playback multiplier; <code>2</code> = twice as fast, <code>0.5</code> = half as fast</td>
+</tr>
+<tr>
+<td><code>--syn-logo-gap</code></td>
+<td><code>clamp(1rem, 3vw, 3rem)</code></td>
+<td>Horizontal spacing between logos</td>
+</tr>
+<tr>
+<td><code>--syn-logo-height</code></td>
+<td><code>clamp(1.4rem, 3vw, 2.4rem)</code></td>
+<td>Logo image/SVG block height</td>
+</tr>
+<tr>
+<td><code>--syn-logo-max-width</code></td>
+<td><code>10rem</code></td>
+<td>Maximum image/SVG width</td>
+</tr>
+<tr>
+<td><code>--syn-logo-row-gap</code></td>
+<td><code>clamp(.75rem, 2vw, 1.5rem)</code></td>
+<td>Vertical distance between rows</td>
+</tr>
+<tr>
+<td><code>--syn-logo-play-state</code></td>
+<td><code>running</code></td>
+<td><code>running</code> or <code>paused</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>--syn-logo-duration</code> works in all supported browsers; newer CSS
+engines supporting typed division also apply
+<code>calc(var(--syn-logo-duration) / var(--syn-logo-speed))</code>. To maximize
+cross-browser precision, set <code>--syn-logo-duration</code> explicitly.</p>
+<p>&lt;!-- coderabbit-ai-generated:v1 --&gt;</p>
+<p>&lt;!-- coderabbit-ai-generated-section:v1:ba62471601719527dd45406f875cda9bb1983ea2c413a8faa60e5c5439ad68f7 --&gt;</p>
+<p><strong>Accessibility and fallback:</strong> Hover pauses scrolling in place. When a
+row or one of its links receives focus, that row shows the original
+logos as a static, wrapped list and hides the decorative copy. Scrolling
+starts again when focus leaves. For a row without links, add
+<code>tabindex=&quot;0&quot;</code>, <code>role=&quot;group&quot;</code> and a distinct accessible name to let
+keyboard users reach it.</p>
+<p>With reduced motion or just one group, the original logos stay static
+and wrap without horizontal clipping. No JavaScript is required. Only
+the original logo links are interactive; duplicated links must remain
+<code>inert</code> and hidden from assistive technologies. Provide real <code>alt</code> text
+for meaningful logos and empty <code>alt=&quot;&quot;</code> for decorative copies.</p>
+<p>&lt;!-- /coderabbit-ai-generated:v1 --&gt;</p>
+<p>This composition lives in the optional motion stylesheet, not core.
+There is no mandatory runtime or external asset. See the
+<a href="../examples/animation.html">animation showcase</a> for a self-contained
+two-row version using fictional wordmarks. That showcase also provides
+optional per-row speed/direction sliders and a pause/resume button; those
+controls are demonstration JavaScript only, not a requirement for the
+CSS-only component or the embeddable HTML recipe.</p>
 <h2 id="website-block-effects-css-only">Website block effects (CSS only)</h2>
 <p>Load the optional <code>syntyr.motion.css</code> stylesheet <strong>alongside core</strong>. These
 effects can be applied to existing Syntyr Blocks, sections, React-rendered
 markup, and CMS templates. No JavaScript, hydration, observer setup, or new
 framework is required. This section describes the <strong>unreleased alpha.5
 candidate</strong>, not the published alpha.4 assets.</p>
-<pre><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.core.css&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.core.css&quot;&gt;
 &lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.motion.css&quot;&gt;
 
 &lt;section class=&quot;syn-root syn-region&quot; aria-labelledby=&quot;features-heading&quot;&gt;
@@ -196,7 +587,7 @@ understanding the page.</p>
 <p>Apply <code>data-syn-parallax</code> to a section with a natural or explicit height.
 Include one decorative media layer as a <strong>direct child</strong> marked
 <code>data-syn-parallax-layer</code>, plus a foreground <code>data-syn-parallax-content</code>.</p>
-<pre><code class="language-html">&lt;section class=&quot;syn-root syn-region&quot; data-syn-parallax
+<pre tabindex="0"><code class="language-html">&lt;section class=&quot;syn-root syn-region&quot; data-syn-parallax
          style=&quot;min-block-size: 26rem; --syn-parallax-travel: 2rem&quot;
          aria-labelledby=&quot;parallax-title&quot;&gt;
   &lt;img data-syn-parallax-layer src=&quot;/images/landscape.webp&quot;
@@ -217,7 +608,7 @@ or controls. When motion is reduced or view timelines are unsupported,
 the image is <strong>static</strong> and all foreground content remains visible.
 Avoid <code>background-attachment: fixed</code> and JavaScript scroll handlers.</p>
 <h3 id="media-hover-zoom-and-existing-hover-lift">Media hover zoom and existing hover lift</h3>
-<pre><code class="language-html">&lt;a class=&quot;syn-root syn-panel&quot; style=&quot;display: block&quot; href=&quot;/portfolio/project&quot; data-syn-hover=&quot;zoom&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;a class=&quot;syn-root syn-panel&quot; style=&quot;display: block&quot; href=&quot;/portfolio/project&quot; data-syn-hover=&quot;zoom&quot;&gt;
   &lt;img src=&quot;/images/project.webp&quot; alt=&quot;Project preview&quot;
        width=&quot;640&quot; height=&quot;420&quot; data-syn-hover-media&gt;
   &lt;span&gt;Explore the project&lt;/span&gt;
@@ -243,7 +634,7 @@ The optional <code>syntyr.motion.css</code> adds a decorative, slowly drifting
 gradient layer when <code>data-syn-gradient=&quot;drift&quot;</code> is present. The background
 remains static if motion is reduced or unsupported, and all content remains
 visible. The animated layer never accepts pointer events.</p>
-<pre><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.core.css&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.core.css&quot;&gt;
 &lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.effects.css&quot;&gt;
 &lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.motion.css&quot;&gt;
 
@@ -263,7 +654,7 @@ on every frame. Use modest sections and inspect contrast against actual
 photography or themes. Do not mix <code>data-syn-gradient</code> and <code>data-syn-parallax</code>
 on the same element; instead nest separate wrappers.</p>
 <h3 id="text-accents-no-splitting-or-javascript">Text accents (no splitting or JavaScript)</h3>
-<pre><code class="language-html">&lt;section class=&quot;syn-root&quot; aria-labelledby=&quot;text-effects-title&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;section class=&quot;syn-root&quot; aria-labelledby=&quot;text-effects-title&quot;&gt;
   &lt;h2 id=&quot;text-effects-title&quot; data-syn-text=&quot;underline&quot;&gt;
     A headline with an animated underline
   &lt;/h2&gt;
@@ -291,18 +682,49 @@ companion and do not add timers, DOM cloning, inaccessible character
 splitting, or component variants. They are <strong>alpha.5 source-candidate APIs</strong>
 until included in a published Syntyr version.</p>
         </article>
-        <aside class="docs-article-sidebar"><nav aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#install-and-invoke">Install and invoke</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#minimal-api">Minimal API</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#viewport-reveals">Viewport reveals</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#accessibility-and-performance">Accessibility and performance</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#verification">Verification</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#website-animation-presets-css-only">Website animation presets (CSS only)</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#available-effects">Available effects</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#timing-and-loop-controls">Timing and loop controls</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#responsive-two-row-logo-marquee-css-only">Responsive two-row logo marquee (CSS only)</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#copy-and-paste-html">Copy-and-paste HTML</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#maintaining-one-source-list-optional-enhancement">Maintaining one source list (optional enhancement)</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#style-and-playback-variables">Style and playback variables</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#website-block-effects-css-only">Website block effects (CSS only)</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#image-parallax-blocks">Image parallax blocks</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#media-hover-zoom-and-existing-hover-lift">Media hover zoom and existing hover lift</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#animated-gradient-wash-composable-css">Animated gradient wash (composable CSS)</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#text-accents-no-splitting-or-javascript">Text accents (no splitting or JavaScript)</a>
-        </nav></aside>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#install-and-invoke">Install and invoke</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#minimal-api">Minimal API</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#viewport-reveals">Viewport reveals</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#accessibility-and-performance">Accessibility and performance</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#verification">Verification</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#website-animation-presets-css-only">Website animation presets (CSS only)</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#available-effects">Available effects</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#timing-and-loop-controls">Timing and loop controls</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#responsive-two-row-logo-marquee-css-only">Responsive two-row logo marquee (CSS only)</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#copy-and-paste-html">Copy-and-paste HTML</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#maintaining-one-source-list-optional-enhancement">Maintaining one source list (optional enhancement)</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#style-and-playback-variables">Style and playback variables</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#website-block-effects-css-only">Website block effects (CSS only)</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#image-parallax-blocks">Image parallax blocks</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#media-hover-zoom-and-existing-hover-lift">Media hover zoom and existing hover lift</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#animated-gradient-wash-composable-css">Animated gradient wash (composable CSS)</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#text-accents-no-splitting-or-javascript">Text accents (no splitting or JavaScript)</a>
+            </nav>
+          </details>
+        </aside>
       </div>
       <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="animation.md">Markdown source</a></nav>
     </main>

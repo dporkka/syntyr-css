@@ -8,6 +8,7 @@ from functools import partial
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 import argparse
+import os
 import subprocess
 import sys
 import tempfile
@@ -26,7 +27,12 @@ class QuietHandler(SimpleHTTPRequestHandler):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--package", default="shadcn@4.23.0")
+    parser.add_argument("--cli-bin", type=str, help="Already installed shadcn CLI; avoid npx/npm fetch")
     args = parser.parse_args()
+    # Preserve PATH lookup for bare names; paths containing a directory are
+    # anchored before the child process switches to an isolated consumer cwd.
+    cli_bin = (os.path.abspath(args.cli_bin) if args.cli_bin and os.path.dirname(args.cli_bin)
+               else args.cli_bin)
     with tempfile.TemporaryDirectory(prefix="syntyr-shadcn-") as temp:
         temp = Path(temp)
         server_root = temp / "static"
@@ -42,11 +48,15 @@ def main():
         thread.start()
         try:
             for block, modules in (("faq", ("core",)),
-                                   ("hero-product", ("core", "recipes"))):
+                                   ("hero-product", ("core", "recipes")),
+                                   ("resource-workspace", ("core", "recipes"))):
                 consumer = temp / block
                 consumer.mkdir()
+                command = ([cli_bin, "add", f"{base_url}/{block}.json", "--yes"]
+                           if cli_bin else
+                           ["npx", "--yes", args.package, "add", f"{base_url}/{block}.json", "--yes"])
                 result = subprocess.run(
-                    ["npx", "--yes", args.package, "add", f"{base_url}/{block}.json", "--yes"],
+                    command,
                     cwd=consumer, capture_output=True, text=True, timeout=120)
                 if result.returncode:
                     raise RuntimeError(f"shadcn failed for {block}:\n{result.stdout}\n{result.stderr}")

@@ -101,7 +101,11 @@ continues to use `rem`. Derived `color-mix()` values, `auto` mode and
 component-specific expressions are excluded rather than approximated.
 An [editable Figma component-kit pilot](figma-component-kit.md) now includes
 Studio button and input state variants, navigation, a table and separate
-palette collections. Full accessibility, font and visual parity remain open.
+palette collections. For reconciliation, the optional
+[generated Figma handoff contract](../metadata/figma/syntyr-handoff.v1.json)
+records source-derived spacing, typography expressions, density values and
+component selectors. Generate/check it with `python3 scripts/export_figma_handoff.py`;
+it never edits the Figma canvas. Full accessibility, font and visual parity remain open.
 
 Source: https://help.figma.com/hc/en-us/articles/15343816063383-Modes-for-variables
 
