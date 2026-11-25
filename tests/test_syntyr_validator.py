@@ -164,6 +164,17 @@ class ValidatorTests(unittest.TestCase):
         self.assertIn("syntyr.core.css", result[0]["required_stylesheets"])
         self.assertEqual(validate_html(html, self.contract, tokens=True), [])
 
+    def test_token_provider_ignores_inert_and_dynamic_stylesheet_links(self):
+        recipes = '<link rel="stylesheet" href="/css/syntyr.recipes.css">'
+        reference = '<div style="gap:var(--syn-space-2)"></div>'
+        for core in ('<template><link rel="stylesheet" href="/css/syntyr.core.css"></template>',
+                     '<link rel="stylesheet" href="{{cdn}}/syntyr.core.css">'):
+            with self.subTest(core=core):
+                result = validate_html(recipes + core + reference, self.contract, tokens=True)
+                self.assertEqual([d["code"] for d in result], ["missing-token-stylesheet"])
+        active = '<link rel="stylesheet" href="/css/syntyr.core.css">'
+        self.assertEqual(validate_html(recipes + active + reference, self.contract, tokens=True), [])
+
     def test_token_reference_cli_reports_warnings_without_failing(self):
         result = subprocess.run([sys.executable, "scripts/syntyr_check.py", "--tokens",
                                  "--format", "json", "-"], cwd=ROOT, text=True,

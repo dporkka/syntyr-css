@@ -404,7 +404,11 @@ def validate_html(html: str, contract: dict, *, stylesheets: set[str] | None = N
                               line, col, required_stylesheets=sorted(expected),
                               loaded_stylesheets=sorted(loaded))
     if tokens:
-        parser.diagnostics.extend(_token_findings(parser, contract, loaded, stylesheets is not None))
+        # Token-provider checks only trust active literal links, as doctor does.
+        # Preserve the existing default class-validation contract.
+        token_loaded = ({name for _, _, name, _ in parser.stylesheet_links}
+                        if stylesheets is None else stylesheets)
+        parser.diagnostics.extend(_token_findings(parser, contract, token_loaded, stylesheets is not None))
     if doctor:
         sources = contract.get("distribution_sources")
         if not isinstance(sources, dict) or set(sources) != set(contract["stylesheets"]):
