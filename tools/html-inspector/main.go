@@ -12,12 +12,17 @@ import (
 const maxInputBytes = 8 << 20
 
 func run(args []string, stdout, stderr io.Writer) error {
+	return runWithInput(args, os.Stdin, stdout, stderr)
+}
+
+func runWithInput(args []string, stdin io.Reader, stdout, stderr io.Writer) error {
 	fs := flag.NewFlagSet("syntyr-html-inspect", flag.ContinueOnError)
 	fs.SetOutput(stderr)
 	catalogPath := fs.String("catalog", "metadata/components.json", "path to Syntyr component catalog")
 	selector := fs.String("selector", "", "CSS selector (default: elements with syn-* classes)")
+	limit := fs.Int("limit", 0, "maximum returned elements; zero means unlimited")
 	fs.Usage = func() {
-		fmt.Fprintln(stderr, "Usage: syntyr-html-inspect [--catalog FILE] [--selector CSS] HTML_FILE")
+		fmt.Fprintln(stderr, "Usage: syntyr-html-inspect [--catalog FILE] [--selector CSS] HTML_FILE|-")
 		fs.PrintDefaults()
 	}
 	if err := fs.Parse(args); err != nil {
@@ -25,6 +30,9 @@ func run(args []string, stdout, stderr io.Writer) error {
 	}
 	if fs.NArg() != 1 {
 		return fmt.Errorf("expected one local HTML file")
+	}
+	if *limit < 0 {
+		return fmt.Errorf("limit must be nonnegative")
 	}
 	cfile, err := os.Open(*catalogPath)
 	if err != nil {
@@ -35,19 +43,23 @@ func run(args []string, stdout, stderr io.Writer) error {
 	if err != nil {
 		return fmt.Errorf("catalog: %w", err)
 	}
-	f, err := os.Open(fs.Arg(0))
-	if err != nil {
-		return err
+	var input io.Reader = stdin
+	if fs.Arg(0) != "-" {
+		f, err := os.Open(fs.Arg(0))
+		if err != nil {
+			return err
+		}
+		defer f.Close()
+		input = f
 	}
-	defer f.Close()
-	data, err := io.ReadAll(io.LimitReader(f, maxInputBytes+1))
+	data, err := io.ReadAll(io.LimitReader(input, maxInputBytes+1))
 	if err != nil {
 		return err
 	}
 	if len(data) > maxInputBytes {
 		return fmt.Errorf("HTML exceeds 8 MiB input limit")
 	}
-	report, err := inspect(bytes.NewReader(data), c, *selector)
+	report, err := inspectLimited(bytes.NewReader(data), c, *selector, *limit)
 	if err != nil {
 		return err
 	}

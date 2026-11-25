@@ -1,5 +1,6 @@
 """Real MCP SDK discovery and tool calls, not a mocked JSON-RPC interface."""
 import asyncio
+import os
 import unittest
 
 try:
@@ -21,7 +22,7 @@ class AgentMcpSdkTests(unittest.TestCase):
                 self.assertGreaterEqual(names, {
                     "search_components", "get_component", "lookup_api",
                     "get_theme_tokens", "validate_markup", "get_interaction_contracts",
-                    "get_interaction_recipes",
+                    "get_interaction_recipes", "inspect_markup",
                 })
                 contracts = await client.call_tool("get_interaction_contracts", {
                     "name": "dialog", "release": "0.3.0-alpha.5",
@@ -61,6 +62,17 @@ class AgentMcpSdkTests(unittest.TestCase):
                                  {"unknown-class", "invalid-attribute-value"})
                 typo = next(d for d in result["diagnostics"] if d["code"] == "unknown-class")
                 self.assertIn("syn-button", [s["name"] for s in typo["suggestions"]])
+                published_inspect = await client.call_tool("inspect_markup", {
+                    "html": "<p>Hi</p>", "release": "0.3.0-alpha.4",
+                })
+                self.assertTrue(published_inspect.is_error)
+                if os.environ.get("SYNTYR_HTML_INSPECTOR"):
+                    inspected = await client.call_tool("inspect_markup", {
+                        "html": '<button class="syn-button">Go</button>',
+                        "release": "0.3.0-alpha.5", "selector": "button",
+                    })
+                    self.assertFalse(inspected.is_error)
+                    self.assertEqual(inspected.structured_content["elements"][0]["components"], ["Button"])
                 for tool in listing.tools:
                     self.assertIs(tool.annotations.read_only_hint, True)
         asyncio.run(run())

@@ -55,6 +55,7 @@ type Report struct {
 	SourceVersion string    `json:"source_version"`
 	Selector      string    `json:"selector"`
 	Elements      []Element `json:"elements"`
+	Truncated     bool      `json:"truncated"`
 }
 
 func loadCatalog(r io.Reader) (catalog, error) {
@@ -130,6 +131,10 @@ func recipeReport(root *goquery.Selection, r recipe) RecipeReport {
 }
 
 func inspect(r io.Reader, c catalog, selector string) (Report, error) {
+	return inspectLimited(r, c, selector, 0)
+}
+
+func inspectLimited(r io.Reader, c catalog, selector string, limit int) (Report, error) {
 	out := Report{SchemaVersion: 1, SourceVersion: c.SourceVersion, Selector: selector, Elements: []Element{}}
 	query := selector
 	if query == "" {
@@ -143,9 +148,9 @@ func inspect(r io.Reader, c catalog, selector string) (Report, error) {
 	if err != nil {
 		return out, err
 	}
-	doc.FindMatcher(matcher).Each(func(_ int, s *goquery.Selection) {
+	doc.FindMatcher(matcher).EachWithBreak(func(_ int, s *goquery.Selection) bool {
 		if inert(s) {
-			return
+			return true
 		}
 		raw, _ := s.Attr("class")
 		e := Element{Tag: goquery.NodeName(s), Classes: []string{}, Components: []string{}, Recipes: []RecipeReport{}}
@@ -157,7 +162,11 @@ func inspect(r io.Reader, c catalog, selector string) (Report, error) {
 			}
 		}
 		if selector == "" && len(e.Classes) == 0 {
-			return
+			return true
+		}
+		if limit > 0 && len(out.Elements) >= limit {
+			out.Truncated = true
+			return false
 		}
 		for _, comp := range c.Components {
 			for _, class := range comp.Classes {
@@ -173,6 +182,7 @@ func inspect(r io.Reader, c catalog, selector string) (Report, error) {
 			}
 		}
 		out.Elements = append(out.Elements, e)
+		return true
 	})
 	return out, nil
 }

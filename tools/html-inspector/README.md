@@ -15,6 +15,21 @@ From the repository root:
 (cd tools/html-inspector && go test ./... && go vet ./...)
 ```
 
+The standalone CLI also accepts `-` for stdin and `--limit N` for a bounded
+report; zero (default) is unlimited. The `truncated` flag is true only if
+additional matching elements were omitted.
+
+Optional integration with the existing source-checkout agent CLI:
+
+```sh
+export SYNTYR_HTML_INSPECTOR=/tmp/syntyr-html-inspect
+python3 scripts/syntyr_agent.py inspect-html --release 0.3.0-alpha.5 --selector '.syn-app-shell' examples/operations-console.html
+```
+
+This command and the optional MCP tool require an explicit candidate release,
+limit HTML to 20,000 characters, return at most 40 elements, and do not build
+or discover executables automatically. See [the MCP README](../../agent_mcp/README.md).
+
 Use `--catalog FILE` to explicitly select a matching version 1 component catalog.
 The default inventory finds elements with literal `syn-*` class tokens;
 an explicit CSS selector can also select unstyled elements. JSON reports contain

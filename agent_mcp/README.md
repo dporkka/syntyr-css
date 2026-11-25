@@ -48,6 +48,27 @@ The server offers these **read-only** tools:
   allowed theme/state values, missing CSS files, and structured repair hints.
   This is not an accessibility conformance audit.
 
+### Optional selector-based inspection (source candidate only)
+
+The separate Go inspector is never built or downloaded by the server. To enable
+it, build the checked-in tool yourself with Go 1.26+ and configure the absolute
+path to the trusted executable before launching the server:
+
+```sh
+(cd tools/html-inspector && go build -o /tmp/syntyr-html-inspect .)
+export SYNTYR_HTML_INSPECTOR=/tmp/syntyr-html-inspect
+```
+
+Call `inspect_markup(html, release, selector="")` with explicit release
+`0.3.0-alpha.5` (unreleased source candidate). It accepts literal HTML, not
+a path or URL, and returns selected elements, curated component names and
+advisory recipe-slot counts. Inputs are capped at 20,000 characters and selectors
+at 256 characters; results contain at most 40 elements and a `truncated` flag.
+The local executable has a five-second timeout. An unconfigured binary,
+unsupported release, or invalid selector is a tool error. There is no automatic
+repair, browser evaluation, or source-file access. Use `validate_markup` for
+release-pinned class and stylesheet checks, and browser tests for rendered behavior.
+
 ### Agent verification loop
 
 Call `validate_markup` with the generated **literal HTML**, explicit release,

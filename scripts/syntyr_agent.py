@@ -16,7 +16,8 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from agent_mcp.catalog import PUBLISHED, RELEASES, SyntyrCatalog  # noqa: E402
+from agent_mcp.catalog import CANDIDATE, MAX_HTML_CHARS, PUBLISHED, RELEASES, SyntyrCatalog  # noqa: E402
+from agent_mcp.html_inspector import inspect_markup  # noqa: E402
 from scripts.syntyr_check import validate_html  # noqa: E402
 
 DEFAULT_SHEETS = ('syntyr.core.css', 'syntyr.recipes.css')
@@ -238,6 +239,12 @@ def check(args: argparse.Namespace, catalog: SyntyrCatalog) -> tuple[int, dict]:
                   'limitations': 'Static literal HTML and pinned file integrity only. CSS inclusion, browser behavior, JSX/TSX/Vue/Svelte, and WCAG require separate verification.'}
 
 
+def inspect_html(args: argparse.Namespace, catalog: SyntyrCatalog) -> tuple[int, dict]:
+    with Path(args.file).open(encoding="utf-8") as source:
+        html = source.read(MAX_HTML_CHARS + 1)
+    return 0, inspect_markup(html, args.release, args.selector)
+
+
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__, prog='syntyr-agent')
     sub = parser.add_subparsers(dest='command', required=True)
@@ -253,10 +260,15 @@ def main(argv=None) -> int:
     inspect = sub.add_parser('info', help='Read-only project inventory for agents and developers')
     inspect.add_argument('--project', default='.')
     inspect.add_argument('--json', action='store_true')
+    markup = sub.add_parser('inspect-html', help='Inspect literal candidate HTML using the optional configured Go inspector')
+    markup.add_argument('--release', required=True, choices=[CANDIDATE])
+    markup.add_argument('--selector', default='')
+    markup.add_argument('--json', action='store_true')
+    markup.add_argument('file')
     args = parser.parse_args(argv)
     try:
         catalog = SyntyrCatalog()
-        handlers = {'init': initialize, 'check': check, 'info': info}
+        handlers = {'init': initialize, 'check': check, 'info': info, 'inspect-html': inspect_html}
         code, payload = handlers[args.command](args, catalog)
     except (ValueError, OSError, KeyError, json.JSONDecodeError) as exc:
         code, payload = 1, {'error': str(exc)}
