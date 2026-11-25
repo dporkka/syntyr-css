@@ -83,6 +83,70 @@
   const inspector = byId("playground-inspector");
   const inspectTarget = byId("playground-inspector-target");
   const inspectValues = byId("playground-inspector-values");
+  const design = window.SYNTYR_PLAYGROUND_INSPECTION;
+  const tokenControl = byId("playground-inspector-token");
+  const variantControl = byId("playground-inspector-variant");
+  function addOption(parent, value, label) {
+    const option = document.createElement("option");
+    option.value = value;
+    option.textContent = label;
+    parent.append(option);
+  }
+  function showDependencies() {
+    const token = design?.tokens.find(row => row.token === tokenControl.value);
+    if (!token) return;
+    const lines = [
+      ["Depends on", token.depends_on],
+      ["Referenced by tokens", token.referenced_by_tokens],
+      ["Transitive dependencies", token.transitive_dependencies],
+      ["Declared in", token.declared_in],
+      ["Referenced in", token.referenced_in]
+    ];
+    byId("playground-inspector-dependencies").textContent = lines.map(
+      ([label, values]) => label + ": " + (values.join(", ") || "None")
+    ).join("\n");
+  }
+  function showVariant() {
+    const links = byId("playground-inspector-variant-links");
+    links.replaceChildren();
+    const variant = design?.families.flatMap(family => family.variants)
+      .find(row => row.class === variantControl.value);
+    const ids = variant?.example_ids || [];
+    if (!ids.length) {
+      links.textContent = "No canonical example found.";
+      return;
+    }
+    for (const id of ids) {
+      const item = catalogMap.get(id);
+      if (!item) continue;
+      const p = document.createElement("p");
+      const link = document.createElement("a");
+      link.href = "playground.html#component=" + encodeURIComponent(id);
+      link.target = "_blank";
+      link.rel = "noopener";
+      link.textContent = item.title + " (new tab)";
+      p.append(link);
+      links.append(p);
+    }
+  }
+  if (Array.isArray(design?.tokens) && Array.isArray(design?.families)) {
+    tokenControl.replaceChildren();
+    for (const token of design.tokens) addOption(tokenControl, token.token, token.token);
+    tokenControl.disabled = !design.tokens.length;
+    variantControl.replaceChildren();
+    for (const family of design.families) {
+      const group = document.createElement("optgroup");
+      group.label = family.component;
+      for (const variant of family.variants) addOption(group, variant.class, variant.class);
+      variantControl.append(group);
+    }
+    variantControl.disabled = !variantControl.options.length;
+    tokenControl.addEventListener("change", showDependencies);
+    variantControl.addEventListener("change", showVariant);
+    showDependencies();
+    showVariant();
+  }
+
   let inspectElements = [];
   function showComputed() {
     const element = inspectElements[Number(inspectTarget.value)];

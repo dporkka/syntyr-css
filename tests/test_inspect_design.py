@@ -45,6 +45,21 @@ class DesignInspectionTests(unittest.TestCase):
             {"class": "syn-button--ghost", "example_ids": []}])
         self.assertEqual(matrix[0]["base_class"], "syn-button")
 
+    def test_browser_inspection_payload_reuses_cli_reports(self):
+        from scripts.build_playground_catalog import generate_inspection
+        from scripts.inspect_design import source_graph
+        from scripts.build_cloudflare_site import source_files
+        file = ROOT / "docs/playground-design-inspection.js"
+        payload = file.read_text(encoding="utf-8")
+        self.assertEqual(payload, generate_inspection())
+        data = json.loads(payload.removeprefix("window.SYNTYR_PLAYGROUND_INSPECTION = ").removesuffix(";\n"))
+        graph = source_graph()
+        self.assertEqual(data["tokens"], [token_report(graph, name) for name in sorted(graph)])
+        manifest = json.loads((ROOT / "metadata/component-gallery.v1.json").read_text())
+        self.assertEqual(data["families"], variant_matrix(manifest["components"], manifest["examples"]))
+        self.assertIn("docs/playground-design-inspection.js", source_files())
+        self.assertIn('src="playground-design-inspection.js"', (ROOT / "docs/playground.html").read_text())
+
     def test_every_curated_modifier_has_canonical_example(self):
         manifest = json.loads((ROOT / "metadata/component-gallery.v1.json").read_text())
         missing = [v["class"] for f in variant_matrix(manifest["components"], manifest["examples"])

@@ -28,7 +28,7 @@ def verify(browser, viewport):
     frame.locator(".syn-panel").wait_for()
     panel_radius = frame.locator(".syn-panel").evaluate("e => getComputedStyle(e).borderTopLeftRadius")
     assert panel_radius == "12px", ("panel radius token not applied", panel_radius)
-    page.locator("#playground-inspector summary").click()
+    page.locator("#playground-inspector > summary").click()
     target = page.locator("#playground-inspector-target")
     target.select_option(label=target.locator("option").filter(has_text="syn-button--primary").first.inner_text())
     values = page.locator("#playground-inspector-values")

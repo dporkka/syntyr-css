@@ -52,3 +52,10 @@
   #playground-inspector-target { max-width: 100%; min-width: 0; }
   .playground-inspector-values { white-space: pre-wrap; overflow-wrap: anywhere; font: .8rem/1.6 var(--syn-mono); margin: 0; }
 }
+
+@layer docs {
+  .playground-inspection-section { min-width: 0; border-block-start: 1px solid var(--syn-border-default); padding-block-start: .5rem; }
+  .playground-inspection-section[open] > :not(summary) { margin-block-start: .5rem; }
+  .playground-inspection-section select { width: 100%; max-width: 100%; min-width: 0; }
+  #playground-inspector-variant-links { overflow-wrap: anywhere; }
+}

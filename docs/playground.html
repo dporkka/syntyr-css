@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="docs.css">
   <link rel="stylesheet" href="playground.css">
   <script src="playground-catalog.js" defer></script>
+  <script src="playground-design-inspection.js" defer></script>
   <script src="playground-snippet.js" defer></script>
   <script src="playground.js" defer></script>
   <script src="playground-editor.js" defer></script>
@@ -79,6 +80,20 @@
             <select class="syn-select" id="playground-inspector-target" disabled><option>No rendered elements</option></select>
             <p class="syn-caption">Computed styles and resolved theme context for the selected element. This is not a list of all tokens it consumes or an accessibility audit.</p>
             <pre class="playground-inspector-values" id="playground-inspector-values">Open the live preview to inspect.</pre>
+            <details class="playground-inspection-section">
+              <summary>Token dependencies</summary>
+              <label class="syn-label" for="playground-inspector-token">Source token</label>
+              <select class="syn-select" id="playground-inspector-token" disabled><option>Unavailable</option></select>
+              <p class="syn-caption">Possible static references across all scopes and fallbacks, not computed consumption.</p>
+              <pre class="playground-inspector-values" id="playground-inspector-dependencies">Choose a token.</pre>
+            </details>
+            <details class="playground-inspection-section">
+              <summary>Curated component variants</summary>
+              <label class="syn-label" for="playground-inspector-variant">Documented modifier</label>
+              <select class="syn-select" id="playground-inspector-variant" disabled><option>Unavailable</option></select>
+              <p class="syn-caption">Open an actual catalog example in a new tab without replacing your edits. This is not a combination editor.</p>
+              <div id="playground-inspector-variant-links"></div>
+            </details>
           </details>
           <label class="syn-label" for="playground-markup" id="playground-markup-label">EDITABLE HTML</label>
           <textarea class="syn-textarea playground-code" id="playground-markup" spellcheck="false" rows="17" aria-describedby="playground-help"></textarea>
