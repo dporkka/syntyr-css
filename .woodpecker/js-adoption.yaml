@@ -29,6 +29,7 @@ steps:
             - scripts/export_ecosystem_adapters.py
             - scripts/test_js_adoption.py
             - tests/test_node_react_next_adoption.py
+            - tests/npm_consumer.test.mjs
             - tests/animate.test.mjs
             - tests/copy.test.mjs
             - tests/ascii_playground.test.mjs
@@ -45,6 +46,7 @@ steps:
     image: node:24-bookworm-slim@sha256:dc26ae92c9fb15cf6b1d63e20f0944b2efe0f115b20e00be48fb23fceb061c54
     commands:
       - node --version && npm --version
+      - node --test tests/npm_consumer.test.mjs
       - node --test tests/animate.test.mjs tests/copy.test.mjs tests/ascii_playground.test.mjs tests/ascii_cli.test.mjs tests/compose_cli.test.mjs
       - npm install --prefix packages/react --no-audit --no-fund
       - npm test --prefix packages/react
