@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Syntyr works with ChatGPT, Codex, Claude Code, Cursor and other agents that generate HTML or framework markup. No Syntyr-specific service, account, MCP…">
-  <meta name="syntyr-source-sha256" content="964d50b573cd9197d2252f0aa76e0dff3174f8c91dd71e379b94135ffd634575">
+  <meta name="syntyr-source-sha256" content="e6b4a8ebba80515d41c5030b83f08bc3d6ccbc8bdf0815135b8a0f042c729903">
   <meta name="theme-color" content="#f5f7fb">
   <title>Using Syntyr with coding agents — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/agent-integration">
@@ -200,6 +200,15 @@ serialized response object are each bounded to 256 KiB; use the local CLI for
 larger results. No output files are written or generated markup executed.
 Blocked plans contain diagnostics without partial HTML. The standard
 <code>validate_markup</code> MCP tool keeps its separate 20,000-character limit.</p>
+<h3 id="edit-a-generated-project-in-the-visual-builder">Edit a generated project in the visual builder</h3>
+<p>Save the complete CLI result or MCP structured response as a local JSON file.
+In the <a href="page-builder.html">free visual builder</a>, choose <strong>Open project /
+generation JSON</strong> and select the file. Only completed results matching the
+source candidate are accepted. The builder extracts the editable project and
+validates it against the local block definitions; it ignores the supplied
+HTML and validation claims. Editing invalidates prior validation evidence;
+review and revalidate the final export before publication. The private
+<a href="studio.html">Studio concept</a> remains unreleased and is not a hosted service.</p>
 <h3 id="reproduce-and-share-a-generation-demo">Reproduce and share a generation demo</h3>
 <p>With the optional local Python and Node authoring tools, build one of three
 portable demo ZIPs from the same validated generation pipeline:</p>
@@ -245,6 +254,7 @@ only copies the explicitly reviewed ZIP files; Node is not required to publish.<
 <a class="docs-article-toc-link docs-article-toc-3" href="#select-sections-from-explicit-intent-ids">Select sections from explicit intent IDs</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#one-command-validated-generation">One-command validated generation</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#generate-through-the-optional-local-mcp-adapter">Generate through the optional local MCP adapter</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#edit-a-generated-project-in-the-visual-builder">Edit a generated project in the visual builder</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#reproduce-and-share-a-generation-demo">Reproduce and share a generation demo</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#try-the-browser-composition-playground">Try the browser composition playground</a>
           </nav>
@@ -263,6 +273,7 @@ only copies the explicitly reviewed ZIP files; Node is not required to publish.<
 <a class="docs-article-toc-link docs-article-toc-3" href="#select-sections-from-explicit-intent-ids">Select sections from explicit intent IDs</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#one-command-validated-generation">One-command validated generation</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#generate-through-the-optional-local-mcp-adapter">Generate through the optional local MCP adapter</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#edit-a-generated-project-in-the-visual-builder">Edit a generated project in the visual builder</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#reproduce-and-share-a-generation-demo">Reproduce and share a generation demo</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#try-the-browser-composition-playground">Try the browser composition playground</a>
             </nav>
