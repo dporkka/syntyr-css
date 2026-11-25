@@ -26,6 +26,7 @@ func runWithInput(args []string, stdin io.Reader, stdout, stderr io.Writer) erro
 	digest := fs.String("document-sha256", "", "digest from inspection")
 	id := fs.String("element-id", "", "element ID from inspection")
 	patch := fs.Bool("source-patch", false, "include an exact verified source byte patch in variant preview")
+	verify := fs.String("verify-patches", "", "JSON array of bounded source patch operations for combined DOM proof")
 	fs.Usage = func() {
 		fmt.Fprintln(stderr, "Usage: syntyr-html-inspect [--catalog FILE] [--selector CSS] HTML_FILE|-")
 		fs.PrintDefaults()
@@ -66,6 +67,26 @@ func runWithInput(args []string, stdin io.Reader, stdout, stderr io.Writer) erro
 	}
 	enc := json.NewEncoder(stdout)
 	enc.SetIndent("", "  ")
+	if *verify != "" {
+		if *patch || *from != "" || *to != "" || *id != "" || *selector != "" || *limit != 0 || len(*verify) > 16384 {
+			return fmt.Errorf("invalid combined verification flags")
+		}
+		var ops []CombinedOperation
+		decoder := json.NewDecoder(bytes.NewBufferString(*verify))
+		decoder.DisallowUnknownFields()
+		if err := decoder.Decode(&ops); err != nil {
+			return err
+		}
+		var extra any
+		if err := decoder.Decode(&extra); err != io.EOF {
+			return fmt.Errorf("unexpected extra verification data")
+		}
+		result, err := verifyCombined(data, c, *digest, ops)
+		if err != nil {
+			return err
+		}
+		return enc.Encode(map[string]any{"schema_version": 1, "source_version": c.SourceVersion, "document_sha256": *digest, "result_sha256": result, "combined_dom_verified": true})
+	}
 	if *patch || *from != "" || *to != "" || *digest != "" || *id != "" {
 		if *limit != 0 {
 			return fmt.Errorf("limit is not applicable to preview")

@@ -117,3 +117,48 @@ class SourcePlanIntegrationTests(unittest.TestCase):
                for e in report["elements"]]
         with self.assertRaises(CatalogError):
             plan_source_patches(source, CANDIDATE, report["document_sha256"], ops)
+
+@unittest.skipUnless(os.environ.get("SYNTYR_HTML_INSPECTOR"), "Configure optional inspector")
+class GuardedApplyTests(unittest.TestCase):
+    def test_approved_candidate_only_and_no_overwrite(self):
+        from agent_mcp.html_inspector import plan_source_patches
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source = root / "page.html"
+            output = root / "candidate.html"
+            request = root / "plan.json"
+            source.write_bytes(HTML.encode())
+            report = inspect_markup(HTML, CANDIDATE, "button")
+            ops = [{"element_id": e["element_id"], "selector": "button",
+                    "from": "syn-button--primary", "to": "syn-button--outline"}
+                   for e in report["elements"]]
+            request.write_text(json.dumps({"document_sha256": report["document_sha256"], "operations": ops}))
+            plan = plan_source_patches(HTML, CANDIDATE, report["document_sha256"], ops)
+            self.assertTrue(plan["combined_dom_verified"])
+            command = [sys.executable, str(ROOT / "scripts/syntyr_agent.py"),
+                       "apply-html", "--release", CANDIDATE, "--request", str(request),
+                       "--output", str(output), str(source)]
+            for extra in ([], ["--approve-result-sha256", "0"*64]):
+                proc = subprocess.run(command+extra, capture_output=True, text=True)
+                self.assertNotEqual(proc.returncode, 0)
+                self.assertFalse(output.exists())
+            approved = command+["--approve-result-sha256", plan["result_sha256"]]
+            proc = subprocess.run(approved, capture_output=True, text=True)
+            self.assertEqual(proc.returncode, 0, proc.stdout+proc.stderr)
+            self.assertEqual(hashlib.sha256(output.read_bytes()).hexdigest(), plan["result_sha256"])
+            self.assertEqual(source.read_bytes(), HTML.encode())
+            alias = root / "alias.html"
+            alias.symlink_to(source)
+            linked = approved.copy()
+            linked[linked.index(str(output))] = str(alias)
+            self.assertNotEqual(subprocess.run(linked, capture_output=True).returncode, 0)
+            self.assertEqual(source.read_bytes(), HTML.encode())
+            original_output = output.read_bytes()
+            proc = subprocess.run(approved, capture_output=True, text=True)
+            self.assertNotEqual(proc.returncode, 0)
+            self.assertEqual(output.read_bytes(), original_output)
+            output.unlink()
+            source.write_bytes((HTML+" ").encode())
+            proc = subprocess.run(approved, capture_output=True, text=True)
+            self.assertNotEqual(proc.returncode, 0)
+            self.assertFalse(output.exists())

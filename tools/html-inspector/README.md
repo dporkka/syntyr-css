@@ -97,7 +97,28 @@ patches in memory, reports the candidate digest, unified diff and canonical
 static contract/semantic validation. Source patch mode has an 80,000-byte
 Go input limit and at most 16 candidate edits per operation; encoded class
 values and duplicate class attributes are intentionally unsupported.
-No file writing, auto-application, or browser validation is provided.
+Source-patch plans also verify the entire combined candidate DOM against all
+intended mutations. The standalone Go tool and MCP remain preview-only.
+
+### Materialize an explicitly approved candidate
+
+Review the source-patch plan and its static diagnostics first. Copy the
+`result_sha256` from that plan into the local CLI command:
+
+```sh
+python3 scripts/syntyr_agent.py apply-html --release 0.3.0-alpha.5 \
+  --request plan.json --approve-result-sha256 APPROVED_RESULT_DIGEST \
+  --output candidate.html page.html
+```
+
+This recomputes the plan against the current source, verifies the combined
+DOM and static contract, checks the exact candidate digest, and atomically
+publishes a **new** .html file using an exclusive hard link. The original
+is not overwritten; existing outputs and symlink paths are rejected.
+Requires a local filesystem supporting hard links and a trusted output
+directory. In-place edits, automatic application, browser validation,
+and a hostile-filesystem sandbox are not supported. Delete the candidate
+to roll back; replacing the source remains a separate human decision.
 
  Use the existing
 `python3 scripts/syntyr_check.py FILE` for canonical class, attribute,

@@ -155,12 +155,25 @@ def _plan_variants(html: str, release: str, document_sha256: str, operations: li
     candidate = data
     for patch in reversed(patches):
         candidate = candidate[:patch["start_byte"]] + patch["replacement"].encode("ascii") + candidate[patch["end_byte"]:]
+    proof_ops = [{**op, "patch": {k: p[k] for k in ("start_byte", "end_byte", "expected", "replacement")}}
+                 for op in operations for p in patches if p["element_id"] == op["element_id"]]
+    remaining = deadline - time.monotonic()
+    if remaining <= 0:
+        raise CatalogError("Combined DOM proof timed out")
+    proof = _invoke(data, ["--document-sha256", document_sha256, "--verify-patches",
+                           json.dumps(proof_ops, separators=(",", ":"))], remaining)
+    candidate_digest = hashlib.sha256(candidate).hexdigest()
+    if (proof.get("schema_version") != 1 or proof.get("source_version") != release
+            or proof.get("document_sha256") != document_sha256
+            or proof.get("result_sha256") != candidate_digest
+            or proof.get("combined_dom_verified") is not True):
+        raise CatalogError("Combined DOM proof mismatch; rebuild inspector")
     updated = candidate.decode("utf-8")
     contract = SyntyrCatalog()._validation_contract(release)
     baseline = validate_html(html, contract, semantic=True)
     diagnostics = validate_html(updated, contract, semantic=True)
     errors = sum(d["severity"] == "error" for d in diagnostics)
-    result.update(patches=patches, result_sha256=hashlib.sha256(candidate).hexdigest(),
+    result.update(patches=patches, result_sha256=candidate_digest, combined_dom_verified=True,
                   unified_diff=_unified_diff(html, updated),
                   validation={"valid": errors == 0, "error_count": errors,
                               "baseline_error_count": sum(d["severity"] == "error" for d in baseline),

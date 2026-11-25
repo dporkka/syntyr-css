@@ -93,7 +93,7 @@ syntax, encoded class values, duplicate class attributes, overlapping edits,
 or more than 16 matching source candidates reject the entire plan; the
 semantic preview remains available. The combined validation includes existing
 errors, not just introduced ones; `valid: false` is not permission to apply.
-No application or write operation exists. The static validator does not
+The combined DOM is also checked against all intended attribute mutations. No MCP application or write operation exists; a separate local CLI can materialize an explicitly approved new candidate file. The static validator does not
 certify accessibility, browser behavior or rendered geometry.
 
 ### Agent verification loop
