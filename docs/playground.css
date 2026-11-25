@@ -44,3 +44,16 @@
   @media (max-width: 35rem) { .playground-token-controls { grid-template-columns: minmax(0, 1fr); } }
   @media (forced-colors: active) { .playground-reference { border-color: CanvasText; } }
 }
+
+/* Typography lab is docs-only; all actual text styling comes from Syntyr. */
+@layer docs {
+  .playground-typography { display: grid; gap: 1rem; margin-block: 1.5rem; }
+  .type-lab-layout { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: 1.5rem; align-items: start; }
+  .type-lab-controls, .type-lab-result { display: grid; gap: 1rem; min-width: 0; }
+  .type-lab-controls input[type="range"] { display: block; width: 100%; min-height: 2.75rem; }
+  .type-lab-controls output { float: right; font-variant-numeric: tabular-nums; }
+  .type-lab-stage { min-inline-size: 0; padding: 1rem; border: 1px solid var(--syn-border-default); background: var(--syn-surface); }
+  #type-lab-preview { inline-size: min(100%, var(--lab-width, 320px)); max-inline-size: none; margin: 0; }
+  @media (max-width: 60rem) { .type-lab-layout { grid-template-columns: minmax(0, 1fr); } }
+  @media (forced-colors: active) { .type-lab-stage { border-color: CanvasText; } }
+}

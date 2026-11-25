@@ -98,6 +98,7 @@ For browser readers, use the [human-readable HTML documentation directory](https
 - [Visual composition and flagship showcases](https://syntyr-css.pages.dev/docs/visual-composition.md): Premium restraint, accessible surfaces and responsive Studio, Noir and Grid page examples (alpha.5 candidate).
 - [Optional advanced geometry guide](https://syntyr-css.pages.dev/docs/geometry-terminal.md): Seven frame shapes, per-corner cuts, gradient borders, inlays and integration boundaries (alpha.5 source candidate only).
 - [Experimental visual page composer](https://syntyr-css.pages.dev/docs/page-builder-guide.md): Local-only Syntyr page block editor, versioned JSON projects, safe static HTML export and separate CSS file; unreleased alpha.5 source candidate.
+- [Typography and wrapping lab](https://syntyr-css.pages.dev/docs/playground.html#typography-title): Native CSS wrapping controls, DOM diagnostics, and optional [Pretext development adapter](https://github.com/dporkka/syntyr-css/blob/main/integrations/pretext/README.md); unreleased alpha.5 source candidate, no runtime dependency.
 - [Interactive geometry mixer](https://syntyr-css.pages.dev/docs/playground.html#geometry-title): Documentation-only editor with copyable HTML and no consumer runtime JavaScript (alpha.5 source candidate).
 - [Accessibility guide](https://syntyr-css.pages.dev/docs/accessibility.md): Practical verification.
 - [Alpha.5 accessibility review](https://syntyr-css.pages.dev/docs/accessibility-alpha5-review.md): Pinned automated evidence, unresolved contrast targets, and manual release gates.

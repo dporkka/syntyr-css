@@ -22,6 +22,7 @@
         <a href="index.html">GALLERY</a>
         <a href="theme-editor.html">THEME EDITOR</a>
         <a href="page-builder.html">PAGE BUILDER</a>
+        <a href="#typography-title">TYPE LAB</a>
         <a href="#geometry-title">GEOMETRY MIXER</a>
         <a href="editor-integration.md">EDITOR SETUP</a>
       </nav>
@@ -110,6 +111,41 @@
           <p class="syn-caption">Syntyr styling runs with ordinary CSS. Only documentation uses JavaScript for editing and previewing. <a href="playground-editor.licenses.txt">CodeMirror and dependency licenses</a>.</p>
         </section>
       </div>
+      <section class="syn-panel playground-typography" aria-labelledby="typography-title">
+        <span class="syn-eyebrow">NATIVE CSS / TEXT BEHAVIOR</span>
+        <h2 id="typography-title" class="syn-heading">Typography and wrapping lab</h2>
+        <p class="syn-muted">Explore actual browser line breaks, width and overflow across styles and themes. These are DOM measurements for this developer tool, not a runtime requirement for Syntyr CSS.</p>
+        <div class="type-lab-layout">
+          <div class="type-lab-controls">
+            <label class="syn-label" for="type-lab-text">PREVIEW TEXT</label>
+            <textarea id="type-lab-text" class="syn-textarea" rows="4" spellcheck="false">Reliable interfaces for multilingual teams — deployment ready / AVAILABILITY-2026-VERY-LONG-IDENTIFIER</textarea>
+            <label class="syn-label" for="type-lab-width">AVAILABLE WIDTH <output id="type-lab-width-value">320px</output>
+              <input id="type-lab-width" class="syn-input" type="range" min="160" max="640" step="8" value="320">
+            </label>
+            <label class="syn-label" for="type-lab-style">TEXT STYLE
+              <select id="type-lab-style" class="syn-select">
+                <option value="heading">Heading</option>
+                <option value="title">Display title</option>
+                <option value="body">Body text</option>
+              </select>
+            </label>
+            <label class="syn-label" for="type-lab-wrap">WRAPPING
+              <select id="type-lab-wrap" class="syn-select">
+                <option value="safe">Safe (anywhere)</option>
+                <option value="balance">Balanced heading</option>
+                <option value="pretty">Pretty paragraph</option>
+              </select>
+            </label>
+          </div>
+          <div class="type-lab-result">
+            <div class="type-lab-stage" id="type-lab-stage">
+              <div id="type-lab-preview" class="syn-heading syn-u-text-safe" dir="auto">Reliable interfaces for multilingual teams</div>
+            </div>
+            <p id="type-lab-report" role="status" aria-live="polite" class="syn-caption">Measuring browser text.</p>
+            <p class="syn-caption">Measurements reflect this browser, font fallback and available viewport width. The optional Pretext adapter is for predictive development checks; it is not bundled with the framework.</p>
+          </div>
+        </div>
+      </section>
       <section class="syn-panel playground-geometry" aria-labelledby="geometry-title">
         <span class="syn-eyebrow">OPTIONAL / ZERO APPLICATION JAVASCRIPT</span>
         <h2 id="geometry-title" class="syn-heading">Geometry mixer</h2>

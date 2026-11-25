@@ -21,6 +21,10 @@
   .syn-root :where(.syn-u-max-reading) { max-inline-size: var(--syn-reading-width, 68ch); }
   .syn-root :where(.syn-u-overflow-auto) { overflow: auto; }
   .syn-root :where(.syn-u-text-center) { text-align: center; }
+  /* Explicit native text layout tools; no measurement runtime. */
+  .syn-root :where(.syn-u-text-safe) { min-inline-size: 0; overflow-wrap: anywhere; }
+  .syn-root :where(.syn-u-text-balance) { text-wrap: balance; }
+  .syn-root :where(.syn-u-text-pretty) { text-wrap: pretty; }
   .syn-root :where(.syn-u-min-w-0) { min-width: 0; }
   .syn-root :where(.syn-u-wrap) { flex-wrap: wrap; }
   .syn-root :where(.syn-u-sr-only) {

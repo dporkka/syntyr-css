@@ -2022,9 +2022,24 @@
       "description": "Optional stack utility; load utilities.css when used."
     },
     {
+      "name": "syn-u-text-balance",
+      "module": "utilities.css",
+      "description": "Native balanced heading wraps when supported."
+    },
+    {
       "name": "syn-u-text-center",
       "module": "utilities.css",
       "description": "Optional text center utility; load utilities.css when used."
+    },
+    {
+      "name": "syn-u-text-pretty",
+      "module": "utilities.css",
+      "description": "Native improved paragraph wrapping when supported."
+    },
+    {
+      "name": "syn-u-text-safe",
+      "module": "utilities.css",
+      "description": "Prevent unbroken text from overflowing narrow containers."
     },
     {
       "name": "syn-u-w-full",

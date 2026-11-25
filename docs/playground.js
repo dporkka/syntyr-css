@@ -333,3 +333,75 @@ ${snippet.previewStylesheets(selectedModule())}
   });
   updateGeometry();
 })();
+
+
+// Documentation-only: actual browser text bounds (never shipped in CSS bundles).
+(() => {
+  "use strict";
+  const byId = id => document.getElementById(id);
+  const text = byId("type-lab-text");
+  const width = byId("type-lab-width");
+  const style = byId("type-lab-style");
+  const wrap = byId("type-lab-wrap");
+  const preview = byId("type-lab-preview");
+  const report = byId("type-lab-report");
+  const stage = byId("type-lab-stage");
+  const themes = byId("playground-theme");
+  const classes = {title: "syn-title", heading: "syn-heading", body: "syn-body"};
+  const wraps = {safe: "syn-u-text-safe", balance: "syn-u-text-balance", pretty: "syn-u-text-pretty"};
+  let pending = false;
+
+  function measure() {
+    pending = false;
+    const range = document.createRange();
+    range.selectNodeContents(preview);
+    // Font fallback can produce multiple fragment tops on the same visual line.
+    const lineHeight = Number.parseFloat(getComputedStyle(preview).lineHeight);
+    const halfLine = Number.isFinite(lineHeight) && lineHeight > 0 ? lineHeight / 2 : Infinity;
+    const bands = [];
+    const fragments = Array.from(range.getClientRects(), rect => ({
+      center: (rect.top + rect.bottom) / 2, height: rect.bottom - rect.top
+    })).filter(rect => rect.height > 0).sort((a, b) => a.center - b.center);
+    // Range rectangles do not expose line-box identity. Avoid false precision
+    // when unusually short line boxes overlap mixed font metrics.
+    const ambiguous = Number.isFinite(lineHeight) && fragments.some(f => f.height > lineHeight) &&
+      fragments.some(f => Math.abs(f.height - fragments[0].height) > 0.5);
+    for (const fragment of fragments) {
+      const band = bands[bands.length - 1];
+      if (!band || fragment.center - band.center >= Math.min(fragment.height / 2, band.height / 2, halfLine))
+        bands.push(fragment);
+    }
+    const lineCount = preview.textContent ? (ambiguous ? null : bands.length) : 0;
+    const actualWidth = Math.round(preview.getBoundingClientRect().width);
+    const actualHeight = Math.round(preview.getBoundingClientRect().height);
+    const overflow = preview.scrollWidth > preview.clientWidth + 1 ||
+      preview.scrollHeight > preview.clientHeight + 1;
+    const lineLabel = lineCount === null ? "Visual line count unavailable (overlapping mixed-font metrics)" : `${lineCount} visual line${lineCount === 1 ? "" : "s"}`;
+    report.textContent = `${lineLabel} · ${actualWidth}px content box · ${actualHeight}px element height · ${overflow ? "Overflow detected" : "No element overflow detected"}.`;
+  }
+
+  function update() {
+    const desired = Math.max(160, Math.min(640, Number(width.value) || 320));
+    byId("type-lab-width-value").textContent = `${desired}px`;
+    preview.style.setProperty("--lab-width", `${desired}px`);
+    preview.className = `${classes[style.value] || classes.heading} ${wraps[wrap.value] || wraps.safe}`;
+    preview.textContent = text.value;
+    stage.dataset.synTheme = themes.value;
+    report.textContent = "Measuring browser text…";
+    if (!pending) {
+      pending = true;
+      requestAnimationFrame(measure);
+    }
+  }
+
+  for (const control of [text, width, style, wrap, themes]) {
+    control.addEventListener("input", update);
+    control.addEventListener("change", update);
+  }
+  // Width can change independently of the slider (zoom, responsive layout).
+  if (typeof ResizeObserver === "function") new ResizeObserver(() => {
+    if (!pending) { pending = true; requestAnimationFrame(measure); }
+  }).observe(stage);
+  document.fonts?.ready.then(() => requestAnimationFrame(measure));
+  update();
+})();
