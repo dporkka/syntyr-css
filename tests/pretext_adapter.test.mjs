@@ -94,3 +94,14 @@ test("counts tightly spaced adjacent lines even when glyph rectangles overlap", 
   const rects = [{top: 0, bottom: 40}, {top: 10, bottom: 50}];
   assert.equal(inspectText(element({rects}, {fontSize: "40px", lineHeight: "10px"})).actualLines, 2);
 });
+
+test("declines ambiguous mixed-font line counts when line boxes are shorter than glyphs", () => {
+  const rects = [{top: 2, bottom: 18}, {top: 4, bottom: 20}, {top: 0, bottom: 22}];
+  const sample = element({rects}, {fontSize: "16px", lineHeight: "4px"});
+  assert.equal(inspectText(sample).actualLines, null);
+  const result = predictWithPretext(sample, {
+    prepare: () => { throw new Error("must not predict ambiguous layout"); }, layout: () => {}
+  });
+  assert.equal(result.status, "skipped");
+  assert.equal(result.reason, "ambiguous-line-fragments");
+});

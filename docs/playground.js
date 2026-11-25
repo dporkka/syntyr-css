@@ -362,17 +362,22 @@ ${snippet.previewStylesheets(selectedModule())}
     const fragments = Array.from(range.getClientRects(), rect => ({
       center: (rect.top + rect.bottom) / 2, height: rect.bottom - rect.top
     })).filter(rect => rect.height > 0).sort((a, b) => a.center - b.center);
+    // Range rectangles do not expose line-box identity. Avoid false precision
+    // when unusually short line boxes overlap mixed font metrics.
+    const ambiguous = Number.isFinite(lineHeight) && fragments.some(f => f.height > lineHeight) &&
+      fragments.some(f => Math.abs(f.height - fragments[0].height) > 0.5);
     for (const fragment of fragments) {
       const band = bands[bands.length - 1];
       if (!band || fragment.center - band.center >= Math.min(fragment.height / 2, band.height / 2, halfLine))
         bands.push(fragment);
     }
-    const lineCount = preview.textContent ? bands.length : 0;
+    const lineCount = preview.textContent ? (ambiguous ? null : bands.length) : 0;
     const actualWidth = Math.round(preview.getBoundingClientRect().width);
     const actualHeight = Math.round(preview.getBoundingClientRect().height);
     const overflow = preview.scrollWidth > preview.clientWidth + 1 ||
       preview.scrollHeight > preview.clientHeight + 1;
-    report.textContent = `${lineCount} visual line${lineCount === 1 ? "" : "s"} · ${actualWidth}px content box · ${actualHeight}px element height · ${overflow ? "Overflow detected" : "No element overflow detected"}.`;
+    const lineLabel = lineCount === null ? "Visual line count unavailable (overlapping mixed-font metrics)" : `${lineCount} visual line${lineCount === 1 ? "" : "s"}`;
+    report.textContent = `${lineLabel} · ${actualWidth}px content box · ${actualHeight}px element height · ${overflow ? "Overflow detected" : "No element overflow detected"}.`;
   }
 
   function update() {

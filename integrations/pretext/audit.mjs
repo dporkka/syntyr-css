@@ -15,13 +15,17 @@ export function inspectText(element) {
   const fragments = Array.from(range.getClientRects(), rect => ({
     center: (rect.top + rect.bottom) / 2, height: rect.bottom - rect.top
   })).filter(rect => rect.height > 0).sort((a, b) => a.center - b.center);
+  // Range rectangles do not expose line-box identity. Avoid false precision
+  // when unusually short line boxes overlap mixed font metrics.
+  const ambiguous = Number.isFinite(lineHeight) && fragments.some(f => f.height > lineHeight) &&
+    fragments.some(f => Math.abs(f.height - fragments[0].height) > 0.5);
   for (const fragment of fragments) {
     const band = bands[bands.length - 1];
     if (!band || fragment.center - band.center >= Math.min(fragment.height / 2, band.height / 2, halfLine))
       bands.push(fragment);
   }
   return {
-    actualLines: element.textContent?.length ? bands.length : 0,
+    actualLines: element.textContent?.length ? (ambiguous ? null : bands.length) : 0,
     height: element.getBoundingClientRect().height,
     overflowInline: element.scrollWidth > element.clientWidth + 1,
     overflowBlock: element.scrollHeight > element.clientHeight + 1
@@ -38,6 +42,7 @@ export function predictWithPretext(element, pretext) {
   if (!pretext || typeof pretext.prepare !== "function" || typeof pretext.layout !== "function")
     throw new TypeError("Supply the @chenglou/pretext module");
   if (element.childElementCount) return skip("rich-inline-content", measured);
+  if (measured.actualLines === null) return skip("ambiguous-line-fragments", measured);
   const style = element.ownerDocument.defaultView.getComputedStyle(element);
   if (!["normal", "pre-wrap"].includes(style.whiteSpace))
     return skip("unsupported-white-space", measured);

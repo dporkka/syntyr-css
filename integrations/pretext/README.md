@@ -36,3 +36,5 @@ Predictions require explicit `overflow-wrap: break-word` and are skipped for ric
 - Pretext has its own licensing and notices; **do not vendor or redistribute its code** without preserving its requirements.
 
 The free core stays CSS-first. Avoid creating a paid stand-alone predictive text engine; evaluate a paid editorial composition pack only if buyers demonstrate demand for design assets rather than a measurement dependency.
+
+Line counts from range rectangles are estimates. When mixed glyph metrics overlap unusually short line boxes, `actualLines` is `null` and predictions are skipped rather than reporting a false mismatch.
