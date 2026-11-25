@@ -63,6 +63,20 @@ stylesheets.
 - **Static page composition (alpha.5 source):** browse and rearrange all 99 copy-owned sections in the optional visual builder, then download a self-hostable HTML/CSS/image ZIP without application JavaScript. Backend forms remain host-owned. [Builder](docs/page-builder.html).
 - **Opt-in universal registry (alpha.5 source):** 99 copy-owned HTML blocks plus 9 CSS modules in shadcn-compatible static JSON; no consumer runtime dependency. See [blocks guide](docs/blocks-guide.md).
 
+## Optional coding-agent skill
+
+Use Syntyr with compatible coding agents via the existing consumer skill.
+Inspect the [Skill source](agents/syntyr/SKILL.md) before using the optional
+third-party skills CLI from your application directory:
+
+```sh
+npx skills add https://github.com/dporkka/syntyr-css/tree/main/agents/syntyr --skill syntyr
+```
+
+This installs agent instructions only, not CSS or application dependencies.
+Keep your CSS release pinned; see the [agent integration guide](docs/agent-integration.md#optional-skills-cli-distribution)
+for discovery, review, offline installation and validation.
+
 ## Live gallery and installation
 
 * [Three-page SaaS marketing site starter](examples/site-starters/saas-marketing/README.md): original responsive hero, features, workflow, pricing, about and native FAQs; [live source preview](https://syntyr-css.pages.dev/examples/site-starters/saas-marketing/) and dependency-free offline export with `scripts/export_site_starter.py`; [separate Vercel/Netlify deployment guide](deploy/saas-marketing/README.md). Illustrative alpha.5 source, not a commercial SaaS product.

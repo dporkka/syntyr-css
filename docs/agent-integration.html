@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Syntyr works with ChatGPT, Codex, Claude Code, Cursor and other agents that generate HTML or framework markup. No Syntyr-specific service, account, MCP…">
-  <meta name="syntyr-source-sha256" content="3f62d7fb0729870fee041f35371a96fb3fa5a0a358f6cc6f6c24365cc65d2012">
+  <meta name="syntyr-source-sha256" content="e94183b1dd266820c271b65f1c839c7c6489c9025e127bb7663b6d3edf0a3986">
   <meta name="theme-color" content="#f5f7fb">
   <title>Using Syntyr with coding agents — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/agent-integration">
@@ -50,6 +50,25 @@
 <h2 id="project-level-integration">Project-level integration</h2>
 <p>A consumer may copy <a href="https://github.com/dporkka/syntyr-css/blob/main/agents/syntyr/SKILL.md"><code>agents/syntyr/SKILL.md</code></a> as an optional local skill in agent tooling that supports Skills. It is a portable instruction document, <strong>not a published package, automatic installation, or guaranteed discovery mechanism</strong>.</p>
 <p>The repository's root <code>AGENTS.md</code> guides agents contributing to Syntyr itself. It does <strong>not</strong> automatically become instructions in a separate application repository.</p>
+<h2 id="optional-skills-cli-distribution">Optional skills CLI distribution</h2>
+<p>The existing MIT-licensed consumer Skill can also be discovered and installed
+with the third-party <a href="https://skills.sh/">skills CLI</a>. There is no separate
+Syntyr skill package to maintain. From your application directory, inspect the
+<a href="https://github.com/dporkka/syntyr-css/tree/main/agents/syntyr">canonical Skill</a>
+before choosing a project-scoped installation:</p>
+<pre tabindex="0"><code class="language-sh">npx skills add https://github.com/dporkka/syntyr-css/tree/main/agents/syntyr --list
+npx skills add https://github.com/dporkka/syntyr-css/tree/main/agents/syntyr --skill syntyr
+</code></pre>
+<p>The CLI requires Node.js and network access for this optional installation
+route only. Review the source and select your agent when prompted; do not
+install globally by default. For reproducible updates, review a specific
+source commit and use that Git ref instead of the moving main branch. The
+Skill installs instructions, <strong>not CSS</strong>, a pinned selector inventory,
+Syntyr tooling, or an application runtime. It does not change the installed
+CSS release or grant access to premium assets. Inspect your actual stylesheets
+before generating HTML; use the offline setup below when you also need
+release-pinned assets and a local reference. Automatic listing or ranking
+on skills.sh is not guaranteed.</p>
 <h2 id="offline-first-run-agent-setup-source-checkout">Offline first-run agent setup (source checkout)</h2>
 <p>An optional Python standard-library command installs a <strong>portable consumer Skill</strong>,
 release-pinned CSS, and a small verified selector reference into an existing app.
@@ -126,6 +145,7 @@ python3 scripts/build_cloudflare_site.py --check
           <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#recommended-context-to-supply-an-agent">Recommended context to supply an agent</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#project-level-integration">Project-level integration</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#optional-skills-cli-distribution">Optional skills CLI distribution</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#offline-first-run-agent-setup-source-checkout">Offline first-run agent setup (source checkout)</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#optional-local-mcp-adapter">Optional local MCP adapter</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#documents-and-machine-readable-inventory">Documents and machine-readable inventory</a>
@@ -138,6 +158,7 @@ python3 scripts/build_cloudflare_site.py --check
             <nav aria-label="On this page (mobile)">
 <a class="docs-article-toc-link docs-article-toc-2" href="#recommended-context-to-supply-an-agent">Recommended context to supply an agent</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#project-level-integration">Project-level integration</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#optional-skills-cli-distribution">Optional skills CLI distribution</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#offline-first-run-agent-setup-source-checkout">Offline first-run agent setup (source checkout)</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#optional-local-mcp-adapter">Optional local MCP adapter</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#documents-and-machine-readable-inventory">Documents and machine-readable inventory</a>
