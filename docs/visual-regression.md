@@ -133,3 +133,21 @@ enlargement is not equivalent to native browser zoom. Browser font shaping,
 all languages and arbitrary application content are not certified by these
 fixtures. The Chromium stress run is configured for PRs and the full
 three-engine run for manual/tag execution.
+
+## Publish historical responsive compatibility evidence
+
+Generate the public static dashboard and JSON from completed local/CI
+reflow reports, using the exact tested source revision and UTC test date.
+Repeated input files must represent disjoint cases for that same revision.
+
+```sh
+python scripts/build_responsive_compatibility.py \
+  --input /tmp/syntyr-responsive.json \
+  --revision "$(git rev-parse HEAD)" --tested-on "$(date -u +%F)"
+```
+
+Only run this command with reports from the revision supplied; do not
+substitute the current HEAD for an earlier tested checkout. Review the
+generated HTML and JSON together before committing. Raw diagnostics are
+not published. Report hashes identify the private input files; they do
+not authenticate the run or imply an independent certification.

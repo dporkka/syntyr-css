@@ -312,7 +312,7 @@ PUBLIC_DOCS = (
     "blocks.html", "blocks.css", "blocks.js", "blocks-assets.css", "blocks-guide.md", "headless-interactions.md", "framework-integrations.md", "htmx-components.md", "htmx-playground.html", "mobile-frameworks.md",
     "geometry-terminal.md", "native-browser-apis.md", "interaction-recipes.md", "dropdowns.md", "radix-integration.md", "visual-intensity.md", "performance-and-polish.md",
     "performance-validation.md", "progressive-enhancement.md", "progressive-loading.md", "live-performance-audit.md",
-    "index.html", "design-resources.html", "animation.md", "clipboard.md", "lit-integration.md", "playground.html", "playground.css", "playground.js", "playground-catalog.js", "playground-snippet.js", "playground-editor.js", "playground-editor.licenses.txt", "page-builder-guide.md", "page-builder.html",  "page-builder.css", "page-builder.js", "page-builder-model.mjs", "site-builder-model.mjs", "page-builder-zip.mjs", "page-builder-starters.mjs", "page-builder-site-kits.mjs", "page-builder-section-picker.mjs",
+    "index.html", "responsive-compatibility.html", "design-resources.html", "animation.md", "clipboard.md", "lit-integration.md", "playground.html", "playground.css", "playground.js", "playground-catalog.js", "playground-snippet.js", "playground-editor.js", "playground-editor.licenses.txt", "page-builder-guide.md", "page-builder.html",  "page-builder.css", "page-builder.js", "page-builder-model.mjs", "site-builder-model.mjs", "page-builder-zip.mjs", "page-builder-starters.mjs", "page-builder-site-kits.mjs", "page-builder-section-picker.mjs",
     "form-builder.html", "form-builder.css", "form-builder.js", "form-builder-model.mjs",
     "editor-integration.md", "recipes.md", "saas-cli-business.md", "products.html", "pro.html", "studio.html", "integration-services.html",
     "cms-integration.md", "site-generator-decision.md", "static-site-generators.md", "site-builders.md", "tailwind-research.md", "tailwind-alternative.html",
@@ -365,6 +365,7 @@ def source_files(site_url: str = SITE_URL, *, include_cloudflare_headers: bool =
         ROOT / "metadata/component-gallery.v1.json",
         ROOT / "metadata/interaction-recipes.json",
         ROOT / "metadata/catalog-release-compatibility.v1.json",
+        ROOT / "metadata/responsive-compatibility.v1.json",
         ROOT / "metadata/section-composer.v1.json",
         # Public, generated, dependency-free mobile design tokens and copy-owned source.
         ROOT / "metadata/mobile/syntyr.tokens.json",

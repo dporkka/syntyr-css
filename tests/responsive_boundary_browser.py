@@ -93,7 +93,7 @@ def probe_media(page, example, query, px):
         assert count == (1 if px <= 480 else 2)
     if example == "examples/dropdowns.html":
         panel = page.locator("#actions-panel")
-        panel.evaluate("e => e.showPopover()")
+        page.locator("#actions-trigger").click()
         rect = panel.bounding_box()
         assert rect and rect["y"] >= -1 and rect["y"] + rect["height"] <= height + 1, rect
         if px <= 480:
