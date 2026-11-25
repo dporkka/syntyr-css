@@ -26,59 +26,14 @@ from scripts.build_cloudflare_site import source_files  # noqa: E402
 from responsive_viewports import CANONICAL_VIEWPORTS, PUBLISHED_VIEWPORTS
 from responsive_reporting import record_case, summarize, block_remaining
 
-INSPECT = """() => {
-  const root = document.documentElement;
-  const controls = document.querySelectorAll('a, button, input, select, textarea, summary');
-  function scrollableAncestor(node) {
-    for (let p = node.parentElement; p; p = p.parentElement) {
-      const style = getComputedStyle(p);
-      if (/(auto|scroll)/.test(style.overflowX) && p.scrollWidth > p.clientWidth + 1) {
-        // The scrollport must itself fit inside the viewport.
-        const bounds = p.getBoundingClientRect();
-        if (bounds.left >= -1 && bounds.right <= innerWidth + 1) return true;
-      }
-    }
-    return false;
-  }
-  const clipped = [...controls].filter(el => {
-    const style = getComputedStyle(el), r = el.getBoundingClientRect();
-    if (!r.width || !r.height || style.display === 'none' || style.visibility === 'hidden') return false;
-    if (el.closest('details:not([open])') && !el.closest('summary')) return false;
-    return !scrollableAncestor(el) && (r.left < -1 || r.right > innerWidth + 1);
-  }).slice(0, 5).map(el => [el.tagName, el.textContent.trim().slice(0, 45)]);
-  const missingStyles = [...document.querySelectorAll('link[rel="stylesheet"]')]
-    .filter(link => !link.sheet).map(link => link.getAttribute('href'));
-  return {scrollWidth: root.scrollWidth, clientWidth: root.clientWidth, clipped, missingStyles};
-}"""
+PROBE = json.loads((ROOT / "metadata/responsive-probe.v1.json").read_text(encoding="utf-8"))
+INSPECT = PROBE["inspectLayout"]
 
 
 # Minimum 24 CSS-pixel targets for standalone native controls. Associated
 # <label> targets can satisfy the rule even when a native checkbox is 13px.
 # This is a focused geometry regression, not a full WCAG 2.2 target-spacing audit.
-INSPECT_TOUCH_TARGETS = """() => {
-  const targets = document.querySelectorAll(
-    'button, summary, input:not([type="hidden"]), select, textarea, [role="button"], [role="tab"]'
-  );
-  return [...targets].filter(el => {
-    const style = getComputedStyle(el), r = el.getBoundingClientRect();
-    if (el.matches(':disabled') || !r.width || !r.height
-        || style.display === 'none' || style.visibility === 'hidden') return false;
-    if (el.closest('details:not([open])') && !el.closest('summary')) return false;
-    if (r.width >= 24 && r.height >= 24) return false;
-    const labels = [...document.querySelectorAll('label[for]')]
-      .filter(label => el.id && label.htmlFor === el.id);
-    const wrapped = el.closest('label');
-    if (wrapped) labels.push(wrapped);
-    return !labels.some(label => {
-      const box = label.getBoundingClientRect();
-      return box.width >= 24 && box.height >= 24;
-    });
-  }).slice(0, 12).map(el => {
-    const r = el.getBoundingClientRect();
-    return [el.tagName, (el.textContent || el.getAttribute('aria-label') || '').trim().slice(0, 48),
-            Math.round(r.width), Math.round(r.height)];
-  });
-}"""
+INSPECT_TOUCH_TARGETS = PROBE["inspectTouchTargets"]
 
 
 class QuietHandler(SimpleHTTPRequestHandler):

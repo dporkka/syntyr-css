@@ -366,6 +366,7 @@ def source_files(site_url: str = SITE_URL, *, include_cloudflare_headers: bool =
         ROOT / "metadata/interaction-recipes.json",
         ROOT / "metadata/catalog-release-compatibility.v1.json",
         ROOT / "metadata/responsive-compatibility.v1.json",
+        ROOT / "metadata/responsive-probe.v1.json",
         ROOT / "metadata/section-composer.v1.json",
         # Public, generated, dependency-free mobile design tokens and copy-owned source.
         ROOT / "metadata/mobile/syntyr.tokens.json",

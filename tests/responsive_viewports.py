@@ -2,14 +2,11 @@
 
 Keep the docs playground width choices in sync (enforced by a unit test).
 """
-CANONICAL_VIEWPORTS = (
-    ("small-mobile", 320, 568),
-    ("mobile", 390, 844),
-    ("tablet", 768, 1024),
-    ("large-tablet", 1024, 1366),
-    ("desktop", 1440, 900),
-    ("large-desktop", 1920, 1080),
-)
+import json
+from pathlib import Path
+
+_PROBE = json.loads((Path(__file__).resolve().parents[1] / "metadata/responsive-probe.v1.json").read_text(encoding="utf-8"))
+CANONICAL_VIEWPORTS = tuple((v["id"], v["width"], v["height"]) for v in _PROBE["viewports"])
 
 # Retain legacy and orientation/text enlargement coverage in addition to the
 # canonical targets. Text scaling here is not native browser zoom.

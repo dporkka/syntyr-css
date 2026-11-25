@@ -143,10 +143,12 @@ Repeated input files must represent disjoint cases for that same revision.
 ```sh
 python scripts/build_responsive_compatibility.py \
   --input /tmp/syntyr-responsive.json \
-  --revision "$(git rev-parse HEAD)" --tested-on "$(date -u +%F)"
+  --revision "$TESTED_GIT_SHA" --tested-on "$TEST_RUN_UTC_DATE"
 ```
 
-Only run this command with reports from the revision supplied; do not
+Set TESTED_GIT_SHA and TEST_RUN_UTC_DATE from the original test run (the UTC
+date in YYYY-MM-DD form). For a historical run, never substitute today’s
+publication date. Only run this command with reports from the revision supplied; do not
 substitute the current HEAD for an earlier tested checkout. Review the
 generated HTML and JSON together before committing. Raw diagnostics are
 not published. Report hashes identify the private input files; they do
@@ -178,3 +180,14 @@ The version-1 raw report is shared with the published reflow runner:
 page, width, height, textScale, status, optional error). The local report also
 includes a suite name and limitations. Consumers should recompute counts,
 reject duplicate cases, and never interpret blocked or missing as success.
+
+## Shared cross-language browser probes
+
+`metadata/responsive-probe.v1.json` is the canonical registry of six
+viewport sizes and two DOM geometry function expressions. Both Python
+Playwright tests and the local CLI consume it. Other tools can vendor
+an exact revision of the MIT-licensed artifact, verify its digest,
+and invoke the function expressions (Node Playwright needs an explicit
+call, e.g. `page.evaluate("(" + expression + ")()")`). Do not fetch and
+execute mutable remote probe code. A consumer must supply its own secure
+browser boundary, navigation, limits and result redaction.
