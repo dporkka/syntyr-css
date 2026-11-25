@@ -1010,6 +1010,25 @@ The optional CSS uses Syntyr's quiet operational surfaces by default; opt into
 Grid/Noir palettes only when appropriate. Avoid glows or decorative motion
 on data-heavy workspaces.
 
+## Spreadsheet pinning, range selection and conflict presentation
+
+For horizontal freeze panes, set `data-syn-pin="start"` or
+`data-syn-pin="end"` on matching headers and cells. Supply the cumulative
+logical offset in `--syn-grid-pin-offset` (default zero), measured from the
+respective inline edge. The host must use identical column widths/offsets,
+keep pinned columns mounted, and prevent opposing pinned regions from
+overlapping the scrollable area. Test scrolling in both LTR and RTL.
+
+Use `data-syn-range="true"` on cells in a host-managed rectangular selection.
+Actual interactive grids must still expose their selection via ARIA; static
+table illustrations may use this presentation hook without inventing selection
+behavior. Use `data-syn-conflict="true"` for a server-reported write conflict
+and include a visible text explanation or an accessible description.
+Conflict is not equivalent to invalid input or a pending local edit.
+The host owns all conflict resolution, keyboard navigation, mutation
+acknowledgements and authorization. These are unreleased source-candidate
+hooks, not features of the published alpha.4 release.
+
 ---
 
 ## Source: docs/recipes.md

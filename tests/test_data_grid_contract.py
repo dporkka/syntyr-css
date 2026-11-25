@@ -113,6 +113,38 @@ class DataGridContract(unittest.TestCase):
             "Descendant grids must retain their existing wrapper focus treatment.",
         )
 
+    def test_spreadsheet_pinning_uses_logical_offsets_and_opaque_background(self):
+        css = (ROOT / "src/data-grid.css").read_text()
+        self.assertIn('[data-syn-pin="start"]', css)
+        self.assertIn('[data-syn-pin="end"]', css)
+        self.assertIn("inset-inline-start: var(--syn-grid-pin-offset, 0px)", css)
+        self.assertIn("inset-inline-end: var(--syn-grid-pin-offset, 0px)", css)
+        self.assertIn("background: inherit", css)
+
+    def test_range_and_conflict_states_preserve_forced_color_focus(self):
+        css = (ROOT / "src/data-grid.css").read_text()
+        for hook in ('[data-syn-range="true"]', '[data-syn-conflict="true"]'):
+            self.assertIn(hook, css)
+            self.assertIn(hook, css.split("@media (forced-colors: active)", 1)[1])
+        self.assertIn("3px double CanvasText", css)
+
+    def test_spreadsheet_hooks_document_host_ownership(self):
+        guide = (ROOT / "docs/data-grid.md").read_text()
+        for hook in ("data-syn-pin", "--syn-grid-pin-offset", "data-syn-range", "data-syn-conflict"):
+            self.assertIn(hook, guide)
+        example = (ROOT / "examples/data-grid.html").read_text()
+        self.assertIn('data-syn-pin="start"', example)
+        self.assertIn('data-syn-range="true"', example)
+        self.assertIn('data-syn-conflict="true"', example)
+
+    def test_reference_search_indexes_spreadsheet_topics(self):
+        import re
+        html = (ROOT / "docs/reference.html").read_text()
+        entry = re.search(r'data-doc-search="data-grid ([^"]+)"', html)
+        self.assertIsNotNone(entry)
+        self.assertIn("range selection", entry.group(1).lower())
+        self.assertIn("conflict", entry.group(1).lower())
+
     def test_static_html_example_is_self_contained(self):
         example = (ROOT / "examples/data-grid.html").read_text()
         self.assertIn("syntyr.data-grid.css", example)

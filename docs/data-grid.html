@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Syntyr styles the presentation of an existing data grid . It does not implement virtualization, sorting, query execution, clipboard parsing, selection…">
-  <meta name="syntyr-source-sha256" content="236d144154ab967552c6db1e2cfe986671504ce36298bc21dd8bc6c7e9ef1602">
+  <meta name="syntyr-source-sha256" content="e413817eed78f478ee7f3f32aa631175994c2a08affeb097e51922454915b432">
   <meta name="theme-color" content="#f5f7fb">
   <title>Data-grid presentation (opt-in, CSS-only) — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/data-grid">
@@ -98,17 +98,35 @@ paste error states need accessible descriptive text and focus management.</p>
 <p>The optional CSS uses Syntyr's quiet operational surfaces by default; opt into
 Grid/Noir palettes only when appropriate. Avoid glows or decorative motion
 on data-heavy workspaces.</p>
+<h2 id="spreadsheet-pinning-range-selection-and-conflict-presentation">Spreadsheet pinning, range selection and conflict presentation</h2>
+<p>For horizontal freeze panes, set <code>data-syn-pin=&quot;start&quot;</code> or
+<code>data-syn-pin=&quot;end&quot;</code> on matching headers and cells. Supply the cumulative
+logical offset in <code>--syn-grid-pin-offset</code> (default zero), measured from the
+respective inline edge. The host must use identical column widths/offsets,
+keep pinned columns mounted, and prevent opposing pinned regions from
+overlapping the scrollable area. Test scrolling in both LTR and RTL.</p>
+<p>Use <code>data-syn-range=&quot;true&quot;</code> on cells in a host-managed rectangular selection.
+Actual interactive grids must still expose their selection via ARIA; static
+table illustrations may use this presentation hook without inventing selection
+behavior. Use <code>data-syn-conflict=&quot;true&quot;</code> for a server-reported write conflict
+and include a visible text explanation or an accessible description.
+Conflict is not equivalent to invalid input or a pending local edit.
+The host owns all conflict resolution, keyboard navigation, mutation
+acknowledgements and authorization. These are unreleased source-candidate
+hooks, not features of the published alpha.4 release.</p>
         </article>
         <aside class="docs-article-sidebar">
           <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#installation">Installation</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#api-and-responsibilities">API and responsibilities</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#spreadsheet-pinning-range-selection-and-conflict-presentation">Spreadsheet pinning, range selection and conflict presentation</a>
           </nav>
           <details class="docs-article-toc-mobile">
             <summary>On this page <span>Jump to section</span></summary>
             <nav aria-label="On this page (mobile)">
 <a class="docs-article-toc-link docs-article-toc-2" href="#installation">Installation</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#api-and-responsibilities">API and responsibilities</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#spreadsheet-pinning-range-selection-and-conflict-presentation">Spreadsheet pinning, range selection and conflict presentation</a>
             </nav>
           </details>
         </aside>
