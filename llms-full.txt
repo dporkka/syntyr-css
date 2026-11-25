@@ -6805,6 +6805,23 @@ Syntyr styles. Plain HTML fragments are exempt because the embedding app may
 supply the root; dynamic ancestor classes and inert `<template>` contents are
 also exempt because their rendered scope is unknown.
 
+### Inspect stylesheet loading with CSS Doctor
+
+Use the same validator with `--doctor` to inspect literal stylesheet links:
+
+```sh
+python3 scripts/syntyr_check.py --doctor --semantic --format json index.html
+```
+
+Repeated Syntyr links and distributions sharing canonical CSS sources produce
+advisory warnings; different explicit semantic-version pins in `/v/<version>/`
+paths produce errors. The source-ownership map comes from the generated current
+candidate contract, including presets and atomic component files. Conditional
+stylesheets may overlap intentionally; review warnings rather than automatically
+removing files. Unpinned local paths, bundler imports and actual downloaded CSS
+versions are not inferred. This is static inspection, not browser cascade,
+security or accessibility certification. Default validation is unchanged.
+
 With `--semantic`, a second standard-library pass checks literal HTML for
 duplicate static IDs, missing form labels (including an unnamed `input
 type="image"` or `type="button"`), unmatched `label for` and

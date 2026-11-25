@@ -139,6 +139,101 @@ class ValidatorTests(unittest.TestCase):
             self.assertEqual(data[0]["code"], "unknown-class")
             self.assertEqual(data[0]["file"], str(path))
 
+    def test_doctor_and_semantic_checks_can_run_together(self):
+        html = ('<link rel="stylesheet" href="/css/syntyr.core.css">'
+                '<link rel="stylesheet" href="/css/syntyr.all.css">'
+                '<main class="syn-root"><input id="email"></main>')
+        findings = validate_html(html, self.contract, semantic=True, doctor=True)
+        self.assertEqual({d["code"] for d in findings},
+                         {"overlapping-stylesheets", "missing-form-label"})
+
+    def test_doctor_does_not_infer_versions_from_nonversion_paths(self):
+        html = ('<link rel="stylesheet" href="/v/current/syntyr.core.css">'
+                '<link rel="stylesheet" href="/v/next/syntyr.recipes.css">')
+        self.assertEqual(validate_html(html, self.contract, doctor=True), [])
+
+    def test_doctor_ignores_inert_template_links(self):
+        html = ('<link rel="stylesheet" href="syntyr.core.css">'
+                '<template><link rel="stylesheet" href="syntyr.core.css"></template>')
+        self.assertEqual(validate_html(html, self.contract, doctor=True), [])
+
+    def test_doctor_detects_repeated_css_links(self):
+        html = """<link rel="stylesheet" href="/css/syntyr.core.css">
+        <link rel="stylesheet" href="/css/syntyr.core.css">
+        <main class="syn-root syn-panel"></main>"""
+        diagnostics = validate_html(html, self.contract, doctor=True)
+        self.assertEqual([item["code"] for item in diagnostics], ["duplicate-stylesheet"])
+        self.assertIn("syntyr.core.css", diagnostics[0]["message"])
+        self.assertEqual(diagnostics[0]["line"], 2)
+
+    def test_doctor_detects_overlapping_bundles(self):
+        html = """<link rel="stylesheet" href="/css/syntyr.core.css">
+        <link rel="stylesheet" href="/css/syntyr.semantic-bundle.css">
+        <main class="syn-root syn-panel"></main>"""
+        diagnostics = validate_html(html, self.contract, doctor=True)
+        self.assertEqual([item["code"] for item in diagnostics], ["overlapping-stylesheets"])
+        self.assertIn("syntyr.core.css", diagnostics[0]["message"])
+        self.assertIn("syntyr.semantic-bundle.css", diagnostics[0]["message"])
+
+    def test_doctor_detects_preset_plus_module_overlap(self):
+        html = """<link rel="stylesheet" href="/dist/presets/saas.css">
+        <link rel="stylesheet" href="/dist/syntyr.recipes.css">"""
+        diagnostics = validate_html(html, self.contract, doctor=True)
+        self.assertEqual([item["code"] for item in diagnostics], ["overlapping-stylesheets"])
+
+    def test_doctor_allows_complementary_core_and_recipes(self):
+        html = """<link rel="stylesheet" href="/css/syntyr.core.css">
+        <link rel="stylesheet" href="/css/syntyr.recipes.css">
+        <main class="syn-root syn-pipeline"></main>"""
+        self.assertEqual(validate_html(html, self.contract, doctor=True), [])
+
+    def test_doctor_detects_conflicting_pinned_versions_even_without_overlap(self):
+        html = """<link rel="stylesheet" href="/v/0.3.0-alpha.4/syntyr.core.css">
+        <link rel="stylesheet" href="/v/0.3.0-alpha.5/syntyr.recipes.css">"""
+        diagnostics = validate_html(html, self.contract, doctor=True)
+        self.assertEqual([item["code"] for item in diagnostics], ["mixed-stylesheet-versions"])
+        self.assertEqual(diagnostics[0]["severity"], "error")
+
+    def test_doctor_ignores_unrecognized_links_and_does_not_guess_local_versions(self):
+        html = """<link rel="stylesheet" href="/css/app.css">
+        <link rel="stylesheet" href="/css/syntyr.core.css">
+        <link rel="stylesheet" href="/css/syntyr.recipes.css">"""
+        self.assertEqual(validate_html(html, self.contract, doctor=True), [])
+
+    def test_default_validator_is_unchanged_without_doctor(self):
+        html = """<link rel="stylesheet" href="syntyr.core.css">
+        <link rel="stylesheet" href="syntyr.semantic-bundle.css">"""
+        self.assertEqual(validate_html(html, self.contract), [])
+
+    def test_doctor_requires_complete_source_manifest(self):
+        old_contract = dict(self.contract)
+        old_contract.pop("distribution_sources")
+        with self.assertRaisesRegex(ValueError, "distribution_sources"):
+            validate_html('<link rel="stylesheet" href="syntyr.core.css">',
+                          old_contract, doctor=True)
+
+    def test_doctor_warnings_remain_non_failing_for_cli(self):
+        with tempfile.TemporaryDirectory() as temp:
+            file = Path(temp) / "duplicate.html"
+            file.write_text('<link rel="stylesheet" href="syntyr.core.css">'
+                            '<link rel="stylesheet" href="syntyr.core.css">')
+            result = subprocess.run([sys.executable, "scripts/syntyr_check.py", "--doctor",
+                                     "--format", "json", str(file)], cwd=ROOT, text=True,
+                                    capture_output=True)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertEqual(json.loads(result.stdout)[0]["severity"], "warning")
+
+    def test_cli_doctor_reports_machine_readable_exit_status(self):
+        with tempfile.TemporaryDirectory() as temp:
+            file = Path(temp) / "mixed.html"
+            file.write_text('<link rel="stylesheet" href="/v/0.3.0-alpha.4/syntyr.core.css">'
+                            '<link rel="stylesheet" href="/v/0.3.0-alpha.5/syntyr.recipes.css">')
+            result = subprocess.run([sys.executable, "scripts/syntyr_check.py", "--doctor",
+                                     "--format", "json", str(file)], cwd=ROOT, text=True,
+                                    capture_output=True)
+            self.assertEqual(result.returncode, 1, result.stderr)
+            self.assertEqual(json.loads(result.stdout)[0]["code"], "mixed-stylesheet-versions")
+
 
 if __name__ == "__main__":
     unittest.main()

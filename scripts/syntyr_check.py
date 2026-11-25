@@ -10,6 +10,7 @@ import argparse
 from difflib import get_close_matches
 from html.parser import HTMLParser
 import json
+import re
 from pathlib import Path
 import sys
 from urllib.parse import urlsplit
@@ -43,6 +44,7 @@ class _SyntyrParser(HTMLParser):
         self.attribute_values = contract["attributes"]
         self.stylesheet_names = set(contract["stylesheets"])
         self.linked_stylesheets: set[str] = set()
+        self.stylesheet_links: list[tuple[int, int, str, str | None]] = []
         self.used_classes: list[tuple[int, int, str]] = []
         self.unscoped_classes: list[tuple[int, int, str]] = []
         self.complete_document = False
@@ -79,6 +81,10 @@ class _SyntyrParser(HTMLParser):
             name = _stylesheet_name(data.get("href") or "", self.stylesheet_names)
             if name:
                 self.linked_stylesheets.add(name)
+                href = data.get("href") or ""
+                if not _is_dynamic(href) and not within_template:
+                    pinned = re.search(r"/v/(\d+\.\d+\.\d+(?:-[A-Za-z0-9.-]+)?)/", urlsplit(href).path)
+                    self.stylesheet_links.append((line, col, name, pinned.group(1) if pinned else None))
         for class_attr in ("class", "classname"):
             class_value = data.get(class_attr) or ""
             if _is_dynamic(class_value):
@@ -280,8 +286,52 @@ class _SemanticParser(HTMLParser):
         return result
 
 
+def _doctor_findings(parser: _SyntyrParser, contract: dict) -> list[dict]:
+    """Detect duplicate CSS sources and explicit mixed release pins in linked HTML.
+
+    The contract's source ownership is generated from the canonical build
+    manifest, not maintained as a second module list. Unpinned local files
+    and CSS loaded via bundlers cannot be version-verified by static HTML.
+    """
+    sources = contract.get("distribution_sources", {})
+    found = []
+    earlier = []
+    pinned_version = None
+    for line, column, name, version in parser.stylesheet_links:
+        for prev in earlier:
+            previous_name = prev[2]
+            if name == previous_name:
+                code = "duplicate-stylesheet"
+                message = f"'{name}' is linked more than once; load it only once."
+            else:
+                repeated = set(sources.get(name, ())) & set(sources.get(previous_name, ()))
+                if not repeated:
+                    continue
+                code = "overlapping-stylesheets"
+                sample = ", ".join(sorted(repeated)[:3])
+                message = (f"'{name}' overlaps '{previous_name}' (shared CSS sources: {sample}); "
+                           "prefer one complete preset or non-overlapping modules.")
+            found.append({
+                "line": line, "column": column + 1, "severity": "warning",
+                "code": code, "message": message,
+                "stylesheets": [previous_name, name],
+            })
+        if version:
+            if pinned_version and version != pinned_version:
+                found.append({
+                    "line": line, "column": column + 1, "severity": "error",
+                    "code": "mixed-stylesheet-versions",
+                    "message": (f"'{name}' is pinned to {version}, but another Syntyr "
+                                f"stylesheet is pinned to {pinned_version}; use one release."),
+                    "detected_versions": sorted({pinned_version, version}),
+                })
+            elif not pinned_version:
+                pinned_version = version
+        earlier.append((line, column, name, version))
+    return found
+
 def validate_html(html: str, contract: dict, *, stylesheets: set[str] | None = None,
-                  semantic: bool = False) -> list[dict]:
+                  semantic: bool = False, doctor: bool = False) -> list[dict]:
     """Return deterministic diagnostics for literal HTML.
 
     When no Syntyr stylesheet is linked and none is explicitly provided,
@@ -309,6 +359,11 @@ def validate_html(html: str, contract: dict, *, stylesheets: set[str] | None = N
                               f"'{name}' is not in the loaded Syntyr CSS; add {hint}.",
                               line, col, required_stylesheets=sorted(expected),
                               loaded_stylesheets=sorted(loaded))
+    if doctor:
+        sources = contract.get("distribution_sources")
+        if not isinstance(sources, dict) or set(sources) != set(contract["stylesheets"]):
+            raise ValueError("Doctor mode requires distribution_sources from a matching current Syntyr contract.")
+        parser.diagnostics.extend(_doctor_findings(parser, contract))
     if semantic:
         inspector = _SemanticParser()
         inspector.feed(html)
@@ -325,6 +380,8 @@ def main(argv=None) -> int:
     p.add_argument("--format", choices=("text", "json"), default="text")
     p.add_argument("--semantic", action="store_true",
                    help="Additionally lint literal native HTML semantics (conservative; templates need rendered checks).")
+    p.add_argument("--doctor", action="store_true",
+                   help="Report overlapping CSS bundles, repeated links and explicit mixed release pins.")
     p.add_argument("--stylesheets", action="append", default=None,
                    help="Known loaded Syntyr stylesheets, comma-separated; overrides HTML links.")
     p.add_argument("--contract", type=Path, default=CONTRACT)
@@ -343,7 +400,7 @@ def main(argv=None) -> int:
         results = []
         for file in args.files:
             source = sys.stdin.read() if str(file) == "-" else file.read_text(encoding="utf-8")
-            diagnostics = validate_html(source, contract, stylesheets=configured, semantic=args.semantic)
+            diagnostics = validate_html(source, contract, stylesheets=configured, semantic=args.semantic, doctor=args.doctor)
             label = "<stdin>" if str(file) == "-" else str(file)
             results += [{"file": label, **diag} for diag in diagnostics]
     except (OSError, UnicodeError, ValueError, KeyError) as exc:
