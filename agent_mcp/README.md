@@ -35,6 +35,10 @@ The server offers these **read-only** tools:
 
 - `search_components(query, release)` — curated verified components.
 - `get_component(name, release)` — native element guidance and stylesheets.
+- `get_interaction_contracts(name, release)` — source-candidate-only anatomy,
+  state hooks, behavior ownership, accessibility obligations, fallbacks and
+  descriptive intentions. Use an empty name to list contracts and explicitly
+  pin `0.3.0-alpha.5`. These are not executable tools or a conformance claim.
 - `lookup_api(name, release)` — class or token existence.
 - `get_theme_tokens(query, release)` — property names, not computed values.
 - `validate_markup(html, release, stylesheets)` — unknown `syn-*` classes,

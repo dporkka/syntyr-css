@@ -20,8 +20,15 @@ class AgentMcpSdkTests(unittest.TestCase):
                 names = {tool.name for tool in listing.tools}
                 self.assertGreaterEqual(names, {
                     "search_components", "get_component", "lookup_api",
-                    "get_theme_tokens", "validate_markup",
+                    "get_theme_tokens", "validate_markup", "get_interaction_contracts",
                 })
+                contracts = await client.call_tool("get_interaction_contracts", {
+                    "name": "dialog", "release": "0.3.0-alpha.5",
+                })
+                self.assertFalse(contracts.is_error)
+                self.assertEqual(contracts.structured_content["contracts"][0]["id"], "dialog")
+                unavailable = await client.call_tool("get_interaction_contracts", {})
+                self.assertTrue(unavailable.is_error)
                 result = await client.call_tool("lookup_api", {
                     "name": "syn-button--primary", "release": "0.3.0-alpha.4",
                 })

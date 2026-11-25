@@ -150,6 +150,21 @@ class SyntyrCatalog:
             }),
         }, "note": "Syntyr styles native HTML; it does not implement app behavior."}
 
+    def get_interaction_contracts(self, name: str = "", release: str = PUBLISHED):
+        """Describe candidate-only UI anatomy and behavior ownership; never execute."""
+        base = self._release(release)
+        if release != CANDIDATE:
+            raise CatalogError("Interaction contracts are unavailable in the published release; select the source candidate explicitly")
+        manifest = json.loads((self.root / "metadata/interaction-contracts.v1.json").read_text(encoding="utf-8"))
+        if manifest["source_version"] != release or manifest["schema_version"] != 1:
+            raise RuntimeError("Interaction contract metadata version needs review")
+        term = name.strip().casefold()
+        contracts = [c for c in manifest["contracts"] if not term or c["id"] == term]
+        if not contracts:
+            raise CatalogError(f"Unknown interaction contract {name!r}; list contracts without a name")
+        return {**base, "schema_version": manifest["schema_version"],
+                "contracts": contracts, "note": manifest["note"]}
+
     def lookup_api(self, name: str, release: str = PUBLISHED):
         base = self._release(release)
         kind = "class" if name.startswith("syn-") else "token" if name.startswith("--syn-") else None
