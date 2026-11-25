@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Syntyr works with ChatGPT, Codex, Claude Code, Cursor and other agents that generate HTML or framework markup. No Syntyr-specific service, account, MCP…">
-  <meta name="syntyr-source-sha256" content="5303318225e75d2d13b13bbcc01d36c34a6e94601bbdffe6fb241df9a8d4f457">
+  <meta name="syntyr-source-sha256" content="7d9ca617ed7a96ea5666062b31ab87ed22ef11c32674086e2285cb19843054fb">
   <meta name="theme-color" content="#f5f7fb">
   <title>Using Syntyr with coding agents — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/agent-integration">
@@ -55,12 +55,16 @@
 with the third-party <a href="https://skills.sh/">skills CLI</a>. There is no separate
 Syntyr skill package to maintain. From your application directory, inspect the
 <a href="https://github.com/dporkka/syntyr-css/tree/main/agents/syntyr">canonical Skill</a>
-before choosing a project-scoped installation:</p>
+before choosing a project-scoped installation.</p>
+<p>If you already use the Codex offline setup, keep that installation. Installing
+with Skills CLI in the same project can replace <code>.agents/skills/syntyr</code> and
+remove its generated <code>references/api.json</code>. Without that reference,
+<code>syntyr_agent.py info</code> reports the offline installation as degraded.</p>
 <pre tabindex="0"><code class="language-sh">npx skills@1.9.0 add https://github.com/dporkka/syntyr-css/tree/main/agents/syntyr --list
 npx skills@1.9.0 add https://github.com/dporkka/syntyr-css/tree/main/agents/syntyr --skill syntyr
 </code></pre>
 <p>The commands above pin the verified Skills CLI 1.9.0, which requires
-Node.js 22.20.0 or later and network access for this optional installation
+Node.js 22.20.0 or later, Git, and network access for this optional installation
 route only. Review the source and select your agent when prompted; do not
 install globally by default. For reproducible updates, review a specific
 source commit and use that Git ref instead of the moving main branch. The

@@ -25,7 +25,12 @@ The existing MIT-licensed consumer Skill can also be discovered and installed
 with the third-party [skills CLI](https://skills.sh/). There is no separate
 Syntyr skill package to maintain. From your application directory, inspect the
 [canonical Skill](https://github.com/dporkka/syntyr-css/tree/main/agents/syntyr)
-before choosing a project-scoped installation:
+before choosing a project-scoped installation.
+
+If you already use the Codex offline setup, keep that installation. Installing
+with Skills CLI in the same project can replace `.agents/skills/syntyr` and
+remove its generated `references/api.json`. Without that reference,
+`syntyr_agent.py info` reports the offline installation as degraded.
 
 ```sh
 npx skills@1.9.0 add https://github.com/dporkka/syntyr-css/tree/main/agents/syntyr --list
@@ -33,7 +38,7 @@ npx skills@1.9.0 add https://github.com/dporkka/syntyr-css/tree/main/agents/synt
 ```
 
 The commands above pin the verified Skills CLI 1.9.0, which requires
-Node.js 22.20.0 or later and network access for this optional installation
+Node.js 22.20.0 or later, Git, and network access for this optional installation
 route only. Review the source and select your agent when prompted; do not
 install globally by default. For reproducible updates, review a specific
 source commit and use that Git ref instead of the moving main branch. The

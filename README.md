@@ -67,7 +67,10 @@ stylesheets.
 
 Use Syntyr with compatible coding agents via the existing consumer skill.
 Inspect the [Skill source](agents/syntyr/SKILL.md) before using the optional
-third-party Skills CLI 1.9.0 (Node.js 22.20.0 or later) from your application directory:
+third-party Skills CLI 1.9.0 from your application directory. It requires
+Node.js 22.20.0 or later, Git, and network access. If you already use the
+Codex offline setup, keep it: the command below can replace its skill directory
+and remove the generated selector reference.
 
 ```sh
 npx skills@1.9.0 add https://github.com/dporkka/syntyr-css/tree/main/agents/syntyr --skill syntyr
