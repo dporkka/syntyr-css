@@ -8,6 +8,7 @@ zoom, touch hardware, or manual screen-reader verification. Internal horizontal
 scrolling is allowed only inside an actually scrollable ancestor.
 """
 import argparse
+import json
 import os
 from functools import partial
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
@@ -22,68 +23,17 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from scripts.build_cloudflare_site import source_files  # noqa: E402
 
-# CSS pixel viewports: small/large phones, tablet, laptops, widescreen,
-# mobile landscape, and enlarged text at narrow widths.
-VIEWPORTS = (
-    (320, 800, 1), (375, 812, 1), (390, 844, 1), (430, 932, 1),
-    (768, 1024, 1), (1024, 768, 1), (1440, 900, 1), (1920, 1080, 1),
-    (667, 375, 1), (844, 390, 1),
-    (320, 800, 1.5), (320, 800, 2), (390, 844, 2),
-)
+from responsive_viewports import CANONICAL_VIEWPORTS, PUBLISHED_VIEWPORTS
+from responsive_reporting import record_case, summarize, block_remaining
 
-INSPECT = """() => {
-  const root = document.documentElement;
-  const controls = document.querySelectorAll('a, button, input, select, textarea, summary');
-  function scrollableAncestor(node) {
-    for (let p = node.parentElement; p; p = p.parentElement) {
-      const style = getComputedStyle(p);
-      if (/(auto|scroll)/.test(style.overflowX) && p.scrollWidth > p.clientWidth + 1) {
-        // The scrollport must itself fit inside the viewport.
-        const bounds = p.getBoundingClientRect();
-        if (bounds.left >= -1 && bounds.right <= innerWidth + 1) return true;
-      }
-    }
-    return false;
-  }
-  const clipped = [...controls].filter(el => {
-    const style = getComputedStyle(el), r = el.getBoundingClientRect();
-    if (!r.width || !r.height || style.display === 'none' || style.visibility === 'hidden') return false;
-    if (el.closest('details:not([open])') && !el.closest('summary')) return false;
-    return !scrollableAncestor(el) && (r.left < -1 || r.right > innerWidth + 1);
-  }).slice(0, 5).map(el => [el.tagName, el.textContent.trim().slice(0, 45)]);
-  const missingStyles = [...document.querySelectorAll('link[rel="stylesheet"]')]
-    .filter(link => !link.sheet).map(link => link.getAttribute('href'));
-  return {scrollWidth: root.scrollWidth, clientWidth: root.clientWidth, clipped, missingStyles};
-}"""
+PROBE = json.loads((ROOT / "metadata/responsive-probe.v1.json").read_text(encoding="utf-8"))
+INSPECT = PROBE["inspectLayout"]
 
 
 # Minimum 24 CSS-pixel targets for standalone native controls. Associated
 # <label> targets can satisfy the rule even when a native checkbox is 13px.
 # This is a focused geometry regression, not a full WCAG 2.2 target-spacing audit.
-INSPECT_TOUCH_TARGETS = """() => {
-  const targets = document.querySelectorAll(
-    'button, summary, input:not([type="hidden"]), select, textarea, [role="button"], [role="tab"]'
-  );
-  return [...targets].filter(el => {
-    const style = getComputedStyle(el), r = el.getBoundingClientRect();
-    if (el.disabled || !r.width || !r.height
-        || style.display === 'none' || style.visibility === 'hidden') return false;
-    if (el.closest('details:not([open])') && !el.closest('summary')) return false;
-    if (r.width >= 24 && r.height >= 24) return false;
-    const labels = [...document.querySelectorAll('label[for]')]
-      .filter(label => el.id && label.htmlFor === el.id);
-    const wrapped = el.closest('label');
-    if (wrapped) labels.push(wrapped);
-    return !labels.some(label => {
-      const box = label.getBoundingClientRect();
-      return box.width >= 24 && box.height >= 24;
-    });
-  }).slice(0, 12).map(el => {
-    const r = el.getBoundingClientRect();
-    return [el.tagName, (el.textContent || el.getAttribute('aria-label') || '').trim().slice(0, 48),
-            Math.round(r.width), Math.round(r.height)];
-  });
-}"""
+INSPECT_TOUCH_TARGETS = PROBE["inspectTouchTargets"]
 
 
 class QuietHandler(SimpleHTTPRequestHandler):
@@ -99,48 +49,61 @@ class QuietHandler(SimpleHTTPRequestHandler):
             pass
 
 
-def check(browser, engine, origin, pages):
-    cases = 0
-    for width, height, scale in VIEWPORTS:
+def check_geometry(page, engine, name, width, height, scale):
+    if scale != 1:
+        page.evaluate("(scale) => document.documentElement.style.fontSize = (16 * scale) + 'px'", scale)
+    layout = page.evaluate(INSPECT)
+    assert not layout["missingStyles"], (engine, name, width, scale, layout)
+    assert layout["scrollWidth"] <= layout["clientWidth"] + 1 and not layout["clipped"], (
+        engine, name, width, scale, layout
+    )
+    if width in (320, 390) and scale == 1:
+        too_small = page.evaluate(INSPECT_TOUCH_TARGETS)
+        assert not too_small, (engine, name, "touch targets below 24px", too_small)
+
+
+def check_page(page, engine, origin, name, width, height, scale):
+    response = page.goto(f"{origin}/{name}", wait_until="load", timeout=15_000)
+    assert response and response.status == 200, (engine, name, "HTTP", response)
+    check_geometry(page, engine, name, width, height, scale)
+    if name == "examples/viz.html" and width == 320 and scale == 2:
+        heatmap = page.locator(".syn-viz-heatmap").first
+        grid = heatmap.evaluate("""e => ({
+            columns: getComputedStyle(e).gridTemplateColumns.split(' ').length,
+            inner: e.clientWidth, scroll: e.scrollWidth
+        })""")
+        assert grid["columns"] == 6 and grid["scroll"] <= grid["inner"] + 1, grid
+        details = page.locator(".viz-values").first
+        details.evaluate("e => e.open = true")
+        region = details.evaluate("""e => ({
+            scroll: e.scrollWidth, inner: e.clientWidth,
+            overflow: getComputedStyle(e).overflowX
+        })""")
+        assert region["overflow"] == "auto" and region["scroll"] > region["inner"], region
+        assert page.evaluate("document.documentElement.scrollWidth <= innerWidth + 1")
+
+
+def check(browser, engine, origin, pages, viewports=PUBLISHED_VIEWPORTS, results=None):
+    if results is None:
+        results = []
+    for width, height, scale in viewports:
         context = browser.new_context(
             viewport={"width": width, "height": height},
             reduced_motion="reduce",
         )
-        page = context.new_page()
+        before = len(results)
         try:
+            page = context.new_page()
             for name in pages:
-                response = page.goto(f"{origin}/{name}", wait_until="load", timeout=15_000)
-                assert response and response.status == 200, (engine, name, "HTTP", response)
-                if scale != 1:
-                    page.evaluate("(scale) => document.documentElement.style.fontSize = (16 * scale) + 'px'", scale)
-                layout = page.evaluate(INSPECT)
-                assert not layout["missingStyles"], (engine, name, width, scale, layout)
-                assert layout["scrollWidth"] <= layout["clientWidth"] + 1 and not layout["clipped"], (
-                    engine, name, width, scale, layout
-                )
-                if width in (320, 390) and scale == 1:
-                    too_small = page.evaluate(INSPECT_TOUCH_TARGETS)
-                    assert not too_small, (engine, name, "touch targets below 24px", too_small)
-                if name == "examples/viz.html" and width == 320 and scale == 2:
-                    heatmap = page.locator(".syn-viz-heatmap").first
-                    grid = heatmap.evaluate("""e => ({
-                        columns: getComputedStyle(e).gridTemplateColumns.split(' ').length,
-                        inner: e.clientWidth, scroll: e.scrollWidth
-                    })""")
-                    assert grid["columns"] == 6 and grid["scroll"] <= grid["inner"] + 1, grid
-                    details = page.locator(".viz-values").first
-                    details.evaluate("e => e.open = true")
-                    region = details.evaluate("""e => ({
-                        scroll: e.scrollWidth, inner: e.clientWidth,
-                        overflow: getComputedStyle(e).overflowX
-                    })""")
-                    assert region["overflow"] == "auto" and region["scroll"] > region["inner"], region
-                    assert page.evaluate("document.documentElement.scrollWidth <= innerWidth + 1")
-                cases += 1
+                case = record_case(results, engine, name, (width, height, scale),
+                                   lambda: check_page(page, engine, origin, name, width, height, scale))
+                if case["status"] == "fail":
+                    print(f"FAIL {engine} {name} {width}x{height} font={scale}x: {case['error']}", flush=True)
         finally:
             context.close()
-        print(f"PASS {engine}: {len(pages)} published pages, {width}x{height}px, font={scale}x", flush=True)
-    return cases
+        counts = summarize(results[before:])
+        print(f"{engine}: {width}x{height}px, font={scale}x: {counts}", flush=True)
+    return results
 
 
 def main():
@@ -148,6 +111,11 @@ def main():
     parser.add_argument("--browsers", nargs="+",
                         choices=("chromium", "firefox", "webkit"),
                         default=("chromium", "firefox", "webkit"))
+    parser.add_argument("--canonical-only", action="store_true",
+                        help="Run the six standard CSS-pixel viewports without stress cases")
+    parser.add_argument("--pages", nargs="+",
+                        help="Limit checks to specific published HTML paths")
+    parser.add_argument("--report", type=Path, help="Write machine-readable JSON results, including failures")
     args = parser.parse_args()
 
     files = source_files()
@@ -155,6 +123,13 @@ def main():
     assert "docs/reference.html" in pages
     assert "examples/landing.html" in pages
     assert "examples/viz.html" in pages
+    if args.pages:
+        unknown = set(args.pages) - set(pages)
+        if unknown:
+            parser.error(f"Not published HTML: {', '.join(sorted(unknown))}")
+        pages = sorted(set(args.pages))
+    viewports = (tuple((w, h, 1) for _, w, h in CANONICAL_VIEWPORTS)
+                 if args.canonical_only else PUBLISHED_VIEWPORTS)
     with tempfile.TemporaryDirectory(prefix="syntyr-public-reflow-") as folder:
         base = Path(folder)
         for name, data in files.items():
@@ -164,8 +139,7 @@ def main():
         server = ThreadingHTTPServer(("127.0.0.1", 0), partial(QuietHandler, directory=str(base)))
         thread = Thread(target=server.serve_forever, daemon=True)
         thread.start()
-        failures = 0
-        total = 0
+        results = []
         try:
             with sync_playwright() as playwright:
                 for engine in args.browsers:
@@ -176,21 +150,26 @@ def main():
                         browser = getattr(playwright, engine).launch(**options)
                     except Exception as exc:
                         print(f"BLOCKED {engine}: {str(exc).splitlines()[0]}", flush=True)
-                        failures += 1
+                        block_remaining(results, engine, pages, viewports, exc)
                         continue
                     try:
-                        total += check(browser, engine, f"http://127.0.0.1:{server.server_port}", pages)
+                        check(browser, engine, f"http://127.0.0.1:{server.server_port}", pages, viewports, results)
                     except Exception as exc:
-                        print(f"FAIL {engine}: {exc}", flush=True)
-                        failures += 1
+                        print(f"BLOCKED {engine}: {exc}", flush=True)
+                        block_remaining(results, engine, pages, viewports, exc)
                     finally:
                         browser.close()
         finally:
             server.shutdown()
             server.server_close()
             thread.join(timeout=5)
-    print(f"FINISHED {total} public reflow cases, {failures} failed/blocked engine(s)", flush=True)
-    return int(bool(failures))
+    counts = summarize(results)
+    if args.report:
+        args.report.parent.mkdir(parents=True, exist_ok=True)
+        args.report.write_text(json.dumps({"schemaVersion": 1, "summary": counts, "cases": results},
+                                          indent=2) + "\n", encoding="utf-8")
+    print(f"FINISHED {len(results)} public reflow cases: {counts}", flush=True)
+    return int(bool(counts["fail"] or counts["blocked"]))
 
 
 if __name__ == "__main__":

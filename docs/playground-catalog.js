@@ -193,7 +193,7 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "title": "Fieldset and choice inputs",
     "module": "syntyr.core.css",
     "description": "A fieldset and legend give related inputs an accessible group name.",
-    "html": "\u003cform action=\"#catalog-top\" method=\"get\">\n  \u003cfieldset>\n    \u003clegend>Notification frequency\u003c/legend>\n    \u003clabel>\u003cinput type=\"radio\" name=\"catalog-frequency\" value=\"daily\" checked> Daily\u003c/label>\n    \u003clabel>\u003cinput type=\"radio\" name=\"catalog-frequency\" value=\"weekly\"> Weekly\u003c/label>\n  \u003c/fieldset>\n  \u003clabel>\u003cinput type=\"checkbox\" name=\"catalog-updates\" checked> Product updates\u003c/label>\n  \u003cbutton type=\"submit\" class=\"syn-button\">Apply\u003c/button>\n\u003c/form>",
+    "html": "\u003cform action=\"#catalog-top\" method=\"get\">\n  \u003cfieldset>\n    \u003clegend>Notification frequency\u003c/legend>\n    \u003clabel class=\"syn-check\">\u003cinput type=\"radio\" name=\"catalog-frequency\" value=\"daily\" checked> Daily\u003c/label>\n    \u003clabel class=\"syn-check\">\u003cinput type=\"radio\" name=\"catalog-frequency\" value=\"weekly\"> Weekly\u003c/label>\n  \u003c/fieldset>\n  \u003clabel class=\"syn-check\">\u003cinput type=\"checkbox\" name=\"catalog-updates\" checked> Product updates\u003c/label>\n  \u003cbutton type=\"submit\" class=\"syn-button\">Apply\u003c/button>\n\u003c/form>",
     "keywords": "fieldset legend radio checkbox label choice form",
     "guidance": "Use button for actions and a for navigation. ARIA states describe real application state."
   },

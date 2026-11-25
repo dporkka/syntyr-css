@@ -210,6 +210,7 @@ Browse the curated entry points above, or expand the full reference index below.
 - [Runnable Tailwind v4, Astro and shadcn-token adoption projects](docs/adoption-starters.md) and [editable Figma component kit pilot](docs/figma-component-kit.md)
 - [Opt-in shadcn/ui semantic token bridge](docs/shadcn-integration.md), [official CLI-generated React/Radix example](examples/syntyr-shadcn-react/), [Chromium visual regression](docs/visual-regression.md), and [release readiness](docs/release-readiness-ecosystem.md)
 - [Accessibility and browser-matrix methodology](docs/accessibility.md)
+- [Responsive compatibility evidence](docs/responsive-compatibility.html) ([JSON](metadata/responsive-compatibility.v1.json)); [optional local responsive audit CLI](https://github.com/dporkka/syntyr-css/blob/main/docs/visual-regression.md#optional-local-responsive-audit-cli)
 - [Progressive enhancement, automatic color scheme and print styling](docs/progressive-enhancement.md)
 - [Commercial Console Kit concept (not available for purchase)](docs/console-kit.html)
 - [Public design-partner review issue (seeking 10 participants)](https://github.com/dporkka/syntyr-css/issues/3)

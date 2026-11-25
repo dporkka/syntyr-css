@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "viewports": [
+    {
+      "id": "small-mobile",
+      "width": 320,
+      "height": 568
+    },
+    {
+      "id": "mobile",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "id": "tablet",
+      "width": 768,
+      "height": 1024
+    },
+    {
+      "id": "large-tablet",
+      "width": 1024,
+      "height": 1366
+    },
+    {
+      "id": "desktop",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "id": "large-desktop",
+      "width": 1920,
+      "height": 1080
+    }
+  ],
+  "inspectLayout": "() => {\n  const root = document.documentElement;\n  const controls = document.querySelectorAll('a, button, input, select, textarea, summary');\n  function scrollableAncestor(node) {\n    for (let p = node.parentElement; p; p = p.parentElement) {\n      const style = getComputedStyle(p);\n      if (/(auto|scroll)/.test(style.overflowX) && p.scrollWidth > p.clientWidth + 1) {\n        // The scrollport must itself fit inside the viewport.\n        const bounds = p.getBoundingClientRect();\n        if (bounds.left >= -1 && bounds.right <= innerWidth + 1) return true;\n      }\n    }\n    return false;\n  }\n  const clipped = [...controls].filter(el => {\n    const style = getComputedStyle(el), r = el.getBoundingClientRect();\n    if (!r.width || !r.height || style.display === 'none' || style.visibility === 'hidden') return false;\n    if (el.closest('details:not([open])') && !el.closest('summary')) return false;\n    return !scrollableAncestor(el) && (r.left < -1 || r.right > innerWidth + 1);\n  }).slice(0, 5).map(el => [el.tagName, el.textContent.trim().slice(0, 45)]);\n  const missingStyles = [...document.querySelectorAll('link[rel=\"stylesheet\"]')]\n    .filter(link => !link.sheet).map(link => link.getAttribute('href'));\n  return {scrollWidth: root.scrollWidth, clientWidth: root.clientWidth, clipped, missingStyles};\n}",
+  "inspectTouchTargets": "() => {\n  const targets = document.querySelectorAll(\n    'button, summary, input:not([type=\"hidden\"]), select, textarea, [role=\"button\"], [role=\"tab\"]'\n  );\n  return [...targets].filter(el => {\n    const style = getComputedStyle(el), r = el.getBoundingClientRect();\n    if (el.matches(':disabled') || !r.width || !r.height\n        || style.display === 'none' || style.visibility === 'hidden') return false;\n    if (el.closest('details:not([open])') && !el.closest('summary')) return false;\n    if (r.width >= 24 && r.height >= 24) return false;\n    const labels = [...document.querySelectorAll('label[for]')]\n      .filter(label => el.id && label.htmlFor === el.id);\n    const wrapped = el.closest('label');\n    if (wrapped) labels.push(wrapped);\n    return !labels.some(label => {\n      const box = label.getBoundingClientRect();\n      return box.width >= 24 && box.height >= 24;\n    });\n  }).slice(0, 12).map(el => {\n    const r = el.getBoundingClientRect();\n    return [el.tagName, (el.textContent || el.getAttribute('aria-label') || '').trim().slice(0, 48),\n            Math.round(r.width), Math.round(r.height)];\n  });\n}"
+}
