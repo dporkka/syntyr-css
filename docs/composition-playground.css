@@ -1,0 +1,7 @@
+.composition-layout { display:grid; grid-template-columns:minmax(0, 19rem) minmax(0, 1fr); gap:1rem; align-items:start; margin-block:1rem 3rem; }
+.composition-controls, .composition-output { min-width:0; display:grid; gap:.75rem; }
+#composition-intents { display:grid; gap:.4rem; padding:.75rem; min-width:0; }
+#composition-intents label { display:flex; align-items:center; gap:.5rem; }
+#composition-preview { width:100%; min-height:38rem; border:1px solid var(--syn-border-default); border-radius:var(--syn-radius); background:var(--syn-surface); }
+#composition-obligations { overflow-wrap:anywhere; }
+@media (max-width: 800px) { .composition-layout { grid-template-columns:minmax(0,1fr); } #composition-preview { min-height:30rem; } }

@@ -6641,6 +6641,17 @@ are needed for generation. These demos are illustrative static presentation
 scaffolds; sample destinations and host-owned forms are not working
 backend integrations. Do not deploy them unchanged as real applications.
 
+### Try the browser composition playground
+
+The [composition playground](composition-playground.html) shares the CLI's
+deterministic intent planner and canonical renderer. Choose a SaaS or CRM
+preset, change the selected requirements and theme, then preview in a
+sandbox and download project JSON or a portable HTML/CSS ZIP. This browser
+experiment performs structural planning and rendering only; it does not
+run the Python preflight or release-pinned markup validator. Use the offline
+generation command for validated artifacts and the reproducible demo command
+for packages containing validation evidence.
+
 ---
 
 ## Source: docs/editor-integration.md

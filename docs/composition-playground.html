@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Choose structured interface requirements and generate a portable Syntyr HTML scaffold locally.">
+  <title>Composition playground — SYNTYR CSS</title>
+  <link rel="stylesheet" href="../dist/syntyr.all.css">
+  <link rel="stylesheet" href="docs.css">
+  <link rel="stylesheet" href="composition-playground.css">
+  <script type="module" src="composition-playground.mjs"></script>
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <div class="syn-shell">
+    <header class="syn-header">
+      <a class="syn-logo" href="index.html">SYNTYR / COMPOSE</a>
+      <nav class="syn-nav" aria-label="Composition navigation"><a href="page-builder.html">Visual builder</a><a href="agent-integration.html">Agent guide</a><a href="products.html">Products</a></nav>
+    </header>
+    <main>
+      <section class="syn-stage">
+        <p class="syn-eyebrow">SOURCE CANDIDATE / LOCAL AUTHORING</p>
+        <h1 class="syn-title">Compose an interface.</h1>
+        <p class="syn-lede">Choose requirements. Preview real canonical HTML. Download the editable project or a portable HTML/CSS ZIP.</p>
+        <p>Browser preview uses the shared deterministic composer, not the offline Python preflight or markup validator. These are sample interfaces, not working applications. No account or AI service required.</p>
+      </section>
+      <div class="composition-layout">
+        <section class="syn-panel composition-controls" aria-labelledby="requirements-heading">
+          <h2 id="requirements-heading" class="syn-heading">Requirements</h2>
+          <div class="syn-actions">
+            <button type="button" class="syn-button" data-preset="saas" disabled>SaaS landing</button>
+            <button type="button" class="syn-button" data-preset="crm" disabled>CRM dashboard</button>
+          </div>
+          <label class="syn-label" for="composition-title">Page title</label>
+          <input class="syn-input" id="composition-title" maxlength="120" value="SaaS landing page">
+          <label class="syn-label" for="composition-theme">Theme</label>
+          <select class="syn-select" id="composition-theme">
+            <option>studio</option><option>noir</option><option>corporate</option><option>grid</option><option>minimal</option><option>terminal</option><option>industrial</option><option>auto</option>
+          </select>
+          <fieldset id="composition-intents" disabled><legend>Select requirements</legend></fieldset>
+          <button type="button" class="syn-button syn-button--primary" id="composition-generate" disabled>Generate interface</button>
+          <p role="status" id="composition-status">Loading candidate sections…</p>
+          <h3 class="syn-heading">Host implementation requirements</h3>
+          <ul id="composition-obligations"></ul>
+        </section>
+        <section class="syn-panel composition-output" aria-labelledby="preview-heading">
+          <h2 class="syn-heading" id="preview-heading">Interface preview</h2>
+          <p class="syn-caption">Links and form submissions disabled in the preview. Native controls remain available.</p>
+          <iframe id="composition-preview" title="Sandboxed generated interface" sandbox="allow-same-origin" referrerpolicy="no-referrer"></iframe>
+          <div class="syn-actions">
+            <button type="button" class="syn-button" id="composition-json" disabled>Download project JSON</button>
+            <button type="button" class="syn-button" id="composition-zip" disabled>Download HTML/CSS ZIP</button>
+          </div>
+          <p class="syn-caption">Review sample data and routes before publishing. For full release-pinned validation, use the offline CLI in the agent guide.</p>
+        </section>
+      </div>
+      <noscript><p>Preview and export need authoring JavaScript. Generated pages do not. See the <a href="agent-integration.html">offline generation guide</a>.</p></noscript>
+    </main>
+  </div>
+</body>
+</html>
