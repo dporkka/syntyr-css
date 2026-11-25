@@ -208,7 +208,7 @@ Control and navigation text uses `--syn-font-ui`. Display headings use
 `--syn-font-display`, while code and CLI regions retain `--syn-mono`.
 Grid and Terminal choose monospace UI explicitly; Studio is the implicit default; light themes and Noir use
 system sans-serif controls. Replace the font variables if a product has its
-own typeface, without introducing required external fonts.
+own typeface, without introducing required external fonts. For a proportional UI in Grid or Terminal, opt in with `data-syn-typography="application"` on the theme root or a descendant. Display and technical code fonts remain unchanged. An explicit nested theme establishes its own font defaults; apply the profile there if desired.
 
 The `--syn-surface-recessed`, `--syn-surface-raised`, and
 `--syn-border-subtle` tokens derive from the active theme palette and
@@ -233,7 +233,7 @@ Both use local fonts and static CSS without runtime dependencies.
 
 ## Semantic roles, states, and content rhythm
 
-Use `.syn-display` (also available as `.syn-title`), `.syn-section-heading` for section titles, `.syn-heading` for card headings,
+Use `.syn-display` (also available as `.syn-title`) for marketing display text, `.syn-page-title` for application page titles, `.syn-section-heading` for section titles, and `.syn-card-heading` for compact application cards. The existing `.syn-heading` retains its original sizing. Override `--syn-type-page-title` and `--syn-type-card-heading` for the new roles. Other roles include
 `.syn-body`, `.syn-text-support`, and the opt-in `.syn-prose` content
 container. Typography roles inherit theme fonts and allow applications to
 override type scale without rewriting individual component selectors.

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Customize Syntyr CSS themes and design tokens for SaaS dashboards, accessible business applications, and futuristic interfaces.">
-  <meta name="syntyr-source-sha256" content="3e0f7673ae35bfe75204e1dfc4c5e06f1ff6abc52296e7fdcb051fb9f70034b4">
+  <meta name="syntyr-source-sha256" content="6d2fb8f7d8f7fb1044cc4289407522fa57b049dcbd5a3bdf474f915572b6101f">
   <meta name="theme-color" content="#f5f7fb">
   <title>Syntyr theme customization — copy, override, ship — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/theme-customization">
@@ -267,7 +267,7 @@ themes, native form controls, and contrast in both OS preference modes.</p>
 <code>--syn-font-display</code>, while code and CLI regions retain <code>--syn-mono</code>.
 Grid and Terminal choose monospace UI explicitly; Studio is the implicit default; light themes and Noir use
 system sans-serif controls. Replace the font variables if a product has its
-own typeface, without introducing required external fonts.</p>
+own typeface, without introducing required external fonts. For a proportional UI in Grid or Terminal, opt in with <code>data-syn-typography=&quot;application&quot;</code> on the theme root or a descendant. Display and technical code fonts remain unchanged. An explicit nested theme establishes its own font defaults; apply the profile there if desired.</p>
 <p>The <code>--syn-surface-recessed</code>, <code>--syn-surface-raised</code>, and
 <code>--syn-border-subtle</code> tokens derive from the active theme palette and
 recompute in nested themed regions. Strong borders remain available for
@@ -284,7 +284,7 @@ For an optional editorial hero, combine <code>syn-site-heading--editorial</code>
 <code>syntyr.recipes.css</code> with <code>syn-gradient-wash</code> from <code>syntyr.effects.css</code>.
 Both use local fonts and static CSS without runtime dependencies.</p>
 <h2 id="semantic-roles-states-and-content-rhythm">Semantic roles, states, and content rhythm</h2>
-<p>Use <code>.syn-display</code> (also available as <code>.syn-title</code>), <code>.syn-section-heading</code> for section titles, <code>.syn-heading</code> for card headings,
+<p>Use <code>.syn-display</code> (also available as <code>.syn-title</code>) for marketing display text, <code>.syn-page-title</code> for application page titles, <code>.syn-section-heading</code> for section titles, and <code>.syn-card-heading</code> for compact application cards. The existing <code>.syn-heading</code> retains its original sizing. Override <code>--syn-type-page-title</code> and <code>--syn-type-card-heading</code> for the new roles. Other roles include
 <code>.syn-body</code>, <code>.syn-text-support</code>, and the opt-in <code>.syn-prose</code> content
 container. Typography roles inherit theme fonts and allow applications to
 override type scale without rewriting individual component selectors.</p>

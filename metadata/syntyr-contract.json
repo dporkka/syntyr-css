@@ -673,6 +673,22 @@
       ]
     },
     {
+      "name": "syn-card-heading",
+      "module": "components/typography.css",
+      "description": "Compact application card heading independent of marketing display typography.",
+      "stylesheets": [
+        "components/typography.css",
+        "presets/cinematic.css",
+        "presets/minimal.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.core.css",
+        "syntyr.css",
+        "syntyr.embed.css",
+        "syntyr.semantic-bundle.css"
+      ]
+    },
+    {
       "name": "syn-cell--nowrap",
       "module": "components/data.css",
       "description": "Nowrap appearance variant of the cell component; see components/data.css for styles.",
@@ -3233,6 +3249,22 @@
       "description": "Page link presentation in the components/patterns.css module; use semantic HTML and consult its component example.",
       "stylesheets": [
         "components/patterns.css",
+        "presets/cinematic.css",
+        "presets/minimal.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.core.css",
+        "syntyr.css",
+        "syntyr.embed.css",
+        "syntyr.semantic-bundle.css"
+      ]
+    },
+    {
+      "name": "syn-page-title",
+      "module": "components/typography.css",
+      "description": "Application page title with responsive UI typography; use a semantic heading.",
+      "stylesheets": [
+        "components/typography.css",
         "presets/cinematic.css",
         "presets/minimal.css",
         "presets/saas.css",
@@ -6851,6 +6883,22 @@
       ]
     },
     {
+      "name": "--syn-type-card-heading",
+      "module": "tokens.css",
+      "description": "Typography scale role type card heading; use consistently within the theme.",
+      "stylesheets": [
+        "components/tokens.css",
+        "presets/cinematic.css",
+        "presets/minimal.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.core.css",
+        "syntyr.css",
+        "syntyr.embed.css",
+        "syntyr.semantic-bundle.css"
+      ]
+    },
+    {
       "name": "--syn-type-display",
       "module": "tokens.css",
       "description": "Large display typography size role for emphasized headings.",
@@ -6891,6 +6939,22 @@
         "presets/saas.css",
         "syntyr.all.css",
         "syntyr.recipes.css"
+      ]
+    },
+    {
+      "name": "--syn-type-page-title",
+      "module": "tokens.css",
+      "description": "Typography scale role type page title; use consistently within the theme.",
+      "stylesheets": [
+        "components/tokens.css",
+        "presets/cinematic.css",
+        "presets/minimal.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.core.css",
+        "syntyr.css",
+        "syntyr.embed.css",
+        "syntyr.semantic-bundle.css"
       ]
     },
     {
@@ -7026,6 +7090,9 @@
       "quiet",
       "standard",
       "cinematic"
+    ],
+    "data-syn-typography": [
+      "application"
     ],
     "data-syn-density": [
       "compact",

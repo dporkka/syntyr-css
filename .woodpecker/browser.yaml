@@ -24,5 +24,8 @@ steps:
       - python3 tests/playground_browser.py chromium
       - python3 tests/playground_browser.py firefox
       - python3 tests/playground_browser.py webkit
+      - python3 tests/application_typography_browser.py chromium
+      - python3 tests/application_typography_browser.py firefox
+      - python3 tests/application_typography_browser.py webkit
       - python3 scripts/build_cloudflare_site.py
       - python3 tests/security_headers_browser.py --browsers chromium firefox webkit
