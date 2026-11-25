@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Syntyr works with ChatGPT, Codex, Claude Code, Cursor and other agents that generate HTML or framework markup. No Syntyr-specific service, account, MCP…">
-  <meta name="syntyr-source-sha256" content="7ebf868015db58727052e38c53ac78acf4a70951e28c754e19435f85c5e41d17">
+  <meta name="syntyr-source-sha256" content="15e39641ba7847f1923315839e6aec9e67f9779220765758f68d06ab0e12f13e">
   <meta name="theme-color" content="#f5f7fb">
   <title>Using Syntyr with coding agents — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/agent-integration">
@@ -216,6 +216,12 @@ experiment performs structural planning and rendering only; it does not
 run the Python preflight or release-pinned markup validator. Use the offline
 generation command for validated artifacts and the reproducible demo command
 for packages containing validation evidence.</p>
+<p>The playground also links to three prevalidated downloadable source-candidate
+demos. These are generated with the offline command, not browser exports.
+When updating the candidate or canonical renderer, regenerate the three
+archives under <code>docs/demos/</code> with <code>scripts/build_generation_demo.py</code> and verify
+their contents using <code>tests/test_generation_demo.py</code>. The static site build
+only copies the explicitly reviewed ZIP files; Node is not required to publish.</p>
         </article>
         <aside class="docs-article-sidebar">
           <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>

@@ -34,3 +34,16 @@ class GenerationDemoTests(unittest.TestCase):
     def test_unknown_demo_rejected(self):
         with self.assertRaises(ValueError):
             build_demo("../escape")
+
+
+    def test_public_demo_packages_match_current_generation(self):
+        from scripts.build_cloudflare_site import source_files
+        files = source_files()
+        for name in DEMOS:
+            with self.subTest(name=name):
+                path = "docs/demos/" + name + ".zip"
+                self.assertIn(path, files)
+                with ZipFile(io.BytesIO(files[path])) as published, ZipFile(io.BytesIO(build_demo(name))) as expected:
+                    self.assertEqual(sorted(published.namelist()), sorted(expected.namelist()))
+                    for member in expected.namelist():
+                        self.assertEqual(published.read(member), expected.read(member), member)

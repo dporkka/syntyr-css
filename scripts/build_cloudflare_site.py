@@ -433,6 +433,8 @@ def source_files(site_url: str = SITE_URL, *, include_cloudflare_headers: bool =
     paths.extend(ROOT / "docs/vendor" / name for name in
                  ("htmx-2.0.11.min.js", "htmx-LICENSE.txt"))
     paths.extend(ROOT / "docs" / name for name in PUBLIC_DOCS)
+    # Fixed MIT-owned validated demo archives; build stays Python-only.
+    paths.extend(ROOT / "docs/demos" / (name + ".zip") for name in ("saas", "crm", "native"))
     paths.extend(ROOT / "docs" / (name.removesuffix(".md") + ".html")
                  for name in PUBLIC_DOCS if name.endswith(".md"))
     paths.append(ROOT / "docs/reference.html")

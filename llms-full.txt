@@ -6652,6 +6652,13 @@ run the Python preflight or release-pinned markup validator. Use the offline
 generation command for validated artifacts and the reproducible demo command
 for packages containing validation evidence.
 
+The playground also links to three prevalidated downloadable source-candidate
+demos. These are generated with the offline command, not browser exports.
+When updating the candidate or canonical renderer, regenerate the three
+archives under `docs/demos/` with `scripts/build_generation_demo.py` and verify
+their contents using `tests/test_generation_demo.py`. The static site build
+only copies the explicitly reviewed ZIP files; Node is not required to publish.
+
 ---
 
 ## Source: docs/editor-integration.md

@@ -62,6 +62,14 @@ def main():
                         with page.expect_download() as download:
                             page.get_by_role("button", name="Download project JSON").click()
                         assert len(json.loads(Path(download.value.path()).read_text())["blocks"]) == 4
+                        with page.expect_download() as demo:
+                            page.get_by_role("link", name="Download CRM ZIP").click()
+                        with ZipFile(demo.value.path()) as archive:
+                            assert archive.testzip() is None
+                            report = json.loads(archive.read("validation.json"))
+                            assert report["status"] == "generated"
+                            assert not report["validation"]["diagnostics"]
+                        assert page.get_by_role("link", name="Ask about a private preview").get_attribute("href").startswith("mailto:")
                         page.locator("#composition-title").fill("Modified")
                         assert page.locator("#composition-zip").is_disabled()
                         assert page.evaluate("document.documentElement.scrollWidth<=innerWidth")
