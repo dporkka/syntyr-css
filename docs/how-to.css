@@ -1,5 +1,9 @@
 /* Docs-only How-To index; not part of the Syntyr CSS distribution. */
 @layer docs {
+  @media (max-width: 45rem) {
+    .docs-header { flex-wrap: wrap; }
+    .docs-header .syn-nav { flex-wrap: wrap; min-width: 0; }
+  }
   .howto-controls { display: grid; gap: .5rem; max-width: 38rem; margin-block: 1.5rem .8rem; }
   .howto-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); gap: 1.25rem; margin-block: 1rem 3rem; }
   .howto-card { display: grid; align-content: start; gap: .9rem; min-width: 0; }

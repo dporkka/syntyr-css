@@ -64,3 +64,29 @@ Playwright environment, compare all six PNGs, and commit them. Screenshots
 are environment-sensitive (browser/font revisions); a 2% pixel tolerance is
 not a substitute for manual accessibility, zoom, WebKit and Firefox coverage.
 The test is not a mandatory consumer or release dependency.
+
+## Canonical responsive preset snapshots
+
+The existing preset visual runner also accepts `--canonical` to exercise
+three presets across the six standard viewport dimensions (18 captures).
+The legacy baseline set remains separate. Generate new snapshots only for
+intentional, reviewed changes:
+
+```sh
+python tests/preset_visual_browser.py --canonical --update-baselines
+python tests/preset_visual_browser.py --canonical
+```
+
+Use an identical Chromium version, operating system and font configuration
+for baseline generation and comparison. These opt-in snapshots are not a
+cross-platform release certification.
+
+To audit every published page at the six canonical widths and heights and
+retain individual pass/fail/blocked results:
+
+```sh
+python tests/published_reflow_browser.py --browsers chromium --canonical-only --report /tmp/syntyr-responsive.json
+```
+
+A nonzero exit indicates a failure or blocked browser. The report is a local
+test artifact, not part of the public site or CSS distribution.
