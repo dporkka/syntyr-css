@@ -206,6 +206,10 @@
           "description": "Secondary caption text for supporting context."
         },
         {
+          "name": "syn-card-heading",
+          "description": "Compact application card heading independent of marketing display typography."
+        },
+        {
           "name": "syn-cell--nowrap",
           "description": "Nowrap appearance variant of the cell component; see components/data.css for styles."
         },
@@ -1122,6 +1126,10 @@
           "description": "Page link presentation in the components/patterns.css module; use semantic HTML and consult its component example."
         },
         {
+          "name": "syn-page-title",
+          "description": "Application page title with responsive UI typography; use a semantic heading."
+        },
+        {
           "name": "syn-pagination",
           "description": "Pagination link and control presentation; host performs page changes."
         },
@@ -1737,6 +1745,15 @@
         },
         {
           "name": "cinematic"
+        }
+      ]
+    },
+    {
+      "name": "data-syn-typography",
+      "description": "Optional proportional application UI typography; preserves display and code fonts.",
+      "values": [
+        {
+          "name": "application"
         }
       ]
     },

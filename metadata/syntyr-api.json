@@ -252,6 +252,11 @@
       "description": "Secondary caption text for supporting context."
     },
     {
+      "name": "syn-card-heading",
+      "module": "components/typography.css",
+      "description": "Compact application card heading independent of marketing display typography."
+    },
+    {
       "name": "syn-cell--nowrap",
       "module": "components/data.css",
       "description": "Nowrap appearance variant of the cell component; see components/data.css for styles."
@@ -1395,6 +1400,11 @@
       "name": "syn-page-link",
       "module": "components/patterns.css",
       "description": "Page link presentation in the components/patterns.css module; use semantic HTML and consult its component example."
+    },
+    {
+      "name": "syn-page-title",
+      "module": "components/typography.css",
+      "description": "Application page title with responsive UI typography; use a semantic heading."
     },
     {
       "name": "syn-pagination",
@@ -2814,6 +2824,11 @@
       "description": "Body typography size role; override consistently across components."
     },
     {
+      "name": "--syn-type-card-heading",
+      "module": "tokens.css",
+      "description": "Typography scale role type card heading; use consistently within the theme."
+    },
+    {
       "name": "--syn-type-display",
       "module": "tokens.css",
       "description": "Large display typography size role for emphasized headings."
@@ -2827,6 +2842,11 @@
       "name": "--syn-type-lede",
       "module": "recipes.css",
       "description": "Typography scale role type lede; use consistently within the theme."
+    },
+    {
+      "name": "--syn-type-page-title",
+      "module": "tokens.css",
+      "description": "Typography scale role type page title; use consistently within the theme."
     },
     {
       "name": "--syn-type-section",

@@ -562,6 +562,10 @@
       "description": "Body typography size role; override consistently across components."
     },
     {
+      "name": "--syn-type-card-heading",
+      "description": "Typography scale role type card heading; use consistently within the theme."
+    },
+    {
       "name": "--syn-type-display",
       "description": "Large display typography size role for emphasized headings."
     },
@@ -572,6 +576,10 @@
     {
       "name": "--syn-type-lede",
       "description": "Typography scale role type lede; use consistently within the theme."
+    },
+    {
+      "name": "--syn-type-page-title",
+      "description": "Typography scale role type page title; use consistently within the theme."
     },
     {
       "name": "--syn-type-section",
