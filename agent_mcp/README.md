@@ -104,3 +104,22 @@ uv run --no-project --with 'mcp>=2,<3' python -m unittest discover -s tests -q
 ```
 
 No MCP dependency is added to `package.json` or to browser-facing assets.
+
+### Browser evidence for interaction contracts
+
+The candidate interaction contracts describe obligations, not certified behavior.
+Maintainers can trace them to existing real browser fixtures without duplicating
+the interaction implementation:
+
+```sh
+python3 scripts/check_interaction_conformance.py --list
+# Optional tooling: install the pinned Python Playwright and its browsers.
+# Install the locked headless React example dependencies with npm ci.
+python3 scripts/check_interaction_conformance.py
+# Or select particular contracts:
+python3 scripts/check_interaction_conformance.py dialog disclosure
+```
+
+Native dialog/disclosure and dropdown scenarios exercise real browser controls;
+combobox and sortable-table scenarios exercise the optional React Aria example.
+Results apply to these fixtures only, not all host implementations.
