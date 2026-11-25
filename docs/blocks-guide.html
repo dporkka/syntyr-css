@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Status: Experimental alpha.5 source gallery, not an immutable release or published npm package.">
-  <meta name="syntyr-source-sha256" content="d031b64cc967b5ecd7f273573bd25c28e3445694b1cee24ecbabb5609b459a7f">
+  <meta name="syntyr-source-sha256" content="11aed6048a55dc98c5117986831f75b493d6a31a6977c40118324b9ff2f202a1">
   <meta name="theme-color" content="#f5f7fb">
   <title>Syntyr Blocks &amp; Assets — integration guide — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/blocks-guide">
@@ -36,17 +36,17 @@
         <article class="docs-prose" aria-label="Syntyr Blocks &amp; Assets — integration guide">
 <h1 id="syntyr-blocks-assets-integration-guide">Syntyr Blocks &amp; Assets — integration guide</h1>
 <p><strong>Status:</strong> Experimental alpha.5 source gallery, not an immutable release or published npm package.</p>
-<p><a href="blocks.html">Browse 99 blocks</a> | <a href="catalog.html">Component catalog</a> | <a href="theme-customization.html">Themes</a> | <a href="accessibility.html">Accessibility</a></p>
+<p><a href="blocks.html">Browse 102 blocks</a> | <a href="catalog.html">Component catalog</a> | <a href="theme-customization.html">Themes</a> | <a href="accessibility.html">Accessibility</a></p>
 <h2 id="contract">Contract</h2>
-<p>The 99 copy-owned HTML compositions cover marketing, application, services, portfolio, editorial, navigation, publishing, commerce, company and technical use
+<p>The 102 copy-owned HTML compositions cover marketing, application, services, portfolio, editorial, navigation, publishing, commerce, company and technical use
 cases. Each contains its own Syntyr root, uses accessible native markup and requires
 no application JavaScript. The data, testimonials and prices are illustrative, not live.</p>
 <p>The gallery script powers optional documentation search, theme switching and copy
-buttons. Disable JavaScript and all 99 static previews remain visible, with
+buttons. Disable JavaScript and all 102 static previews remain visible, with
 selectable source under native disclosure elements. No scripts are included in
 application CSS; the added gallery rules remain CSS-only.</p>
 <h2 id="safe-local-registry-installation-experimental-alpha5-source">Safe local registry installation (experimental alpha.5 source)</h2>
-<p>The static <a href="../registry/registry.json">universal registry</a> contains the 99 MIT
+<p>The static <a href="../registry/registry.json">universal registry</a> contains the 102 MIT
 HTML blocks and nine CSS module entries. Every item includes its exact
 source-tree version, SHA-256 content hashes, declared CSS dependencies, files,
 and destination paths. This is <strong>not</strong> a published immutable alpha.5 release.</p>
@@ -281,7 +281,7 @@ No premium Tailwind, commercial UI kit or third-party icon artwork has been
 copied into the public project. The separate private Console Kit is unaffected.</p>
 <h2 id="experimental-shadcn-universal-item-registry">Experimental shadcn universal-item registry</h2>
 <p>The source candidate can generate a <strong>copy-owned, framework-independent</strong>
-shadcn-compatible universal-item registry from the same 99 MIT blocks and
+shadcn-compatible universal-item registry from the same 102 MIT blocks and
 checked-in CSS distributions. It neither replaces nor duplicates the native
 block installer from PR #104. Universal files use explicit project-relative
 targets, so no React, Tailwind, or Syntyr runtime JavaScript is required.</p>
@@ -306,6 +306,8 @@ never reads private Console Kit assets or executes downloaded code. No dynamic
 service, telemetry, npm dependency, or customer license is introduced.
 Published alpha.4 assets remain immutable; registry payloads declare their
 source-candidate Syntyr version and must not be confused with a tagged release.</p>
+<h3 id="agent-interface-blocks">Agent interface blocks</h3>
+<p>The three additional core-only blocks cover conversation, tool evidence and disabled approval previews. They are static examples, not a model runtime or an authorization mechanism. See <a href="agent-integration.html">agent integration</a>.</p>
         </article>
         <aside class="docs-article-sidebar">
           <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
@@ -325,6 +327,7 @@ source-candidate Syntyr version and must not be confused with a tagged release.<
 <a class="docs-article-toc-link docs-article-toc-2" href="#source-build-and-maintenance">Source, build and maintenance</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#accessibility-fidelity-and-licensing">Accessibility, fidelity and licensing</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#experimental-shadcn-universal-item-registry">Experimental shadcn universal-item registry</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#agent-interface-blocks">Agent interface blocks</a>
           </nav>
           <details class="docs-article-toc-mobile">
             <summary>On this page <span>Jump to section</span></summary>
@@ -345,6 +348,7 @@ source-candidate Syntyr version and must not be confused with a tagged release.<
 <a class="docs-article-toc-link docs-article-toc-2" href="#source-build-and-maintenance">Source, build and maintenance</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#accessibility-fidelity-and-licensing">Accessibility, fidelity and licensing</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#experimental-shadcn-universal-item-registry">Experimental shadcn universal-item registry</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#agent-interface-blocks">Agent interface blocks</a>
             </nav>
           </details>
         </aside>

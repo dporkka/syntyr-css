@@ -1528,5 +1528,38 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "kind": "block",
     "category": "Commerce",
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
+  },
+  {
+    "id": "block-ai-conversation",
+    "title": "Agent conversation",
+    "module": "syntyr.core.css",
+    "description": "Illustrative conversation with visible author labels and timestamps.",
+    "html": "\u003csection class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-agent-conversation\">\n  \u003cdiv class=\"syn-panel syn-stack\">\n    \u003ch2 class=\"syn-heading\" id=\"syn-agent-conversation\">Conversation\u003c/h2>\n    \u003carticle class=\"syn-panel\">\n      \u003cheader class=\"syn-inline\">\u003cstrong>You\u003c/strong>\u003ctime class=\"syn-muted\" datetime=\"2026-11-25T12:00:00Z\">12:00 UTC\u003c/time>\u003c/header>\n      \u003cp>Prepare a draft campaign proposal.\u003c/p>\n    \u003c/article>\n    \u003carticle class=\"syn-panel\">\n      \u003cheader class=\"syn-inline\">\u003cstrong>Assistant\u003c/strong>\u003ctime class=\"syn-muted\" datetime=\"2026-11-25T12:01:00Z\">12:01 UTC\u003c/time>\u003c/header>\n      \u003cp>The draft is ready for your review.\u003c/p>\n    \u003c/article>\n    \u003cp class=\"syn-muted\">Illustrative messages; the host owns persistence and streaming.\u003c/p>\n  \u003c/div>\n\u003c/section>",
+    "keywords": "Agent conversation Illustrative conversation with visible author labels and timestamps. ai agent conversation chat",
+    "kind": "block",
+    "category": "Applications",
+    "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
+  },
+  {
+    "id": "block-ai-tool-run",
+    "title": "Agent tool evidence",
+    "module": "syntyr.core.css",
+    "description": "Read-only tool status and native disclosure of illustrative structured results.",
+    "html": "\u003csection class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-agent-tool\">\n  \u003cdiv class=\"syn-panel syn-stack\">\n    \u003ch2 class=\"syn-heading\" id=\"syn-agent-tool\">Tool evidence\u003c/h2>\n    \u003cp>\u003cspan class=\"syn-status\">Completed\u003c/span> Inventory lookup (illustrative result)\u003c/p>\n    \u003cdetails>\n      \u003csummary>View structured result\u003c/summary>\n      \u003cpre class=\"syn-code-scroll\">\u003ccode>{ \"available_units\": 4, \"draft_total_usd\": 40000 }\u003c/code>\u003c/pre>\n    \u003c/details>\n    \u003cp class=\"syn-muted\">Display escaped host-supplied evidence; this block never executes tools.\u003c/p>\n  \u003c/div>\n\u003c/section>",
+    "keywords": "Agent tool evidence Read-only tool status and native disclosure of illustrative structured results. ai agent tool evidence",
+    "kind": "block",
+    "category": "Applications",
+    "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
+  },
+  {
+    "id": "block-ai-approval",
+    "title": "Agent approval preview",
+    "module": "syntyr.core.css",
+    "description": "Explicit action review with disabled decisions until the host implements authorized handling.",
+    "html": "\u003csection class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-agent-approval\">\n  \u003cdiv class=\"syn-panel syn-stack\">\n    \u003ch2 class=\"syn-heading\" id=\"syn-agent-approval\">Review proposed action\u003c/h2>\n    \u003cp>\u003cspan class=\"syn-status syn-status--warning\">Awaiting approval\u003c/span>\u003c/p>\n    \u003cp>Send the draft campaign proposal to the selected customer?\u003c/p>\n    \u003cdiv class=\"syn-inline\">\n      \u003cbutton class=\"syn-button syn-button--primary\" type=\"button\" disabled>Approve\u003c/button>\n      \u003cbutton class=\"syn-button syn-button--outline\" type=\"button\" disabled>Reject\u003c/button>\n    \u003c/div>\n    \u003cp class=\"syn-muted\">Preview only. Enable decisions only through authenticated, authorized, CSRF-protected, audited host handlers.\u003c/p>\n  \u003c/div>\n\u003c/section>",
+    "keywords": "Agent approval preview Explicit action review with disabled decisions until the host implements authorized handling. ai agent approval review",
+    "kind": "block",
+    "category": "Applications",
+    "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   }
 ];
