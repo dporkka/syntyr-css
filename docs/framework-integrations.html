@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Integrate Syntyr CSS with server-rendered HTML, HTMX, LiveView, Livewire, and frontend frameworks without requiring client-side JavaScript.">
-  <meta name="syntyr-source-sha256" content="666b88024c86a5c4383d11858f3946b68673e5edd4e5711bdc4fdf0b8ff99b95">
+  <meta name="syntyr-source-sha256" content="5cb931bace8c808e0feb843765c73df0d404ce75ba5ed88350f61ca7390daa5e">
   <meta name="theme-color" content="#f5f7fb">
   <title>Syntyr CSS integration guide: server-rendered HTML and frontend stacks — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/framework-integrations">
@@ -38,6 +38,144 @@
 <p>Syntyr is a <strong>CSS presentation layer</strong>, not a state manager, request client, or component runtime.
 It has no JavaScript initialization, no required build tool, and no runtime dependency.
 Every example uses the same <code>syn-</code> classes, CSS tokens and standard HTML.</p>
+<h2 id="compatibility-matrix-and-evidence">Compatibility matrix and evidence</h2>
+<p>Syntyr is compatible with HTML renderers by architecture, not by a blanket
+promise about every framework version or browser. Use the following routes
+and evidence levels when choosing an integration.</p>
+<p><strong>Published alpha.4:</strong> pin the <a href="distribution.html">immutable CSS release</a>.
+<strong>Unreleased alpha.5:</strong> the fixtures and optional adapters below use the
+source candidate unless explicitly stated otherwise. Do not copy new classes
+or modules into an alpha.4 app. No framework or browser support floor has
+been approved for alpha.5; see <a href="launch-status.html">release readiness</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Integration</th>
+<th>Adoption route</th>
+<th>Evidence available</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Plain HTML / server templates</td>
+<td>Self-host pinned core CSS, scoped root</td>
+<td>Published alpha.4 quickstart; alpha.5 browser sample below</td>
+</tr>
+<tr>
+<td>React / Vite and Next.js</td>
+<td>Global CSS import, native JSX; optional typed wrappers</td>
+<td><a href="https://github.com/dporkka/syntyr-css/blob/main/docs/node-react-next-integration.md">Source consumer fixtures</a>, optional build/browser tests</td>
+</tr>
+<tr>
+<td>Preact and Solid</td>
+<td>JSX/TSX with explicit classes</td>
+<td><a href="https://github.com/dporkka/syntyr-css/blob/main/docs/jsx-tsx-integration.md">Source consumer fixtures</a>, optional build/browser tests</td>
+</tr>
+<tr>
+<td>Astro, Eleventy, Hugo</td>
+<td>Static output and copied or imported CSS</td>
+<td><a href="https://github.com/dporkka/syntyr-css/blob/main/docs/adoption-starters.md">Runnable source fixtures</a>; generator-specific deployment checks</td>
+</tr>
+<tr>
+<td>Svelte / SvelteKit</td>
+<td>Global CSS, native actions, optional enhancement</td>
+<td><a href="https://github.com/dporkka/syntyr-css/tree/main/examples/sveltekit">SvelteKit source app</a>; build and action tests</td>
+</tr>
+<tr>
+<td>Go / templ, Rust / Axum, Node / Express</td>
+<td>Static CSS and server-owned rendering</td>
+<td><a href="https://github.com/dporkka/syntyr-css/tree/main/examples/go-htmx">Go HTMX</a>, <a href="rust-saas-integration.html">Rust Axum</a>, <a href="https://github.com/dporkka/syntyr-css/blob/main/docs/node-react-next-integration.md">Node</a> source examples</td>
+</tr>
+<tr>
+<td>HTMX, Datastar, Turbo, Unpoly, Lit</td>
+<td>Stable theme root, host-managed interactions</td>
+<td><a href="interaction-recipes.html">Interaction recipes</a> and source behavior fixtures</td>
+</tr>
+<tr>
+<td>Tailwind v4, shadcn/ui, Radix</td>
+<td>Opt-in scoped token bridges; keep host behavior</td>
+<td><a href="https://github.com/dporkka/syntyr-css/blob/main/docs/adoption-starters.md">Ecosystem fixtures</a>; test actual host cascade</td>
+</tr>
+<tr>
+<td>Vue / Nuxt, Rails, Laravel, Django, Phoenix, Spring, ASP.NET</td>
+<td>Native HTML/template classes; host-owned behavior</td>
+<td>Integration guidance, not an independently verified framework-version guarantee</td>
+</tr>
+<tr>
+<td>WordPress, Shopify, Webflow, Wix and other builders</td>
+<td>Scoped HTML/CSS embed; alpha.5 embed entrypoint where available</td>
+<td><a href="site-builders.html">Platform-specific guidance</a>; verify editor and host constraints</td>
+</tr>
+<tr>
+<td>React Native, Flutter, SwiftUI, Compose</td>
+<td>Portable literal tokens, not browser CSS</td>
+<td><a href="mobile-frameworks.html">Token adapters and limitations</a>; no native component compatibility claim</td>
+</tr>
+<tr>
+<td>Electron, Tauri, Capacitor</td>
+<td>HTML/CSS in a WebView</td>
+<td>Browser-level route only; test the actual embedded engine</td>
+</tr>
+</tbody>
+</table>
+<p>A fixture existing in the repository does not mean its latest dependency
+versions have been built, its package tarball consumed, or its accessibility
+review completed. The <a href="package-managers.html">package-manager guide</a> separates
+archive verification from consumer installation.</p>
+<h3 id="focused-browser-evidence-november-25-2026">Focused browser evidence (November 25, 2026)</h3>
+<p>The following is a historical, <strong>unreleased alpha.5</strong> source sample at
+<a href="https://github.com/dporkka/syntyr-css/commit/45c86cf58bd0fb1decaaf391ba4dba69b00cefc8">45c86cf58bd0fb1decaaf391ba4dba69b00cefc8</a>.
+Playwright 1.65.2 ran on x86-64 Linux with glibc 2.43, headless.
+Three existing pages (console, native elements, semantic starter) were
+checked at 320, 390 and 1280 CSS-pixel widths with the existing
+<code>tests/browser_matrix.py</code> assertions.</p>
+<table>
+<thead>
+<tr>
+<th>Engine</th>
+<th>Observed browser version</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Chromium</td>
+<td>159.0.8154.6</td>
+<td>9/9 focused cases passed</td>
+</tr>
+<tr>
+<td>Firefox</td>
+<td>159.0</td>
+<td>9/9 focused cases passed</td>
+</tr>
+<tr>
+<td>WebKit</td>
+<td>Not obtained</td>
+<td>Blocked: browser launch failed; zero cases executed</td>
+</tr>
+</tbody>
+</table>
+<p>This is a sample of 18 passing automated cases, not the full site/browser
+matrix. It does not establish support for physical Android/iOS devices,
+Safari, Chrome or Edge product versions, actual browser zoom, screen readers,
+OS forced colors or WCAG conformance. WebKit is unverified, not a passing or
+failing Syntyr layout result. The independently approved browser matrix
+and manual review remain open.</p>
+<p>To reproduce the broader automated matrix from a checked-out revision with
+the required Playwright engines and native libraries installed:</p>
+<pre tabindex="0"><code class="language-sh">python3 tests/browser_matrix.py --browsers chromium firefox webkit
+</code></pre>
+<p>For the focused historical sample, call the same <code>assert_page</code> function
+from that script for <code>examples/console.html</code>, <code>examples/native-elements.html</code>
+and <code>examples/semantic-starter.html</code> at widths 320, 390 and 1280 (height 820,
+reduced motion). Record the exact commit, engine versions, case counts and
+blocked engines. Do not infer current support from historical test results.</p>
+<p><strong>Framework package evidence gap:</strong> independent offline install attempts
+using the packed alpha.5 CSS and the Preact/Vite, Tailwind and Astro source
+fixtures were blocked at dependency resolution (missing third-party npm
+cache entries). No framework build passed or failed in those attempts.
+Resolve toolchain and dependency availability, then test actual installed
+tarballs in clean consumer apps before upgrading evidence claims.</p>
 <h2 id="copy-a-catalog-example-into-your-stack">Copy a catalog example into your stack</h2>
 <p>The <a href="catalog.html">49-example component catalog</a> has a <strong>Copy HTML</strong> action for
 snippets and an optional <strong>Copy full page</strong> action that includes the
@@ -635,6 +773,8 @@ and unnecessary hydration. Measure actual page LCP, CLS and INP.</li>
         </article>
         <aside class="docs-article-sidebar">
           <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+<a class="docs-article-toc-link docs-article-toc-2" href="#compatibility-matrix-and-evidence">Compatibility matrix and evidence</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#focused-browser-evidence-november-25-2026">Focused browser evidence (November 25, 2026)</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#copy-a-catalog-example-into-your-stack">Copy a catalog example into your stack</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#plain-html-or-server-rendered-partial">Plain HTML or server-rendered partial</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#react-nextjs-jsx">React / Next.js JSX</a>
@@ -666,6 +806,8 @@ and unnecessary hydration. Measure actual page LCP, CLS and INP.</li>
           <details class="docs-article-toc-mobile">
             <summary>On this page <span>Jump to section</span></summary>
             <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#compatibility-matrix-and-evidence">Compatibility matrix and evidence</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#focused-browser-evidence-november-25-2026">Focused browser evidence (November 25, 2026)</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#copy-a-catalog-example-into-your-stack">Copy a catalog example into your stack</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#plain-html-or-server-rendered-partial">Plain HTML or server-rendered partial</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#react-nextjs-jsx">React / Next.js JSX</a>

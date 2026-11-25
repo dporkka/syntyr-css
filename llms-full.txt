@@ -3565,6 +3565,80 @@ Syntyr is a **CSS presentation layer**, not a state manager, request client, or 
 It has no JavaScript initialization, no required build tool, and no runtime dependency.
 Every example uses the same `syn-` classes, CSS tokens and standard HTML.
 
+## Compatibility matrix and evidence
+
+Syntyr is compatible with HTML renderers by architecture, not by a blanket
+promise about every framework version or browser. Use the following routes
+and evidence levels when choosing an integration.
+
+**Published alpha.4:** pin the [immutable CSS release](distribution.md).
+**Unreleased alpha.5:** the fixtures and optional adapters below use the
+source candidate unless explicitly stated otherwise. Do not copy new classes
+or modules into an alpha.4 app. No framework or browser support floor has
+been approved for alpha.5; see [release readiness](launch-status.md).
+
+| Integration | Adoption route | Evidence available |
+| --- | --- | --- |
+| Plain HTML / server templates | Self-host pinned core CSS, scoped root | Published alpha.4 quickstart; alpha.5 browser sample below |
+| React / Vite and Next.js | Global CSS import, native JSX; optional typed wrappers | [Source consumer fixtures](node-react-next-integration.md), optional build/browser tests |
+| Preact and Solid | JSX/TSX with explicit classes | [Source consumer fixtures](jsx-tsx-integration.md), optional build/browser tests |
+| Astro, Eleventy, Hugo | Static output and copied or imported CSS | [Runnable source fixtures](adoption-starters.md); generator-specific deployment checks |
+| Svelte / SvelteKit | Global CSS, native actions, optional enhancement | [SvelteKit source app](https://github.com/dporkka/syntyr-css/tree/main/examples/sveltekit); build and action tests |
+| Go / templ, Rust / Axum, Node / Express | Static CSS and server-owned rendering | [Go HTMX](https://github.com/dporkka/syntyr-css/tree/main/examples/go-htmx), [Rust Axum](rust-saas-integration.md), [Node](node-react-next-integration.md) source examples |
+| HTMX, Datastar, Turbo, Unpoly, Lit | Stable theme root, host-managed interactions | [Interaction recipes](interaction-recipes.md) and source behavior fixtures |
+| Tailwind v4, shadcn/ui, Radix | Opt-in scoped token bridges; keep host behavior | [Ecosystem fixtures](adoption-starters.md); test actual host cascade |
+| Vue / Nuxt, Rails, Laravel, Django, Phoenix, Spring, ASP.NET | Native HTML/template classes; host-owned behavior | Integration guidance, not an independently verified framework-version guarantee |
+| WordPress, Shopify, Webflow, Wix and other builders | Scoped HTML/CSS embed; alpha.5 embed entrypoint where available | [Platform-specific guidance](site-builders.md); verify editor and host constraints |
+| React Native, Flutter, SwiftUI, Compose | Portable literal tokens, not browser CSS | [Token adapters and limitations](mobile-frameworks.md); no native component compatibility claim |
+| Electron, Tauri, Capacitor | HTML/CSS in a WebView | Browser-level route only; test the actual embedded engine |
+
+A fixture existing in the repository does not mean its latest dependency
+versions have been built, its package tarball consumed, or its accessibility
+review completed. The [package-manager guide](package-managers.md) separates
+archive verification from consumer installation.
+
+### Focused browser evidence (November 25, 2026)
+
+The following is a historical, **unreleased alpha.5** source sample at
+[45c86cf58bd0fb1decaaf391ba4dba69b00cefc8](https://github.com/dporkka/syntyr-css/commit/45c86cf58bd0fb1decaaf391ba4dba69b00cefc8).
+Playwright 1.65.2 ran on x86-64 Linux with glibc 2.43, headless.
+Three existing pages (console, native elements, semantic starter) were
+checked at 320, 390 and 1280 CSS-pixel widths with the existing
+`tests/browser_matrix.py` assertions.
+
+| Engine | Observed browser version | Result |
+| --- | --- | --- |
+| Chromium | 159.0.8154.6 | 9/9 focused cases passed |
+| Firefox | 159.0 | 9/9 focused cases passed |
+| WebKit | Not obtained | Blocked: browser launch failed; zero cases executed |
+
+This is a sample of 18 passing automated cases, not the full site/browser
+matrix. It does not establish support for physical Android/iOS devices,
+Safari, Chrome or Edge product versions, actual browser zoom, screen readers,
+OS forced colors or WCAG conformance. WebKit is unverified, not a passing or
+failing Syntyr layout result. The independently approved browser matrix
+and manual review remain open.
+
+To reproduce the broader automated matrix from a checked-out revision with
+the required Playwright engines and native libraries installed:
+
+```sh
+python3 tests/browser_matrix.py --browsers chromium firefox webkit
+```
+
+For the focused historical sample, call the same `assert_page` function
+from that script for `examples/console.html`, `examples/native-elements.html`
+and `examples/semantic-starter.html` at widths 320, 390 and 1280 (height 820,
+reduced motion). Record the exact commit, engine versions, case counts and
+blocked engines. Do not infer current support from historical test results.
+
+**Framework package evidence gap:** independent offline install attempts
+using the packed alpha.5 CSS and the Preact/Vite, Tailwind and Astro source
+fixtures were blocked at dependency resolution (missing third-party npm
+cache entries). No framework build passed or failed in those attempts.
+Resolve toolchain and dependency availability, then test actual installed
+tarballs in clean consumer apps before upgrading evidence claims.
+
 ## Copy a catalog example into your stack
 
 The [49-example component catalog](catalog.html) has a **Copy HTML** action for
