@@ -126,3 +126,52 @@ python3 scripts/check_interaction_conformance.py dialog disclosure
 Native dialog/disclosure and dropdown scenarios exercise real browser controls;
 combobox and sortable-table scenarios exercise the optional React Aria example.
 Results apply to these fixtures only, not all host implementations.
+
+
+### Discover runnable interaction recipes
+
+Call `get_interaction_contracts` for anatomy, state and ownership obligations,
+then `get_interaction_recipes(contract="combobox", release="0.3.0-alpha.5")`
+for source and test references. Omit the contract filter to list all eight
+candidate recipes. Each relationship explicitly distinguishes an implementation,
+an alternative, a fallback, or an example; an empty link list means no matching
+contract exists yet. In particular, a native select is a fallback for a searchable
+combobox, not a searchable combobox implementation.
+
+Recipe `stylesheets` identifiers are accepted by `validate_markup`. The
+original `css` paths remain source references. Discovery never runs the tests,
+executes interactions, or certifies accessibility. The published alpha.4 release
+does not expose candidate recipes.
+
+
+### Preflight a candidate composition
+
+The read-only `validate_composition` tool checks a declared assembly of
+canonical section IDs and separate interaction requirements. It reuses the
+section composer and interaction recipe catalogs rather than defining new HTML.
+
+```json
+{
+  "section_ids": ["hero-product"],
+  "interactions": [
+    {
+      "contract": "combobox",
+      "recipe": "react-aria-combobox",
+      "relationship": "implementation",
+      "intentions": ["filter", "select"],
+      "state_hooks": ["aria-expanded"]
+    }
+  ],
+  "stylesheets": ["syntyr.core.css", "syntyr.recipes.css", "headless/interactions.css"],
+  "runtime_policy": "host-enabled",
+  "release": "0.3.0-alpha.5"
+}
+```
+
+The default `scriptless` policy rejects headless recipes but permits server
+behavior; `host-enabled` permits optional host-side controllers. Required
+stylesheet IDs are exact catalog identifiers, not a bundle coverage analysis.
+Alternatives, examples and fallbacks cannot claim the original contract's
+intentions or state hooks. Results describe the declared plan only, not a
+rendered document, actual widget state values, a security policy, or WCAG
+certification. The tool never installs, renders or executes anything.

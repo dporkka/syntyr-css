@@ -51,6 +51,21 @@ def get_interaction_contracts(name: str = "", release: str = PUBLISHED) -> dict[
 
 
 @server.tool(annotations=READ_ONLY, structured_output=True)
+def get_interaction_recipes(contract: str = "", release: str = PUBLISHED) -> dict[str, Any]:
+    """Discover candidate-only implementation, alternative and fallback recipe references."""
+    return checked(catalog.get_interaction_recipes, contract, release)
+
+
+@server.tool(annotations=READ_ONLY, structured_output=True)
+def validate_composition(section_ids: list[str], interactions: list[dict[str, Any]],
+                         stylesheets: list[str], runtime_policy: str = "scriptless",
+                         release: str = PUBLISHED) -> dict[str, Any]:
+    """Preflight candidate section IDs, declared interaction requirements and CSS modules."""
+    return checked(catalog.validate_composition, section_ids, interactions, stylesheets,
+                   runtime_policy, release)
+
+
+@server.tool(annotations=READ_ONLY, structured_output=True)
 def lookup_api(name: str, release: str = PUBLISHED) -> dict[str, Any]:
     """Look up a concrete syn-* class or --syn-* token in the chosen release."""
     return checked(catalog.lookup_api, name, release)

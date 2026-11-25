@@ -172,6 +172,143 @@ class SyntyrCatalog:
         return {**base, "schema_version": manifest["schema_version"],
                 "contracts": contracts, "note": manifest["note"]}
 
+    def get_interaction_recipes(self, contract: str = "", release: str = PUBLISHED):
+        """Discover runnable recipe references, not executable actions or test results."""
+        contracts = self.get_interaction_contracts(contract, release)
+        selected = {item["id"] for item in contracts["contracts"]}
+        all_ids = {item["id"] for item in self.get_interaction_contracts("", release)["contracts"]}
+        manifest = json.loads((self.root / "metadata/interaction-recipes.json").read_text(encoding="utf-8"))
+        if (manifest["schema_version"] != 1 or manifest["source_version"] != release
+                or manifest["release_status"] != "unreleased-source-candidate"):
+            raise RuntimeError("Interaction recipe metadata version needs review")
+        # A recipe may be a fallback or an alternative, not a conforming implementation.
+        links = {
+            "native-select": [("combobox", "fallback")],
+            "native-popover": [("dropdown", "implementation")],
+            "native-modal-dialog": [("dialog", "implementation"), ("disclosure", "example")],
+            "native-table": [("sortable-table", "fallback")],
+            "radix-menu": [("dropdown", "alternative")],
+            "react-aria-combobox": [("combobox", "implementation")],
+            "react-aria-sortable-grid": [("sortable-table", "implementation")],
+            "radix-toast": [],
+        }
+        recipes = manifest["recipes"]
+        if len(recipes) != len(links) or {item["id"] for item in recipes} != set(links):
+            raise RuntimeError("Interaction recipe links need review")
+        if {name for pairs in links.values() for name, _ in pairs} != all_ids:
+            raise RuntimeError("Interaction contract links need review")
+        known = self._catalog(release)["files"]
+        result = []
+        for item in recipes:
+            relations = links[item["id"]]
+            if contract.strip() and not any(name in selected for name, _ in relations):
+                continue
+            stylesheets = sorted({path.removeprefix("dist/").removeprefix("integrations/")
+                                  for path in item["css"]})
+            if not set(stylesheets) <= set(known):
+                raise RuntimeError(f"Recipe stylesheet inventory needs review: {item['id']}")
+            result.append({**item, "stylesheets": stylesheets,
+                           "contract_links": [{"id": name, "relationship": relation}
+                                              for name, relation in relations]})
+        return {**self._release(release), "schema_version": manifest["schema_version"],
+                "recipes": result,
+                "note": "Recipe and test source references, not runtime actions, test results or accessibility certification."}
+
+    def validate_composition(self, section_ids: list[str], interactions: list[dict],
+                             stylesheets: list[str], runtime_policy: str = "scriptless",
+                             release: str = PUBLISHED):
+        """Preflight a declared candidate plan; does not render, execute or certify."""
+        base = self._release(release)
+        if release != CANDIDATE:
+            raise CatalogError("Composition preflight requires the source candidate")
+        if runtime_policy not in ("scriptless", "host-enabled"):
+            raise CatalogError("Unknown runtime policy; choose scriptless or host-enabled")
+
+        def strings(value, label, limit=100):
+            if (not isinstance(value, list) or len(value) > limit
+                    or not all(isinstance(v, str) and 0 < len(v) <= 128 for v in value)):
+                raise CatalogError(f"{label} must be a bounded list of identifiers")
+            return value
+
+        strings(section_ids, "section_ids")
+        strings(stylesheets, "stylesheets")
+        known = set(self._catalog(release)["files"])
+        if set(stylesheets) - known:
+            raise CatalogError("Unknown stylesheet(s): " + ", ".join(sorted(set(stylesheets) - known)))
+        if not isinstance(interactions, list) or len(interactions) > 100:
+            raise CatalogError("interactions must be a bounded list of declarations")
+        if not section_ids and not interactions:
+            raise CatalogError("Composition requires at least one section or interaction")
+        for entry in interactions:
+            if (not isinstance(entry, dict)
+                    or not {"contract", "recipe", "relationship"} <= entry.keys()
+                    or entry.keys() - {"contract", "recipe", "relationship", "intentions", "state_hooks"}):
+                raise CatalogError("Invalid interaction declaration fields")
+            strings([entry["contract"], entry["recipe"], entry["relationship"]], "interaction identifiers")
+            if entry["relationship"] not in ("implementation", "alternative", "fallback", "example"):
+                raise CatalogError("Unknown recipe relationship")
+            strings(entry.get("intentions", []), "intentions", 40)
+            strings(entry.get("state_hooks", []), "state_hooks", 40)
+
+        manifest = json.loads((self.root / "metadata/section-composer.v1.json").read_text(encoding="utf-8"))
+        if (manifest["schema_version"] != 1 or manifest["source_version"] != release
+                or manifest["runtime_requirement"] != "none"):
+            raise RuntimeError("Section composer metadata needs review")
+        sections = {item["id"]: item for item in manifest["sections"]}
+        contracts = {item["id"]: item for item in self.get_interaction_contracts("", release)["contracts"]}
+        recipes = {item["id"]: item for item in self.get_interaction_recipes("", release)["recipes"]}
+        required = set()
+        diagnostics = []
+
+        def issue(code, field, value):
+            diagnostics.append({"code": code, "field": field, "value": value})
+
+        for i, ident in enumerate(section_ids):
+            if ident not in sections:
+                issue("unknown-section", f"section_ids[{i}]", ident)
+            else:
+                required.update(sections[ident]["required_stylesheets"])
+
+        for i, entry in enumerate(interactions):
+            field = f"interactions[{i}]"
+            contract = contracts.get(entry["contract"])
+            recipe = recipes.get(entry["recipe"])
+            if contract is None:
+                issue("unknown-contract", field + ".contract", entry["contract"])
+            if recipe is None:
+                issue("unknown-recipe", field + ".recipe", entry["recipe"])
+            if contract is None or recipe is None:
+                continue
+            relation = {"id": contract["id"], "relationship": entry["relationship"]}
+            if relation not in recipe["contract_links"]:
+                issue("recipe-relationship-mismatch", field + ".relationship", entry["relationship"])
+            required.update(recipe["stylesheets"])
+            if runtime_policy == "scriptless" and recipe["kind"] != "native":
+                issue("host-recipe-not-allowed", field + ".recipe", recipe["id"])
+            intentions = entry.get("intentions", [])
+            hooks = entry.get("state_hooks", [])
+            if entry["relationship"] == "implementation":
+                required.update(contract["stylesheets"])
+                for intent in sorted(set(intentions) - set(contract["intentions"])):
+                    issue("unknown-intention", field + ".intentions", intent)
+                for hook in sorted(set(hooks) - set(contract["state_hooks"])):
+                    issue("unknown-state-hook", field + ".state_hooks", hook)
+            elif intentions or hooks:
+                issue("unverified-interaction-claims", field, recipe["id"])
+
+        if required - known:
+            raise RuntimeError("Composition stylesheet inventory needs review")
+        missing = sorted(required - set(stylesheets))
+        for css in missing:
+            issue("missing-stylesheet", "stylesheets", css)
+        return {**base, "valid": not diagnostics, "runtime_policy": runtime_policy,
+                "section_ids": list(section_ids), "required_stylesheets": sorted(required),
+                "missing_stylesheets": missing, "diagnostics": diagnostics,
+                "note": ("Declared plan only. Stylesheet requirements are exact catalog identifiers, "
+                         "not inferred bundle coverage. Scriptless excludes headless recipes, "
+                         "not server behavior. Does not inspect rendered HTML, validate live state "
+                         "values, execute interactions, or certify accessibility.")}
+
     def lookup_api(self, name: str, release: str = PUBLISHED):
         base = self._release(release)
         kind = "class" if name.startswith("syn-") else "token" if name.startswith("--syn-") else None
