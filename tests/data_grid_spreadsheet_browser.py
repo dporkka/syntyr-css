@@ -21,7 +21,16 @@ try {
   const check = (condition, label) => { if (!condition) throw Error(label); };
   check(getComputedStyle(header).position === 'sticky', 'header sticky');
   check(getComputedStyle(cell).position === 'sticky', 'cell sticky');
-  check(getComputedStyle(cell).backgroundColor !== 'rgba(0, 0, 0, 0)', 'opaque cell');
+  const opaque = item => {
+    const color = getComputedStyle(item).backgroundColor;
+    return /^rgb\(/.test(color) || /^rgba\([^,]+,[^,]+,[^,]+,\s*1\)$/.test(color);
+  };
+  check(opaque(cell), 'opaque cell');
+  for (const state of ['data-syn-range', 'data-syn-selected', 'data-syn-focused']) {
+    cell.setAttribute(state, 'true');
+    check(opaque(cell), 'opaque pinned ' + state);
+    cell.removeAttribute(state);
+  }
   check(getComputedStyle(conflict).borderBlockEndStyle === 'dashed', 'conflict marker');
   check(getComputedStyle(range).backgroundColor !== 'rgba(0, 0, 0, 0)', 'range background');
   for (const direction of ['ltr', 'rtl']) {

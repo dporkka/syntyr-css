@@ -137,6 +137,14 @@ class DataGridContract(unittest.TestCase):
         self.assertIn('data-syn-range="true"', example)
         self.assertIn('data-syn-conflict="true"', example)
 
+    def test_reference_search_indexes_spreadsheet_topics(self):
+        import re
+        html = (ROOT / "docs/reference.html").read_text()
+        entry = re.search(r'data-doc-search="data-grid ([^"]+)"', html)
+        self.assertIsNotNone(entry)
+        self.assertIn("range selection", entry.group(1).lower())
+        self.assertIn("conflict", entry.group(1).lower())
+
     def test_static_html_example_is_self_contained(self):
         example = (ROOT / "examples/data-grid.html").read_text()
         self.assertIn("syntyr.data-grid.css", example)
