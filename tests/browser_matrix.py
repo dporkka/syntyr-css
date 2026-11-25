@@ -140,12 +140,21 @@ def assert_page(browser, name: str, viewport: int) -> None:
         cards = page.locator(".catalog-card")
         total = cards.count()
         assert total >= 8, total
+        release = page.locator("#catalog-release-filter")
+        assert release.input_value() == "published-alpha4"
+        covered = page.locator('.catalog-card[data-catalog-alpha4="true"]').count()
+        assert 0 < covered < total, (covered, total)
+        assert page.locator('.catalog-card:visible').count() == covered
+        assert page.locator('.catalog-card[data-catalog-alpha4="false"]:visible').count() == 0
+        release.select_option("source-alpha5")
         assert all(cards.nth(i).is_visible() for i in range(total))
         search = page.get_by_role("searchbox", name="Find a component")
         assert search.is_visible()
         search.fill("buttons")
-        assert page.locator(".catalog-card:visible").count() == 1, "search must hide unmatched cards"
-        assert f"Showing 1 of {total}" in page.locator("#catalog-results").inner_text()
+        matches = page.locator(".catalog-card:visible").count()
+        assert 0 < matches < total, "search must hide unmatched cards"
+        assert page.locator('.catalog-card[aria-labelledby="catalog-buttons-title"]').is_visible()
+        assert f"Showing {matches} of {total}" in page.locator("#catalog-results").inner_text()
         search.fill("no-matching-syntyr-component-123456")
         assert page.locator(".catalog-card:visible").count() == 0
         assert page.locator("#catalog-empty").is_visible()
@@ -158,10 +167,10 @@ def assert_page(browser, name: str, viewport: int) -> None:
             # Clipboard permission handling is async; await the observable live
             # region update rather than asserting synchronously after a click.
             page.wait_for_function("""() => {
-                const message = document.getElementById('catalog-results')?.textContent || '';
+                const message = document.getElementById('catalog-feedback')?.textContent || '';
                 return message.includes('HTML copied.') || message.includes('HTML selected.');
             }""", timeout=3000)
-            status = page.locator("#catalog-results").inner_text()
+            status = page.locator("#catalog-feedback").inner_text()
             assert ("HTML copied." in status or "HTML selected." in status), status
             # Without documentation JavaScript, actual components and HTML source
             # must still be usable; do not ship a JS-only catalog by accident.
