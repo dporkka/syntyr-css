@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agent workflow and human approval — Syntyr</title>
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <main class="syn-shell syn-stack">
+    <h1>Review proposed campaign</h1>
+    <p class="syn-muted">Illustrative preview: no tools execute and decisions are disabled. The application must implement the POST endpoint, session authorization, CSRF validation, and audit logging.</p>
+
+    <section class="syn-panel syn-stack"
+             aria-labelledby="agent-run-title">
+      <header class="syn-inline">
+        <h2 id="agent-run-title">Campaign proposal · run 42</h2>
+        <span class="syn-status syn-status--warning">Awaiting your approval</span>
+      </header>
+      <p>Prepare a draft campaign proposal using authorized inventory data. No proposal will be sent without approval.</p>
+
+      <section class="syn-panel syn-stack" aria-labelledby="agent-conversation-title">
+        <h3 id="agent-conversation-title">Conversation</h3>
+        <div class="syn-stack">
+          <article class="syn-panel">
+            <header class="syn-inline"><strong>You</strong><time class="syn-muted" datetime="2026-11-25T12:00:00Z">12:00 UTC</time></header>
+            <p>Prepare a proposal for the available campaign inventory.</p>
+          </article>
+          <article class="syn-panel">
+            <header class="syn-inline"><strong>Assistant</strong><time class="syn-muted" datetime="2026-11-25T12:01:00Z">12:01 UTC</time></header>
+            <p>I prepared a draft for review. Sending requires your decision.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="syn-panel syn-stack" aria-labelledby="agent-tool-title">
+        <h3 id="agent-tool-title">Tool evidence</h3>
+        <p><span class="syn-status">Completed</span> Inventory lookup (illustrative result)</p>
+        <details>
+          <summary>View structured result</summary>
+          <pre class="syn-code-scroll"><code>{ "available_units": 4, "draft_total_usd": 40000 }</code></pre>
+        </details>
+      </section>
+
+      <ol class="syn-steps syn-steps--vertical" role="list" aria-label="Agent plan and progress">
+        <li class="syn-step" data-syn-state="complete">
+          <div><strong class="syn-step-label">Find available inventory</strong>
+            <p class="syn-step-detail">Completed · checked against availability records</p></div>
+        </li>
+        <li class="syn-step" data-syn-state="complete">
+          <div><strong class="syn-step-label">Calculate draft budget</strong>
+            <p class="syn-step-detail">Completed · draft total $40,000, pending your review</p></div>
+        </li>
+        <li class="syn-step" aria-current="step">
+          <div><strong class="syn-step-label">Request permission to send</strong>
+            <p class="syn-step-detail">Awaiting approval · no external message has been sent</p></div>
+        </li>
+        <li class="syn-step">
+          <div><strong class="syn-step-label">Send proposal and record receipt</strong>
+            <p class="syn-step-detail">Pending · requires an authorized decision</p></div>
+        </li>
+      </ol>
+
+      <section class="syn-panel syn-stack" aria-labelledby="agent-approval-title">
+        <h3 id="agent-approval-title">Review required before sending</h3>
+        <p id="agent-approval-impact">Proposed action: send the $40,000 draft to the selected customer.
+           This is an external communication; verify the recipient and inventory first.</p>
+        <!-- The host must substitute a real token and bind the run/action to this user's authorization. -->
+        <form method="post" action="/agent-runs/run-42/decisions"
+              aria-describedby="agent-approval-impact">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+          <div class="syn-inline">
+            <button class="syn-button syn-button--primary" type="submit"
+                    name="decision" value="approve" disabled>Approve sending</button>
+            <button class="syn-button syn-button--outline" type="submit"
+                    name="decision" value="reject" disabled>Reject proposal</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="syn-panel syn-stack" aria-labelledby="agent-outcome-title">
+        <h3 id="agent-outcome-title">Outcome</h3>
+        <p>No action taken. Once processed, the application should display the
+          authoritative result, evidence and audit record here.</p>
+      </section>
+    </section>
+  </main>
+</body>
+</html>
