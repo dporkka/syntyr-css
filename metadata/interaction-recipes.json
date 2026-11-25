@@ -1,0 +1,190 @@
+{
+  "schema_version": 1,
+  "source_version": "0.3.0-alpha.5",
+  "release_status": "unreleased-source-candidate",
+  "recipes": [
+    {
+      "id": "native-select",
+      "title": "Native single select and form submission",
+      "kind": "native",
+      "use_when": "Choose from a short fixed list without search or custom option content.",
+      "behavior_owner": "Browser controls; host receives and validates GET parameters",
+      "source": "examples/semantic-starter.html",
+      "docs": "docs/progressive-enhancement.md",
+      "css": [
+        "dist/syntyr.semantic-bundle.css"
+      ],
+      "source_markers": [
+        "<select id=\"style\"",
+        "<form action=\"?\" method=\"get\""
+      ],
+      "test_file": "tests/interaction_recipe_browser.py",
+      "test_markers": [
+        "def check_native_select("
+      ],
+      "keyboard": "Native Tab, arrow keys, typeahead and form submission",
+      "fallback": "Keep the labeled native select; enhance only if requirements exceed it."
+    },
+    {
+      "id": "native-popover",
+      "title": "Native action popover",
+      "kind": "native",
+      "use_when": "Provide ordinary links or buttons in a lightweight nonmodal overlay.",
+      "behavior_owner": "Browser Popover API, not ARIA menu-item arrow navigation",
+      "source": "examples/native-apis.html",
+      "docs": "docs/native-browser-apis.md",
+      "css": [
+        "dist/syntyr.css",
+        "dist/syntyr.motion.css"
+      ],
+      "source_markers": [
+        "popovertarget=\"native-popover\"",
+        "id=\"native-popover\""
+      ],
+      "test_file": "tests/interaction_recipe_browser.py",
+      "test_markers": [
+        "def check_native_popover("
+      ],
+      "keyboard": "Tab through actual buttons and links; Escape dismisses",
+      "fallback": "Keep essential actions accessible through regular links or forms."
+    },
+    {
+      "id": "native-modal-dialog",
+      "title": "Native modal dialog with disclosure fallback",
+      "kind": "native",
+      "use_when": "Require a short modal confirmation or preview on browsers supporting invoker commands.",
+      "behavior_owner": "Browser dialog modal and focus behavior; application still owns side effects",
+      "source": "examples/native-apis.html",
+      "docs": "docs/native-browser-apis.md",
+      "css": [
+        "dist/syntyr.css",
+        "dist/syntyr.motion.css"
+      ],
+      "source_markers": [
+        "command=\"show-modal\"",
+        "<dialog id=\"native-dialog\"",
+        "<details class=\"syn-details\""
+      ],
+      "test_file": "tests/interaction_recipe_browser.py",
+      "test_markers": [
+        "def check_native_dialog_fallback("
+      ],
+      "keyboard": "Enter opens on supporting browsers, Escape closes, native modal focus management",
+      "fallback": "A real details disclosure in the example remains available if invoker commands fail."
+    },
+    {
+      "id": "native-table",
+      "title": "Semantic table with truthful static sort state",
+      "kind": "native",
+      "use_when": "Read data or display a server-sorted snapshot without interactive grid editing.",
+      "behavior_owner": "Browser table semantics; server must implement and validate real sorting",
+      "source": "examples/data-tables.html",
+      "docs": "docs/data-tables.md",
+      "css": [
+        "dist/syntyr.core.css"
+      ],
+      "source_markers": [
+        "aria-sort=\"ascending\"",
+        "<table class=\"syn-table"
+      ],
+      "test_file": "tests/interaction_recipe_browser.py",
+      "test_markers": [
+        "def check_native_table_snapshot("
+      ],
+      "keyboard": "Tab into the named scroll region; regular links when server sorting is provided",
+      "fallback": "Use actual GET sort links on a server endpoint; never fake interactive sorting with CSS."
+    },
+    {
+      "id": "radix-menu",
+      "title": "Radix menu with real menu keyboard behavior",
+      "kind": "headless",
+      "use_when": "Need ARIA menu semantics, roving focus, arrow navigation and focus restoration.",
+      "behavior_owner": "Radix DropdownMenu; host owns action authorization",
+      "source": "examples/headless-react/src/App.tsx",
+      "docs": "docs/headless-interactions.md",
+      "css": [
+        "dist/syntyr.core.css",
+        "integrations/headless/interactions.css"
+      ],
+      "source_markers": [
+        "DropdownMenu.Root",
+        "syn-menu-surface"
+      ],
+      "test_file": "examples/headless-react/tests/interactions.spec.ts",
+      "test_markers": [
+        "Radix action menu supports keyboard navigation and restores focus"
+      ],
+      "keyboard": "Arrow keys, Enter or Space, Escape and focus restoration",
+      "fallback": "Use native popover with normal links and buttons when menu semantics are unnecessary."
+    },
+    {
+      "id": "react-aria-combobox",
+      "title": "React Aria searchable combobox",
+      "kind": "headless",
+      "use_when": "Need filtered selection, keyboard option navigation and accessible active focus.",
+      "behavior_owner": "React Aria ComboBox; host owns async fetching and persistence",
+      "source": "examples/headless-react/src/App.tsx",
+      "docs": "docs/headless-interactions.md",
+      "css": [
+        "dist/syntyr.core.css",
+        "integrations/headless/interactions.css"
+      ],
+      "source_markers": [
+        "<ComboBox className=\"syn-combobox\"",
+        "<ListBoxItem id=\"digital\""
+      ],
+      "test_file": "examples/headless-react/tests/interactions.spec.ts",
+      "test_markers": [
+        "React Aria combobox filters and selects options via keyboard"
+      ],
+      "keyboard": "Typed filtering, arrow navigation, Enter selection and IME support from library",
+      "fallback": "Use a native select or GET search form if live suggestions are not necessary."
+    },
+    {
+      "id": "react-aria-sortable-grid",
+      "title": "React Aria sortable inventory grid",
+      "kind": "headless",
+      "use_when": "Need real keyboard grid interactions and client-side sortable columns.",
+      "behavior_owner": "React Aria Table for focus and ARIA; application sorts data",
+      "source": "examples/headless-react/src/App.tsx",
+      "docs": "docs/headless-interactions.md",
+      "css": [
+        "dist/syntyr.core.css"
+      ],
+      "source_markers": [
+        "sortDescriptor={sortDescriptor}",
+        "onSortChange={setSortDescriptor}"
+      ],
+      "test_file": "examples/headless-react/tests/interactions.spec.ts",
+      "test_markers": [
+        "React Aria sortable data grid changes DOM order",
+        "sortable data grid works from keyboard"
+      ],
+      "keyboard": "Column-header activation, grid navigation, announced sort state and retained focus",
+      "fallback": "Use a plain table with server-side GET sorting unless grid keyboard behavior is needed."
+    },
+    {
+      "id": "radix-toast",
+      "title": "Radix noncritical notification",
+      "kind": "headless",
+      "use_when": "Show transient noncritical feedback with a tested dismissal lifecycle.",
+      "behavior_owner": "Radix Toast; host owns notification semantics and timing",
+      "source": "examples/headless-react/src/App.tsx",
+      "docs": "docs/headless-interactions.md",
+      "css": [
+        "dist/syntyr.core.css",
+        "integrations/headless/interactions.css"
+      ],
+      "source_markers": [
+        "Toast.Provider",
+        "Toast.Close"
+      ],
+      "test_file": "examples/headless-react/tests/interactions.spec.ts",
+      "test_markers": [
+        "Radix toast can be announced, dismissed and remains nonblocking"
+      ],
+      "keyboard": "Focus, dismiss and nonblocking access provided by the toast primitive",
+      "fallback": "Keep critical or irreversible messages inline or in a real dialog; do not auto-dismiss them."
+    }
+  ]
+}

@@ -310,7 +310,7 @@ PUBLIC_DOCS = (
     "compare-daisyui.md", "compare-pico.md", "compare-native-css.md",
     "distribution.md", "native-patterns.md", "native-workflows.md", "semantic-components.md", "composition-adoption.md", "from-pico.md", "package-managers.md", "docs.css", "guides.html", "how-to.html", "how-to.css", "how-to.js", "starter-wizard.html", "starter-wizard.mjs", "catalog.html", "catalog.css", "catalog.js",
     "blocks.html", "blocks.css", "blocks.js", "blocks-assets.css", "blocks-guide.md", "headless-interactions.md", "framework-integrations.md", "htmx-components.md", "htmx-playground.html", "mobile-frameworks.md",
-    "geometry-terminal.md", "native-browser-apis.md", "dropdowns.md", "radix-integration.md", "visual-intensity.md", "performance-and-polish.md",
+    "geometry-terminal.md", "native-browser-apis.md", "interaction-recipes.md", "dropdowns.md", "radix-integration.md", "visual-intensity.md", "performance-and-polish.md",
     "performance-validation.md", "progressive-enhancement.md", "progressive-loading.md", "live-performance-audit.md",
     "index.html", "design-resources.html", "animation.md", "clipboard.md", "lit-integration.md", "playground.html", "playground.css", "playground.js", "playground-catalog.js", "playground-snippet.js", "playground-editor.js", "playground-editor.licenses.txt", "page-builder-guide.md", "page-builder.html",  "page-builder.css", "page-builder.js", "page-builder-model.mjs", "site-builder-model.mjs", "page-builder-zip.mjs", "page-builder-starters.mjs", "page-builder-site-kits.mjs", "page-builder-section-picker.mjs",
     "form-builder.html", "form-builder.css", "form-builder.js", "form-builder-model.mjs",
@@ -324,6 +324,12 @@ PUBLIC_DOCS = (
 
 def source_files(site_url: str = SITE_URL, *, include_cloudflare_headers: bool = True) -> dict[str, bytes]:
     site_url = validate_site_url(site_url)
+    if __package__:
+        from .build_interaction_catalog import load_catalog, render_catalog
+    else:
+        from build_interaction_catalog import load_catalog, render_catalog
+    if (ROOT / "docs/interaction-recipes.md").read_text(encoding="utf-8") != render_catalog(load_catalog()):
+        raise ValueError("Stale interaction recipe catalog: run scripts/build_interaction_catalog.py")
     # Both galleries are generated from reviewed, MIT-owned source fragments.
     if (ROOT / "docs/blocks.html").read_text(encoding="utf-8") != blocks_gallery():
         raise ValueError("Stale blocks gallery: run scripts/build_blocks.py")
@@ -357,6 +363,7 @@ def source_files(site_url: str = SITE_URL, *, include_cloudflare_headers: bool =
         ROOT / "llms-full.txt",
         ROOT / "metadata/components.json",
         ROOT / "metadata/component-gallery.v1.json",
+        ROOT / "metadata/interaction-recipes.json",
         ROOT / "metadata/catalog-release-compatibility.v1.json",
         ROOT / "metadata/section-composer.v1.json",
         # Public, generated, dependency-free mobile design tokens and copy-owned source.
