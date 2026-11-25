@@ -17,11 +17,13 @@ import unittest
 
 from PIL import Image, ImageChops
 from playwright.sync_api import sync_playwright
+from responsive_viewports import CANONICAL_VIEWPORTS
 
 ROOT = Path(__file__).resolve().parents[1]
 BASELINES = ROOT / 'tests' / 'visual-baselines' / 'presets'
 PRESETS = ('minimal', 'saas', 'cinematic')
-WIDTHS = (390, 1280)
+VIEWPORTS = ((390, 800), (1280, 800))
+CANONICAL = False
 UPDATE = False
 
 
@@ -66,12 +68,12 @@ class PresetVisualRegression(unittest.TestCase):
     def test_each_preset_across_viewports(self):
         with serve() as server:
             for preset in PRESETS:
-                for width in WIDTHS:
-                    with self.subTest(preset=preset, width=width):
-                        self.assert_preview(server, preset, width)
+                for width, height in VIEWPORTS:
+                    with self.subTest(preset=preset, width=width, height=height):
+                        self.assert_preview(server, preset, width, height)
 
-    def assert_preview(self, server, preset, width):
-        page = self.browser.new_page(viewport={'width': width, 'height': 800},
+    def assert_preview(self, server, preset, width, height):
+        page = self.browser.new_page(viewport={'width': width, 'height': height},
                                      device_scale_factor=1, reduced_motion='reduce',
                                      color_scheme='light')
         errors = []
@@ -120,7 +122,8 @@ class PresetVisualRegression(unittest.TestCase):
         page.evaluate('document.fonts.ready')
         screenshot = page.locator('main').screenshot(animations='disabled')
         page.close()
-        output = BASELINES / f'{preset}-{width}.png'
+        output = (BASELINES / 'canonical' / f'{preset}-{width}x{height}.png'
+                  if CANONICAL else BASELINES / f'{preset}-{width}.png')
         if UPDATE:
             output.parent.mkdir(parents=True, exist_ok=True)
             output.write_bytes(screenshot)
@@ -138,6 +141,10 @@ class PresetVisualRegression(unittest.TestCase):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--update-baselines', action='store_true', help='regenerate intentionally and manually review PNGs')
+    parser.add_argument('--canonical', action='store_true', help='compare all six canonical viewport sizes')
     args = parser.parse_args()
     UPDATE = args.update_baselines
+    CANONICAL = args.canonical
+    if CANONICAL:
+        VIEWPORTS = tuple((w, h) for _, w, h in CANONICAL_VIEWPORTS)
     unittest.main(argv=[__file__], verbosity=2)

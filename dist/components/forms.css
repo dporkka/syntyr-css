@@ -2,7 +2,7 @@
   /* All component rules match the root itself or a descendant, never a host sibling. */
   :where(.syn-root, .syn-root *) {
     &.syn-form { display: grid; gap: 1rem; }
-    &.syn-label { display: grid; gap: .35rem; font: 600 var(--syn-type-sm)/1.35 var(--syn-font-ui); }
+    &.syn-label { display: grid; min-inline-size: 0; overflow-wrap: anywhere; gap: .35rem; font: 600 var(--syn-type-sm)/1.35 var(--syn-font-ui); }
     &.syn-input, &.syn-select, &.syn-textarea {
       width: 100%; min-height: var(--syn-control-height); padding: var(--syn-control-padding-block) .8rem;
       border: var(--syn-field-border-width, 1px) solid var(--syn-field-border-color, var(--syn-border-default)); background: var(--syn-field-bg, var(--syn-bg));

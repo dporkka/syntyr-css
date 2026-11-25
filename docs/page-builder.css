@@ -1,6 +1,6 @@
 /* Docs-only builder layout: no CSS or JavaScript added to Syntyr's core. */
-.builder-skip { position: absolute; left: -9999px; top: 0; z-index: 20; }
-.builder-skip:focus { left: .75rem; top: .75rem; }
+.builder-skip { position: absolute; inset-inline-start: .75rem; inset-block-start: -10rem; z-index: 20; }
+.builder-skip:focus { inset-block-start: .75rem; }
 .builder-intro { padding-block: 2rem 1.25rem; }
 .builder-intro .syn-title { max-width: 16ch; }
 .builder-toolbar {

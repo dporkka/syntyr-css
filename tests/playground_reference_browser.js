@@ -64,14 +64,14 @@ const gallery = pathToFileURL(path.join(root, 'docs/catalog.html')).href;
       });
       assert.equal(await page.locator('#playground-panel-radius-value').innerText(), '22px');
       await page.locator('#playground-viewport').selectOption('390');
-      assert.ok(await page.locator('#playground-preview').evaluate(el => el.getBoundingClientRect().width <= 391));
-      await page.locator('#playground-viewport').selectOption('1200');
+      assert.ok(await page.locator('#playground-preview').evaluate(el => el.contentWindow.innerWidth === 390));
+      await page.locator('#playground-viewport').selectOption('1440');
       const dimensions = await page.locator('.playground-canvas').evaluate(canvas => ({
-        frame: canvas.querySelector('#playground-preview').getBoundingClientRect().width,
+        frame: canvas.querySelector('#playground-preview').contentWindow.innerWidth,
         view: canvas.clientWidth,
         scroll: canvas.scrollWidth
       }));
-      assert.ok(Math.abs(dimensions.frame - 1200) < 2, `Desktop preview should be 1200px: ${JSON.stringify(dimensions)}`);
+      assert.ok(dimensions.frame === 1440, `Desktop preview should be 1440px: ${JSON.stringify(dimensions)}`);
       assert.ok(dimensions.scroll > dimensions.view, 'Fixed desktop preview should scroll horizontally');
       await page.locator('#playground-viewport').selectOption('fluid');
       assert.ok(await page.locator('#playground-preview').evaluate(el => el.getBoundingClientRect().width <= el.parentElement.clientWidth));

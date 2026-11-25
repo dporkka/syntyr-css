@@ -425,7 +425,7 @@
     &.syn-eyebrow { font: 700 var(--syn-type-xs)/1.4 var(--syn-font-ui); letter-spacing: .15em; text-transform: uppercase; color: var(--syn-accent); }
     &.syn-title, &.syn-display { font-family: var(--syn-font-display); font-size: var(--syn-type-display); line-height: 1.08; letter-spacing: var(--syn-tracking-display); margin-block: 1rem; max-width: 14ch; text-wrap: balance; }
     &.syn-heading { font-family: var(--syn-font-display); font-size: var(--syn-type-heading); line-height: 1.2; margin-block: .5rem 1rem; }
-    &.syn-section-heading { font: 650 var(--syn-type-section)/1.16 var(--syn-font-display); letter-spacing: -.03em; margin-block: .5rem 1rem; max-inline-size: 32ch; text-wrap: balance; }
+    &.syn-section-heading { overflow-wrap: anywhere; font: 650 var(--syn-type-section)/1.16 var(--syn-font-display); letter-spacing: -.03em; margin-block: .5rem 1rem; max-inline-size: 32ch; text-wrap: balance; }
     &.syn-body { font: 400 var(--syn-type-body)/var(--syn-leading-body) var(--syn-font-ui); }
     &.syn-text-support { font: 400 var(--syn-type-sm)/1.5 var(--syn-font-ui); color: var(--syn-text-subtle); }
     /* Opt-in vertical rhythm; does not alter unwrapped host document styles. */
@@ -518,7 +518,7 @@
   /* All component rules match the root itself or a descendant, never a host sibling. */
   :where(.syn-root, .syn-root *) {
     &.syn-form { display: grid; gap: 1rem; }
-    &.syn-label { display: grid; gap: .35rem; font: 600 var(--syn-type-sm)/1.35 var(--syn-font-ui); }
+    &.syn-label { display: grid; min-inline-size: 0; overflow-wrap: anywhere; gap: .35rem; font: 600 var(--syn-type-sm)/1.35 var(--syn-font-ui); }
     &.syn-input, &.syn-select, &.syn-textarea {
       width: 100%; min-height: var(--syn-control-height); padding: var(--syn-control-padding-block) .8rem;
       border: var(--syn-field-border-width, 1px) solid var(--syn-field-border-color, var(--syn-border-default)); background: var(--syn-field-bg, var(--syn-bg));
@@ -1003,7 +1003,7 @@
     }
     &.syn-stats { display: grid; gap: var(--syn-space-2); grid-template-columns: minmax(0, 1fr); }
     &.syn-stat { padding: var(--syn-space-3); border: 1px solid var(--syn-frame); background: var(--syn-surface); min-width: 0; }
-    &.syn-stat-label { color: var(--syn-muted); font: 650 .8125rem/1.4 var(--syn-mono); letter-spacing: .05em; }
+    &.syn-stat-label { overflow-wrap: anywhere; color: var(--syn-muted); font: 650 .8125rem/1.4 var(--syn-mono); letter-spacing: .05em; }
     &.syn-stat-value { margin: .5rem 0 0; color: var(--syn-text); font: 650 clamp(1.7rem, 4vw, 2.4rem)/1.1 var(--syn-mono); font-variant-numeric: tabular-nums; }
     &.syn-toolbar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--syn-space-2); }
     &.syn-empty { display: grid; justify-items: center; align-content: center; text-align: center; gap: var(--syn-space-2); min-height: 12rem; padding: var(--syn-space-4); border: 1px dashed var(--syn-frame); background: var(--syn-surface); }
@@ -2035,7 +2035,7 @@
       }
     }
     &.syn-record-fields > div:last-child { border-block-end: 0; }
-    &.syn-record-fields dt { color: var(--syn-muted); }
+    &.syn-record-fields dt { min-inline-size: 0; overflow-wrap: anywhere; color: var(--syn-muted); }
     &.syn-record-fields dd { min-inline-size: 0; margin: 0; overflow-wrap: anywhere; }
 
     /* Transaction feedback is presentation only. Hosts supply actual state,
