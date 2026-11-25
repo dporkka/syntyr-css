@@ -6,7 +6,7 @@ The **published immutable release** is v0.3.0-alpha.4 (Grid, Noir, Studio). The 
 
 ## Choose the right representation
 
-For browser readers, use the [human-readable HTML documentation directory](https://syntyr-css.pages.dev/docs/reference.html) and [practical HTML guides](https://syntyr-css.pages.dev/docs/guides.html). For retrieval by coding agents, most technical-guide links below point to public Markdown sources with the same guide content. The design resources directory is a standalone HTML page. All are served directly without user-agent spoofing or a JavaScript requirement.
+For browser readers, use the [human-readable HTML documentation directory](https://syntyr-css.pages.dev/docs/reference.html) and [practical HTML guides](https://syntyr-css.pages.dev/docs/guides.html). The directory includes optional local title, description and heading search, labeled with the current source version; all guides remain browsable without JavaScript. For retrieval by coding agents, most technical-guide links below point to public Markdown sources with the same guide content. The design resources directory is a standalone HTML page. All are served directly without user-agent spoofing or a JavaScript requirement.
 
 ## Start here
 
