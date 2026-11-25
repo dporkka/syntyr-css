@@ -7,11 +7,19 @@ export function inspectText(element) {
   if (!element?.ownerDocument?.createRange) throw new TypeError("Expected a browser Element");
   const range = element.ownerDocument.createRange();
   range.selectNodeContents(element);
-  const tops = new Set(
-    Array.from(range.getClientRects(), rect => Math.round(rect.top * 2) / 2)
-  );
+  // Font fallback may give fragments on one line different top coordinates.
+  // Group overlapping text bands using their midpoints, not exact tops.
+  const bands = [];
+  const fragments = Array.from(range.getClientRects(), rect => ({
+    center: (rect.top + rect.bottom) / 2, height: rect.bottom - rect.top
+  })).filter(rect => rect.height > 0).sort((a, b) => a.center - b.center);
+  for (const fragment of fragments) {
+    const band = bands[bands.length - 1];
+    if (!band || fragment.center - band.center >= Math.min(fragment.height, band.height) / 2)
+      bands.push(fragment);
+  }
   return {
-    actualLines: element.textContent?.length ? tops.size : 0,
+    actualLines: element.textContent?.length ? bands.length : 0,
     height: element.getBoundingClientRect().height,
     overflowInline: element.scrollWidth > element.clientWidth + 1,
     overflowBlock: element.scrollHeight > element.clientHeight + 1
@@ -38,6 +46,10 @@ export function predictWithPretext(element, pretext) {
   if (["balance", "pretty"].includes(style.textWrapStyle) ||
       /\b(balance|pretty)\b/.test(style.textWrap || ""))
     return skip("browser-text-wrap-optimization", measured);
+  if (style.textTransform && style.textTransform !== "none")
+    return skip("unsupported-text-transform", measured);
+  if (style.wordSpacing && style.wordSpacing !== "normal" && Number.parseFloat(style.wordSpacing) !== 0)
+    return skip("unsupported-word-spacing", measured);
   if (style.fontVariationSettings && style.fontVariationSettings !== "normal")
     return skip("font-variation-settings", measured);
   if (style.fontFeatureSettings && style.fontFeatureSettings !== "normal")

@@ -355,8 +355,17 @@ ${snippet.previewStylesheets(selectedModule())}
     pending = false;
     const range = document.createRange();
     range.selectNodeContents(preview);
-    const lineTops = new Set(Array.from(range.getClientRects(), rect => Math.round(rect.top * 2) / 2));
-    const lineCount = preview.textContent ? lineTops.size : 0;
+    // Font fallback can produce multiple fragment tops on the same visual line.
+    const bands = [];
+    const fragments = Array.from(range.getClientRects(), rect => ({
+      center: (rect.top + rect.bottom) / 2, height: rect.bottom - rect.top
+    })).filter(rect => rect.height > 0).sort((a, b) => a.center - b.center);
+    for (const fragment of fragments) {
+      const band = bands[bands.length - 1];
+      if (!band || fragment.center - band.center >= Math.min(fragment.height, band.height) / 2)
+        bands.push(fragment);
+    }
+    const lineCount = preview.textContent ? bands.length : 0;
     const actualWidth = Math.round(preview.getBoundingClientRect().width);
     const actualHeight = Math.round(preview.getBoundingClientRect().height);
     const overflow = preview.scrollWidth > preview.clientWidth + 1 ||

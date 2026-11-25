@@ -11,7 +11,7 @@ const css = {
   fontFeatureSettings: "normal"
 };
 function element(overrides = {}, styles = {}) {
-  const rects = [{top: 2}, {top: 26}];
+  const rects = overrides.rects || [{top: 2, bottom: 18}, {top: 26, bottom: 42}];
   return {
     textContent: "Syntyr a readable label", childElementCount: 0,
     scrollWidth: 216, clientWidth: 216, scrollHeight: 48, clientHeight: 48,
@@ -68,4 +68,24 @@ test("skips normal overflow-wrap for a long identifier", () => {
   });
   assert.equal(result.status, "skipped");
   assert.equal(result.reason, "unsupported-overflow-wrap");
+});
+
+test("groups mixed-font fragments on one visual line without merging adjacent lines", () => {
+  const rects = [{top: 2, bottom: 18}, {top: 4, bottom: 20}, {top: 0, bottom: 22}, {top: 26, bottom: 42}];
+  assert.equal(inspectText(element({rects})).actualLines, 2);
+});
+test("skips CSS text transformation and nondefault word spacing", () => {
+  const pretext = {prepare: () => { throw new Error("must not predict"); }, layout: () => {}};
+  for (const [styles, reason] of [
+    [{textTransform: "uppercase"}, "unsupported-text-transform"],
+    [{wordSpacing: "40px"}, "unsupported-word-spacing"]
+  ]) {
+    const report = predictWithPretext(element({}, styles), pretext);
+    assert.equal(report.status, "skipped");
+    assert.equal(report.reason, reason);
+  }
+});
+test("accepts explicit zero word spacing and untransformed text", () => {
+  const pretext = {prepare: () => "handle", layout: () => ({lineCount: 2, height: 48})};
+  assert.equal(predictWithPretext(element({}, {textTransform: "none", wordSpacing: "0px"}), pretext).status, "measured");
 });

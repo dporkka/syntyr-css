@@ -48,6 +48,9 @@ def verify(browser, viewport):
     page.locator("#type-lab-style").select_option("body")
     page.locator("#type-lab-wrap").select_option("pretty")
     assert page.locator("#type-lab-preview").get_attribute("class") == "syn-body syn-u-text-pretty"
+    page.locator("#type-lab-text").fill("Latin العربية 漢字")
+    page.locator("#type-lab-width").evaluate("e => { e.value = '640'; e.dispatchEvent(new Event('input', {bubbles: true})); }")
+    page.wait_for_function("document.querySelector('#type-lab-report').textContent.startsWith('1 visual line ·')")
     assert page.locator("body").evaluate("e => e.scrollWidth <= window.innerWidth + 1"), "playground overflows"
     # Nested grid items must retain a small min-content contribution even
     # when their headings contain an unbroken identifier.
