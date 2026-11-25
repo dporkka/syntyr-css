@@ -143,7 +143,7 @@ use the release-pinned markup validator and real browser tests before shipping.
 
 The unreleased v0.3.0-alpha.5 source candidate includes an agent workflow
 template and JSON contract. The template follows the
-[workflow operations example](../examples/workflow-operations.html): it uses
+[workflow operations example](https://syntyr-css.pages.dev/examples/workflow-operations.html): it uses
 core steps and status labels for progress, panels for conversation and
 outcomes, native details/summary for escaped tool evidence, and forms for
 decisions. The static preview disables both decision buttons. These resources are

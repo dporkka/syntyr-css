@@ -62,6 +62,22 @@ class PortableReleaseExampleTests(unittest.TestCase):
                 with self.subTest(asset=asset):
                     self.assertTrue((example.parent.parent / asset).is_file())
 
+    def test_agent_workflow_candidate_is_self_contained_in_release_archive(self):
+        with tempfile.TemporaryDirectory(prefix="syntyr-agent-zip-") as tmp:
+            path = Path(tmp) / "release.zip"
+            package(path)
+            version = (ROOT / "VERSION").read_text().strip()
+            prefix = f"syntyr-css-{version}/"
+            with ZipFile(path) as archive:
+                for name in ("examples/agent-workflow.html",
+                             "metadata/agent-workflow.v1.json",
+                             "dist/syntyr.core.css"):
+                    self.assertEqual(archive.read(prefix + name), (ROOT / name).read_bytes())
+                tags = Tags()
+                tags.feed(archive.read(prefix + "examples/agent-workflow.html").decode())
+                self.assertEqual(tags.stylesheets, ["../dist/syntyr.core.css"])
+                self.assertEqual(tags.scripts, [])
+
     def test_example_has_no_external_assets_or_broken_local_navigation(self):
         tags = Tags()
         tags.feed((ROOT / EXAMPLE).read_text(encoding="utf-8"))
