@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 )
 
@@ -88,5 +89,50 @@ func TestCLIPreviewLeavesSourceUnchanged(t *testing.T) {
 	actual, err := os.ReadFile(path)
 	if err != nil || string(actual) != html {
 		t.Fatal("source modified")
+	}
+}
+func TestCLIStrictRecipesReportsViolationsAndFails(t *testing.T) {
+	file := filepath.Join(t.TempDir(), "fragment.html")
+	if err := os.WriteFile(file, []byte(`<div class="syn-app-shell"></div>`), 0600); err != nil {
+		t.Fatal(err)
+	}
+	var out, stderr bytes.Buffer
+	err := run([]string{"--catalog", "../../metadata/components.json", "--strict-recipes", file}, &out, &stderr)
+	if err == nil {
+		t.Fatal("strict mode accepted missing slots")
+	}
+	var report Report
+	if err := json.Unmarshal(out.Bytes(), &report); err != nil {
+		t.Fatalf("strict mode must emit JSON: %v", err)
+	}
+	if len(report.Elements) != 1 || report.Elements[0].Recipes[0].Slots[0].Status != "missing" {
+		t.Fatalf("%+v", report)
+	}
+}
+func TestCLIStrictRecipesAcceptsValidRecipe(t *testing.T) {
+	var out, stderr bytes.Buffer
+	if err := run([]string{"--catalog", "../../metadata/components.json", "--strict-recipes", "../../examples/operations-console.html"}, &out, &stderr); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestCLIStrictRecipesRejectsTruncatedReport(t *testing.T) {
+	var out, stderr bytes.Buffer
+	err := run([]string{"--catalog", "../../metadata/components.json", "--strict-recipes", "--limit", "1", "../../examples/operations-console.html"}, &out, &stderr)
+	if err == nil || out.Len() != 0 {
+		t.Fatal("strict validation must reject output truncation")
+	}
+}
+
+func TestCLIStrictRecipesRejectsPreviewModes(t *testing.T) {
+	for _, args := range [][]string{
+		{"--strict-recipes", "--preview-from", "syn-button--primary", "-"},
+		{"--strict-recipes", "--verify-patches", "[]", "-"},
+	} {
+		var out, stderr bytes.Buffer
+		err := runWithInput(args, bytes.NewBufferString("<button></button>"), &out, &stderr)
+		if err == nil || !strings.Contains(err.Error(), "strict recipe validation") || out.Len() != 0 {
+			t.Fatalf("expected strict flag conflict, got %v", err)
+		}
 	}
 }

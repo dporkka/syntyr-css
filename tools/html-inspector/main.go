@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
 	"flag"
 	"fmt"
 	"io"
@@ -10,6 +11,8 @@ import (
 )
 
 const maxInputBytes = 8 << 20
+
+var errRecipeViolations = errors.New("recipe slot violations found")
 
 func run(args []string, stdout, stderr io.Writer) error {
 	return runWithInput(args, os.Stdin, stdout, stderr)
@@ -19,6 +22,7 @@ func runWithInput(args []string, stdin io.Reader, stdout, stderr io.Writer) erro
 	fs := flag.NewFlagSet("syntyr-html-inspect", flag.ContinueOnError)
 	fs.SetOutput(stderr)
 	catalogPath := fs.String("catalog", "metadata/components.json", "path to Syntyr component catalog")
+	strict := fs.Bool("strict-recipes", false, "fail on reported recipe slot violations after emitting JSON")
 	selector := fs.String("selector", "", "CSS selector (default: elements with syn-* classes)")
 	limit := fs.Int("limit", 0, "maximum returned elements; zero means unlimited")
 	from := fs.String("preview-from", "", "original curated modifier class")
@@ -28,7 +32,7 @@ func runWithInput(args []string, stdin io.Reader, stdout, stderr io.Writer) erro
 	patch := fs.Bool("source-patch", false, "include an exact verified source byte patch in variant preview")
 	verify := fs.String("verify-patches", "", "JSON array of bounded source patch operations for combined DOM proof")
 	fs.Usage = func() {
-		fmt.Fprintln(stderr, "Usage: syntyr-html-inspect [--catalog FILE] [--selector CSS] HTML_FILE|-")
+		fmt.Fprintln(stderr, "Usage: syntyr-html-inspect [--catalog FILE] [--selector CSS] [--strict-recipes] HTML_FILE|-")
 		fs.PrintDefaults()
 	}
 	if err := fs.Parse(args); err != nil {
@@ -36,6 +40,9 @@ func runWithInput(args []string, stdin io.Reader, stdout, stderr io.Writer) erro
 	}
 	if fs.NArg() != 1 {
 		return fmt.Errorf("expected one local HTML file")
+	}
+	if *strict && (*limit != 0 || *patch || *from != "" || *to != "" || *digest != "" || *id != "" || *verify != "") {
+		return fmt.Errorf("strict recipe validation requires unlimited inspection, not preview or verification")
 	}
 	if *limit < 0 {
 		return fmt.Errorf("limit must be nonnegative")
@@ -108,7 +115,21 @@ func runWithInput(args []string, stdin io.Reader, stdout, stderr io.Writer) erro
 	if err != nil {
 		return err
 	}
-	return enc.Encode(report)
+	if err := enc.Encode(report); err != nil {
+		return err
+	}
+	if *strict {
+		for _, element := range report.Elements {
+			for _, recipe := range element.Recipes {
+				for _, slot := range recipe.Slots {
+					if slot.Status != "ok" {
+						return errRecipeViolations
+					}
+				}
+			}
+		}
+	}
+	return nil
 }
 func main() {
 	if err := run(os.Args[1:], os.Stdout, os.Stderr); err != nil {
@@ -116,6 +137,9 @@ func main() {
 			return
 		}
 		fmt.Fprintln(os.Stderr, err)
+		if errors.Is(err, errRecipeViolations) {
+			os.Exit(1)
+		}
 		os.Exit(2)
 	}
 }
