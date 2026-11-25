@@ -80,6 +80,55 @@
     let framePending = false;
   if (!example || !theme || !markup || !preview || !viewport || !radius || !padding || !snippet) return;
 
+  const inspector = byId("playground-inspector");
+  const inspectTarget = byId("playground-inspector-target");
+  const inspectValues = byId("playground-inspector-values");
+  let inspectElements = [];
+  function showComputed() {
+    const element = inspectElements[Number(inspectTarget.value)];
+    if (!element || !element.isConnected || inspectTarget.disabled) {
+      inspectValues.textContent = "No rendered Syntyr element selected.";
+      return;
+    }
+    const style = element.ownerDocument.defaultView.getComputedStyle(element);
+    const properties = ["display", "color", "background-color", "font-size",
+      "font-weight", "line-height", "padding", "gap", "border-radius",
+      "--syn-accent", "--syn-text", "--syn-surface", "--syn-space-2"];
+    inspectValues.textContent = properties.map(name =>
+      name + ": " + (style.getPropertyValue(name).trim() || "(not set)")
+    ).join("\n");
+  }
+  function refreshInspector() {
+    if (!inspector.open) return;
+    const previous = inspectTarget.selectedOptions[0]?.textContent;
+    const doc = preview.contentDocument;
+    inspectElements = doc?.body ? Array.from(doc.body.querySelectorAll("[class]"))
+      .filter(el => Array.from(el.classList).some(name => name.startsWith("syn-")))
+      .slice(0, 200) : [];
+    inspectTarget.replaceChildren();
+    for (const [index, el] of inspectElements.entries()) {
+      const option = document.createElement("option");
+      option.value = String(index);
+      option.textContent = (index + 1) + ". " + el.localName + " " +
+        Array.from(el.classList).filter(name => name.startsWith("syn-")).join(" ");
+      inspectTarget.append(option);
+    }
+    inspectTarget.disabled = !inspectElements.length;
+    if (inspectTarget.disabled) {
+      const option = document.createElement("option");
+      option.textContent = "No rendered Syntyr elements";
+      inspectTarget.append(option);
+    } else {
+      const old = Array.from(inspectTarget.options).find(option => option.textContent === previous);
+      if (old) inspectTarget.value = old.value;
+    }
+    showComputed();
+  }
+  inspector.addEventListener("toggle", refreshInspector);
+  inspectTarget.addEventListener("change", showComputed);
+  preview.addEventListener("load", refreshInspector);
+  viewport.addEventListener("change", () => requestAnimationFrame(showComputed));
+
   function numericValue(control, minimum, maximum) {
     return Math.min(maximum, Math.max(minimum, Number(control.value) || minimum));
   }
@@ -199,6 +248,8 @@ ${snippet.previewStylesheets(selectedModule())}
         : starterGuide[example.value]);
     byId("playground-reference-guidance").textContent = item ? item.guidance :
       "The documentation examples are illustrative. Implement real application actions yourself.";
+    byId("playground-inspector-sources").textContent = item?.source_files?.join(", ") ||
+      "Starter — see the component API for source ownership.";
     const source = byId("playground-source-link");
     source.href = item?.kind === "block" ? `blocks.html#block-title-${item.id.slice(6)}` :
       item ? `catalog.html#${item.id}` : "catalog.html";
