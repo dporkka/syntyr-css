@@ -115,3 +115,26 @@ existing flat Figma palette exports and reconciliation handoff remain
 unchanged. Import compatibility with particular versions of Figma, Penpot,
 and Tokens Studio requires separate tool-specific verification. This is
 source tooling for the unreleased alpha.5 candidate, not an alpha.4 API.
+
+### Reconcile a returned snapshot
+
+After editing or transferring a snapshot, compare the returned JSON to the
+same source theme and density:
+
+```sh
+python3 scripts/reconcile_design_tokens.py studio-compact.tokens.json --theme studio --density compact
+```
+
+This read-only check reports structural token drift by path, including alias
+changes. Exit status 0 means identical, 1 means valid with changes, and 2 means
+invalid or unreadable. Missing/unknown token names, changed types, unresolved
+or cyclic aliases, duplicate JSON keys and invalid literal values are rejected.
+
+The validator deliberately accepts only the exported Syntyr subset of the
+[2025.10 DTCG format](https://www.designtokens.org/TR/2025.10/format/):
+flat named groups, explicitly typed dimensions and sRGB colors, and
+whole-token aliases. It is not a general DTCG validator, importer, or
+automatic CSS patcher. Structural drift may include equivalent representations
+(e.g. px versus rem or omitted optional color fields). No CSS or input file is
+modified; review changes manually and run browser accessibility checks before
+adopting them.
