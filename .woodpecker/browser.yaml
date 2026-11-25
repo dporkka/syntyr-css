@@ -14,6 +14,7 @@ steps:
       - python3 -m pip install --disable-pip-version-check playwright==1.65.2
       - python3 tests/published_reflow_browser.py --browsers chromium --canonical-only --pages docs/playground.html examples/saas.html examples/crm.html
       - python3 tests/playground_browser.py chromium
+      - python3 tests/responsive_boundary_browser.py --browsers chromium
 
   - name: three-engine-browser-and-reflow-matrix
     when:
@@ -26,6 +27,7 @@ steps:
       - python3 tests/site_builder_browser.py
       - python3 tests/site_builder_upload_race_browser.py
       - python3 tests/synced_components_browser.py
+      - python3 tests/responsive_boundary_browser.py --browsers chromium firefox webkit
       - python3 tests/browser_matrix.py --browsers chromium firefox webkit
       - python3 tests/interaction_recipe_browser.py --browsers chromium firefox webkit
       - python3 tests/progressive_reliability_browser.py --browsers chromium firefox webkit

@@ -90,3 +90,24 @@ python tests/published_reflow_browser.py --browsers chromium --canonical-only --
 
 A nonzero exit indicates a failure or blocked browser. The report is a local
 test artifact, not part of the public site or CSS distribution.
+
+## Dimensional query boundary tests
+
+```sh
+python tests/responsive_boundary_browser.py --browsers chromium
+python tests/responsive_boundary_browser.py --browsers chromium firefox webkit
+```
+
+The maintained inventory covers dimensional media and container queries in
+`src/`. Each threshold is exercised at the adjacent CSS pixels below, at,
+and above its boundary using the default 16px font size. The contract test
+requires newly introduced dimensional queries to be registered explicitly.
+
+Container probes use the distributed stylesheet and constrain component
+parents independently inside a 1920px viewport. Named region probes also
+nest a narrow region inside a wide region. Assertions verify actual grid,
+stacking, label, overlay and navigation behavior; these are not merely
+screenshots or media-query string checks. The Chromium run is part of the
+PR smoke configuration, and all three engines are configured for manual/tag
+runs. This does not cover every docs-only CSS rule, device font preference,
+or arbitrary content combination.
