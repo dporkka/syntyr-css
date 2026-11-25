@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Syntyr works with ChatGPT, Codex, Claude Code, Cursor and other agents that generate HTML or framework markup. No Syntyr-specific service, account, MCP…">
-  <meta name="syntyr-source-sha256" content="f76c62b5ebeead5aee6f26a13ae0ac1f7fe14092d2b8f7e9ab3101b74d612252">
+  <meta name="syntyr-source-sha256" content="39df61d8c5ba545b7ab07e22ba91e3bbde929b264e5b95b1b813f9229b922792">
   <meta name="theme-color" content="#f5f7fb">
   <title>Using Syntyr with coding agents — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/agent-integration">
@@ -142,6 +142,25 @@ known canonical sections and 1–50 section instances are accepted.</p>
 install host widget controllers, implement routes/forms, generate production
 copy, or certify accessibility. Review example content and destinations, and
 use the release-pinned markup validator and real browser tests before shipping.</p>
+<h3 id="select-sections-from-explicit-intent-ids">Select sections from explicit intent IDs</h3>
+<p>The optional composer also supports an offline, deterministic planner. Use
+<code>node scripts/compose.mjs --list-intents 0.3.0-alpha.5</code> to discover the
+reviewed requirement IDs, corresponding section IDs and host obligations.</p>
+<pre tabindex="0"><code class="language-sh">node scripts/compose.mjs --plan &lt;&lt;'JSON'
+{&quot;release&quot;:&quot;0.3.0-alpha.5&quot;,&quot;title&quot;:&quot;CRM dashboard&quot;,&quot;theme&quot;:&quot;studio&quot;,&quot;requirements&quot;:[&quot;pipeline&quot;,&quot;metrics&quot;,&quot;inventory-search&quot;,&quot;account-management&quot;]}
+JSON
+</code></pre>
+<p>The plan preserves requirement order, deduplicates overlapping section
+mappings and returns a separate coverage entry for every requirement.
+A ready plan includes a <code>composition</code> object accepted by the normal
+composer. Read every coverage entry before rendering. Generic resource
+sections require domain-specific customization; they do not implement
+account or inventory management. A presentation-only entry lists the
+remaining host work, and even static content contains example copy and links.</p>
+<p>Unknown, well-formed requirement IDs produce an unresolved plan, a null
+composition and CLI exit code 2. Invalid input produces exit code 1.
+The planner does not parse natural-language prompts, guess missing features,
+select host controllers, certify functionality or make network calls.</p>
         </article>
         <aside class="docs-article-sidebar">
           <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
@@ -154,6 +173,7 @@ use the release-pinned markup validator and real browser tests before shipping.<
 <a class="docs-article-toc-link docs-article-toc-2" href="#validation-and-maintenance">Validation and maintenance</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#what-syntyr-does-not-do">What Syntyr does not do</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#deterministic-section-composition-source-candidate">Deterministic section composition (source candidate)</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#select-sections-from-explicit-intent-ids">Select sections from explicit intent IDs</a>
           </nav>
           <details class="docs-article-toc-mobile">
             <summary>On this page <span>Jump to section</span></summary>
@@ -167,6 +187,7 @@ use the release-pinned markup validator and real browser tests before shipping.<
 <a class="docs-article-toc-link docs-article-toc-2" href="#validation-and-maintenance">Validation and maintenance</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#what-syntyr-does-not-do">What Syntyr does not do</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#deterministic-section-composition-source-candidate">Deterministic section composition (source candidate)</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#select-sections-from-explicit-intent-ids">Select sections from explicit intent IDs</a>
             </nav>
           </details>
         </aside>
