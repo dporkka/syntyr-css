@@ -126,3 +126,19 @@ python3 scripts/check_interaction_conformance.py dialog disclosure
 Native dialog/disclosure and dropdown scenarios exercise real browser controls;
 combobox and sortable-table scenarios exercise the optional React Aria example.
 Results apply to these fixtures only, not all host implementations.
+
+
+### Discover runnable interaction recipes
+
+Call `get_interaction_contracts` for anatomy, state and ownership obligations,
+then `get_interaction_recipes(contract="combobox", release="0.3.0-alpha.5")`
+for source and test references. Omit the contract filter to list all eight
+candidate recipes. Each relationship explicitly distinguishes an implementation,
+an alternative, a fallback, or an example; an empty link list means no matching
+contract exists yet. In particular, a native select is a fallback for a searchable
+combobox, not a searchable combobox implementation.
+
+Recipe `stylesheets` identifiers are accepted by `validate_markup`. The
+original `css` paths remain source references. Discovery never runs the tests,
+executes interactions, or certifies accessibility. The published alpha.4 release
+does not expose candidate recipes.
