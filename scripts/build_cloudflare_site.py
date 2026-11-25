@@ -308,7 +308,7 @@ PUBLIC_DOCS = (
     "console-kit.html", "component-recipes.md", "design-research-linear-resend.md", "premium-compositions.md", "visual-composition.md",
     "faq.md", "compare.md", "compare-tailwind.md", "compare-bootstrap.md", "compare-shadcn.md",
     "compare-daisyui.md", "compare-pico.md", "compare-native-css.md",
-    "distribution.md", "native-patterns.md", "native-workflows.md", "semantic-components.md", "composition-adoption.md", "from-pico.md", "package-managers.md", "docs.css", "guides.html", "how-to.html", "how-to.css", "how-to.js", "starter-wizard.html", "starter-wizard.mjs", "catalog.html", "catalog.css", "catalog.js",
+    "distribution.md", "native-patterns.md", "native-workflows.md", "semantic-components.md", "composition-adoption.md", "from-pico.md", "package-managers.md", "docs.css", "reference-search.js", "guides.html", "how-to.html", "how-to.css", "how-to.js", "starter-wizard.html", "starter-wizard.mjs", "catalog.html", "catalog.css", "catalog.js",
     "blocks.html", "blocks.css", "blocks.js", "blocks-assets.css", "blocks-guide.md", "headless-interactions.md", "framework-integrations.md", "htmx-components.md", "htmx-playground.html", "mobile-frameworks.md",
     "geometry-terminal.md", "native-browser-apis.md", "interaction-recipes.md", "dropdowns.md", "radix-integration.md", "visual-intensity.md", "performance-and-polish.md",
     "performance-validation.md", "progressive-enhancement.md", "progressive-loading.md", "live-performance-audit.md",
