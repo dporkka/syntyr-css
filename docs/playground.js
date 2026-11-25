@@ -80,6 +80,119 @@
     let framePending = false;
   if (!example || !theme || !markup || !preview || !viewport || !radius || !padding || !snippet) return;
 
+  const inspector = byId("playground-inspector");
+  const inspectTarget = byId("playground-inspector-target");
+  const inspectValues = byId("playground-inspector-values");
+  const design = window.SYNTYR_PLAYGROUND_INSPECTION;
+  const tokenControl = byId("playground-inspector-token");
+  const variantControl = byId("playground-inspector-variant");
+  function addOption(parent, value, label) {
+    const option = document.createElement("option");
+    option.value = value;
+    option.textContent = label;
+    parent.append(option);
+  }
+  function showDependencies() {
+    const token = design?.tokens.find(row => row.token === tokenControl.value);
+    if (!token) return;
+    const lines = [
+      ["Depends on", token.depends_on],
+      ["Referenced by tokens", token.referenced_by_tokens],
+      ["Transitive dependencies", token.transitive_dependencies],
+      ["Declared in", token.declared_in],
+      ["Referenced in", token.referenced_in]
+    ];
+    byId("playground-inspector-dependencies").textContent = lines.map(
+      ([label, values]) => label + ": " + (values.join(", ") || "None")
+    ).join("\n");
+  }
+  function showVariant() {
+    const links = byId("playground-inspector-variant-links");
+    links.replaceChildren();
+    const variant = design?.families.flatMap(family => family.variants)
+      .find(row => row.class === variantControl.value);
+    const ids = variant?.example_ids || [];
+    if (!ids.length) {
+      links.textContent = "No canonical example found.";
+      return;
+    }
+    for (const id of ids) {
+      const item = catalogMap.get(id);
+      if (!item) continue;
+      const p = document.createElement("p");
+      const link = document.createElement("a");
+      link.href = "playground.html#component=" + encodeURIComponent(id);
+      link.target = "_blank";
+      link.rel = "noopener";
+      link.textContent = item.title + " (new tab)";
+      p.append(link);
+      links.append(p);
+    }
+  }
+  if (Array.isArray(design?.tokens) && Array.isArray(design?.families)) {
+    tokenControl.replaceChildren();
+    for (const token of design.tokens) addOption(tokenControl, token.token, token.token);
+    tokenControl.disabled = !design.tokens.length;
+    variantControl.replaceChildren();
+    for (const family of design.families) {
+      const group = document.createElement("optgroup");
+      group.label = family.component;
+      for (const variant of family.variants) addOption(group, variant.class, variant.class);
+      variantControl.append(group);
+    }
+    variantControl.disabled = !variantControl.options.length;
+    tokenControl.addEventListener("change", showDependencies);
+    variantControl.addEventListener("change", showVariant);
+    showDependencies();
+    showVariant();
+  }
+
+  let inspectElements = [];
+  function showComputed() {
+    const element = inspectElements[Number(inspectTarget.value)];
+    if (!element || !element.isConnected || inspectTarget.disabled) {
+      inspectValues.textContent = "No rendered Syntyr element selected.";
+      return;
+    }
+    const style = element.ownerDocument.defaultView.getComputedStyle(element);
+    const properties = ["display", "color", "background-color", "font-size",
+      "font-weight", "line-height", "padding", "gap", "border-radius",
+      "--syn-accent", "--syn-text", "--syn-surface", "--syn-space-2"];
+    inspectValues.textContent = properties.map(name =>
+      name + ": " + (style.getPropertyValue(name).trim() || "(not set)")
+    ).join("\n");
+  }
+  function refreshInspector() {
+    if (!inspector.open) return;
+    const previous = inspectTarget.selectedOptions[0]?.textContent;
+    const doc = preview.contentDocument;
+    inspectElements = doc?.body ? Array.from(doc.body.querySelectorAll("[class]"))
+      .filter(el => Array.from(el.classList).some(name => name.startsWith("syn-")))
+      .slice(0, 200) : [];
+    inspectTarget.replaceChildren();
+    for (const [index, el] of inspectElements.entries()) {
+      const option = document.createElement("option");
+      option.value = String(index);
+      option.textContent = (index + 1) + ". " + el.localName + " " +
+        Array.from(el.classList).filter(name => name.startsWith("syn-")).join(" ");
+      inspectTarget.append(option);
+    }
+    inspectTarget.disabled = !inspectElements.length;
+    if (inspectTarget.disabled) {
+      const option = document.createElement("option");
+      option.textContent = "No rendered Syntyr elements";
+      inspectTarget.append(option);
+    } else {
+      const old = Array.from(inspectTarget.options).find(option => option.textContent === previous);
+      if (old) inspectTarget.value = old.value;
+    }
+    showComputed();
+  }
+  inspector.addEventListener("toggle", refreshInspector);
+  inspectTarget.addEventListener("change", showComputed);
+  preview.addEventListener("load", refreshInspector);
+  viewport.addEventListener("change", () => requestAnimationFrame(showComputed));
+
   function numericValue(control, minimum, maximum) {
     return Math.min(maximum, Math.max(minimum, Number(control.value) || minimum));
   }
@@ -131,6 +244,52 @@
     return detached.body.innerHTML;
   }
 
+  const compare = byId("playground-compare");
+  const comparison = byId("playground-comparison");
+  const comparisonWidths = [320, 390, 768, 1024, 1440, 1920];
+
+  function updateComparison(shell) {
+    if (!compare.checked) {
+      comparison.replaceChildren();
+      comparison.hidden = true;
+      return;
+    }
+    comparison.hidden = false;
+    if (!comparison.childElementCount) {
+      for (const width of comparisonWidths) {
+        const card = document.createElement("section");
+        card.className = "playground-comparison-card";
+        const title = document.createElement("h3");
+        title.className = "syn-heading";
+        title.textContent = width + "px viewport";
+        const report = document.createElement("p");
+        report.className = "syn-caption";
+        const canvas = document.createElement("div");
+        canvas.className = "playground-canvas";
+        const frame = document.createElement("iframe");
+        frame.title = "Sandboxed preview at " + width + "px";
+        frame.dataset.width = String(width);
+        frame.setAttribute("sandbox", "allow-same-origin");
+        frame.referrerPolicy = "no-referrer";
+        frame.style.width = width + "px";
+        frame.addEventListener("load", () => {
+          if (!frame.isConnected) return;
+          const root = frame.contentDocument?.documentElement;
+          report.textContent = !root ? "Overflow unavailable." :
+            root.scrollWidth > root.clientWidth + 1 ? "Horizontal document overflow detected." :
+            "No horizontal document overflow detected.";
+        });
+        canvas.append(frame);
+        card.append(title, report, canvas);
+        comparison.append(card);
+      }
+    }
+    for (const frame of comparison.querySelectorAll("iframe")) {
+      frame.closest("section").querySelector("p").textContent = "Updating preview…";
+      frame.srcdoc = shell;
+    }
+  }
+
   function render() {
     // No script or form permissions, even if an editor pastes arbitrary markup.
     // allow-same-origin permits the local stylesheet but not script execution.
@@ -143,6 +302,7 @@ ${snippet.previewStylesheets(selectedModule())}
 <style>html,body{min-height:100%;} body.syn-root{margin:0;padding:1.5rem;} *,*::before,*::after{box-sizing:border-box;}</style>
 </head><body class="syn-root syn-page" data-syn-theme="${theme.value}" style="${tokens()}">${previewSafeMarkup()}</body></html>`;
     preview.srcdoc = shell;
+    updateComparison(shell);
     status.textContent = `Preview updated: ${theme.options[theme.selectedIndex].text} theme.`;
   }
 
@@ -199,6 +359,9 @@ ${snippet.previewStylesheets(selectedModule())}
         : starterGuide[example.value]);
     byId("playground-reference-guidance").textContent = item ? item.guidance :
       "The documentation examples are illustrative. Implement real application actions yourself.";
+    byId("playground-inspector-sources").textContent = item
+      ? (item.source_files?.join(", ") || "No Syntyr-class source files in this canonical example.")
+      : "Starter — see the component API for source ownership.";
     const source = byId("playground-source-link");
     source.href = item?.kind === "block" ? `blocks.html#block-title-${item.id.slice(6)}` :
       item ? `catalog.html#${item.id}` : "catalog.html";
@@ -211,6 +374,7 @@ ${snippet.previewStylesheets(selectedModule())}
   markup.addEventListener("input", scheduleRender);
   for (const control of [radius, padding]) control.addEventListener("input", scheduleRender);
   viewport.addEventListener("change", updateViewport);
+  compare.addEventListener("change", render);
   search.addEventListener("input", populateCatalog);
   renderButton.addEventListener("click", render);
   copyButton.addEventListener("click", async () => {

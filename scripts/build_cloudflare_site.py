@@ -19,7 +19,7 @@ import tempfile
 if __package__:
     from .build import all_distributions, javascript_distributions
     from .build_shadcn_registry import generate as universal_registry_files
-    from .build_playground_catalog import generate as playground_catalog
+    from .build_playground_catalog import generate as playground_catalog, generate_inspection as playground_inspection
     from .build_blocks import build as blocks_gallery
     from .build_section_composer import build as section_catalog
     from .build_catalog_release import build_release_matrix, render_release_matrix, verify_catalog_annotations
@@ -27,7 +27,7 @@ if __package__:
 else:
     from build import all_distributions, javascript_distributions
     from build_shadcn_registry import generate as universal_registry_files
-    from build_playground_catalog import generate as playground_catalog
+    from build_playground_catalog import generate as playground_catalog, generate_inspection as playground_inspection
     from build_blocks import build as blocks_gallery
     from build_section_composer import build as section_catalog
     from build_catalog_release import build_release_matrix, render_release_matrix, verify_catalog_annotations
@@ -312,7 +312,7 @@ PUBLIC_DOCS = (
     "blocks.html", "blocks.css", "blocks.js", "blocks-assets.css", "blocks-guide.md", "headless-interactions.md", "framework-integrations.md", "htmx-components.md", "htmx-playground.html", "mobile-frameworks.md",
     "geometry-terminal.md", "native-browser-apis.md", "interaction-recipes.md", "dropdowns.md", "radix-integration.md", "visual-intensity.md", "performance-and-polish.md",
     "performance-validation.md", "progressive-enhancement.md", "progressive-loading.md", "live-performance-audit.md",
-    "index.html", "design-resources.html", "animation.md", "clipboard.md", "lit-integration.md", "playground.html", "playground.css", "playground.js", "playground-catalog.js", "playground-snippet.js", "playground-editor.js", "playground-editor.licenses.txt", "page-builder-guide.md", "page-builder.html",  "page-builder.css", "page-builder.js", "page-builder-model.mjs", "site-builder-model.mjs", "page-builder-zip.mjs", "page-builder-starters.mjs", "page-builder-site-kits.mjs", "page-builder-section-picker.mjs",
+    "index.html", "design-resources.html", "animation.md", "clipboard.md", "lit-integration.md", "playground.html", "playground.css", "playground.js", "playground-catalog.js", "playground-design-inspection.js", "playground-snippet.js", "playground-editor.js", "playground-editor.licenses.txt", "page-builder-guide.md", "page-builder.html",  "page-builder.css", "page-builder.js", "page-builder-model.mjs", "site-builder-model.mjs", "page-builder-zip.mjs", "page-builder-starters.mjs", "page-builder-site-kits.mjs", "page-builder-section-picker.mjs",
     "form-builder.html", "form-builder.css", "form-builder.js", "form-builder-model.mjs",
     "editor-integration.md", "recipes.md", "saas-cli-business.md", "products.html", "pro.html", "studio.html", "integration-services.html",
     "cms-integration.md", "site-generator-decision.md", "static-site-generators.md", "site-builders.md", "tailwind-research.md", "tailwind-alternative.html",
@@ -344,6 +344,8 @@ def source_files(site_url: str = SITE_URL, *, include_cloudflare_headers: bool =
     # Fail closed if either gallery changes without updating the playground.
     if (ROOT / "docs/playground-catalog.js").read_text(encoding="utf-8") != playground_catalog():
         raise ValueError("Stale playground examples: run scripts/build_playground_catalog.py")
+    if (ROOT / "docs/playground-design-inspection.js").read_text(encoding="utf-8") != playground_inspection():
+        raise ValueError("Stale playground inspection: run scripts/build_playground_catalog.py")
     files: dict[str, bytes] = {}
     paths = [
         ROOT / "index.html",

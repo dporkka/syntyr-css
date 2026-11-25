@@ -116,9 +116,13 @@
     },
     {
       "id": "catalog-ordered-and-unordered-lists-title",
-      "published_css_covered": true,
+      "published_css_covered": false,
       "missing_stylesheets": [],
-      "missing_classes": []
+      "missing_classes": [
+        "syn-list",
+        "syn-list--accent",
+        "syn-list--compact"
+      ]
     },
     {
       "id": "catalog-definition-list-title",
@@ -199,9 +203,11 @@
     },
     {
       "id": "catalog-geometry-frame-title",
-      "published_css_covered": true,
+      "published_css_covered": false,
       "missing_stylesheets": [],
-      "missing_classes": []
+      "missing_classes": [
+        "syn-frame--accent"
+      ]
     },
     {
       "id": "catalog-viz-bars-title",

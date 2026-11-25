@@ -4,8 +4,12 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "title": "Buttons",
     "module": "syntyr.core.css",
     "description": "Use native buttons for actions; variants change appearance only.",
-    "html": "\u003cdiv class=\"syn-inline\">\n  \u003cbutton type=\"button\" class=\"syn-button syn-button--primary\">Save changes\u003c/button>\n  \u003cbutton type=\"button\" class=\"syn-button syn-button--outline\">Preview\u003c/button>\n  \u003cbutton type=\"button\" class=\"syn-button\" disabled>Disabled\u003c/button>\n\u003c/div>",
+    "html": "\u003cdiv class=\"syn-inline\">\n  \u003cbutton type=\"button\" class=\"syn-button syn-button--primary\">Save changes\u003c/button>\n  \u003cbutton type=\"button\" class=\"syn-button syn-button--outline\">Preview\u003c/button>\n  \u003cbutton type=\"button\" class=\"syn-button syn-button--danger\">Remove draft\u003c/button>\n  \u003cbutton type=\"button\" class=\"syn-button syn-button--ghost\">Cancel\u003c/button>\n  \u003cbutton type=\"button\" class=\"syn-button\" disabled>Disabled\u003c/button>\n\u003c/div>",
     "keywords": "actions controls primary outline",
+    "source_files": [
+      "src/components/buttons.css",
+      "src/components/layout.css"
+    ],
     "guidance": "Use button for actions and a for navigation. ARIA states describe real application state."
   },
   {
@@ -15,6 +19,9 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "description": "Use real labels and native validation; form submission belongs to your app.",
     "html": "\u003cdiv class=\"syn-form\">\n  \u003clabel class=\"syn-label\" for=\"catalog-email\">Email address\u003c/label>\n  \u003cinput class=\"syn-input\" id=\"catalog-email\" type=\"email\" placeholder=\"you@example.com\" required>\n  \u003cp class=\"syn-help\">Use your work email.\u003c/p>\n\u003c/div>",
     "keywords": "input text validation form accessibility",
+    "source_files": [
+      "src/components/forms.css"
+    ],
     "guidance": "Real handlers and field validation belong to the application."
   },
   {
@@ -24,6 +31,9 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "description": "One existing input class; native keyboard, picker and file selection behavior.",
     "html": "\u003cdiv class=\"syn-form\" id=\"catalog-native-controls\">\n  \u003clabel class=\"syn-label\" for=\"catalog-range\">Threshold\u003c/label>\n  \u003cinput id=\"catalog-range\" type=\"range\" class=\"syn-input\" min=\"0\" max=\"100\" value=\"60\">\n  \u003clabel class=\"syn-label\" for=\"catalog-file\">Attach artwork\u003c/label>\n  \u003cinput id=\"catalog-file\" type=\"file\" class=\"syn-input\">\n  \u003clabel class=\"syn-label\" for=\"catalog-color\">Accent color\u003c/label>\n  \u003cinput id=\"catalog-color\" type=\"color\" class=\"syn-input\" value=\"#3355aa\">\n\u003c/div>",
     "keywords": "native range file color slider upload chooser form",
+    "source_files": [
+      "src/components/forms.css"
+    ],
     "guidance": "Real handlers and field validation belong to the application."
   },
   {
@@ -33,6 +43,9 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "description": "Related disclosures use native details name; no script or custom roles.",
     "html": "\u003csection aria-labelledby=\"catalog-faq-heading\">\n  \u003ch3 id=\"catalog-faq-heading\">Common questions\u003c/h3>\n  \u003cdetails class=\"syn-details\" name=\"catalog-interaction-faq\" open>\n    \u003csummary>Can I use standard HTML?\u003c/summary>\n    \u003cp>Yes, Syntyr styles browser-native elements.\u003c/p>\n  \u003c/details>\n  \u003cdetails class=\"syn-details\" name=\"catalog-interaction-faq\">\n    \u003csummary>Do I need a JavaScript runtime?\u003c/summary>\n    \u003cp>No. Native disclosures handle their own open state.\u003c/p>\n  \u003c/details>\n\u003c/section>",
     "keywords": "native accordion FAQ details summary exclusive disclosure",
+    "source_files": [
+      "src/components/overlays.css"
+    ],
     "guidance": "See the component API reference for compatible classes and CSS modules."
   },
   {
@@ -42,6 +55,10 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "description": "Real search landmark and GET submission; the static destination does not filter results.",
     "html": "\u003csearch aria-label=\"Search example inventory\">\n  \u003cform class=\"syn-form\" action=\"../examples/native-interactions.html\" method=\"get\">\n    \u003clabel class=\"syn-label\" for=\"catalog-inventory-query\">Inventory search\u003c/label>\n    \u003cinput class=\"syn-input\" id=\"catalog-inventory-query\" type=\"search\"\n           name=\"q\" required placeholder=\"Enter a keyword\">\n    \u003cbutton class=\"syn-button syn-button--primary\" type=\"submit\">Search\u003c/button>\n  \u003c/form>\n\u003c/search>",
     "keywords": "native search get landmark searchform filtering server",
+    "source_files": [
+      "src/components/buttons.css",
+      "src/components/forms.css"
+    ],
     "guidance": "Real handlers and field validation belong to the application."
   },
   {
@@ -51,6 +68,11 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "description": "Native modal command and dialog-only choices; confirming this preview does not persist changes.",
     "html": "\u003cdiv class=\"syn-inline\">\n  \u003cbutton type=\"button\" class=\"syn-button\" commandfor=\"catalog-interaction-dialog\"\n          command=\"show-modal\">Open confirmation\u003c/button>\n  \u003cdialog class=\"syn-dialog\" id=\"catalog-interaction-dialog\"\n          aria-labelledby=\"catalog-interaction-dialog-title\">\n    \u003ch3 id=\"catalog-interaction-dialog-title\">Confirm preview?\u003c/h3>\n    \u003cp>This static example changes no data.\u003c/p>\n    \u003cform method=\"dialog\" class=\"syn-inline\">\n      \u003cbutton class=\"syn-button syn-button--outline\" type=\"submit\"\n              value=\"cancel\" autofocus>Cancel\u003c/button>\n      \u003cbutton class=\"syn-button syn-button--primary\" type=\"submit\"\n              value=\"confirm\">Confirm preview\u003c/button>\n    \u003c/form>\n  \u003c/dialog>\n\u003c/div>",
     "keywords": "native dialog modal confirmation commandfor method dialog",
+    "source_files": [
+      "src/components/buttons.css",
+      "src/components/layout.css",
+      "src/components/overlays.css"
+    ],
     "guidance": "Use button for actions and a for navigation. ARIA states describe real application state."
   },
   {
@@ -60,6 +82,9 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "description": "Browser suggestions for a free-text input; not a searchable select or combobox implementation.",
     "html": "\u003cdiv class=\"syn-form\">\n  \u003clabel class=\"syn-label\" for=\"catalog-suggested-city\">City\u003c/label>\n  \u003cinput class=\"syn-input\" id=\"catalog-suggested-city\" name=\"city\"\n         list=\"catalog-city-options\" placeholder=\"Start typing a city\">\n  \u003cdatalist id=\"catalog-city-options\">\n    \u003coption value=\"Bras\u00edlia\">\u003c/option>\n    \u003coption value=\"Chicago\">\u003c/option>\n    \u003coption value=\"New York\">\u003c/option>\n  \u003c/datalist>\n\u003c/div>",
     "keywords": "native datalist suggestions autocomplete input optgroup",
+    "source_files": [
+      "src/components/forms.css"
+    ],
     "guidance": "Real handlers and field validation belong to the application."
   },
   {
@@ -69,6 +94,10 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "description": "Native bounded measurements and static server result; calculations belong to the host.",
     "html": "\u003cdiv class=\"syn-semantic syn-stack\">\n  \u003clabel for=\"catalog-capacity-meter\">Utilization\u003c/label>\n  \u003cmeter id=\"catalog-capacity-meter\" min=\"0\" max=\"100\" low=\"20\"\n         high=\"85\" optimum=\"40\" value=\"68\">68%\u003c/meter>\n  \u003clabel for=\"catalog-inventory-output\">Matching inventory\u003c/label>\n  \u003coutput id=\"catalog-inventory-output\" name=\"results\">42 available locations\u003c/output>\n\u003c/div>",
     "keywords": "native meter output capacity calculation progress gauge",
+    "source_files": [
+      "src/components/layout.css",
+      "src/semantic.css"
+    ],
     "guidance": "See the component API reference for compatible classes and CSS modules."
   },
   {
@@ -76,8 +105,12 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "title": "Panels and token overrides",
     "module": "syntyr.core.css",
     "description": "Override component tokens locally without rebuilding the stylesheet.",
-    "html": "\u003carticle class=\"syn-panel\" style=\"--syn-surface: var(--syn-surface-hi)\">\n  \u003ch3 class=\"syn-heading\">Workspace settings\u003c/h3>\n  \u003cp>Use scoped CSS properties to customize an individual panel.\u003c/p>\n\u003c/article>",
+    "html": "\u003carticle class=\"syn-panel syn-panel--cut\" style=\"--syn-surface: var(--syn-surface-hi)\">\n  \u003ch3 class=\"syn-heading\">Workspace settings\u003c/h3>\n  \u003cp>Use scoped CSS properties to customize an individual panel.\u003c/p>\n\u003c/article>",
     "keywords": "surface card border padding radius CSS variables",
+    "source_files": [
+      "src/components/layout.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Choose native headings and accessible labels."
   },
   {
@@ -87,6 +120,9 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "description": "A named container lets metrics respond to their parent, not the viewport.",
     "html": "\u003csection class=\"syn-region\" aria-label=\"Service metrics\">\n  \u003cdiv class=\"syn-stats\">\n    \u003carticle class=\"syn-stat\">\u003cspan class=\"syn-stat-label\">UPTIME\u003c/span>\u003cstrong class=\"syn-stat-value\">99.9%\u003c/strong>\u003c/article>\n    \u003carticle class=\"syn-stat\">\u003cspan class=\"syn-stat-label\">USERS\u003c/span>\u003cstrong class=\"syn-stat-value\">2,840\u003c/strong>\u003c/article>\n  \u003c/div>\n\u003c/section>",
     "keywords": "stats grid telemetry container query region",
+    "source_files": [
+      "src/components/patterns.css"
+    ],
     "guidance": "Named container must be an ancestor of responsive children."
   },
   {
@@ -96,6 +132,9 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "description": "Keep semantic table markup and provide scrolling on narrow screens.",
     "html": "\u003cdiv class=\"syn-table-wrap\">\n  \u003ctable class=\"syn-table\">\n    \u003ccaption>Recent deployments\u003c/caption>\n    \u003cthead>\u003ctr>\u003cth scope=\"col\">Build\u003c/th>\u003cth scope=\"col\">Status\u003c/th>\u003c/tr>\u003c/thead>\n    \u003ctbody>\u003ctr>\u003ctd>v1.2\u003c/td>\u003ctd>Passed\u003c/td>\u003c/tr>\u003ctr>\u003ctd>v1.1\u003c/td>\u003ctd>Passed\u003c/td>\u003c/tr>\u003c/tbody>\n  \u003c/table>\n\u003c/div>",
     "keywords": "table tabular records scroll responsive data",
+    "source_files": [
+      "src/components/data.css"
+    ],
     "guidance": "Use proper headers, captions and scroll containers."
   },
   {
@@ -105,6 +144,9 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "description": "Use visible text and semantic status only for real application updates.",
     "html": "\u003cdiv class=\"syn-alert\">Your changes have been saved.\u003c/div>\n\u003cdiv class=\"syn-alert syn-alert--danger\">Could not connect. Try again.\u003c/div>",
     "keywords": "error warning info status important notification",
+    "source_files": [
+      "src/components/typography.css"
+    ],
     "guidance": "See the component API reference for compatible classes and CSS modules."
   },
   {
@@ -114,6 +156,9 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "description": "Browser-native disclosure works without custom JavaScript.",
     "html": "\u003cdetails class=\"syn-details\">\n  \u003csummary>What does Syntyr require?\u003c/summary>\n  \u003cp>Just CSS and semantic HTML. JavaScript is optional.\u003c/p>\n\u003c/details>",
     "keywords": "details accordion faq expandable summary",
+    "source_files": [
+      "src/components/overlays.css"
+    ],
     "guidance": "See the component API reference for compatible classes and CSS modules."
   },
   {
@@ -123,6 +168,9 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "description": "Use a real navigation landmark and mark the current page.",
     "html": "\u003cnav class=\"syn-breadcrumbs\" aria-label=\"Breadcrumb\">\n  \u003col>\n    \u003cli>\u003ca href=\"/\">Home\u003c/a>\u003c/li>\n    \u003cli>\u003cspan aria-current=\"page\">Settings\u003c/span>\u003c/li>\n  \u003c/ol>\n\u003c/nav>",
     "keywords": "nav pages route links aria current",
+    "source_files": [
+      "src/components/patterns.css"
+    ],
     "guidance": "Real links and aria-current only for the actual current page."
   },
   {
@@ -132,6 +180,10 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "description": "Native progress exposes a meaningful value to assistive technology.",
     "html": "\u003clabel class=\"syn-label\" for=\"catalog-progress\">Uploading files\u003c/label>\n\u003cprogress id=\"catalog-progress\" class=\"syn-meter\" value=\"65\" max=\"100\">65%\u003c/progress>",
     "keywords": "meter native progress loading",
+    "source_files": [
+      "src/components/data.css",
+      "src/components/forms.css"
+    ],
     "guidance": "Real handlers and field validation belong to the application."
   },
   {
@@ -141,6 +193,10 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "description": "Container-responsive pricing, with no client-side layout logic.",
     "html": "\u003csection class=\"syn-region\" aria-label=\"Example plans\">\n  \u003cdiv class=\"syn-pricing\">\n    \u003carticle class=\"syn-price-card\">\u003ch3>Starter\u003c/h3>\u003cp class=\"syn-price-value\">$19\u003c/p>\u003ca href=\"#catalog-top\" class=\"syn-button\">Explore\u003c/a>\u003c/article>\n    \u003carticle class=\"syn-price-card\" data-syn-featured>\u003ch3>Pro\u003c/h3>\u003cp class=\"syn-price-value\">$49\u003c/p>\u003ca href=\"#catalog-top\" class=\"syn-button syn-button--primary\">Explore\u003c/a>\u003c/article>\n  \u003c/div>\n\u003c/section>",
     "keywords": "plan subscriptions marketing grid featured",
+    "source_files": [
+      "src/components/buttons.css",
+      "src/components/patterns.css"
+    ],
     "guidance": "Use button for actions and a for navigation. ARIA states describe real application state."
   },
   {
@@ -150,6 +206,9 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "description": "Use heading hierarchy for meaning, not visual size; mark highlights relevance.",
     "html": "\u003csection aria-label=\"Typography sample\">\n  \u003ch2 class=\"syn-heading\">Design with native text\u003c/h2>\n  \u003cp>Combine \u003cstrong>importance\u003c/strong>, \u003cem>emphasis\u003c/em>, and \u003cmark>relevance\u003c/mark>.\u003c/p>\n  \u003cp>\u003csmall>Small print belongs in meaningful supporting text.\u003c/small>\u003c/p>\n\u003c/section>",
     "keywords": "headings heading paragraph emphasis strong mark small",
+    "source_files": [
+      "src/components/typography.css"
+    ],
     "guidance": "See the component API reference for compatible classes and CSS modules."
   },
   {
@@ -159,6 +218,7 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "description": "Use code for tokens, pre for blocks, and kbd for user input.",
     "html": "\u003csection aria-label=\"Code sample\">\n  \u003cp>Press \u003ckbd>Ctrl\u003c/kbd> + \u003ckbd>K\u003c/kbd> to search.\u003c/p>\n  \u003cpre>\u003ccode>&lt;button type=\"button\"&gt;Save&lt;/button&gt;\u003c/code>\u003c/pre>\n\u003c/section>",
     "keywords": "code pre kbd developer shortcut snippet monospace",
+    "source_files": [],
     "guidance": "See the component API reference for compatible classes and CSS modules."
   },
   {
@@ -166,9 +226,13 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "title": "Ordered and unordered lists",
     "module": "syntyr.core.css",
     "description": "Use ordered steps for sequences and unordered lists for collections.",
-    "html": "\u003cdiv class=\"syn-grid\">\n  \u003cul>\u003cli>Accessible markup\u003c/li>\u003cli>Scoped styling\u003c/li>\u003c/ul>\n  \u003col>\u003cli>Add the stylesheet\u003c/li>\u003cli>Choose a theme\u003c/li>\u003c/ol>\n\u003c/div>",
+    "html": "\u003cdiv class=\"syn-grid\">\n  \u003cul class=\"syn-list syn-list--accent\">\u003cli>Accessible markup\u003c/li>\u003cli>Scoped styling\u003c/li>\u003c/ul>\n  \u003col class=\"syn-list syn-list--compact\">\u003cli>Add the stylesheet\u003c/li>\u003cli>Choose a theme\u003c/li>\u003c/ol>\n\u003c/div>",
     "keywords": "bullets list ol ul li content steps",
-    "guidance": "See the component API reference for compatible classes and CSS modules."
+    "source_files": [
+      "src/components/layout.css",
+      "src/components/typography.css"
+    ],
+    "guidance": "Native list markers and order preserved. Use in core-only scopes; semantic mode handles unclassed lists."
   },
   {
     "id": "catalog-definition-list-title",
@@ -177,6 +241,7 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "description": "A definition list preserves the association between terms and values.",
     "html": "\u003cdl>\n  \u003cdt>Deployment\u003c/dt>\u003cdd>Production\u003c/dd>\n  \u003cdt>Region\u003c/dt>\u003cdd>Americas\u003c/dd>\n\u003c/dl>",
     "keywords": "description terms dl dt dd metadata key value",
+    "source_files": [],
     "guidance": "See the component API reference for compatible classes and CSS modules."
   },
   {
@@ -186,6 +251,9 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "description": "Use a self-contained article for independently meaningful content.",
     "html": "\u003carticle class=\"syn-panel\">\n  \u003cheader>\u003ch3>Release notes\u003c/h3>\u003c/header>\n  \u003cp>Native-first components reduce upkeep.\u003c/p>\n  \u003cfooter>\u003csmall>Updated November 2026\u003c/small>\u003c/footer>\n\u003c/article>",
     "keywords": "section article header footer landmark semantic blog",
+    "source_files": [
+      "src/components/layout.css"
+    ],
     "guidance": "Choose native headings and accessible labels."
   },
   {
@@ -195,6 +263,9 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "description": "A fieldset and legend give related inputs an accessible group name.",
     "html": "\u003cform action=\"#catalog-top\" method=\"get\">\n  \u003cfieldset>\n    \u003clegend>Notification frequency\u003c/legend>\n    \u003clabel>\u003cinput type=\"radio\" name=\"catalog-frequency\" value=\"daily\" checked> Daily\u003c/label>\n    \u003clabel>\u003cinput type=\"radio\" name=\"catalog-frequency\" value=\"weekly\"> Weekly\u003c/label>\n  \u003c/fieldset>\n  \u003clabel>\u003cinput type=\"checkbox\" name=\"catalog-updates\" checked> Product updates\u003c/label>\n  \u003cbutton type=\"submit\" class=\"syn-button\">Apply\u003c/button>\n\u003c/form>",
     "keywords": "fieldset legend radio checkbox label choice form",
+    "source_files": [
+      "src/components/buttons.css"
+    ],
     "guidance": "Use button for actions and a for navigation. ARIA states describe real application state."
   },
   {
@@ -204,6 +275,9 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "description": "Use native select and textarea before introducing custom widgets.",
     "html": "\u003cdiv class=\"syn-form\">\n  \u003clabel class=\"syn-label\" for=\"catalog-role\">Role\u003c/label>\n  \u003cselect class=\"syn-input\" id=\"catalog-role\">\n    \u003coption>Designer\u003c/option>\u003coption>Developer\u003c/option>\n  \u003c/select>\n  \u003clabel class=\"syn-label\" for=\"catalog-note\">Notes\u003c/label>\n  \u003ctextarea class=\"syn-input\" id=\"catalog-note\" rows=\"2\" placeholder=\"Optional details\">\u003c/textarea>\n\u003c/div>",
     "keywords": "select option textarea label notes form dropdown",
+    "source_files": [
+      "src/components/forms.css"
+    ],
     "guidance": "Real handlers and field validation belong to the application."
   },
   {
@@ -213,6 +287,7 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "description": "Encode dates and values for machines while keeping text readable.",
     "html": "\u003cdl>\n  \u003cdt>Launch\u003c/dt>\u003cdd>\u003ctime datetime=\"2026-11-16\">November 16, 2026\u003c/time>\u003c/dd>\n  \u003cdt>Seats\u003c/dt>\u003cdd>\u003cdata value=\"12\">12 active seats\u003c/data>\u003c/dd>\n\u003c/dl>",
     "keywords": "time datetime data value machine readable metadata",
+    "source_files": [],
     "guidance": "See the component API reference for compatible classes and CSS modules."
   },
   {
@@ -222,6 +297,7 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "description": "A picture provides art-direction sources; the img provides the fallback and alt text.",
     "html": "\u003cfigure>\n  \u003cpicture>\n    \u003csource media=\"(min-width: 50rem)\" srcset=\"../assets/og-syntyr.png\">\n    \u003cimg src=\"../assets/syntyr-mark.svg\" alt=\"Syntyr design system mark\" width=\"240\" height=\"120\" loading=\"lazy\">\n  \u003c/picture>\n  \u003cfigcaption>Replace these local demo assets with your own images.\u003c/figcaption>\n\u003c/figure>",
     "keywords": "figure figcaption img picture source responsive image art direction",
+    "source_files": [],
     "guidance": "See the component API reference for compatible classes and CSS modules."
   },
   {
@@ -231,6 +307,7 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "description": "Use blockquote for quoted passages and cite for the title of a work.",
     "html": "\u003cfigure>\n  \u003cblockquote>\u003cp>Prefer the native browser platform.\u003c/p>\u003c/blockquote>\n  \u003cfigcaption>From \u003ccite>Interface Design Notes\u003c/cite>\u003c/figcaption>\n\u003c/figure>",
     "keywords": "blockquote cite q quote citation figure attribution",
+    "source_files": [],
     "guidance": "See the component API reference for compatible classes and CSS modules."
   },
   {
@@ -240,6 +317,10 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "description": "Native popovers preserve browser-managed opening, dismissal, and focus behavior.",
     "html": "\u003cbutton type=\"button\" class=\"syn-button\" popovertarget=\"catalog-help-popover\">More information\u003c/button>\n\u003cdiv id=\"catalog-help-popover\" popover class=\"syn-popover\">\n  \u003cp>Browser-native popover; no JavaScript component required.\u003c/p>\n  \u003cbutton type=\"button\" class=\"syn-button\" popovertarget=\"catalog-help-popover\" popovertargetaction=\"hide\">Close\u003c/button>\n\u003c/div>",
     "keywords": "popover popovertarget overlay help no javascript browser",
+    "source_files": [
+      "src/components/buttons.css",
+      "src/components/overlays.css"
+    ],
     "guidance": "Use button for actions and a for navigation. ARIA states describe real application state."
   },
   {
@@ -249,6 +330,10 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "description": "Native text input with a connected visual prefix and an accessible field label.",
     "html": "\u003cdiv class=\"syn-field\">\n  \u003clabel class=\"syn-label\" for=\"catalog-website\">Website URL\u003c/label>\n  \u003cdiv class=\"syn-input-group\">\n    \u003cspan class=\"syn-input-addon\" aria-hidden=\"true\">https://\u003c/span>\n    \u003cinput class=\"syn-input\" id=\"catalog-website\" name=\"website\" type=\"text\" inputmode=\"url\" placeholder=\"example.com\">\n  \u003c/div>\n  \u003cp class=\"syn-help\">Enter the host name; validate the full URL in your app.\u003c/p>\n\u003c/div>",
     "keywords": "form composition prefix addon connected input",
+    "source_files": [
+      "src/components/form-composition.css",
+      "src/components/forms.css"
+    ],
     "guidance": "Unreleased alpha.5 candidate only. Native form behavior, associated labels, server validation; use syn-region for container-responsive rows. The Radix adapter is separately optional."
   },
   {
@@ -258,6 +343,11 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "description": "Optional responsive filter layout. The linked static demo does not implement server-side filtering.",
     "html": "\u003cform class=\"syn-filter-bar\" action=\"../examples/crm.html#pipeline\" method=\"get\">\n  \u003clabel class=\"syn-label syn-filter-field syn-filter-field--query\" for=\"catalog-account-query\">Account\n    \u003cinput class=\"syn-input\" id=\"catalog-account-query\" name=\"query\" type=\"search\" placeholder=\"Search accounts\">\n  \u003c/label>\n  \u003clabel class=\"syn-label syn-filter-field\" for=\"catalog-stage\">Stage\n    \u003cselect class=\"syn-select\" id=\"catalog-stage\" name=\"status\">\n      \u003coption value=\"\">All stages\u003c/option>\n      \u003coption value=\"qualified\">Qualified\u003c/option>\n    \u003c/select>\n  \u003c/label>\n  \u003cdiv class=\"syn-filter-actions\">\u003cbutton class=\"syn-button syn-button--primary\" type=\"submit\">Apply\u003c/button>\u003c/div>\n\u003c/form>",
     "keywords": "search crm filter bar stage records toolbar",
+    "source_files": [
+      "src/components/buttons.css",
+      "src/components/forms.css",
+      "src/recipes.css"
+    ],
     "guidance": "Unreleased alpha.5, CSS-only optional layouts. Use a GET form, labelled stages, focusable board overflow and definition-list details; application implements filtering and pipeline state."
   },
   {
@@ -267,6 +357,10 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "description": "Optional app-state composition. Provide a working destination for any recovery action.",
     "html": "\u003csection class=\"syn-result-state\" aria-labelledby=\"catalog-recovery-title\">\n  \u003ch3 id=\"catalog-recovery-title\">No matching records\u003c/h3>\n  \u003cp>Try a broader search or review the documentation.\u003c/p>\n  \u003ca class=\"syn-button syn-button--outline\" href=\"https://syntyr-css.pages.dev/docs/guides.html\">Browse guides\u003c/a>\n\u003c/section>",
     "keywords": "empty no results recovery error reset action",
+    "source_files": [
+      "src/components/buttons.css",
+      "src/recipes.css"
+    ],
     "guidance": "Use button for actions and a for navigation. ARIA states describe real application state."
   },
   {
@@ -274,8 +368,13 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "title": "Geometry frame",
     "module": "syntyr.core.css + syntyr.geometry.css",
     "description": "An optional decorative bracket frame; content stays semantic HTML.",
-    "html": "\u003carticle class=\"syn-panel syn-frame syn-frame--bracket\" aria-labelledby=\"catalog-frame-title\">\n  \u003ch3 class=\"syn-heading\" id=\"catalog-frame-title\">Connection established\u003c/h3>\n  \u003cp>Geometry changes presentation, not meaning.\u003c/p>\n\u003c/article>",
+    "html": "\u003cdiv class=\"syn-grid\">\n\u003carticle class=\"syn-panel syn-frame syn-frame--bracket\" aria-labelledby=\"catalog-frame-title\">\n  \u003ch3 class=\"syn-heading\" id=\"catalog-frame-title\">Connection established\u003c/h3>\n  \u003cp>Geometry changes presentation, not meaning.\u003c/p>\n\u003c/article>\n\u003carticle class=\"syn-panel syn-frame syn-frame--bevel\">\n  \u003ch3 class=\"syn-heading\">Beveled surface\u003c/h3>\n  \u003cp>Optional corner treatment.\u003c/p>\n\u003c/article>\n\u003carticle class=\"syn-panel syn-frame syn-frame--notch\">\n  \u003ch3 class=\"syn-heading\">Notched surface\u003c/h3>\n  \u003cp>Optional corner treatment.\u003c/p>\n\u003c/article>\n\u003carticle class=\"syn-panel syn-frame syn-frame--bracket syn-frame--accent\">\n  \u003ch3 class=\"syn-heading\">Accent emphasis\u003c/h3>\n  \u003cp>One shape with additive emphasis.\u003c/p>\n\u003c/article>\n\u003c/div>",
     "keywords": "decorative frame bracket accent geometry visual",
+    "source_files": [
+      "src/components/layout.css",
+      "src/components/typography.css",
+      "src/geometry.css"
+    ],
     "guidance": "Load optional geometry CSS. One shape per frame; accent emphasis is additive. Refer to visual-intensity.md for pseudo-element ownership and backgrounds."
   },
   {
@@ -285,6 +384,9 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "description": "Optional CSS-only bars with visible values; your app supplies real measurements.",
     "html": "\u003col class=\"syn-viz-bars\" aria-label=\"Illustrative channel share\">\n  \u003cli class=\"syn-viz-bar\">\n    \u003cdiv class=\"syn-viz-bar-label\">\u003cspan>Direct\u003c/span>\u003cdata value=\"54\">54%\u003c/data>\u003c/div>\n    \u003cdiv class=\"syn-viz-bar-track\" aria-hidden=\"true\">\u003cspan class=\"syn-viz-bar-fill\" style=\"--syn-viz-value: 54\">\u003c/span>\u003c/div>\n  \u003c/li>\n  \u003cli class=\"syn-viz-bar\">\n    \u003cdiv class=\"syn-viz-bar-label\">\u003cspan>Agency\u003c/span>\u003cdata value=\"31\">31%\u003c/data>\u003c/div>\n    \u003cdiv class=\"syn-viz-bar-track\" aria-hidden=\"true\">\u003cspan class=\"syn-viz-bar-fill\" style=\"--syn-viz-value: 31\">\u003c/span>\u003c/div>\n  \u003c/li>\n\u003c/ol>",
     "keywords": "visualization graph chart ranked bars percentages data",
+    "source_files": [
+      "src/viz.css"
+    ],
     "guidance": "See the component API reference for compatible classes and CSS modules."
   },
   {
@@ -294,6 +396,9 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "description": "A named navigation landmark with a list of real destinations and one current-page indicator.",
     "html": "\u003cnav aria-label=\"Primary navigation\">\n  \u003cul class=\"syn-inline\">\n    \u003cli>\u003ca href=\"index.html\">Overview\u003c/a>\u003c/li>\n    \u003cli>\u003ca href=\"catalog.html\" aria-current=\"page\">Components\u003c/a>\u003c/li>\n    \u003cli>\u003ca href=\"guides.html\">Guides\u003c/a>\u003c/li>\n  \u003c/ul>\n\u003c/nav>",
     "keywords": "primary site navigation landmark active page aria-current list",
+    "source_files": [
+      "src/components/layout.css"
+    ],
     "guidance": "See the component API reference for compatible classes and CSS modules."
   },
   {
@@ -303,6 +408,7 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "description": "Real fragment links point to heading IDs in the same example; no scroll handler is necessary.",
     "html": "\u003cnav aria-label=\"In-page example sections\">\n  \u003cul>\n    \u003cli>\u003ca href=\"#catalog-toc-overview\">Overview\u003c/a>\u003c/li>\n    \u003cli>\u003ca href=\"#catalog-toc-notes\">Notes\u003c/a>\u003c/li>\n  \u003c/ul>\n\u003c/nav>\n\u003csection aria-labelledby=\"catalog-toc-overview\">\n  \u003ch3 id=\"catalog-toc-overview\">Overview\u003c/h3>\n  \u003cp>Each section has an addressable heading.\u003c/p>\n\u003c/section>\n\u003csection aria-labelledby=\"catalog-toc-notes\">\n  \u003ch3 id=\"catalog-toc-notes\">Notes\u003c/h3>\n  \u003cp>Native anchors work without JavaScript.\u003c/p>\n\u003c/section>",
     "keywords": "table of contents jump links anchor section navigation same page",
+    "source_files": [],
     "guidance": "See the component API reference for compatible classes and CSS modules."
   },
   {
@@ -312,6 +418,9 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "description": "Place a footer within its owning section and name each navigation landmark.",
     "html": "\u003csection aria-labelledby=\"catalog-footer-example-title\">\n  \u003ch3 id=\"catalog-footer-example-title\">Documentation\u003c/h3>\n  \u003cfooter>\n    \u003cnav aria-label=\"Footer resources\">\n      \u003cul class=\"syn-inline\">\n        \u003cli>\u003ca href=\"guides.html\">Guides\u003c/a>\u003c/li>\n        \u003cli>\u003ca href=\"faq.html\">FAQ\u003c/a>\u003c/li>\n        \u003cli>\u003ca href=\"distribution.html\">Installation\u003c/a>\u003c/li>\n      \u003c/ul>\n    \u003c/nav>\n    \u003csmall>Example footer \u2014 update links for your own site.\u003c/small>\n  \u003c/footer>\n\u003c/section>",
     "keywords": "footer contentinfo navigation about legal links sitemap",
+    "source_files": [
+      "src/components/layout.css"
+    ],
     "guidance": "See the component API reference for compatible classes and CSS modules."
   },
   {
@@ -321,6 +430,9 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "description": "Numbered navigation with a clearly identified current page; replace demo query URLs with real routes.",
     "html": "\u003cnav class=\"syn-pagination\" aria-label=\"Example result pages\">\n  \u003ca class=\"syn-page-link\" href=\"catalog.html?page=1\" rel=\"prev\">Previous\u003c/a>\n  \u003ca class=\"syn-page-link\" href=\"catalog.html?page=1\">1\u003c/a>\n  \u003cspan class=\"syn-page-link\" aria-current=\"page\">2\u003c/span>\n  \u003ca class=\"syn-page-link\" href=\"catalog.html?page=3\">3\u003c/a>\n  \u003ca class=\"syn-page-link\" href=\"catalog.html?page=3\" rel=\"next\">Next\u003c/a>\n\u003c/nav>",
     "keywords": "pagination pages previous next rel prev next aria-current",
+    "source_files": [
+      "src/components/patterns.css"
+    ],
     "guidance": "Real links and aria-current only for the actual current page."
   },
   {
@@ -330,6 +442,7 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "description": "Use address for the nearest article or section contact; sample contacts are placeholders.",
     "html": "\u003csection aria-labelledby=\"catalog-contact-heading\">\n  \u003ch3 id=\"catalog-contact-heading\">Customer support\u003c/h3>\n  \u003caddress>\n    \u003ca href=\"mailto:support@example.com\">support@example.com\u003c/a>\n    \u003cspan aria-hidden=\"true\"> \u00b7 \u003c/span>\n    \u003ca href=\"tel:+12025550123\">+1 (202) 555-0123\u003c/a>\n  \u003c/address>\n  \u003cp>\u003csmall>Replace example.com and the example telephone number.\u003c/small>\u003c/p>\n\u003c/section>",
     "keywords": "contact address email phone support organization details",
+    "source_files": [],
     "guidance": "See the component API reference for compatible classes and CSS modules."
   },
   {
@@ -339,6 +452,9 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "description": "Keep a named content section and related complementary material distinct; sidecar layout is optional.",
     "html": "\u003cdiv class=\"syn-sidecar\">\n  \u003csection aria-labelledby=\"catalog-aside-main-heading\">\n    \u003ch3 id=\"catalog-aside-main-heading\">Project overview\u003c/h3>\n    \u003cp>Core project content belongs in a named section.\u003c/p>\n  \u003c/section>\n  \u003caside aria-labelledby=\"catalog-aside-related-heading\">\n    \u003ch3 id=\"catalog-aside-related-heading\">Related resources\u003c/h3>\n    \u003cul>\u003cli>\u003ca href=\"guides.html\">Read the guides\u003c/a>\u003c/li>\u003c/ul>\n  \u003c/aside>\n\u003c/div>",
     "keywords": "section sidebar complementary related resources aside landmark",
+    "source_files": [
+      "src/components/layout.css"
+    ],
     "guidance": "See the component API reference for compatible classes and CSS modules."
   },
   {
@@ -348,6 +464,9 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "description": "Group a title and supporting subtitle without inserting fake heading levels.",
     "html": "\u003csection aria-labelledby=\"catalog-hgroup-heading\">\n  \u003chgroup>\n    \u003ch3 id=\"catalog-hgroup-heading\">Product updates\u003c/h3>\n    \u003cp class=\"syn-lede\">New releases, written for people.\u003c/p>\n  \u003c/hgroup>\n  \u003cp>Follow the updates that matter to your team.\u003c/p>\n\u003c/section>",
     "keywords": "hgroup heading title subtitle introduction lede editorial",
+    "source_files": [
+      "src/components/typography.css"
+    ],
     "guidance": "See the component API reference for compatible classes and CSS modules."
   },
   {
@@ -357,6 +476,9 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "description": "Machine-readable times in an ordered agenda; the display time zone is explicit.",
     "html": "\u003csection aria-labelledby=\"catalog-agenda-heading\">\n  \u003ch3 id=\"catalog-agenda-heading\">Workshop schedule\u003c/h3>\n  \u003col class=\"syn-stack\">\n    \u003cli>\u003ctime datetime=\"2026-12-03T09:00:00-03:00\">09:00 BRT\u003c/time> \u2014 Welcome\u003c/li>\n    \u003cli>\u003ctime datetime=\"2026-12-03T10:30:00-03:00\">10:30 BRT\u003c/time> \u2014 Hands-on session\u003c/li>\n    \u003cli>\u003ctime datetime=\"2026-12-03T12:00:00-03:00\">12:00 BRT\u003c/time> \u2014 Questions\u003c/li>\n  \u003c/ol>\n\u003c/section>",
     "keywords": "agenda schedule event time datetime ordered list sessions",
+    "source_files": [
+      "src/components/layout.css"
+    ],
     "guidance": "See the component API reference for compatible classes and CSS modules."
   },
   {
@@ -366,6 +488,9 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "description": "Use caption, scoped column headings and a real table footer for aggregated values.",
     "html": "\u003cdiv class=\"syn-table-wrap\">\n  \u003ctable class=\"syn-table\">\n    \u003ccaption>Illustrative monthly orders\u003c/caption>\n    \u003cthead>\u003ctr>\u003cth scope=\"col\">Month\u003c/th>\u003cth scope=\"col\">Orders\u003c/th>\u003c/tr>\u003c/thead>\n    \u003ctbody>\n      \u003ctr>\u003cth scope=\"row\">January\u003c/th>\u003ctd>12\u003c/td>\u003c/tr>\n      \u003ctr>\u003cth scope=\"row\">February\u003c/th>\u003ctd>18\u003c/td>\u003c/tr>\n    \u003c/tbody>\n    \u003ctfoot>\u003ctr>\u003cth scope=\"row\">Total\u003c/th>\u003ctd>30\u003c/td>\u003c/tr>\u003c/tfoot>\n  \u003c/table>\n\u003c/div>",
     "keywords": "table caption summary tfoot total column scope numeric",
+    "source_files": [
+      "src/components/data.css"
+    ],
     "guidance": "Use proper headers, captions and scroll containers."
   },
   {
@@ -375,6 +500,7 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "description": "Give abbreviations definitions and mark edits with native insertion and deletion elements.",
     "html": "\u003csection aria-labelledby=\"catalog-revisions-heading\">\n  \u003ch3 id=\"catalog-revisions-heading\">Release terminology\u003c/h3>\n  \u003cp>\u003cabbr title=\"Application programming interface\">API\u003c/abbr> is the public contract.\u003c/p>\n  \u003cp>\u003cdfn>Progressive enhancement\u003c/dfn> keeps core content usable without scripts.\u003c/p>\n  \u003cp>Plan: \u003cdel datetime=\"2026-11-20\">Ship a prototype\u003c/del>\n     \u003cins datetime=\"2026-11-22\">Ship a tested component\u003c/ins>.\u003c/p>\n\u003c/section>",
     "keywords": "abbreviation definition edit insert delete ins del dfn datetime revisions",
+    "source_files": [],
     "guidance": "See the component API reference for compatible classes and CSS modules."
   },
   {
@@ -384,6 +510,10 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "description": "Built-in constraint validation with a visible description; adapt the example GET endpoint.",
     "html": "\u003cform class=\"syn-form\" action=\"catalog.html\" method=\"get\">\n  \u003clabel class=\"syn-label\" for=\"catalog-results-limit\">Maximum results\u003c/label>\n  \u003cinput class=\"syn-input\" id=\"catalog-results-limit\" name=\"limit\"\n         type=\"number\" min=\"1\" max=\"50\" value=\"10\" required\n         aria-describedby=\"catalog-validation-help\">\n  \u003cp class=\"syn-help\" id=\"catalog-validation-help\">Choose a number from 1 to 50.\u003c/p>\n  \u003cbutton class=\"syn-button syn-button--primary\" type=\"submit\">Apply limit\u003c/button>\n\u003c/form>",
     "keywords": "form validation help required number range aria-describedby label",
+    "source_files": [
+      "src/components/buttons.css",
+      "src/components/forms.css"
+    ],
     "guidance": "Real handlers and field validation belong to the application."
   },
   {
@@ -393,6 +523,9 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "description": "A working skip link moves to real content in the same example.",
     "html": "\u003cdiv>\n  \u003ca class=\"syn-button\" href=\"#catalog-skip-destination\">Skip to example content\u003c/a>\n  \u003cnav aria-label=\"Example introductory links\">\u003ca href=\"guides.html\">Browse guides\u003c/a>\u003c/nav>\n  \u003csection id=\"catalog-skip-destination\" tabindex=\"-1\" aria-labelledby=\"catalog-skip-heading\">\n    \u003ch3 id=\"catalog-skip-heading\">Example main content\u003c/h3>\n    \u003cp>Use a matching target ID in your application.\u003c/p>\n  \u003c/section>\n\u003c/div>",
     "keywords": "skip content anchor keyboard accessible",
+    "source_files": [
+      "src/components/buttons.css"
+    ],
     "guidance": "Use button for actions and a for navigation. ARIA states describe real application state."
   },
   {
@@ -402,6 +535,10 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "description": "Use textual status labels that stay understandable without color.",
     "html": "\u003csection aria-labelledby=\"catalog-status-heading\">\n  \u003ch3 id=\"catalog-status-heading\">Workflow status\u003c/h3>\n  \u003cul class=\"syn-stack\">\n    \u003cli>\u003cspan class=\"syn-badge\">Ready\u003c/span> \u00b7 Draft reviewed\u003c/li>\n    \u003cli>\u003cspan class=\"syn-badge\">Pending\u003c/span> \u00b7 Awaiting approval\u003c/li>\n    \u003cli>\u003cspan class=\"syn-badge\">Needs attention\u003c/span> \u00b7 Missing document\u003c/li>\n  \u003c/ul>\n\u003c/section>",
     "keywords": "status list badges semantic state text",
+    "source_files": [
+      "src/components/layout.css",
+      "src/components/typography.css"
+    ],
     "guidance": "See the component API reference for compatible classes and CSS modules."
   },
   {
@@ -411,6 +548,9 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "description": "Use an ordered list with machine-readable timestamps for an activity feed.",
     "html": "\u003csection aria-labelledby=\"catalog-activity-heading\">\n  \u003ch3 id=\"catalog-activity-heading\">Recent activity\u003c/h3>\n  \u003col class=\"syn-stack\">\n    \u003cli>\u003ctime datetime=\"2026-11-22T10:00:00Z\">Nov 22, 10:00 UTC\u003c/time> \u2014 Draft updated\u003c/li>\n    \u003cli>\u003ctime datetime=\"2026-11-21T15:30:00Z\">Nov 21, 15:30 UTC\u003c/time> \u2014 Review requested\u003c/li>\n  \u003c/ol>\n\u003c/section>",
     "keywords": "activity timeline events ordered time feed",
+    "source_files": [
+      "src/components/layout.css"
+    ],
     "guidance": "See the component API reference for compatible classes and CSS modules."
   },
   {
@@ -420,6 +560,7 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "description": "A definition list for record attributes, not a faux two-column table.",
     "html": "\u003csection aria-labelledby=\"catalog-property-heading\">\n  \u003ch3 id=\"catalog-property-heading\">Record details\u003c/h3>\n  \u003cdl>\n    \u003cdt>Status\u003c/dt>\u003cdd>Active\u003c/dd>\n    \u003cdt>Plan\u003c/dt>\u003cdd>Starter\u003c/dd>\n    \u003cdt>Updated\u003c/dt>\u003cdd>\u003ctime datetime=\"2026-11-22\">November 22, 2026\u003c/time>\u003c/dd>\n  \u003c/dl>\n\u003c/section>",
     "keywords": "property key value details description list metadata",
+    "source_files": [],
     "guidance": "See the component API reference for compatible classes and CSS modules."
   },
   {
@@ -429,6 +570,10 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "description": "A card with one real destination and a meaningful accessible link name.",
     "html": "\u003carticle class=\"syn-panel\">\n  \u003cp class=\"syn-eyebrow\">DOCUMENTATION\u003c/p>\n  \u003ch3 class=\"syn-heading\">\u003ca href=\"guides.html\">Getting started guides\u003c/a>\u003c/h3>\n  \u003cp>Find practical examples for integrating native HTML and Syntyr CSS.\u003c/p>\n\u003c/article>",
     "keywords": "resource article card link description",
+    "source_files": [
+      "src/components/layout.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Choose native headings and accessible labels."
   },
   {
@@ -438,6 +583,10 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "description": "A labeled section with actions kept in normal document order.",
     "html": "\u003csection aria-labelledby=\"catalog-action-section-heading\">\n  \u003cheader class=\"syn-inline\">\n    \u003ch3 id=\"catalog-action-section-heading\">Workspace overview\u003c/h3>\n    \u003ca class=\"syn-button syn-button--outline\" href=\"guides.html\">View guides\u003c/a>\n  \u003c/header>\n  \u003cp>Place supporting content after the section heading.\u003c/p>\n\u003c/section>",
     "keywords": "section header toolbar actions links responsive",
+    "source_files": [
+      "src/components/buttons.css",
+      "src/components/layout.css"
+    ],
     "guidance": "Use button for actions and a for navigation. ARIA states describe real application state."
   },
   {
@@ -449,6 +598,13 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Product launch hero A concise product introduction with real calls to action. hero landing product",
     "kind": "block",
     "category": "Marketing",
+    "source_files": [
+      "src/base.css",
+      "src/components/buttons.css",
+      "src/components/patterns.css",
+      "src/components/typography.css",
+      "src/recipes.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -460,6 +616,13 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Security-first hero A restrained security product hero with an explicit trust message. security hero saas",
     "kind": "block",
     "category": "Marketing",
+    "source_files": [
+      "src/base.css",
+      "src/components/buttons.css",
+      "src/components/patterns.css",
+      "src/components/typography.css",
+      "src/recipes.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -471,6 +634,12 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Three-feature grid Responsive feature cards based on a fluid CSS grid. features cards grid",
     "kind": "block",
     "category": "Marketing",
+    "source_files": [
+      "src/base.css",
+      "src/components/patterns.css",
+      "src/components/typography.css",
+      "src/recipes.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -482,6 +651,12 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Benefits checklist A short benefits section with native list semantics. benefits features list",
     "kind": "block",
     "category": "Marketing",
+    "source_files": [
+      "src/base.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -493,6 +668,12 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Three-tier pricing Three responsive pricing cards with a featured plan. pricing plans conversion",
     "kind": "block",
     "category": "Marketing",
+    "source_files": [
+      "src/base.css",
+      "src/components/buttons.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -504,6 +685,12 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Customer testimonial Readable social proof with explicit quotation attribution. testimonial quote trust",
     "kind": "block",
     "category": "Marketing",
+    "source_files": [
+      "src/base.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -515,6 +702,12 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Frequently asked questions Keyboard-accessible native disclosures without a script. faq questions disclosure",
     "kind": "block",
     "category": "Marketing",
+    "source_files": [
+      "src/base.css",
+      "src/components/overlays.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -526,6 +719,13 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Call-to-action band A compact conversion section with clear hierarchy. cta conversion contact",
     "kind": "block",
     "category": "Marketing",
+    "source_files": [
+      "src/base.css",
+      "src/components/buttons.css",
+      "src/components/patterns.css",
+      "src/components/typography.css",
+      "src/recipes.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -537,6 +737,11 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "KPI overview Container-aware operational metrics with text labels. dashboard kpi metrics",
     "kind": "block",
     "category": "Applications",
+    "source_files": [
+      "src/base.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -548,6 +753,12 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Recent activity A compact activity feed in a reusable application card. activity feed application",
     "kind": "block",
     "category": "Applications",
+    "source_files": [
+      "src/base.css",
+      "src/components/patterns.css",
+      "src/components/typography.css",
+      "src/recipes.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -559,6 +770,12 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Records table Semantic, scrollable table with caption and column scopes. table records report",
     "kind": "block",
     "category": "Applications",
+    "source_files": [
+      "src/base.css",
+      "src/components/data.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -570,6 +787,14 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Search and filter form Server-ready GET filters that preserve native form semantics. search filter form",
     "kind": "block",
     "category": "Applications",
+    "source_files": [
+      "src/base.css",
+      "src/components/buttons.css",
+      "src/components/forms.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -581,6 +806,14 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Account settings Labeled settings form for server-backed applications. settings account form",
     "kind": "block",
     "category": "Applications",
+    "source_files": [
+      "src/base.css",
+      "src/components/buttons.css",
+      "src/components/forms.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -592,6 +825,12 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Team directory Simple list of people and roles with descriptive content. team permissions people",
     "kind": "block",
     "category": "Applications",
+    "source_files": [
+      "src/base.css",
+      "src/components/patterns.css",
+      "src/components/typography.css",
+      "src/recipes.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -603,6 +842,14 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Billing summary A compact, readable subscription overview. billing subscription invoice",
     "kind": "block",
     "category": "Applications",
+    "source_files": [
+      "src/base.css",
+      "src/components/buttons.css",
+      "src/components/data.css",
+      "src/components/patterns.css",
+      "src/components/typography.css",
+      "src/recipes.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -614,6 +861,15 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Onboarding checklist A short onboarding progression conveyed without color-only state. onboarding checklist setup",
     "kind": "block",
     "category": "Applications",
+    "source_files": [
+      "src/base.css",
+      "src/components/buttons.css",
+      "src/components/data.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css",
+      "src/recipes.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -625,6 +881,12 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Terminal output A static terminal presentation, not an interactive shell. terminal developer cli",
     "kind": "block",
     "category": "Technical",
+    "source_files": [
+      "src/base.css",
+      "src/components/patterns.css",
+      "src/components/typography.css",
+      "src/recipes.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -636,6 +898,11 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Service incident notice Status notice with actionable text and honest semantics. incident status alert",
     "kind": "block",
     "category": "Technical",
+    "source_files": [
+      "src/base.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -647,6 +914,14 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Telemetry panel Readable service status with native progress indicators. telemetry health progress",
     "kind": "block",
     "category": "Technical",
+    "source_files": [
+      "src/base.css",
+      "src/components/data.css",
+      "src/components/forms.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -658,6 +933,12 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Release notes Compact changelog entry with a machine-readable date. changelog releases updates",
     "kind": "block",
     "category": "Technical",
+    "source_files": [
+      "src/base.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -669,6 +950,16 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Resource management workspace Server-ready resource search, record table, pagination and empty state. saas resources crud admin operations",
     "kind": "block",
     "category": "Applications",
+    "source_files": [
+      "src/base.css",
+      "src/components/buttons.css",
+      "src/components/data.css",
+      "src/components/forms.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css",
+      "src/recipes.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -680,6 +971,15 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "CRM pipeline workspace Accessible native deal stages, filters and links with no drag runtime. saas crm pipeline deals sales",
     "kind": "block",
     "category": "Applications",
+    "source_files": [
+      "src/base.css",
+      "src/components/buttons.css",
+      "src/components/forms.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css",
+      "src/recipes.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -691,6 +991,17 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Billing and settings workspace Subscription details, invoice history and a server-owned billing contact form. saas billing settings invoices forms",
     "kind": "block",
     "category": "Applications",
+    "source_files": [
+      "src/base.css",
+      "src/components/buttons.css",
+      "src/components/data.css",
+      "src/components/form-composition.css",
+      "src/components/forms.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css",
+      "src/recipes.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -702,6 +1013,14 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Sign-in form Native authentication form with accessible labels and recovery link. authentication login form",
     "kind": "block",
     "category": "Applications",
+    "source_files": [
+      "src/base.css",
+      "src/components/buttons.css",
+      "src/components/forms.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -713,6 +1032,14 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Account recovery Email recovery request presentation with security integration notes. authentication recovery password",
     "kind": "block",
     "category": "Applications",
+    "source_files": [
+      "src/base.css",
+      "src/components/buttons.css",
+      "src/components/forms.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -724,6 +1051,14 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Error recovery view Actionable error state without fake success or client-side retry. error recovery status",
     "kind": "block",
     "category": "Applications",
+    "source_files": [
+      "src/base.css",
+      "src/components/buttons.css",
+      "src/components/forms.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -735,6 +1070,13 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Empty collection state Clear primary action and filter recovery guidance. empty no-results onboarding",
     "kind": "block",
     "category": "Applications",
+    "source_files": [
+      "src/base.css",
+      "src/components/buttons.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -746,6 +1088,12 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Features comparison table A semantic comparison matrix that can scroll within narrow containers. comparison features matrix",
     "kind": "block",
     "category": "Marketing",
+    "source_files": [
+      "src/base.css",
+      "src/components/data.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -757,6 +1105,12 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Integration directory grid A grid of documented integration entry points and benefits. integrations directory apps",
     "kind": "block",
     "category": "Marketing",
+    "source_files": [
+      "src/base.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -768,6 +1122,15 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Newsletter signup panel An accessible subscription form with a native server-backed fallback. newsletter email lead",
     "kind": "block",
     "category": "Marketing",
+    "source_files": [
+      "src/base.css",
+      "src/components/buttons.css",
+      "src/components/form-composition.css",
+      "src/components/forms.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -779,6 +1142,13 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Site announcement strip A lightweight product or event announcement with a contextual destination. announcement promotion notice",
     "kind": "block",
     "category": "Marketing",
+    "source_files": [
+      "src/base.css",
+      "src/components/buttons.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -790,6 +1160,12 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Partner logo text wall A compact text-only partner strip with no unlicensed logos. logos partners trust",
     "kind": "block",
     "category": "Marketing",
+    "source_files": [
+      "src/base.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -801,6 +1177,12 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "How it works steps An ordered and accessible sequence for explaining a service. process steps workflow",
     "kind": "block",
     "category": "Services",
+    "source_files": [
+      "src/base.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -812,6 +1194,12 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Service offerings grid A services section with clear descriptions and destination links. agency services business",
     "kind": "block",
     "category": "Services",
+    "source_files": [
+      "src/base.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -823,6 +1211,12 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Service coverage cards A service-area section suitable for local and regional businesses. locations local services",
     "kind": "block",
     "category": "Services",
+    "source_files": [
+      "src/base.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -834,6 +1228,12 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Selected work grid An accessible project gallery without fragile image dependencies. portfolio projects work",
     "kind": "block",
     "category": "Portfolio",
+    "source_files": [
+      "src/base.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -845,6 +1245,12 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Team introduction cards A team directory section without invented portraits or credentials. team people about",
     "kind": "block",
     "category": "Services",
+    "source_files": [
+      "src/base.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -856,6 +1262,15 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Project inquiry form A labeled contact form with appropriate native inputs and privacy guidance. contact lead inquiry",
     "kind": "block",
     "category": "Services",
+    "source_files": [
+      "src/base.css",
+      "src/components/buttons.css",
+      "src/components/form-composition.css",
+      "src/components/forms.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -867,6 +1282,13 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Featured editorial story A prominent lead article with an accessible summary and a real reading link. blog featured editorial",
     "kind": "block",
     "category": "Editorial",
+    "source_files": [
+      "src/base.css",
+      "src/components/buttons.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -878,6 +1300,12 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Article and news grid A responsive collection of dated articles with titles and excerpts. blog news posts cards",
     "kind": "block",
     "category": "Editorial",
+    "source_files": [
+      "src/base.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -889,6 +1317,11 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Long-form article layout A semantic article header, readable paragraphs and related links. article blog reading",
     "kind": "block",
     "category": "Editorial",
+    "source_files": [
+      "src/base.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -900,6 +1333,12 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Author bio card A concise author introduction with a clearly labeled profile link. author bio profile",
     "kind": "block",
     "category": "Editorial",
+    "source_files": [
+      "src/base.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -911,6 +1350,13 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Editorial intro with context panel An editorial introduction with primary actions and a contextual checklist beside it. intro split editorial landing",
     "kind": "block",
     "category": "Editorial",
+    "source_files": [
+      "src/base.css",
+      "src/components/buttons.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -922,6 +1368,12 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Article with contents sidebar A long-form article and real anchor-linked table of contents in a wrapping sidecar. article contents sidebar reading",
     "kind": "block",
     "category": "Editorial",
+    "source_files": [
+      "src/base.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -933,6 +1385,13 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Case-study teaser A project outcome summary with challenges, solution and next action. case-study portfolio results",
     "kind": "block",
     "category": "Portfolio",
+    "source_files": [
+      "src/base.css",
+      "src/components/buttons.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -944,6 +1403,13 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Responsive site header A compact brand, navigation and call-to-action header with native links. header navigation website",
     "kind": "block",
     "category": "Navigation",
+    "source_files": [
+      "src/base.css",
+      "src/components/buttons.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -955,6 +1421,12 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Multi-column site footer A reusable footer with separate navigation groups and business information. footer links website",
     "kind": "block",
     "category": "Navigation",
+    "source_files": [
+      "src/base.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -966,6 +1438,13 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Centered editorial header Centered brand, horizontal links, and a secondary call to action. header centered editorial navigation",
     "kind": "block",
     "category": "Navigation",
+    "source_files": [
+      "src/base.css",
+      "src/components/buttons.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -977,6 +1456,13 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Two-row product header Separate utility and product navigation with a prominent action. header utility two-row saas",
     "kind": "block",
     "category": "Navigation",
+    "source_files": [
+      "src/base.css",
+      "src/components/buttons.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -988,6 +1474,14 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Native disclosure header Compact brand and expandable keyboard-accessible menu without JavaScript. header details mobile disclosure",
     "kind": "block",
     "category": "Navigation",
+    "source_files": [
+      "src/base.css",
+      "src/components/buttons.css",
+      "src/components/layout.css",
+      "src/components/overlays.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -999,6 +1493,12 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Compact single-row footer Space-saving brand, legal links and disclosure in a wrapping row. footer compact minimal legal",
     "kind": "block",
     "category": "Navigation",
+    "source_files": [
+      "src/base.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -1010,6 +1510,12 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Four-column sitemap footer Responsive product, resource, company and legal navigation groups. footer sitemap columns links",
     "kind": "block",
     "category": "Navigation",
+    "source_files": [
+      "src/base.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -1021,6 +1527,14 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Newsletter and links footer Email subscription example beside site links; requires a host-owned backend. footer newsletter subscription form",
     "kind": "block",
     "category": "Navigation",
+    "source_files": [
+      "src/base.css",
+      "src/components/buttons.css",
+      "src/components/forms.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -1032,6 +1546,15 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Native expandable mega menu Keyboard-friendly disclosure with grouped destination links and no menu runtime. mega menu navigation disclosure site",
     "kind": "block",
     "category": "Navigation",
+    "source_files": [
+      "src/base.css",
+      "src/components/buttons.css",
+      "src/components/layout.css",
+      "src/components/overlays.css",
+      "src/components/patterns.css",
+      "src/components/typography.css",
+      "src/recipes.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -1043,6 +1566,12 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Documentation page Documentation navigation, breadcrumb and article content. documentation sidebar technical",
     "kind": "block",
     "category": "Technical",
+    "source_files": [
+      "src/base.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -1054,6 +1583,15 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Filterable content collection Loop-style article cards with real GET search, taxonomy selection and pagination. loop grid archive blog category filters",
     "kind": "block",
     "category": "Publishing",
+    "source_files": [
+      "src/base.css",
+      "src/components/buttons.css",
+      "src/components/forms.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css",
+      "src/recipes.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -1065,6 +1603,12 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Product collection cards Product catalog cards with explicit price and detail links. ecommerce products catalog",
     "kind": "block",
     "category": "Commerce",
+    "source_files": [
+      "src/base.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -1076,6 +1620,12 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Shop category highlights A merchandise category section with links instead of fabricated checkout controls. shop categories merchandising",
     "kind": "block",
     "category": "Commerce",
+    "source_files": [
+      "src/base.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -1087,6 +1637,13 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Feature spotlight An editorial split section with a concrete feature benefit and a complementary product detail. feature spotlight split landing layout",
     "kind": "block",
     "category": "Marketing",
+    "source_files": [
+      "src/base.css",
+      "src/components/buttons.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -1098,6 +1655,12 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Trust and assurance section Transparent questions to ask about security, reliability, and data handling; not certification claims. trust security assurance compliance marketing",
     "kind": "block",
     "category": "Marketing",
+    "source_files": [
+      "src/base.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -1109,6 +1672,13 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Event registration section An agenda and accessible native signup form; your server must implement registration. event registration webinar signup marketing form",
     "kind": "block",
     "category": "Marketing",
+    "source_files": [
+      "src/base.css",
+      "src/components/buttons.css",
+      "src/components/forms.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -1120,6 +1690,12 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Help center landing A searchable-looking help index built from real navigation links, not a fake search control. help support knowledgebase navigation layout",
     "kind": "block",
     "category": "Applications",
+    "source_files": [
+      "src/base.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -1131,6 +1707,12 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Notification center Time-ordered notifications with visible status labels and real detail destinations. inbox alerts notification activity layout",
     "kind": "block",
     "category": "Applications",
+    "source_files": [
+      "src/base.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -1142,6 +1724,12 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "API endpoint reference Readable example request and response, with method, route, and JSON; your API owns behavior. api endpoint documentation technical code",
     "kind": "block",
     "category": "Technical",
+    "source_files": [
+      "src/base.css",
+      "src/components/data.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -1153,6 +1741,13 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Scrollable product card rail An accessible, CSS-only horizontal collection for feature, portfolio or editorial cards. carousel scroll cards features",
     "kind": "block",
     "category": "Marketing",
+    "source_files": [
+      "src/base.css",
+      "src/components/buttons.css",
+      "src/components/patterns.css",
+      "src/components/typography.css",
+      "src/recipes.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -1164,6 +1759,12 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Responsive bento feature grid A container-aware asymmetric feature section using composable cards. bento features grid",
     "kind": "block",
     "category": "Marketing",
+    "source_files": [
+      "src/base.css",
+      "src/components/patterns.css",
+      "src/components/typography.css",
+      "src/recipes.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -1175,6 +1776,15 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Product screenshot hero Split-screen product hero with semantic CSS-only mock dashboard content. hero product showcase",
     "kind": "block",
     "category": "Marketing",
+    "source_files": [
+      "src/base.css",
+      "src/components/buttons.css",
+      "src/components/data.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css",
+      "src/recipes.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -1186,6 +1796,13 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Split feature detail spotlight Full split section with illustration, record details and activity timeline. features showcase split",
     "kind": "block",
     "category": "Marketing",
+    "source_files": [
+      "src/base.css",
+      "src/components/buttons.css",
+      "src/components/patterns.css",
+      "src/components/typography.css",
+      "src/recipes.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -1197,6 +1814,13 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Customer case study detail A complete editorial case-study layout with honest illustrative metrics. case-study story social-proof",
     "kind": "block",
     "category": "Marketing",
+    "source_files": [
+      "src/base.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css",
+      "src/recipes.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -1208,6 +1832,15 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Pricing and feature comparison Plan cards and a keyboard-scrollable semantic comparison table. pricing comparison plans",
     "kind": "block",
     "category": "Marketing",
+    "source_files": [
+      "src/base.css",
+      "src/components/buttons.css",
+      "src/components/data.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css",
+      "src/recipes.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -1219,6 +1852,16 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Account registration screen Native sign-up form and next-step guidance with real host routes. auth sign-up forms",
     "kind": "block",
     "category": "Applications",
+    "source_files": [
+      "src/base.css",
+      "src/components/buttons.css",
+      "src/components/form-composition.css",
+      "src/components/forms.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css",
+      "src/recipes.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -1230,6 +1873,17 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Resource create and browse screen Filterable records, detail navigation and native create form. crud resources table",
     "kind": "block",
     "category": "Applications",
+    "source_files": [
+      "src/base.css",
+      "src/components/buttons.css",
+      "src/components/data.css",
+      "src/components/form-composition.css",
+      "src/components/forms.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css",
+      "src/recipes.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -1241,6 +1895,17 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Team and invitation management Workspace roster, role information and a native invite form. organization team roles",
     "kind": "block",
     "category": "Applications",
+    "source_files": [
+      "src/base.css",
+      "src/components/buttons.css",
+      "src/components/data.css",
+      "src/components/form-composition.css",
+      "src/components/forms.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css",
+      "src/recipes.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -1252,6 +1917,15 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Subscription and usage overview Plan details, native metering and invoice history. billing usage subscription",
     "kind": "block",
     "category": "Applications",
+    "source_files": [
+      "src/base.css",
+      "src/components/buttons.css",
+      "src/components/data.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css",
+      "src/recipes.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -1263,6 +1937,14 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Integration connection states Connection directory with connected, disconnected and error examples. integrations connections status",
     "kind": "block",
     "category": "Applications",
+    "source_files": [
+      "src/base.css",
+      "src/components/buttons.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css",
+      "src/recipes.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -1274,6 +1956,17 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "API key and webhook settings Masked API-key metadata, secure-endpoint form and documentation routes. api-keys webhooks developer",
     "kind": "block",
     "category": "Applications",
+    "source_files": [
+      "src/base.css",
+      "src/components/buttons.css",
+      "src/components/data.css",
+      "src/components/form-composition.css",
+      "src/components/forms.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css",
+      "src/recipes.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -1285,6 +1978,11 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Responsive image gallery Four original local illustrations in a CSS-only responsive gallery with native full-image links. gallery images photography portfolio",
     "kind": "block",
     "category": "Portfolio",
+    "source_files": [
+      "src/base.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -1296,6 +1994,13 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Image and story split A media-and-copy section with semantic figure, responsive image and action. image story about feature",
     "kind": "block",
     "category": "Marketing",
+    "source_files": [
+      "src/base.css",
+      "src/components/buttons.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -1307,6 +2012,12 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Testimonials grid Three sample quotation cards with clear demo-only attribution. testimonials reviews social-proof",
     "kind": "block",
     "category": "Marketing",
+    "source_files": [
+      "src/base.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -1318,6 +2029,11 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Company milestones timeline A chronological history using native dates and an ordered vertical sequence. timeline history about milestones",
     "kind": "block",
     "category": "Services",
+    "source_files": [
+      "src/base.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -1329,6 +2045,13 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Event agenda A schedule of talks and sessions with native time elements. events agenda schedule conference",
     "kind": "block",
     "category": "Services",
+    "source_files": [
+      "src/base.css",
+      "src/components/buttons.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -1340,6 +2063,13 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Company story and milestones An accessible company introduction with mission copy and an ordered story timeline. about story company mission",
     "kind": "block",
     "category": "Company",
+    "source_files": [
+      "src/base.css",
+      "src/components/buttons.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -1351,6 +2081,13 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Customer review grid Original attributed review cards with an explicit sample-content disclosure. reviews testimonials social proof",
     "kind": "block",
     "category": "Marketing",
+    "source_files": [
+      "src/base.css",
+      "src/components/buttons.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -1362,6 +2099,12 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Industry and use-case showcase Audience-specific benefits with real destination links and honest example content. solutions industries use cases cards",
     "kind": "block",
     "category": "Marketing",
+    "source_files": [
+      "src/base.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -1373,6 +2116,13 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Locations and opening hours Semantic multi-location contacts with structured hours and accessibility links. locations hours local business contact",
     "kind": "block",
     "category": "Services",
+    "source_files": [
+      "src/base.css",
+      "src/components/buttons.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -1384,6 +2134,13 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Three-path decision guide A responsive choice of three service approaches with visible criteria and tradeoffs. decision comparison services paths",
     "kind": "block",
     "category": "Services",
+    "source_files": [
+      "src/base.css",
+      "src/components/buttons.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -1395,6 +2152,14 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "FAQs with a contact sidebar Native expandable answers alongside a clear contact path. faq questions sidebar contact",
     "kind": "block",
     "category": "Services",
+    "source_files": [
+      "src/base.css",
+      "src/components/buttons.css",
+      "src/components/layout.css",
+      "src/components/overlays.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -1406,6 +2171,13 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Careers and open positions Readable role summaries with clear application routes and example-data disclosure. careers jobs recruiting hiring",
     "kind": "block",
     "category": "Company",
+    "source_files": [
+      "src/base.css",
+      "src/components/buttons.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -1417,6 +2189,13 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Three-column principles section Organizational principles with concrete explanations in a responsive grid. principles values company columns",
     "kind": "block",
     "category": "Company",
+    "source_files": [
+      "src/base.css",
+      "src/components/buttons.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -1428,6 +2207,13 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Native feature switcher Exclusive browser-native disclosures for feature storytelling without a script. features accordion progressive enhancement no javascript",
     "kind": "block",
     "category": "Marketing",
+    "source_files": [
+      "src/base.css",
+      "src/components/layout.css",
+      "src/components/overlays.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -1439,6 +2225,13 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Photographic hero section An image-led introduction with a meaningful action and figure caption. hero image landing photography",
     "kind": "block",
     "category": "Marketing",
+    "source_files": [
+      "src/base.css",
+      "src/components/buttons.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -1450,6 +2243,11 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Before and after image comparison Two semantic, responsive photos with accessible full-image links; no scripted comparison slider. before after portfolio images",
     "kind": "block",
     "category": "Portfolio",
+    "source_files": [
+      "src/base.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -1461,6 +2259,13 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Free resources and downloads Native download links to reusable illustrations in a flexible resource grid. resources downloads files library",
     "kind": "block",
     "category": "Publishing",
+    "source_files": [
+      "src/base.css",
+      "src/components/buttons.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -1472,6 +2277,12 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Grouped resource topic index A documentation and resource hub with grouped descriptive navigation links. resources index documentation navigation",
     "kind": "block",
     "category": "Publishing",
+    "source_files": [
+      "src/base.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -1483,6 +2294,12 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "News and press highlights A dated editorial summary grid with descriptive story destinations. press mentions news announcements",
     "kind": "block",
     "category": "Marketing",
+    "source_files": [
+      "src/base.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -1494,6 +2311,12 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Stacked feature story rows Two narrative feature rows with contextual detail cards and destination links. features story rows content",
     "kind": "block",
     "category": "Marketing",
+    "source_files": [
+      "src/base.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -1505,6 +2328,13 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Metrics with explanatory narrative Contextualized illustrative metrics paired with interpretation and source guidance. metrics story stats explanation",
     "kind": "block",
     "category": "Marketing",
+    "source_files": [
+      "src/base.css",
+      "src/components/buttons.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -1516,6 +2346,12 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Community and social links A semantic link directory for communities, updates and contact channels. social community links follow",
     "kind": "block",
     "category": "Navigation",
+    "source_files": [
+      "src/base.css",
+      "src/components/layout.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   },
   {
@@ -1527,6 +2363,12 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "keywords": "Product specifications table Accessible product details in a named, keyboard-scrollable semantic table. product details specifications commerce",
     "kind": "block",
     "category": "Commerce",
+    "source_files": [
+      "src/base.css",
+      "src/components/data.css",
+      "src/components/patterns.css",
+      "src/components/typography.css"
+    ],
     "guidance": "Illustrative, MIT-licensed presentation. Use the required CSS modules; your application supplies actions, validation, real data and permissions."
   }
 ];

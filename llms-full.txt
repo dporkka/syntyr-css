@@ -5487,6 +5487,35 @@ you intentionally want to compare. Do not generalize this experiment to text
 colors or primary buttons without a contrast audit, and check the resulting
 hover backgrounds against text across all palettes and browser engines.
 
+## Inspect token dependencies and component variants (source candidate)
+
+From the source checkout, use the dependency-free Python inspection tool:
+
+```sh
+python3 scripts/inspect_design.py token -- --syn-focus-ring
+python3 scripts/inspect_design.py variants
+```
+
+The token report lists declarations and references by source file, direct
+dependencies, reverse token references, and transitively reachable tokens.
+It scans the public build inputs, ignoring CSS comments and quoted strings.
+Edges combine all theme scopes, conditional rules and fallback branches:
+they describe possible static relationships, not the cascade or computed
+values for any element. A reference without a declaration can represent an
+optional host override. The report is not a CSS parser, cycle validator or
+accessibility audit.
+
+The variant report derives its families from the curated component manifest
+and links each documented modifier to canonical gallery example IDs where
+the base and modifier actually occur on the same HTML element. An empty
+example list means no matching curated example was found, not that the
+modifier is unsupported. This is not a Cartesian combination matrix or
+proof of all valid states. See the [catalog](catalog.html) and
+[playground](playground.html) for rendering and accessibility guidance.
+
+Both commands are read-only, emit JSON, and report the unreleased source
+candidate version. No application runtime dependencies or CSS are added.
+
 ---
 
 ## Source: docs/visual-intensity.md
@@ -6956,6 +6985,25 @@ selectors are scoped, those classes would otherwise silently render without
 Syntyr styles. Plain HTML fragments are exempt because the embedding app may
 supply the root; dynamic ancestor classes and inert `<template>` contents are
 also exempt because their rendered scope is unknown.
+
+Opt in to design-system consistency checks in the same validator:
+
+```sh
+python3 scripts/syntyr_check.py --design --semantic --format json index.html
+```
+
+The source candidate checks same-element base classes for curated modifiers
+and rejects combinations of the explicitly checked mutually exclusive frame
+shapes (bevel, notch, bracket, facet and step). Additive accent emphasis and
+button size modifiers remain valid. These checks are opt-in, skip dynamic
+class attributes, and report source locations without rewriting HTML. They
+are not a complete CSS compatibility or accessibility checker.
+
+The documentation playground also offers an opt-in comparison of real
+320, 390, 768, 1024, 1440 and 1920 px sandboxed iframes using the same HTML,
+theme and token settings. The overflow report measures horizontal document
+overflow when each frame loads; nested overflow, interactions, keyboard
+navigation and accessibility still need separate application tests.
 
 With `--semantic`, a second standard-library pass checks literal HTML for
 duplicate static IDs, missing form labels (including an unnamed `input

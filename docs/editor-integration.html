@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Syntyr&#x27;s editor integration is optional . Applications still consume ordinary prebuilt CSS, HTML, and custom properties without Node, JavaScript, or a…">
-  <meta name="syntyr-source-sha256" content="7ecfcc239d5c50eaaef516144d0cd5758e62716cf43ee1e6418eb2716e7bd4cc">
+  <meta name="syntyr-source-sha256" content="65956c31500f1586af996b9de954607903c8e8b12e58b05bb15374e66376538d">
   <meta name="theme-color" content="#f5f7fb">
   <title>Syntyr editor autocomplete and metadata — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/editor-integration">
@@ -228,6 +228,20 @@ selectors are scoped, those classes would otherwise silently render without
 Syntyr styles. Plain HTML fragments are exempt because the embedding app may
 supply the root; dynamic ancestor classes and inert <code>&lt;template&gt;</code> contents are
 also exempt because their rendered scope is unknown.</p>
+<p>Opt in to design-system consistency checks in the same validator:</p>
+<pre tabindex="0"><code class="language-sh">python3 scripts/syntyr_check.py --design --semantic --format json index.html
+</code></pre>
+<p>The source candidate checks same-element base classes for curated modifiers
+and rejects combinations of the explicitly checked mutually exclusive frame
+shapes (bevel, notch, bracket, facet and step). Additive accent emphasis and
+button size modifiers remain valid. These checks are opt-in, skip dynamic
+class attributes, and report source locations without rewriting HTML. They
+are not a complete CSS compatibility or accessibility checker.</p>
+<p>The documentation playground also offers an opt-in comparison of real
+320, 390, 768, 1024, 1440 and 1920 px sandboxed iframes using the same HTML,
+theme and token settings. The overflow report measures horizontal document
+overflow when each frame loads; nested overflow, interactions, keyboard
+navigation and accessibility still need separate application tests.</p>
 <p>With <code>--semantic</code>, a second standard-library pass checks literal HTML for
 duplicate static IDs, missing form labels (including an unnamed <code>input type=&quot;image&quot;</code> or <code>type=&quot;button&quot;</code>), unmatched <code>label for</code> and
 <code>aria-labelledby</code>/<code>aria-describedby</code> ID references (the latter two only in

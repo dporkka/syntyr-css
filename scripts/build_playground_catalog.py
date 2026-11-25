@@ -15,9 +15,11 @@ import sys
 if __package__:
     from .build import all_distributions
     from .export_api_metadata import collect
+    from .inspect_design import source_graph, token_report, variant_matrix
 else:
     from build import all_distributions
     from export_api_metadata import collect
+    from inspect_design import source_graph, token_report, variant_matrix
 
 
 class LiteralClassParser(HTMLParser):
@@ -65,6 +67,7 @@ def stylesheet_requirements(html: str, declared: list[str],
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "docs/playground-catalog.js"
+INSPECTION_OUTPUT = ROOT / "docs/playground-design-inspection.js"
 
 
 class CatalogParser(HTMLParser):
@@ -194,6 +197,7 @@ def generate() -> str:
         class_parser = LiteralClassParser()
         class_parser.feed(entry["html"])
         used_classes = {name for name in class_parser.classes if name.startswith("syn-")}
+        entry["source_files"] = sorted({"src/" + class_sources[name] for name in used_classes})
         matches = [component for component in components
                    if component["module"] in modules
                    and used_classes.intersection(component["classes"])]
@@ -209,20 +213,30 @@ def generate() -> str:
     return f"window.SYNTYR_PLAYGROUND_CATALOG = {payload};\n"
 
 
+def generate_inspection() -> str:
+    manifest = json.loads((ROOT / "metadata/component-gallery.v1.json").read_text(encoding="utf-8"))
+    graph = source_graph()
+    data = {
+        "tokens": [token_report(graph, name) for name in sorted(graph)],
+        "families": variant_matrix(manifest["components"], manifest["examples"]),
+    }
+    payload = json.dumps(data, ensure_ascii=True, separators=(",", ":")).replace("<", r"\u003c")
+    return f"window.SYNTYR_PLAYGROUND_INSPECTION = {payload};\n"
+
+
 def main() -> int:
     args = argparse.ArgumentParser(description=__doc__)
     args.add_argument("--check", action="store_true")
     options = args.parse_args()
-    expected = generate()
-    if options.check:
-        if not OUTPUT.is_file() or OUTPUT.read_text(encoding="utf-8") != expected:
-            print("STALE docs/playground-catalog.js: run python3 scripts/build_playground_catalog.py",
-                  file=sys.stderr)
-            return 1
-        print("OK playground examples synchronized with catalog")
-        return 0
-    OUTPUT.write_text(expected, encoding="utf-8")
-    print(f"Generated {OUTPUT.relative_to(ROOT)}")
+    for path, expected in ((OUTPUT, generate()), (INSPECTION_OUTPUT, generate_inspection())):
+        if options.check:
+            if not path.is_file() or path.read_text(encoding="utf-8") != expected:
+                print(f"STALE {path.relative_to(ROOT)}: run python3 scripts/build_playground_catalog.py",
+                      file=sys.stderr)
+                return 1
+        else:
+            path.write_text(expected, encoding="utf-8")
+    print("OK playground examples and design inspection synchronized with source")
     return 0
 
 

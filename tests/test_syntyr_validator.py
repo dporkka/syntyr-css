@@ -39,6 +39,27 @@ class ValidatorTests(unittest.TestCase):
     def setUpClass(cls):
         cls.contract = json.loads((ROOT / "metadata/syntyr-contract.json").read_text())
 
+    def test_opt_in_design_lint_checks_curated_modifier_base_and_exclusive_shapes(self):
+        html = '<button class="syn-button--primary">Go</button><div class="syn-frame syn-frame--bevel syn-frame--notch"></div>'
+        self.assertEqual(validate_html(html, self.contract), [])
+        diagnostics = validate_html(html, self.contract, design=True)
+        self.assertEqual([d["code"] for d in diagnostics],
+                         ["missing-variant-base", "conflicting-frame-shapes"])
+        self.assertTrue(all(d["severity"] == "error" for d in diagnostics))
+
+    def test_design_lint_cli_is_opt_in_and_emits_json(self):
+        command = [sys.executable, str(ROOT / "scripts/syntyr_check.py"), "--format", "json", "-"]
+        source = '<button class="syn-button--primary">Go</button>'
+        default = subprocess.run(command, input=source, text=True, capture_output=True)
+        self.assertEqual(default.returncode, 0)
+        linted = subprocess.run(command + ["--design"], input=source, text=True, capture_output=True)
+        self.assertEqual(linted.returncode, 1, linted.stderr)
+        self.assertEqual(json.loads(linted.stdout)[0]["code"], "missing-variant-base")
+
+    def test_design_lint_allows_additive_and_dynamic_classes(self):
+        html = '<button class="syn-button syn-button--primary syn-button--small">Go</button><div class="syn-frame syn-frame--bevel syn-frame--accent"></div><div class="{{ classes }}"></div>'
+        self.assertEqual(validate_html(html, self.contract, design=True), [])
+
     def test_valid_document_and_local_classes(self):
         html = """<link rel="stylesheet" href="/assets/syntyr.core.css">
         <main class="syn-root app">

@@ -44,3 +44,26 @@
   @media (max-width: 35rem) { .playground-token-controls { grid-template-columns: minmax(0, 1fr); } }
   @media (forced-colors: active) { .playground-reference { border-color: CanvasText; } }
 }
+
+@layer docs {
+  #playground-inspector { min-width: 0; }
+  #playground-inspector summary { cursor: pointer; }
+  #playground-inspector:not([open]) > :not(summary) { display: none; }
+  #playground-inspector-target { max-width: 100%; min-width: 0; }
+  .playground-inspector-values { white-space: pre-wrap; overflow-wrap: anywhere; font: .8rem/1.6 var(--syn-mono); margin: 0; }
+}
+
+@layer docs {
+  .playground-inspection-section { min-width: 0; border-block-start: 1px solid var(--syn-border-default); padding-block-start: .5rem; }
+  .playground-inspection-section[open] > :not(summary) { margin-block-start: .5rem; }
+  .playground-inspection-section select { width: 100%; max-width: 100%; min-width: 0; }
+  #playground-inspector-variant-links { overflow-wrap: anywhere; }
+}
+
+@layer docs {
+  #playground-comparison { display: grid; gap: 1rem; min-width: 0; }
+  #playground-comparison[hidden] { display: none; }
+  .playground-comparison-card { display: grid; gap: .5rem; min-width: 0; }
+  .playground-comparison-card h3, .playground-comparison-card p { margin: 0; }
+  .playground-comparison-card iframe { display: block; height: 24rem; border: 0; max-width: none; }
+}

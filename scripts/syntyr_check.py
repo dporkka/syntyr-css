@@ -37,9 +37,18 @@ def _is_dynamic(value: str) -> bool:
 
 
 class _SyntyrParser(HTMLParser):
-    def __init__(self, contract: dict):
+    def __init__(self, contract: dict, *, design: bool = False):
         super().__init__(convert_charrefs=True)
         self.classes = {c["name"]: c for c in contract["classes"]}
+        self.design = design
+        self.variant_bases = {}
+        if design:
+            for component in contract.get("components", []):
+                for base in component["classes"]:
+                    for modifier in component["classes"]:
+                        if modifier.startswith(base + "--"):
+                            self.variant_bases[modifier] = base
+
         self.attribute_values = contract["attributes"]
         self.stylesheet_names = set(contract["stylesheets"])
         self.linked_stylesheets: set[str] = set()
@@ -64,6 +73,21 @@ class _SyntyrParser(HTMLParser):
         if tag == "html":
             self.complete_document = True
         class_values = [data.get(key) or "" for key in ("class", "classname")]
+        if self.design and not any(_is_dynamic(value) for value in class_values):
+            literal = set(" ".join(class_values).split())
+            for modifier in sorted(literal & self.variant_bases.keys()):
+                base = self.variant_bases[modifier]
+                if base not in literal:
+                    self._error("missing-variant-base",
+                                f"'{modifier}' needs '{base}' on the same element.",
+                                line, col, class_name=modifier, required_base=base)
+            # Known mutually exclusive shapes; accent emphasis is additive.
+            shapes = literal & {"syn-frame--" + name for name in
+                                ("bevel", "notch", "bracket", "facet", "step")}
+            if len(shapes) > 1 and shapes <= self.classes.keys():
+                self._error("conflicting-frame-shapes",
+                            "Choose one frame shape: " + ", ".join(sorted(shapes)) + ".",
+                            line, col, conflicting_classes=sorted(shapes))
         local_root = any("syn-root" in value.split()
                          for value in class_values if not _is_dynamic(value))
         dynamic_scope = any(_is_dynamic(value) for value in class_values)
@@ -281,13 +305,13 @@ class _SemanticParser(HTMLParser):
 
 
 def validate_html(html: str, contract: dict, *, stylesheets: set[str] | None = None,
-                  semantic: bool = False) -> list[dict]:
+                  semantic: bool = False, design: bool = False) -> list[dict]:
     """Return deterministic diagnostics for literal HTML.
 
     When no Syntyr stylesheet is linked and none is explicitly provided,
     treat input as a partial HTML fragment and skip module presence checks.
     """
-    parser = _SyntyrParser(contract)
+    parser = _SyntyrParser(contract, design=design)
     parser.feed(html)
     parser.close()
     # A fragment may inherit .syn-root from its host, so only diagnose root
@@ -325,6 +349,8 @@ def main(argv=None) -> int:
     p.add_argument("--format", choices=("text", "json"), default="text")
     p.add_argument("--semantic", action="store_true",
                    help="Additionally lint literal native HTML semantics (conservative; templates need rendered checks).")
+    p.add_argument("--design", action="store_true",
+                   help="Additionally check curated modifier base classes and known conflicting frame shapes.")
     p.add_argument("--stylesheets", action="append", default=None,
                    help="Known loaded Syntyr stylesheets, comma-separated; overrides HTML links.")
     p.add_argument("--contract", type=Path, default=CONTRACT)
@@ -343,7 +369,7 @@ def main(argv=None) -> int:
         results = []
         for file in args.files:
             source = sys.stdin.read() if str(file) == "-" else file.read_text(encoding="utf-8")
-            diagnostics = validate_html(source, contract, stylesheets=configured, semantic=args.semantic)
+            diagnostics = validate_html(source, contract, stylesheets=configured, semantic=args.semantic, design=args.design)
             label = "<stdin>" if str(file) == "-" else str(file)
             results += [{"file": label, **diag} for diag in diagnostics]
     except (OSError, UnicodeError, ValueError, KeyError) as exc:
