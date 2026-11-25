@@ -21,11 +21,11 @@ class Handler(SimpleHTTPRequestHandler):
 
 def verify(page, width, port):
     page.goto(f"http://127.0.0.1:{port}/docs/page-builder.html")
-    expect(page.locator("#builder-section-count")).to_have_text("99 of 99 copy-owned sections.")
-    expect(page.locator("#builder-section-palette .builder-section-card")).to_have_count(99)
-    assert page.locator(".builder-section-thumbnail span").count() == 99 * 4
+    expect(page.locator("#builder-section-count")).to_have_text("102 of 102 copy-owned sections.")
+    expect(page.locator("#builder-section-palette .builder-section-card")).to_have_count(102)
+    assert page.locator(".builder-section-thumbnail span").count() == 102 * 4
     page.locator("#builder-section-use-case").select_option("publishing")
-    expect(page.locator("#builder-section-count")).not_to_have_text("99 of 99 copy-owned sections.")
+    expect(page.locator("#builder-section-count")).not_to_have_text("102 of 102 copy-owned sections.")
     expect(page.locator("[data-section-preview='section:article-toc']")).to_be_visible()
 
     # Preview is the actual canonical block, not the thumbnail sketch.

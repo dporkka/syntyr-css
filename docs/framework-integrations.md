@@ -11,7 +11,7 @@ snippets and an optional **Copy full page** action that includes the
 **actual required stylesheets**, the document shell and `.syn-root` theme
 scope. Copying uses docs-only JavaScript; view the ordinary HTML source
 without JavaScript. For complete layouts, choose the existing
-[99 MIT blocks](blocks.html) instead of rebuilding a pricing or dashboard
+[102 MIT blocks](blocks.html) instead of rebuilding a pricing or dashboard
 section from scratch.
 
 The full-page option expects you to self-host the same **unreleased alpha.5**

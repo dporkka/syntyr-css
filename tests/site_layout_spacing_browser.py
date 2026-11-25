@@ -122,13 +122,13 @@ class SiteLayoutSpacingBrowserTests(unittest.TestCase):
         page = self.page_at("docs/blocks.html", 390)
         try:
             previews = page.locator(".blocks-preview-disclosure")
-            self.assertEqual(previews.count(), 99)
+            self.assertEqual(previews.count(), 102)
             self.assertEqual(page.locator(".blocks-preview-disclosure[open]").count(), 2)
             compact_height = page.evaluate("document.documentElement.scrollHeight")
             button = page.locator("#blocks-preview-toggle")
             self.assertTrue(button.is_visible())
             button.click()
-            self.assertEqual(page.locator(".blocks-preview-disclosure[open]").count(), 99)
+            self.assertEqual(page.locator(".blocks-preview-disclosure[open]").count(), 102)
             expanded_height = page.evaluate("document.documentElement.scrollHeight")
             self.assertLess(compact_height, expanded_height * 0.75)
             button.click()
@@ -141,7 +141,7 @@ class SiteLayoutSpacingBrowserTests(unittest.TestCase):
     def test_blocks_gallery_no_js_and_desktop_show_all_previews(self):
         desktop = self.page_at("docs/blocks.html", 1440)
         try:
-            self.assertEqual(desktop.locator(".blocks-preview-disclosure[open]").count(), 99)
+            self.assertEqual(desktop.locator(".blocks-preview-disclosure[open]").count(), 102)
             self.assertFalse(desktop.locator("#blocks-preview-toggle").is_visible())
         finally:
             desktop.close()
@@ -150,7 +150,7 @@ class SiteLayoutSpacingBrowserTests(unittest.TestCase):
         page = context.new_page()
         try:
             page.goto((ROOT / "docs/blocks.html").as_uri(), wait_until="load")
-            self.assertEqual(page.locator(".blocks-preview-disclosure[open]").count(), 99)
+            self.assertEqual(page.locator(".blocks-preview-disclosure[open]").count(), 102)
         finally:
             context.close()
 

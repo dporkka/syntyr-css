@@ -2442,6 +2442,72 @@
           "target": "~/syntyr/LICENSE"
         }
       ]
+    },
+    {
+      "name": "ai-conversation",
+      "type": "registry:item",
+      "title": "Agent conversation",
+      "description": "Illustrative conversation with visible author labels and timestamps.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://syntyr-css.pages.dev/registry/r/core.json"
+      ],
+      "files": [
+        {
+          "path": "blocks/snippets/ai-conversation.html",
+          "type": "registry:file",
+          "target": "~/syntyr/blocks/ai-conversation.html"
+        },
+        {
+          "path": "LICENSE",
+          "type": "registry:file",
+          "target": "~/syntyr/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "ai-tool-run",
+      "type": "registry:item",
+      "title": "Agent tool evidence",
+      "description": "Read-only tool status and native disclosure of illustrative structured results.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://syntyr-css.pages.dev/registry/r/core.json"
+      ],
+      "files": [
+        {
+          "path": "blocks/snippets/ai-tool-run.html",
+          "type": "registry:file",
+          "target": "~/syntyr/blocks/ai-tool-run.html"
+        },
+        {
+          "path": "LICENSE",
+          "type": "registry:file",
+          "target": "~/syntyr/LICENSE"
+        }
+      ]
+    },
+    {
+      "name": "ai-approval",
+      "type": "registry:item",
+      "title": "Agent approval preview",
+      "description": "Explicit action review with disabled decisions until the host implements authorized handling.",
+      "dependencies": [],
+      "registryDependencies": [
+        "https://syntyr-css.pages.dev/registry/r/core.json"
+      ],
+      "files": [
+        {
+          "path": "blocks/snippets/ai-approval.html",
+          "type": "registry:file",
+          "target": "~/syntyr/blocks/ai-approval.html"
+        },
+        {
+          "path": "LICENSE",
+          "type": "registry:file",
+          "target": "~/syntyr/LICENSE"
+        }
+      ]
     }
   ]
 }
