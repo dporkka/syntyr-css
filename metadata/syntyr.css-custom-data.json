@@ -94,6 +94,14 @@
       "description": "Chart presentation design token chart tooltip bg; provide non-color chart labels."
     },
     {
+      "name": "--syn-content-gap",
+      "description": "Content gap design token from tokens.css; override in the appropriate Syntyr scope when needed."
+    },
+    {
+      "name": "--syn-content-max",
+      "description": "Content max design token from tokens.css; override in the appropriate Syntyr scope when needed."
+    },
+    {
       "name": "--syn-control-height",
       "description": "Shared native form control height; check accessible target sizing."
     },
@@ -398,12 +406,20 @@
       "description": "Operation edge design token from recipes.css; override in the appropriate Syntyr scope when needed."
     },
     {
+      "name": "--syn-page-gutter",
+      "description": "Page gutter design token from tokens.css; override in the appropriate Syntyr scope when needed."
+    },
+    {
       "name": "--syn-panel-border-width",
       "description": "Per-panel border width; defaults to 1px."
     },
     {
       "name": "--syn-panel-padding",
       "description": "Per-panel padding; defaults to the existing fluid panel padding."
+    },
+    {
+      "name": "--syn-panel-padding-default",
+      "description": "Panel padding default design token from tokens.css; override in the appropriate Syntyr scope when needed."
     },
     {
       "name": "--syn-panel-radius",
@@ -428,6 +444,10 @@
     {
       "name": "--syn-scanline-alpha",
       "description": "Scanline overlay opacity percentage."
+    },
+    {
+      "name": "--syn-section-space",
+      "description": "Section space design token from tokens.css; override in the appropriate Syntyr scope when needed."
     },
     {
       "name": "--syn-shadow-overlay",

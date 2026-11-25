@@ -3,7 +3,7 @@
 .flagship .flagship-skip { position: absolute; inset-block-start: -10rem; inset-inline-start: 1rem; z-index: 50; }
 .flagship .flagship-skip:focus-visible { inset-block-start: 1rem; }
 .flagship { --flagship-width: 76rem; background: var(--syn-bg); color: var(--syn-text); }
-.flagship .flagship-shell { width: min(calc(100% - 2.5rem), var(--flagship-width)); margin-inline: auto; min-width: 0; }
+.flagship .flagship-shell { width: min(calc(100% - var(--syn-page-gutter) - var(--syn-page-gutter)), var(--flagship-width)); margin-inline: auto; min-width: 0; }
 .flagship .flagship-topbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem 2rem; padding-block: 1.1rem; border-block-end: 1px solid var(--syn-border-subtle); }
 .flagship .flagship-wordmark { font: 760 1rem/1.3 var(--syn-font-ui); letter-spacing: -.04em; color: var(--syn-text); text-decoration: none; }
 .flagship .flagship-wordmark small { color: var(--syn-muted); font-size: .75rem; margin-inline-start: .55rem; font-weight: 500; letter-spacing: .03em; }
@@ -11,7 +11,7 @@
 .flagship .flagship-navigation a { color: var(--syn-muted); text-decoration: none; font: 600 .85rem/1.5 var(--syn-font-ui); padding-block: .6rem; }
 .flagship .flagship-navigation a:hover, .flagship .flagship-navigation a:focus-visible, .flagship .flagship-navigation a[aria-current] { color: var(--syn-text); }
 .flagship .flagship-back { color: var(--syn-accent); text-underline-offset: .25em; font-size: .85rem; }
-.flagship .flagship-hero { padding-block: clamp(3.5rem, 8vw, 7rem); }
+.flagship .flagship-hero { padding-block: clamp(2rem, 7vw, 7rem); }
 .flagship .flagship-hero-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: clamp(1.5rem, 5vw, 5rem); align-items: center; }
 .flagship .flagship-eyebrow { display: inline-flex; flex-wrap: wrap; max-inline-size: 100%; overflow-wrap: anywhere; gap: .65rem; align-items: center; font: 700 .75rem/1.5 var(--syn-font-ui); color: var(--syn-accent); letter-spacing: .1em; text-transform: uppercase; }
 .flagship .flagship-eyebrow::before { content: ""; inline-size: 1.5rem; block-size: 2px; background: currentColor; }
@@ -20,15 +20,15 @@
 .flagship .flagship-lede { max-inline-size: 54ch; font-size: clamp(1.025rem, 1rem + .3vw, 1.2rem); line-height: 1.7; color: var(--syn-muted); }
 .flagship .flagship-actions { display: flex; flex-wrap: wrap; gap: .65rem; margin-block-start: 1.7rem; }
 .flagship .flagship-note { color: var(--syn-muted); font-size: .78rem; line-height: 1.5; }
-.flagship .flagship-section { padding-block: clamp(2.5rem, 5vw, 4.5rem); border-block-start: 1px solid var(--syn-border-subtle); scroll-margin-block-start: 1rem; }
+.flagship .flagship-section { padding-block: var(--syn-section-space); border-block-start: 1px solid var(--syn-border-subtle); scroll-margin-block-start: 1rem; }
 .flagship .flagship-section-title { font: 650 clamp(1.6rem, 2.5vw, 2.55rem)/1.17 var(--syn-font-display); letter-spacing: -.045em; margin-block: .45rem 1rem; }
 .flagship .flagship-section-header { display: flex; align-items: end; justify-content: space-between; flex-wrap: wrap; gap: .75rem 2rem; margin-block-end: 1.5rem; }
 .flagship .flagship-section-header p { max-width: 54ch; color: var(--syn-muted); }
-.flagship .flagship-card-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+.flagship .flagship-card-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--syn-content-gap); }
 .flagship .flagship-card { min-width: 0; overflow-wrap: anywhere; }
 .flagship .flagship-card > small { display: block; color: var(--syn-muted); font-weight: 550; }
 .flagship .flagship-figure { display: block; margin-block: .5rem; font: 690 clamp(1.6rem, 2.7vw, 2.5rem)/1.16 var(--syn-font-display); letter-spacing: -.05em; font-variant-numeric: tabular-nums; }
-.flagship .flagship-split { display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(15rem, .8fr); gap: 1rem; align-items: start; }
+.flagship .flagship-split { display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(15rem, .8fr); gap: var(--syn-content-gap); align-items: start; }
 .flagship .flagship-row { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: .5rem 1rem; }
 .flagship .flagship-muted { color: var(--syn-muted); }
 .flagship .flagship-rule { border: 0; border-block-start: 1px solid var(--syn-border-subtle); margin-block: 1.2rem; }
@@ -71,7 +71,6 @@
   .flagship .flagship-card-grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); }
 }
 @media (max-width: 38rem) {
-  .flagship .flagship-shell { width: min(calc(100% - 1.5rem), var(--flagship-width)); }
   .flagship .flagship-topbar { align-items: start; }
   .flagship .flagship-navigation { gap: .25rem .8rem; }
   .flagship .flagship-display { font-size: clamp(2.65rem, 12vw, 3.9rem); }

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Customize Syntyr CSS themes and design tokens for SaaS dashboards, accessible business applications, and futuristic interfaces.">
-  <meta name="syntyr-source-sha256" content="3e0f7673ae35bfe75204e1dfc4c5e06f1ff6abc52296e7fdcb051fb9f70034b4">
+  <meta name="syntyr-source-sha256" content="d28fa32efe9cc95ec982ab7b5aea35bf352be6bc489178d67a686ca5232277fa">
   <meta name="theme-color" content="#f5f7fb">
   <title>Syntyr theme customization — copy, override, ship — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/theme-customization">
@@ -183,6 +183,18 @@ Syntyr leaves platform font smoothing untouched.</p>
 <td>Spacing</td>
 </tr>
 <tr>
+<td><code>--syn-page-gutter</code>, <code>--syn-content-max</code></td>
+<td>Responsive <code>.syn-shell</code> and application workspace gutters</td>
+</tr>
+<tr>
+<td><code>--syn-content-gap</code>, <code>--syn-section-space</code></td>
+<td>Shared grid/form/section rhythm (local gap overrides still work)</td>
+</tr>
+<tr>
+<td><code>--syn-display-measure</code>, <code>--syn-section-heading-measure</code>, <code>--syn-site-heading-measure</code></td>
+<td>Optional heading line-length overrides without changing semantic type roles</td>
+</tr>
+<tr>
 <td><code>--syn-cut</code>, <code>--syn-radius</code>, <code>--syn-control-height</code></td>
 <td>Geometry</td>
 </tr>
@@ -200,6 +212,35 @@ Syntyr leaves platform font smoothing untouched.</p>
 </tr>
 </tbody>
 </table>
+<h3 id="page-widths-stack-rhythm-and-density">Page widths, stack rhythm, and density</h3>
+<p>Use the built-in <code>.syn-shell</code> for centered content. Its default maximum is
+<code>72rem</code>, with fluid <code>--syn-page-gutter</code> (at least <code>1rem</code> per side). Set
+<code>--syn-content-max</code> on a Syntyr scope for editorial pages, wide dashboards, or
+embeds rather than copying a hard-coded width into every theme. Shared
+<code>--syn-content-gap</code> is the fallback for <code>.syn-grid</code>, <code>.syn-layout</code>,
+<code>.syn-feature-grid</code>, and <code>.syn-form</code>; the existing <code>--syn-grid-gap</code> and
+<code>--syn-layout-gap</code> local overrides still take priority. <code>--syn-section-space</code>
+controls site-hero vertical padding and can be overridden per page.</p>
+<pre tabindex="0"><code class="language-html">&lt;main class=&quot;syn-root syn-page&quot; data-syn-theme=&quot;studio&quot;
+      style=&quot;--syn-content-max: 64rem; --syn-content-gap: 1.5rem&quot;&gt;
+  &lt;div class=&quot;syn-shell&quot;&gt;
+    &lt;section class=&quot;syn-stack&quot; aria-labelledby=&quot;intro-title&quot;&gt;
+      &lt;h1 id=&quot;intro-title&quot; class=&quot;syn-display&quot;&gt;An accessible interface&lt;/h1&gt;
+      &lt;p class=&quot;syn-lede&quot;&gt;Shared rhythm across every Syntyr palette.&lt;/p&gt;
+    &lt;/section&gt;
+  &lt;/div&gt;
+&lt;/main&gt;
+</code></pre>
+<p>An intentional <code>.syn-stack</code> or <code>.syn-u-stack</code> owns its direct-child vertical
+spacing: native heading and paragraph margins are suppressed, so they do not
+add to the declared grid gap. Paragraphs <em>inside</em> <code>.syn-prose</code> retain their
+reading rhythm; utilities and app CSS can still add explicit separation.
+Do not globally reset margins in arbitrary host markup.</p>
+<p><code>data-syn-density=&quot;compact&quot;</code> and <code>&quot;spacious&quot;</code> also change <code>.syn-panel</code>
+padding; a nested <code>&quot;comfortable&quot;</code> region restores the regular fluid value.
+Density never shrinks font sizes. At narrow widths, verify labels, controls,
+and actions reflow without horizontal page scroll; do not infer accessibility
+solely from a good desktop screenshot.</p>
 <h2 id="3-independent-visual-intensity">3. Independent visual intensity</h2>
 <p>Use <code>data-syn-intensity=&quot;quiet&quot;</code> on a dense dashboard, the default <code>standard</code> for a balanced presentation, or <code>cinematic</code> on a limited hero region. Intensity controls only opt-in decoration in <code>syntyr.effects.css</code>; it does not alter palette, density, typography or control contrast. Nested regions can override an inherited value. See the <a href="visual-intensity.html">visual-intensity guide</a> and <a href="../examples/intensity-geometry.html">live comparison</a>.</p>
 <h2 id="4-css-component-mode-versus-native-semantic-mode">4. CSS component mode versus native semantic mode</h2>
@@ -412,6 +453,7 @@ hover backgrounds against text across all palettes and browser engines.</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#1-choose-a-theme">1. Choose a theme</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#copyable-theme-presets-alpha5-documentation-tool">Copyable theme presets (alpha.5 documentation tool)</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#2-override-tokens-using-application-css">2. Override tokens using application CSS</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#page-widths-stack-rhythm-and-density">Page widths, stack rhythm, and density</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#3-independent-visual-intensity">3. Independent visual intensity</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#4-css-component-mode-versus-native-semantic-mode">4. CSS component mode versus native semantic mode</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#5-responsive-applications-and-accessibility">5. Responsive applications and accessibility</a>
@@ -429,6 +471,7 @@ hover backgrounds against text across all palettes and browser engines.</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#1-choose-a-theme">1. Choose a theme</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#copyable-theme-presets-alpha5-documentation-tool">Copyable theme presets (alpha.5 documentation tool)</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#2-override-tokens-using-application-css">2. Override tokens using application CSS</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#page-widths-stack-rhythm-and-density">Page widths, stack rhythm, and density</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#3-independent-visual-intensity">3. Independent visual intensity</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#4-css-component-mode-versus-native-semantic-mode">4. CSS component mode versus native semantic mode</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#5-responsive-applications-and-accessibility">5. Responsive applications and accessibility</a>
