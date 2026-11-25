@@ -83,6 +83,15 @@ class CloudflareSiteTests(unittest.TestCase):
                 self.assertTrue((out / "docs" / name).is_file(), name)
             for name in ("form-builder.html", "form-builder.css", "form-builder.js", "form-builder-model.mjs"):
                 self.assertTrue((out / "docs" / name).is_file(), name)
+            for name in ("saas", "crm", "native"):
+                self.assertTrue((out / "docs/demos" / (name + ".zip")).is_file())
+            playground = (out / "docs/composition-playground.html").read_text()
+            self.assertIn('href="demos/crm.zip"', playground)
+            homepage = (out / "index.html").read_text()
+            self.assertIn('href="docs/composition-playground.html"', homepage)
+            self.assertIn("Compose from requirements", homepage)
+            self.assertIn('href="docs/demos/crm.zip"', homepage)
+            self.assertIn('Syntyr%20Pro%20composition%20preview', playground)
             # JSON-LD is inert data, not browser-executed JavaScript.
             self.assertFalse(any(
                 "<script" in re.sub(
@@ -96,6 +105,7 @@ class CloudflareSiteTests(unittest.TestCase):
                     "tools/css-clamp-generator.html", "tools/responsive-design-tester.html",
                     "tools/ascii-playground.html",  # Local-only first-party ASCII tool.
                     "docs/playground.html", "docs/page-builder.html", "docs/blocks.html",
+                    "docs/composition-playground.html",  # Local-only first-party authoring.
                     "docs/htmx-playground.html",  # Explicit first-party HTMX demo with vendored JS.
                     "docs/how-to.html",  # Docs-only search, same CSP as the catalog.
                     "docs/starter-wizard.html",  # Docs-only generator, no runtime dependency.

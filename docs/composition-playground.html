@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Choose structured interface requirements and generate a portable Syntyr HTML scaffold locally.">
+  <title>Composition playground — SYNTYR CSS</title>
+  <link rel="stylesheet" href="../dist/syntyr.all.css">
+  <link rel="stylesheet" href="docs.css">
+  <link rel="stylesheet" href="composition-playground.css">
+  <script type="module" src="composition-playground.mjs"></script>
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <div class="syn-shell">
+    <header class="syn-header">
+      <a class="syn-logo" href="index.html">SYNTYR / COMPOSE</a>
+      <nav class="syn-nav" aria-label="Composition navigation"><a href="page-builder.html">Visual builder</a><a href="agent-integration.html">Agent guide</a><a href="products.html">Products</a></nav>
+    </header>
+    <main>
+      <section class="syn-stage">
+        <p class="syn-eyebrow">SOURCE CANDIDATE / LOCAL AUTHORING</p>
+        <h1 class="syn-title">Compose an interface.</h1>
+        <p class="syn-lede">Choose requirements. Preview real canonical HTML. Download the editable project or a portable HTML/CSS ZIP.</p>
+        <p>Browser preview uses the shared deterministic composer, not the offline Python preflight or markup validator. These are sample interfaces, not working applications. No account or AI service required.</p>
+      </section>
+      <div class="composition-layout">
+        <section class="syn-panel composition-controls" aria-labelledby="requirements-heading">
+          <h2 id="requirements-heading" class="syn-heading">Requirements</h2>
+          <div class="syn-actions">
+            <button type="button" class="syn-button" data-preset="saas" disabled>SaaS landing</button>
+            <button type="button" class="syn-button" data-preset="crm" disabled>CRM dashboard</button>
+          </div>
+          <label class="syn-label" for="composition-title">Page title</label>
+          <input class="syn-input" id="composition-title" maxlength="120" value="SaaS landing page">
+          <label class="syn-label" for="composition-theme">Theme</label>
+          <select class="syn-select" id="composition-theme">
+            <option>studio</option><option>noir</option><option>corporate</option><option>grid</option><option>minimal</option><option>terminal</option><option>industrial</option><option>auto</option>
+          </select>
+          <fieldset id="composition-intents" disabled><legend>Select requirements</legend></fieldset>
+          <button type="button" class="syn-button syn-button--primary" id="composition-generate" disabled>Generate interface</button>
+          <p role="status" id="composition-status">Loading candidate sections…</p>
+          <h3 class="syn-heading">Host implementation requirements</h3>
+          <ul id="composition-obligations"></ul>
+        </section>
+        <section class="syn-panel composition-output" aria-labelledby="preview-heading">
+          <h2 class="syn-heading" id="preview-heading">Interface preview</h2>
+          <p class="syn-caption">Links and form submissions disabled in the preview. Native controls remain available.</p>
+          <iframe id="composition-preview" title="Sandboxed generated interface" sandbox="allow-same-origin" referrerpolicy="no-referrer"></iframe>
+          <div class="syn-actions">
+            <button type="button" class="syn-button" id="composition-json" disabled>Download project JSON</button>
+            <button type="button" class="syn-button" id="composition-zip" disabled>Download HTML/CSS ZIP</button>
+          </div>
+          <p class="syn-caption">Review sample data and routes before publishing. For full release-pinned validation, use the offline CLI in the agent guide.</p>
+        </section>
+      </div>
+      <section class="syn-stage" aria-labelledby="validated-demos-heading">
+        <p class="syn-eyebrow">OFFLINE VALIDATED EXAMPLES</p>
+        <h2 class="syn-heading" id="validated-demos-heading">Download a prevalidated demo</h2>
+        <p>These source-candidate packages passed the offline composition and markup checks. Each includes HTML, matching CSS, editable project JSON, the original requirements, a validation report and license. Sample data and host routes still need implementation.</p>
+        <div class="syn-grid">
+          <article class="syn-panel"><h3 class="syn-heading">SaaS landing</h3><p>Product introduction, features, pricing and FAQ.</p><a class="syn-button" href="demos/saas.zip" download>Download SaaS ZIP</a></article>
+          <article class="syn-panel"><h3 class="syn-heading">CRM dashboard</h3><p>Pipeline, metrics, inventory and account scaffolds.</p><a class="syn-button" href="demos/crm.zip" download>Download CRM ZIP</a></article>
+          <article class="syn-panel"><h3 class="syn-heading">Native controls</h3><p>Fixed-list selection, static tables and disclosure.</p><a class="syn-button" href="demos/native.zip" download>Download native ZIP</a></article>
+        </div>
+      </section>
+      <section class="syn-stage syn-panel" aria-labelledby="composition-pro-heading">
+        <p class="syn-eyebrow">PRIVATE PRODUCT RESEARCH</p>
+        <h2 class="syn-heading" id="composition-pro-heading">Interested in Syntyr Pro composition?</h2>
+        <p>Tell us which workflows, stack and output you would pay to automate. A metered composition API and premium application profiles are proposed, not available for purchase here.</p>
+        <div class="syn-actions">
+          <a class="syn-button syn-button--primary" href="mailto:davidporkka@gmail.com?subject=Syntyr%20Pro%20composition%20preview&amp;body=Stack%3A%0AWorkflow%20to%20automate%3A%0AExpected%20output%3A%0AWillingness%20to%20pay%3A%0A">Ask about a private preview</a>
+          <a class="syn-button" href="pro.html">Explore Pro</a>
+        </div>
+        <p class="syn-caption">Opens your email app. No information is collected by the site, and this is not an order or waitlist signup.</p>
+      </section>
+      <noscript><p>Preview and export need authoring JavaScript. Generated pages do not. See the <a href="agent-integration.html">offline generation guide</a>.</p></noscript>
+    </main>
+  </div>
+</body>
+</html>
