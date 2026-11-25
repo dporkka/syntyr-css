@@ -11,7 +11,7 @@ def verify(browser):
     for width in (320, 390, 768, 1024, 1440, 1920):
         page.set_viewport_size({'width':width,'height':900})
         for theme in THEMES:
-            page.set_content(f'<section class="syn-root" data-syn-theme="{theme}" data-syn-typography="application"><h1 class="syn-page-title">Application overview</h1><h2 class="syn-card-heading">Customer accounts</h2><p class="syn-body">Supporting content</p><h2 class="syn-display">Display</h2><code class="syn-code">id-123</code></section><h1 class="syn-page-title" id="host">Host</h1>')
+            page.set_content(f'<section class="syn-root" data-syn-theme="{theme}" data-syn-typography="application"><h1 class="syn-page-title">Application overview</h1><h2 class="syn-section-heading">Customer accounts</h2><h3 class="syn-card-heading">Recent activity</h3><p class="syn-body">Supporting content</p><h2 class="syn-display">Display</h2><code class="syn-code">id-123</code></section><h1 class="syn-page-title" id="host">Host</h1>')
             page.add_style_tag(content=css)
             result=page.evaluate("""() => {
                 const root=document.querySelector('.syn-root');
@@ -19,7 +19,7 @@ def verify(browser):
                 const fonts=getComputedStyle(root);
                 const before=style('.syn-page-title').fontSize;
                 root.dataset.synDensity='compact';
-                return {page:parseFloat(before),card:parseFloat(style('.syn-card-heading').fontSize),
+                return {page:parseFloat(before),card:parseFloat(style('.syn-card-heading').fontSize),section:parseFloat(style('.syn-section-heading').fontSize),
                   densityStable:before===style('.syn-page-title').fontSize,
                   ui:style('.syn-page-title').fontFamily,body:style('.syn-body').fontFamily,
                   display:style('.syn-display').fontFamily,code:style('.syn-code').fontFamily,
@@ -28,7 +28,7 @@ def verify(browser):
                   overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+1,
                   host:getComputedStyle(document.getElementById('host')).fontFamily};
             }""")
-            assert result['page']>result['card'],(theme,width,result)
+            assert result['page']>result['section']>result['card'],(theme,width,result)
             assert result['densityStable'] and not result['overflow'],(theme,width,result)
             assert result['ui']==result['body'] and 'system-ui' in result['ui'],(theme,width,result)
             if theme in ('grid','terminal'):
