@@ -172,6 +172,48 @@ class SyntyrCatalog:
         return {**base, "schema_version": manifest["schema_version"],
                 "contracts": contracts, "note": manifest["note"]}
 
+    def get_interaction_recipes(self, contract: str = "", release: str = PUBLISHED):
+        """Discover runnable recipe references, not executable actions or test results."""
+        contracts = self.get_interaction_contracts(contract, release)
+        selected = {item["id"] for item in contracts["contracts"]}
+        all_ids = {item["id"] for item in self.get_interaction_contracts("", release)["contracts"]}
+        manifest = json.loads((self.root / "metadata/interaction-recipes.json").read_text(encoding="utf-8"))
+        if (manifest["schema_version"] != 1 or manifest["source_version"] != release
+                or manifest["release_status"] != "unreleased-source-candidate"):
+            raise RuntimeError("Interaction recipe metadata version needs review")
+        # A recipe may be a fallback or an alternative, not a conforming implementation.
+        links = {
+            "native-select": [("combobox", "fallback")],
+            "native-popover": [("dropdown", "implementation")],
+            "native-modal-dialog": [("dialog", "implementation"), ("disclosure", "example")],
+            "native-table": [("sortable-table", "fallback")],
+            "radix-menu": [("dropdown", "alternative")],
+            "react-aria-combobox": [("combobox", "implementation")],
+            "react-aria-sortable-grid": [("sortable-table", "implementation")],
+            "radix-toast": [],
+        }
+        recipes = manifest["recipes"]
+        if len(recipes) != len(links) or {item["id"] for item in recipes} != set(links):
+            raise RuntimeError("Interaction recipe links need review")
+        if {name for pairs in links.values() for name, _ in pairs} != all_ids:
+            raise RuntimeError("Interaction contract links need review")
+        known = self._catalog(release)["files"]
+        result = []
+        for item in recipes:
+            relations = links[item["id"]]
+            if contract.strip() and not any(name in selected for name, _ in relations):
+                continue
+            stylesheets = sorted({path.removeprefix("dist/").removeprefix("integrations/")
+                                  for path in item["css"]})
+            if not set(stylesheets) <= set(known):
+                raise RuntimeError(f"Recipe stylesheet inventory needs review: {item['id']}")
+            result.append({**item, "stylesheets": stylesheets,
+                           "contract_links": [{"id": name, "relationship": relation}
+                                              for name, relation in relations]})
+        return {**self._release(release), "schema_version": manifest["schema_version"],
+                "recipes": result,
+                "note": "Recipe and test source references, not runtime actions, test results or accessibility certification."}
+
     def lookup_api(self, name: str, release: str = PUBLISHED):
         base = self._release(release)
         kind = "class" if name.startswith("syn-") else "token" if name.startswith("--syn-") else None
