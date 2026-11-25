@@ -91,3 +91,27 @@ Source of truth: `src/tokens.css`, `src/components/buttons.css`,
 `src/components/forms.css`, `src/components/data.css`, and
 `src/components/layout.css`. Token exchange:
 `metadata/figma/syntyr-<theme>.tokens.json`.
+
+## Portable design-token snapshots (source candidate)
+
+For design tools and token pipelines that accept DTCG token documents, export
+an explicit theme and density from the canonical CSS without installing Node
+or contacting Figma:
+
+```sh
+python3 scripts/export_design_tokens.py --theme studio --density compact > studio-compact.tokens.json
+python3 scripts/export_design_tokens.py --theme noir --density spacious > noir-spacious.tokens.json
+```
+
+The exporter supports all seven source-candidate palettes and three density
+modes. It preserves literal rem dimensions and sRGB colors, and expresses
+supported CSS references as typed token aliases (for example,
+`{palette.accent}`). Each document is a standalone snapshot, not a native
+Figma variable collection or a full CSS cascade model.
+
+Responsive expressions, fluid spacing, derived color mixes, typography
+stacks and other browser-dependent values are intentionally excluded. The
+existing flat Figma palette exports and reconciliation handoff remain
+unchanged. Import compatibility with particular versions of Figma, Penpot,
+and Tokens Studio requires separate tool-specific verification. This is
+source tooling for the unreleased alpha.5 candidate, not an alpha.4 API.
