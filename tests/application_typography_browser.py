@@ -38,16 +38,18 @@ def verify(browser):
     # must not change sibling regions or overwrite unrelated palette aliases.
     page.set_content("""<main class="syn-root" data-syn-theme="grid">
       <p id="legacy" class="syn-body">Legacy</p>
-      <section data-syn-typography="application">
-        <p id="profile" class="syn-body">Profile</p>
-        <section data-syn-theme="terminal"><p id="reset" class="syn-body">Reset</p></section>
+      <section class="syn-body"><section data-syn-typography="application">
+        <p id="profile" class="syn-body">Profile</p><p id="plain">Plain</p><input id="control" aria-label="Example"><h2 class="syn-display" id="display">Display</h2><code class="syn-code" id="code">Code</code>
+        <section data-syn-theme="terminal"><p id="reset" class="syn-body">Reset</p><p id="reset-plain">Plain reset</p></section>
         <section data-syn-theme="terminal" data-syn-typography="application"><p id="both" class="syn-body">Both</p></section>
-      </section><p id="sibling" class="syn-body">Sibling</p>
+      </section></section><p id="sibling" class="syn-body">Sibling</p>
     </main>""")
     page.add_style_tag(content=css)
-    fonts=page.evaluate("""() => Object.fromEntries(['legacy','profile','reset','both','sibling'].map(id=>[id,getComputedStyle(document.getElementById(id)).fontFamily]))""")
-    assert 'monospace' in fonts['legacy'] and fonts['legacy']==fonts['sibling']==fonts['reset'],fonts
+    fonts=page.evaluate("""() => Object.fromEntries(['legacy','profile','reset','both','sibling','plain','control','display','code','reset-plain'].map(id=>[id,getComputedStyle(document.getElementById(id)).fontFamily]))""")
+    assert 'monospace' in fonts['legacy'] and fonts['legacy']==fonts['sibling']==fonts['reset']==fonts['reset-plain'],fonts
     assert 'system-ui' in fonts['profile'] and fonts['profile']==fonts['both'],fonts
+    assert fonts['plain']==fonts['control']==fonts['profile'],fonts
+    assert 'monospace' in fonts['display'] and 'monospace' in fonts['code'],fonts
     page.close()
 
 if __name__=='__main__':

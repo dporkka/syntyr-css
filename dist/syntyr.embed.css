@@ -335,6 +335,14 @@
     display: none !important;
   }
   .syn-root :where([data-syn-theme]) { color: var(--syn-text); background-color: var(--syn-bg); }
+  /* Apply the opt-in UI font to inherited text and native controls as well
+     as component roles. Nested explicit themes reset the inherited UI font. */
+  :where(.syn-root[data-syn-typography="application"],
+         .syn-root [data-syn-typography="application"],
+         .syn-root[data-syn-typography="application"] [data-syn-theme],
+         .syn-root [data-syn-typography="application"] [data-syn-theme]) {
+    font-family: var(--syn-font-ui);
+  }
   .syn-root.syn-page { min-height: 100svh; }
   .syn-root :where(h1,h2,h3,h4,p) { margin-block-start: 0; }
   .syn-root :where(h1,h2,h3,h4) { line-height: 1.12; letter-spacing: -.025em; overflow-wrap: anywhere; }
