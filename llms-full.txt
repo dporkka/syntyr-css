@@ -6986,6 +6986,25 @@ Syntyr styles. Plain HTML fragments are exempt because the embedding app may
 supply the root; dynamic ancestor classes and inert `<template>` contents are
 also exempt because their rendered scope is unknown.
 
+Opt in to design-system consistency checks in the same validator:
+
+```sh
+python3 scripts/syntyr_check.py --design --semantic --format json index.html
+```
+
+The source candidate checks same-element base classes for curated modifiers
+and rejects combinations of the explicitly checked mutually exclusive frame
+shapes (bevel, notch, bracket, facet and step). Additive accent emphasis and
+button size modifiers remain valid. These checks are opt-in, skip dynamic
+class attributes, and report source locations without rewriting HTML. They
+are not a complete CSS compatibility or accessibility checker.
+
+The documentation playground also offers an opt-in comparison of real
+320, 390, 768, 1024, 1440 and 1920 px sandboxed iframes using the same HTML,
+theme and token settings. The overflow report measures horizontal document
+overflow when each frame loads; nested overflow, interactions, keyboard
+navigation and accessibility still need separate application tests.
+
 With `--semantic`, a second standard-library pass checks literal HTML for
 duplicate static IDs, missing form labels (including an unnamed `input
 type="image"` or `type="button"`), unmatched `label for` and

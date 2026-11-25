@@ -59,3 +59,11 @@
   .playground-inspection-section select { width: 100%; max-width: 100%; min-width: 0; }
   #playground-inspector-variant-links { overflow-wrap: anywhere; }
 }
+
+@layer docs {
+  #playground-comparison { display: grid; gap: 1rem; min-width: 0; }
+  #playground-comparison[hidden] { display: none; }
+  .playground-comparison-card { display: grid; gap: .5rem; min-width: 0; }
+  .playground-comparison-card h3, .playground-comparison-card p { margin: 0; }
+  .playground-comparison-card iframe { display: block; height: 24rem; border: 0; max-width: none; }
+}

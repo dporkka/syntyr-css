@@ -38,6 +38,27 @@ const {chromium} = require('playwright');
       await examplePage.close();
       await page.locator('#playground-theme').selectOption('grid');
       await page.waitForFunction(() => document.querySelector('#playground-inspector-values').textContent.includes('#76e7f7'));
+      await page.locator('#playground-compare').check();
+      const frames = page.locator('#playground-comparison iframe');
+      assert.equal(await frames.count(), 6);
+      for (const width of [320, 390, 768, 1024, 1440, 1920]) {
+        const frame = page.locator('#playground-comparison iframe[data-width="' + width + '"]');
+        assert.equal(await frame.evaluate(el => Math.round(el.getBoundingClientRect().width)), width);
+        assert.equal(await frame.getAttribute('sandbox'), 'allow-same-origin');
+        await page.frameLocator('#playground-comparison iframe[data-width="' + width + '"]').locator('body[data-syn-theme="grid"]').waitFor();
+      }
+      await page.locator('#playground-theme').selectOption('studio');
+      await page.frameLocator('#playground-comparison iframe[data-width="320"]').locator('body[data-syn-theme="studio"]').waitFor();
+      await page.locator('#playground-markup').evaluate(el => {
+        el.value = '<div style="width:700px">Wide content</div><script>parent.document.body.dataset.compromised="yes"</script>';
+        el.dispatchEvent(new Event('input', {bubbles: true}));
+      });
+      await page.frameLocator('#playground-comparison iframe[data-width="320"]').getByText('Wide content').waitFor();
+      await page.waitForFunction(() => document.querySelector('#playground-comparison iframe[data-width="320"]').closest('section').querySelector('p').textContent === 'Horizontal document overflow detected.');
+      await page.waitForFunction(() => document.querySelector('#playground-comparison iframe[data-width="1920"]').closest('section').querySelector('p').textContent === 'No horizontal document overflow detected.');
+      assert.equal(await page.locator('body').getAttribute('data-compromised'), null);
+      await page.locator('#playground-compare').uncheck();
+      assert.equal(await frames.count(), 0);
       await page.locator('#playground-example').selectOption('catalog-definition-list-title');
       assert.match(await page.locator('#playground-inspector-sources').innerText(), /No Syntyr-class source files/);
       await page.locator('#playground-example').selectOption('actions');

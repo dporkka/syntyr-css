@@ -244,6 +244,52 @@
     return detached.body.innerHTML;
   }
 
+  const compare = byId("playground-compare");
+  const comparison = byId("playground-comparison");
+  const comparisonWidths = [320, 390, 768, 1024, 1440, 1920];
+
+  function updateComparison(shell) {
+    if (!compare.checked) {
+      comparison.replaceChildren();
+      comparison.hidden = true;
+      return;
+    }
+    comparison.hidden = false;
+    if (!comparison.childElementCount) {
+      for (const width of comparisonWidths) {
+        const card = document.createElement("section");
+        card.className = "playground-comparison-card";
+        const title = document.createElement("h3");
+        title.className = "syn-heading";
+        title.textContent = width + "px viewport";
+        const report = document.createElement("p");
+        report.className = "syn-caption";
+        const canvas = document.createElement("div");
+        canvas.className = "playground-canvas";
+        const frame = document.createElement("iframe");
+        frame.title = "Sandboxed preview at " + width + "px";
+        frame.dataset.width = String(width);
+        frame.setAttribute("sandbox", "allow-same-origin");
+        frame.referrerPolicy = "no-referrer";
+        frame.style.width = width + "px";
+        frame.addEventListener("load", () => {
+          if (!frame.isConnected) return;
+          const root = frame.contentDocument?.documentElement;
+          report.textContent = !root ? "Overflow unavailable." :
+            root.scrollWidth > root.clientWidth + 1 ? "Horizontal document overflow detected." :
+            "No horizontal document overflow detected.";
+        });
+        canvas.append(frame);
+        card.append(title, report, canvas);
+        comparison.append(card);
+      }
+    }
+    for (const frame of comparison.querySelectorAll("iframe")) {
+      frame.closest("section").querySelector("p").textContent = "Updating preview…";
+      frame.srcdoc = shell;
+    }
+  }
+
   function render() {
     // No script or form permissions, even if an editor pastes arbitrary markup.
     // allow-same-origin permits the local stylesheet but not script execution.
@@ -256,6 +302,7 @@ ${snippet.previewStylesheets(selectedModule())}
 <style>html,body{min-height:100%;} body.syn-root{margin:0;padding:1.5rem;} *,*::before,*::after{box-sizing:border-box;}</style>
 </head><body class="syn-root syn-page" data-syn-theme="${theme.value}" style="${tokens()}">${previewSafeMarkup()}</body></html>`;
     preview.srcdoc = shell;
+    updateComparison(shell);
     status.textContent = `Preview updated: ${theme.options[theme.selectedIndex].text} theme.`;
   }
 
@@ -327,6 +374,7 @@ ${snippet.previewStylesheets(selectedModule())}
   markup.addEventListener("input", scheduleRender);
   for (const control of [radius, padding]) control.addEventListener("input", scheduleRender);
   viewport.addEventListener("change", updateViewport);
+  compare.addEventListener("change", render);
   search.addEventListener("input", populateCatalog);
   renderButton.addEventListener("click", render);
   copyButton.addEventListener("click", async () => {
