@@ -87,6 +87,10 @@ class CloudflareSiteTests(unittest.TestCase):
                 self.assertTrue((out / "docs/demos" / (name + ".zip")).is_file())
             playground = (out / "docs/composition-playground.html").read_text()
             self.assertIn('href="demos/crm.zip"', playground)
+            homepage = (out / "index.html").read_text()
+            self.assertIn('href="docs/composition-playground.html"', homepage)
+            self.assertIn("Compose from requirements", homepage)
+            self.assertIn('href="docs/demos/crm.zip"', homepage)
             self.assertIn('Syntyr%20Pro%20composition%20preview', playground)
             # JSON-LD is inert data, not browser-executed JavaScript.
             self.assertFalse(any(
