@@ -162,3 +162,20 @@ class GuardedApplyTests(unittest.TestCase):
             proc = subprocess.run(approved, capture_output=True, text=True)
             self.assertNotEqual(proc.returncode, 0)
             self.assertFalse(output.exists())
+
+@unittest.skipUnless(os.environ.get("SYNTYR_HTML_INSPECTOR"), "Configure optional inspector")
+class UnicodeProofTests(unittest.TestCase):
+    def test_combined_proof_accepts_eight_long_unicode_selectors(self):
+        from agent_mcp.html_inspector import plan_source_patches
+        names = ["𐀀" * 240 + str(i) for i in range(8)]
+        source = "".join(f'<button id="{name}" class="syn-button syn-button--primary">Button</button>'
+                         for name in names)
+        report = inspect_markup(source, CANDIDATE, "button")
+        ops = [{"element_id": e["element_id"], "selector": "#" + name,
+                "from": "syn-button--primary", "to": "syn-button--outline"}
+               for e, name in zip(report["elements"], names)]
+        plan = plan_source_patches(source, CANDIDATE, report["document_sha256"], ops)
+        self.assertTrue(plan["combined_dom_verified"])
+        self.assertEqual(len(plan["patches"]), 8)
+        self.assertEqual(plan["result_sha256"], hashlib.sha256(
+            source.replace("syn-button--primary", "syn-button--outline").encode()).hexdigest())

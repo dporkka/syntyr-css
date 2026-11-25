@@ -161,7 +161,7 @@ def _plan_variants(html: str, release: str, document_sha256: str, operations: li
     if remaining <= 0:
         raise CatalogError("Combined DOM proof timed out")
     proof = _invoke(data, ["--document-sha256", document_sha256, "--verify-patches",
-                           json.dumps(proof_ops, separators=(",", ":"))], remaining)
+                           json.dumps(proof_ops, ensure_ascii=False, separators=(",", ":"))], remaining)
     candidate_digest = hashlib.sha256(candidate).hexdigest()
     if (proof.get("schema_version") != 1 or proof.get("source_version") != release
             or proof.get("document_sha256") != document_sha256
