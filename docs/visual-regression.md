@@ -111,3 +111,25 @@ screenshots or media-query string checks. The Chromium run is part of the
 PR smoke configuration, and all three engines are configured for manual/tag
 runs. This does not cover every docs-only CSS rule, device font preference,
 or arbitrary content combination.
+
+## Bidirectional resize and localized content stress
+
+```sh
+python tests/responsive_stress_browser.py --browsers chromium
+python tests/responsive_stress_browser.py --browsers chromium firefox webkit
+```
+
+Six representative live documents are resized from 320 to 2560 CSS pixels
+and back without navigation between samples. Sampling is at most 32 pixels
+apart and also includes canonical widths and adjacent media-query thresholds.
+This is a sampled sweep, not exhaustive testing of every possible width.
+
+Localized component fixtures use German and Brazilian Portuguese (LTR),
+Arabic and Hebrew (RTL), long labels, long actions, and unbroken record
+identifiers across the six canonical viewports at 100%, 150% and 200% root
+font size. Assertions check document overflow, clipped text, input/action
+overlap and visual direction of adjacent statistics cards. Root font
+enlargement is not equivalent to native browser zoom. Browser font shaping,
+all languages and arbitrary application content are not certified by these
+fixtures. The Chromium stress run is configured for PRs and the full
+three-engine run for manual/tag execution.
