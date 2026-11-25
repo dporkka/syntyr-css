@@ -69,6 +69,18 @@ unsupported release, or invalid selector is a tool error. There is no automatic
 repair, browser evaluation, or source-file access. Use `validate_markup` for
 release-pinned class and stylesheet checks, and browser tests for rendered behavior.
 
+### Transactional variant previews (experimental)
+
+After inspection, call `plan_variant_changes(html, release, document_sha256,
+operations)`. Each operation contains `element_id`, `selector`, `from`, and
+`to`. The planner accepts one to eight independent class replacements on
+distinct elements in the same exact snapshot; one invalid operation rejects
+the entire response. All operations are evaluated against the original HTML,
+not sequentially applied. A shared five-second execution budget bounds the
+local inspector subprocesses. Returned changes are decoded attribute
+before/after pairs, not source diffs. No files are written. Use the canonical
+validator and browser testing after any human-applied edit.
+
 ### Agent verification loop
 
 Call `validate_markup` with the generated **literal HTML**, explicit release,

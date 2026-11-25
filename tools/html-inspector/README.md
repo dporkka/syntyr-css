@@ -75,8 +75,18 @@ a semantic suggestion, not a source patch: HTML parsing decodes entities,
 normalizes line endings, and uses the effective first duplicate attribute.
 Do not apply the plan automatically or interpret IDs as byte offsets.
 The preview checks class-family membership, not visual compatibility or
-complete component semantics. The MCP and agent CLI expose inspection IDs
-but do not yet expose the preview operation.
+complete component semantics. The MCP and agent CLI also expose bounded multi-operation previews.
+Save a local JSON request with the inspected `document_sha256` and an
+`operations` array of objects containing `element_id`, `selector`, `from`,
+and `to`, then run:
+
+```sh
+python3 scripts/syntyr_agent.py plan-html --release 0.3.0-alpha.5 --request plan.json page.html
+```
+
+The MCP tool is `plan_variant_changes`. The planner permits at most eight
+distinct targets and rejects the entire request if any operation fails.
+It never applies changes or emits source patches.
 
  Use the existing
 `python3 scripts/syntyr_check.py FILE` for canonical class, attribute,

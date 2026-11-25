@@ -17,7 +17,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from agent_mcp.catalog import CANDIDATE, MAX_HTML_CHARS, PUBLISHED, RELEASES, SyntyrCatalog  # noqa: E402
-from agent_mcp.html_inspector import inspect_markup  # noqa: E402
+from agent_mcp.html_inspector import inspect_markup, plan_variants  # noqa: E402
 from scripts.syntyr_check import validate_html  # noqa: E402
 
 DEFAULT_SHEETS = ('syntyr.core.css', 'syntyr.recipes.css')
@@ -239,10 +239,26 @@ def check(args: argparse.Namespace, catalog: SyntyrCatalog) -> tuple[int, dict]:
                   'limitations': 'Static literal HTML and pinned file integrity only. CSS inclusion, browser behavior, JSX/TSX/Vue/Svelte, and WCAG require separate verification.'}
 
 
+def _read_inspector_html(file: str) -> str:
+    # Preserve CRLF and exact UTF-8 bytes so the digest agrees with standalone Go.
+    with Path(file).open(encoding="utf-8", newline="") as source:
+        return source.read(MAX_HTML_CHARS + 1)
+
+
 def inspect_html(args: argparse.Namespace, catalog: SyntyrCatalog) -> tuple[int, dict]:
-    with Path(args.file).open(encoding="utf-8") as source:
-        html = source.read(MAX_HTML_CHARS + 1)
-    return 0, inspect_markup(html, args.release, args.selector)
+    return 0, inspect_markup(_read_inspector_html(args.file), args.release, args.selector)
+
+
+def plan_html(args: argparse.Namespace, catalog: SyntyrCatalog) -> tuple[int, dict]:
+    with Path(args.request).open(encoding="utf-8") as source:
+        raw = source.read(16385)
+    if len(raw) > 16384:
+        raise ValueError("Plan request exceeds 16,384 characters")
+    request = json.loads(raw)
+    if not isinstance(request, dict) or set(request) != {"document_sha256", "operations"}:
+        raise ValueError("Expected document_sha256 and operations in plan request")
+    return 0, plan_variants(_read_inspector_html(args.file), args.release,
+                            request["document_sha256"], request["operations"])
 
 
 def main(argv=None) -> int:
@@ -265,10 +281,15 @@ def main(argv=None) -> int:
     markup.add_argument('--selector', default='')
     markup.add_argument('--json', action='store_true')
     markup.add_argument('file')
+    plan = sub.add_parser('plan-html', help='Preview bounded variant replacements without writing source')
+    plan.add_argument('--release', required=True, choices=[CANDIDATE])
+    plan.add_argument('--request', required=True, help='Local JSON plan request')
+    plan.add_argument('--json', action='store_true')
+    plan.add_argument('file')
     args = parser.parse_args(argv)
     try:
         catalog = SyntyrCatalog()
-        handlers = {'init': initialize, 'check': check, 'info': info, 'inspect-html': inspect_html}
+        handlers = {'init': initialize, 'check': check, 'info': info, 'inspect-html': inspect_html, 'plan-html': plan_html}
         code, payload = handlers[args.command](args, catalog)
     except (ValueError, OSError, KeyError, json.JSONDecodeError) as exc:
         code, payload = 1, {'error': str(exc)}
