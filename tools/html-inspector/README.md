@@ -39,6 +39,10 @@ Recipe slots are checked within their root, excluding nested instances of the
 same recipe and inert template content. A missing required or repeated
 nonrepeatable slot is advisory (`missing` or `multiple`); otherwise `ok`.
 Successful inspections exit zero, input/selector/catalog failures exit 2.
+Use `--strict-recipes` in CI to exit 1 when any **selected** recipe reports a
+slot violation. JSON is still emitted before the failure; default inspections
+remain advisory. Strict mode rejects nonzero `--limit` to prevent false passes
+from truncated reports. This is not a complete accessibility or HTML validator.
 
 The catalog is curated, not exhaustive. This tool analyzes rendered static HTML
 or fragments (up to 8 MiB), not JSX, Go templates, browser state, computed CSS,
