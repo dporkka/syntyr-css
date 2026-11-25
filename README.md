@@ -6,7 +6,7 @@
 
 **Build expressive, durable interfaces with HTML and CSS.** Syntyr is a framework-neutral, CSS-first design system for SaaS dashboards, business websites, developer tools and cinematic interfaces. Copy a stylesheet, compose native HTML, and keep application behavior in your own stack.
 
-[Website](https://syntyr-css.pages.dev/) · [Documentation](https://syntyr-css.pages.dev/docs/) · [Examples](#visual-showcase) · [Releases](https://github.com/dporkka/syntyr-css/releases) · [Issues](https://github.com/dporkka/syntyr-css/issues) · [Contributing](CONTRIBUTING.md) · [Roadmap](#roadmap)
+[Website](https://syntyr-css.pages.dev/) · [Documentation](https://syntyr-css.pages.dev/docs/) · [Examples](#visual-showcase) · [Releases](https://github.com/dporkka/syntyr-css/releases) · [Issues](https://github.com/dporkka/syntyr-css/issues) · [Contributing](https://github.com/dporkka/syntyr-css/blob/main/CONTRIBUTING.md) · [Roadmap](#roadmap)
 
 | Published release | Source candidate | License | Core runtime |
 | --- | --- | --- | --- |
@@ -115,7 +115,7 @@ Grid, Noir and Studio are available in the published alpha.4; the four additiona
 | Integrate with my stack | [Framework integrations](docs/framework-integrations.md) · [Site builders](docs/site-builders.md) |
 | Use it with a coding agent | [AI quickstart](docs/ai-quickstart.md) · [DESIGN.md](DESIGN.md) · [llms.txt](llms.txt) |
 | Understand the internals | [Architecture](ARCHITECTURE.md) · [API stability](docs/api-stability.md) |
-| Help improve Syntyr | [Open issues](https://github.com/dporkka/syntyr-css/issues?q=is%3Aissue+is%3Aopen) · [Contributor guide](CONTRIBUTING.md) |
+| Help improve Syntyr | [Open issues](https://github.com/dporkka/syntyr-css/issues?q=is%3Aissue+is%3Aopen) · [Contributor guide](https://github.com/dporkka/syntyr-css/blob/main/CONTRIBUTING.md) |
 
 ## How Syntyr compares
 
@@ -465,9 +465,9 @@ Contributions are welcome: documentation fixes, reproducible bugs, accessibility
 
 - [Browse open issues](https://github.com/dporkka/syntyr-css/issues?q=is%3Aissue+is%3Aopen) and [open pull requests](https://github.com/dporkka/syntyr-css/pulls) before starting. New contributors can browse [good first issues](https://github.com/dporkka/syntyr-css/labels/good%20first%20issue).
 - [Report a bug or request an improvement](https://github.com/dporkka/syntyr-css/issues/new/choose). Include a minimal HTML reproduction and the stylesheet version.
-- Follow the [contributor guide](CONTRIBUTING.md), including the local setup, screenshot and verification requirements.
+- Follow the [contributor guide](https://github.com/dporkka/syntyr-css/blob/main/CONTRIBUTING.md), including the local setup, screenshot and verification requirements.
 - [Review the design-partner invitation](https://github.com/dporkka/syntyr-css/issues/3) if you want to give product feedback.
-- Report vulnerabilities privately using [SECURITY.md](SECURITY.md), not the public issue tracker.
+- Report vulnerabilities privately using [SECURITY.md](https://github.com/dporkka/syntyr-css/blob/main/SECURITY.md), not the public issue tracker.
 
 Reading this from a package or ZIP? The [GitHub README](https://github.com/dporkka/syntyr-css#readme) has the complete visual showcase and repository links.
 
