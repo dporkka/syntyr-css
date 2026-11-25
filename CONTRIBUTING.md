@@ -123,6 +123,9 @@ and browser engines **only in development or CI**; consumers do not install
 these tools. See [docs/accessibility.md](docs/accessibility.md) for browser,
 reflow, keyboard, focus, screen-reader and contrast checks.
 
+For documentation-directory search changes, run `python3 tests/reference_search_browser.py`
+with the optional Playwright environment and Chromium/Firefox installed.
+
 For behavior changes, add a regression test that fails before the fix,
 then verify it passes afterward. Report any unrun or unavailable browser
 engines explicitly. A clean automated axe result is not a WCAG certification.

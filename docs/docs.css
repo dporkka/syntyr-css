@@ -124,6 +124,9 @@
   .docs-article-toc-mobile .docs-article-toc-link { padding: .45rem .65rem; }
   .docs-article-toc-link { display: block; padding: .28rem .35rem; font-size: .86rem; line-height: 1.35; overflow-wrap: anywhere; }
   .docs-article-toc-3 { padding-inline-start: 1.25rem; font-size: .8rem; }
+  .docs-reference-search { margin-block: 1rem; max-inline-size: 40rem; }
+  .docs-reference-search .syn-input { inline-size: 100%; min-inline-size: 0; }
+  .docs-reference-search p { margin-block: .5rem; overflow-wrap: anywhere; }
   .docs-reference-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.2rem; padding-block-end: 5rem; }
   .docs-reference-group { padding: 1rem 1.25rem; background: var(--syn-surface); border: 1px solid var(--syn-frame); min-width: 0; }
   .docs-reference-group h2 { margin-block: .5rem 1rem; font-size: 1.4rem; }
