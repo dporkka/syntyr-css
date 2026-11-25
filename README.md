@@ -67,10 +67,10 @@ stylesheets.
 
 Use Syntyr with compatible coding agents via the existing consumer skill.
 Inspect the [Skill source](agents/syntyr/SKILL.md) before using the optional
-third-party skills CLI from your application directory:
+third-party Skills CLI 1.9.0 (Node.js 22.20.0 or later) from your application directory:
 
 ```sh
-npx skills add https://github.com/dporkka/syntyr-css/tree/main/agents/syntyr --skill syntyr
+npx skills@1.9.0 add https://github.com/dporkka/syntyr-css/tree/main/agents/syntyr --skill syntyr
 ```
 
 This installs agent instructions only, not CSS or application dependencies.

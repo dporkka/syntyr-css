@@ -6448,11 +6448,12 @@ Syntyr skill package to maintain. From your application directory, inspect the
 before choosing a project-scoped installation:
 
 ```sh
-npx skills add https://github.com/dporkka/syntyr-css/tree/main/agents/syntyr --list
-npx skills add https://github.com/dporkka/syntyr-css/tree/main/agents/syntyr --skill syntyr
+npx skills@1.9.0 add https://github.com/dporkka/syntyr-css/tree/main/agents/syntyr --list
+npx skills@1.9.0 add https://github.com/dporkka/syntyr-css/tree/main/agents/syntyr --skill syntyr
 ```
 
-The CLI requires Node.js and network access for this optional installation
+The commands above pin the verified Skills CLI 1.9.0, which requires
+Node.js 22.20.0 or later and network access for this optional installation
 route only. Review the source and select your agent when prompted; do not
 install globally by default. For reproducible updates, review a specific
 source commit and use that Git ref instead of the moving main branch. The

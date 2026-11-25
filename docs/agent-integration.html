@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Syntyr works with ChatGPT, Codex, Claude Code, Cursor and other agents that generate HTML or framework markup. No Syntyr-specific service, account, MCP…">
-  <meta name="syntyr-source-sha256" content="e94183b1dd266820c271b65f1c839c7c6489c9025e127bb7663b6d3edf0a3986">
+  <meta name="syntyr-source-sha256" content="e127512aece035d12b591bf3b5285c9b07306329d4c42c2ef21b340a2fecf9d9">
   <meta name="theme-color" content="#f5f7fb">
   <title>Using Syntyr with coding agents — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/agent-integration">
@@ -56,10 +56,11 @@ with the third-party <a href="https://skills.sh/">skills CLI</a>. There is no se
 Syntyr skill package to maintain. From your application directory, inspect the
 <a href="https://github.com/dporkka/syntyr-css/tree/main/agents/syntyr">canonical Skill</a>
 before choosing a project-scoped installation:</p>
-<pre tabindex="0"><code class="language-sh">npx skills add https://github.com/dporkka/syntyr-css/tree/main/agents/syntyr --list
-npx skills add https://github.com/dporkka/syntyr-css/tree/main/agents/syntyr --skill syntyr
+<pre tabindex="0"><code class="language-sh">npx skills@1.9.0 add https://github.com/dporkka/syntyr-css/tree/main/agents/syntyr --list
+npx skills@1.9.0 add https://github.com/dporkka/syntyr-css/tree/main/agents/syntyr --skill syntyr
 </code></pre>
-<p>The CLI requires Node.js and network access for this optional installation
+<p>The commands above pin the verified Skills CLI 1.9.0, which requires
+Node.js 22.20.0 or later and network access for this optional installation
 route only. Review the source and select your agent when prompted; do not
 install globally by default. For reproducible updates, review a specific
 source commit and use that Git ref instead of the moving main branch. The
