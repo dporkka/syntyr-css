@@ -17,3 +17,12 @@ class ResponsiveReportingTest(unittest.TestCase):
     def test_blocked_engine_is_not_passed(self):
         self.assertEqual(summarize([{"status": "blocked"}]),
                          {"pass": 0, "fail": 0, "blocked": 1})
+
+    def test_block_remaining_preserves_completed_cases(self):
+        from responsive_reporting import block_remaining
+        results = []
+        viewports = [(320, 568, 1), (390, 844, 1)]
+        record_case(results, "chromium", "a.html", viewports[0], lambda: None)
+        block_remaining(results, "chromium", ["a.html", "b.html"], viewports, RuntimeError("context unavailable"))
+        self.assertEqual(summarize(results), {"pass": 1, "fail": 0, "blocked": 3})
+        self.assertEqual(len({(c["page"], c["width"]) for c in results}), 4)

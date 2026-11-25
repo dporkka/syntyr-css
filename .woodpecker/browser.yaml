@@ -16,6 +16,7 @@ steps:
       - python3 tests/playground_browser.py chromium
       - python3 tests/responsive_boundary_browser.py --browsers chromium
       - python3 tests/responsive_stress_browser.py --browsers chromium
+      - python3 tests/responsive_cli_browser.py
 
   - name: three-engine-browser-and-reflow-matrix
     when:

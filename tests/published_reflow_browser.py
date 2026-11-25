@@ -24,7 +24,7 @@ sys.path.insert(0, str(ROOT))
 from scripts.build_cloudflare_site import source_files  # noqa: E402
 
 from responsive_viewports import CANONICAL_VIEWPORTS, PUBLISHED_VIEWPORTS
-from responsive_reporting import record_case, summarize
+from responsive_reporting import record_case, summarize, block_remaining
 
 INSPECT = """() => {
   const root = document.documentElement;
@@ -94,9 +94,7 @@ class QuietHandler(SimpleHTTPRequestHandler):
             pass
 
 
-def check_page(page, engine, origin, name, width, height, scale):
-    response = page.goto(f"{origin}/{name}", wait_until="load", timeout=15_000)
-    assert response and response.status == 200, (engine, name, "HTTP", response)
+def check_geometry(page, engine, name, width, height, scale):
     if scale != 1:
         page.evaluate("(scale) => document.documentElement.style.fontSize = (16 * scale) + 'px'", scale)
     layout = page.evaluate(INSPECT)
@@ -107,6 +105,12 @@ def check_page(page, engine, origin, name, width, height, scale):
     if width in (320, 390) and scale == 1:
         too_small = page.evaluate(INSPECT_TOUCH_TARGETS)
         assert not too_small, (engine, name, "touch targets below 24px", too_small)
+
+
+def check_page(page, engine, origin, name, width, height, scale):
+    response = page.goto(f"{origin}/{name}", wait_until="load", timeout=15_000)
+    assert response and response.status == 200, (engine, name, "HTTP", response)
+    check_geometry(page, engine, name, width, height, scale)
     if name == "examples/viz.html" and width == 320 and scale == 2:
         heatmap = page.locator(".syn-viz-heatmap").first
         grid = heatmap.evaluate("""e => ({
@@ -132,9 +136,9 @@ def check(browser, engine, origin, pages, viewports=PUBLISHED_VIEWPORTS, results
             viewport={"width": width, "height": height},
             reduced_motion="reduce",
         )
-        page = context.new_page()
         before = len(results)
         try:
+            page = context.new_page()
             for name in pages:
                 case = record_case(results, engine, name, (width, height, scale),
                                    lambda: check_page(page, engine, origin, name, width, height, scale))
@@ -191,11 +195,13 @@ def main():
                         browser = getattr(playwright, engine).launch(**options)
                     except Exception as exc:
                         print(f"BLOCKED {engine}: {str(exc).splitlines()[0]}", flush=True)
-                        results.extend({"engine": engine, "page": name, "width": w, "height": h, "textScale": scale, "status": "blocked", "error": str(exc)}
-                                       for w, h, scale in viewports for name in pages)
+                        block_remaining(results, engine, pages, viewports, exc)
                         continue
                     try:
                         check(browser, engine, f"http://127.0.0.1:{server.server_port}", pages, viewports, results)
+                    except Exception as exc:
+                        print(f"BLOCKED {engine}: {exc}", flush=True)
+                        block_remaining(results, engine, pages, viewports, exc)
                     finally:
                         browser.close()
         finally:

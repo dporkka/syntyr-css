@@ -151,3 +151,30 @@ substitute the current HEAD for an earlier tested checkout. Review the
 generated HTML and JSON together before committing. Raw diagnostics are
 not published. Report hashes identify the private input files; they do
 not authenticate the run or imply an independent certification.
+
+## Optional local responsive audit CLI
+
+Run from a source checkout with developer-installed Playwright and browsers.
+Start your own trusted local development server first.
+
+```sh
+python scripts/syntyr_agent.py responsive http://127.0.0.1:8000/index.html \
+  --browsers chromium firefox --report /tmp/responsive.json
+```
+
+The default is six canonical viewports. Add `--stress` for the 15-case
+orientation and root-text matrix. Exit 0 means all recorded cases passed;
+exit 1 means at least one failed or was blocked; invalid invocation exits 2.
+This is opt-in tooling, not part of the consumer CSS installation.
+
+Use trusted local pages only. The command rejects non-loopback targets and
+filters ordinary cross-origin requests, but is not a sandbox for malicious
+pages or redirects. It does not replace Websyt.dev's SSRF-safe remote browser
+infrastructure. Raw report paths and errors may contain private application
+data; do not publish them directly.
+
+The version-1 raw report is shared with the published reflow runner:
+`schemaVersion`, `summary` (pass/fail/blocked counts), and `cases` (engine,
+page, width, height, textScale, status, optional error). The local report also
+includes a suite name and limitations. Consumers should recompute counts,
+reject duplicate cases, and never interpret blocked or missing as success.
