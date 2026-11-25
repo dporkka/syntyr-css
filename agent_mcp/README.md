@@ -48,6 +48,28 @@ The server offers these **read-only** tools:
   allowed theme/state values, missing CSS files, and structured repair hints.
   This is not an accessibility conformance audit.
 
+### Generate a validated static interface
+
+The optional candidate-only `generate_ui(request)` tool invokes the exact same
+offline generation pipeline as `python3 scripts/generate_ui.py`. It requires
+local Node.js 22+ in addition to the MCP SDK; the other reference tools do not.
+It accepts the structured request shown below, not free-text prompts, arbitrary
+commands, HTML, or file paths.
+
+```json
+{"request":{"release":"0.3.0-alpha.5","title":"CRM dashboard","theme":"noir","requirements":["pipeline","metrics"]}}
+```
+
+A successful response includes the plan, preflight, markup diagnostics, static
+HTML, editable project and required assets. Unsupported requirements return a
+blocked stage and no artifact. Invalid input or a JSON request/result above
+256 KiB returns a tool error; use the local CLI for larger results. This bound
+applies to the serialized result object, not MCP transport framing. The
+existing public markup tool retains its independent 20,000-character limit.
+The tool invokes only the checked-in local composer, never generated code,
+writes no project files and makes no network requests. It does not implement
+host behavior, verify permissions or certify accessibility.
+
 ### Agent verification loop
 
 Call `validate_markup` with the generated **literal HTML**, explicit release,

@@ -5,6 +5,7 @@ CSS assets, website, and build never import this adapter.
 """
 from __future__ import annotations
 
+import json
 from typing import Any
 
 from mcp.server import MCPServer
@@ -12,6 +13,9 @@ from mcp.types import ToolAnnotations
 from mcp.server.mcpserver.exceptions import ToolError
 
 from .catalog import CatalogError, SyntyrCatalog, PUBLISHED
+from scripts.generate_ui import generate
+
+MAX_GENERATION_RESPONSE_BYTES = 256 * 1024
 
 catalog = SyntyrCatalog()
 READ_ONLY = ToolAnnotations(readOnlyHint=True, destructiveHint=False, idempotentHint=True, openWorldHint=False)
@@ -63,6 +67,19 @@ def validate_composition(section_ids: list[str], interactions: list[dict[str, An
     """Preflight candidate section IDs, declared interaction requirements and CSS modules."""
     return checked(catalog.validate_composition, section_ids, interactions, stylesheets,
                    runtime_policy, release)
+
+
+@server.tool(annotations=READ_ONLY, structured_output=True)
+def generate_ui(request: dict[str, Any]) -> dict[str, Any]:
+    """Generate validated static candidate HTML and editable JSON from structured intents.
+
+    Requires local Node.js. Returns blocked diagnostics without partial artifacts.
+    No file writes, network requests, or execution of generated markup.
+    """
+    result = checked(generate, request)
+    if len(json.dumps(result, ensure_ascii=True).encode("utf-8")) > MAX_GENERATION_RESPONSE_BYTES:
+        raise ToolError("Generation response exceeds 256 KiB; use a smaller plan or the local CLI")
+    return result
 
 
 @server.tool(annotations=READ_ONLY, structured_output=True)

@@ -1,5 +1,7 @@
 """Real MCP SDK discovery and tool calls, not a mocked JSON-RPC interface."""
 import asyncio
+import shutil
+from unittest.mock import patch
 import unittest
 
 try:
@@ -12,6 +14,38 @@ except ImportError:
 
 @unittest.skipUnless(Client is not None, "Install optional MCP SDK to run integration")
 class AgentMcpSdkTests(unittest.TestCase):
+    @unittest.skipUnless(shutil.which("node"), "Optional Node authoring tool")
+    def test_generation_uses_canonical_engine_and_bounded_results(self):
+        from scripts.generate_ui import generate
+        request = {"release": "0.3.0-alpha.5", "title": "CRM",
+                   "theme": "noir", "requirements": ["pipeline", "metrics"]}
+        async def run():
+            async with Client(adapter.server) as client:
+                listing = await client.list_tools()
+                tool = next((t for t in listing.tools if t.name == "generate_ui"), None)
+                self.assertIsNotNone(tool)
+                self.assertIs(tool.annotations.read_only_hint, True)
+                result = await client.call_tool("generate_ui", {"request": request})
+                self.assertFalse(result.is_error)
+                self.assertEqual(result.structured_content, generate(request))
+                self.assertEqual(result.structured_content["validation"]["diagnostics"], [])
+                blocked = await client.call_tool("generate_ui", {"request":
+                    {**request, "requirements": ["pipeline", "live-map"]}})
+                self.assertFalse(blocked.is_error)
+                self.assertEqual(blocked.structured_content["status"], "blocked")
+                self.assertNotIn("output", blocked.structured_content)
+                invalid = await client.call_tool("generate_ui", {"request":
+                    {**request, "release": "0.3.0-alpha.4"}})
+                self.assertTrue(invalid.is_error)
+                oversized = await client.call_tool("generate_ui", {"request":
+                    {**request, "description": "x" * (256 * 1024 + 1)}})
+                self.assertTrue(oversized.is_error)
+                with patch.object(adapter, "MAX_GENERATION_RESPONSE_BYTES", 1):
+                    limited = await client.call_tool("generate_ui", {"request": request})
+                    self.assertTrue(limited.is_error)
+                    self.assertNotIn("<!doctype html>", str(limited.content).lower())
+        asyncio.run(run())
+
     def test_mcp_tools_are_discoverable_and_use_published_api(self):
         self.assertTrue(hasattr(adapter, "server"))
         async def run():
