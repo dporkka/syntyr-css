@@ -57,6 +57,41 @@ class ValidatedGenerationTests(unittest.TestCase):
         self.assertEqual(result["stage"], "markup-validation")
         self.assertNotIn("output", result)
 
+    def test_native_fallbacks_and_disclosure_render_as_editable_sections(self):
+        entries = [
+            {"contract": "combobox", "recipe": "native-select", "relationship": "fallback"},
+            {"contract": "sortable-table", "recipe": "native-table", "relationship": "fallback"},
+            {"contract": "disclosure", "recipe": "native-modal-dialog", "relationship": "example"},
+        ]
+        result = generate(self.request(requirements=["product-intro"], interactions=entries))
+        self.assertEqual(result["status"], "generated")
+        rendered = result["output"]
+        self.assertEqual([b["type"] for b in rendered["project"]["blocks"]],
+                         ["section:hero-product", "section:filter-toolbar", "section:data-table", "section:faq"])
+        self.assertEqual([i["section_id"] for i in result["rendered_interactions"]],
+                         ["filter-toolbar", "data-table", "faq"])
+        self.assertIn("<select", rendered["html"])
+        self.assertIn("<table", rendered["html"])
+        self.assertIn("<details", rendered["html"])
+        self.assertNotIn("<script", rendered["html"])
+        self.assertEqual(result["validation"]["diagnostics"], [])
+        self.assertTrue(all(i["limitations"] for i in result["rendered_interactions"]))
+
+    def test_disclosure_example_does_not_duplicate_planned_faq(self):
+        result = generate(self.request(requirements=["faq"], interactions=[
+            {"contract": "disclosure", "recipe": "native-modal-dialog", "relationship": "example"}]))
+        self.assertEqual(result["status"], "generated")
+        self.assertEqual(len(result["output"]["project"]["blocks"]), 1)
+        self.assertEqual(result["rendered_interactions"][0]["section_id"], "faq")
+
+    def test_mixed_supported_and_unimplemented_recipes_block_entire_artifact(self):
+        result = generate(self.request(interactions=[
+            {"contract": "combobox", "recipe": "native-select", "relationship": "fallback"},
+            {"contract": "dropdown", "recipe": "native-popover", "relationship": "implementation"}]))
+        self.assertEqual(result["stage"], "interaction-rendering")
+        self.assertNotIn("output", result)
+        self.assertEqual(result["unrendered_interactions"], [1])
+
     def test_invalid_inputs_fail_closed(self):
         for request in (self.request(release="0.3.0-alpha.4"),
                         self.request(html="<script>"), self.request(theme="unknown")):

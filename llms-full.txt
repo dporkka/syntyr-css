@@ -6604,9 +6604,16 @@ has no generated artifact and identifies the stage that blocked it (exit 2).
 Invalid input or tool failure returns exit 1.
 
 Optional `interactions` declarations and `runtime_policy` are checked
-against the interaction contract and recipe inventory. Explicit interaction
-recipes are not yet emitted by the static section renderer, so even a valid
-explicit recipe declaration blocks generation until a renderer supports it.
+against the interaction contract and recipe inventory. Three reviewed
+canonical section equivalents can be emitted without adding a new renderer:
+`combobox/native-select/fallback` selects the filter toolbar,
+`sortable-table/native-table/fallback` selects a static data table, and
+`disclosure/native-modal-dialog/example` selects the FAQ disclosure.
+The response lists each equivalent in `rendered_interactions` with explicit
+limitations. This is not the full recipe source or implementation of live
+combobox filtering, table sorting or modal commands. The final preflight
+includes the extra section requirements. Other recipes (including modal and
+popover implementations) block the entire output, even if preflight is valid.
 Documents above the markup validator's 20,000-character limit also block.
 The pipeline does not claim host functionality, live interaction behavior,
 security or accessibility certification; review the returned host obligations,

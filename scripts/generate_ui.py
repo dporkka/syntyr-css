@@ -20,6 +20,18 @@ NOTE = ("Static presentation only. Host requirements remain unresolved implement
         "Validation is release-pinned markup checking, not a runtime or accessibility audit.")
 
 
+# These are reviewed canonical section equivalents, not copied recipe source
+# or a claim of full contract implementation. Keep this mapping narrow.
+NATIVE_EQUIVALENTS = {
+    ("combobox", "native-select", "fallback"): (
+        "filter-toolbar", "Fixed-list native selection only; host owns search/filter submission."),
+    ("sortable-table", "native-table", "fallback"): (
+        "data-table", "Static example rows only; no live sorting or server data."),
+    ("disclosure", "native-modal-dialog", "example"): (
+        "faq", "Native details/summary disclosure only; no modal dialog."),
+}
+
+
 def _compose(request, *, plan=False):
     node = shutil.which("node")
     if not node:
@@ -82,10 +94,41 @@ def generate(request: dict):
                                             requirements["required_stylesheets"], policy, CANDIDATE)
     if not preflight["valid"]:
         return blocked("preflight", preflight=preflight)
-    if interactions:
+    rendered_interactions = []
+    unrendered = []
+    for index, entry in enumerate(interactions):
+        key = (entry["contract"], entry["recipe"], entry["relationship"])
+        equivalent = NATIVE_EQUIVALENTS.get(key)
+        if equivalent is None:
+            unrendered.append(index)
+            continue
+        section_id, limitations = equivalent
+        rendered_interactions.append({"index": index, **{k: entry[k] for k in
+                                      ("contract", "recipe", "relationship")},
+                                      "section_id": section_id,
+                                      "rendering": "canonical-section-equivalent",
+                                      "limitations": limitations})
+    if unrendered:
         return blocked("interaction-rendering", preflight=preflight,
-                       reason="Explicit interaction recipes are not emitted by the section renderer")
-    output = _compose(composition)
+                       unrendered_interactions=unrendered,
+                       reason="One or more declared interaction recipes have no canonical section renderer")
+    # Keep original intent plan intact. Append equivalent sections only when
+    # not already selected, so output stays importable in the visual builder.
+    sections = list(composition["sections"])
+    selected = set(section_ids)
+    for entry in rendered_interactions:
+        section_id = entry["section_id"]
+        if section_id not in selected:
+            sections.append({"section_id": section_id})
+            section_ids.append(section_id)
+            selected.add(section_id)
+    if rendered_interactions:
+        requirements = catalog.validate_composition(section_ids, interactions, [], policy, CANDIDATE)
+        preflight = catalog.validate_composition(section_ids, interactions,
+                                                requirements["required_stylesheets"], policy, CANDIDATE)
+        if not preflight["valid"]:
+            return blocked("preflight", preflight=preflight)
+    output = _compose({**composition, "sections": sections})
     if len(output["html"]) > MAX_HTML_CHARS:
         return blocked("markup-validation", preflight=preflight,
                        reason="Generated HTML exceeds the pinned validator's document limit")
@@ -93,7 +136,7 @@ def generate(request: dict):
     if validation["diagnostics"] or validation["unknown_classes"] or validation["missing_stylesheets"]:
         return blocked("markup-validation", preflight=preflight, validation=validation)
     return {**base, "status": "generated", "stage": "complete", "preflight": preflight,
-            "validation": validation, "output": output}
+            "validation": validation, "rendered_interactions": rendered_interactions, "output": output}
 
 
 def main():
