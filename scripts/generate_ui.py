@@ -12,7 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from agent_mcp.catalog import CANDIDATE, MAX_HTML_CHARS, CatalogError, SyntyrCatalog
+from agent_mcp.catalog import CANDIDATE, MAX_LOCAL_DOCUMENT_CHARS, CatalogError, SyntyrCatalog
 
 MAX_INPUT = 256 * 1024
 MAX_OUTPUT = 4 * 1024 * 1024
@@ -129,10 +129,10 @@ def generate(request: dict):
         if not preflight["valid"]:
             return blocked("preflight", preflight=preflight)
     output = _compose({**composition, "sections": sections})
-    if len(output["html"]) > MAX_HTML_CHARS:
+    if len(output["html"]) > MAX_LOCAL_DOCUMENT_CHARS:
         return blocked("markup-validation", preflight=preflight,
                        reason="Generated HTML exceeds the pinned validator's document limit")
-    validation = catalog.validate_markup(output["html"], CANDIDATE, output["stylesheets"])
+    validation = catalog.validate_local_document(output["html"], CANDIDATE, output["stylesheets"])
     if validation["diagnostics"] or validation["unknown_classes"] or validation["missing_stylesheets"]:
         return blocked("markup-validation", preflight=preflight, validation=validation)
     return {**base, "status": "generated", "stage": "complete", "preflight": preflight,

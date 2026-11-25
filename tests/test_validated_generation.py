@@ -6,7 +6,7 @@ import subprocess
 import sys
 import unittest
 
-from agent_mcp.catalog import CANDIDATE, CatalogError
+from agent_mcp.catalog import CANDIDATE, CatalogError, SyntyrCatalog
 from scripts.generate_ui import generate
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -54,8 +54,10 @@ class ValidatedGenerationTests(unittest.TestCase):
                                           cwd=ROOT, text=True)
         ids = [entry["id"] for entry in json.loads(listing)["intents"]]
         result = generate(self.request(requirements=ids))
-        self.assertEqual(result["stage"], "markup-validation")
-        self.assertNotIn("output", result)
+        self.assertEqual(result["status"], "generated")
+        self.assertGreater(len(result["output"]["html"]), 20_000)
+        self.assertEqual(result["validation"]["diagnostics"], [])
+        self.assertEqual(len(result["plan"]["coverage"]), len(ids))
 
     def test_native_fallbacks_and_disclosure_render_as_editable_sections(self):
         entries = [
@@ -112,3 +114,19 @@ class ValidatedGenerationTests(unittest.TestCase):
         bad = run(self.request(html="unsafe"))
         self.assertEqual(bad.returncode, 1)
         self.assertEqual(bad.stdout, "")
+
+
+class LocalDocumentValidationTests(unittest.TestCase):
+    def test_local_validation_checks_entire_document_without_relaxing_mcp_limit(self):
+        catalog = SyntyrCatalog()
+        html = '<!doctype html><html><body class="syn-root">' + ("<p>Example</p>" * 2000) + '<p class="syn-invented-tail">Invalid</p></body></html>'
+        with self.assertRaisesRegex(CatalogError, "too long"):
+            catalog.validate_markup(html, CANDIDATE, ["syntyr.all.css"])
+        result = catalog.validate_local_document(html, CANDIDATE, ["syntyr.all.css"])
+        self.assertIn("syn-invented-tail", result["unknown_classes"])
+        self.assertTrue(result["diagnostics"])
+
+    def test_local_document_has_independent_hard_limit(self):
+        catalog = SyntyrCatalog()
+        with self.assertRaisesRegex(CatalogError, "too long"):
+            catalog.validate_local_document("x" * (256 * 1024 + 1), CANDIDATE, ["syntyr.all.css"])

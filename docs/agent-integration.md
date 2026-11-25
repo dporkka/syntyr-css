@@ -194,7 +194,9 @@ limitations. This is not the full recipe source or implementation of live
 combobox filtering, table sorting or modal commands. The final preflight
 includes the extra section requirements. Other recipes (including modal and
 popover implementations) block the entire output, even if preflight is valid.
-Documents above the markup validator's 20,000-character limit also block.
+The local authoring pipeline validates entire documents up to 262,144 characters;
+the public MCP markup tool retains its 20,000-character limit. Larger local
+documents block rather than bypass validation.
 The pipeline does not claim host functionality, live interaction behavior,
 security or accessibility certification; review the returned host obligations,
 sample content and destinations before deployment.

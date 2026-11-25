@@ -16,6 +16,7 @@ PUBLISHED = "0.3.0-alpha.4"
 CANDIDATE = "0.3.0-alpha.5"
 RELEASES = (PUBLISHED, CANDIDATE)
 MAX_HTML_CHARS = 20_000
+MAX_LOCAL_DOCUMENT_CHARS = 256 * 1024
 MAX_RESULTS = 40
 
 SELECTOR = re.compile(r"\.(syn-[a-zA-Z0-9_-]+)(?![a-zA-Z0-9_-])")
@@ -366,9 +367,17 @@ class SyntyrCatalog:
 
     def validate_markup(self, html: str, release: str = PUBLISHED,
                         stylesheets: list[str] | None = None):
+        return self._validate_markup(html, release, stylesheets, MAX_HTML_CHARS)
+
+    def validate_local_document(self, html: str, release: str = PUBLISHED,
+                                stylesheets: list[str] | None = None):
+        """Bounded local authoring path; intentionally not an MCP tool."""
+        return self._validate_markup(html, release, stylesheets, MAX_LOCAL_DOCUMENT_CHARS)
+
+    def _validate_markup(self, html, release, stylesheets, limit):
         base = self._release(release)
-        if not isinstance(html, str) or len(html) > MAX_HTML_CHARS:
-            raise CatalogError(f"HTML is too long or invalid (limit {MAX_HTML_CHARS} characters)")
+        if not isinstance(html, str) or len(html) > limit:
+            raise CatalogError(f"HTML is too long or invalid (limit {limit} characters)")
         info = self._catalog(release)
         if not isinstance(stylesheets, (list, type(None))) or not all(isinstance(s, str) for s in (stylesheets or [])):
             raise CatalogError("stylesheets must be an array of known Syntyr stylesheet identifiers")
