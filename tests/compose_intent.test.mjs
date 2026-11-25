@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {spawnSync} from "node:child_process";
+import {fileURLToPath} from "node:url";
 import {planIntent, listIntents, compose} from "../scripts/compose.mjs";
 
 const release = "0.3.0-alpha.5";
@@ -53,7 +54,7 @@ test("invalid intent plan shape, version or size rejected", () => {
 });
 
 test("CLI plan and intent catalog are accessible without rendering unsupported plans", () => {
-  const path=new URL("../scripts/compose.mjs",import.meta.url).pathname;
+  const path=fileURLToPath(new URL("../scripts/compose.mjs",import.meta.url));
   const run=(args,data)=>spawnSync(process.execPath,[path,...args],{input:data,encoding:"utf8"});
   const res=run(["--plan"],JSON.stringify(input));
   assert.equal(res.status,0,res.stderr);
