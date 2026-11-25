@@ -75,8 +75,15 @@ class CompositionPreflightTests(unittest.TestCase):
                                "metadata/section-composer.v1.json").read_text())
         sections = manifest["sections"]
         styles = sorted({css for item in sections for css in item["required_stylesheets"]})
-        result = self.check([item["id"] for item in sections], styles=styles)
-        self.assertTrue(result["valid"], result["diagnostics"])
+        # The catalog can grow beyond the bounded per-request input limit.
+        for offset in range(0, len(sections), 100):
+            with self.subTest(offset=offset):
+                result = self.check([item["id"] for item in sections[offset:offset + 100]], styles=styles)
+                self.assertTrue(result["valid"], result["diagnostics"])
+
+    def test_section_request_limit_remains_enforced(self):
+        with self.assertRaises(CatalogError):
+            self.check(["hero-product"] * 101)
 
     def test_unknown_contract_and_recipe_are_diagnosed_without_execution(self):
         result = self.check(interactions=[{"contract": "invented", "recipe": "untrusted",
