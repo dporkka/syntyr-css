@@ -26,9 +26,10 @@ try {
     return /^rgb\(/.test(color) || /^rgba\([^,]+,[^,]+,[^,]+,\s*1\)$/.test(color);
   };
   check(opaque(cell), 'opaque cell');
-  for (const state of ['data-syn-range', 'data-syn-selected', 'data-syn-focused']) {
+  for (const state of ['data-syn-range', 'data-syn-selected', 'aria-selected', 'data-syn-focused']) {
     cell.setAttribute(state, 'true');
     check(opaque(cell), 'opaque pinned ' + state);
+    check(getComputedStyle(cell).backgroundImage.startsWith('linear-gradient('), 'pinned tint ' + state);
     cell.removeAttribute(state);
   }
   check(getComputedStyle(conflict).borderBlockEndStyle === 'dashed', 'conflict marker');

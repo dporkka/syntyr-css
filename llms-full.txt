@@ -1010,7 +1010,7 @@ The optional CSS uses Syntyr's quiet operational surfaces by default; opt into
 Grid/Noir palettes only when appropriate. Avoid glows or decorative motion
 on data-heavy workspaces.
 
-## Spreadsheet presentation extensions
+## Spreadsheet pinning, range selection and conflict presentation
 
 For horizontal freeze panes, set `data-syn-pin="start"` or
 `data-syn-pin="end"` on matching headers and cells. Supply the cumulative

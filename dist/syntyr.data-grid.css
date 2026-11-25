@@ -163,6 +163,13 @@
   :where(.syn-root .syn-data-grid__cell[data-syn-focused="true"]) {
     background: var(--syn-grid-selected);
   }
+  /* Selection tints can be translucent. A pinned cell must occlude
+     scrolling content while retaining the tint over an opaque row surface. */
+  :where(.syn-root .syn-data-grid__cell:is([data-syn-pin="start"], [data-syn-pin="end"]):is(
+         [data-syn-range="true"], [aria-selected="true"], [data-syn-selected="true"], [data-syn-focused="true"])) {
+    background-color: var(--syn-surface);
+    background-image: linear-gradient(var(--syn-grid-selected), var(--syn-grid-selected));
+  }
   :where(.syn-root .syn-data-grid__cell:focus-visible) {
     outline: 2px solid var(--syn-grid-focus);
     outline-offset: -2px;
