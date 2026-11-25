@@ -201,6 +201,16 @@ The pipeline does not claim host functionality, live interaction behavior,
 security or accessibility certification; review the returned host obligations,
 sample content and destinations before deployment.
 
+### Generate through the optional local MCP adapter
+
+The candidate-only `generate_ui` tool accepts the CLI request as its
+`request` object and delegates to the same validated generator. It requires
+local Node.js 22+ and the optional MCP Python SDK. The JSON request and
+serialized response object are each bounded to 256 KiB; use the local CLI for
+larger results. No output files are written or generated markup executed.
+Blocked plans contain diagnostics without partial HTML. The standard
+`validate_markup` MCP tool keeps its separate 20,000-character limit.
+
 ### Reproduce and share a generation demo
 
 With the optional local Python and Node authoring tools, build one of three

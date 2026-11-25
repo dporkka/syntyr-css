@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Syntyr works with ChatGPT, Codex, Claude Code, Cursor and other agents that generate HTML or framework markup. No Syntyr-specific service, account, MCP…">
-  <meta name="syntyr-source-sha256" content="15e39641ba7847f1923315839e6aec9e67f9779220765758f68d06ab0e12f13e">
+  <meta name="syntyr-source-sha256" content="964d50b573cd9197d2252f0aa76e0dff3174f8c91dd71e379b94135ffd634575">
   <meta name="theme-color" content="#f5f7fb">
   <title>Using Syntyr with coding agents — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/agent-integration">
@@ -192,6 +192,14 @@ documents block rather than bypass validation.
 The pipeline does not claim host functionality, live interaction behavior,
 security or accessibility certification; review the returned host obligations,
 sample content and destinations before deployment.</p>
+<h3 id="generate-through-the-optional-local-mcp-adapter">Generate through the optional local MCP adapter</h3>
+<p>The candidate-only <code>generate_ui</code> tool accepts the CLI request as its
+<code>request</code> object and delegates to the same validated generator. It requires
+local Node.js 22+ and the optional MCP Python SDK. The JSON request and
+serialized response object are each bounded to 256 KiB; use the local CLI for
+larger results. No output files are written or generated markup executed.
+Blocked plans contain diagnostics without partial HTML. The standard
+<code>validate_markup</code> MCP tool keeps its separate 20,000-character limit.</p>
 <h3 id="reproduce-and-share-a-generation-demo">Reproduce and share a generation demo</h3>
 <p>With the optional local Python and Node authoring tools, build one of three
 portable demo ZIPs from the same validated generation pipeline:</p>
@@ -236,6 +244,7 @@ only copies the explicitly reviewed ZIP files; Node is not required to publish.<
 <a class="docs-article-toc-link docs-article-toc-2" href="#deterministic-section-composition-source-candidate">Deterministic section composition (source candidate)</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#select-sections-from-explicit-intent-ids">Select sections from explicit intent IDs</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#one-command-validated-generation">One-command validated generation</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#generate-through-the-optional-local-mcp-adapter">Generate through the optional local MCP adapter</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#reproduce-and-share-a-generation-demo">Reproduce and share a generation demo</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#try-the-browser-composition-playground">Try the browser composition playground</a>
           </nav>
@@ -253,6 +262,7 @@ only copies the explicitly reviewed ZIP files; Node is not required to publish.<
 <a class="docs-article-toc-link docs-article-toc-2" href="#deterministic-section-composition-source-candidate">Deterministic section composition (source candidate)</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#select-sections-from-explicit-intent-ids">Select sections from explicit intent IDs</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#one-command-validated-generation">One-command validated generation</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#generate-through-the-optional-local-mcp-adapter">Generate through the optional local MCP adapter</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#reproduce-and-share-a-generation-demo">Reproduce and share a generation demo</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#try-the-browser-composition-playground">Try the browser composition playground</a>
             </nav>
