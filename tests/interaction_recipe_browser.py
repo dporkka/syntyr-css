@@ -43,9 +43,18 @@ def check_native_popover(page):
 
 def check_native_dialog_fallback(page):
     page.goto((ROOT / "examples/native-apis.html").as_uri())
-    page.get_by_role("button", name="OPEN MODAL").click()
-    dialog = page.locator("#native-dialog")
-    if dialog.evaluate("(node) => node.open"):
+    return check_dialog_activation(page)
+
+
+def check_dialog_activation(page):
+    supports_invoker = page.evaluate(
+        "'commandForElement' in HTMLButtonElement.prototype && "
+        "'command' in HTMLButtonElement.prototype"
+    )
+    if supports_invoker:
+        page.get_by_role("button", name="OPEN MODAL").click()
+        dialog = page.locator("#native-dialog")
+        assert dialog.evaluate("(node) => node.open"), "supported dialog did not open"
         assert dialog.evaluate("(node) => node.matches(':modal')"), "dialog is not modal"
         page.keyboard.press("Escape")
         assert not dialog.evaluate("(node) => node.open"), "Escape did not dismiss dialog"
@@ -53,6 +62,21 @@ def check_native_dialog_fallback(page):
     page.get_by_text("Read system status without a modal").click()
     assert page.get_by_text("System status: operational.").is_visible(), "fallback is inaccessible"
     return "invoker unsupported; accessible disclosure fallback verified"
+
+
+def check_broken_dialog_is_rejected(page):
+    page.goto((ROOT / "examples/native-apis.html").as_uri())
+    if not page.evaluate("'commandForElement' in HTMLButtonElement.prototype && 'command' in HTMLButtonElement.prototype"):
+        return
+    page.get_by_role("button", name="OPEN MODAL").evaluate(
+        "node => node.setAttribute('commandfor', 'missing-dialog')"
+    )
+    try:
+        check_dialog_activation(page)
+    except AssertionError as error:
+        assert str(error) == "supported dialog did not open", str(error)
+    else:
+        raise AssertionError("Broken supported dialog was accepted")
 
 
 def check_native_table_snapshot(page):
@@ -86,6 +110,7 @@ def main() -> None:
                         check_native_select(page)
                         check_native_popover(page)
                         modal = check_native_dialog_fallback(page)
+                        check_broken_dialog_is_rejected(page)
                         check_native_table_snapshot(page)
                         assert page.evaluate("document.documentElement.scrollWidth <= innerWidth"), (
                             engine, width, "unexpected horizontal overflow"
