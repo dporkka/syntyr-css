@@ -25,6 +25,7 @@ func runWithInput(args []string, stdin io.Reader, stdout, stderr io.Writer) erro
 	to := fs.String("preview-to", "", "replacement curated modifier class")
 	digest := fs.String("document-sha256", "", "digest from inspection")
 	id := fs.String("element-id", "", "element ID from inspection")
+	patch := fs.Bool("source-patch", false, "include an exact verified source byte patch in variant preview")
 	fs.Usage = func() {
 		fmt.Fprintln(stderr, "Usage: syntyr-html-inspect [--catalog FILE] [--selector CSS] HTML_FILE|-")
 		fs.PrintDefaults()
@@ -65,13 +66,20 @@ func runWithInput(args []string, stdin io.Reader, stdout, stderr io.Writer) erro
 	}
 	enc := json.NewEncoder(stdout)
 	enc.SetIndent("", "  ")
-	if *from != "" || *to != "" || *digest != "" || *id != "" {
+	if *patch || *from != "" || *to != "" || *digest != "" || *id != "" {
 		if *limit != 0 {
 			return fmt.Errorf("limit is not applicable to preview")
 		}
 		plan, err := previewVariant(data, c, *selector, *digest, *id, *from, *to)
 		if err != nil {
 			return err
+		}
+		if *patch {
+			p, err := sourcePatch(data, plan, *from, *to)
+			if err != nil {
+				return err
+			}
+			plan.SourcePatch = &p
 		}
 		return enc.Encode(plan)
 	}

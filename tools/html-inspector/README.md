@@ -86,7 +86,18 @@ python3 scripts/syntyr_agent.py plan-html --release 0.3.0-alpha.5 --request plan
 
 The MCP tool is `plan_variant_changes`. The planner permits at most eight
 distinct targets and rejects the entire request if any operation fails.
-It never applies changes or emits source patches.
+It never applies changes. For exact literal token edits, append
+`--source-patches` to the agent CLI command, or call the MCP
+`plan_html_source_patches` tool. The standalone single-variant preview accepts
+`--source-patch`. The Go proof reparses candidate edits and compares the tree
+to the expected single-attribute mutation; ambiguous or unsupported syntax
+fails closed. Each patch is a zero-based UTF-8 byte range with exclusive end,
+expected bytes and replacement. The agent planner combines non-overlapping
+patches in memory, reports the candidate digest, unified diff and canonical
+static contract/semantic validation. Source patch mode has an 80,000-byte
+Go input limit and at most 16 candidate edits per operation; encoded class
+values and duplicate class attributes are intentionally unsupported.
+No file writing, auto-application, or browser validation is provided.
 
  Use the existing
 `python3 scripts/syntyr_check.py FILE` for canonical class, attribute,

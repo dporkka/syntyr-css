@@ -17,7 +17,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from agent_mcp.catalog import CANDIDATE, MAX_HTML_CHARS, PUBLISHED, RELEASES, SyntyrCatalog  # noqa: E402
-from agent_mcp.html_inspector import inspect_markup, plan_variants  # noqa: E402
+from agent_mcp.html_inspector import inspect_markup, plan_variants, plan_source_patches  # noqa: E402
 from scripts.syntyr_check import validate_html  # noqa: E402
 
 DEFAULT_SHEETS = ('syntyr.core.css', 'syntyr.recipes.css')
@@ -257,8 +257,9 @@ def plan_html(args: argparse.Namespace, catalog: SyntyrCatalog) -> tuple[int, di
     request = json.loads(raw)
     if not isinstance(request, dict) or set(request) != {"document_sha256", "operations"}:
         raise ValueError("Expected document_sha256 and operations in plan request")
-    return 0, plan_variants(_read_inspector_html(args.file), args.release,
-                            request["document_sha256"], request["operations"])
+    planner = plan_source_patches if args.source_patches else plan_variants
+    return 0, planner(_read_inspector_html(args.file), args.release,
+                      request["document_sha256"], request["operations"])
 
 
 def main(argv=None) -> int:
@@ -284,6 +285,7 @@ def main(argv=None) -> int:
     plan = sub.add_parser('plan-html', help='Preview bounded variant replacements without writing source')
     plan.add_argument('--release', required=True, choices=[CANDIDATE])
     plan.add_argument('--request', required=True, help='Local JSON plan request')
+    plan.add_argument('--source-patches', action='store_true', help='Preview exact source edits and static validation')
     plan.add_argument('--json', action='store_true')
     plan.add_argument('file')
     args = parser.parse_args(argv)

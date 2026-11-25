@@ -64,3 +64,56 @@ class PlanIntegrationTests(unittest.TestCase):
             run=subprocess.run(base+["plan-html","--release",CANDIDATE,"--request",str(request),str(path)],capture_output=True,text=True,check=True)
             self.assertEqual(len(json.loads(run.stdout)["changes"]),2)
             self.assertEqual(path.read_bytes(),data)
+
+@unittest.skipUnless(os.environ.get("SYNTYR_HTML_INSPECTOR"), "Configure optional inspector")
+class SourcePlanIntegrationTests(unittest.TestCase):
+    def test_exact_patches_and_combined_validation(self):
+        from agent_mcp.html_inspector import plan_source_patches
+        source = '<!-- café -->\r\n' + HTML
+        report = inspect_markup(source, CANDIDATE, "button")
+        ops = [{"element_id": e["element_id"], "selector": "button",
+                "from": "syn-button--primary", "to": "syn-button--outline"}
+               for e in report["elements"]]
+        plan = plan_source_patches(source, CANDIDATE, report["document_sha256"], ops)
+        self.assertTrue(plan["preview_only"])
+        self.assertTrue(plan["validation"]["valid"])
+        self.assertEqual(len(plan["patches"]), 2)
+        expected = source.replace("syn-button--primary", "syn-button--outline")
+        data = source.encode()
+        for p in reversed(plan["patches"]):
+            self.assertEqual(data[p["start_byte"]:p["end_byte"]], p["expected"].encode())
+            data = data[:p["start_byte"]] + p["replacement"].encode() + data[p["end_byte"]:]
+        self.assertEqual(data, expected.encode())
+        self.assertEqual(plan["result_sha256"], hashlib.sha256(data).hexdigest())
+        self.assertIn("syn-button--outline", plan["unified_diff"])
+        self.assertIn(r"\ No newline at end of file", plan["unified_diff"])
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "page.html"
+            path.write_bytes(source.encode())
+            req = Path(directory) / "plan.json"
+            req.write_text(json.dumps({"document_sha256": report["document_sha256"], "operations": ops}))
+            cli = subprocess.run([sys.executable, str(ROOT / "scripts/syntyr_agent.py"), "plan-html",
+                                  "--source-patches", "--release", CANDIDATE, "--request", str(req), str(path)],
+                                 capture_output=True, text=True, check=True)
+            self.assertEqual(json.loads(cli.stdout), plan)
+            self.assertEqual(path.read_bytes(), source.encode())
+
+    def test_invalid_existing_contract_is_reported(self):
+        from agent_mcp.html_inspector import plan_source_patches
+        source = HTML + '<div class="syn-unknown-class"></div>'
+        report = inspect_markup(source, CANDIDATE, "button")
+        ops = [{"element_id": report["elements"][0]["element_id"], "selector": "button",
+                "from": "syn-button--primary", "to": "syn-button--outline"}]
+        plan = plan_source_patches(source, CANDIDATE, report["document_sha256"], ops)
+        self.assertFalse(plan["validation"]["valid"])
+        self.assertIn("unknown-class", [d["code"] for d in plan["validation"]["diagnostics"]])
+
+    def test_ambiguous_source_rejects_whole_plan(self):
+        from agent_mcp.html_inspector import plan_source_patches
+        source = HTML + '<button class="syn-button syn-button&#45;&#45;primary">Three</button>'
+        report = inspect_markup(source, CANDIDATE, "button")
+        ops = [{"element_id": e["element_id"], "selector": "button",
+                "from": "syn-button--primary", "to": "syn-button--outline"}
+               for e in report["elements"]]
+        with self.assertRaises(CatalogError):
+            plan_source_patches(source, CANDIDATE, report["document_sha256"], ops)

@@ -22,7 +22,7 @@ class AgentMcpSdkTests(unittest.TestCase):
                 self.assertGreaterEqual(names, {
                     "search_components", "get_component", "lookup_api",
                     "get_theme_tokens", "validate_markup", "get_interaction_contracts",
-                    "get_interaction_recipes", "inspect_markup", "plan_variant_changes",
+                    "get_interaction_recipes", "inspect_markup", "plan_variant_changes", "plan_html_source_patches",
                 })
                 contracts = await client.call_tool("get_interaction_contracts", {
                     "name": "dialog", "release": "0.3.0-alpha.5",
@@ -87,6 +87,10 @@ class AgentMcpSdkTests(unittest.TestCase):
                     self.assertFalse(plan.is_error)
                     self.assertTrue(plan.structured_content["preview_only"])
                     self.assertEqual(plan.structured_content["changes"][0]["after"], "syn-button syn-button--outline")
+                    patch = await client.call_tool("plan_html_source_patches", request)
+                    self.assertFalse(patch.is_error)
+                    self.assertTrue(patch.structured_content["validation"]["valid"])
+                    self.assertEqual(patch.structured_content["patches"][0]["replacement"], "syn-button--outline")
                     request["operations"] *= 2
                     duplicate = await client.call_tool("plan_variant_changes", request)
                     self.assertTrue(duplicate.is_error)

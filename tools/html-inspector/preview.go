@@ -10,15 +10,16 @@ import (
 )
 
 type VariantPreview struct {
-	SchemaVersion  int    `json:"schema_version"`
-	SourceVersion  string `json:"source_version"`
-	DocumentSHA256 string `json:"document_sha256"`
-	ElementID      string `json:"element_id"`
-	Selector       string `json:"selector"`
-	Attribute      string `json:"attribute"`
-	Before         string `json:"before"`
-	After          string `json:"after"`
-	PreviewOnly    bool   `json:"preview_only"`
+	SchemaVersion  int          `json:"schema_version"`
+	SourceVersion  string       `json:"source_version"`
+	DocumentSHA256 string       `json:"document_sha256"`
+	ElementID      string       `json:"element_id"`
+	Selector       string       `json:"selector"`
+	Attribute      string       `json:"attribute"`
+	Before         string       `json:"before"`
+	After          string       `json:"after"`
+	PreviewOnly    bool         `json:"preview_only"`
+	SourcePatch    *SourcePatch `json:"source_patch,omitempty"`
 }
 
 func previewVariant(data []byte, c catalog, selector, digest, id, from, to string) (VariantPreview, error) {

@@ -81,6 +81,21 @@ local inspector subprocesses. Returned changes are decoded attribute
 before/after pairs, not source diffs. No files are written. Use the canonical
 validator and browser testing after any human-applied edit.
 
+### Exact source-patch previews
+
+For literal HTML, `plan_html_source_patches` accepts the same arguments as
+`plan_variant_changes` and produces UTF-8 byte offsets, expected token bytes,
+replacement tokens, candidate digest, unified diff and combined static
+contract/semantic diagnostics. A patch is returned only when the Go parser
+can prove a unique candidate edit changes the intended DOM attribute and
+nothing else. All byte ranges refer to the original snapshot. Unsupported
+syntax, encoded class values, duplicate class attributes, overlapping edits,
+or more than 16 matching source candidates reject the entire plan; the
+semantic preview remains available. The combined validation includes existing
+errors, not just introduced ones; `valid: false` is not permission to apply.
+No application or write operation exists. The static validator does not
+certify accessibility, browser behavior or rendered geometry.
+
 ### Agent verification loop
 
 Call `validate_markup` with the generated **literal HTML**, explicit release,

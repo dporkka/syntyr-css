@@ -12,7 +12,7 @@ from mcp.types import ToolAnnotations
 from mcp.server.mcpserver.exceptions import ToolError
 
 from .catalog import CatalogError, SyntyrCatalog, PUBLISHED
-from .html_inspector import inspect_markup as inspect_literal_markup, plan_variants
+from .html_inspector import inspect_markup as inspect_literal_markup, plan_variants, plan_source_patches
 
 catalog = SyntyrCatalog()
 READ_ONLY = ToolAnnotations(readOnlyHint=True, destructiveHint=False, idempotentHint=True, openWorldHint=False)
@@ -87,6 +87,13 @@ def plan_variant_changes(html: str, release: str, document_sha256: str,
                          operations: list[dict[str, str]]) -> dict[str, Any]:
     """Preview up to eight independent variant changes against one inspected snapshot."""
     return checked(plan_variants, html, release, document_sha256, operations)
+
+
+@server.tool(annotations=READ_ONLY, structured_output=True)
+def plan_html_source_patches(html: str, release: str, document_sha256: str,
+                             operations: list[dict[str, str]]) -> dict[str, Any]:
+    """Preview exact source patches and validate the combined literal HTML."""
+    return checked(plan_source_patches, html, release, document_sha256, operations)
 
 
 if __name__ == "__main__":
