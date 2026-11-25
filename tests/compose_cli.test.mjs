@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { spawnSync } from "node:child_process";
+import { fileURLToPath } from "node:url";
 import { compose, listSections } from "../scripts/compose.mjs";
 
 const release = "0.3.0-alpha.5";
@@ -57,7 +58,7 @@ test("reject arbitrary markup, invalid release, oversized plan and unsupported i
 
 test("CLI returns JSON, supports list, and rejects invalid input without output", () => {
   const path = new URL("../scripts/compose.mjs", import.meta.url);
-  const run = (args, data) => spawnSync(process.execPath,[path.pathname,...args],{input:data, encoding:"utf8"});
+  const run = (args, data) => spawnSync(process.execPath,[fileURLToPath(path),...args],{input:data, encoding:"utf8"});
   const output = run([], JSON.stringify(input));
   assert.equal(output.status,0,output.stderr);
   assert.deepEqual(JSON.parse(output.stdout),compose(input));
@@ -67,4 +68,23 @@ test("CLI returns JSON, supports list, and rejects invalid input without output"
   const bad = run([], '{"title":');
   assert.notEqual(bad.status,0);
   assert.equal(bad.stdout,"");
+});
+
+test("canonical sections preserve selected non-Studio theme", () => {
+  for (const theme of ["noir", "auto", "corporate"]) {
+    const result = compose({...input, theme, sections:[{section_id:"hero-product"}]});
+    assert.match(result.html, new RegExp('<section class="syn-root syn-region" data-syn-theme="' + theme + '"'));
+  }
+  const studio = compose({...input, sections:[{section_id:"hero-product"}]});
+  assert.match(studio.html, /<section class="syn-root syn-region" aria-labelledby=/);
+});
+
+test("asset manifest includes padded and unpadded download links", () => {
+  // Use a link-only asset so that other image fields cannot mask the regression.
+  for (const href1 of ["../assets/gallery-horizon.svg", " ../assets/gallery-horizon.svg "]) {
+    const result = compose({...input,sections:[{section_id:"resource-downloads",
+      fields:{href1,href2:"/other",href3:"/other"}}]});
+    assert.match(result.html,/href="assets\/gallery-horizon\.svg"/);
+    assert.ok(result.assets.includes("gallery-horizon.svg"));
+  }
 });
