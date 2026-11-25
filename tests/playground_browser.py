@@ -28,12 +28,19 @@ def verify(browser, viewport):
     frame.locator(".syn-panel").wait_for()
     panel_radius = frame.locator(".syn-panel").evaluate("e => getComputedStyle(e).borderTopLeftRadius")
     assert panel_radius == "12px", ("panel radius token not applied", panel_radius)
+    page.locator("#playground-inspector summary").click()
+    target = page.locator("#playground-inspector-target")
+    target.select_option(label=target.locator("option").filter(has_text="syn-button--primary").first.inner_text())
+    values = page.locator("#playground-inspector-values")
+    assert "display:" in values.inner_text()
+    assert "--syn-accent: #76e7f7" in values.inner_text().lower()
     editor = page.locator('#playground-editor-mount .cm-content[contenteditable="true"]')
     editor.wait_for()
     editor.click()
     page.keyboard.press('ControlOrMeta+A')
     page.keyboard.insert_text('<div id="safe">Edited HTML</div><script>parent.document.body.dataset.injected="yes"</script>')
     frame.locator("#safe").wait_for()
+    page.wait_for_function("document.querySelector('#playground-inspector-target').disabled")
     assert page.locator("body").get_attribute("data-injected") is None, "sandbox permitted parent script injection"
     assert page.locator("body").evaluate("e => e.scrollWidth <= window.innerWidth + 1"), "playground overflows"
     assert not page_errors, page_errors

@@ -194,6 +194,7 @@ def generate() -> str:
         class_parser = LiteralClassParser()
         class_parser.feed(entry["html"])
         used_classes = {name for name in class_parser.classes if name.startswith("syn-")}
+        entry["source_files"] = sorted({"src/" + class_sources[name] for name in used_classes})
         matches = [component for component in components
                    if component["module"] in modules
                    and used_classes.intersection(component["classes"])]

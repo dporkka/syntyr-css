@@ -44,3 +44,11 @@
   @media (max-width: 35rem) { .playground-token-controls { grid-template-columns: minmax(0, 1fr); } }
   @media (forced-colors: active) { .playground-reference { border-color: CanvasText; } }
 }
+
+@layer docs {
+  #playground-inspector { min-width: 0; }
+  #playground-inspector summary { cursor: pointer; }
+  #playground-inspector:not([open]) > :not(summary) { display: none; }
+  #playground-inspector-target { max-width: 100%; min-width: 0; }
+  .playground-inspector-values { white-space: pre-wrap; overflow-wrap: anywhere; font: .8rem/1.6 var(--syn-mono); margin: 0; }
+}

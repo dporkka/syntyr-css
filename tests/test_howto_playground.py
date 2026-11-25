@@ -43,6 +43,18 @@ class HowToPlaygroundTests(unittest.TestCase):
             self.assertTrue(item["description"])
             self.assertTrue(item["title"])
 
+    def test_inspector_sources_match_canonical_snippet_classes(self):
+        from scripts.build_playground_catalog import LiteralClassParser
+        from scripts.export_api_metadata import collect
+        sources = {item["name"]: "src/" + item["module"] for item in collect()["classes"]}
+        for entry in catalog_entries():
+            parser = LiteralClassParser()
+            parser.feed(entry["html"])
+            expected = sorted({sources[name] for name in parser.classes if name.startswith("syn-")})
+            self.assertEqual(entry["source_files"], expected, entry["id"])
+            for source in expected:
+                self.assertTrue((ROOT / source).is_file(), source)
+
     def test_gallery_links_to_editor_and_editor_groups_examples(self):
         block_script = (ROOT / "docs/blocks.js").read_text()
         editor = (ROOT / "docs/playground.js").read_text()
