@@ -139,6 +139,39 @@ class ValidatorTests(unittest.TestCase):
             self.assertEqual(data[0]["code"], "unknown-class")
             self.assertEqual(data[0]["file"], str(path))
 
+    def test_token_references_report_unknown_public_names_with_suggestions(self):
+        html = '<main style="gap:var(--syn-spce-2);color:var(--syn-accent)"></main>'
+        result = validate_html(html, self.contract, tokens=True)
+        self.assertEqual([d["code"] for d in result], ["unknown-token-reference"])
+        self.assertEqual(result[0]["severity"], "warning")
+        self.assertEqual(result[0]["token"], "--syn-spce-2")
+        self.assertIn("--syn-space-2", [s["name"] for s in result[0]["suggestions"]])
+        self.assertEqual(validate_html(html, self.contract), [])
+
+    def test_token_references_are_literal_and_ignore_strings_comments_and_host_tokens(self):
+        html = """<main style="--syn-local:1px; gap:var(--syn-local);
+          color:var(--app-brand); /* var(--syn-comment) */
+          content:'var(--syn-quoted)'"></main>
+          <div style="color:{{ var(--syn-dynamic) }}"></div>"""
+        self.assertEqual(validate_html(html, self.contract, tokens=True), [])
+
+    def test_token_references_warn_when_known_token_provider_is_missing(self):
+        html = '<div style="gap:var(--syn-space-2)"></div>'
+        result = validate_html(html, self.contract, tokens=True,
+                               stylesheets={"syntyr.recipes.css"})
+        self.assertEqual([d["code"] for d in result], ["missing-token-stylesheet"])
+        self.assertEqual(result[0]["severity"], "warning")
+        self.assertIn("syntyr.core.css", result[0]["required_stylesheets"])
+        self.assertEqual(validate_html(html, self.contract, tokens=True), [])
+
+    def test_token_reference_cli_reports_warnings_without_failing(self):
+        result = subprocess.run([sys.executable, "scripts/syntyr_check.py", "--tokens",
+                                 "--format", "json", "-"], cwd=ROOT, text=True,
+                                input='<div style="gap:var(--syn-typo)"></div>',
+                                capture_output=True)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(json.loads(result.stdout)[0]["code"], "unknown-token-reference")
+
     def test_doctor_and_semantic_checks_can_run_together(self):
         html = ('<link rel="stylesheet" href="/css/syntyr.core.css">'
                 '<link rel="stylesheet" href="/css/syntyr.all.css">'

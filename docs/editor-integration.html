@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Syntyr&#x27;s editor integration is optional . Applications still consume ordinary prebuilt CSS, HTML, and custom properties without Node, JavaScript, or a…">
-  <meta name="syntyr-source-sha256" content="6f1dae9f0e26d5f00fdfb66c8fe0050b9ff4906a14bf24e7c825631dbdf542e9">
+  <meta name="syntyr-source-sha256" content="4b873921dcdf165d213858213e2243c46ea88c2a6779c0eccc123a5ead62eca6">
   <meta name="theme-color" content="#f5f7fb">
   <title>Syntyr editor autocomplete and metadata — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/editor-integration">
@@ -240,6 +240,18 @@ stylesheets may overlap intentionally; review warnings rather than automatically
 removing files. Unpinned local paths, bundler imports and actual downloaded CSS
 versions are not inferred. This is static inspection, not browser cascade,
 security or accessibility certification. Default validation is unchanged.</p>
+<h3 id="inspect-design-token-references">Inspect design token references</h3>
+<p>Add <code>--tokens</code> to inspect literal inline <code>var(--syn-…)</code> references against
+the selected contract's token inventory. Unknown names include suggested
+canonical spellings and provider stylesheets. Known references without a
+declared provider produce advisory warnings. The check does not determine
+computed values, resolve inheritance or infer custom host definitions.
+It skips locally declared tokens, templates, CSS strings/comments and
+ambiguous escaped or URL-bearing inline styles; external CSS and style
+blocks are not analyzed. Warnings do not alter default validation or fail
+the CLI.</p>
+<pre tabindex="0"><code class="language-sh">python3 scripts/syntyr_check.py --doctor --tokens --semantic --format json index.html
+</code></pre>
 <p>With <code>--semantic</code>, a second standard-library pass checks literal HTML for
 duplicate static IDs, missing form labels (including an unnamed <code>input type=&quot;image&quot;</code> or <code>type=&quot;button&quot;</code>), unmatched <code>label for</code> and
 <code>aria-labelledby</code>/<code>aria-describedby</code> ID references (the latter two only in
@@ -295,6 +307,7 @@ to the browser by this integration.</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#optional-static-html-diagnostics">Optional static HTML diagnostics</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#agent-ready-composition-recipes">Agent-ready composition recipes</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#inspect-stylesheet-loading-with-css-doctor">Inspect stylesheet loading with CSS Doctor</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#inspect-design-token-references">Inspect design token references</a>
           </nav>
           <details class="docs-article-toc-mobile">
             <summary>On this page <span>Jump to section</span></summary>
@@ -307,6 +320,7 @@ to the browser by this integration.</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#optional-static-html-diagnostics">Optional static HTML diagnostics</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#agent-ready-composition-recipes">Agent-ready composition recipes</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#inspect-stylesheet-loading-with-css-doctor">Inspect stylesheet loading with CSS Doctor</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#inspect-design-token-references">Inspect design token references</a>
             </nav>
           </details>
         </aside>
