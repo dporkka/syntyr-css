@@ -3,6 +3,7 @@
 Run: /path/to/playwright/python tests/playground_browser.py
 """
 from pathlib import Path
+from responsive_viewports import CANONICAL_VIEWPORTS
 import sys
 from playwright.sync_api import sync_playwright
 
@@ -18,6 +19,11 @@ def verify(browser, viewport):
     frame = page.frame_locator("#playground-preview")
     frame.locator(".syn-stat").first.wait_for()
     assert frame.locator(".syn-stat").count() == 3
+    for _, width, _ in CANONICAL_VIEWPORTS:
+        page.locator("#playground-viewport").select_option(str(width))
+        page.wait_for_function("(w) => document.querySelector('#playground-preview').contentWindow.innerWidth === w", arg=width)
+        assert page.evaluate("document.documentElement.scrollWidth <= innerWidth + 1"), width
+    page.locator("#playground-viewport").select_option("fluid")
     accent = frame.locator("body").evaluate("e => getComputedStyle(e).getPropertyValue('--syn-accent').trim()")
     assert accent == "#2458c6", ("initial studio stylesheet did not load", accent)
     page.locator("#playground-theme").select_option("grid")

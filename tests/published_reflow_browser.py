@@ -22,14 +22,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from scripts.build_cloudflare_site import source_files  # noqa: E402
 
-# CSS pixel viewports: small/large phones, tablet, laptops, widescreen,
-# mobile landscape, and enlarged text at narrow widths.
-VIEWPORTS = (
-    (320, 800, 1), (375, 812, 1), (390, 844, 1), (430, 932, 1),
-    (768, 1024, 1), (1024, 768, 1), (1440, 900, 1), (1920, 1080, 1),
-    (667, 375, 1), (844, 390, 1),
-    (320, 800, 1.5), (320, 800, 2), (390, 844, 2),
-)
+from responsive_viewports import CANONICAL_VIEWPORTS, PUBLISHED_VIEWPORTS
 
 INSPECT = """() => {
   const root = document.documentElement;
@@ -99,9 +92,9 @@ class QuietHandler(SimpleHTTPRequestHandler):
             pass
 
 
-def check(browser, engine, origin, pages):
+def check(browser, engine, origin, pages, viewports=PUBLISHED_VIEWPORTS):
     cases = 0
-    for width, height, scale in VIEWPORTS:
+    for width, height, scale in viewports:
         context = browser.new_context(
             viewport={"width": width, "height": height},
             reduced_motion="reduce",
@@ -148,6 +141,10 @@ def main():
     parser.add_argument("--browsers", nargs="+",
                         choices=("chromium", "firefox", "webkit"),
                         default=("chromium", "firefox", "webkit"))
+    parser.add_argument("--canonical-only", action="store_true",
+                        help="Run the six standard CSS-pixel viewports without stress cases")
+    parser.add_argument("--pages", nargs="+",
+                        help="Limit checks to specific published HTML paths")
     args = parser.parse_args()
 
     files = source_files()
@@ -155,6 +152,13 @@ def main():
     assert "docs/reference.html" in pages
     assert "examples/landing.html" in pages
     assert "examples/viz.html" in pages
+    if args.pages:
+        unknown = set(args.pages) - set(pages)
+        if unknown:
+            parser.error(f"Not published HTML: {', '.join(sorted(unknown))}")
+        pages = sorted(set(args.pages))
+    viewports = (tuple((w, h, 1) for _, w, h in CANONICAL_VIEWPORTS)
+                 if args.canonical_only else PUBLISHED_VIEWPORTS)
     with tempfile.TemporaryDirectory(prefix="syntyr-public-reflow-") as folder:
         base = Path(folder)
         for name, data in files.items():
@@ -179,7 +183,7 @@ def main():
                         failures += 1
                         continue
                     try:
-                        total += check(browser, engine, f"http://127.0.0.1:{server.server_port}", pages)
+                        total += check(browser, engine, f"http://127.0.0.1:{server.server_port}", pages, viewports)
                     except Exception as exc:
                         print(f"FAIL {engine}: {exc}", flush=True)
                         failures += 1

@@ -1,11 +1,24 @@
-# Run manually before a candidate release or when a version tag is pushed.
+# Run a focused responsive smoke on PRs; full browser matrix on manual/tag.
 # Browser tooling is development-only and is not shipped to consumers.
 when:
+  - event: pull_request
   - event: manual
   - event: tag
 
 steps:
+  - name: canonical-responsive-smoke
+    image: mcr.microsoft.com/playwright/python:v1.65.2-noble@sha256:38dd67fc654b56b3cba611e4c8eb71cd33750e1cd29eea2a5dc00b484817a75f
+    when:
+      - event: pull_request
+    commands:
+      - python3 -m pip install --disable-pip-version-check playwright==1.65.2
+      - python3 tests/published_reflow_browser.py --browsers chromium --canonical-only --pages docs/playground.html examples/saas.html examples/crm.html
+      - python3 tests/playground_browser.py chromium
+
   - name: three-engine-browser-and-reflow-matrix
+    when:
+      - event: manual
+      - event: tag
     image: mcr.microsoft.com/playwright/python:v1.65.2-noble@sha256:38dd67fc654b56b3cba611e4c8eb71cd33750e1cd29eea2a5dc00b484817a75f
     commands:
       - python3 -m pip install --disable-pip-version-check playwright==1.65.2

@@ -86,6 +86,23 @@ For behavior changes, add a regression test that fails before the fix,
 then verify it passes afterward. Report any unrun or unavailable browser
 engines explicitly. A clean automated axe result is not a WCAG certification.
 
+## Responsive UI verification
+
+The canonical browser targets are small mobile (320×568), mobile (390×844),
+tablet (768×1024), large tablet (1024×1366), desktop (1440×900) and large
+desktop (1920×1080), in CSS pixels. These are test sizes, not required CSS
+breakpoints. Use the component playground for width previews.
+
+Run a focused Chromium smoke test of representative published pages:
+
+```sh
+python3 tests/published_reflow_browser.py --browsers chromium --canonical-only --pages docs/playground.html examples/saas.html examples/crm.html
+```
+
+The full published reflow suite retains orientation and enlarged-text stress
+cases. Its layout and control geometry assertions do not certify WCAG or
+replace manual interaction and visual review. Report missing engines as blocked.
+
 ## Review and release
 
 Use the actual current-head Woodpecker quality and merge checks before
