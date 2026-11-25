@@ -16,25 +16,25 @@
     <div class="syn-data-grid__viewport" tabindex="0" role="table" aria-label="Scrollable inventory table" aria-rowcount="3" aria-colcount="3">
       <div role="rowgroup" class="syn-data-grid__header">
         <div role="row" aria-rowindex="1" class="syn-data-grid__header-row">
-        <div role="columnheader" style="width:10rem" class="syn-data-grid__columnheader">Asset</div>
+        <div role="columnheader" style="width:10rem" class="syn-data-grid__columnheader" data-syn-pin="start">Asset</div>
         <div role="columnheader" style="width:9rem" class="syn-data-grid__columnheader">Status</div>
         <div role="columnheader" style="width:8rem" class="syn-data-grid__columnheader">Revenue</div>
         </div>
       </div>
       <div role="rowgroup" style="position:relative;block-size:4rem">
         <div role="row" aria-rowindex="2" class="syn-data-grid__row" style="block-size:2rem">
-          <div role="cell" style="width:10rem" class="syn-data-grid__cell"><span class="syn-data-grid__cell-text">Face 102</span></div>
-          <div role="cell" style="width:9rem" class="syn-data-grid__cell" data-syn-selected="true"><span class="syn-data-grid__cell-text">Booked</span></div>
+          <div role="cell" style="width:10rem" class="syn-data-grid__cell" data-syn-pin="start"><span class="syn-data-grid__cell-text">Face 102</span></div>
+          <div role="cell" style="width:9rem" class="syn-data-grid__cell" data-syn-selected="true" data-syn-range="true"><span class="syn-data-grid__cell-text">Booked</span></div>
           <div role="cell" style="width:8rem" class="syn-data-grid__cell syn-data-grid__cell--numeric"><span class="syn-data-grid__cell-text">$4,200</span></div>
         </div>
         <div role="row" aria-rowindex="3" class="syn-data-grid__row" style="top:2rem;block-size:2rem">
-          <div role="cell" style="width:10rem" class="syn-data-grid__cell"><span class="syn-data-grid__cell-text">Face 103</span></div>
-          <div role="cell" style="width:9rem" class="syn-data-grid__cell" data-syn-dirty="true"><span class="syn-data-grid__cell-text">Review</span></div>
+          <div role="cell" style="width:10rem" class="syn-data-grid__cell" data-syn-pin="start"><span class="syn-data-grid__cell-text">Face 103</span></div>
+          <div role="cell" style="width:9rem" class="syn-data-grid__cell" data-syn-dirty="true" data-syn-conflict="true"><span class="syn-data-grid__cell-text">Conflict</span></div>
           <div role="cell" style="width:8rem" class="syn-data-grid__cell syn-data-grid__cell--numeric"><span class="syn-data-grid__cell-text">$2,850</span></div>
         </div>
       </div>
     </div>
-    <footer class="syn-data-grid__footer">2 inventory records. This example does not implement application commands.</footer>
+    <footer class="syn-data-grid__footer">2 inventory records. Static selection and conflict examples; no edits or commands are implemented.</footer>
   </section>
 </main>
 </body></html>

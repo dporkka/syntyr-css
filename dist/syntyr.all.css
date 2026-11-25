@@ -4425,6 +4425,28 @@
     color: var(--syn-text);
     outline: none;
   }
+  /* The host supplies cumulative logical offsets for each pinned column.
+     Keep this before cell-state styles so selection/validation can still win. */
+  :where(.syn-root :is(.syn-data-grid__cell, .syn-data-grid__columnheader)[data-syn-pin="start"],
+         .syn-root :is(.syn-data-grid__cell, .syn-data-grid__columnheader)[data-syn-pin="end"]) {
+    position: sticky;
+    z-index: 1;
+    background: inherit;
+  }
+  :where(.syn-root :is(.syn-data-grid__cell, .syn-data-grid__columnheader)[data-syn-pin="start"]) {
+    inset-inline-start: var(--syn-grid-pin-offset, 0px);
+    border-inline-end: 1px solid var(--syn-grid-edge);
+  }
+  :where(.syn-root :is(.syn-data-grid__cell, .syn-data-grid__columnheader)[data-syn-pin="end"]) {
+    inset-inline-end: var(--syn-grid-pin-offset, 0px);
+    border-inline-start: 1px solid var(--syn-grid-edge);
+  }
+  /* A header row is transparent by default; inherit from its opaque header. */
+  :where(.syn-root .syn-data-grid__header-row) { background: inherit; }
+  :where(.syn-root .syn-data-grid__cell[data-syn-range="true"]) {
+    background: var(--syn-grid-selected);
+    box-shadow: inset 0 0 0 1px var(--syn-accent);
+  }
   /* Text inside a flex cell needs a real shrinkable container for ellipsis. */
   :where(.syn-root .syn-data-grid__cell-text) {
     flex: 0 1 auto;
@@ -4457,6 +4479,12 @@
   :where(.syn-root .syn-data-grid__cell[aria-readonly="false"]) { cursor: cell; }
   :where(.syn-root .syn-data-grid__cell[data-syn-dirty="true"]) {
     box-shadow: inset 0 -2px var(--syn-warning);
+  }
+  /* Conflict is distinct from local validation and pending edit state.
+     Host must also expose a text explanation; color alone is insufficient. */
+  :where(.syn-root .syn-data-grid__cell[data-syn-conflict="true"]) {
+    background: color-mix(in srgb, var(--syn-warning) 14%, var(--syn-surface));
+    border-block-end: 2px dashed var(--syn-warning);
   }
   :where(.syn-root .syn-data-grid__cell--numeric) {
     justify-content: flex-end;
@@ -4513,6 +4541,14 @@
     :where(.syn-root .syn-data-grid__cell[data-syn-dirty="true"]) {
       border-block-end: 2px solid Mark;
       box-shadow: none;
+    }
+    :where(.syn-root .syn-data-grid__cell[data-syn-range="true"]) {
+      outline: 1px solid Highlight;
+      outline-offset: -1px;
+      box-shadow: none;
+    }
+    :where(.syn-root .syn-data-grid__cell[data-syn-conflict="true"]) {
+      border-block-end: 2px dashed Mark;
     }
     /* Selection remains highlighted while the keyboard focus is clearly distinct. */
     :where(.syn-root .syn-data-grid__cell:focus-visible) {
