@@ -685,12 +685,14 @@
       ],
       "classes": [
         "syn-button",
+        "syn-button--danger",
+        "syn-button--ghost",
         "syn-button--outline",
         "syn-button--primary",
         "syn-inline"
       ],
       "native_feature_requirements": [],
-      "html": "<div class=\"syn-inline\">\n  <button type=\"button\" class=\"syn-button syn-button--primary\">Save changes</button>\n  <button type=\"button\" class=\"syn-button syn-button--outline\">Preview</button>\n  <button type=\"button\" class=\"syn-button\" disabled>Disabled</button>\n</div>"
+      "html": "<div class=\"syn-inline\">\n  <button type=\"button\" class=\"syn-button syn-button--primary\">Save changes</button>\n  <button type=\"button\" class=\"syn-button syn-button--outline\">Preview</button>\n  <button type=\"button\" class=\"syn-button syn-button--danger\">Remove draft</button>\n  <button type=\"button\" class=\"syn-button syn-button--ghost\">Cancel</button>\n  <button type=\"button\" class=\"syn-button\" disabled>Disabled</button>\n</div>"
     },
     {
       "id": "catalog-forms-title",
@@ -994,10 +996,11 @@
       ],
       "classes": [
         "syn-heading",
-        "syn-panel"
+        "syn-panel",
+        "syn-panel--cut"
       ],
       "native_feature_requirements": [],
-      "html": "<article class=\"syn-panel\" style=\"--syn-surface: var(--syn-surface-hi)\">\n  <h3 class=\"syn-heading\">Workspace settings</h3>\n  <p>Use scoped CSS properties to customize an individual panel.</p>\n</article>"
+      "html": "<article class=\"syn-panel syn-panel--cut\" style=\"--syn-surface: var(--syn-surface-hi)\">\n  <h3 class=\"syn-heading\">Workspace settings</h3>\n  <p>Use scoped CSS properties to customize an individual panel.</p>\n</article>"
     },
     {
       "id": "catalog-metrics-title",
@@ -1355,10 +1358,13 @@
         "ul"
       ],
       "classes": [
-        "syn-grid"
+        "syn-grid",
+        "syn-list",
+        "syn-list--accent",
+        "syn-list--compact"
       ],
       "native_feature_requirements": [],
-      "html": "<div class=\"syn-grid\">\n  <ul><li>Accessible markup</li><li>Scoped styling</li></ul>\n  <ol><li>Add the stylesheet</li><li>Choose a theme</li></ol>\n</div>"
+      "html": "<div class=\"syn-grid\">\n  <ul class=\"syn-list syn-list--accent\"><li>Accessible markup</li><li>Scoped styling</li></ul>\n  <ol class=\"syn-list syn-list--compact\"><li>Add the stylesheet</li><li>Choose a theme</li></ol>\n</div>"
     },
     {
       "id": "catalog-definition-list-title",
@@ -1802,17 +1808,22 @@
       "playground_url": "docs/playground.html#component=catalog-geometry-frame-title",
       "elements": [
         "article",
+        "div",
         "h3",
         "p"
       ],
       "classes": [
         "syn-frame",
+        "syn-frame--accent",
+        "syn-frame--bevel",
         "syn-frame--bracket",
+        "syn-frame--notch",
+        "syn-grid",
         "syn-heading",
         "syn-panel"
       ],
       "native_feature_requirements": [],
-      "html": "<article class=\"syn-panel syn-frame syn-frame--bracket\" aria-labelledby=\"catalog-frame-title\">\n  <h3 class=\"syn-heading\" id=\"catalog-frame-title\">Connection established</h3>\n  <p>Geometry changes presentation, not meaning.</p>\n</article>"
+      "html": "<div class=\"syn-grid\">\n<article class=\"syn-panel syn-frame syn-frame--bracket\" aria-labelledby=\"catalog-frame-title\">\n  <h3 class=\"syn-heading\" id=\"catalog-frame-title\">Connection established</h3>\n  <p>Geometry changes presentation, not meaning.</p>\n</article>\n<article class=\"syn-panel syn-frame syn-frame--bevel\">\n  <h3 class=\"syn-heading\">Beveled surface</h3>\n  <p>Optional corner treatment.</p>\n</article>\n<article class=\"syn-panel syn-frame syn-frame--notch\">\n  <h3 class=\"syn-heading\">Notched surface</h3>\n  <p>Optional corner treatment.</p>\n</article>\n<article class=\"syn-panel syn-frame syn-frame--bracket syn-frame--accent\">\n  <h3 class=\"syn-heading\">Accent emphasis</h3>\n  <p>One shape with additive emphasis.</p>\n</article>\n</div>"
     },
     {
       "id": "catalog-viz-bars-title",

@@ -312,6 +312,8 @@
 <div class="syn-inline">
   <button type="button" class="syn-button syn-button--primary">Save changes</button>
   <button type="button" class="syn-button syn-button--outline">Preview</button>
+  <button type="button" class="syn-button syn-button--danger">Remove draft</button>
+  <button type="button" class="syn-button syn-button--ghost">Cancel</button>
   <button type="button" class="syn-button" disabled>Disabled</button>
 </div>
           </div>
@@ -320,6 +322,8 @@
             <pre class="catalog-source"><code>&lt;div class=&quot;syn-inline&quot;&gt;
   &lt;button type=&quot;button&quot; class=&quot;syn-button syn-button--primary&quot;&gt;Save changes&lt;/button&gt;
   &lt;button type=&quot;button&quot; class=&quot;syn-button syn-button--outline&quot;&gt;Preview&lt;/button&gt;
+  &lt;button type=&quot;button&quot; class=&quot;syn-button syn-button--danger&quot;&gt;Remove draft&lt;/button&gt;
+  &lt;button type=&quot;button&quot; class=&quot;syn-button syn-button--ghost&quot;&gt;Cancel&lt;/button&gt;
   &lt;button type=&quot;button&quot; class=&quot;syn-button&quot; disabled&gt;Disabled&lt;/button&gt;
 &lt;/div&gt;</code></pre>
             <button type="button" class="syn-button catalog-copy-page" hidden data-catalog-copy-page>Copy full page</button>
@@ -609,14 +613,14 @@
           <p class="syn-muted">Override component tokens locally without rebuilding the stylesheet.</p>
           <span class="catalog-preview-anchor" id="catalog-panels-title-preview" aria-hidden="true"></span>
           <div class="catalog-preview">
-<article class="syn-panel" style="--syn-surface: var(--syn-surface-hi)">
+<article class="syn-panel syn-panel--cut" style="--syn-surface: var(--syn-surface-hi)">
   <h3 class="syn-heading">Workspace settings</h3>
   <p>Use scoped CSS properties to customize an individual panel.</p>
 </article>
           </div>
           <details class="catalog-code-details">
             <summary>View HTML source and copy a full page</summary>
-            <pre class="catalog-source"><code>&lt;article class=&quot;syn-panel&quot; style=&quot;--syn-surface: var(--syn-surface-hi)&quot;&gt;
+            <pre class="catalog-source"><code>&lt;article class=&quot;syn-panel syn-panel--cut&quot; style=&quot;--syn-surface: var(--syn-surface-hi)&quot;&gt;
   &lt;h3 class=&quot;syn-heading&quot;&gt;Workspace settings&lt;/h3&gt;
   &lt;p&gt;Use scoped CSS properties to customize an individual panel.&lt;/p&gt;
 &lt;/article&gt;</code></pre>
@@ -892,7 +896,7 @@
             <a class="syn-button catalog-edit" href="playground.html#component=catalog-code-and-keyboard-input-title">Edit in playground</a>
           </div>
         </article>
-        <article class="catalog-card syn-panel" data-catalog-alpha4="true" data-catalog-category="typography" data-catalog-keywords="bullets list ol ul li content steps" aria-labelledby="catalog-ordered-and-unordered-lists-title" data-catalog-use-cases="content-docs">
+        <article class="catalog-card syn-panel" data-catalog-alpha4="false" data-catalog-category="typography" data-catalog-keywords="bullets list ol ul li content steps" aria-labelledby="catalog-ordered-and-unordered-lists-title" data-catalog-use-cases="content-docs">
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-ordered-and-unordered-lists-title">Ordered and unordered lists</h2>
             <span class="syn-badge">syntyr.core.css</span>
@@ -902,15 +906,15 @@
           <span class="catalog-preview-anchor" id="catalog-ordered-and-unordered-lists-title-preview" aria-hidden="true"></span>
           <div class="catalog-preview">
 <div class="syn-grid">
-  <ul><li>Accessible markup</li><li>Scoped styling</li></ul>
-  <ol><li>Add the stylesheet</li><li>Choose a theme</li></ol>
+  <ul class="syn-list syn-list--accent"><li>Accessible markup</li><li>Scoped styling</li></ul>
+  <ol class="syn-list syn-list--compact"><li>Add the stylesheet</li><li>Choose a theme</li></ol>
 </div>
           </div>
           <details class="catalog-code-details">
             <summary>View HTML source and copy a full page</summary>
             <pre class="catalog-source"><code>&lt;div class=&quot;syn-grid&quot;&gt;
-  &lt;ul&gt;&lt;li&gt;Accessible markup&lt;/li&gt;&lt;li&gt;Scoped styling&lt;/li&gt;&lt;/ul&gt;
-  &lt;ol&gt;&lt;li&gt;Add the stylesheet&lt;/li&gt;&lt;li&gt;Choose a theme&lt;/li&gt;&lt;/ol&gt;
+  &lt;ul class=&quot;syn-list syn-list--accent&quot;&gt;&lt;li&gt;Accessible markup&lt;/li&gt;&lt;li&gt;Scoped styling&lt;/li&gt;&lt;/ul&gt;
+  &lt;ol class=&quot;syn-list syn-list--compact&quot;&gt;&lt;li&gt;Add the stylesheet&lt;/li&gt;&lt;li&gt;Choose a theme&lt;/li&gt;&lt;/ol&gt;
 &lt;/div&gt;</code></pre>
             <button type="button" class="syn-button catalog-copy-page" hidden data-catalog-copy-page>Copy full page</button>
           </details>
@@ -1283,7 +1287,7 @@
             <a class="syn-button catalog-edit" href="playground.html#component=catalog-recovery-state-title">Edit in playground</a>
           </div>
         </article>
-        <article class="catalog-card syn-panel" data-catalog-alpha4="true" data-catalog-category="layout" data-catalog-keywords="decorative frame bracket accent geometry visual" aria-labelledby="catalog-geometry-frame-title" data-catalog-use-cases="marketing-site">
+        <article class="catalog-card syn-panel" data-catalog-alpha4="false" data-catalog-category="layout" data-catalog-keywords="decorative frame bracket accent geometry visual" aria-labelledby="catalog-geometry-frame-title" data-catalog-use-cases="marketing-site">
           <div class="catalog-card-top">
             <h2 class="syn-heading" id="catalog-geometry-frame-title">Geometry frame</h2>
             <span class="syn-badge">syntyr.geometry.css</span>
@@ -1292,17 +1296,45 @@
           <p class="syn-muted">An optional decorative bracket frame; content stays semantic HTML.</p>
           <span class="catalog-preview-anchor" id="catalog-geometry-frame-title-preview" aria-hidden="true"></span>
           <div class="catalog-preview">
+<div class="syn-grid">
 <article class="syn-panel syn-frame syn-frame--bracket" aria-labelledby="catalog-frame-title">
   <h3 class="syn-heading" id="catalog-frame-title">Connection established</h3>
   <p>Geometry changes presentation, not meaning.</p>
 </article>
+<article class="syn-panel syn-frame syn-frame--bevel">
+  <h3 class="syn-heading">Beveled surface</h3>
+  <p>Optional corner treatment.</p>
+</article>
+<article class="syn-panel syn-frame syn-frame--notch">
+  <h3 class="syn-heading">Notched surface</h3>
+  <p>Optional corner treatment.</p>
+</article>
+<article class="syn-panel syn-frame syn-frame--bracket syn-frame--accent">
+  <h3 class="syn-heading">Accent emphasis</h3>
+  <p>One shape with additive emphasis.</p>
+</article>
+</div>
           </div>
           <details class="catalog-code-details">
             <summary>View HTML source and copy a full page</summary>
-            <pre class="catalog-source"><code>&lt;article class=&quot;syn-panel syn-frame syn-frame--bracket&quot; aria-labelledby=&quot;catalog-frame-title&quot;&gt;
+            <pre class="catalog-source"><code>&lt;div class=&quot;syn-grid&quot;&gt;
+&lt;article class=&quot;syn-panel syn-frame syn-frame--bracket&quot; aria-labelledby=&quot;catalog-frame-title&quot;&gt;
   &lt;h3 class=&quot;syn-heading&quot; id=&quot;catalog-frame-title&quot;&gt;Connection established&lt;/h3&gt;
   &lt;p&gt;Geometry changes presentation, not meaning.&lt;/p&gt;
-&lt;/article&gt;</code></pre>
+&lt;/article&gt;
+&lt;article class=&quot;syn-panel syn-frame syn-frame--bevel&quot;&gt;
+  &lt;h3 class=&quot;syn-heading&quot;&gt;Beveled surface&lt;/h3&gt;
+  &lt;p&gt;Optional corner treatment.&lt;/p&gt;
+&lt;/article&gt;
+&lt;article class=&quot;syn-panel syn-frame syn-frame--notch&quot;&gt;
+  &lt;h3 class=&quot;syn-heading&quot;&gt;Notched surface&lt;/h3&gt;
+  &lt;p&gt;Optional corner treatment.&lt;/p&gt;
+&lt;/article&gt;
+&lt;article class=&quot;syn-panel syn-frame syn-frame--bracket syn-frame--accent&quot;&gt;
+  &lt;h3 class=&quot;syn-heading&quot;&gt;Accent emphasis&lt;/h3&gt;
+  &lt;p&gt;One shape with additive emphasis.&lt;/p&gt;
+&lt;/article&gt;
+&lt;/div&gt;</code></pre>
             <button type="button" class="syn-button catalog-copy-page" hidden data-catalog-copy-page>Copy full page</button>
           </details>
           <div class="catalog-actions">

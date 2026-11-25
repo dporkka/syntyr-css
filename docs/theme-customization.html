@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Customize Syntyr CSS themes and design tokens for SaaS dashboards, accessible business applications, and futuristic interfaces.">
-  <meta name="syntyr-source-sha256" content="d28fa32efe9cc95ec982ab7b5aea35bf352be6bc489178d67a686ca5232277fa">
+  <meta name="syntyr-source-sha256" content="1b215a192704c113d102e5dbddb340dcefa4a0219a1ea6905bc8ccd660fdc453">
   <meta name="theme-color" content="#f5f7fb">
   <title>Syntyr theme customization — copy, override, ship — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/theme-customization">
@@ -447,6 +447,28 @@ recompute their own tokens; add the opt-in attribute to each theme scope
 you intentionally want to compare. Do not generalize this experiment to text
 colors or primary buttons without a contrast audit, and check the resulting
 hover backgrounds against text across all palettes and browser engines.</p>
+<h2 id="inspect-token-dependencies-and-component-variants-source-candidate">Inspect token dependencies and component variants (source candidate)</h2>
+<p>From the source checkout, use the dependency-free Python inspection tool:</p>
+<pre tabindex="0"><code class="language-sh">python3 scripts/inspect_design.py token -- --syn-focus-ring
+python3 scripts/inspect_design.py variants
+</code></pre>
+<p>The token report lists declarations and references by source file, direct
+dependencies, reverse token references, and transitively reachable tokens.
+It scans the public build inputs, ignoring CSS comments and quoted strings.
+Edges combine all theme scopes, conditional rules and fallback branches:
+they describe possible static relationships, not the cascade or computed
+values for any element. A reference without a declaration can represent an
+optional host override. The report is not a CSS parser, cycle validator or
+accessibility audit.</p>
+<p>The variant report derives its families from the curated component manifest
+and links each documented modifier to canonical gallery example IDs where
+the base and modifier actually occur on the same HTML element. An empty
+example list means no matching curated example was found, not that the
+modifier is unsupported. This is not a Cartesian combination matrix or
+proof of all valid states. See the <a href="catalog.html">catalog</a> and
+<a href="playground.html">playground</a> for rendering and accessibility guidance.</p>
+<p>Both commands are read-only, emit JSON, and report the unreleased source
+candidate version. No application runtime dependencies or CSS are added.</p>
         </article>
         <aside class="docs-article-sidebar">
           <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
@@ -464,6 +486,7 @@ hover backgrounds against text across all palettes and browser engines.</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#component-local-layouts-without-compilation-experimental-alpha5">Component-local layouts without compilation (experimental alpha.5)</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#native-state-styling-and-accessibility">Native state styling and accessibility</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#experimental-opt-in-oklch-mixing">Experimental opt-in OKLCH mixing</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#inspect-token-dependencies-and-component-variants-source-candidate">Inspect token dependencies and component variants (source candidate)</a>
           </nav>
           <details class="docs-article-toc-mobile">
             <summary>On this page <span>Jump to section</span></summary>
@@ -482,6 +505,7 @@ hover backgrounds against text across all palettes and browser engines.</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#component-local-layouts-without-compilation-experimental-alpha5">Component-local layouts without compilation (experimental alpha.5)</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#native-state-styling-and-accessibility">Native state styling and accessibility</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#experimental-opt-in-oklch-mixing">Experimental opt-in OKLCH mixing</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#inspect-token-dependencies-and-component-variants-source-candidate">Inspect token dependencies and component variants (source candidate)</a>
             </nav>
           </details>
         </aside>

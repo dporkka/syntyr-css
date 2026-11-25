@@ -4,7 +4,7 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "title": "Buttons",
     "module": "syntyr.core.css",
     "description": "Use native buttons for actions; variants change appearance only.",
-    "html": "\u003cdiv class=\"syn-inline\">\n  \u003cbutton type=\"button\" class=\"syn-button syn-button--primary\">Save changes\u003c/button>\n  \u003cbutton type=\"button\" class=\"syn-button syn-button--outline\">Preview\u003c/button>\n  \u003cbutton type=\"button\" class=\"syn-button\" disabled>Disabled\u003c/button>\n\u003c/div>",
+    "html": "\u003cdiv class=\"syn-inline\">\n  \u003cbutton type=\"button\" class=\"syn-button syn-button--primary\">Save changes\u003c/button>\n  \u003cbutton type=\"button\" class=\"syn-button syn-button--outline\">Preview\u003c/button>\n  \u003cbutton type=\"button\" class=\"syn-button syn-button--danger\">Remove draft\u003c/button>\n  \u003cbutton type=\"button\" class=\"syn-button syn-button--ghost\">Cancel\u003c/button>\n  \u003cbutton type=\"button\" class=\"syn-button\" disabled>Disabled\u003c/button>\n\u003c/div>",
     "keywords": "actions controls primary outline",
     "guidance": "Use button for actions and a for navigation. ARIA states describe real application state."
   },
@@ -76,7 +76,7 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "title": "Panels and token overrides",
     "module": "syntyr.core.css",
     "description": "Override component tokens locally without rebuilding the stylesheet.",
-    "html": "\u003carticle class=\"syn-panel\" style=\"--syn-surface: var(--syn-surface-hi)\">\n  \u003ch3 class=\"syn-heading\">Workspace settings\u003c/h3>\n  \u003cp>Use scoped CSS properties to customize an individual panel.\u003c/p>\n\u003c/article>",
+    "html": "\u003carticle class=\"syn-panel syn-panel--cut\" style=\"--syn-surface: var(--syn-surface-hi)\">\n  \u003ch3 class=\"syn-heading\">Workspace settings\u003c/h3>\n  \u003cp>Use scoped CSS properties to customize an individual panel.\u003c/p>\n\u003c/article>",
     "keywords": "surface card border padding radius CSS variables",
     "guidance": "Choose native headings and accessible labels."
   },
@@ -166,9 +166,9 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "title": "Ordered and unordered lists",
     "module": "syntyr.core.css",
     "description": "Use ordered steps for sequences and unordered lists for collections.",
-    "html": "\u003cdiv class=\"syn-grid\">\n  \u003cul>\u003cli>Accessible markup\u003c/li>\u003cli>Scoped styling\u003c/li>\u003c/ul>\n  \u003col>\u003cli>Add the stylesheet\u003c/li>\u003cli>Choose a theme\u003c/li>\u003c/ol>\n\u003c/div>",
+    "html": "\u003cdiv class=\"syn-grid\">\n  \u003cul class=\"syn-list syn-list--accent\">\u003cli>Accessible markup\u003c/li>\u003cli>Scoped styling\u003c/li>\u003c/ul>\n  \u003col class=\"syn-list syn-list--compact\">\u003cli>Add the stylesheet\u003c/li>\u003cli>Choose a theme\u003c/li>\u003c/ol>\n\u003c/div>",
     "keywords": "bullets list ol ul li content steps",
-    "guidance": "See the component API reference for compatible classes and CSS modules."
+    "guidance": "Native list markers and order preserved. Use in core-only scopes; semantic mode handles unclassed lists."
   },
   {
     "id": "catalog-definition-list-title",
@@ -274,7 +274,7 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "title": "Geometry frame",
     "module": "syntyr.core.css + syntyr.geometry.css",
     "description": "An optional decorative bracket frame; content stays semantic HTML.",
-    "html": "\u003carticle class=\"syn-panel syn-frame syn-frame--bracket\" aria-labelledby=\"catalog-frame-title\">\n  \u003ch3 class=\"syn-heading\" id=\"catalog-frame-title\">Connection established\u003c/h3>\n  \u003cp>Geometry changes presentation, not meaning.\u003c/p>\n\u003c/article>",
+    "html": "\u003cdiv class=\"syn-grid\">\n\u003carticle class=\"syn-panel syn-frame syn-frame--bracket\" aria-labelledby=\"catalog-frame-title\">\n  \u003ch3 class=\"syn-heading\" id=\"catalog-frame-title\">Connection established\u003c/h3>\n  \u003cp>Geometry changes presentation, not meaning.\u003c/p>\n\u003c/article>\n\u003carticle class=\"syn-panel syn-frame syn-frame--bevel\">\n  \u003ch3 class=\"syn-heading\">Beveled surface\u003c/h3>\n  \u003cp>Optional corner treatment.\u003c/p>\n\u003c/article>\n\u003carticle class=\"syn-panel syn-frame syn-frame--notch\">\n  \u003ch3 class=\"syn-heading\">Notched surface\u003c/h3>\n  \u003cp>Optional corner treatment.\u003c/p>\n\u003c/article>\n\u003carticle class=\"syn-panel syn-frame syn-frame--bracket syn-frame--accent\">\n  \u003ch3 class=\"syn-heading\">Accent emphasis\u003c/h3>\n  \u003cp>One shape with additive emphasis.\u003c/p>\n\u003c/article>\n\u003c/div>",
     "keywords": "decorative frame bracket accent geometry visual",
     "guidance": "Load optional geometry CSS. One shape per frame; accent emphasis is additive. Refer to visual-intensity.md for pseudo-element ownership and backgrounds."
   },
