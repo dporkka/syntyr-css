@@ -57,3 +57,36 @@ func TestCLIRejectsOversizedHTML(t *testing.T) {
 		t.Fatal("oversized HTML accepted")
 	}
 }
+
+func TestCLIPreviewLeavesSourceUnchanged(t *testing.T) {
+	html := `<button class="syn-button syn-button--primary">Save</button>`
+	path := filepath.Join(t.TempDir(), "source.html")
+	if err := os.WriteFile(path, []byte(html), 0600); err != nil {
+		t.Fatal(err)
+	}
+	var out, stderr bytes.Buffer
+	args := []string{"--catalog", "../../metadata/components.json", "--selector", "button"}
+	if err := run(append(append([]string{}, args...), path), &out, &stderr); err != nil {
+		t.Fatal(err)
+	}
+	var r Report
+	if err := json.Unmarshal(out.Bytes(), &r); err != nil {
+		t.Fatal(err)
+	}
+	out.Reset()
+	args = append(args, "--document-sha256", r.DocumentSHA256, "--element-id", r.Elements[0].ElementID, "--preview-from", "syn-button--primary", "--preview-to", "syn-button--outline", path)
+	if err := run(args, &out, &stderr); err != nil {
+		t.Fatal(err)
+	}
+	var p VariantPreview
+	if err := json.Unmarshal(out.Bytes(), &p); err != nil {
+		t.Fatal(err)
+	}
+	if p.After != "syn-button syn-button--outline" || !p.PreviewOnly {
+		t.Fatalf("%+v", p)
+	}
+	actual, err := os.ReadFile(path)
+	if err != nil || string(actual) != html {
+		t.Fatal("source modified")
+	}
+}

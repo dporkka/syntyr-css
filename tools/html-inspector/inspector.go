@@ -1,6 +1,8 @@
 package main
 
 import (
+	"bytes"
+	"crypto/sha256"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -8,6 +10,7 @@ import (
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/andybalholm/cascadia"
+	"golang.org/x/net/html"
 )
 
 type part struct {
@@ -45,17 +48,19 @@ type RecipeReport struct {
 	Slots []SlotReport `json:"slots"`
 }
 type Element struct {
+	ElementID  string         `json:"element_id"`
 	Tag        string         `json:"tag"`
 	Classes    []string       `json:"classes"`
 	Components []string       `json:"components"`
 	Recipes    []RecipeReport `json:"recipes"`
 }
 type Report struct {
-	SchemaVersion int       `json:"schema_version"`
-	SourceVersion string    `json:"source_version"`
-	Selector      string    `json:"selector"`
-	Elements      []Element `json:"elements"`
-	Truncated     bool      `json:"truncated"`
+	SchemaVersion  int       `json:"schema_version"`
+	SourceVersion  string    `json:"source_version"`
+	DocumentSHA256 string    `json:"document_sha256"`
+	Selector       string    `json:"selector"`
+	Elements       []Element `json:"elements"`
+	Truncated      bool      `json:"truncated"`
 }
 
 func loadCatalog(r io.Reader) (catalog, error) {
@@ -83,6 +88,20 @@ func loadCatalog(r io.Reader) (catalog, error) {
 	}
 	return c, nil
 }
+
+func htmlSpace(r rune) bool { return r == ' ' || r == '\t' || r == '\n' || r == '\r' || r == '\f' }
+
+// IDs are document-order ordinals of the parsed HTML tree, independent of
+// selector and output limits. The input digest must match before reuse.
+func elementIDs(doc *goquery.Document) map[*html.Node]string {
+	ids := make(map[*html.Node]string)
+	doc.Find("*").Each(func(i int, s *goquery.Selection) {
+		ids[s.Get(0)] = fmt.Sprintf("el-%d", i+1)
+	})
+	return ids
+}
+
+func documentDigest(data []byte) string { return fmt.Sprintf("%x", sha256.Sum256(data)) }
 
 func matches(s *goquery.Selection, p part) bool {
 	if goquery.NodeName(s) != p.Tag {
@@ -144,18 +163,27 @@ func inspectLimited(r io.Reader, c catalog, selector string, limit int) (Report,
 	if err != nil {
 		return out, fmt.Errorf("invalid selector: %w", err)
 	}
-	doc, err := goquery.NewDocumentFromReader(r)
+	data, err := io.ReadAll(io.LimitReader(r, maxInputBytes+1))
 	if err != nil {
 		return out, err
 	}
+	if len(data) > maxInputBytes {
+		return out, fmt.Errorf("HTML exceeds 8 MiB input limit")
+	}
+	out.DocumentSHA256 = documentDigest(data)
+	doc, err := goquery.NewDocumentFromReader(bytes.NewReader(data))
+	if err != nil {
+		return out, err
+	}
+	ids := elementIDs(doc)
 	doc.FindMatcher(matcher).EachWithBreak(func(_ int, s *goquery.Selection) bool {
 		if inert(s) {
 			return true
 		}
 		raw, _ := s.Attr("class")
-		e := Element{Tag: goquery.NodeName(s), Classes: []string{}, Components: []string{}, Recipes: []RecipeReport{}}
+		e := Element{ElementID: ids[s.Get(0)], Tag: goquery.NodeName(s), Classes: []string{}, Components: []string{}, Recipes: []RecipeReport{}}
 		seen := map[string]bool{}
-		for _, class := range strings.Fields(raw) {
+		for _, class := range strings.FieldsFunc(raw, htmlSpace) {
 			if strings.HasPrefix(class, "syn-") && !seen[class] {
 				e.Classes = append(e.Classes, class)
 				seen[class] = true

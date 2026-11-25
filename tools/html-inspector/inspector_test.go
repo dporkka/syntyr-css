@@ -74,3 +74,21 @@ func TestExplicitSelectorCanMatchUnstyledElements(t *testing.T) {
 		t.Fatalf("%+v", r)
 	}
 }
+
+func TestHTMLClassWhitespace(t *testing.T) {
+	r := runInspection(t, `<button class="syn-button&#160;local"></button><button class="syn-button local"></button>`, "button")
+	if len(r.Elements) != 2 || len(r.Elements[0].Components) != 0 || len(r.Elements[1].Components) != 1 {
+		t.Fatalf("%+v", r)
+	}
+}
+
+func TestElementIdentityIsIndependentOfSelector(t *testing.T) {
+	html := `<main><button class="syn-button">One</button><button class="syn-button">Two</button></main>`
+	all := runInspection(t, html, "button")
+	one := runInspection(t, html, "button:nth-child(2)")
+	if all.DocumentSHA256 == "" || all.DocumentSHA256 != one.DocumentSHA256 ||
+		all.Elements[1].ElementID != one.Elements[0].ElementID ||
+		all.Elements[0].ElementID == all.Elements[1].ElementID {
+		t.Fatalf("%+v %+v", all, one)
+	}
+}

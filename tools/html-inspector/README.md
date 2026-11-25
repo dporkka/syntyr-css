@@ -45,7 +45,39 @@ or fragments (up to 8 MiB), not JSX, Go templates, browser state, computed CSS,
 accessibility conformance, or arbitrary framework source. Selector support
 is Cascadia's static selector subset; HTML5 parsing can normalize source
 markup. Recipe checks are structural hints, not a complete component contract.
-No source changes, HTML output, network fetching, or automatic repairs occur.
-The JSON schema is experimental. Use the existing
+No source changes, full HTML output, network fetching, or automatic repairs occur.
+The JSON schema is experimental. Inspection also returns a SHA-256 digest of
+the exact input bytes and an `element_id` for each selected parsed element.
+IDs are document-order ordinals independent of selector and output limit; they
+are valid only against that exact input digest and the same inspector version.
+They are not DOM id attributes, persistent editor identifiers or source offsets.
+HTML5 parsing can insert implicit elements and discard duplicate attributes.
+
+## Preview a curated class variant (experimental)
+
+The standalone CLI can propose a **single decoded class-attribute replacement**.
+Inspect first, then copy the digest and element ID from the JSON report:
+
+```sh
+/tmp/syntyr-html-inspect --selector '.syn-button--primary' page.html
+/tmp/syntyr-html-inspect --selector '.syn-button--primary' \
+  --document-sha256 DIGEST_FROM_REPORT --element-id ID_FROM_REPORT \
+  --preview-from syn-button--primary --preview-to syn-button--outline page.html
+```
+
+The result reports `before`, `after`, `attribute: "class"` and
+`preview_only: true`. No HTML is serialized or written. It requires a matching
+digest and selector, exactly one base class and original modifier, and two
+known modifiers from the same curated class family; competing modifiers,
+unknown variants, and recognizable dynamic class expressions are refused.
+All unrelated decoded class tokens and whitespace are preserved. The result is
+a semantic suggestion, not a source patch: HTML parsing decodes entities,
+normalizes line endings, and uses the effective first duplicate attribute.
+Do not apply the plan automatically or interpret IDs as byte offsets.
+The preview checks class-family membership, not visual compatibility or
+complete component semantics. The MCP and agent CLI expose inspection IDs
+but do not yet expose the preview operation.
+
+ Use the existing
 `python3 scripts/syntyr_check.py FILE` for canonical class, attribute,
 stylesheet and optional semantic validation.
