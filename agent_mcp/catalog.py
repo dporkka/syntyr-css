@@ -18,7 +18,7 @@ RELEASES = (PUBLISHED, CANDIDATE)
 MAX_HTML_CHARS = 20_000
 MAX_RESULTS = 40
 
-SELECTOR = re.compile(r"(?<![\w-])\.(syn-[a-zA-Z0-9_-]+)(?![a-zA-Z0-9_-])")
+SELECTOR = re.compile(r"\.(syn-[a-zA-Z0-9_-]+)(?![a-zA-Z0-9_-])")
 TOKEN = re.compile(r"(?<![\w-])(--syn-[a-zA-Z0-9_-]+)\s*:")
 CSS_COMMENT = re.compile(r"/\*.*?\*/", re.S)
 PREFER = (
@@ -27,7 +27,7 @@ PREFER = (
     "syntyr.geometry.css", "syntyr.effects.css", "syntyr.viz.css",
     "syntyr.utilities.css", "syntyr.motion.css", "syntyr.symbols.css",
     "syntyr.native-recipes.css", "syntyr.server.css", "syntyr.print.css",
-    "syntyr.css", "syntyr.all.css",
+    "syntyr.css", "syntyr.all.css", "headless/interactions.css",
 )
 
 
@@ -96,6 +96,13 @@ class SyntyrCatalog:
                     "classes": set(SELECTOR.findall(src)),
                     "tokens": set(TOKEN.findall(src)),
                 }
+        if release == CANDIDATE:
+            adapter = self.root / "integrations/headless/interactions.css"
+            src = CSS_COMMENT.sub("", adapter.read_text(encoding="utf-8"))
+            found["headless/interactions.css"] = {
+                "classes": set(SELECTOR.findall(src)),
+                "tokens": set(TOKEN.findall(src)),
+            }
         if "syntyr.core.css" not in found:
             raise RuntimeError(f"Missing checked-in core stylesheet for {release}")
         classes = set().union(*(v["classes"] for v in found.values()))
@@ -227,7 +234,7 @@ class SyntyrCatalog:
             raise CatalogError(f"HTML is too long or invalid (limit {MAX_HTML_CHARS} characters)")
         info = self._catalog(release)
         if not isinstance(stylesheets, (list, type(None))) or not all(isinstance(s, str) for s in (stylesheets or [])):
-            raise CatalogError("stylesheets must be an array of Syntyr CSS filenames")
+            raise CatalogError("stylesheets must be an array of known Syntyr stylesheet identifiers")
         invalid = sorted(set(stylesheets or []) - set(info["files"]))
         if invalid:
             raise CatalogError(f"Unknown stylesheet(s) in {release}: {', '.join(invalid)}")

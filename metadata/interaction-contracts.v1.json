@@ -7,8 +7,8 @@
       "id": "combobox",
       "behavior_owner": "host",
       "stylesheets": [
-        "dist/syntyr.core.css",
-        "integrations/headless/interactions.css"
+        "syntyr.core.css",
+        "headless/interactions.css"
       ],
       "parts": [
         {
@@ -76,7 +76,7 @@
       "id": "dialog",
       "behavior_owner": "browser-and-host",
       "stylesheets": [
-        "dist/syntyr.core.css"
+        "syntyr.core.css"
       ],
       "parts": [
         {
@@ -115,7 +115,7 @@
       "id": "disclosure",
       "behavior_owner": "browser",
       "stylesheets": [
-        "dist/syntyr.core.css"
+        "syntyr.core.css"
       ],
       "parts": [
         {
@@ -154,7 +154,7 @@
       "id": "dropdown",
       "behavior_owner": "browser-and-host",
       "stylesheets": [
-        "dist/syntyr.core.css"
+        "syntyr.core.css"
       ],
       "parts": [
         {
@@ -200,7 +200,7 @@
       "id": "sortable-table",
       "behavior_owner": "host",
       "stylesheets": [
-        "dist/syntyr.core.css"
+        "syntyr.core.css"
       ],
       "parts": [
         {

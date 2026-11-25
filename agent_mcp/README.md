@@ -38,7 +38,10 @@ The server offers these **read-only** tools:
 - `get_interaction_contracts(name, release)` — source-candidate-only anatomy,
   state hooks, behavior ownership, accessibility obligations, fallbacks and
   descriptive intentions. Use an empty name to list contracts and explicitly
-  pin `0.3.0-alpha.5`. These are not executable tools or a conformance claim.
+  pin `0.3.0-alpha.5`. Stylesheet identifiers can be passed directly to
+  `validate_markup`; the candidate-only `headless/interactions.css` identifier
+  refers to the optional adapter in `integrations/headless/`. These are not
+  executable tools or a conformance claim.
 - `lookup_api(name, release)` — class or token existence.
 - `get_theme_tokens(query, release)` — property names, not computed values.
 - `validate_markup(html, release, stylesheets)` — unknown `syn-*` classes,

@@ -25,7 +25,7 @@ class InteractionContractTests(unittest.TestCase):
         result = self.catalog.get_interaction_contracts("combobox", CANDIDATE)
         contract, = result["contracts"]
         self.assertEqual(contract["behavior_owner"], "host")
-        self.assertIn("integrations/headless/interactions.css", contract["stylesheets"])
+        self.assertIn("headless/interactions.css", contract["stylesheets"])
         with self.assertRaisesRegex(CatalogError, "Unknown"):
             self.catalog.get_interaction_contracts("not-a-widget", CANDIDATE)
 
@@ -38,7 +38,7 @@ class InteractionContractTests(unittest.TestCase):
         data = self.catalog.get_interaction_contracts(release=CANDIDATE)
         for contract in data["contracts"]:
             with self.subTest(contract=contract["id"]):
-                css = "\n".join((ROOT / p).read_text() for p in contract["stylesheets"])
+                css = "\n".join((ROOT / ("integrations/" if p.startswith("headless/") else "dist/") / p).read_text() for p in contract["stylesheets"])
                 for part in contract["parts"]:
                     for cls in part["classes"]:
                         self.assertRegex(css, r"\." + re.escape(cls) + r"(?![\w-])")
@@ -48,6 +48,24 @@ class InteractionContractTests(unittest.TestCase):
                 self.assertTrue(contract["intentions"])
                 self.assertNotIn("actions", contract)
                 self.assertEqual(len({p["id"] for p in contract["parts"]}), len(contract["parts"]))
+
+    def test_contract_stylesheets_round_trip_through_validator(self):
+        for contract in self.catalog.get_interaction_contracts(release=CANDIDATE)["contracts"]:
+            with self.subTest(contract=contract["id"]):
+                html = "".join('<div class="' + " ".join(part["classes"]) + '"></div>'
+                               for part in contract["parts"] if part["classes"])
+                result = self.catalog.validate_markup(html, CANDIDATE, contract["stylesheets"])
+                self.assertEqual(result["unknown_classes"], [])
+                self.assertEqual(result["missing_stylesheets"], [])
+
+    def test_headless_adapter_is_candidate_only_and_required(self):
+        html = '<div class="syn-combobox"></div>'
+        result = self.catalog.validate_markup(html, CANDIDATE, ["syntyr.core.css"])
+        self.assertEqual(result["unknown_classes"], [])
+        self.assertIn("headless/interactions.css", result["missing_stylesheets"])
+        with self.assertRaises(CatalogError):
+            self.catalog.validate_markup(html, PUBLISHED, ["headless/interactions.css"])
+        self.assertIn("syn-combobox", self.catalog.validate_markup(html, PUBLISHED)["unknown_classes"])
 
     def test_metadata_tracks_candidate_version(self):
         manifest = json.loads((ROOT / "metadata/interaction-contracts.v1.json").read_text())
