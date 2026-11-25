@@ -7,7 +7,7 @@ or framework-specific component package.
 
 ## Start here
 
-1. Browse [open issues](https://github.com/dporkka/syntyr-css/issues?q=is%3Aissue+is%3Aopen) and [pull requests](https://github.com/dporkka/syntyr-css/pulls). Small documentation, accessibility, and reproducible bug fixes are good first contributions.
+1. Browse [open issues](https://github.com/dporkka/syntyr-css/issues?q=is%3Aissue+is%3Aopen) and [pull requests](https://github.com/dporkka/syntyr-css/pulls). Start with [good first issues](https://github.com/dporkka/syntyr-css/labels/good%20first%20issue); small documentation, accessibility, and reproducible bug fixes are good first contributions.
 2. For a new bug or feature proposal, use the [issue chooser](https://github.com/dporkka/syntyr-css/issues/new/choose). For larger changes, discuss scope and compatibility in an issue before implementation.
 3. Fork the repository, create a focused branch, and open a PR against `main`. Link the relevant issue using `Fixes #123` only when the PR resolves it completely.
 
@@ -134,23 +134,32 @@ viewport widths. Identify the theme, viewport, browser and source revision;
 use fictional data only. Check keyboard focus, reduced motion and text zoom
 where relevant. Screenshots complement tests; they do not prove accessibility.
 
-The README showcase images in `assets/readme/` are actual Chromium viewport
-captures at 1280 × 800 CSS pixels (device scale factor 1), using the following
-local examples and committed distribution CSS:
+The README showcase images in `assets/readme/` are real Chromium captures
+of existing examples with committed CSS, device scale factor 1 and reduced
+motion. The capture definitions in `scripts/capture_readme.py` are the
+authoritative list of example paths and viewport sizes.
 
-| Image | Source |
-| --- | --- |
-| `operations-console.png` | [Operations console](examples/operations-console.html) |
-| `flagship-studio.png` | [Studio flagship](examples/flagship-studio.html) |
-| `flagship-noir.png` | [Noir flagship](examples/flagship-noir.html) |
+To regenerate the complete set, use an optional developer-only virtual
+environment (never install browser tooling in a consumer application):
 
-To refresh them, rebuild CSS, open each source example in Chromium at the
-specified viewport, wait for rendering, and save a viewport PNG using the
-same filename. Review every image for clipping, missing assets, and accurate
-release labeling. Keep README screenshots separate from regression baselines
-in `tests/visual-baselines/`; do not update test baselines just to change
-marketing imagery. Do not commit browser profiles, internal screenshots or
-unrelated generated files.
+```sh
+python3 scripts/build.py --check
+python3 -m venv /tmp/syntyr-readme-venv
+/tmp/syntyr-readme-venv/bin/pip install playwright
+/tmp/syntyr-readme-venv/bin/playwright install chromium
+/tmp/syntyr-readme-venv/bin/python scripts/capture_readme.py
+python3 -m unittest discover -s tests -p test_readme_showcase.py -v
+```
+
+The script opens only local examples, blocks network requests, and stages
+all captures before replacing the committed PNGs. It does not run in the
+consumer build or automatically change screenshots in CI. Review images
+for clipping, missing assets, and accurate release labeling. Browser
+version and system fonts can affect pixels; the screenshots are not
+pixel-exact cross-platform baselines. Keep these separate from
+`tests/visual-baselines/`; do not update test baselines just to change
+marketing imagery. Do not commit browser profiles, internal screenshots
+or unrelated generated files.
 
 ## Review and release
 

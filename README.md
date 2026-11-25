@@ -88,6 +88,22 @@ The same CSS foundations support professional, restrained interfaces and optiona
 
 [Compare all seven candidate themes](examples/themes.html) · [Browse component catalog](docs/catalog.html) · [Explore the Grid flagship](examples/flagship-grid.html) · [Visual composition guide](docs/visual-composition.md)
 
+### Responsive components
+
+The same native markup at desktop and mobile viewport widths.
+
+| Desktop · 1280 × 800 | Mobile · 390 × 844 |
+| --- | --- |
+| [![Studio navigation, list groups, avatars and chips on desktop](assets/readme/components-desktop.png)](https://syntyr-css.pages.dev/examples/common-ui.html) | [![The same Studio components reflowed at mobile width](assets/readme/components-mobile.png)](https://syntyr-css.pages.dev/examples/common-ui.html) |
+
+[Live component example](https://syntyr-css.pages.dev/examples/common-ui.html) · [HTML source](examples/common-ui.html)
+
+### Seven themes, one component API
+
+[![All seven candidate themes showing the same card and button patterns: Grid, Noir, Studio, Industrial, Terminal, Corporate and Minimal](assets/readme/theme-gallery.png)](https://syntyr-css.pages.dev/examples/themes.html)
+
+Grid, Noir and Studio are available in the published alpha.4; the four additional themes are in the unreleased alpha.5 source candidate.
+
 ## Find your next step
 
 | I want to… | Start here |
@@ -228,6 +244,20 @@ can prevent interactive resizing. This example-specific JavaScript is
 not part of the Syntyr CSS runtime.
 
 No NPM, JS or build step is needed in an application. For package-manager projects, an optional CSS-only `@syntyr/css` manifest is now prepared for an **unpublished** alpha.5 candidate; [test it locally](docs/package-managers.md) until registry ownership and release approval are confirmed. No package installation is required by Syntyr itself.
+
+## Payload sizes and performance evidence
+
+These are **measured gzip asset sizes** for the immutable, published alpha.4 CSS, not HTTP transfer measurements or browser speed rankings. Each bar represents approximately 500 bytes; the exact byte count is authoritative. Bundles have different features.
+
+| Published alpha.4 asset | Relative gzip size | Gzip bytes |
+| --- | --- | ---: |
+| Core (default) | `█████████` | 4,324 |
+| Core + effects | `█████████` | 4,742 |
+| All modules | `██████████████` | 7,192 |
+
+Reproduce locally with Python's `gzip.compress(data, mtime=0)` on the three immutable files (`syntyr.core.css`, `syntyr.css`, `syntyr.all.css`) under [site-releases/0.3.0-alpha.4](site-releases/0.3.0-alpha.4/). The current source candidate has different sizes; run `python3 scripts/asset_report.py` to measure it.
+
+For actual browser measurements, see the [historical deployed-site mobile audit](docs/live-performance-audit.md) and [reproducible framework benchmark](docs/framework-performance.md). Neither asset sizes nor synthetic timing alone establish a cross-framework speed ranking.
 
 ## Documentation for humans and AI agents
 
@@ -420,7 +450,7 @@ an enforced required check until the GitHub/CI integration is verified.
 
 Contributions are welcome: documentation fixes, reproducible bugs, accessibility findings, cross-browser evidence and focused CSS improvements are especially useful.
 
-- [Browse open issues](https://github.com/dporkka/syntyr-css/issues?q=is%3Aissue+is%3Aopen) and [open pull requests](https://github.com/dporkka/syntyr-css/pulls) before starting.
+- [Browse open issues](https://github.com/dporkka/syntyr-css/issues?q=is%3Aissue+is%3Aopen) and [open pull requests](https://github.com/dporkka/syntyr-css/pulls) before starting. New contributors can browse [good first issues](https://github.com/dporkka/syntyr-css/labels/good%20first%20issue).
 - [Report a bug or request an improvement](https://github.com/dporkka/syntyr-css/issues/new/choose). Include a minimal HTML reproduction and the stylesheet version.
 - Follow the [contributor guide](CONTRIBUTING.md), including the local setup, screenshot and verification requirements.
 - [Review the design-partner invitation](https://github.com/dporkka/syntyr-css/issues/3) if you want to give product feedback.
