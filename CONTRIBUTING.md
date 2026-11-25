@@ -161,6 +161,18 @@ pixel-exact cross-platform baselines. Keep these separate from
 marketing imagery. Do not commit browser profiles, internal screenshots
 or unrelated generated files.
 
+The public Open Graph image (`assets/og-syntyr.png`) uses the real showcase
+captures. After refreshing those screenshots, optionally render its local
+source at 1200 × 630 CSS pixels, scale factor 1, using the same Chromium
+environment:
+
+```sh
+/tmp/syntyr-readme-venv/bin/playwright screenshot --viewport-size="1200,630" --wait-for-timeout=300 "file://$(pwd)/scripts/social-preview.html" assets/og-syntyr.png
+```
+
+Inspect the result before committing. GitHub's repository-level social preview
+is configured separately from the website's Open Graph image.
+
 ## Review and release
 
 Use the actual current-head Woodpecker quality and merge checks before

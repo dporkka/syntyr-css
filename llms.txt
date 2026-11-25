@@ -13,7 +13,7 @@ For browser readers, use the [human-readable HTML documentation directory](https
 - [Canonical DESIGN.md contract](https://syntyr-css.pages.dev/DESIGN.md): Agent-readable design rationale and Studio token snapshot generated from source CSS; other themes remain in CSS.
 - [AI quickstart](https://syntyr-css.pages.dev/docs/ai-quickstart.md): Version-aware CSS installation and valid HTML examples.
 - [README payload sizes and visual showcase](https://syntyr-css.pages.dev/README.md#payload-sizes-and-performance-evidence): Measured published alpha.4 gzip asset sizes; source-candidate screenshots and reproduction guidance, not browser speed rankings.
-- [Release and commercial readiness](https://syntyr-css.pages.dev/docs/launch-status.md): Published alpha.4 CSS, unreleased alpha.5 previews, and separate approval gates for npm and paid products.
+- [Release and commercial readiness](https://syntyr-css.pages.dev/docs/launch-status.md): Published alpha.4 CSS, unreleased alpha.5 previews, public roadmap and separate approval gates for npm and paid products.
 - [Complete curated reference](https://syntyr-css.pages.dev/llms-full.txt): Concatenated public technical guides, generated from source.
 - [Syntyr Pro concept](https://syntyr-css.pages.dev/docs/pro): Proposed SaaS/CRM/operations templates. The public research page includes one authentic static screenshot (docs/previews/pro-work-orders-studio.webp) from fictional work-order sample data, not an interactive preview. Private candidate, not for sale; no premium source, license grant, payment or customer download is available.
 - [Syntyr Studio concept](https://syntyr-css.pages.dev/docs/studio): Proposed website and application templates. The public research page includes one authentic static screenshot (docs/previews/studio-saas-home.webp) from a fictional B2B SaaS homepage, not an interactive demo. Private candidate, not for sale; no premium source, license grant, checkout or customer download is available.
@@ -46,7 +46,7 @@ For browser readers, use the [human-readable HTML documentation directory](https
 
 ## Reference
 
-- [Distribution and pinned CSS](https://syntyr-css.pages.dev/docs/distribution.md): Self-hosting, pinned asset URLs, and a downloadable offline SaaS demo in the **unreleased alpha.5** ZIP candidate (not in published alpha.4).
+- [Distribution and pinned CSS](https://syntyr-css.pages.dev/docs/distribution.md): Five-minute published alpha.4 tutorial, self-hosting, pinned asset URLs, and a downloadable offline SaaS demo in the **unreleased alpha.5** ZIP candidate (not in published alpha.4).
 - [Cloudflare hosting and cache contract](https://syntyr-css.pages.dev/docs/cloudflare-hosting.md): Content-addressed website CSS, mutable preview URLs and immutable consumer releases.
 - [Experimental Nulang Cloud hosting adapter](https://syntyr-css.pages.dev/docs/nulang-cloud-hosting.md): Prepare portable static websites and offline deployment bundles; live Nulang Cloud hosting is not yet available.
 - [Release freeze and exact-commit approval procedure](https://syntyr-css.pages.dev/docs/release-freeze.md): Maintainer-only human approval and evidence gates before freezing the unreleased alpha.5 candidate; technical preflight is not release authorization.

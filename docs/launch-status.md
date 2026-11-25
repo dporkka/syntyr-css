@@ -12,6 +12,24 @@
 | Console Kit, Pro, Studio | Private prototypes, **not for sale** | Review original screenshots or request a qualified research conversation. Do not accept payment, issue customer licenses or promise delivery. |
 | Syntyr Studio visual editor | Separate local-first experimental repository; not a hosted SaaS | Use only its documented local preview/export workflows and pinned compatible CSS. |
 
+## Public roadmap
+
+These are milestones, not a dated release promise. This roadmap summarizes
+existing work and links to the live issue tracker; it is not a second CI or
+release-approval authority.
+
+| Milestone | State | What would move it forward |
+| --- | --- | --- |
+| Alpha.4 immutable CSS | Published | Keep pinned assets unchanged; gather adoption feedback |
+| Alpha.5 technical readiness | Unreleased | Freeze exact SHA, validate packaging and browser matrix, resolve or adjudicate [accessibility #24](https://github.com/dporkka/syntyr-css/issues/24), [reflow #101](https://github.com/dporkka/syntyr-css/issues/101) and [CI #26](https://github.com/dporkka/syntyr-css/issues/26) |
+| Adoption and contributor onboarding | Ongoing | [Design-partner research #3](https://github.com/dporkka/syntyr-css/issues/3), [discovery measurement #343](https://github.com/dporkka/syntyr-css/issues/343), [contributor tasks](https://github.com/dporkka/syntyr-css/labels/good%20first%20issue) |
+| Stable v1 API | Planned | Agree on [API stability policy](api-stability.md), migration expectations and supported browsers; complete manual verification |
+| npm and paid offerings | Separate gated decisions | Verified package ownership and release authorization; brand clearance [#4](https://github.com/dporkka/syntyr-css/issues/4) and commercial gates below |
+
+Contribute via [open issues](https://github.com/dporkka/syntyr-css/issues) and
+the [contributor guide](https://github.com/dporkka/syntyr-css/blob/main/CONTRIBUTING.md).
+Current status of individual tasks belongs to their linked issues.
+
 ## Alpha.5 release blockers
 
 The detailed **technical process and exact-SHA review** live in [release-freeze.md](release-freeze.md). This page only summarizes gates; it cannot attest that any reviewer has completed them.
