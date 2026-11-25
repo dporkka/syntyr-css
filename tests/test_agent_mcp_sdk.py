@@ -21,7 +21,7 @@ class AgentMcpSdkTests(unittest.TestCase):
                 self.assertGreaterEqual(names, {
                     "search_components", "get_component", "lookup_api",
                     "get_theme_tokens", "validate_markup", "get_interaction_contracts",
-                    "get_interaction_recipes",
+                    "get_interaction_recipes", "validate_composition",
                 })
                 contracts = await client.call_tool("get_interaction_contracts", {
                     "name": "dialog", "release": "0.3.0-alpha.5",
@@ -34,6 +34,20 @@ class AgentMcpSdkTests(unittest.TestCase):
                 self.assertFalse(recipes.is_error)
                 self.assertEqual({r["id"] for r in recipes.structured_content["recipes"]},
                                  {"native-select", "react-aria-combobox"})
+                plan = await client.call_tool("validate_composition", {
+                    "section_ids": ["hero-product"], "interactions": [],
+                    "stylesheets": ["syntyr.core.css"], "release": "0.3.0-alpha.5",
+                })
+                self.assertFalse(plan.is_error)
+                self.assertFalse(plan.structured_content["valid"])
+                self.assertEqual(plan.structured_content["missing_stylesheets"], ["syntyr.recipes.css"])
+                plan_valid = await client.call_tool("validate_composition", {
+                    "section_ids": ["hero-product"], "interactions": [],
+                    "stylesheets": ["syntyr.core.css", "syntyr.recipes.css"],
+                    "release": "0.3.0-alpha.5",
+                })
+                self.assertFalse(plan_valid.is_error)
+                self.assertTrue(plan_valid.structured_content["valid"])
                 unavailable_recipes = await client.call_tool("get_interaction_recipes", {})
                 self.assertTrue(unavailable_recipes.is_error)
                 unavailable = await client.call_tool("get_interaction_contracts", {})

@@ -142,3 +142,36 @@ Recipe `stylesheets` identifiers are accepted by `validate_markup`. The
 original `css` paths remain source references. Discovery never runs the tests,
 executes interactions, or certifies accessibility. The published alpha.4 release
 does not expose candidate recipes.
+
+
+### Preflight a candidate composition
+
+The read-only `validate_composition` tool checks a declared assembly of
+canonical section IDs and separate interaction requirements. It reuses the
+section composer and interaction recipe catalogs rather than defining new HTML.
+
+```json
+{
+  "section_ids": ["hero-product"],
+  "interactions": [
+    {
+      "contract": "combobox",
+      "recipe": "react-aria-combobox",
+      "relationship": "implementation",
+      "intentions": ["filter", "select"],
+      "state_hooks": ["aria-expanded"]
+    }
+  ],
+  "stylesheets": ["syntyr.core.css", "syntyr.recipes.css", "headless/interactions.css"],
+  "runtime_policy": "host-enabled",
+  "release": "0.3.0-alpha.5"
+}
+```
+
+The default `scriptless` policy rejects headless recipes but permits server
+behavior; `host-enabled` permits optional host-side controllers. Required
+stylesheet IDs are exact catalog identifiers, not a bundle coverage analysis.
+Alternatives, examples and fallbacks cannot claim the original contract's
+intentions or state hooks. Results describe the declared plan only, not a
+rendered document, actual widget state values, a security policy, or WCAG
+certification. The tool never installs, renders or executes anything.
