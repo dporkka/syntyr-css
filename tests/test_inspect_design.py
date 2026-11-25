@@ -45,6 +45,12 @@ class DesignInspectionTests(unittest.TestCase):
             {"class": "syn-button--ghost", "example_ids": []}])
         self.assertEqual(matrix[0]["base_class"], "syn-button")
 
+    def test_every_curated_modifier_has_canonical_example(self):
+        manifest = json.loads((ROOT / "metadata/component-gallery.v1.json").read_text())
+        missing = [v["class"] for f in variant_matrix(manifest["components"], manifest["examples"])
+                   for v in f["variants"] if not v["example_ids"]]
+        self.assertEqual(missing, [])
+
     def test_cli_returns_real_button_evidence(self):
         run = subprocess.run([sys.executable, "scripts/inspect_design.py", "variants"],
                              cwd=ROOT, capture_output=True, text=True, check=True)
