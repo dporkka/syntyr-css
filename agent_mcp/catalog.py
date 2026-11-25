@@ -18,7 +18,7 @@ RELEASES = (PUBLISHED, CANDIDATE)
 MAX_HTML_CHARS = 20_000
 MAX_RESULTS = 40
 
-SELECTOR = re.compile(r"(?<![\w-])\.(syn-[a-zA-Z0-9_-]+)(?![a-zA-Z0-9_-])")
+SELECTOR = re.compile(r"\.(syn-[a-zA-Z0-9_-]+)(?![a-zA-Z0-9_-])")
 TOKEN = re.compile(r"(?<![\w-])(--syn-[a-zA-Z0-9_-]+)\s*:")
 CSS_COMMENT = re.compile(r"/\*.*?\*/", re.S)
 PREFER = (
@@ -27,7 +27,7 @@ PREFER = (
     "syntyr.geometry.css", "syntyr.effects.css", "syntyr.viz.css",
     "syntyr.utilities.css", "syntyr.motion.css", "syntyr.symbols.css",
     "syntyr.native-recipes.css", "syntyr.server.css", "syntyr.print.css",
-    "syntyr.css", "syntyr.all.css",
+    "syntyr.css", "syntyr.all.css", "headless/interactions.css",
 )
 
 
@@ -96,6 +96,13 @@ class SyntyrCatalog:
                     "classes": set(SELECTOR.findall(src)),
                     "tokens": set(TOKEN.findall(src)),
                 }
+        if release == CANDIDATE:
+            adapter = self.root / "integrations/headless/interactions.css"
+            src = CSS_COMMENT.sub("", adapter.read_text(encoding="utf-8"))
+            found["headless/interactions.css"] = {
+                "classes": set(SELECTOR.findall(src)),
+                "tokens": set(TOKEN.findall(src)),
+            }
         if "syntyr.core.css" not in found:
             raise RuntimeError(f"Missing checked-in core stylesheet for {release}")
         classes = set().union(*(v["classes"] for v in found.values()))
@@ -149,6 +156,21 @@ class SyntyrCatalog:
                 self._stylesheet(cls, "class", release) for cls in component["classes"]
             }),
         }, "note": "Syntyr styles native HTML; it does not implement app behavior."}
+
+    def get_interaction_contracts(self, name: str = "", release: str = PUBLISHED):
+        """Describe candidate-only UI anatomy and behavior ownership; never execute."""
+        base = self._release(release)
+        if release != CANDIDATE:
+            raise CatalogError("Interaction contracts are unavailable in the published release; select the source candidate explicitly")
+        manifest = json.loads((self.root / "metadata/interaction-contracts.v1.json").read_text(encoding="utf-8"))
+        if manifest["source_version"] != release or manifest["schema_version"] != 1:
+            raise RuntimeError("Interaction contract metadata version needs review")
+        term = name.strip().casefold()
+        contracts = [c for c in manifest["contracts"] if not term or c["id"] == term]
+        if not contracts:
+            raise CatalogError(f"Unknown interaction contract {name!r}; list contracts without a name")
+        return {**base, "schema_version": manifest["schema_version"],
+                "contracts": contracts, "note": manifest["note"]}
 
     def lookup_api(self, name: str, release: str = PUBLISHED):
         base = self._release(release)
@@ -212,7 +234,7 @@ class SyntyrCatalog:
             raise CatalogError(f"HTML is too long or invalid (limit {MAX_HTML_CHARS} characters)")
         info = self._catalog(release)
         if not isinstance(stylesheets, (list, type(None))) or not all(isinstance(s, str) for s in (stylesheets or [])):
-            raise CatalogError("stylesheets must be an array of Syntyr CSS filenames")
+            raise CatalogError("stylesheets must be an array of known Syntyr stylesheet identifiers")
         invalid = sorted(set(stylesheets or []) - set(info["files"]))
         if invalid:
             raise CatalogError(f"Unknown stylesheet(s) in {release}: {', '.join(invalid)}")
