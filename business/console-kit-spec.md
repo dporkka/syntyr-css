@@ -1,6 +1,6 @@
 # Syntyr Console Kit — proposed premium product specification
 
-**Status: private prototype built, not for sale or accepting orders.** The private preview contains eight original screen types × Grid, Noir and Studio (24 generated variants), but no operative commercial license, checkout, customer distribution or validated buyer commitments. The MIT CSS core, all existing free themes, component classes, examples, recipe gallery and accessibility fixes remain free. Any future paid product must separately identify new original screen-level compositions and its operative license.
+**Status: private prototype built, not for sale or accepting orders.** The current private preview contains twelve original screen types × Grid, Noir and Studio (36 generated variants), including original screens, approvals and CRM compositions, but no operative commercial license, checkout, customer distribution or validated buyer commitments. The MIT CSS core, all existing free themes, component classes, examples, recipe gallery and accessibility fixes remain free. Any future paid product must separately identify new original screen-level compositions and its operative license.
 
 ## Primary buyer and job-to-be-done
 

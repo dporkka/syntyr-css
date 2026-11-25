@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "pricing-trio",
+  "type": "registry:item",
+  "title": "Three-tier pricing",
+  "description": "Three responsive pricing cards with a featured plan.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://syntyr-css.pages.dev/registry/r/core.json"
+  ],
+  "files": [
+    {
+      "path": "blocks/snippets/pricing-trio.html",
+      "type": "registry:file",
+      "target": "~/syntyr/blocks/pricing-trio.html",
+      "content": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-pricing-heading\">\n  <h2 id=\"syn-pricing-heading\" class=\"syn-heading\">Plans that scale</h2>\n  <div class=\"syn-pricing\">\n    <article class=\"syn-price-card\"><h3>Solo</h3><p class=\"syn-price-value\">$19 <small>/ mo</small></p><ul class=\"syn-feature-list\"><li>One workspace</li><li>Essential reports</li></ul><a class=\"syn-button\" href=\"/checkout/solo\">Choose Solo</a></article>\n    <article class=\"syn-price-card\" data-syn-featured><h3>Team</h3><p class=\"syn-price-value\">$49 <small>/ mo</small></p><ul class=\"syn-feature-list\"><li>Unlimited workspaces</li><li>Team permissions</li></ul><a class=\"syn-button syn-button--primary\" href=\"/checkout/team\">Choose Team</a></article>\n    <article class=\"syn-price-card\"><h3>Scale</h3><p class=\"syn-price-value\">Custom</p><ul class=\"syn-feature-list\"><li>Advanced controls</li><li>Assisted onboarding</li></ul><a class=\"syn-button\" href=\"/contact\">Contact sales</a></article>\n  </div>\n  <p class=\"syn-caption\">Example prices only; replace plan data and checkout routes.</p>\n</section>\n"
+    },
+    {
+      "path": "LICENSE",
+      "type": "registry:file",
+      "target": "~/syntyr/LICENSE",
+      "content": "MIT License\n\nCopyright (c) 2026 Syntyr CSS contributors\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n"
+    }
+  ],
+  "meta": {
+    "syntyrVersion": "0.3.0-alpha.5",
+    "source": "MIT source candidate",
+    "runtimeJavaScript": false,
+    "fileDigests": {
+      "~/syntyr/blocks/pricing-trio.html": "86524bfd2baf93be204c31e3832362caad364f6e3b85a910243b946888f4332d",
+      "~/syntyr/LICENSE": "42f56369ac06362dbfe433d2d50b178bf74c369a55ea22337ab40fd9433521bf"
+    }
+  },
+  "docs": "Experimental source-candidate asset. Review exact version, HTML routes, keyboard behavior and integration before production use."
+}

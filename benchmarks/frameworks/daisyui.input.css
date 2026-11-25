@@ -1,0 +1,6 @@
+/* Benchmark-only Tailwind 4 + actual daisyUI 5 plugin. */
+@import "tailwindcss";
+@source "./generated/daisyui/*.html";
+@plugin "daisyui" {
+  themes: light --default;
+}

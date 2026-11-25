@@ -1,0 +1,83 @@
+# Pages CMS: keep this file at your site's repository root.
+# Both editors manage the same JSON file. No CMS fields are stored in markup.
+content:
+  - name: homepage
+    label: Homepage
+    type: file
+    path: content/pages/home.json
+    fields:
+      - { name: title, label: SEO title, type: string }
+      - { name: description, label: Meta description, type: text }
+      - name: theme
+        label: Syntyr theme
+        type: select
+        options:
+          values: [studio, grid, noir, industrial, terminal, corporate, minimal]
+      - name: sections
+        label: Page sections
+        type: block
+        list: true
+        blockKey: type
+        blocks:
+          - name: hero
+            label: Hero
+            fields:
+              - { name: id, label: Stable section ID, type: string }
+              - { name: eyebrow, type: string }
+              - { name: heading, type: string }
+              - { name: description, type: text }
+              - name: button
+                type: object
+                fields:
+                  - { name: label, type: string }
+                  - { name: url, type: string }
+          - name: features
+            label: Features
+            fields:
+              - { name: id, label: Stable section ID, type: string }
+              - { name: heading, type: string }
+              - name: items
+                type: object
+                list: true
+                fields:
+                  - { name: title, type: string }
+                  - { name: description, type: text }
+          - name: pricing
+            label: Pricing
+            fields:
+              - { name: id, label: Stable section ID, type: string }
+              - { name: heading, type: string }
+              - name: plans
+                type: object
+                list: true
+                fields:
+                  - { name: name, type: string }
+                  - { name: price, type: string }
+                  - { name: features, type: string, list: true }
+                  - name: button
+                    type: object
+                    fields:
+                      - { name: label, type: string }
+                      - { name: url, type: string }
+          - name: faq
+            label: FAQ
+            fields:
+              - { name: id, label: Stable section ID, type: string }
+              - { name: heading, type: string }
+              - name: items
+                type: object
+                list: true
+                fields:
+                  - { name: question, type: string }
+                  - { name: answer, type: text }
+          - name: cta
+            label: Call to action
+            fields:
+              - { name: id, label: Stable section ID, type: string }
+              - { name: heading, type: string }
+              - { name: description, type: text }
+              - name: button
+                type: object
+                fields:
+                  - { name: label, type: string }
+                  - { name: url, type: string }

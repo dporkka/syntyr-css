@@ -41,6 +41,88 @@ JavaScript API, runtime dependency, or widget package into `@syntyr/css`.
     preferences, forced colors, text contrast and zoom/reflow. Do not replace
     accessible native behaviors with untested ARIA patterns.
 
+## Framework-free native Custom Elements
+
+The [runnable native fixture](https://github.com/dporkka/syntyr-css/tree/main/examples/web-components) uses
+`HTMLElement`, `customElements.define()`, `observedAttributes`,
+`connectedCallback()`, `disconnectedCallback()`, and `CustomEvent`, with
+no Lit dependency. Demo-only tags start with `syn-demo-`; they are **not**
+a stable widget API or distributed as part of Syntyr CSS.
+
+- Keep attribute/property defaults explicit; update the view in
+  `attributeChangedCallback()` rather than maintaining a second state store.
+- In `connectedCallback()`, attach listeners only once per connection.
+  Cancel listeners with an `AbortController` in `disconnectedCallback()`.
+  Reconnecting a host must not duplicate listeners, events, or markup.
+- Assign untrusted strings using `textContent`, not template interpolation
+  into `innerHTML` or other unsafe HTML sinks.
+- Native events need a documented name, payload, and bubbling/composed contract.
+  Retain real button keyboard semantics instead of inventing key handlers.
+- `aria-busy` reports operational state, and `disabled` prevents activation.
+  A custom CSS state is not a substitute for an accessible state or status text.
+  Place a live status announcement **outside** a region with `aria-busy="true"`;
+  assistive technologies may defer updates to busy descendants.
+- Use `aria-pressed` only for an actual toggle button with a **stable accessible
+  name** (for example, "Mute"). When the label instead names the changing
+  action ("Mark online" / "Mark offline"), use a normal action button without
+  `aria-pressed`. The native demonstration uses action-button semantics.
+
+### Declarative Shadow DOM and progressive enhancement
+
+Server rendering can supply `<template shadowrootmode="open">` inside
+the custom-element host. When the browser creates that root, an upgrading
+element must **reuse** the existing `shadowRoot` and its child nodes.
+Calling `attachShadow({ mode: "open" })` again on a declarative root
+can **clear the rendered server content**, even when it does not throw.
+The [SSR example](https://github.com/dporkka/syntyr-css/blob/main/examples/web-components/ssr.html) verifies this
+behavior in browser tests.
+
+For an essential workflow, either provide meaningful static content
+that is valid without JavaScript or provide an independent native form/link
+fallback. Server-rendered text must match the initial attributes/state.
+A JavaScript-only action rendered into Declarative Shadow DOM should begin
+**disabled** and be enabled only after its event listener is installed, so a
+failed module load does not leave a misleading, apparently working control.
+Only rewrite a live region when its announced message actually changes,
+not when unrelated attributes (such as a heading) change.
+Do not claim that a JavaScript-only toggle provides a no-script mutation path.
+
+### Custom state and form association (optional application concerns)
+
+Prefer the built-in state/ARIA vocabulary when it already expresses the behavior.
+For **internal-only**, CSS-observable boolean state, custom elements can use
+`this.attachInternals().states.add("loading")` and style with
+`:host(:state(loading))`. This avoids a redundant public attribute; it does
+**not** replace `aria-busy`, `disabled`, or other accessibility semantics.
+Use `ElementInternals` only for a concrete need; it is not required for
+ordinary Syntyr components or presentation.
+
+A truly custom, form-participating element must declare
+`static formAssociated = true`, acquire `ElementInternals` using
+`attachInternals()`, and call `setFormValue()` as its value changes.
+If it supports validation, use `setValidity()` and expose accessible
+labels, error text, and focus. Implement applicable
+`formResetCallback()`, `formDisabledCallback()`, and
+`formStateRestoreCallback()` lifecycle behavior. Test actual
+`FormData`, reset, disabled fieldsets, and native validation in browsers.
+**Ordinary `input`, `select`, `textarea`, and `button` should
+remain the default**; Syntyr does not ship a custom form-control runtime.
+
+The [form-associated integration fixture](https://github.com/dporkka/syntyr-css/blob/main/examples/web-components/form-associated.html)
+demonstrates a justified narrow use case: two native inputs treated as a
+single form-associated *range* with cross-field validity and a two-entry
+`FormData` submission. With JavaScript disabled, the original named fields
+remain usable. The enhancement removes those native `name` attributes so
+`setFormValue(FormData, state)` remains the sole submission source. Test
+`form.reset()`, ancestor `fieldset disabled`, direct host `disabled`,
+`FormData` cardinality, restoration, reconnection and validation across
+browsers. Server-side validation remains mandatory; this example is **not**
+a distributed Syntyr component or a reason to replace ordinary controls.
+
+References: [Custom elements](https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_custom_elements),
+[ElementInternals](https://developer.mozilla.org/en-US/docs/Web/API/ElementInternals),
+[Declarative Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/template#declarative_shadow_dom).
+
 ## Suggested review checklist
 
 - Has an HTML-only fallback when the workflow requires it

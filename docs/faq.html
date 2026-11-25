@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Answers to common Syntyr CSS questions about installation, MIT licensing, JavaScript requirements, React compatibility, native HTML, themes and accessibility.">
+  <meta name="syntyr-source-sha256" content="572cd398f9712d4be3b374046f929f3a9a62dd2b49d2613ca424f0150b659393">
+  <meta name="theme-color" content="#f5f7fb">
+  <title>Syntyr CSS FAQ | Installation, Licensing &amp; Frameworks</title>
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Syntyr CSS FAQ | Installation, Licensing &amp; Frameworks">
+  <meta property="og:description" content="Answers to common Syntyr CSS questions about installation, MIT licensing, JavaScript requirements, React compatibility, native HTML, themes and accessibility.">
+  <meta property="og:url" content="https://syntyr-css.pages.dev/docs/faq">
+  <meta property="og:image" content="https://syntyr-css.pages.dev/assets/og-syntyr.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://syntyr-css.pages.dev/docs/faq">
+  <link rel="alternate" type="text/markdown" href="faq.md" title="Markdown source">
+  <link rel="icon" href="../assets/syntyr-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="docs.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <a class="syn-button docs-skip" href="#doc-main">Skip to guide</a>
+  <div class="syn-shell">
+    <header class="syn-header docs-header">
+      <a class="syn-logo" href="../index.html">SYNTYR / CSS</a>
+      <nav class="syn-nav" aria-label="Documentation navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav>
+      <details class="site-mobile-menu"><summary>Menu</summary><nav aria-label="Mobile navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav></details>
+    </header>
+    <main id="doc-main" class="docs-article-page">
+      <nav class="syn-breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="reference.html">Documentation</a></li><li aria-current="page">Syntyr CSS FAQ: installation, frameworks, licensing and components</li></ol></nav>
+      <header class="docs-article-heading">
+        <p class="syn-eyebrow">SYNTYR / DOCUMENTATION</p>
+        <p class="syn-muted">Current source documentation may describe unreleased alpha.5 features. <a href="distribution.html">Check released version compatibility.</a></p>
+        <p class="syn-caption">Prefer a machine-readable version? <a href="faq.md">Markdown source</a> · <a href="../llms.txt">LLM index</a></p>
+      </header>
+      <div class="docs-article-layout">
+        <article class="docs-prose" aria-label="Syntyr CSS FAQ: installation, frameworks, licensing and components">
+<h1 id="syntyr-css-faq-installation-frameworks-licensing-and-components">Syntyr CSS FAQ: installation, frameworks, licensing and components</h1>
+<p>Syntyr is an MIT-licensed, CSS-first interface system for native HTML, SaaS dashboards and business websites. These frequently asked questions cover installation, framework compatibility, accessibility, licensing and how it compares with alternatives.</p>
+<p><strong>Version note:</strong> v0.3.0-alpha.4 is the published immutable release, with Grid, Noir and Studio themes. The alpha.5 source tree contains <strong>unreleased</strong> candidate features. Check the <a href="distribution.html">distribution guide</a> before copying a newer example into a released site.</p>
+<h2 id="what-is-syntyr-css">What is Syntyr CSS?</h2>
+<p>Syntyr is a framework-neutral design system built from scoped CSS classes, semantic HTML and design tokens. It styles ordinary buttons, forms, dashboards and reusable page compositions. It is <strong>not</strong> an application framework, data layer or JavaScript widget engine. Browse the <a href="catalog.html">component catalog</a> and <a href="../examples/semantic-starter.html">starter examples</a>.</p>
+<h2 id="is-syntyr-css-free-and-open-source">Is Syntyr CSS free and open source?</h2>
+<p>The core CSS library is available under the <a href="../LICENSE">MIT license</a>. You can use, modify and self-host it in personal or commercial projects under the license terms. Commercial or experimental packages should not be confused with the MIT core; see <a href="products.html">products and roadmap</a> for product status.</p>
+<h2 id="does-syntyr-require-javascript-or-a-build-tool">Does Syntyr require JavaScript or a build tool?</h2>
+<p><strong>No runtime JavaScript or build tool is required to use its styles.</strong> Link a stylesheet and write HTML. Browser-native controls such as <code>&lt;details&gt;</code> work without a Syntyr script. Your application still supplies JavaScript when required for complex state, data tables, asynchronous workflows or browser fallbacks. See the <a href="progressive-enhancement.html">progressive enhancement guide</a>.</p>
+<h2 id="how-do-i-install-syntyr-on-an-existing-website">How do I install Syntyr on an existing website?</h2>
+<p>Download a published release and self-host the core stylesheet, then add the <code>syn-root</code> class to the region you want styled. For a quick evaluation, use the <a href="https://syntyr-css.pages.dev/v/0.3.0-alpha.4/syntyr.core.css">pinned alpha.4 CSS</a>. Do not rely on a mutable development-branch build for production. <a href="distribution.html">Installation and caching details</a>.</p>
+<h2 id="can-i-use-syntyr-with-react-nextjs-vue-svelte-or-astro">Can I use Syntyr with React, Next.js, Vue, Svelte or Astro?</h2>
+<p>Yes. Syntyr styles HTML that those frameworks render. Add the stylesheet and use its <code>syn-*</code> classes. React and other frameworks still own events, state and application behavior. It also works with server templates, HTMX, LiveView, Livewire and Go templ; see <a href="framework-integrations.html">framework integration examples</a>.</p>
+<h2 id="does-syntyr-work-with-wordpress-wix-shopify-webflow-and-framer">Does Syntyr work with WordPress, Wix, Shopify, Webflow and Framer?</h2>
+<p>Potentially, where a platform permits custom stylesheets or scoped HTML/CSS. Editor restrictions, shadow roots, content security policies and hosting rules vary. Syntyr cannot bypass a platform's restrictions. See the <a href="site-builders.html">site-builder integration guide</a> for platform-by-platform limitations.</p>
+<h2 id="can-syntyr-style-semantic-html-forms-and-native-browser-controls">Can Syntyr style semantic HTML forms and native browser controls?</h2>
+<p>Yes. Its styles work with standard inputs, labels, fieldsets, buttons, dialogs, disclosures and popovers. Some enhanced semantic-mode bundles and patterns are <strong>alpha.5 source candidates</strong>, not published alpha.4 features. Browser support for declarative dialog commands and popover APIs varies; keep an accessible fallback. Read <a href="native-patterns.html">native patterns</a> and <a href="accessibility.html">accessibility</a>.</p>
+<h2 id="is-syntyr-accessible-out-of-the-box">Is Syntyr accessible out of the box?</h2>
+<p>Syntyr includes CSS for focus and responsive layouts, but <strong>a stylesheet cannot guarantee application accessibility</strong>. Choose proper semantic elements, associate labels, verify contrast across themes, support keyboard navigation, and test at zoom and in forced-colors mode. The <a href="accessibility.html">accessibility review</a> explains what to verify.</p>
+<h2 id="how-do-themes-and-design-tokens-work">How do themes and design tokens work?</h2>
+<p>Use <code>data-syn-theme</code> on a scoped root and override documented <code>--syn-*</code> custom properties. Grid, Noir and Studio ship in alpha.4; additional themes in the alpha.5 source are not yet published. Start with <a href="theme-customization.html">theme customization</a>.</p>
+<h2 id="how-is-syntyr-different-from-tailwind-css">How is Syntyr different from Tailwind CSS?</h2>
+<p>Tailwind supplies utility classes to style nearly anything; Syntyr supplies predesigned, scoped components and token-driven styles that can be used without a compilation step. Neither requires runtime JavaScript for CSS. Choose based on whether you want utility-level control or reusable component defaults. See <a href="compare-tailwind.html">Syntyr vs Tailwind</a>.</p>
+<h2 id="how-does-syntyr-compare-to-bootstrap-shadcnui-and-daisyui">How does Syntyr compare to Bootstrap, shadcn/ui and daisyUI?</h2>
+<p>Bootstrap offers a mature UI ecosystem; shadcn/ui offers source-owned interactive component patterns; daisyUI offers Tailwind integration and standalone prebuilt CSS. Syntyr emphasizes native HTML, scoped CSS and optional enhancements, rather than replacing a full interactive widget system. Read the <a href="compare.html">comparison hub</a>.</p>
+<h2 id="can-i-use-syntyr-together-with-tailwind-or-shadcnui">Can I use Syntyr together with Tailwind or shadcn/ui?</h2>
+<p>Yes in principle, but test CSS layer order, resets, tokens and which system owns each region. Keep Syntyr scoped inside <code>syn-root</code> and avoid applying competing global resets to the same markup. This is an integration choice, not a promised conflict-free plug-in. Read <a href="framework-integrations.html">framework integrations</a> and <a href="radix-integration.html">Radix integration</a>.</p>
+<h2 id="when-should-i-not-choose-syntyr">When should I not choose Syntyr?</h2>
+<p>Use native CSS alone for a small bespoke interface you can maintain easily. Choose Tailwind if your team prefers utility-first styling; Bootstrap for its ecosystem; or shadcn/ui when reusable, interactive React components are the primary requirement. Syntyr is a better fit when you want a repeatable visual contract for HTML-first pages without adopting a JavaScript component runtime. <a href="compare.html">Compare the options</a>.</p>
+<h2 id="where-do-i-find-documentation-and-source-code">Where do I find documentation and source code?</h2>
+<p>Start with the <a href="reference.html">HTML documentation</a>, <a href="faq.html">FAQ</a> and <a href="catalog.html">component catalog</a>, or inspect the <a href="https://github.com/dporkka/syntyr-css">public repository</a>. Search-oriented <a href="compare.html">comparisons</a> explain the main tradeoffs. Report technical issues on GitHub.</p>
+        </article>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+<a class="docs-article-toc-link docs-article-toc-2" href="#what-is-syntyr-css">What is Syntyr CSS?</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#is-syntyr-css-free-and-open-source">Is Syntyr CSS free and open source?</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#does-syntyr-require-javascript-or-a-build-tool">Does Syntyr require JavaScript or a build tool?</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#how-do-i-install-syntyr-on-an-existing-website">How do I install Syntyr on an existing website?</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#can-i-use-syntyr-with-react-nextjs-vue-svelte-or-astro">Can I use Syntyr with React, Next.js, Vue, Svelte or Astro?</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#does-syntyr-work-with-wordpress-wix-shopify-webflow-and-framer">Does Syntyr work with WordPress, Wix, Shopify, Webflow and Framer?</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#can-syntyr-style-semantic-html-forms-and-native-browser-controls">Can Syntyr style semantic HTML forms and native browser controls?</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#is-syntyr-accessible-out-of-the-box">Is Syntyr accessible out of the box?</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#how-do-themes-and-design-tokens-work">How do themes and design tokens work?</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#how-is-syntyr-different-from-tailwind-css">How is Syntyr different from Tailwind CSS?</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#how-does-syntyr-compare-to-bootstrap-shadcnui-and-daisyui">How does Syntyr compare to Bootstrap, shadcn/ui and daisyUI?</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#can-i-use-syntyr-together-with-tailwind-or-shadcnui">Can I use Syntyr together with Tailwind or shadcn/ui?</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#when-should-i-not-choose-syntyr">When should I not choose Syntyr?</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#where-do-i-find-documentation-and-source-code">Where do I find documentation and source code?</a>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#what-is-syntyr-css">What is Syntyr CSS?</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#is-syntyr-css-free-and-open-source">Is Syntyr CSS free and open source?</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#does-syntyr-require-javascript-or-a-build-tool">Does Syntyr require JavaScript or a build tool?</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#how-do-i-install-syntyr-on-an-existing-website">How do I install Syntyr on an existing website?</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#can-i-use-syntyr-with-react-nextjs-vue-svelte-or-astro">Can I use Syntyr with React, Next.js, Vue, Svelte or Astro?</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#does-syntyr-work-with-wordpress-wix-shopify-webflow-and-framer">Does Syntyr work with WordPress, Wix, Shopify, Webflow and Framer?</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#can-syntyr-style-semantic-html-forms-and-native-browser-controls">Can Syntyr style semantic HTML forms and native browser controls?</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#is-syntyr-accessible-out-of-the-box">Is Syntyr accessible out of the box?</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#how-do-themes-and-design-tokens-work">How do themes and design tokens work?</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#how-is-syntyr-different-from-tailwind-css">How is Syntyr different from Tailwind CSS?</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#how-does-syntyr-compare-to-bootstrap-shadcnui-and-daisyui">How does Syntyr compare to Bootstrap, shadcn/ui and daisyUI?</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#can-i-use-syntyr-together-with-tailwind-or-shadcnui">Can I use Syntyr together with Tailwind or shadcn/ui?</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#when-should-i-not-choose-syntyr">When should I not choose Syntyr?</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#where-do-i-find-documentation-and-source-code">Where do I find documentation and source code?</a>
+            </nav>
+          </details>
+        </aside>
+      </div>
+      <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="faq.md">Markdown source</a></nav>
+    </main>
+    <footer class="syn-header"><span class="syn-caption">SYNTYR CSS · MIT CORE · EXPERIMENTAL</span><a href="../index.html">Home</a></footer>
+  </div>
+</body>
+</html>

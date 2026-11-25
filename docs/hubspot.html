@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="HubSpot CMS design components: Use Syntyr in a custom HubSpot CMS module, coded template or selected landing-page region. This works well for…">
+  <meta name="syntyr-source-sha256" content="d8051c0d90cdec1311795680b1754515dc5f8c9181e6678a13264e88c296de62">
+  <meta name="theme-color" content="#f5f7fb">
+  <title>Syntyr for HubSpot CMS | Custom Module CSS</title>
+  <link rel="canonical" href="https://syntyr-css.pages.dev/docs/hubspot">
+  <meta property="og:image" content="https://syntyr-css.pages.dev/assets/og-syntyr.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="alternate" type="text/markdown" href="hubspot.md" title="Markdown source">
+  <link rel="icon" href="../assets/syntyr-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="docs.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <a class="syn-button docs-skip" href="#doc-main">Skip to guide</a>
+  <div class="syn-shell">
+    <header class="syn-header docs-header">
+      <a class="syn-logo" href="../index.html">SYNTYR / CSS</a>
+      <nav class="syn-nav" aria-label="Documentation navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav>
+      <details class="site-mobile-menu"><summary>Menu</summary><nav aria-label="Mobile navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav></details>
+    </header>
+    <main id="doc-main" class="docs-article-page">
+      <nav class="syn-breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="reference.html">Documentation</a></li><li aria-current="page">Syntyr for HubSpot CMS: CSS for custom modules and pages</li></ol></nav>
+      <header class="docs-article-heading">
+        <p class="syn-eyebrow">SYNTYR / DOCUMENTATION</p>
+        <p class="syn-muted">Current source documentation may describe unreleased alpha.5 features. <a href="distribution.html">Check released version compatibility.</a></p>
+        <p class="syn-caption">Prefer a machine-readable version? <a href="hubspot.md">Markdown source</a> · <a href="../llms.txt">LLM index</a></p>
+      </header>
+      <div class="docs-article-layout">
+        <article class="docs-prose" aria-label="Syntyr for HubSpot CMS: CSS for custom modules and pages">
+<h1 id="syntyr-for-hubspot-cms-css-for-custom-modules-and-pages">Syntyr for HubSpot CMS: CSS for custom modules and pages</h1>
+<p><strong>HubSpot CMS design components:</strong> Use Syntyr in a custom HubSpot CMS module, coded template or selected landing-page region. This works well for lead-generation panels, agency campaign components and product comparisons where content marketers need fields they can edit while developers own the HTML and CSS.</p>
+<h2 id="why-use-syntyr-on-hubspot-cms">Why use Syntyr on HubSpot CMS?</h2>
+<p>HubSpot CMS modules already provide fields and template rendering through HubL. A Syntyr component can style that generated HTML without requiring a React bundle or external component runtime. The CSS namespace keeps the new module separate from unrelated HubSpot forms and theme styling. Developers can retain reusable, MIT-licensed design primitives in source control and still let a marketer change the displayed heading or call to action in the HubSpot page editor.</p>
+<h2 id="how-to-install-syntyr-in-hubspot-cms">How to install Syntyr in HubSpot CMS</h2>
+<ol>
+<li>In <strong>Design Manager</strong>, create or open a custom coded module with fields for a heading, body copy and optional CTA link. Keep existing HubSpot module authoring and permission conventions.</li>
+<li>Upload a pinned <code>syntyr.embed.css</code> candidate asset and attach the stylesheet to the relevant <strong>template, page or module</strong>. HubSpot also supports attaching a stylesheet from a page's advanced settings; avoid loading it site-wide when only one module needs it.</li>
+<li>In the module's HTML/HubL template, render a <code>syn-root</code> wrapper and escape field content as appropriate for its context. For example, a static markup scaffold is:</li>
+</ol>
+<pre tabindex="0"><code class="language-html">&lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;hs-heading&quot;&gt;
+  &lt;div class=&quot;syn-panel&quot;&gt;
+    &lt;h2 class=&quot;syn-heading&quot; id=&quot;hs-heading&quot;&gt;Talk to our team&lt;/h2&gt;
+    &lt;p class=&quot;syn-muted&quot;&gt;A styled HubSpot campaign module.&lt;/p&gt;
+    &lt;a class=&quot;syn-button syn-button--primary&quot; href=&quot;/contact&quot;&gt;Contact sales&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+</code></pre>
+<ol start="4">
+<li>Connect your own module fields via HubL, preview, then publish and confirm the linked CSS asset resolves correctly.</li>
+</ol>
+<h2 id="limitations-and-hubspot-specific-considerations">Limitations and HubSpot-specific considerations</h2>
+<p>Syntyr does not provide the HubSpot Form API, CRM integration, personalization, analytics tracking or native module fields. Those remain HubSpot features. Page, module and domain stylesheet attachments have a defined cascade and <strong>some domain-level settings require higher subscription plans or permissions</strong>. Prefer local module CSS when feasible, and never assume a stylesheet attached to an unrelated page is inherited elsewhere.</p>
+<p><strong>HubSpot references:</strong> <a href="https://knowledge.hubspot.com/design-manager/create-edit-and-attach-css-files-to-style-your-site">Create and attach CSS files</a> and <a href="https://knowledge.hubspot.com/design-manager/understand-the-source-of-a-page-s-styling">Understanding page styling</a>.</p>
+<h2 id="verify-the-result-before-publishing">Verify the result before publishing</h2>
+<p>Check the public, published URL rather than relying only on an editor preview. Confirm that the Syntyr stylesheet returns HTTP 200 with a CSS content type, that a button inside <code>.syn-root</code> has the desired theme, and that unrelated host navigation, product cards and forms remain unchanged. Test keyboard focus, accessible names, narrow screens around 320px, reduced motion and the platform's own responsive layouts. If an iframe is involved, test its height, keyboard navigation, sandbox attributes and HTTPS/CSP restrictions.</p>
+<p><strong>Release compatibility:</strong> The immutable <strong>alpha.4</strong> stylesheet <code>syntyr.core.css</code> is published. The <strong>alpha.5</strong> <code>syntyr.embed.css</code> bundle is a candidate build designed for existing themes; it is not part of the alpha.4 release. Build the candidate from the source repository and self-host a version-pinned copy for testing. Never load both bundles together, and verify theme-specific overrides before production rollout. Syntyr is a stylesheet, not an official integration or plug-in from the site platform.</p>
+<p>Explore the <a href="site-builders.html">platform integration overview</a>, <a href="distribution.html">Syntyr distribution and release guide</a>, or <a href="../examples/platform-embed.html">live host-theme example</a>.</p>
+        </article>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+<a class="docs-article-toc-link docs-article-toc-2" href="#why-use-syntyr-on-hubspot-cms">Why use Syntyr on HubSpot CMS?</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#how-to-install-syntyr-in-hubspot-cms">How to install Syntyr in HubSpot CMS</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#limitations-and-hubspot-specific-considerations">Limitations and HubSpot-specific considerations</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#verify-the-result-before-publishing">Verify the result before publishing</a>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#why-use-syntyr-on-hubspot-cms">Why use Syntyr on HubSpot CMS?</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#how-to-install-syntyr-in-hubspot-cms">How to install Syntyr in HubSpot CMS</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#limitations-and-hubspot-specific-considerations">Limitations and HubSpot-specific considerations</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#verify-the-result-before-publishing">Verify the result before publishing</a>
+            </nav>
+          </details>
+        </aside>
+      </div>
+      <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="hubspot.md">Markdown source</a></nav>
+    </main>
+    <footer class="syn-header"><span class="syn-caption">SYNTYR CSS · MIT CORE · EXPERIMENTAL</span><a href="../index.html">Home</a></footer>
+  </div>
+</body>
+</html>

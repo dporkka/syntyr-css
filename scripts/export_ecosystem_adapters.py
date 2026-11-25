@@ -21,16 +21,22 @@ COLORS = ("bg", "surface", "surface-hi", "text", "muted", "accent", "accent-2",
           "on-accent", "frame", "frame-strong", "danger", "success", "warning")
 DIMENSIONS = ("radius", "cut")
 DECLARATION = re.compile(r"^\s*(--syn-[\w-]+):\s*([^;]+);")
+CSS_COMMENT = re.compile(r"/\*.*?\*/", re.DOTALL)
 THEME_NAME = re.compile(r'data-syn-theme="([a-z]+)"')
 HEX_COLOR = re.compile(r"^#[0-9a-fA-F]{6}$")
 REM_VALUE = re.compile(r"^((?:\d+(?:\.\d*)?|\.\d+))rem$")
 
 
-def read_palettes(css: str) -> dict[str, dict[str, str]]:
-    """Read literal source palettes; fail closed if a design token becomes dynamic."""
+def read_palettes(css: str, *, strict: bool = True) -> dict[str, dict[str, str]]:
+    """Read source palettes; strict mode requires literal public design tokens.
+
+    Non-strict mode is for diagnostics: it retains missing and nonliteral
+    declarations so the caller can report individual actionable failures.
+    """
     result: dict[str, dict[str, str]] = {}
     current = None
-    for line in css.splitlines():
+    # CSS ignores declarations inside block comments; audit the same active text.
+    for line in CSS_COMMENT.sub("", css).splitlines():
         stripped = line.strip()
         if current is not None:
             if stripped == "}":
@@ -52,6 +58,8 @@ def read_palettes(css: str) -> dict[str, dict[str, str]]:
         raise ValueError(f"Unclosed theme block: {current}")
     if set(result) != set(PALETTES):
         raise ValueError(f"Expected {PALETTES}, found {sorted(result)}")
+    if not strict:
+        return result
     for name, palette in result.items():
         for token in COLORS:
             value = palette.get(f"--syn-{token}", "")

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Migrate from Pico CSS to Syntyr with semantic HTML, explicit component styling, theme tokens, and minimal runtime dependencies.">
-  <meta name="syntyr-source-sha256" content="9de3e050773b3da0e6557e21e9a6470ad95267b870105c3c72f23baa51538100">
+  <meta name="syntyr-source-sha256" content="923ea0b5a3449995aeec938203fb96740a92f1db0e0b001de86e02bfc687ce1d">
   <meta name="theme-color" content="#f5f7fb">
   <title>Moving from Pico.css to Syntyr — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/from-pico">
@@ -43,7 +43,7 @@ markup or exact Pico token compatibility is more important.</p>
 <h2 id="try-a-plain-html-page">Try a plain HTML page</h2>
 <p>In the <strong>unreleased alpha.5 source candidate</strong>, copy
 <code>dist/syntyr.semantic-bundle.css</code> into your application's public CSS directory:</p>
-<pre><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.semantic-bundle.css&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.semantic-bundle.css&quot;&gt;
 &lt;body class=&quot;syn-root syn-page syn-semantic&quot; data-syn-theme=&quot;studio&quot;&gt;
   &lt;main class=&quot;syn-shell&quot;&gt;
     &lt;article&gt;
@@ -111,7 +111,9 @@ that page where feasible, or carefully isolate the two frameworks.</li>
 <li>Load the pinned Syntyr stylesheet and opt into <code>.syn-root.syn-semantic</code>.
 Without these classes, no Syntyr semantic styling is applied.</li>
 <li>Keep real form labels, methods, actions, buttons, table headers, <code>details</code>
-and other native elements. Add <code>.syn-shell</code> or <code>.syn-form</code> where useful.</li>
+and other native elements. Classless <code>form</code> and <code>fieldset</code> gain useful
+vertical layout in semantic mode; use <code>.syn-form</code> for the explicit class API.
+Add <code>.syn-shell</code> where a page-width constraint is useful.</li>
 <li>Translate existing <code>--pico-*</code> customizations <strong>by design role</strong>, not by
 search-and-replace. Syntyr's <code>--syn-*</code> tokens are not one-to-one aliases.</li>
 <li>If HTMX or another library adds temporary classes to formerly unclassed
@@ -119,6 +121,9 @@ elements, prefer explicit <code>syn-*</code> component classes on published alph
 The <code>data-syn-semantic</code> marker is an <strong>alpha.5-only</strong> selector enhancement
 for retaining semantic styling through transient class changes; do not use
 it as an alpha.4 compatibility guarantee.</li>
+<li>Run the optional <code>python3 scripts/syntyr_check.py --semantic your-page.html</code>
+checker on literal HTML to catch labeling, reference and table-state mistakes.
+Dynamic templates still need rendered-page checks.</li>
 <li>Test keyboard navigation, light/dark behavior, small screens, 200%/400%
 browser zoom, forced colors, and screen readers in the actual application.</li>
 </ol>
@@ -132,12 +137,23 @@ cross-framework performance advantage has been established.</p>
 <a href="framework-integrations.html">framework integrations</a>, and
 <a href="performance-validation.html">performance validation</a>.</p>
         </article>
-        <aside class="docs-article-sidebar"><nav aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#try-a-plain-html-page">Try a plain HTML page</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#key-differences">Key differences</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#migration-sequence">Migration sequence</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#when-not-to-migrate">When not to migrate</a>
-        </nav></aside>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#try-a-plain-html-page">Try a plain HTML page</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#key-differences">Key differences</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#migration-sequence">Migration sequence</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#when-not-to-migrate">When not to migrate</a>
+            </nav>
+          </details>
+        </aside>
       </div>
       <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="from-pico.md">Markdown source</a></nav>
     </main>

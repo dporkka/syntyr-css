@@ -1,0 +1,187 @@
+{{define "page.html"}}<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Runnable, framework-free Syntyr resource workbench with GET filtering, safe selection previews and local-only edits.">
+  <title>Resource workbench — Syntyr</title>
+  <link rel="stylesheet" href="/assets/syntyr.core.css">
+  <link rel="stylesheet" href="/assets/syntyr.recipes.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="{{.Theme}}" data-syn-density="compact" data-syn-intensity="quiet">
+  <a class="syn-button" href="#main">Skip to resources</a>
+  <main class="syn-workspace" id="main">
+    <nav class="syn-breadcrumbs" aria-label="Breadcrumb">
+      <ol><li><a href="/resources">Syntyr examples</a></li><li><span aria-current="page">Resource workbench</span></li></ol>
+    </nav>
+    <header class="syn-page-header">
+      <div>
+        <p class="syn-eyebrow">CSS FIRST / SERVER RENDERED</p>
+        <h1>Resource workbench</h1>
+        <p class="syn-muted">Go handles filtering, sorting, selection previews and local-only record edits. Fictional data resets when the server restarts; no authentication or bulk mutation.</p>
+      </div>
+      <div class="syn-page-header__actions"><a class="syn-button" href="/resources">Reset workspace</a></div>
+    </header>
+
+    <section class="syn-app-card" aria-labelledby="filters-title">
+      <h2 class="syn-heading" id="filters-title">Find resources</h2>
+      <search aria-label="Resource search">
+        <form method="get" action="/resources" class="syn-filter-bar">
+          <label class="syn-filter-field syn-filter-field--query" for="resource-q">Search
+            <input class="syn-input" type="search" id="resource-q" name="q" maxlength="100" value="{{.Query}}" placeholder="Name, ID, region or owner">
+          </label>
+          <label class="syn-filter-field" for="resource-status">Status
+            <select class="syn-select" id="resource-status" name="status">
+              <option value="">Any status</option>
+              <option value="active" {{if .StatusActive}}selected{{end}}>Active</option>
+              <option value="review" {{if .StatusReview}}selected{{end}}>Review</option>
+              <option value="done" {{if .StatusDone}}selected{{end}}>Done</option>
+            </select>
+          </label>
+          <label class="syn-filter-field" for="resource-sort">Order
+            <select class="syn-select" name="sort" id="resource-sort">
+              <option value="updated" {{if .SortUpdated}}selected{{end}}>Recently updated</option>
+              <option value="name" {{if .SortName}}selected{{end}}>Name A–Z</option>
+            </select>
+          </label>
+          <label class="syn-filter-field" for="resource-theme">Theme
+            <select class="syn-select" id="resource-theme" name="theme">
+              <option value="studio" {{if .ThemeStudio}}selected{{end}}>Studio</option>
+              <option value="grid" {{if .ThemeGrid}}selected{{end}}>Grid</option>
+              <option value="noir" {{if .ThemeNoir}}selected{{end}}>Noir</option>
+            </select>
+          </label>
+          <details class="syn-details">
+            <summary>Columns</summary>
+            <fieldset>
+              <legend>Visible columns</legend>
+              <input type="hidden" name="columns_present" value="1">
+              <label><input type="checkbox" name="columns" value="owner" {{if .ShowOwner}}checked{{end}}> Owner</label>
+              <label><input type="checkbox" name="columns" value="region" {{if .ShowRegion}}checked{{end}}> Region</label>
+            </fieldset>
+          </details>
+          <div class="syn-filter-actions">
+            <button class="syn-button syn-button--primary" type="submit">Apply view</button>
+            <a class="syn-button" href="/resources">Clear filters</a>
+          </div>
+        </form>
+      </search>
+    </section>
+
+    {{if .IsPreview}}
+      <section class="syn-app-card" aria-labelledby="preview-title">
+        <h2 class="syn-heading" id="preview-title">Bulk selection preview</h2>
+        <p><strong>Preview only</strong> — no resource has been changed. Selection scope: {{.SelectionScope}}.</p>
+        {{if .SelectionCount}}
+          <p>{{.SelectionCount}} selected.</p>
+          <ul>{{range .Chosen}}<li>{{.ID}} — {{.Name}} ({{.Status}})</li>{{end}}</ul>
+        {{else}}
+          <p role="status">No resources selected.</p>
+        {{end}}
+        <a class="syn-button" href="{{.ReturnURL}}">Back to resource list</a>
+      </section>
+    {{end}}
+
+    <div class="syn-detail-layout">
+      <section class="syn-detail-main syn-app-card" aria-labelledby="results-title">
+        <div class="syn-collection-toolbar">
+          <div>
+            <h2 class="syn-heading" id="results-title">Resources</h2>
+            <p class="syn-caption" role="status">{{.Count}} {{if eq .Count 1}}result{{else}}results{{end}} in this local example</p>
+          </div>
+          <div class="syn-collection-actions">
+            {{if .AllPreviewURL}}<a class="syn-button" href="{{.AllPreviewURL}}">Preview all {{.Count}} matching</a>{{end}}
+          </div>
+        </div>
+
+        {{if .Count}}
+          <form method="get" action="/preview" aria-label="Preview checked resources">
+            <input type="hidden" name="q" value="{{.Query}}">
+            <input type="hidden" name="status" value="{{.Status}}">
+            <input type="hidden" name="sort" value="{{.Sort}}">
+            <input type="hidden" name="page" value="{{.Page}}">
+            <input type="hidden" name="theme" value="{{.Theme}}">
+            <input type="hidden" name="columns_present" value="1">
+            {{if .ShowOwner}}<input type="hidden" name="columns" value="owner">{{end}}
+            {{if .ShowRegion}}<input type="hidden" name="columns" value="region">{{end}}
+            <div class="syn-table-wrap" role="region" tabindex="0" aria-label="Filtered resource results; horizontally scrollable">
+              <table class="syn-table syn-table--compact">
+                <caption>Server-filtered fictional resources. Select the IDs you want to preview.</caption>
+                <thead><tr><th scope="col">Select</th><th scope="col">Resource</th>{{if .ShowOwner}}<th scope="col">Owner</th>{{end}}{{if .ShowRegion}}<th scope="col">Region</th>{{end}}<th scope="col">Status</th><th scope="col">Updated</th></tr></thead>
+                <tbody>
+                  {{range .Rows}}
+                    <tr>
+                      <td><label for="check-{{.ID}}"><input id="check-{{.ID}}" type="checkbox" name="ids" value="{{.ID}}"> <span class="syn-caption">Select {{.ID}}</span></label></td>
+                      <th scope="row"><a href="{{.DetailURL}}">{{.ID}} — {{.Name}}</a></th>
+                      {{if $.ShowOwner}}<td>{{.Owner}}</td>{{end}}
+                      {{if $.ShowRegion}}<td>{{.Region}}</td>{{end}}
+                      <td>{{.Status}}</td>
+                      <td><time datetime="{{.Updated}}">{{.Updated}}</time></td>
+                    </tr>
+                  {{end}}
+                </tbody>
+              </table>
+            </div>
+            <div class="syn-bulk-actions">
+              <span>Checked rows on this page only · no changes will be saved</span>
+              <button class="syn-button" type="submit">Preview checked</button>
+            </div>
+          </form>
+          <nav class="syn-pagination" aria-label="Resource result pages">
+            {{if .HasPrevious}}<a class="syn-page-link" href="{{.PreviousURL}}">Previous</a>{{end}}
+            <span class="syn-page-link" aria-current="page">Page {{.Page}} of {{.TotalPages}}</span>
+            {{if .HasNext}}<a class="syn-page-link" href="{{.NextURL}}">Next</a>{{end}}
+          </nav>
+          <p class="syn-caption">Showing {{.FirstResult}}–{{.LastResult}} of {{.Count}} filtered resources. Only visible-page checkboxes are submitted. “Preview all matching” explicitly spans all filtered pages.</p>
+        {{else}}
+          <div class="syn-result-state" role="status">
+            <h3>No matching resources</h3>
+            <p>Try another query or clear the filters.</p>
+            <a href="/resources" class="syn-button">Show all resources</a>
+          </div>
+        {{end}}
+      </section>
+
+      <aside class="syn-detail-aside syn-surface--raised" aria-labelledby="inspector-title">
+        <h2 id="inspector-title" class="syn-heading">Record details</h2>
+        {{if .Selected}}
+          <h3>Selected record: {{.Selected.Name}}</h3>
+          <dl class="syn-record-fields">
+            <div><dt>Reference</dt><dd>{{.Selected.ID}}</dd></div>
+            <div><dt>Owner</dt><dd>{{.Selected.Owner}}</dd></div>
+            <div><dt>Region</dt><dd>{{.Selected.Region}}</dd></div>
+            <div><dt>Status</dt><dd>{{.Selected.Status}}</dd></div>
+            <div><dt>Updated</dt><dd><time datetime="{{.Selected.Updated}}">{{.Selected.Updated}}</time></dd></div>
+          </dl>
+          {{if .EditToken}}
+          <form method="post" action="/resource/edit" class="syn-stack" aria-label="Edit selected resource">
+            <input type="hidden" name="id" value="{{.Selected.ID}}">
+            <input type="hidden" name="theme" value="{{.Theme}}">
+            <input type="hidden" name="csrf_token" value="{{.EditToken}}">
+            <h4 class="syn-heading">Edit this record</h4>
+            <label for="edit-owner">Owner
+              <input class="syn-input" id="edit-owner" name="owner" value="{{.Selected.Owner}}" maxlength="80" required>
+            </label>
+            <label for="edit-status">Status
+              <select class="syn-select" id="edit-status" name="status" required>
+                <option value="active" {{if eq .Selected.Status "active"}}selected{{end}}>Active</option>
+                <option value="review" {{if eq .Selected.Status "review"}}selected{{end}}>Review</option>
+                <option value="done" {{if eq .Selected.Status "done"}}selected{{end}}>Done</option>
+              </select>
+            </label>
+            <button class="syn-button syn-button--primary" type="submit">Save local change</button>
+            <p class="syn-caption">Native POST + redirect + GET. This demo stores changes in memory only and has no user authentication. Do not expose it publicly.</p>
+          </form>
+          {{end}}
+        {{else}}
+          <p class="syn-muted">Choose a resource from the table to inspect its current server-rendered record.</p>
+        {{end}}
+        <details class="syn-details">
+          <summary>Application responsibility</summary>
+          <p>The host must add authentication, tenant isolation, permissions, durable storage, persistent sessions and audit logging. This localhost demo validates edits and uses a signed CSRF form token, but is not an authenticated multi-user application.</p>
+        </details>
+      </aside>
+    </div>
+  </main>
+</body>
+</html>{{end}}

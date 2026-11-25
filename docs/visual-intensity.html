@@ -73,7 +73,7 @@ palette. Omitting the attribute is equivalent to <code>standard</code>.</p>
 <code>syntyr.effects.css</code>. It does not change status colors, border contrast,
 focus rings, typography, form affordances or any theme's underlying palette.
 For zero decoration, simply do not load effects.</p>
-<pre><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.core.css&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.core.css&quot;&gt;
 &lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.effects.css&quot;&gt;
 &lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.geometry.css&quot;&gt;
 
@@ -104,7 +104,7 @@ Use exactly one shape on <code>.syn-frame</code>, optionally adding
 The geometry layer explicitly resets pseudo-element dimensions and clipping
 from earlier CSS layers, so <code>.syn-panel--cut</code> on the <strong>same host</strong> is safely
 superseded by the selected frame geometry rather than corrupting it.</p>
-<pre><code class="language-html">&lt;article class=&quot;syn-panel syn-panel--cut syn-frame syn-frame--notch syn-frame--accent&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;article class=&quot;syn-panel syn-panel--cut syn-frame syn-frame--notch syn-frame--accent&quot;&gt;
   &lt;h2&gt;System status&lt;/h2&gt;
   &lt;p&gt;The notch frame takes precedence over the simpler panel cut.&lt;/p&gt;
 &lt;/article&gt;
@@ -136,11 +136,21 @@ browser engines before relying on a theme in production.</li>
 <a href="geometry-terminal.html">advanced geometry</a> and
 <a href="theme-customization.html">theme customization</a>.</p>
         </article>
-        <aside class="docs-article-sidebar"><nav aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#choose-the-right-intensity">Choose the right intensity</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#geometry-that-composes">Geometry that composes</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#accessibility-and-performance">Accessibility and performance</a>
-        </nav></aside>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#choose-the-right-intensity">Choose the right intensity</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#geometry-that-composes">Geometry that composes</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#accessibility-and-performance">Accessibility and performance</a>
+            </nav>
+          </details>
+        </aside>
       </div>
       <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="visual-intensity.md">Markdown source</a></nav>
     </main>

@@ -1,0 +1,347 @@
+/* Optional renderer-neutral map/UI composition. Requires Syntyr core.
+   The host application owns projection, tiles, attribution, spatial data,
+   hit testing and map behavior. Neither CSS nor the demo is a GIS engine. */
+@layer syn.viz {
+  /* Compute geo roles where the workspace is mounted so the containing
+     Syntyr theme supplies the colors, without creating a theme selector fork. */
+  :where(.syn-root .syn-geo-shell, .syn-root.syn-geo-shell) {
+    --syn-geo-land: color-mix(in srgb, var(--syn-surface-hi) 80%, var(--syn-accent));
+    --syn-geo-water: color-mix(in srgb, var(--syn-accent-2) 20%, var(--syn-surface));
+    --syn-geo-road: color-mix(in srgb, var(--syn-surface) 75%, var(--syn-text));
+    --syn-geo-parcel: color-mix(in srgb, var(--syn-accent) 18%, transparent);
+    --syn-geo-point: var(--syn-accent);
+    --syn-geo-route: var(--syn-accent-2);
+    --syn-geo-zone: var(--syn-warning);
+    --syn-geo-floating: var(--syn-surface-raised);
+
+    /* The shell is also the named container for responsive GIS layout. */
+    container: syn-geo / inline-size;
+    min-inline-size: 0;
+    color: var(--syn-text);
+    font: var(--syn-type-sm)/1.5 var(--syn-font-ui);
+  }
+  .syn-root .syn-geo-workspace {
+    display: grid;
+    grid-template-columns: minmax(15rem, var(--syn-geo-sidebar-width, 19rem)) minmax(0, 1fr);
+    gap: var(--syn-space-2);
+    min-inline-size: 0;
+    align-items: stretch;
+  }
+  .syn-root .syn-geo-sidebar {
+    min-inline-size: 0;
+    display: grid;
+    align-content: start;
+    gap: var(--syn-space-2);
+    padding: var(--syn-space-3);
+    border: 1px solid var(--syn-border-default);
+    border-radius: var(--syn-radius);
+    background: var(--syn-surface);
+    color: var(--syn-text);
+  }
+  .syn-root .syn-geo-sidebar :is(h2, h3, p) { margin-block: 0; }
+  .syn-root .syn-geo-viewport {
+    position: relative;
+    isolation: isolate;
+    margin: 0; /* Reset UA figure margins when the viewport is a figure. */
+    min-inline-size: 0;
+    min-block-size: var(--syn-geo-height, 35rem);
+    overflow: hidden;
+    border: 1px solid var(--syn-border-default);
+    border-radius: var(--syn-radius);
+    background: var(--syn-geo-land);
+    color: var(--syn-text);
+  }
+  /* Fill the stage with a renderer container, image or decorative SVG.
+     Do not set pointer-events:none on the map: wheel/pan/touch belong to it. */
+  .syn-root .syn-geo-map {
+    position: absolute;
+    inset: 0;
+    inline-size: 100%;
+    block-size: 100%;
+    min-inline-size: 0;
+  }
+  .syn-root .syn-geo-map > svg { display: block; inline-size: 100%; block-size: 100%; }
+  /* Overlaid chrome is click-through except its own interactive children. */
+  .syn-root .syn-geo-overlay,
+  .syn-root .syn-geo-marker-layer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .syn-root .syn-geo-controls {
+    position: absolute;
+    inset-block-start: var(--syn-space-2);
+    inset-inline-end: var(--syn-space-2);
+    display: grid;
+    justify-items: end;
+    gap: .375rem;
+    pointer-events: auto;
+  }
+  .syn-root .syn-geo-control-group {
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
+    padding: .25rem;
+    border: 1px solid var(--syn-border-default);
+    border-radius: var(--syn-radius);
+    background: var(--syn-geo-floating);
+    box-shadow: var(--syn-shadow-sm);
+  }
+  .syn-root .syn-geo-control {
+    display: grid;
+    place-items: center;
+    min-inline-size: 2.75rem;
+    min-block-size: 2.75rem;
+    padding: .375rem;
+    border: 1px solid transparent;
+    border-radius: var(--syn-radius);
+    background: var(--syn-geo-floating);
+    color: var(--syn-text);
+    font: 650 1rem/1 var(--syn-font-ui);
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .syn-root .syn-geo-control:where(:hover, [aria-pressed="true"]) {
+    border-color: var(--syn-border-hover);
+    background: var(--syn-surface-hover);
+  }
+  .syn-root .syn-geo-control:disabled {
+    opacity: .6;
+    cursor: not-allowed;
+  }
+  .syn-root .syn-geo-control:focus-visible,
+  .syn-root .syn-geo-marker:focus-visible,
+  .syn-root .syn-geo-data-list a:focus-visible {
+    outline: 3px solid var(--syn-focus-ring);
+    outline-offset: 3px;
+  }
+
+  /* Explicit 44px hit regions; marker artwork stays smaller than its target. */
+  .syn-root .syn-geo-marker {
+    --syn-geo-marker-color: var(--syn-geo-point);
+    display: grid;
+    place-items: center;
+    min-inline-size: 2.75rem;
+    min-block-size: 2.75rem;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--syn-text);
+    text-decoration: none;
+    cursor: pointer;
+    pointer-events: auto;
+  }
+  /* Only Syntyr's static/absolute overlay positions markers.
+     Real mapping engines position their own marker elements. */
+  .syn-root .syn-geo-marker-layer > .syn-geo-marker {
+    position: absolute;
+    /* Diagram coordinates are physical SVG/canvas axes, not logical inline flow. */
+    left: var(--syn-geo-x, 50%);
+    top: var(--syn-geo-y, 50%);
+    transform: translate(-50%, -50%);
+  }
+  .syn-root .syn-geo-marker::before {
+    content: "";
+    display: block;
+    inline-size: 1.15rem;
+    block-size: 1.15rem;
+    border: 2px solid var(--syn-surface);
+    border-radius: 50%;
+    background: var(--syn-geo-marker-color);
+    box-shadow: 0 1px 5px rgb(0 0 0 / 38%);
+  }
+  .syn-root .syn-geo-marker[data-syn-geo-kind="route"]::before {
+    border-radius: .15rem;
+    background: var(--syn-geo-route);
+  }
+  .syn-root .syn-geo-marker[data-syn-geo-kind="zone"]::before {
+    border-radius: .2rem;
+    transform: rotate(45deg);
+    background: var(--syn-geo-zone);
+  }
+  .syn-root .syn-geo-marker[data-syn-selected="true"]::before,
+  .syn-root .syn-geo-marker[aria-current="location"]::before {
+    box-shadow: 0 0 0 3px var(--syn-surface), 0 0 0 6px var(--syn-geo-marker-color);
+  }
+  .syn-root .syn-geo-cluster {
+    min-inline-size: 2.75rem;
+    min-block-size: 2.75rem;
+    border: 2px solid var(--syn-surface);
+    border-radius: 999px;
+    display: inline-grid;
+    place-items: center;
+    padding: .35rem;
+    background: var(--syn-geo-point);
+    color: var(--syn-on-accent);
+    font: 750 .8125rem/1 var(--syn-font-ui);
+    font-variant-numeric: tabular-nums;
+  }
+  .syn-root .syn-geo-marker:has(.syn-geo-cluster)::before { display: none; }
+  /* Selected clusters need their own visible ring: their marker glyph is hidden. */
+  .syn-root .syn-geo-marker[data-syn-selected="true"] .syn-geo-cluster,
+  .syn-root .syn-geo-marker[aria-current="location"] .syn-geo-cluster {
+    box-shadow: 0 0 0 3px var(--syn-surface), 0 0 0 6px var(--syn-geo-marker-color);
+  }
+
+  /* Surface treatment can also be applied to engine-managed popup content. */
+  .syn-root .syn-geo-callout {
+    max-inline-size: min(21rem, 100%);
+    min-inline-size: 0;
+    padding: var(--syn-space-2);
+    border: 1px solid var(--syn-border-floating);
+    border-radius: var(--syn-radius);
+    background: var(--syn-geo-floating);
+    color: var(--syn-text);
+    box-shadow: var(--syn-shadow-overlay);
+    overflow-wrap: anywhere;
+    pointer-events: auto;
+  }
+  .syn-root .syn-geo-callout > :first-child { margin-block-start: 0; }
+  .syn-root .syn-geo-callout > :last-child { margin-block-end: 0; }
+  .syn-root .syn-geo-bottom {
+    position: absolute;
+    inset-inline-start: var(--syn-space-2);
+    inset-block-end: 1.85rem;
+    display: flex;
+    align-items: end;
+    flex-wrap: wrap;
+    gap: .5rem;
+    max-inline-size: calc(100% - 2 * var(--syn-space-2));
+    pointer-events: none;
+  }
+  .syn-root .syn-geo-legend {
+    display: grid;
+    gap: .4rem;
+    max-inline-size: min(17rem, 100%);
+    margin: 0;
+    padding: .65rem .8rem;
+    border: 1px solid var(--syn-border-default);
+    border-radius: var(--syn-radius);
+    background: var(--syn-geo-floating);
+    color: var(--syn-text);
+    box-shadow: var(--syn-shadow-sm);
+    pointer-events: auto;
+  }
+  .syn-root .syn-geo-legend-title { margin: 0; font-weight: 700; }
+  .syn-root .syn-geo-legend-list,
+  .syn-root .syn-geo-layer-list,
+  .syn-root .syn-geo-data-list { margin: 0; padding: 0; list-style: none; }
+  .syn-root .syn-geo-legend-list { display: grid; gap: .3rem; }
+  .syn-root .syn-geo-legend-list li { display: flex; align-items: center; gap: .55rem; min-inline-size: 0; }
+  .syn-root .syn-geo-swatch {
+    display: inline-block;
+    flex: 0 0 .85rem;
+    inline-size: .85rem;
+    block-size: .85rem;
+    border: 2px solid var(--syn-text);
+    border-radius: 50%;
+    background: var(--syn-geo-point);
+  }
+  .syn-root .syn-geo-swatch[data-syn-geo-kind="route"] {
+    block-size: .35rem;
+    border: 0;
+    border-block-start: 3px dashed var(--syn-geo-route);
+    border-radius: 0;
+    background: transparent;
+  }
+  .syn-root .syn-geo-swatch[data-syn-geo-kind="zone"] {
+    border-radius: .1rem;
+    border-style: dashed;
+    background: var(--syn-geo-parcel);
+  }
+  /* The scale bar is only drawn if a renderer supplies real measurements. */
+  .syn-root .syn-geo-scale {
+    display: inline-flex;
+    align-items: end;
+    min-block-size: 2.15rem;
+    padding: .45rem .65rem;
+    border: 1px solid var(--syn-border-default);
+    border-radius: var(--syn-radius);
+    background: var(--syn-geo-floating);
+    color: var(--syn-text);
+    font-size: var(--syn-type-xs);
+    font-variant-numeric: tabular-nums;
+    pointer-events: auto;
+  }
+  .syn-root .syn-geo-scale[data-syn-measured="true"]::before {
+    content: "";
+    align-self: end;
+    inline-size: var(--syn-geo-scale-length, 4rem);
+    block-size: .45rem;
+    border-inline: 2px solid currentColor;
+    border-block-end: 2px solid currentColor;
+    margin-inline-end: .4rem;
+  }
+  .syn-root .syn-geo-attribution {
+    position: absolute;
+    inset-inline-end: 0;
+    inset-block-end: 0;
+    max-inline-size: 100%;
+    padding: .2rem .5rem;
+    background: var(--syn-geo-floating);
+    color: var(--syn-text);
+    font-size: .6875rem;
+    text-align: end;
+    pointer-events: auto;
+  }
+  .syn-root .syn-geo-attribution a { color: inherit; text-decoration: underline; }
+  .syn-root .syn-geo-layer-list { display: grid; gap: .65rem; }
+  .syn-root .syn-geo-layer-list label {
+    display: flex;
+    align-items: start;
+    gap: .65rem;
+    min-block-size: 2.75rem;
+    cursor: pointer;
+  }
+  .syn-root .syn-geo-layer-list input { inline-size: 1.2rem; block-size: 1.2rem; margin: .25rem 0 0; accent-color: var(--syn-accent); }
+  .syn-root .syn-geo-data-list { display: grid; gap: .3rem; }
+  .syn-root .syn-geo-data-list li { padding-block: .5rem; border-block-end: 1px solid var(--syn-border-subtle); }
+  .syn-root .syn-geo-data-list a { color: var(--syn-accent); }
+  .syn-root .syn-geo-data-list [aria-current="location"] { font-weight: 700; }
+
+  @container syn-geo (max-width: 48rem) {
+    .syn-root .syn-geo-workspace { grid-template-columns: minmax(0, 1fr); }
+    .syn-root .syn-geo-viewport { min-block-size: var(--syn-geo-compact-height, 27rem); }
+  }
+  @container syn-geo (max-width: 26rem) {
+    .syn-root .syn-geo-bottom { inset-inline-start: .5rem; inset-block-end: 2.2rem; max-inline-size: calc(100% - 1rem); }
+    .syn-root .syn-geo-legend { padding: .4rem .55rem; }
+    .syn-root .syn-geo-controls { inset-block-start: .5rem; inset-inline-end: .5rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .syn-root .syn-geo-control,
+    .syn-root .syn-geo-marker { transition: none; }
+  }
+  @media (forced-colors: active) {
+    .syn-root .syn-geo-viewport { background: Canvas; border-color: CanvasText; }
+    .syn-root .syn-geo-sidebar,
+    .syn-root .syn-geo-legend,
+    .syn-root .syn-geo-control-group,
+    .syn-root .syn-geo-control,
+    .syn-root .syn-geo-callout,
+    .syn-root .syn-geo-scale,
+    .syn-root .syn-geo-attribution {
+      background: Canvas;
+      color: CanvasText;
+      border-color: CanvasText;
+    }
+    .syn-root .syn-geo-marker::before { background: Highlight; border-color: CanvasText; }
+    .syn-root .syn-geo-marker[data-syn-selected="true"]::before,
+    .syn-root .syn-geo-marker[aria-current="location"]::before {
+      box-shadow: none;
+      outline: 3px solid Highlight;
+      outline-offset: 4px;
+    }
+    .syn-root .syn-geo-cluster { background: Highlight; color: HighlightText; border-color: CanvasText; }
+    .syn-root .syn-geo-marker[data-syn-selected="true"] .syn-geo-cluster,
+    .syn-root .syn-geo-marker[aria-current="location"] .syn-geo-cluster {
+      box-shadow: none;
+      outline: 3px solid Highlight;
+      outline-offset: 4px;
+    }
+    .syn-root .syn-geo-swatch { background: Highlight; border-color: CanvasText; }
+    .syn-root .syn-geo-swatch[data-syn-geo-kind="route"] { background: none; border-block-start-color: CanvasText; }
+    .syn-root .syn-geo-swatch[data-syn-geo-kind="zone"] { background: Canvas; }
+  }
+}

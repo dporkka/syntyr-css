@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Native-only interaction recipes for Syntyr CSS: accordion, search, dialog, datalist, meter and output.">
+  <title>Syntyr CSS — Native interaction recipes</title>
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="../dist/syntyr.semantic.css">
+</head>
+<body class="syn-root syn-page syn-semantic" data-syn-theme="studio">
+  <a class="syn-button" href="#main">Skip to examples</a>
+  <header class="syn-header syn-shell">
+    <a class="syn-logo" href="../docs/index.html">SYNTYR / NATIVE INTERACTIONS</a>
+    <a class="syn-button syn-button--outline" href="../docs/native-patterns.html">Read native patterns guide</a>
+  </header>
+  <main id="main" class="syn-shell syn-stack">
+    <h1 class="syn-title">Native interaction recipes</h1>
+    <p class="syn-lede">Five real browser patterns, no JavaScript, no custom widgets, no new component class names. These previews are static; a server or host application owns actual search results, data changes, and calculations.</p>
+
+    <section class="syn-panel" aria-labelledby="accordion-title">
+      <h2 id="accordion-title" class="syn-heading">Exclusive accordion</h2>
+      <p>Related disclosures share one name, so opening one closes the other without an application state machine. Use a unique name per group.</p>
+      <details class="syn-details" name="native-interaction-faq" open>
+        <summary>Which components need JavaScript?</summary>
+        <p>The browser handles these controls natively. A product may still need JavaScript for data-dependent behavior.</p>
+      </details>
+      <details class="syn-details" name="native-interaction-faq">
+        <summary>Can I use server-rendered HTML?</summary>
+        <p>Yes. Return full pages, HTMX fragments, or regular links and forms from your server.</p>
+      </details>
+      <details class="syn-details" name="native-interaction-faq">
+        <summary>Does Syntyr replace focus management?</summary>
+        <p>No. Native dialog and disclosure behavior remains owned by the browser.</p>
+      </details>
+    </section>
+
+    <section class="syn-panel" aria-labelledby="search-title">
+      <h2 id="search-title" class="syn-heading">GET search form</h2>
+      <p>This static page has no search backend. Submit to see the native query-string navigation; integrate the same HTML with a real server route to return filtered results.</p>
+      <search aria-label="Search the example inventory">
+        <form class="syn-form" method="get" action="native-interactions.html">
+          <div class="syn-field">
+            <label class="syn-label" for="native-interaction-query">Inventory keywords</label>
+            <input class="syn-input" id="native-interaction-query" name="q" type="search" required placeholder="e.g., billboard" autocomplete="off">
+          </div>
+          <button type="submit" class="syn-button syn-button--primary">Search</button>
+        </form>
+      </search>
+    </section>
+
+    <section class="syn-panel" aria-labelledby="dialog-section-title">
+      <h2 id="dialog-section-title" class="syn-heading">Confirmation dialog</h2>
+      <p>Native invoker commands open a modal dialog in supporting browsers. This is a non-mutating choice demo: <code>method="dialog"</code> closes the dialog; it does not submit a destructive action or save changes to the server.</p>
+      <button type="button" class="syn-button syn-button--outline" commandfor="native-interaction-confirm" command="show-modal">Review a confirmation</button>
+      <dialog class="syn-dialog" id="native-interaction-confirm" aria-labelledby="native-interaction-confirm-title">
+        <h3 id="native-interaction-confirm-title" class="syn-heading">Confirm preview?</h3>
+        <p>Choose an option. No data is changed by this static example.</p>
+        <form method="dialog" class="syn-inline">
+          <button class="syn-button syn-button--outline" type="submit" value="cancel" autofocus>Cancel</button>
+          <button class="syn-button syn-button--primary" type="submit" value="confirm">Confirm preview</button>
+        </form>
+      </dialog>
+    </section>
+
+    <section class="syn-panel" aria-labelledby="suggest-title">
+      <h2 id="suggest-title" class="syn-heading">Datalist suggestions and grouped select</h2>
+      <p>Suggestions are not a custom combobox. Users may enter their own text; use <code>select</code> when values must be restricted to an allowed set.</p>
+      <div class="syn-form">
+        <label class="syn-label" for="native-interaction-city">City (free text with suggestions)</label>
+        <input id="native-interaction-city" class="syn-input" name="city" list="native-interaction-cities" placeholder="Start typing">
+        <datalist id="native-interaction-cities">
+          <option value="Brasília"></option>
+          <option value="Chicago"></option>
+          <option value="New York"></option>
+        </datalist>
+        <label class="syn-label" for="native-interaction-market">Market (restricted options)</label>
+        <select id="native-interaction-market" class="syn-select" name="market">
+          <optgroup label="North America">
+            <option value="us">United States</option>
+            <option value="ca">Canada</option>
+          </optgroup>
+          <optgroup label="South America">
+            <option value="br">Brazil</option>
+          </optgroup>
+        </select>
+      </div>
+    </section>
+
+    <section class="syn-panel" aria-labelledby="meter-title">
+      <h2 id="meter-title" class="syn-heading">Meter and output</h2>
+      <p>Native <code>meter</code> communicates a bounded measurement, while <code>output</code> displays an application or server result. Values in this static preview do not update automatically. An application supplies calculations and announcements when needed.</p>
+      <div class="syn-stack">
+        <label for="native-interaction-capacity">Available capacity</label>
+        <meter id="native-interaction-capacity" min="0" max="100" low="25" high="85" optimum="90" value="68">68 out of 100</meter>
+        <label for="native-interaction-result">Matching inventory (server example)</label>
+        <output id="native-interaction-result" name="inventory-count">42 available locations</output>
+      </div>
+    </section>
+
+    <p class="syn-caption">Production reminder: validate user input on the server, provide real search results, and never treat <code>method="dialog"</code> as authorization for a mutation.</p>
+  </main>
+</body>
+</html>

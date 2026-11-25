@@ -24,6 +24,30 @@ async function run(engine, name) {
     await field.blur();
     assert.equal(await label.evaluate(el => getComputedStyle(el).transform), "none");
 
+    const organization = page.locator("#example-organization");
+    const organizationLabel = page.locator('label[for="example-organization"]');
+    assert.equal(await organizationLabel.evaluate(el => getComputedStyle(el).transform), "none");
+    await organization.fill("Example LLC");
+    assert.notEqual(await organizationLabel.evaluate(el => getComputedStyle(el).transform), "none");
+    await organization.fill("");
+    await organization.blur();
+    assert.equal(await organizationLabel.evaluate(el => getComputedStyle(el).transform), "none");
+
+    const invalidFile = page.locator("#native-file-invalid");
+    const colors = await invalidFile.evaluate(el => {
+      const expected = document.createElement("span");
+      expected.style.color = "var(--syn-danger)";
+      el.parentElement.appendChild(expected);
+      const actual = getComputedStyle(el).borderTopColor;
+      const danger = getComputedStyle(expected).color;
+      expected.remove();
+      return { actual, danger, width: getComputedStyle(el).borderTopWidth };
+    });
+    assert.equal(colors.actual, colors.danger, "Invalid file input should retain danger border");
+    assert.notEqual(colors.width, "0px", "Invalid file input must have a visible border");
+    assert.ok(await page.locator("#example-search")
+      .evaluate(el => parseFloat(getComputedStyle(el).paddingInlineEnd) >= 30));
+
     const open = page.getByRole("button", { name: "Open actions" });
     await open.click();
     const popover = page.locator("#native-actions");
@@ -50,6 +74,18 @@ async function run(engine, name) {
     await page.setViewportSize({ width: 360, height: 780 });
     const rootOverflow = await page.evaluate(() => document.documentElement.scrollWidth > innerWidth);
     assert.equal(rootOverflow, false, "native recipes should not overflow the viewport");
+    assert.equal(await organizationLabel.evaluate(el => getComputedStyle(el).position), "static");
+    const layout = await page.evaluate(() => {
+      const label = document.querySelector('label[for="example-organization"]');
+      const input = document.querySelector("#example-organization");
+      return [getComputedStyle(label).gridRowStart, getComputedStyle(input).gridRowStart];
+    });
+    assert.deepEqual(layout, ["1", "2"]);
+    for (const theme of ["studio", "grid", "noir", "industrial", "terminal", "corporate", "minimal"]) {
+      await page.locator("body").evaluate((el, t) => { el.dataset.synTheme = t; }, theme);
+      assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth),
+        false, theme + " overflow at 360px");
+    }
     const code = page.locator(".syn-code-figure pre");
     assert.equal(await code.getAttribute("tabindex"), "0");
     const animated = await browser.newPage({ reducedMotion: "no-preference" });

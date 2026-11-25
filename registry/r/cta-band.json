@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "cta-band",
+  "type": "registry:item",
+  "title": "Call-to-action band",
+  "description": "A compact conversion section with clear hierarchy.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://syntyr-css.pages.dev/registry/r/core.json",
+    "https://syntyr-css.pages.dev/registry/r/recipes.json"
+  ],
+  "files": [
+    {
+      "path": "blocks/snippets/cta-band.html",
+      "type": "registry:file",
+      "target": "~/syntyr/blocks/cta-band.html",
+      "content": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-cta-heading\">\n  <div class=\"syn-cta-band\">\n    <div><h2 id=\"syn-cta-heading\" class=\"syn-heading\">Ready to explore?</h2><p>Start with a workflow that works for your team.</p></div>\n    <a class=\"syn-button syn-button--primary\" href=\"/contact\">Talk to us</a>\n  </div>\n</section>\n"
+    },
+    {
+      "path": "LICENSE",
+      "type": "registry:file",
+      "target": "~/syntyr/LICENSE",
+      "content": "MIT License\n\nCopyright (c) 2026 Syntyr CSS contributors\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n"
+    }
+  ],
+  "meta": {
+    "syntyrVersion": "0.3.0-alpha.5",
+    "source": "MIT source candidate",
+    "runtimeJavaScript": false,
+    "fileDigests": {
+      "~/syntyr/blocks/cta-band.html": "65bcea18ab9ba53116869f90cfaee68e994d0b2b60bf0ee0766d687ff4487769",
+      "~/syntyr/LICENSE": "42f56369ac06362dbfe433d2d50b178bf74c369a55ea22337ab40fd9433521bf"
+    }
+  },
+  "docs": "Experimental source-candidate asset. Review exact version, HTML routes, keyboard behavior and integration before production use."
+}

@@ -1,0 +1,61 @@
+# Optional framework-consumer verification. This pipeline uses Node.js only
+# for development tests; it never changes the CSS runtime or its Python-only gate.
+when:
+  - event: pull_request
+  - event: push
+    branch: main
+  - event: manual
+
+steps:
+  - name: node-jsx-tsx-consumers
+    # Preserve the optional consumer check while skipping npm for unrelated changes.
+    # A manual invocation always runs the full set of adoption fixtures.
+    when:
+      - event: manual
+      - event: [pull_request, push]
+        path:
+          include:
+            - src/**
+            - dist/**
+            - package.json
+            - packages/react/**
+            - examples/react-vite/**
+            - examples/preact-jsx/**
+            - examples/solid-tsx/**
+            - examples/next-app-router/**
+            - examples/node-express/**
+            - integrations/**
+            - scripts/build.py
+            - scripts/export_ecosystem_adapters.py
+            - scripts/test_js_adoption.py
+            - tests/test_node_react_next_adoption.py
+            - tests/animate.test.mjs
+            - tests/copy.test.mjs
+            - tests/ascii_playground.test.mjs
+            - tests/ascii_cli.test.mjs
+            - scripts/compose.mjs
+            - tests/compose_cli.test.mjs
+            - tests/pretext_adapter.test.mjs
+            - docs/page-builder-model.mjs
+            - metadata/section-composer.v1.json
+            - scripts/ascii.mjs
+            - tools/ascii-logic.mjs
+            - tools/ascii-playground*
+            - .woodpecker/js-adoption.yaml
+          on_empty: true
+    image: node:24-bookworm-slim@sha256:dc26ae92c9fb15cf6b1d63e20f0944b2efe0f115b20e00be48fb23fceb061c54
+    commands:
+      - node --version && npm --version
+      - node --test tests/animate.test.mjs tests/copy.test.mjs tests/ascii_playground.test.mjs tests/ascii_cli.test.mjs tests/compose_cli.test.mjs tests/pretext_adapter.test.mjs
+      - npm install --prefix packages/react --no-audit --no-fund
+      - npm test --prefix packages/react
+      - npm install --prefix examples/react-vite --no-audit --no-fund
+      - npm run build --prefix examples/react-vite
+      - npm install --prefix examples/preact-jsx --no-audit --no-fund
+      - npm run build --prefix examples/preact-jsx
+      - npm install --prefix examples/solid-tsx --no-audit --no-fund
+      - npm run build --prefix examples/solid-tsx
+      - npm install --prefix examples/next-app-router --no-audit --no-fund
+      - npm run build --prefix examples/next-app-router
+      - npm install --prefix examples/node-express --no-audit --no-fund
+      - npm test --prefix examples/node-express

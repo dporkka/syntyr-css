@@ -39,6 +39,10 @@ class CloudflareSiteTests(unittest.TestCase):
             self.assertTrue((out / "404.html").is_file())
             self.assertTrue((out / "docs/index.html").is_file())
             self.assertTrue((out / "docs/framework-integrations.md").is_file())
+            self.assertTrue((out / "docs/mobile-frameworks.md").is_file())
+            self.assertTrue((out / "metadata/mobile/syntyr.tokens.json").is_file())
+            self.assertTrue((out / "integrations/react-native/styles.ts").is_file())
+            self.assertTrue((out / "examples/react-native/App.tsx").is_file())
             self.assertTrue((out / "docs/performance-validation.md").is_file())
             self.assertTrue((out / "docs/performance-and-polish.md").is_file())
             self.assertTrue((out / "dist/syntyr.core.css").is_file())
@@ -46,6 +50,9 @@ class CloudflareSiteTests(unittest.TestCase):
             self.assertTrue((out / "examples/themes.html").is_file())
             self.assertTrue((out / "docs/native-browser-apis.md").is_file())
             self.assertTrue((out / "examples/native-apis.html").is_file())
+            self.assertTrue((out / "examples/dropdowns.html").is_file())
+            self.assertTrue((out / "docs/dropdowns.md").is_file())
+            self.assertTrue((out / "docs/dropdowns.html").is_file())
             self.assertTrue((out / "dist/syntyr.utilities.css").is_file())
             contract = json.loads((out / "metadata/syntyr-contract.json").read_text())
             self.assertEqual(contract["schema_version"], 1)
@@ -72,6 +79,10 @@ class CloudflareSiteTests(unittest.TestCase):
                     resolved = target / 'index.html' if target.is_dir() else target
                     self.assertTrue(resolved.is_file(), (page, url))
             self.assertTrue((out / "docs/theme-editor.js").is_file())
+            for name in ("page-builder.html", "page-builder.css", "page-builder.js", "page-builder-model.mjs", "site-builder-model.mjs", "page-builder-site-kits.mjs", "page-builder-guide.md", "page-builder-guide.html"):
+                self.assertTrue((out / "docs" / name).is_file(), name)
+            for name in ("form-builder.html", "form-builder.css", "form-builder.js", "form-builder-model.mjs"):
+                self.assertTrue((out / "docs" / name).is_file(), name)
             # JSON-LD is inert data, not browser-executed JavaScript.
             self.assertFalse(any(
                 "<script" in re.sub(
@@ -80,8 +91,18 @@ class CloudflareSiteTests(unittest.TestCase):
                 ).lower()
                 for page in out.rglob("*.html")
                 if page.relative_to(out).as_posix() not in {
-                    "docs/theme-editor.html", "docs/catalog.html",
-                    "docs/playground.html", "docs/blocks.html"
+                    "docs/form-builder.html", "docs/theme-editor.html", "docs/catalog.html",
+                    "tools/color-contrast-checker.html", "tools/css-theme-generator.html",
+                    "tools/css-clamp-generator.html", "tools/responsive-design-tester.html",
+                    "tools/ascii-playground.html",  # Local-only first-party ASCII tool.
+                    "docs/playground.html", "docs/page-builder.html", "docs/blocks.html",
+                    "docs/htmx-playground.html",  # Explicit first-party HTMX demo with vendored JS.
+                    "docs/how-to.html",  # Docs-only search, same CSP as the catalog.
+                    "docs/starter-wizard.html",  # Docs-only generator, no runtime dependency.
+                    "examples/animation.html", "examples/copy.html",
+                    "examples/resizable-workspace.html",
+                    "examples/command-launcher.html",
+                    # Explicitly opted-in first-party ESM examples only.
                 }
             ))
 

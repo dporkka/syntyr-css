@@ -14,7 +14,7 @@ function element(overrides = {}, styles = {}) {
   const rects = [{top: 2}, {top: 26}];
   return {
     textContent: "Syntyr a readable label", childElementCount: 0,
-    scrollWidth: 200, clientWidth: 200, scrollHeight: 48, clientHeight: 48,
+    scrollWidth: 216, clientWidth: 216, scrollHeight: 48, clientHeight: 48,
     getBoundingClientRect: () => ({width: 218, height: 48}),
     ownerDocument: {
       defaultView: {getComputedStyle: () => ({...css, ...styles})},
@@ -52,4 +52,20 @@ test("skips rich inline content, where layout has different assumptions", () => 
     prepare: () => { throw new Error("must not run"); }, layout: () => {}
   });
   assert.equal(result.status, "skipped");
+});
+
+test("uses untransformed client width excluding scrollbar space and padding", () => {
+  const pretext = {
+    prepare: () => "handle",
+    layout: (_handle, width) => { assert.equal(width, 169); return {lineCount: 2, height: 48}; }
+  };
+  const result = predictWithPretext(element({clientWidth: 185, getBoundingClientRect: () => ({width: 400, height: 48})}), pretext);
+  assert.equal(result.contentWidth, 169);
+});
+test("skips normal overflow-wrap for a long identifier", () => {
+  const result = predictWithPretext(element({textContent: "a".repeat(100)}, {overflowWrap: "normal"}), {
+    prepare: () => { throw new Error("must not predict"); }, layout: () => {}
+  });
+  assert.equal(result.status, "skipped");
+  assert.equal(result.reason, "unsupported-overflow-wrap");
 });

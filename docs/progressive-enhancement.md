@@ -44,6 +44,35 @@ Don't rely on ARIA to implement state changes or disable interactions. Use
 native control semantics; any optional JavaScript must feature-detect browser
 support, preserve keyboard focus, and never hide the only path to important data.
 
+## Failed enhancements are not the same as missing JavaScript
+
+Native forms handle the **absence** of HTMX or other enhancement scripts, but
+an enhanced request can still fail after the runtime has intercepted it.
+The browser will not automatically re-submit a failed HTMX request as a normal
+navigation. Keep a real form `action`/`method` and provide a visible,
+keyboard-reachable native-navigation fallback on response, connection and timeout
+errors. Preserve submitted values, and clear failed-request messaging on a
+subsequent successful request. A retry link must point to the real, authorized
+server endpoint; do not blindly replay non-idempotent POSTs.
+
+The [HTMX example](https://github.com/dporkka/syntyr-css/blob/main/examples/htmx.html)
+uses an optional, **application-owned**
+[`htmx-recovery.js`](https://github.com/dporkka/syntyr-css/blob/main/examples/htmx-recovery.js) listener that exposes a
+normal GET link with the user's current query on failure. With JavaScript
+disabled or the HTMX bundle missing, the form submits normally; with HTMX
+available, only the result fragment is replaced. Syntyr CSS never installs
+the listener and remains independent of HTMX.
+
+For mutations, use server-owned validation, CSRF defenses, idempotency or
+duplicate-submission controls, accessible field errors, and Post/Redirect/Get
+for ordinary successful form submissions. A client-side pending cursor is
+visual feedback only, not a submission lock or network recovery policy.
+
+Floating labels remain real `<label for>` controls. Do not remove their
+pointer activation when applying responsive, CSS-only label positioning:
+clicking the visible label must focus the associated input at both wide and
+narrow widths.
+
 ## Built-in system-aware theme
 
 Load core and set `data-syn-theme="auto"`. No separate automatic theme

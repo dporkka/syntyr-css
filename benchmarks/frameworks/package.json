@@ -3,7 +3,7 @@
   "private": true,
   "description": "Optional dev-only benchmark compilers. Not a Syntyr runtime dependency.",
   "scripts": {
-    "build": "tailwindcss -i tailwind.input.css -o generated/tailwind.compiled.css --minify && unocss 'generated/uno/*.html' -o generated/uno.compiled.css -c uno.config.mjs"
+    "build": "tailwindcss -i tailwind.input.css -o generated/tailwind.compiled.css --minify && tailwindcss -i daisyui.input.css -o generated/daisyui.compiled.css --minify && unocss 'generated/uno/*.html' -o generated/uno.compiled.css -c uno.config.mjs"
   },
   "devDependencies": {
     "tailwindcss": "4.3.5",
@@ -11,6 +11,7 @@
     "unocss": "66.13.0",
     "@unocss/cli": "66.13.0",
     "@unocss/reset": "66.13.0",
-    "purecss": "3.1.0"
+    "purecss": "3.1.0",
+    "daisyui": "5.8.0"
   }
 }

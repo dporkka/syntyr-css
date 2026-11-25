@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Research rubric for the unreleased alpha.5 source candidate , not a statement about the published alpha.4 package. Updated 2026-11-18. This matrix…">
+  <meta name="syntyr-source-sha256" content="b60475998e937f9cfc86a531d90703ebafd65ffdf511ac9501ef4dc68438bd3d">
+  <meta name="theme-color" content="#f5f7fb">
+  <title>Web design reference matrix and Syntyr benchmark applications — Syntyr CSS docs</title>
+  <link rel="canonical" href="https://syntyr-css.pages.dev/docs/design-reference-matrix">
+  <link rel="alternate" type="text/markdown" href="design-reference-matrix.md" title="Markdown source">
+  <link rel="icon" href="../assets/syntyr-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="docs.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <a class="syn-button docs-skip" href="#doc-main">Skip to guide</a>
+  <div class="syn-shell">
+    <header class="syn-header docs-header">
+      <a class="syn-logo" href="../index.html">SYNTYR / CSS</a>
+      <nav class="syn-nav" aria-label="Documentation navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav>
+      <details class="site-mobile-menu"><summary>Menu</summary><nav aria-label="Mobile navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav></details>
+    </header>
+    <main id="doc-main" class="docs-article-page">
+      <nav class="syn-breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="reference.html">Documentation</a></li><li aria-current="page">Web design reference matrix and Syntyr benchmark applications</li></ol></nav>
+      <header class="docs-article-heading">
+        <p class="syn-eyebrow">SYNTYR / DOCUMENTATION</p>
+        <p class="syn-muted">Current source documentation may describe unreleased alpha.5 features. <a href="distribution.html">Check released version compatibility.</a></p>
+        <p class="syn-caption">Prefer a machine-readable version? <a href="design-reference-matrix.md">Markdown source</a> · <a href="../llms.txt">LLM index</a></p>
+      </header>
+      <div class="docs-article-layout">
+        <article class="docs-prose" aria-label="Web design reference matrix and Syntyr benchmark applications">
+<h1 id="web-design-reference-matrix-and-syntyr-benchmark-applications">Web design reference matrix and Syntyr benchmark applications</h1>
+<p>Research rubric for the <strong>unreleased alpha.5 source candidate</strong>, not a statement about the published alpha.4 package. Updated 2026-11-18. This matrix identifies what to <em>study</em>, not assets to redistribute. Design inspiration and design principles are not licenses.</p>
+<p>For a browsable public catalog with descriptions and direct links, see the <a href="design-resources.html">Syntyr web design resources directory</a>. This matrix adds Syntyr-specific adoption criteria and reproducible benchmarks, rather than duplicating the directory.</p>
+<h2 id="ranked-reference-matrix">Ranked reference matrix</h2>
+<table>
+<thead>
+<tr>
+<th>Priority</th>
+<th>Reference and source</th>
+<th>Study</th>
+<th>Syntyr application / acceptance criterion</th>
+<th>Boundary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P0</td>
+<td><a href="https://open-props.style/">Open Props</a></td>
+<td>Reusable custom properties, color and motion scales</td>
+<td>Keep coherent <code>--syn-*</code> token roles, isolate theme overrides, verify in nested roots</td>
+<td>Study token strategy; do not import source unchanged without license review</td>
+</tr>
+<tr>
+<td>P0</td>
+<td><a href="https://every-layout.dev/">Every Layout</a></td>
+<td>Intrinsic layout primitives</td>
+<td>Reduce bespoke media queries and test reflow at 320 CSS px and 200% zoom</td>
+<td>Concepts only; examples may have separate licenses</td>
+</tr>
+<tr>
+<td>P0</td>
+<td><a href="https://smolcss.dev/">SmolCSS</a></td>
+<td>Small responsive recipes</td>
+<td>Keep CSS composition independent of JS and build tools</td>
+<td>Attribute source when adapting; review per-recipe terms</td>
+</tr>
+<tr>
+<td>P0</td>
+<td><a href="https://www.w3.org/WAI/ARIA/apg/">W3C ARIA APG</a></td>
+<td>Native keyboard and focus interaction guidance</td>
+<td>Validate labels, focus order, and dynamic semantics in actual browser tests</td>
+<td>ARIA guidance does not provide interactive behavior</td>
+</tr>
+<tr>
+<td>P0</td>
+<td><a href="https://web.dev/learn/css/">web.dev Learn CSS</a></td>
+<td>Cascade, modern CSS, progressive enhancement</td>
+<td>Test forced colors, reduced motion, and unsupported CSS fallback</td>
+<td>Verify browser targets before depending on newer primitives</td>
+</tr>
+<tr>
+<td>P1</td>
+<td><a href="https://primer.style/">GitHub Primer</a></td>
+<td>Accessible states, density, documented tokens</td>
+<td>Compare data tables, responsive navigation, error/help states</td>
+<td>Do not copy GitHub branding</td>
+</tr>
+<tr>
+<td>P1</td>
+<td><a href="https://www.patternfly.org/">PatternFly</a></td>
+<td>Complex B2B admin workflows</td>
+<td>Cover multi-column CRM records, search, status and overflow handling</td>
+<td>Framework implementation not a runtime dependency</td>
+</tr>
+<tr>
+<td>P1</td>
+<td><a href="https://carbondesignsystem.com/">IBM Carbon</a></td>
+<td>Data-rich UX patterns and hierarchy</td>
+<td>Verify content density, long labels, tables, status without color alone</td>
+<td>Don't transplant proprietary assets</td>
+</tr>
+<tr>
+<td>P1</td>
+<td><a href="https://react-aria.adobe.com/">React Aria</a></td>
+<td>Interaction states and accessibility contracts</td>
+<td>Test keyboard sequences, focus and touch behavior for any optional interactive adapter</td>
+<td>Patterns are guidance; CSS alone cannot implement interactions</td>
+</tr>
+<tr>
+<td>P1</td>
+<td><a href="https://base-ui.com/">Base UI</a></td>
+<td>Unstyled, composable primitive anatomy</td>
+<td>Audit semantic markup and state hooks without adding a mandatory React runtime</td>
+<td>Do not assume framework components are drop-in native HTML</td>
+</tr>
+<tr>
+<td>P1</td>
+<td><a href="https://atlassian.design/">Atlassian Design System</a></td>
+<td>Dense work-management navigation and status</td>
+<td>Check task tables, contextual actions, labels and long-name overflow</td>
+<td>Do not reuse brand assets or proprietary components</td>
+</tr>
+<tr>
+<td>P1</td>
+<td><a href="https://ui.shadcn.com/">shadcn/ui</a></td>
+<td>Copyable component composition and developer ergonomics</td>
+<td>Compare documentation clarity, component examples and style customization</td>
+<td>Borrow ideas, not framework or Tailwind dependencies</td>
+</tr>
+<tr>
+<td>P1</td>
+<td><a href="https://design-system.service.gov.uk/">GOV.UK Design System</a></td>
+<td>Error summaries, labels and validation patterns</td>
+<td>Include real labels and meaningful help/error copy in future interactive examples</td>
+<td>Not a guarantee of full WCAG conformance</td>
+</tr>
+<tr>
+<td>P1</td>
+<td><a href="https://cube.fyi/">CUBE CSS</a></td>
+<td>Composition, utilities, blocks, exceptions</td>
+<td>Prefer scoped low-specificity CSS over application-level override wars</td>
+<td>Pattern inspiration rather than imported code</td>
+</tr>
+<tr>
+<td>P1</td>
+<td><a href="https://utopia.fyi/">Utopia</a></td>
+<td>Fluid type and spacing</td>
+<td>Prefer <code>clamp()</code> and intrinsic sizing where they improve readability</td>
+<td>Verify min/max type sizes for zoom and content</td>
+</tr>
+<tr>
+<td>P2</td>
+<td><a href="https://mobbin.com/">Mobbin</a></td>
+<td>Real product navigation, onboarding and forms</td>
+<td>Benchmark authentic information architecture, not just isolated cards</td>
+<td>Commercial screenshots are references only</td>
+</tr>
+<tr>
+<td>P2</td>
+<td><a href="https://refero.design/">Refero</a></td>
+<td>SaaS dashboard and marketing layout patterns</td>
+<td>Build practical composition samples with independent original copy</td>
+<td>Do not copy screenshots/templates</td>
+</tr>
+<tr>
+<td>P2</td>
+<td><a href="https://www.saasframe.io/">SaaSFrame</a></td>
+<td>B2B SaaS workflows, pages and hierarchy</td>
+<td>Check onboarding, empty states and page-level navigation in the CRM benchmark</td>
+<td>Screenshots and Figma assets are reference material, not source code</td>
+</tr>
+<tr>
+<td>P2</td>
+<td><a href="https://land-book.com/">Landbook</a></td>
+<td>Marketing hierarchy and landing-page structure</td>
+<td>Compare small-screen CTA order, readable typography and pricing clarity</td>
+<td>Create original layouts, text and artwork; do not replicate submissions</td>
+</tr>
+<tr>
+<td>P2</td>
+<td><a href="https://www.lapa.ninja/">Lapa Ninja</a></td>
+<td>Hero and product-marketing sections</td>
+<td>Compare section variety and responsive information hierarchy</td>
+<td>Templates and screenshots need independent usage rights</td>
+</tr>
+<tr>
+<td>P2</td>
+<td><a href="https://refactoringui.com/">Refactoring UI</a></td>
+<td>Visual hierarchy, spacing and typography</td>
+<td>Validate deliberate size and spacing scales instead of arbitrary one-off values</td>
+<td>Paid instructional material is not redistributable</td>
+</tr>
+<tr>
+<td>P2</td>
+<td><a href="https://tympanus.net/codrops/">Codrops</a></td>
+<td>Expressive CSS, typography, subtle motion</td>
+<td>Keep futuristic effects opt-in, accessible and motion-reducible</td>
+<td>Review each demo's license; no direct copying</td>
+</tr>
+<tr>
+<td>P2</td>
+<td><a href="https://tailwindcss.com/plus">Tailwind Plus</a></td>
+<td>Commercial template packaging and support</td>
+<td>Keep MIT CSS fundamentals free; monetize original complete templates</td>
+<td>Commercial examples are <strong>not</strong> MIT source assets</td>
+</tr>
+</tbody>
+</table>
+<h2 id="decision-framework">Decision framework</h2>
+<ul>
+<li><strong>Core first:</strong> native controls, semantic tokens, keyboard focus, responsive layouts and table reflow.</li>
+<li><strong>Optional recipes:</strong> dashboard shell, marketing hero, code documentation, navigation. Import only needed modules.</li>
+<li><strong>Commercial boundary:</strong> Free MIT token/component contract; original full-page themes, design files and templates can be sold separately. Avoid creating a feature paywall around accessibility.</li>
+<li><strong>Do not copy</strong> competitor screenshots, proprietary HTML/CSS, logos, fonts, graphics or exact visual compositions into the repository. A public webpage is not necessarily an open-source asset.</li>
+<li><strong>Not implemented by CSS:</strong> authentication, filtering, CRUD, stored settings, asynchronous loading, real time charts, server actions. Demo content is fictional and static.</li>
+</ul>
+<h2 id="benchmark-applications">Benchmark applications</h2>
+<p>Three intentionally independent, static Syntyr sample interfaces:</p>
+<ol>
+<li><a href="../examples/design-benchmarks/marketing.html">Marketing website</a> — product navigation, hero, feature pricing, CTA and content hierarchy.</li>
+<li><a href="../examples/design-benchmarks/crm.html">CRM dashboard</a> — sidebar navigation, KPIs, captioned data table, GET search form and status text.</li>
+<li><a href="../examples/design-benchmarks/documentation.html">Documentation website</a> — table of contents, inline code, sample command, version caveats and disclosure.</li>
+</ol>
+<p>The application pages use <code>syntyr.core.css</code> and the optional <code>syntyr.recipes.css</code>. Their shared <strong>original</strong> composition stylesheet is <code>examples/design-benchmarks/benchmark.css</code>; no font CDN, icon CDN or runtime JavaScript is required. This benchmark tests three <em>Syntyr adoption scenarios</em>, not a controlled side-by-side comparison against other CSS frameworks. For comparative framework measurements see <code>scripts/perf_framework_fixtures.py</code>.</p>
+<h3 id="reproduce-offline-measurements">Reproduce offline measurements</h3>
+<p>From a checkout with distribution files built:</p>
+<pre tabindex="0"><code class="language-sh">python3 scripts/build.py --check
+python3 scripts/design_reference_audit.py
+python3 scripts/design_reference_audit.py --json
+python3 -m unittest discover -s tests -p test_design_reference_benchmarks.py -v
+</code></pre>
+<p>The audit reports real HTML bytes; local Syntyr stylesheet bytes and gzip bytes; <strong>linked</strong> custom CSS (<code>custom_css_bytes</code> and <code>custom_css_gzip_bytes</code>); <strong>inline</strong> CSS from <code>&lt;style&gt;</code> blocks and <code>style</code> attributes (<code>inline_css_bytes</code> and <code>inline_css_gzip_bytes</code>); combined logical custom CSS totals (<code>custom_css_total_bytes</code> and <code>custom_css_total_gzip_bytes</code>); unique declared <code>--syn-*</code> tokens excluding CSS comments and strings; and script plus recognized inline event-handler JavaScript bytes. Inline CSS gzip compresses all inline CSS fragments joined by one newline in document order, once per page, using deterministic <code>mtime=0</code>. Linked stylesheet gzip bytes remain the sum of each distinct local CSS file compressed separately, with unchanged linked-only fields. Inline CSS bytes are <strong>already part of HTML markup bytes</strong>, so these analytical totals are not additive network-transfer measurements. The metrics do <strong>not</strong> claim real-world LCP, CLS, browser-interaction latency, color contrast, or full WCAG conformance. Playwright and axe can detect some accessibility problems, but cannot certify WCAG conformance; a complete assessment also requires human review of keyboard operation, screen readers, zoom/reflow, forced colors, and other applicable success criteria. Source checkout and published alpha.4 differ.</p>
+<h3 id="follow-up-quality-gates">Follow-up quality gates</h3>
+<ul>
+<li>Compare the three designs at 320, 375, 768, 1280 CSS pixels, 200% zoom, and with long translated strings.</li>
+<li>Test keyboard-only navigation, high contrast / forced colors and reduced-motion preferences in Chromium, Firefox and WebKit.</li>
+<li>Profile with and without warm CSS caches; capture LCP, CLS, INP and visual screenshots before changing the core.</li>
+<li>Track Syntyr-specific CSS overrides over time, minimizing them when reusable primitives can replace them safely.</li>
+</ul>
+        </article>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+<a class="docs-article-toc-link docs-article-toc-2" href="#ranked-reference-matrix">Ranked reference matrix</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#decision-framework">Decision framework</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#benchmark-applications">Benchmark applications</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#reproduce-offline-measurements">Reproduce offline measurements</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#follow-up-quality-gates">Follow-up quality gates</a>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#ranked-reference-matrix">Ranked reference matrix</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#decision-framework">Decision framework</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#benchmark-applications">Benchmark applications</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#reproduce-offline-measurements">Reproduce offline measurements</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#follow-up-quality-gates">Follow-up quality gates</a>
+            </nav>
+          </details>
+        </aside>
+      </div>
+      <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="design-reference-matrix.md">Markdown source</a></nav>
+    </main>
+    <footer class="syn-header"><span class="syn-caption">SYNTYR CSS · MIT CORE · EXPERIMENTAL</span><a href="../index.html">Home</a></footer>
+  </div>
+</body>
+</html>

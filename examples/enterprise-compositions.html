@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Original Syntyr CSS enterprise compositions: resource collection, native record sheet, and illustrative review evidence.">
+  <title>Enterprise compositions — Syntyr CSS</title>
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="../dist/syntyr.recipes.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <main class="syn-shell syn-stack" id="main">
+    <header class="syn-header">
+      <div style="min-width:0; overflow-wrap:anywhere">
+        <p class="syn-eyebrow">Syntyr / Enterprise recipes</p>
+        <h1 class="syn-heading" style="overflow-wrap:anywhere">Resource workspace</h1>
+        <p class="syn-muted">Illustrative records only; a real server owns navigation, state, permissions and persistence.</p>
+      </div>
+      <a class="syn-button syn-button--outline" href="../docs/recipes.html">Recipe guide</a>
+    </header>
+
+    <section class="syn-panel" id="records" aria-labelledby="records-title">
+      <div class="syn-app-card-header">
+        <div>
+          <h2 id="records-title">Assets and reviews</h2>
+          <p class="syn-muted">The current view must reflect the server-rendered query state.</p>
+        </div>
+        <nav class="syn-view-switcher" aria-label="Record views">
+          <a class="syn-view-link" href="?view=table#records" aria-current="page">Table</a>
+          <a class="syn-view-link" href="?view=cards#records">Cards</a>
+        </nav>
+      </div>
+      <div class="syn-table-wrap" role="region" aria-label="Illustrative asset records" tabindex="0">
+        <table class="syn-table">
+          <caption>Illustrative resource collection — not live data</caption>
+          <thead><tr><th scope="col">Asset</th><th scope="col">Review status</th><th scope="col">Owner</th><th scope="col">Inspect</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Site 102</th><td><span class="syn-status syn-status--success">Verified</span></td><td>Field team</td><td><button type="button" class="syn-button syn-button--small" popovertarget="record-preview">Open details</button></td></tr>
+            <tr><th scope="row">Site 214</th><td><span class="syn-status syn-status--warning">Needs review</span></td><td>Review team</td><td><a href="#evidence">View evidence</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="syn-caption">Without an application or server, the query links demonstrate URL navigation only; they do not alter the illustrative table. <a href="#evidence">Jump to evidence cards</a>.</p>
+    </section>
+
+    <section id="evidence" aria-labelledby="evidence-title">
+      <h2 class="syn-section-heading" id="evidence-title">Evidence review cards</h2>
+      <div class="syn-evidence-grid">
+        <figure class="syn-evidence-card">
+          <div class="syn-evidence-media syn-evidence-media--placeholder" role="img" aria-label="Illustrative placeholder for a field inspection photo">Illustrative preview — no photo loaded</div>
+          <figcaption class="syn-evidence-body">
+            <strong>Site 102 — installation</strong>
+            <span class="syn-status syn-status--success">Verified</span>
+            <dl class="syn-evidence-meta">
+              <div><dt>Recorded</dt><dd><time datetime="2026-11-12">12 Nov 2026</time></dd></div>
+              <div><dt>Source</dt><dd>Example inspection</dd></div>
+              <div><dt>Reviewer</dt><dd>Field team</dd></div>
+            </dl>
+            <div class="syn-evidence-actions"><a href="#records">Back to records</a></div>
+          </figcaption>
+        </figure>
+        <figure class="syn-evidence-card">
+          <div class="syn-evidence-media syn-evidence-media--placeholder" role="img" aria-label="Illustrative placeholder for an asset condition photo">Illustrative preview — no photo loaded</div>
+          <figcaption class="syn-evidence-body">
+            <strong>Site 214 — condition</strong>
+            <span class="syn-status syn-status--warning">Needs review</span>
+            <dl class="syn-evidence-meta">
+              <div><dt>Recorded</dt><dd><time datetime="2026-11-13">13 Nov 2026</time></dd></div>
+              <div><dt>Source</dt><dd>Example field report</dd></div>
+              <div><dt>Reviewer</dt><dd>Unassigned</dd></div>
+            </dl>
+            <div class="syn-evidence-actions"><a href="#records">Back to records</a></div>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+    <footer class="syn-caption">The CSS does not verify images, validate metadata, or change workflow states.</footer>
+  </main>
+
+  <aside id="record-preview" class="syn-sheet" popover="auto" role="dialog" aria-labelledby="record-preview-title" aria-describedby="record-preview-desc">
+    <header class="syn-sheet-header">
+      <div>
+        <p class="syn-eyebrow">Record preview</p>
+        <h2 id="record-preview-title">Site 102</h2>
+        <p id="record-preview-desc" class="syn-muted">Illustrative details, not an editable form.</p>
+      </div>
+      <button type="button" class="syn-button syn-button--ghost" popovertarget="record-preview" popovertargetaction="hide">Close</button>
+    </header>
+    <section class="syn-sheet-body" tabindex="0" aria-labelledby="record-detail-heading">
+      <h3 id="record-detail-heading">Inspection metadata</h3>
+      <dl class="syn-record-fields">
+        <div><dt>Status</dt><dd>Verified</dd></div>
+        <div><dt>Recorded</dt><dd><time datetime="2026-11-12">12 Nov 2026</time></dd></div>
+        <div><dt>Type</dt><dd>Static asset</dd></div>
+      </dl>
+      <p>This native popover is non-modal. For blocking edits use a native modal <code>&lt;dialog&gt;</code> opened through a supported browser command or application code.</p>
+    </section>
+    <footer class="syn-sheet-footer">
+      <a href="#records">Return to collection</a>
+      <button type="button" class="syn-button syn-button--outline" popovertarget="record-preview" popovertargetaction="hide">Done</button>
+    </footer>
+  </aside>
+</body>
+</html>

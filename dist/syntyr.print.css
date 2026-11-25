@@ -25,7 +25,7 @@
     .syn-root { background: #fff; color: #111; }
     .syn-root :is(.syn-app-shell, .syn-layout) { display: block; }
     .syn-root :is(.syn-app-rail, .syn-app-nav, .syn-pagination, .syn-print-hide) { display: none; }
-    .syn-root :is(.syn-table-wrap, .syn-terminal-body) { overflow: visible; }
+    .syn-root :is(.syn-table-wrap, .syn-terminal-body) { overflow: visible; max-block-size: none; }
     .syn-root :is(.syn-grid-effect, .syn-horizon, .syn-atmosphere, .syn-glow, .syn-site-hero, .syn-stage, .syn-panel) {
       background-image: none; box-shadow: none;
     }

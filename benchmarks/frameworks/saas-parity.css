@@ -1,0 +1,76 @@
+/* Development-only SaaS benchmark normalization, identical for all frameworks.
+   This makes visual comparisons more controlled, but measures no native/theme
+   superiority. Do not ship this stylesheet with Syntyr. */
+[data-bench-app], [data-bench-app] * { box-sizing:border-box; }
+body[data-bench-app] {
+  margin:0;min-height:100vh; background:#f8fafc;color:#162235;
+  font:16px/1.5 system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
+}
+[data-bench-app] [data-bench-role="shell"] {
+  width:min(1120px,calc(100% - 32px)); margin-inline:auto; padding-block:28px;padding-inline:0;
+}
+[data-bench-app] [data-bench-role="header"] {
+  display:flex; align-items:center; justify-content:space-between;flex-wrap:wrap;
+  gap:16px; margin:0 0 28px; padding:12px 0; min-width:0;
+}
+[data-bench-app] h1 {font-size:30px;font-weight:700;line-height:1.2;letter-spacing:-.02em;margin:4px 0;}
+[data-bench-app] h2 {font-size:20px;font-weight:650;line-height:1.25;margin:0 0 16px;}
+[data-bench-app] p {margin:0;}
+[data-bench-app] nav {display:flex; gap:16px;}
+[data-bench-app] a {color:#3449a3;text-decoration:underline;text-underline-offset:2px;}
+[data-bench-app] [data-bench-role="metrics"] {
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin:0 0 28px;
+}
+[data-bench-app] [data-bench-role="metric-card"] {
+  display:block;min-width:0;min-height:110px;background:#fff;border:1px solid #dbe3ed;
+  border-radius:12px;padding:20px;box-shadow:0 1px 3px #1622350d;
+}
+[data-bench-app] [data-bench-role="metric-card"]>p:first-child {font-size:14px;color:#526277;}
+[data-bench-app] [data-bench-role="metric-value"] {
+  font-size:30px;font-weight:700;line-height:1.2;margin-top:10px;color:#162235;
+}
+[data-bench-app] [data-bench-role="search-section"],
+[data-bench-app] [data-bench-role="campaigns"] {margin-block:24px;}
+[data-bench-app] [data-bench-role="search"] {
+  display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin:0;
+}
+[data-bench-app] [data-bench-role="search"] label {font-weight:600;font-size:14px;}
+[data-bench-app] [data-bench-role="search"] input {
+  appearance:none;font:inherit;min-width:0;width:min(100%,260px);height:44px;
+  background:white;color:#162235;border:1px solid #98a7ba;border-radius:8px;padding:8px 12px;
+}
+[data-bench-app] [data-bench-role="search"] button {
+  appearance:none;cursor:pointer;font:inherit;font-weight:600;height:44px;
+  background:#374bb3;color:white;border:1px solid #374bb3;border-radius:8px;padding:8px 20px;
+}
+[data-bench-app] [data-bench-role="count"] {font-size:14px;color:#526277;margin-top:12px;}
+[data-bench-app] [data-bench-role="table"] {
+  display:block;max-width:100%;overflow-x:auto;overscroll-behavior-inline:contain;
+  background:white;border:1px solid #dbe3ed;border-radius:12px;
+}
+[data-bench-app] [data-bench-role="table"] table {
+  width:100%;min-width:630px;border-collapse:collapse;text-align:left;
+  background:white;color:#162235;font-size:14px;margin:0;
+}
+[data-bench-app] [data-bench-role="table"] caption {
+  padding:12px 16px;text-align:left;font-weight:600;background:#f1f5fa;color:#162235;
+}
+[data-bench-app] [data-bench-role="table"] th,
+[data-bench-app] [data-bench-role="table"] td {
+  font-size:14px;font-weight:400;line-height:1.5;white-space:nowrap;
+  text-align:left;padding:12px 16px;border:0;border-bottom:1px solid #e3e8ef;
+}
+[data-bench-app] [data-bench-role="table"] thead th {font-weight:600;color:#526277;}
+[data-bench-app] [data-bench-role="status"] {
+  display:inline-block;border-radius:100px;background:#e4f6ed;color:#176d46;
+  font-size:12px;line-height:1.5;padding:4px 8px;
+}
+[data-bench-app] [data-bench-role="empty"] {padding:32px 16px;background:white;border-radius:12px;}
+[data-bench-app] :focus-visible {outline:3px solid #2057c7;outline-offset:3px;}
+@media(max-width:760px) {
+  [data-bench-app] [data-bench-role="metrics"] {grid-template-columns:repeat(2,minmax(0,1fr));}
+}
+@media(max-width:480px) {
+  [data-bench-app] [data-bench-role="metrics"] {grid-template-columns:minmax(0,1fr);}
+  [data-bench-app] [data-bench-role="header"] {align-items:start;}
+}

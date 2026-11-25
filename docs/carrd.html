@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Carrd HTML and CSS embed customization: Use Syntyr for a self-contained pricing panel, product comparison or call-to-action section on a Carrd landing…">
+  <meta name="syntyr-source-sha256" content="375a949ab7fe6522ec3d169c83cec087aecc59cef89733ff262a7fbda90a03b5">
+  <meta name="theme-color" content="#f5f7fb">
+  <title>Syntyr for Carrd | Custom CSS &amp; HTML Embeds</title>
+  <link rel="canonical" href="https://syntyr-css.pages.dev/docs/carrd">
+  <meta property="og:image" content="https://syntyr-css.pages.dev/assets/og-syntyr.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="alternate" type="text/markdown" href="carrd.md" title="Markdown source">
+  <link rel="icon" href="../assets/syntyr-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="docs.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <a class="syn-button docs-skip" href="#doc-main">Skip to guide</a>
+  <div class="syn-shell">
+    <header class="syn-header docs-header">
+      <a class="syn-logo" href="../index.html">SYNTYR / CSS</a>
+      <nav class="syn-nav" aria-label="Documentation navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav>
+      <details class="site-mobile-menu"><summary>Menu</summary><nav aria-label="Mobile navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav></details>
+    </header>
+    <main id="doc-main" class="docs-article-page">
+      <nav class="syn-breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="reference.html">Documentation</a></li><li aria-current="page">Syntyr for Carrd: custom CSS for one-page sites</li></ol></nav>
+      <header class="docs-article-heading">
+        <p class="syn-eyebrow">SYNTYR / DOCUMENTATION</p>
+        <p class="syn-muted">Current source documentation may describe unreleased alpha.5 features. <a href="distribution.html">Check released version compatibility.</a></p>
+        <p class="syn-caption">Prefer a machine-readable version? <a href="carrd.md">Markdown source</a> · <a href="../llms.txt">LLM index</a></p>
+      </header>
+      <div class="docs-article-layout">
+        <article class="docs-prose" aria-label="Syntyr for Carrd: custom CSS for one-page sites">
+<h1 id="syntyr-for-carrd-custom-css-for-one-page-sites">Syntyr for Carrd: custom CSS for one-page sites</h1>
+<p><strong>Carrd HTML and CSS embed customization:</strong> Use Syntyr for a self-contained pricing panel, product comparison or call-to-action section on a Carrd landing page. This approach makes sense when Carrd's native text, container and button elements are insufficient and you want the same styled component across multiple sites.</p>
+<h2 id="why-use-syntyr-on-carrd">Why use Syntyr on Carrd?</h2>
+<p>Carrd is built for compact landing pages. A CSS-only Syntyr component can add a consistent visual system to a small custom region without adding a large JavaScript widget. You can copy the same HTML and token overrides between a Carrd page and an ordinary static website. That preserves developer control over complex little sections while leaving the editor's existing native elements alone.</p>
+<h2 id="how-to-install-syntyr-in-carrd">How to install Syntyr in Carrd</h2>
+<ol>
+<li>Check whether your Carrd subscription supports <strong>Embed</strong> elements and custom HTML. The free plan should not be assumed to support these features.</li>
+<li>Host the alpha.5 candidate <code>syntyr.embed.css</code> on an HTTPS origin you control. In an allowed custom-code Embed positioned in the document <strong>Head</strong>, load that asset:</li>
+</ol>
+<pre tabindex="0"><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://YOUR-ASSET-HOST.example/syntyr.embed.css&quot;&gt;
+</code></pre>
+<ol start="3">
+<li>Add an inline, <strong>visible Embed</strong> element where your custom feature should appear. Use normal HTML instead of trying to apply Syntyr classes to Carrd's generated native element markup:</li>
+</ol>
+<pre tabindex="0"><code class="language-html">&lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;carrd-pricing&quot;&gt;
+  &lt;div class=&quot;syn-panel&quot;&gt;
+    &lt;h2 id=&quot;carrd-pricing&quot; class=&quot;syn-heading&quot;&gt;Simple pricing&lt;/h2&gt;
+    &lt;p class=&quot;syn-muted&quot;&gt;A clear product offer on a Carrd page.&lt;/p&gt;
+    &lt;a href=&quot;#contact&quot; class=&quot;syn-button syn-button--primary&quot;&gt;Get in touch&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+</code></pre>
+<ol start="4">
+<li>Publish the site, verify the embedded markup really renders inline, and check the component's width on a narrow mobile device.</li>
+</ol>
+<h2 id="limitations-and-carrd-specific-considerations">Limitations and Carrd-specific considerations</h2>
+<p>Not every Carrd subscription exposes custom HTML or advanced attributes. The Head Embed is intended for non-visible resource code, whereas your section must live in a <strong>visible inline embed</strong>. Syntyr does not turn a Carrd site into a CMS or ecommerce checkout. It is not intended to restyle all of Carrd's built-in elements, and a template update could change their generated class names.</p>
+<p><strong>Carrd reference:</strong> <a href="https://carrd.co/">Carrd's website builder and plan details</a>.</p>
+<h2 id="verify-the-result-before-publishing">Verify the result before publishing</h2>
+<p>Check the public, published URL rather than relying only on an editor preview. Confirm that the Syntyr stylesheet returns HTTP 200 with a CSS content type, that a button inside <code>.syn-root</code> has the desired theme, and that unrelated host navigation, product cards and forms remain unchanged. Test keyboard focus, accessible names, narrow screens around 320px, reduced motion and the platform's own responsive layouts. If an iframe is involved, test its height, keyboard navigation, sandbox attributes and HTTPS/CSP restrictions.</p>
+<p><strong>Release compatibility:</strong> The immutable <strong>alpha.4</strong> stylesheet <code>syntyr.core.css</code> is published. The <strong>alpha.5</strong> <code>syntyr.embed.css</code> bundle is a candidate build designed for existing themes; it is not part of the alpha.4 release. Build the candidate from the source repository and self-host a version-pinned copy for testing. Never load both bundles together, and verify theme-specific overrides before production rollout. Syntyr is a stylesheet, not an official integration or plug-in from the site platform.</p>
+<p>Explore the <a href="site-builders.html">platform integration overview</a>, <a href="distribution.html">Syntyr distribution and release guide</a>, or <a href="../examples/platform-embed.html">live host-theme example</a>.</p>
+        </article>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+<a class="docs-article-toc-link docs-article-toc-2" href="#why-use-syntyr-on-carrd">Why use Syntyr on Carrd?</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#how-to-install-syntyr-in-carrd">How to install Syntyr in Carrd</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#limitations-and-carrd-specific-considerations">Limitations and Carrd-specific considerations</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#verify-the-result-before-publishing">Verify the result before publishing</a>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#why-use-syntyr-on-carrd">Why use Syntyr on Carrd?</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#how-to-install-syntyr-in-carrd">How to install Syntyr in Carrd</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#limitations-and-carrd-specific-considerations">Limitations and Carrd-specific considerations</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#verify-the-result-before-publishing">Verify the result before publishing</a>
+            </nav>
+          </details>
+        </aside>
+      </div>
+      <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="carrd.md">Markdown source</a></nav>
+    </main>
+    <footer class="syn-header"><span class="syn-caption">SYNTYR CSS · MIT CORE · EXPERIMENTAL</span><a href="../index.html">Home</a></footer>
+  </div>
+</body>
+</html>

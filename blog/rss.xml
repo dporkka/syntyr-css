@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Syntyr CSS Blog</title>
+    <link>https://syntyr-css.pages.dev/blog/</link>
+    <description>Engineering notes on native HTML, CSS-first interfaces, accessibility, and reusable UI blocks.</description>
+    <language>en</language>
+    <lastBuildDate>Mon, 16 Nov 2026 12:00:00 GMT</lastBuildDate>
+    <item><title>CSS-first vs. JavaScript-first design systems: choosing the right foundation</title><link>https://syntyr-css.pages.dev/blog/css-first-design-systems</link><guid isPermaLink="true">https://syntyr-css.pages.dev/blog/css-first-design-systems</guid><pubDate>Mon, 16 Nov 2026 12:00:00 GMT</pubDate><description>Compare CSS-first and JavaScript-first design systems, including rendering, accessibility, portability, and long-term maintenance tradeoffs.</description></item>
+    <item><title>Accessible interfaces start with native HTML, not ARIA patches</title><link>https://syntyr-css.pages.dev/blog/accessible-native-html</link><guid isPermaLink="true">https://syntyr-css.pages.dev/blog/accessible-native-html</guid><pubDate>Mon, 16 Nov 2026 12:00:00 GMT</pubDate><description>Learn how native HTML and Syntyr CSS support accessible forms, navigation, disclosures, focus states, and progressive enhancement.</description></item>
+    <item><title>Build a SaaS landing page with reusable Syntyr UI blocks</title><link>https://syntyr-css.pages.dev/blog/landing-page-ui-blocks</link><guid isPermaLink="true">https://syntyr-css.pages.dev/blog/landing-page-ui-blocks</guid><pubDate>Mon, 16 Nov 2026 12:00:00 GMT</pubDate><description>A practical walkthrough for composing semantic SaaS landing pages from Syntyr's reusable HTML and CSS UI blocks.</description></item>
+  </channel>
+</rss>

@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Accessible, CSS-only email signup, inbox, composer, verification and notification-preference components in Syntyr.">
+  <title>Syntyr — email interface components</title>
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="../dist/syntyr.email.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <main class="syn-shell" id="main">
+    <header class="syn-header">
+      <a class="syn-logo" href="../index.html">SYNTYR / EMAIL</a>
+      <a href="../docs/email-components.html">Implementation guide</a>
+    </header>
+    <h1>Email interfaces</h1>
+    <p class="syn-muted">Static, accessible presentation patterns. Requires an application backend for delivery, subscriptions, mailbox data and persistent preferences. None of these forms send or save anything in this demo.</p>
+
+    <section class="syn-panel syn-stack" aria-labelledby="newsletter-heading">
+      <h2 id="newsletter-heading">Newsletter signup</h2>
+      <p>Use native email validation and record explicit subscription consent server-side.</p>
+      <form class="syn-email-signup" method="post" action="#">
+        <div class="syn-field">
+          <label class="syn-label" for="newsletter-email">Email address</label>
+          <input class="syn-input" id="newsletter-email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com" required aria-describedby="newsletter-help">
+          <small class="syn-help" id="newsletter-help">Only subscribe users who have given consent.</small>
+        </div>
+        <button class="syn-button syn-button--primary" type="submit" disabled>Subscribe (demo)</button>
+      </form>
+    </section>
+
+    <section class="syn-email-workspace syn-stack" aria-labelledby="mailbox-heading">
+      <h2 id="mailbox-heading">Inbox and message detail</h2>
+      <div class="syn-email-layout">
+        <section class="syn-email-sidebar" aria-labelledby="inbox-heading">
+          <h3 id="inbox-heading" class="syn-section-heading">Inbox</h3>
+          <nav aria-label="Messages">
+            <ol class="syn-email-inbox">
+              <li class="syn-email-item" data-syn-unread="true">
+                <a href="#selected-message" aria-current="location" aria-label="Unread: Avery Chen, Your weekly digest">
+                  <span class="syn-email-meta"><strong>Avery Chen</strong><time class="syn-email-time" datetime="2026-11-16T09:30:00">Nov 16</time></span>
+                  <span class="syn-email-subject">Your weekly digest</span>
+                  <span class="syn-email-preview">Updates from the team this week.</span>
+                </a>
+              </li>
+              <li class="syn-email-item">
+                <a href="#message-preview" aria-label="Read: Jordan Lee, Welcome aboard">
+                  <span class="syn-email-meta"><strong>Jordan Lee</strong><time class="syn-email-time" datetime="2026-11-15T15:00:00">Nov 15</time></span>
+                  <span class="syn-email-subject">Welcome aboard</span>
+                  <span class="syn-email-preview">Here's how to get started.</span>
+                </a>
+              </li>
+            </ol>
+          </nav>
+        </section>
+        <article class="syn-email-message syn-email-main" id="selected-message" aria-labelledby="message-subject">
+          <header class="syn-email-message-header">
+            <div>
+              <h3 id="message-subject" class="syn-section-heading">Your weekly digest</h3>
+              <p class="syn-muted">From Avery Chen &lt;avery@example.com&gt; to you@example.com</p>
+            </div>
+            <time class="syn-email-time" datetime="2026-11-16T09:30:00">Nov 16, 9:30 AM</time>
+          </header>
+          <div class="syn-email-body">
+            <p>Hello,</p>
+            <p>Your workspace report is ready. This example renders plain text as HTML escaped by the host application; never inject untrusted email HTML directly.</p>
+            <p>— The team</p>
+          </div>
+          <p class="syn-caption">Unread and selected styles are driven by application-rendered attributes, not CSS-managed mailbox state.</p>
+        </article>
+      </div>
+      <p id="message-preview" class="syn-caption">The second inbox row is a static illustration; no message loading or navigation is implemented.</p>
+    </section>
+
+    <section class="syn-panel syn-stack" aria-labelledby="compose-heading">
+      <h2 id="compose-heading">Compose a message</h2>
+      <form class="syn-email-compose" method="post" action="#" enctype="multipart/form-data">
+        <div class="syn-field">
+          <label class="syn-label" for="compose-to">To</label>
+          <input class="syn-input" id="compose-to" name="to" type="email" autocomplete="off" placeholder="recipient@example.com" required>
+        </div>
+        <div>
+          <p class="syn-caption">Example recipients (display only)</p>
+          <ul class="syn-email-recipient-list" aria-label="Suggested recipients">
+            <li class="syn-chip">avery@example.com</li>
+            <li class="syn-chip">jordan@example.com</li>
+          </ul>
+        </div>
+        <div class="syn-field">
+          <label class="syn-label" for="compose-subject">Subject</label>
+          <input class="syn-input" id="compose-subject" name="subject" type="text" maxlength="200" required>
+        </div>
+        <div class="syn-field">
+          <label class="syn-label" for="compose-body">Message</label>
+          <textarea class="syn-textarea" id="compose-body" name="body" rows="6" required></textarea>
+        </div>
+        <div class="syn-field">
+          <label class="syn-label" for="compose-attachments">Attachments</label>
+          <input class="syn-input" id="compose-attachments" name="attachments" type="file" multiple aria-describedby="attachments-help">
+          <small class="syn-help" id="attachments-help">The server must enforce attachment size, type and malware checks.</small>
+        </div>
+        <button class="syn-button syn-button--primary" type="submit" disabled>Send message (demo)</button>
+      </form>
+    </section>
+
+    <section class="syn-panel syn-stack" aria-labelledby="preferences-heading">
+      <h2 id="preferences-heading">Email preferences</h2>
+      <form class="syn-email-preferences" method="post" action="#">
+        <fieldset class="syn-fieldset">
+          <legend>Subscription topics</legend>
+          <label class="syn-check"><input class="syn-input" type="checkbox" name="topics" value="product" checked>Product updates</label>
+          <label class="syn-check"><input class="syn-input" type="checkbox" name="topics" value="digest">Weekly digest</label>
+          <label class="syn-check"><input class="syn-input" type="checkbox" name="topics" value="security" checked>Security notices</label>
+        </fieldset>
+        <p class="syn-help">Always offer a working unsubscribe pathway for marketing emails. Store consent, changes and suppression preferences on the server.</p>
+        <button class="syn-button" type="submit" disabled>Save preferences (demo)</button>
+      </form>
+    </section>
+
+    <section class="syn-panel syn-stack" aria-labelledby="verification-heading">
+      <h2 id="verification-heading">One-time email verification</h2>
+      <form class="syn-form" method="post" action="#">
+        <div class="syn-field">
+          <label class="syn-label" for="verification-code">Six-digit code</label>
+          <input class="syn-input syn-email-code" type="text" id="verification-code" name="code" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required aria-describedby="code-help">
+          <p class="syn-help" id="code-help">Paste the code from your email. Verification, retry limits and expiration must be enforced by the server.</p>
+        </div>
+        <button class="syn-button" type="submit" disabled>Verify (demo)</button>
+      </form>
+    </section>
+  </main>
+</body>
+</html>

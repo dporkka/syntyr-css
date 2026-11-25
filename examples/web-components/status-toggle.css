@@ -1,0 +1,34 @@
+:host {
+  display: block;
+  color: var(--syn-text, CanvasText);
+  font-family: var(--syn-font-ui, system-ui);
+}
+[part="panel"] {
+  min-width: 0;
+  padding: var(--syn-panel-padding, clamp(1rem, 2.8vw, 1.75rem));
+  background: var(--syn-surface, Canvas);
+  border: 1px solid var(--syn-border-default, CanvasText);
+  border-radius: var(--syn-panel-radius, 0);
+}
+[part="title"] { margin: 0 0 .75rem; font-size: 1.125rem; }
+[part="status"] { margin: 0 0 1rem; }
+[part="toggle"] {
+  min-height: 2.75rem;
+  padding: .5rem 1rem;
+  border: 1px solid var(--syn-border-default, CanvasText);
+  border-radius: var(--syn-radius, .25rem);
+  background: var(--syn-accent, ButtonFace);
+  color: var(--syn-on-accent, ButtonText);
+  font: inherit;
+  cursor: pointer;
+}
+[part="toggle"]:disabled { cursor: not-allowed; opacity: .7; }
+[part="toggle"]:focus-visible {
+  outline: 2px solid var(--syn-focus-ring, currentColor);
+  outline-offset: 3px;
+}
+@media (forced-colors: active) {
+  [part="panel"] { border-color: CanvasText; }
+  [part="toggle"] { background: ButtonFace; color: ButtonText; border-color: ButtonText; }
+  [part="toggle"]:disabled { opacity: 1; color: GrayText; }
+}

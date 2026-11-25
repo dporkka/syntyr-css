@@ -60,6 +60,38 @@ class AgentDocsTests(unittest.TestCase):
                      "docs/api-stability.md", "docs/ai-quickstart.md"):
             self.assertIn(name, published)
 
+    def test_agent_block_index_matches_public_block_manifest(self):
+        manifest = json.loads((ROOT / "blocks/manifest.json").read_text())
+        blocks = manifest["blocks"]
+        index = (ROOT / "llms.txt").read_text(encoding="utf-8")
+        guide = next(line for line in index.splitlines()
+                     if "docs/blocks-guide.md" in line)
+        self.assertIn(f"{len(blocks)} copy-owned blocks", guide)
+        self.assertIn("SaaS", guide)
+        self.assertIn("business", guide.lower())
+        self.assertIn("scrollable", guide.lower())
+
+    def test_v1_contract_proposal_is_discoverable_and_not_misrepresented_as_stable(self):
+        index = (ROOT / "llms.txt").read_text(encoding="utf-8")
+        entry = next(line for line in index.splitlines() if "docs/api-stability.md" in line)
+        self.assertIn("proposed minimum v1 contract", entry.lower())
+        self.assertIn("not yet approved", entry.lower())
+
+    def test_release_freeze_guide_is_public_and_agent_discoverable(self):
+        from scripts.build_cloudflare_site import source_files
+        from urllib.parse import urlsplit
+        published = source_files()
+        procedure = "docs/release-freeze.md"
+        self.assertIn(procedure, published)
+        self.assertIn("docs/release-freeze.html", published)
+        self.assertIn("docs/cloudflare-hosting.md", published)
+        index = (ROOT / "llms.txt").read_text(encoding="utf-8")
+        self.assertIn("https://syntyr-css.pages.dev/docs/release-freeze.md", index)
+        self.assertIn("exact-commit", index)
+        for name in ("docs/cloudflare-hosting.md", "llms.txt"):
+            self.assertIn("release-freeze.md", published[name].decode("utf-8"))
+        self.assertIn("approval", published[procedure].decode("utf-8").lower())
+
     def test_pinned_quickstart_classes_exist_in_alpha4_release(self):
         import re
         example = (ROOT / "docs/ai-quickstart.md").read_text()

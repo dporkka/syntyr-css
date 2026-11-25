@@ -20,6 +20,8 @@ class ReleaseFreezeTests(unittest.TestCase):
             (self.root / name).mkdir()
         shutil.copyfile(ROOT / "scripts/freeze_site_release.py",
                         self.root / "scripts/freeze_site_release.py")
+        shutil.copyfile(ROOT / "scripts/release_approval.py",
+                        self.root / "scripts/release_approval.py")
         (self.root / "scripts/build.py").write_text(
             "from pathlib import Path\n"
             "def distributions():\n"
@@ -39,6 +41,25 @@ class ReleaseFreezeTests(unittest.TestCase):
             "syntyr.core.css": hashlib.sha256(b"immutable-old").hexdigest()
         }}
         self.manifest_path.write_text(json.dumps(self.original_manifest) + "\n")
+        subprocess.run(["git", "init", "-q"], cwd=self.root, check=True)
+        subprocess.run(["git", "add", "."], cwd=self.root, check=True)
+        subprocess.run(["git", "-c", "user.name=Test", "-c",
+                        "user.email=test@example.invalid", "commit", "-q", "-m", "fixture"],
+                       cwd=self.root, check=True)
+        commit = subprocess.check_output(["git", "rev-parse", "HEAD"],
+                                         cwd=self.root, text=True).strip()
+        (self.root / "release").mkdir()
+        from scripts.release_approval import REQUIRED_CHECKS
+        approval = {
+            "version": "0.3.0-alpha.5",
+            "commit": commit,
+            "checks": {
+                name: {"status": "pass", "reviewer": "Synthetic fixture",
+                       "evidence": f"synthetic-test:{name}"}
+                for name in REQUIRED_CHECKS
+            },
+        }
+        (self.root / "release/release-approval.json").write_text(json.dumps(approval))
 
     def run_freeze(self, *args):
         return subprocess.run(
@@ -90,6 +111,77 @@ class ReleaseFreezeTests(unittest.TestCase):
                              hashlib.sha256((release / name).read_bytes()).hexdigest())
         second = self.run_freeze("--apply")
         self.assertNotEqual(second.returncode, 0, second.stdout)
+
+    def test_apply_requires_a_separate_approval_record(self):
+        (self.root / "release/release-approval.json").unlink()
+        result = self.run_freeze("--apply")
+        self.assertNotEqual(result.returncode, 0, result.stdout)
+        self.assertIn("cannot read approval", result.stderr)
+        self.assertFalse((self.root / "site-releases/0.3.0-alpha.5").exists())
+
+    def test_apply_rejects_approval_for_another_commit(self):
+        path = self.root / "release/release-approval.json"
+        evidence = json.loads(path.read_text())
+        evidence["commit"] = "0" * 40
+        path.write_text(json.dumps(evidence))
+        result = self.run_freeze("--apply")
+        self.assertNotEqual(result.returncode, 0, result.stdout)
+        self.assertIn("commit does not match", result.stderr)
+        self.assertFalse((self.root / "site-releases/0.3.0-alpha.5").exists())
+
+    def test_apply_rejects_dirty_tracked_source(self):
+        (self.root / "VERSION").write_text("0.3.0-alpha.5\n\n")
+        result = self.run_freeze("--apply")
+        self.assertNotEqual(result.returncode, 0, result.stdout)
+        self.assertIn("Tracked source differs", result.stderr)
+        self.assertFalse((self.root / "site-releases/0.3.0-alpha.5").exists())
+
+    def run_direct(self, python_code):
+        return subprocess.run([sys.executable, "-c", python_code],
+                              cwd=self.root, capture_output=True, text=True)
+
+    def test_direct_api_rejects_commit_that_is_not_head(self):
+        path = self.root / "release/release-approval.json"
+        evidence = json.loads(path.read_text())
+        evidence["commit"] = "f" * 40
+        path.write_text(json.dumps(evidence))
+        code = """
+from pathlib import Path
+import sys
+sys.path.insert(0, str(Path.cwd() / "scripts"))
+from freeze_site_release import freeze
+freeze(Path.cwd(), apply=True, commit="f" * 40)
+"""
+        result = self.run_direct(code)
+        self.assertNotEqual(result.returncode, 0, result.stdout)
+        self.assertFalse((self.root / "site-releases/0.3.0-alpha.5").exists())
+
+    def test_checkout_change_during_preflight_blocks_snapshot(self):
+        code = """
+from pathlib import Path
+import json
+import subprocess
+import sys
+sys.path.insert(0, str(Path.cwd() / "scripts"))
+import freeze_site_release as f
+original = f.preflight
+def switch_head(root):
+    result = original(root)
+    subprocess.run(["git", "-c", "user.name=Test", "-c",
+        "user.email=test@example.invalid", "commit", "-q", "--allow-empty",
+        "-m", "mid-flight checkout"], cwd=root, check=True)
+    approved = root / "release/release-approval.json"
+    record = json.loads(approved.read_text())
+    record["commit"] = subprocess.check_output(
+        ["git", "rev-parse", "HEAD"], cwd=root, text=True).strip()
+    approved.write_text(json.dumps(record))
+    return result
+f.preflight = switch_head
+f.freeze(Path.cwd(), apply=True)
+"""
+        result = self.run_direct(code)
+        self.assertNotEqual(result.returncode, 0, result.stdout)
+        self.assertFalse((self.root / "site-releases/0.3.0-alpha.5").exists())
 
 
 if __name__ == "__main__":

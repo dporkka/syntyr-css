@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Syntyr CSS vs plain CSS: decide when a reusable design system pays off versus native browser CSS, custom properties and a smaller dependency surface.">
+  <meta name="syntyr-source-sha256" content="cafce501a932ab05ffc89d05da0e8c222205196434e11c154fab26caa97dccbe">
+  <meta name="theme-color" content="#f5f7fb">
+  <title>Syntyr vs Plain CSS | When to Use a Design System</title>
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Syntyr vs Plain CSS | When to Use a Design System">
+  <meta property="og:description" content="Syntyr CSS vs plain CSS: decide when a reusable design system pays off versus native browser CSS, custom properties and a smaller dependency surface.">
+  <meta property="og:url" content="https://syntyr-css.pages.dev/docs/compare-native-css">
+  <meta property="og:image" content="https://syntyr-css.pages.dev/assets/og-syntyr.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://syntyr-css.pages.dev/docs/compare-native-css">
+  <link rel="alternate" type="text/markdown" href="compare-native-css.md" title="Markdown source">
+  <link rel="icon" href="../assets/syntyr-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="docs.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <a class="syn-button docs-skip" href="#doc-main">Skip to guide</a>
+  <div class="syn-shell">
+    <header class="syn-header docs-header">
+      <a class="syn-logo" href="../index.html">SYNTYR / CSS</a>
+      <nav class="syn-nav" aria-label="Documentation navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav>
+      <details class="site-mobile-menu"><summary>Menu</summary><nav aria-label="Mobile navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav></details>
+    </header>
+    <main id="doc-main" class="docs-article-page">
+      <nav class="syn-breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="reference.html">Documentation</a></li><li aria-current="page">Syntyr CSS vs plain CSS: when is a design system worth it?</li></ol></nav>
+      <header class="docs-article-heading">
+        <p class="syn-eyebrow">SYNTYR / DOCUMENTATION</p>
+        <p class="syn-muted">Current source documentation may describe unreleased alpha.5 features. <a href="distribution.html">Check released version compatibility.</a></p>
+        <p class="syn-caption">Prefer a machine-readable version? <a href="compare-native-css.md">Markdown source</a> · <a href="../llms.txt">LLM index</a></p>
+      </header>
+      <div class="docs-article-layout">
+        <article class="docs-prose" aria-label="Syntyr CSS vs plain CSS: when is a design system worth it?">
+<h1 id="syntyr-css-vs-plain-css-when-is-a-design-system-worth-it">Syntyr CSS vs plain CSS: when is a design system worth it?</h1>
+<p>Syntyr is <strong>written in CSS</strong>, so &quot;Syntyr vs native CSS&quot; is not a comparison of competing browser technologies. The decision is whether to maintain your own styles from scratch or adopt a predefined, scoped design system. Plain CSS, custom properties, cascade layers and native HTML remain available with or without Syntyr.</p>
+<p><strong>Release note:</strong> Syntyr alpha.4 is published; experimental alpha.5 source patterns are <strong>unreleased</strong>. Start with the <a href="distribution.html">versioned distribution guide</a>.</p>
+<h2 id="build-from-scratch-or-adopt-syntyr">Build from scratch or adopt Syntyr?</h2>
+<table>
+<thead>
+<tr>
+<th>Concern</th>
+<th>Syntyr CSS</th>
+<th>Plain CSS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Base styling</td>
+<td>Existing <code>syn-*</code> components and theme tokens</td>
+<td>Every visual convention is authored by your team</td>
+</tr>
+<tr>
+<td>Dependencies</td>
+<td>Stylesheet distribution; no required runtime JavaScript</td>
+<td>No third-party design-system dependency</td>
+</tr>
+<tr>
+<td>Consistency</td>
+<td>Shared component names across screens</td>
+<td>Depends on your own CSS architecture</td>
+</tr>
+<tr>
+<td>Flexibility</td>
+<td>Extend tokens and styles within a predefined contract</td>
+<td>Full ownership of selectors, cascade and component rules</td>
+</tr>
+<tr>
+<td>Long-term cost</td>
+<td>Track a small external API and release differences</td>
+<td>Maintain internal primitives, documentation and consistency</td>
+</tr>
+<tr>
+<td>Semantic HTML</td>
+<td>Uses normal browser elements</td>
+<td>Uses normal browser elements</td>
+</tr>
+</tbody>
+</table>
+<h2 id="when-plain-css-is-the-better-choice">When plain CSS is the better choice</h2>
+<p>Choose native CSS for one-off landing pages, a distinctive editorial site, or small bespoke components where maintaining a shared library is unnecessary. New browser features—container queries, <code>color-mix()</code>, <code>:has()</code>, cascade layers and custom properties—reduce the amount of custom framework code many apps need.</p>
+<p>A well-maintained stylesheet may be more durable than any external library if the number of repeated UI surfaces is small. No framework, including Syntyr, guarantees speed or accessibility.</p>
+<h2 id="when-syntyr-earns-its-dependency">When Syntyr earns its dependency</h2>
+<p>Adopt Syntyr when the same component contracts recur across multiple pages, products or teams. Its CSS variables and scoped style names can simplify palette changes and visual governance. The core is MIT-licensed and can be self-hosted, but you're still responsible for version pinning and testing.</p>
+<h2 id="a-practical-experiment">A practical experiment</h2>
+<p>Take one screen, implement it with your existing CSS and a scoped Syntyr region, and compare actual maintenance burden, CSS transferred, accessibility outcomes and time spent on visual consistency. If Syntyr adds more conventions than it removes, stick with plain CSS.</p>
+<p>Explore the <a href="compare.html">alternatives hub</a>, <a href="faq.html">FAQ</a>, <a href="native-browser-apis.html">native browser APIs</a> and <a href="https://developer.mozilla.org/en-US/docs/Web/CSS">MDN's introduction to CSS</a>.</p>
+        </article>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+<a class="docs-article-toc-link docs-article-toc-2" href="#build-from-scratch-or-adopt-syntyr">Build from scratch or adopt Syntyr?</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#when-plain-css-is-the-better-choice">When plain CSS is the better choice</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#when-syntyr-earns-its-dependency">When Syntyr earns its dependency</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#a-practical-experiment">A practical experiment</a>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#build-from-scratch-or-adopt-syntyr">Build from scratch or adopt Syntyr?</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#when-plain-css-is-the-better-choice">When plain CSS is the better choice</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#when-syntyr-earns-its-dependency">When Syntyr earns its dependency</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#a-practical-experiment">A practical experiment</a>
+            </nav>
+          </details>
+        </aside>
+      </div>
+      <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="compare-native-css.md">Markdown source</a></nav>
+    </main>
+    <footer class="syn-header"><span class="syn-caption">SYNTYR CSS · MIT CORE · EXPERIMENTAL</span><a href="../index.html">Home</a></footer>
+  </div>
+</body>
+</html>

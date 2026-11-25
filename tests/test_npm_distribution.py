@@ -33,13 +33,27 @@ class NpmDistributionContract(unittest.TestCase):
         expected.update({'./' + name: './dist/' + name for name in component_distributions()})
         expected['./tailwind.css'] = './integrations/tailwind/syntyr.theme.css'
         expected['./shadcn.css'] = './integrations/shadcn/syntyr.tokens.css'
+        expected['./headless.css'] = './integrations/headless/interactions.css'
+        expected['./htmx.css'] = './integrations/htmx/syntyr.htmx.css'
+        expected['./menu.mjs'] = './integrations/dropdown/menu.mjs'
+        expected['./contract.json'] = './metadata/css-contract.v1.json'
+        expected['./gallery.json'] = './metadata/component-gallery.v1.json'
+        expected['./animate'] = {
+            'types': './dist/syntyr.animate.d.mts',
+            'default': './dist/syntyr.animate.mjs',
+        }
+        expected['./copy'] = {
+            'types': './dist/syntyr.copy.d.mts',
+            'default': './dist/syntyr.copy.mjs',
+        }
         self.assertEqual({key: value for key, value in self.package['exports'].items() if key != '.'}, expected)
-        for relative in expected.values():
-            with self.subTest(relative=relative):
-                self.assertTrue((ROOT / relative.removeprefix('./')).is_file())
+        for exported in expected.values():
+            for relative in exported.values() if isinstance(exported, dict) else (exported,):
+                with self.subTest(relative=relative):
+                    self.assertTrue((ROOT / relative.removeprefix('./')).is_file())
 
     def test_allowlisted_release_files_are_css_and_docs_only(self):
-        self.assertEqual(set(self.package['files']), {'dist/', 'integrations/tailwind/', 'integrations/shadcn/', 'README.md', 'LICENSE'})
+        self.assertEqual(set(self.package['files']), {'dist/', 'integrations/tailwind/', 'integrations/shadcn/', 'integrations/headless/', 'integrations/htmx/', 'integrations/dropdown/', 'metadata/css-contract.v1.json', 'metadata/component-gallery.v1.json', 'README.md', 'LICENSE'})
         self.assertIn('publishConfig', self.package)
         self.assertEqual(self.package['publishConfig']['access'], 'public')
         self.assertTrue((ROOT / 'docs/package-managers.md').is_file())

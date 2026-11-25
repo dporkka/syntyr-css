@@ -5,8 +5,6 @@
     color-scheme: light;
     --syn-font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     --syn-mono: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
-    --syn-font-ui: var(--syn-font);
-    --syn-font-display: var(--syn-font);
     --syn-type-xs: .75rem;
     --syn-type-sm: .875rem;
     --syn-type-base: 1rem;
@@ -22,6 +20,12 @@
     --syn-space-3: 1.125rem;
     --syn-space-4: 1.75rem;
     --syn-space-5: 2.5rem;
+    /* Opt-in fluid rhythm, with fixed fallbacks for engines without vi units.
+       Existing --syn-space-* tokens and component defaults are unchanged. */
+    --syn-space-fluid-1: var(--syn-space-1);
+    --syn-space-fluid-2: var(--syn-space-2);
+    --syn-space-fluid-3: var(--syn-space-3);
+    --syn-space-fluid-4: var(--syn-space-4);
     --syn-cut: .9rem;
     --syn-radius: .25rem;
     --syn-line: 1.55;
@@ -36,6 +40,16 @@
     --syn-ease-enter: cubic-bezier(.16, 1, .3, 1);
     --syn-duration-fast: 150ms;
     --syn-duration-standard: 240ms;
+  }
+  /* vi is the logical viewport inline axis; no JavaScript or media queries.
+     Feature-gating also preserves fixed spacing in older CSS engines. */
+  @supports (width: 1vi) {
+    :where(.syn-root) {
+      --syn-space-fluid-1: clamp(var(--syn-space-1), calc(.25rem + .65vi), var(--syn-space-2));
+      --syn-space-fluid-2: clamp(var(--syn-space-2), calc(.5rem + 1vi), var(--syn-space-3));
+      --syn-space-fluid-3: clamp(var(--syn-space-3), calc(.75rem + 1.5vi), var(--syn-space-4));
+      --syn-space-fluid-4: clamp(var(--syn-space-4), calc(1rem + 2vi), var(--syn-space-5));
+    }
   }
   /* Derived surfaces recompute inside nested themes, not just on the parent. */
   :where(.syn-root, .syn-root [data-syn-theme]) {
@@ -265,6 +279,16 @@
       --syn-cut: .9rem;
     }
   }
+  /* Experimental perceptual mixing: explicitly enable per root or themed region.
+     The default sRGB role remains intact on unsupported engines and elsewhere.
+     Do not recolor semantic text/accent pairings without a contrast audit. */
+  @supports (color: color-mix(in oklch, red, blue)) {
+    :where(.syn-root[data-syn-color-space="oklch"],
+           .syn-root [data-syn-color-space="oklch"]) {
+      --syn-surface-hover: color-mix(in oklch, var(--syn-surface-hi) 83%, var(--syn-accent));
+    }
+  }
+
   /* Technical typography is an explicit choice, not the neutral root default. */
   :where(.syn-root[data-syn-theme="grid"],
          .syn-root [data-syn-theme="grid"], .syn-root[data-syn-theme="terminal"],

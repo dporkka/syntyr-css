@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Install and self-host Syntyr CSS using versioned stylesheets, optional modules, and immutable releases for production websites.">
-  <meta name="syntyr-source-sha256" content="d241f9202c86986e5e9aef131dda202668ec38104bf861bfb52995779acdd7e2">
+  <meta name="syntyr-source-sha256" content="767b9671506793272de5db16cdfadcd3ae1a1cbd2912b12f6dfeed3f2ef4b066">
   <meta name="theme-color" content="#f5f7fb">
   <title>Syntyr CSS distribution — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/distribution">
@@ -43,7 +43,7 @@ icons, Sass compiler or CSS framework is required to use the distributed CSS.</p
 <li>Put <code>syntyr.core.css</code> in your application's static CSS directory.</li>
 <li>Load it normally:</li>
 </ol>
-<pre><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.core.css&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.core.css&quot;&gt;
 &lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;grid&quot;&gt;
   &lt;button class=&quot;syn-button syn-button--primary&quot;&gt;Initialize&lt;/button&gt;
 &lt;/section&gt;
@@ -52,6 +52,15 @@ icons, Sass compiler or CSS framework is required to use the distributed CSS.</p
 The above works with Go templates, plain HTML, Astro, HTMX, React and other
 renderers. See <a href="framework-integrations.html">the framework integration guide</a> for
 HTMX request-state classes, optional semantic markers, and server-side fragments. Add <code>syn-page</code> to the root only if you want full-page min-height.</p>
+<h2 id="embed-inside-an-existing-cms-theme-unreleased-alpha5">Embed inside an existing CMS theme (unreleased alpha.5)</h2>
+<p>The alpha.5 source builds a separate <code>dist/syntyr.embed.css</code> entrypoint
+from the canonical core CSS, removing its outer CSS cascade layers to avoid
+the normal layered-versus-unlayered theme-precedence trap. Load it <strong>instead
+of</strong> <code>syntyr.core.css</code> for self-hosted Syntyr sections on WordPress, Shopify,
+Webflow or similar themes. This file is not in published alpha.4 releases;
+the CSS still uses the same <code>.syn-root</code> namespace and no runtime JavaScript.
+See the <a href="site-builders.html">site-builder integration guide</a> for platform limits
+and copyable snippets.</p>
 <h2 id="offline-saas-preview-in-the-next-release-zip-unreleased-alpha5">Offline SaaS preview in the next release ZIP (unreleased alpha.5)</h2>
 <p>The alpha.5 source candidate now packages <code>examples/saas.html</code> together with
 <code>dist/syntyr.core.css</code> and <code>dist/syntyr.recipes.css</code>. After building or
@@ -65,9 +74,23 @@ it in an application, replace sample values with server-rendered data and wire
 navigation and mutations to your own server. The already published <strong>alpha.4</strong>
 release does <em>not</em> contain this packaged example; the next alpha.5 release
 has not been published yet.</p>
+<h2 id="command-launcher-zip-example-unreleased-alpha5">Command launcher ZIP example (unreleased alpha.5)</h2>
+<p>The optional command launcher example points to three standalone HTML
+examples included in the release ZIP: the preset preview, native resource
+outline, and SaaS dashboard. Both the script-free navigation and enhanced
+native-dialog links resolve without fetching any unbundled docs assets.</p>
+<p>For the interactive Ctrl/Command+K module, serve the extracted alpha.5
+release directory over local HTTP, as explained for the resizable workspace
+above. From the extracted ZIP's top-level folder, run:</p>
+<pre tabindex="0"><code>python3 -m http.server 8000 --bind 127.0.0.1
+</code></pre>
+<p>Open http://127.0.0.1:8000/examples/command-launcher.html.
+The native navigation stays usable without JavaScript on a file:// URL, but
+the optional module may be blocked by browser file-origin restrictions.
+No server is necessary for the static examples/saas.html preview.</p>
 <h2 id="one-file-semantic-starter-unreleased-alpha5-source">One-file semantic starter (unreleased alpha.5 source)</h2>
 <p>For a Pico-like HTML workflow, <code>dist/syntyr.semantic-bundle.css</code> combines core and semantic CSS into a single file. Copy it to your static assets, then opt in on the region you want styled:</p>
-<pre><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.semantic-bundle.css&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.semantic-bundle.css&quot;&gt;
 &lt;body class=&quot;syn-root syn-page syn-semantic&quot; data-syn-theme=&quot;studio&quot;&gt;
   &lt;main class=&quot;syn-shell&quot;&gt;
     &lt;article&gt;&lt;h1&gt;Dashboard&lt;/h1&gt;&lt;button type=&quot;button&quot;&gt;Open&lt;/button&gt;&lt;/article&gt;
@@ -75,8 +98,70 @@ has not been published yet.</p>
 &lt;/body&gt;
 </code></pre>
 <p>Only the controls and elements inside <code>.syn-root.syn-semantic</code> are styled semantically. This is <strong>not</strong> Pico's globally classless behavior: the root scope is deliberate. No script or build tool is required. <a href="../examples/semantic-starter.html">See the runnable starter</a> and the <a href="from-pico.html">Pico migration guide</a>. <strong>This file is not in the published alpha.4 release</strong> and its <code>/dist/</code> URL is not an immutable release asset; pin a released version once alpha.5 is actually published. Do not load <code>core.css</code> or <code>semantic.css</code> alongside this bundle.</p>
+<h2 id="single-file-presets-experimental-alpha5-source">Single-file presets (experimental alpha.5 source)</h2>
+<p>Choose one self-contained file and self-host it. There are <strong>no stylesheet
+imports or runtime dependencies</strong>. Each preset includes tokens, core components,
+and scoped opt-in semantic HTML styling:</p>
+<table>
+<thead>
+<tr>
+<th>Preset</th>
+<th>Distribution</th>
+<th>When to choose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Minimal</td>
+<td><code>dist/presets/minimal.css</code></td>
+<td>Documentation, forms and simple websites</td>
+</tr>
+<tr>
+<td>SaaS</td>
+<td><code>dist/presets/saas.css</code></td>
+<td>Business sites, dashboards, HTMX/server-rendered apps; explicit <code>syn-u-*</code> helpers</td>
+</tr>
+<tr>
+<td>Cinematic</td>
+<td><code>dist/presets/cinematic.css</code></td>
+<td>Optional Grid/Noir effects, precision frames, native CSS motion</td>
+</tr>
+</tbody>
+</table>
+<pre tabindex="0"><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr-saas.css&quot;&gt;
+&lt;main class=&quot;syn-root syn-semantic&quot; data-syn-theme=&quot;studio&quot;&gt;
+  &lt;article&gt;&lt;h1&gt;Settings&lt;/h1&gt;&lt;label for=&quot;email&quot;&gt;Email&lt;/label&gt;
+    &lt;input type=&quot;email&quot; id=&quot;email&quot; required&gt;
+    &lt;button type=&quot;button&quot;&gt;Preview&lt;/button&gt;
+  &lt;/article&gt;
+&lt;/main&gt;
+</code></pre>
+<p>Only the path is application-defined; copy <code>dist/presets/saas.css</code> to match.
+<strong>Do not stack presets</strong> or add core/semantic/recipes CSS already inside a
+preset. Styles are still isolated to <code>.syn-root</code>, while bare element styling
+requires <code>.syn-semantic</code>. Native dialogs/popovers/forms retain browser behavior;
+Syntyr adds no component runtime. <code>data-syn-theme</code> and <code>--syn-*</code> custom
+properties remain the theme API in every preset.</p>
+<p>Advanced users can keep a single CSS output but omit unused core components
+with the optional, stdlib-only <code>scripts/build_selective.py --components ... --modules ... --output ...</code> build. That optimization is not a consumer
+requirement and does <strong>not</strong> purge dynamic selectors or minify CSS.</p>
+<p><code>metadata/css-contract.v1.json</code> is a machine-readable, deterministic
+<strong>distribution artifact manifest</strong>: it declares preset source order, file
+names, raw/gzip bytes and SHA-256 hashes, together with the library version.
+The <code>v1</code> suffix versions the <strong>manifest schema</strong>, not the public CSS API,
+which remains experimental until an explicit v1 release. <code>build.py --check</code>
+rejects stale CSS and contract manifests. See <a href="api-stability.html">CSS API stability</a>
+and <a href="https://github.com/dporkka/syntyr-css/blob/main/docs/visual-regression.md">optional visual regression testing</a>.</p>
+<p>Try the <a href="../examples/preset-preview.html">script-free preset demonstration</a>.
+This is present in the alpha.5 source candidate, <strong>not published alpha.4</strong>.</p>
 <h2 id="optional-npmpackage-manager-distribution">Optional npm/package-manager distribution</h2>
 <p>A CSS-only <code>@syntyr/css</code> manifest is available in the alpha.5 repository candidate, but <strong>it has not been published to npm</strong>. See <a href="package-managers.html">package-manager installation and local tarball testing</a> for supported imports and an explicit no-publication boundary. No package manager is required for the documented self-hosted stylesheet path.</p>
+<h2 id="optional-native-animation-companion">Optional native animation companion</h2>
+<p>Syntyr remains CSS-only by default. Applications that need <em>programmatic</em> motion
+can separately import <code>dist/syntyr.animate.mjs</code> (native Web Animations API and
+IntersectionObserver only). No script is included in core or <code>syntyr.all.css</code>.
+See the <a href="animation.html">animation API guide</a> and the
+<a href="../examples/animation.html">runnable example</a>.</p>
 <h2 id="optional-themes-and-semantic-html">Optional themes and semantic HTML</h2>
 <p>Grid, Noir and Studio ship in the <strong>same</strong> core stylesheet; set
 <code>data-syn-theme=&quot;grid&quot;</code> or <code>data-syn-theme=&quot;noir&quot;</code> or <code>data-syn-theme=&quot;studio&quot;</code> on the scoped root.
@@ -91,18 +176,60 @@ layout helpers and <code>syntyr.print.css</code> for print-friendly reports. Sys
 Grid/Studio <code>data-syn-theme=&quot;auto&quot;</code> is already included in core CSS, with
 no additional stylesheet or runtime JavaScript. See the
 <a href="progressive-enhancement.html">progressive-enhancement guide</a> for examples.
-The optional <code>syntyr.symbols.css</code> adds BYO-SVG icon sizing, literal Unicode styling and ASCII/box-drawing alignment without shipping fonts or icons; see <a href="symbols.html">symbols and accessibility</a>.</p>
+The optional source-candidate <code>syntyr.ascii.css</code> composes with symbols for <a href="ascii-effects.html">ASCII effects</a>; it is not in the published alpha.4 release.</p>
+<p>The optional <code>syntyr.symbols.css</code> adds BYO-SVG icon sizing, literal Unicode styling and ASCII/box-drawing alignment without shipping fonts or icons; see <a href="symbols.html">symbols and accessibility</a>.</p>
 <p><code>syntyr.semantic-bundle.css</code> bundles core and semantic styles with scoped opt-in.
 <code>syntyr.css</code> bundles core and effects. <code>syntyr.all.css</code> bundles all modules
 while still requiring <code>.syn-semantic</code> to opt into semantic element styles.
 Avoid loading these bundles alongside their component files: that duplicates CSS. Optional utilities live in the final <code>syn.utilities</code> cascade layer, allowing explicitly applied utility classes to override ordinary component declarations; see <a href="https://github.com/dporkka/syntyr-css/blob/main/ARCHITECTURE.md">the architecture policy</a>.</p>
+<h2 id="loading-contract-at-a-glance">Loading contract at a glance</h2>
+<table>
+<thead>
+<tr>
+<th>Goal</th>
+<th>Stylesheet choice</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Explicit components</td>
+<td><code>syntyr.core.css</code></td>
+<td><code>.syn-root</code> wraps the component subtree</td>
+</tr>
+<tr>
+<td>Plain semantic HTML</td>
+<td><code>syntyr.semantic-bundle.css</code></td>
+<td>Add <code>.syn-semantic</code> to the scoped root</td>
+</tr>
+<tr>
+<td>Some components only</td>
+<td><code>components/tokens.css</code>, <code>components/base.css</code>, then selected component styles</td>
+<td>Keep order; include <code>forms.css</code> with <code>form-composition.css</code></td>
+</tr>
+<tr>
+<td>Application recipes</td>
+<td><code>syntyr.core.css</code> followed by <code>syntyr.recipes.css</code></td>
+<td>Use explicitly named recipe classes</td>
+</tr>
+<tr>
+<td>All features</td>
+<td><code>syntyr.all.css</code></td>
+<td>Never combine with the constituent files</td>
+</tr>
+</tbody>
+</table>
+<p>Avoid combining bundles with their constituent CSS. Each separately imported
+component file intentionally has <strong>no runtime <code>@import</code></strong>; load tokens and base
+first. Use the <a href="composition-adoption.html">intrinsic composition guide</a> to build
+dashboard layouts without JavaScript or viewport-specific hacks.</p>
 <h2 id="optional-explicit-selective-build">Optional explicit selective build</h2>
 <p>Applications needing fewer core components can assemble a custom CSS file with
 the Python standard-library-only <code>scripts/build_selective.py</code>. It does not scan
 templates or purge individual selectors, and does not alter published assets.
 See <a href="https://github.com/dporkka/syntyr-css/blob/main/docs/selective-builds.md">selective builds and their limits</a>.</p>
 <h2 id="pinned-cdn-for-prototyping">Pinned CDN for prototyping</h2>
-<pre><code class="language-html">&lt;link rel=&quot;stylesheet&quot;
+<pre tabindex="0"><code class="language-html">&lt;link rel=&quot;stylesheet&quot;
       href=&quot;https://syntyr-css.pages.dev/v/0.3.0-alpha.4/syntyr.core.css&quot;&gt;
 </code></pre>
 <p>The first-party Cloudflare CDN serves frozen, checksum-verified CSS releases
@@ -117,7 +244,7 @@ unreleased alpha.5 source candidate includes modular SYNTYR distributions,
 including the optional utilities, print and symbols stylesheets, plus
 the terminal ANSI palette JSON, this guide, MIT license, and README. No retired compatibility aliases are shipped. The ZIP is created deterministically using only
 Python's standard library:</p>
-<pre><code class="language-sh">python3 scripts/build.py --check
+<pre tabindex="0"><code class="language-sh">python3 scripts/build.py --check
 python3 -m unittest discover -s tests -v
 python3 scripts/package_release.py
 </code></pre>
@@ -127,16 +254,41 @@ separately. This v0.3 alpha is <strong>not</strong> a v1 production compatibilit
 cross-browser and full accessibility audits are still release gates.</p>
 <p>The <code>syn-</code> selectors, <code>--syn-</code> custom properties and <code>data-syn-</code> attributes are the only supported source API.</p>
         </article>
-        <aside class="docs-article-sidebar"><nav aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#recommended-self-host-a-versioned-stylesheet">Recommended: self-host a versioned stylesheet</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#embed-inside-an-existing-cms-theme-unreleased-alpha5">Embed inside an existing CMS theme (unreleased alpha.5)</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#offline-saas-preview-in-the-next-release-zip-unreleased-alpha5">Offline SaaS preview in the next release ZIP (unreleased alpha.5)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#command-launcher-zip-example-unreleased-alpha5">Command launcher ZIP example (unreleased alpha.5)</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#one-file-semantic-starter-unreleased-alpha5-source">One-file semantic starter (unreleased alpha.5 source)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#single-file-presets-experimental-alpha5-source">Single-file presets (experimental alpha.5 source)</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#optional-npmpackage-manager-distribution">Optional npm/package-manager distribution</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#optional-native-animation-companion">Optional native animation companion</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#optional-themes-and-semantic-html">Optional themes and semantic HTML</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#loading-contract-at-a-glance">Loading contract at a glance</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#optional-explicit-selective-build">Optional explicit selective build</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#pinned-cdn-for-prototyping">Pinned CDN for prototyping</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#release-artifacts-and-guarantees">Release artifacts and guarantees</a>
-        </nav></aside>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#recommended-self-host-a-versioned-stylesheet">Recommended: self-host a versioned stylesheet</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#embed-inside-an-existing-cms-theme-unreleased-alpha5">Embed inside an existing CMS theme (unreleased alpha.5)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#offline-saas-preview-in-the-next-release-zip-unreleased-alpha5">Offline SaaS preview in the next release ZIP (unreleased alpha.5)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#command-launcher-zip-example-unreleased-alpha5">Command launcher ZIP example (unreleased alpha.5)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#one-file-semantic-starter-unreleased-alpha5-source">One-file semantic starter (unreleased alpha.5 source)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#single-file-presets-experimental-alpha5-source">Single-file presets (experimental alpha.5 source)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#optional-npmpackage-manager-distribution">Optional npm/package-manager distribution</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#optional-native-animation-companion">Optional native animation companion</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#optional-themes-and-semantic-html">Optional themes and semantic HTML</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#loading-contract-at-a-glance">Loading contract at a glance</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#optional-explicit-selective-build">Optional explicit selective build</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#pinned-cdn-for-prototyping">Pinned CDN for prototyping</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#release-artifacts-and-guarantees">Release artifacts and guarantees</a>
+            </nav>
+          </details>
+        </aside>
       </div>
       <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="distribution.md">Markdown source</a></nav>
     </main>

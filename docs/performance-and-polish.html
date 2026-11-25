@@ -39,7 +39,7 @@
 fonts downloaded by default, and no required package manager. Optimize
 <strong>real browser behavior</strong> rather than targeting an arbitrary gzip byte count.</p>
 <h2 id="inspect-stylesheet-sizes-without-blocking-releases">Inspect stylesheet sizes without blocking releases</h2>
-<pre><code class="language-sh">python3 scripts/build.py --check
+<pre tabindex="0"><code class="language-sh">python3 scripts/build.py --check
 python3 scripts/asset_report.py
 python3 scripts/asset_report.py --json &gt; /tmp/syntyr-sizes.json
 python3 scripts/asset_report.py --baseline /tmp/syntyr-sizes.json
@@ -64,7 +64,7 @@ same-origin, cacheable stylesheets to an extra CDN hostname in most apps.</p>
 <h2 id="zero-js-visual-accents">Zero-JS visual accents</h2>
 <p>Optional recipes add depth and a stronger visual hierarchy without extra DOM,
 canvas, web fonts or animations:</p>
-<pre><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.core.css&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.core.css&quot;&gt;
 &lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.recipes.css&quot;&gt;
 &lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot;&gt;
   &lt;article class=&quot;syn-app-card syn-surface--accent syn-surface--lift&quot;&gt;
@@ -87,7 +87,7 @@ mode uses a visible border instead of relying on shadows.</li>
 should feel restrained. Use typography hierarchy, consistent spacing and
 purposeful accent color before adding glow, gradients or large shadows.</p>
 <h2 id="opt-in-long-page-render-deferral">Opt-in long-page render deferral</h2>
-<pre><code class="language-html">&lt;!-- Only below-the-fold sections of sufficiently long, dense pages. --&gt;
+<pre tabindex="0"><code class="language-html">&lt;!-- Only below-the-fold sections of sufficiently long, dense pages. --&gt;
 &lt;section class=&quot;syn-defer-section&quot; style=&quot;--syn-defer-size: 42rem&quot;&gt;
   &lt;h2&gt;Archive&lt;/h2&gt;
   &lt;!-- expensive table, logs or reporting visuals --&gt;
@@ -108,7 +108,7 @@ production-shaped synthetic layouts â€” a SaaS dashboard and a long-table page â
 using the <em>same</em> core + recipes CSS and equivalent DOM. The only experimental
 difference is whether independent, below-the-fold sections opt in to
 <code>syn-defer-section</code>.</p>
-<pre><code class="language-sh"># Optional developer environment only; never required to consume Syntyr.
+<pre tabindex="0"><code class="language-sh"># Optional developer environment only; never required to consume Syntyr.
 python3 -m venv /tmp/syntyr-playwright
 /tmp/syntyr-playwright/bin/pip install playwright
 /tmp/syntyr-playwright/bin/playwright install chromium firefox webkit
@@ -219,14 +219,27 @@ color contrast, and forced colors.</li>
 <a href="theme-customization.html">theme customization</a> and
 <a href="components.html">component contract</a>.</p>
         </article>
-        <aside class="docs-article-sidebar"><nav aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#inspect-stylesheet-sizes-without-blocking-releases">Inspect stylesheet sizes without blocking releases</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#zero-js-visual-accents">Zero-JS visual accents</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#opt-in-long-page-render-deferral">Opt-in long-page render deferral</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#repeatable-offline-rendering-benchmark">Repeatable, offline rendering benchmark</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#local-result-november-14-2026">Local result: November 14, 2026</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#developer-experience-contract">Developer-experience contract</a>
-        </nav></aside>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#inspect-stylesheet-sizes-without-blocking-releases">Inspect stylesheet sizes without blocking releases</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#zero-js-visual-accents">Zero-JS visual accents</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#opt-in-long-page-render-deferral">Opt-in long-page render deferral</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#repeatable-offline-rendering-benchmark">Repeatable, offline rendering benchmark</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#local-result-november-14-2026">Local result: November 14, 2026</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#developer-experience-contract">Developer-experience contract</a>
+            </nav>
+          </details>
+        </aside>
       </div>
       <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="performance-and-polish.md">Markdown source</a></nav>
     </main>

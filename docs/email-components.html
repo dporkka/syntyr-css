@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Use Syntyr&#x27;s optional email module for email-related web interfaces : newsletter subscription, mailbox lists, message reading, composing, notification…">
+  <meta name="syntyr-source-sha256" content="abcc45f37ea3e1e2d959e8e31e9bf77f4cb7c501f3051304fd8db77a00525563">
+  <meta name="theme-color" content="#f5f7fb">
+  <title>Email UI components with Syntyr CSS — Syntyr CSS docs</title>
+  <link rel="canonical" href="https://syntyr-css.pages.dev/docs/email-components">
+  <link rel="alternate" type="text/markdown" href="email-components.md" title="Markdown source">
+  <link rel="icon" href="../assets/syntyr-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="docs.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <a class="syn-button docs-skip" href="#doc-main">Skip to guide</a>
+  <div class="syn-shell">
+    <header class="syn-header docs-header">
+      <a class="syn-logo" href="../index.html">SYNTYR / CSS</a>
+      <nav class="syn-nav" aria-label="Documentation navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav>
+      <details class="site-mobile-menu"><summary>Menu</summary><nav aria-label="Mobile navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav></details>
+    </header>
+    <main id="doc-main" class="docs-article-page">
+      <nav class="syn-breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="reference.html">Documentation</a></li><li aria-current="page">Email UI components with Syntyr CSS</li></ol></nav>
+      <header class="docs-article-heading">
+        <p class="syn-eyebrow">SYNTYR / DOCUMENTATION</p>
+        <p class="syn-muted">Current source documentation may describe unreleased alpha.5 features. <a href="distribution.html">Check released version compatibility.</a></p>
+        <p class="syn-caption">Prefer a machine-readable version? <a href="email-components.md">Markdown source</a> · <a href="../llms.txt">LLM index</a></p>
+      </header>
+      <div class="docs-article-layout">
+        <article class="docs-prose" aria-label="Email UI components with Syntyr CSS">
+<h1 id="email-ui-components-with-syntyr-css">Email UI components with Syntyr CSS</h1>
+<p>Use Syntyr's optional email module for email-related <strong>web interfaces</strong>: newsletter subscription, mailbox lists, message reading, composing, notification preferences and one-time email verification. The components are MIT-licensed, framework-neutral, semantic HTML and CSS only. They work with native forms, HTMX, server-rendered HTML, React and other HTML renderers; Syntyr does not send messages or store state.</p>
+<p><strong>These are not HTML email templates.</strong> Gmail, Outlook and other <strong>email clients</strong> have different CSS support from modern browsers. Do not paste <code>syntyr.email.css</code> into outbound email or assume its cascade layers, variables and container queries will be supported. Build transactional/marketing email markup separately, with email-client-tested inline styles and appropriate plain-text fallbacks.</p>
+<h2 id="installation">Installation</h2>
+<p>Load the standard core first, then the opt-in module:</p>
+<pre tabindex="0"><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/dist/syntyr.core.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;/dist/syntyr.email.css&quot;&gt;
+</code></pre>
+<p>The complete <code>syntyr.all.css</code> bundle also includes the email module, but <strong>core stays unchanged</strong>. The optional selective builder accepts <code>--modules email</code> and assembles tokens and base styles without needing Node or JavaScript:</p>
+<pre tabindex="0"><code class="language-sh">python3 scripts/build_selective.py --components forms,form-composition,buttons --modules email --output /tmp/email-ui.css
+</code></pre>
+<p>Use the <a href="../examples/email.html">backend-free example</a> for complete semantic markup. The demo disables all submit buttons rather than pretending to save or send data.</p>
+<h2 id="component-inventory">Component inventory</h2>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Class</th>
+<th>Native HTML and application responsibility</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Email signup</td>
+<td><code>.syn-email-signup</code></td>
+<td><code>&lt;form&gt;</code>, explicit <code>&lt;label&gt;</code>, <code>&lt;input type=&quot;email&quot; required autocomplete=&quot;email&quot;&gt;</code>, consent, server subscription endpoint</td>
+</tr>
+<tr>
+<td>Inbox</td>
+<td><code>.syn-email-workspace</code>, <code>.syn-email-layout</code>, <code>.syn-email-sidebar</code>, <code>.syn-email-inbox</code>, <code>.syn-email-item</code></td>
+<td><code>&lt;nav&gt;</code> with list links; server marks unread with <code>data-syn-unread=&quot;true&quot;</code> and current location with <code>aria-current=&quot;location&quot;</code></td>
+</tr>
+<tr>
+<td>Message preview</td>
+<td><code>.syn-email-meta</code>, <code>.syn-email-subject</code>, <code>.syn-email-preview</code>, <code>.syn-email-time</code></td>
+<td>Real sender/subject/time text, <code>&lt;time datetime&gt;</code>; no fake read receipt</td>
+</tr>
+<tr>
+<td>Message detail</td>
+<td><code>.syn-email-message</code>, <code>.syn-email-message-header</code>, <code>.syn-email-body</code></td>
+<td>Article, title, sender/recipients, safe body content; sanitize rich messages</td>
+</tr>
+<tr>
+<td>Composer</td>
+<td><code>.syn-email-compose</code>, <code>.syn-email-recipient-list</code></td>
+<td>Labeled native email, subject, textarea and file inputs; application resolves recipients, drafts, attachments and sending</td>
+</tr>
+<tr>
+<td>Preferences</td>
+<td><code>.syn-email-preferences</code></td>
+<td><code>&lt;fieldset&gt;</code>/<code>&lt;legend&gt;</code> and native checkboxes; application persists per-channel consent and opt-out</td>
+</tr>
+<tr>
+<td>Email verification</td>
+<td><code>.syn-email-code</code></td>
+<td>Native <code>type=&quot;text&quot;</code>, <code>inputmode=&quot;numeric&quot;</code>, <code>autocomplete=&quot;one-time-code&quot;</code>; server validates token and enforces expiration/rate limits</td>
+</tr>
+</tbody>
+</table>
+<p>All classes are scoped to <code>.syn-root</code>. Compose with existing <code>.syn-form</code>, <code>.syn-field</code>, <code>.syn-label</code>, <code>.syn-input</code>, <code>.syn-textarea</code>, <code>.syn-button</code>, <code>.syn-chip</code>, <code>.syn-check</code> and <code>.syn-panel</code> instead of introducing duplicates. The mailbox switches from one column to two based on its <strong>container width</strong>, not the viewport. Theme colors come from existing <code>--syn-*</code> tokens. Forced-colors selections and keyboard focus remain visible.</p>
+<h2 id="signup-and-consent">Signup and consent</h2>
+<pre tabindex="0"><code class="language-html">&lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot;&gt;
+  &lt;form class=&quot;syn-email-signup&quot; action=&quot;/newsletter/subscribe&quot; method=&quot;post&quot;&gt;
+    &lt;div class=&quot;syn-field&quot;&gt;
+      &lt;label class=&quot;syn-label&quot; for=&quot;signup-email&quot;&gt;Email address&lt;/label&gt;
+      &lt;input class=&quot;syn-input&quot; id=&quot;signup-email&quot; name=&quot;email&quot;
+             type=&quot;email&quot; autocomplete=&quot;email&quot; required&gt;
+    &lt;/div&gt;
+    &lt;button class=&quot;syn-button syn-button--primary&quot; type=&quot;submit&quot;&gt;Subscribe&lt;/button&gt;
+  &lt;/form&gt;
+&lt;/section&gt;
+</code></pre>
+<p>Only use an actual application endpoint for the form action. Validate and normalize addresses server-side without assuming browser validation is sufficient. Capture a clear consent record where necessary, send confirmation as appropriate, respect unsubscribe requests, and avoid prechecked marketing-consent boxes. Add CSRF protection, bot and abuse controls, and rate limiting as your framework requires. A subscription form alone does not establish consent.</p>
+<h2 id="inbox-and-composing">Inbox and composing</h2>
+<p>Render each inbox row as <strong>one link</strong>; do not nest a reply button or another link inside it. If a row needs actions, use a separate action area rather than a nested interactive target. Maintain the actual unread/current state on the server or in application state; CSS only styles the supplied attributes. An unread dot must be accompanied by an accessible text indication (for example, &quot;Unread&quot; in the link's accessible name). <code>aria-current</code> identifies the current destination, not a checkbox or multiselection state.</p>
+<p>Display plain-text email with escaped text, preserving necessary line breaks; treat HTML from senders as <strong>untrusted content</strong>. Render sanitized email HTML in a properly sandboxed and isolated surface only when necessary, with remote images, tracking pixels, links, downloads and attachments handled under explicit product policies. Do not <code>innerHTML</code> raw inbound email into <code>.syn-email-body</code>.</p>
+<p>Use native <code>&lt;input type=&quot;email&quot;&gt;</code> for individual recipients and <code>multiple</code> only when you actually accept a comma-separated list. <code>.syn-email-recipient-list</code> is visual decoration for validated recipient tokens; it is <strong>not</strong> a tokenizing combobox or address-book integration. The application owns add/remove, keyboard interaction, draft autosave, backend sending and delivery state. The browser-supplied file picker must be paired with server-side file size, type, antivirus and authorization checks.</p>
+<h2 id="preferences-verification-and-transactional-semantics">Preferences, verification and transactional semantics</h2>
+<p>Keep security/transactional notifications separate from optional marketing subscriptions. For marketing preferences, a functional opt-out mechanism and correct consent records are requirements of the product and applicable laws, not effects of CSS. Persist choices and show an explicit success or failure state after submitting. For one-time verification, tokens must be unpredictable, expire, have replay protection, and be rate-limited; autocomplete assists users but does not verify identity itself.</p>
+<p>The module has <strong>no runtime dependencies</strong>, does not provide an email transport, and cannot guarantee a message's arrival. If you want reusable <em>outbound</em> email templates, implement them as a separate export with compatibility tests in actual email clients rather than sharing browser CSS.</p>
+        </article>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+<a class="docs-article-toc-link docs-article-toc-2" href="#installation">Installation</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#component-inventory">Component inventory</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#signup-and-consent">Signup and consent</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#inbox-and-composing">Inbox and composing</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#preferences-verification-and-transactional-semantics">Preferences, verification and transactional semantics</a>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#installation">Installation</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#component-inventory">Component inventory</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#signup-and-consent">Signup and consent</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#inbox-and-composing">Inbox and composing</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#preferences-verification-and-transactional-semantics">Preferences, verification and transactional semantics</a>
+            </nav>
+          </details>
+        </aside>
+      </div>
+      <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="email-components.md">Markdown source</a></nav>
+    </main>
+    <footer class="syn-header"><span class="syn-caption">SYNTYR CSS · MIT CORE · EXPERIMENTAL</span><a href="../index.html">Home</a></footer>
+  </div>
+</body>
+</html>

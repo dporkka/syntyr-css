@@ -1,0 +1,44 @@
+<section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-crm-workspace-heading">
+  <header class="syn-collection-toolbar">
+    <div>
+      <h2 id="syn-crm-workspace-heading" class="syn-heading">Deal pipeline</h2>
+      <p class="syn-muted">Illustrative opportunities. The server supplies real stages, deal states, and permissions.</p>
+    </div>
+    <a class="syn-button syn-button--primary" href="/crm/deals/new">New deal</a>
+  </header>
+  <form method="get" action="/crm/deals" class="syn-filter-bar syn-panel" role="search" aria-label="Filter opportunities">
+    <div class="syn-filter-field syn-filter-field--query">
+      <label class="syn-label" for="syn-crm-query">Search deals</label>
+      <input class="syn-input" id="syn-crm-query" type="search" name="q" placeholder="Company or deal">
+    </div>
+    <div class="syn-filter-field">
+      <label class="syn-label" for="syn-crm-owner">Owner</label>
+      <select class="syn-select" id="syn-crm-owner" name="owner">
+        <option value="">All owners</option>
+        <option value="morgan">Morgan</option><option value="casey">Casey</option>
+      </select>
+    </div>
+    <div class="syn-filter-actions"><button class="syn-button syn-button--primary" type="submit">Apply</button></div>
+  </form>
+  <div class="syn-pipeline" tabindex="0" role="region" aria-label="Deal stages; scroll horizontally for more stages">
+    <section class="syn-pipeline-lane" aria-labelledby="syn-crm-prospect">
+      <h3 id="syn-crm-prospect">Prospecting <span class="syn-badge">1</span></h3>
+      <ol class="syn-pipeline-list">
+        <li class="syn-pipeline-card"><a href="/crm/deals/atlas">Atlas Systems</a>
+          <p>New site evaluation</p><small>Owner: Morgan · $8,000 estimated</small></li>
+      </ol>
+    </section>
+    <section class="syn-pipeline-lane" aria-labelledby="syn-crm-proposal">
+      <h3 id="syn-crm-proposal">Proposal <span class="syn-badge">1</span></h3>
+      <ol class="syn-pipeline-list">
+        <li class="syn-pipeline-card"><a href="/crm/deals/cedar">Cedar Labs</a>
+          <p>Annual placement</p><small>Owner: Casey · $12,000 estimated</small></li>
+      </ol>
+    </section>
+    <section class="syn-pipeline-lane" aria-labelledby="syn-crm-won">
+      <h3 id="syn-crm-won">Closed won <span class="syn-badge">0</span></h3>
+      <p class="syn-muted">No deals in this stage.</p>
+    </section>
+  </div>
+  <p class="syn-help">Stages are presentation only. Changing a deal's stage needs an authorized server operation; there is no drag-and-drop JavaScript.</p>
+</section>

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Date: November 15, 2026 . The subject was the publicly deployed SYNTYR Cloudflare site , at its real canonical /examples/business and /examples/saas URLs…">
-  <meta name="syntyr-source-sha256" content="6f9715c5ec51e2234c5fee5b8478673e3e39947bdf6147bf92b1d9afb311d6f9">
+  <meta name="syntyr-source-sha256" content="7dae500b8487fd37bf05efb6199ea40ed93fcc5e82785d7d9d07da4008026d25">
   <meta name="theme-color" content="#f5f7fb">
   <title>Deployed Syntyr mobile performance / cache / accessibility audit — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/live-performance-audit">
@@ -42,7 +42,7 @@ canonical <code>/examples/business</code> and <code>/examples/saas</code> URLs. 
 <h2 id="reproduction">Reproduction</h2>
 <p>With optional, developer-only Playwright + Chromium installed, and a local
 copy of axe-core (the site never loads axe):</p>
-<pre><code class="language-sh">python3 scripts/audit_live_performance.py \
+<pre tabindex="0"><code class="language-sh">python3 scripts/audit_live_performance.py \
   --origin https://syntyr-css.pages.dev \
   --runs 7 --latency-ms 150 --download-kbps 1600 --cpu-rate 4 \
   --axe-file /tmp/axe.min.js \
@@ -61,8 +61,9 @@ field INP, or latency to every region. Browser and Cloudflare caches
 may vary over time. Resource Timing <code>transferSize</code> includes response
 headers and can be zero for cache hits; it is not an application billing
 or bandwidth metric. Browser instrumentation is not required by sites.</p>
-<h2 id="observed-results">Observed results</h2>
-<p>All times in <strong>milliseconds</strong>; medians from seven samples.</p>
+<h2 id="baseline-results-before-immutable-site-css">Baseline results (before immutable site CSS)</h2>
+<p>All times in <strong>milliseconds</strong>; medians from seven samples taken before
+the Cloudflare site switched to content-addressed CSS.</p>
 <table>
 <thead>
 <tr>
@@ -96,21 +97,67 @@ landing pages. Neither page reported non-input CLS in Chromium; both
 had one visible main element, one H1, <strong>zero runtime scripts</strong>, no
 horizontal overflow at 390 px, no page errors and no failed requests.</p>
 <h3 id="cache-delivery">Cache delivery</h3>
-<p>All live <code>/dist/syntyr.*.css</code> stylesheet responses declared
+<p>Before the optimization, both pages linked directly to
+<code>/dist/syntyr.*.css</code>, which declared
 <code>Cache-Control: public, max-age=0, must-revalidate</code>. The business
 page loaded 3 stylesheets, the dashboard 2. The repeat navigation
-still requested each stylesheet (cached validation responses account
-for the small transferred bytes). This is not the same as serving
-immutable content-addressed CSS to the documentation website.</p>
+still revalidated each stylesheet (response headers account for the
+small transferred bytes).</p>
 <p>The existing public <code>/v/&lt;published-version&gt;/</code> CSS releases correctly
 send <code>Cache-Control: public, max-age=31536000, immutable</code>. That
 mechanism cannot simply replace the site's <strong>unreleased alpha.5</strong>
 preview styles, which are allowed to change between builds.</p>
-<p><strong>Recommendation:</strong> prefer content-addressed, immutable stylesheet
-copies for the site's own live HTML, while preserving public
-<code>/dist/</code> and immutable <code>/v/</code> URLs. Validate a generated preview
-before changing Cloudflare production. Do not mark mutable <code>/dist</code>
-assets immutable: stale CSS could break pages after a deployment.</p>
+<p><strong>Implemented:</strong> The Syntyr site's own HTML now references
+content-addressed immutable stylesheet copies. Keep public <code>/dist/</code>
+assets revalidated and <code>/v/</code> releases frozen. Never mark mutable
+<code>/dist/</code> URLs immutable: stale CSS could break pages after a deployment.</p>
+<h3 id="post-deployment-validation-immutable-css-november-15-2026">Post-deployment validation: immutable CSS (November 15, 2026)</h3>
+<p>After <a href="https://github.com/dporkka/syntyr-css/pull/79">PR #79</a> merged at
+commit <code>5fbcf48</code>, the live pages referenced content-addressed CSS at
+<code>/_assets/css/&lt;sha256&gt;.css</code>. Cloudflare confirmed <strong>HTTP 200</strong> with
+<code>Cache-Control: public, max-age=31536000, immutable</code>. Public mutable
+<code>/dist/</code> and published immutable <code>/v/</code> URLs retained their original
+cache policies.</p>
+<p>We repeated <strong>seven cold/warm Chromium mobile runs per page</strong>, under
+the same synthetic 150 ms RTT / 1.6 Mbps / 4× CPU profile. Values below
+are median LCP in <strong>milliseconds</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Page</th>
+<th style="text-align:right">Cold baseline → after</th>
+<th style="text-align:right">Warm baseline → after</th>
+<th style="text-align:right">Warm CSS bytes baseline → after</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Business</td>
+<td style="text-align:right">508 → 520</td>
+<td style="text-align:right"><strong>364 → 192</strong></td>
+<td style="text-align:right">900 → 0</td>
+</tr>
+<tr>
+<td>SaaS dashboard</td>
+<td style="text-align:right">492 → 504</td>
+<td style="text-align:right"><strong>360 → 196</strong></td>
+<td style="text-align:right">600 → 0</td>
+</tr>
+</tbody>
+</table>
+<p>Warm LCP was <strong>172 ms (47%)</strong> faster for the business page and
+<strong>164 ms (46%)</strong> faster for the SaaS dashboard. Both after-change runs
+still had zero measured CLS in Chromium, no page errors and no failed
+requests. Cold LCP did not improve. The browser continued to report
+2–3 stylesheet resource entries even when their <code>transferSize</code> was
+zero; this reflects in-browser cache use, not extra CSS bytes received.</p>
+<p>These runs occurred at different times and were not a randomized,
+simultaneous experiment. The synthetic RTT creates an especially
+favorable case for removing conditional CSS revalidation. The results
+demonstrate the expected cache behavior and a plausible lab speedup,
+<strong>not a guaranteed improvement to field Core Web Vitals</strong>. Validate
+actual traffic with real-user data before publishing a general speed
+claim.</p>
 <h3 id="accessibility-and-csp">Accessibility and CSP</h3>
 <p>The developer-injected axe-core WCAG 2/2.1/2.2 tag audit reported:</p>
 <table>
@@ -157,13 +204,27 @@ site improvements worth exploring are <strong>immutable generated CSS
 URLs</strong> and manual accessibility verification. No result here
 justifies making automatic critical-CSS extraction mandatory.</p>
         </article>
-        <aside class="docs-article-sidebar"><nav aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#reproduction">Reproduction</a>
-<a class="docs-article-toc-link docs-article-toc-2" href="#observed-results">Observed results</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#baseline-results-before-immutable-site-css">Baseline results (before immutable site CSS)</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#cache-delivery">Cache delivery</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#post-deployment-validation-immutable-css-november-15-2026">Post-deployment validation: immutable CSS (November 15, 2026)</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#accessibility-and-csp">Accessibility and CSP</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#release-decision">Release decision</a>
-        </nav></aside>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#reproduction">Reproduction</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#baseline-results-before-immutable-site-css">Baseline results (before immutable site CSS)</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#cache-delivery">Cache delivery</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#post-deployment-validation-immutable-css-november-15-2026">Post-deployment validation: immutable CSS (November 15, 2026)</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#accessibility-and-csp">Accessibility and CSP</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#release-decision">Release decision</a>
+            </nav>
+          </details>
+        </aside>
       </div>
       <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="live-performance-audit.md">Markdown source</a></nav>
     </main>

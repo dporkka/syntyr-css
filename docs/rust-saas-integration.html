@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="An opt-in Syntyr profile is implemented on the feat/optional-syntyr-skin integration branch of dporkka/rust-saas-foundation . It uses a separate Askama…">
+  <meta name="syntyr-source-sha256" content="bec5718c2c2ed6518e07413318e9c43cd829a64ddf6087a0abbaaf790286328b">
+  <meta name="theme-color" content="#f5f7fb">
+  <title>Optional Rust SaaS Foundation / Askama / HTMX integration — Syntyr CSS docs</title>
+  <link rel="canonical" href="https://syntyr-css.pages.dev/docs/rust-saas-integration">
+  <link rel="alternate" type="text/markdown" href="rust-saas-integration.md" title="Markdown source">
+  <link rel="icon" href="../assets/syntyr-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="docs.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <a class="syn-button docs-skip" href="#doc-main">Skip to guide</a>
+  <div class="syn-shell">
+    <header class="syn-header docs-header">
+      <a class="syn-logo" href="../index.html">SYNTYR / CSS</a>
+      <nav class="syn-nav" aria-label="Documentation navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav>
+      <details class="site-mobile-menu"><summary>Menu</summary><nav aria-label="Mobile navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav></details>
+    </header>
+    <main id="doc-main" class="docs-article-page">
+      <nav class="syn-breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="reference.html">Documentation</a></li><li aria-current="page">Optional Rust SaaS Foundation / Askama / HTMX integration</li></ol></nav>
+      <header class="docs-article-heading">
+        <p class="syn-eyebrow">SYNTYR / DOCUMENTATION</p>
+        <p class="syn-muted">Current source documentation may describe unreleased alpha.5 features. <a href="distribution.html">Check released version compatibility.</a></p>
+        <p class="syn-caption">Prefer a machine-readable version? <a href="rust-saas-integration.md">Markdown source</a> · <a href="../llms.txt">LLM index</a></p>
+      </header>
+      <div class="docs-article-layout">
+        <article class="docs-prose" aria-label="Optional Rust SaaS Foundation / Askama / HTMX integration">
+<h1 id="optional-rust-saas-foundation-askama-htmx-integration">Optional Rust SaaS Foundation / Askama / HTMX integration</h1>
+<p>An opt-in Syntyr profile is implemented on the
+<code>feat/optional-syntyr-skin</code> integration branch of
+<code>dporkka/rust-saas-foundation</code>. It uses a separate Askama page template,
+shares the original <code>catalog.html</code> fragment, and does not require npm,
+external assets, or any additional runtime JavaScript.</p>
+<p>The source adapter is <code>integrations/rust-saas-foundation/catalog.css</code>.
+It scopes the existing <code>.wrap</code>, <code>.items</code> and <code>.item</code> classes beneath
+<code>.syn-rust-foundation</code> so the default page is unaffected. Load a pinned
+Syntyr core stylesheet first, then the adapter. The optional page sets
+<code>class=&quot;syn-root syn-rust-foundation&quot;</code> and <code>data-syn-theme=&quot;studio&quot;</code>.</p>
+<p>The Rust integration vendors the <strong>published alpha.4 core CSS</strong> and serves
+versioned assets from the application binary. The optional Syntyr page includes
+a keyboard-revealed skip link to its focusable main landmark; the adapter
+styles that link in normal and forced-colors modes. The updated bridge is
+versioned as <code>/assets/syntyr/bridge2/catalog.css</code> to avoid stale immutable CSS.
+It exposes <code>APP_UI_SKIN=syntyr</code> at startup; unknown values are rejected. The backend's identity, tenants,
+permissions, PostgreSQL queries and HTMX fragments are not touched.</p>
+<p>This demonstrates a public catalog. It does not prove an authenticated admin
+flow or certify accessibility. Browser, keyboard, contrast and zoom tests on
+real application pages are required before production claims.</p>
+<h2 id="runnable-independent-axum-askama-starter">Runnable independent Axum / Askama starter</h2>
+<p>The <a href="https://github.com/dporkka/syntyr-css/blob/main/examples/rust-axum/README.md">Rust Axum starter</a> demonstrates a
+fully runnable, read-only server-rendered project dashboard rather than
+an illustrative template. It uses Askama's default HTML escaping, a normal GET
+search form, accessible server-side search-length validation, a native table
+and an explicit scoped Syntyr theme.</p>
+<p>Run from the repository root:</p>
+<pre tabindex="0"><code>cd examples/rust-axum
+cargo test --locked
+cargo run --locked
+</code></pre>
+<p>The app compiles the repository's generated core CSS into its binary using
+Rust include_str!; deployed applications should vendor and pin a released
+stylesheet rather than relying on an upstream development tree. No additional
+Syntyr Rust package or client-side JavaScript is involved. This sample makes
+no claims about user authentication, authorization, mutation safety or
+production readiness beyond the demonstrated read-only flow.</p>
+        </article>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+<a class="docs-article-toc-link docs-article-toc-2" href="#runnable-independent-axum-askama-starter">Runnable independent Axum / Askama starter</a>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#runnable-independent-axum-askama-starter">Runnable independent Axum / Askama starter</a>
+            </nav>
+          </details>
+        </aside>
+      </div>
+      <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="rust-saas-integration.md">Markdown source</a></nav>
+    </main>
+    <footer class="syn-header"><span class="syn-caption">SYNTYR CSS · MIT CORE · EXPERIMENTAL</span><a href="../index.html">Home</a></footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "contact-quote",
+  "type": "registry:item",
+  "title": "Project inquiry form",
+  "description": "A labeled contact form with appropriate native inputs and privacy guidance.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://syntyr-css.pages.dev/registry/r/core.json"
+  ],
+  "files": [
+    {
+      "path": "blocks/snippets/contact-quote.html",
+      "type": "registry:file",
+      "target": "~/syntyr/blocks/contact-quote.html",
+      "content": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-inquiry\">\n  <h2 id=\"syn-inquiry\" class=\"syn-heading\">Tell us about your project</h2>\n  <form class=\"syn-panel syn-form\" action=\"/contact/request\" method=\"post\">\n    <div class=\"syn-field\"><label class=\"syn-label\" for=\"syn-inquiry-name\">Your name</label>\n      <input class=\"syn-input\" id=\"syn-inquiry-name\" name=\"name\" autocomplete=\"name\" required></div>\n    <div class=\"syn-field\"><label class=\"syn-label\" for=\"syn-inquiry-email\">Email address</label>\n      <input class=\"syn-input\" id=\"syn-inquiry-email\" name=\"email\" type=\"email\" autocomplete=\"email\" required></div>\n    <div class=\"syn-field\"><label class=\"syn-label\" for=\"syn-inquiry-details\">Project details</label>\n      <textarea class=\"syn-input\" id=\"syn-inquiry-details\" name=\"details\" rows=\"3\" required></textarea></div>\n    <button class=\"syn-button syn-button--primary\" type=\"submit\">Request a conversation</button>\n  </form>\n  <p class=\"syn-caption\">Sample form only. Add consent, anti-spam, CSRF and server validation in your application.</p>\n</section>\n"
+    },
+    {
+      "path": "LICENSE",
+      "type": "registry:file",
+      "target": "~/syntyr/LICENSE",
+      "content": "MIT License\n\nCopyright (c) 2026 Syntyr CSS contributors\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n"
+    }
+  ],
+  "meta": {
+    "syntyrVersion": "0.3.0-alpha.5",
+    "source": "MIT source candidate",
+    "runtimeJavaScript": false,
+    "fileDigests": {
+      "~/syntyr/blocks/contact-quote.html": "2e47e71183e2b0f0007b0927cc2fcf33a1196d520471eefb09bdc935ce311a2f",
+      "~/syntyr/LICENSE": "42f56369ac06362dbfe433d2d50b178bf74c369a55ea22337ab40fd9433521bf"
+    }
+  },
+  "docs": "Experimental source-candidate asset. Review exact version, HTML routes, keyboard behavior and integration before production use."
+}

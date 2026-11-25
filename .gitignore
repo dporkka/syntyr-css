@@ -8,6 +8,7 @@ previews/
 
 release/
 .cloudflare-public/
+.saas-admin-public/
 
 # The Hugo documentation proof never checks in its generated output.
 experiments/hugo/public/
@@ -25,7 +26,34 @@ package-lock.json
 pnpm-lock.yaml
 yarn.lock
 
+# Actual design-partner respondents and private research stay off public GitHub.
+business/private/
+
 # Benchmark output and optional dev-only dependencies.
 benchmarks/frameworks/generated/
 # Nested benchmark lockfile is intentional; root package-lock stays ignored.
 !benchmarks/frameworks/package-lock.json
+# Expo SDK fixture uses npm ci; keep its isolated lockfile for reproducibility.
+!examples/expo-native-smoke/package-lock.json
+# Pinned, isolated build tool for the optional docs-only CodeMirror editor.
+!tools/playground-editor/package-lock.json
+
+# Per-model AI output benchmark runs may contain private prompt/context details.
+benchmarks/agent-output/runs/
+
+# Optional JS adoption examples: avoid committing generated outputs.
+packages/react/dist/
+examples/react-vite/dist/
+examples/preact-jsx/dist/
+examples/solid-tsx/dist/
+examples/next-app-router/.next/
+*.tsbuildinfo
+
+# Generated optional portable CMS starter website.
+examples/cms-starter/_site/
+
+# Separate generated SaaS marketing deployment output (not source assets)
+deploy/saas-marketing/.public/
+
+# Optional Astro + Keystatic static starter: audited, pinned example lockfile.
+!examples/astro-keystatic/package-lock.json

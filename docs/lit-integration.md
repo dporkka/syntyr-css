@@ -1,6 +1,9 @@
 # Syntyr + Lit: optional Web Components interoperability
 
 Syntyr is a **CSS-first design system**, not a Lit or Web Components runtime.
+For a zero-framework example using native `HTMLElement` and Declarative Shadow DOM,
+see the [native Custom Elements fixture](https://github.com/dporkka/syntyr-css/tree/main/examples/web-components).
+The Lit integration below remains optional and independent.
 The Syntyr core has **zero required JavaScript**, no Node.js install requirement,
 and no dependency on Lit. A consumer application may independently choose Lit
 to implement behavior. This guide demonstrates the integration using real
@@ -111,6 +114,36 @@ overwrite an end user's explicit theme with a component-local default.
 See also the [component-authoring contract](component-authoring.md) and
 [framework integrations](framework-integrations.md).
 
+## Framework interoperability: React 19 and HTMX
+
+These examples verify **consumers**, not new Syntyr components or runtime APIs:
+
+- [React 19 source](https://github.com/dporkka/syntyr-css/blob/main/examples/lit/react-interop.html): React owns its state
+  and subscribes to the Lit element's native `syn-demo-status-change` custom event
+  through `onsyn-demo-status-change`. No Syntyr React adapter is involved.
+- [HTMX source](https://github.com/dporkka/syntyr-css/blob/main/examples/lit/htmx-interop.html): a native
+  `<form action="./htmx-result.html" method="get">` navigates to a readable,
+  static result document without JavaScript. With HTMX, the same response
+  replaces the `#htmx-result` subtree. The `.syn-root` stays outside the swap,
+  and the new Lit custom element upgrades without a Syntyr lifecycle hook.
+
+Both demos use pinned, locally bundled dependencies after `npm ci`. They perform
+no third-party runtime network fetches. The HTMX fixture is a **static GET
+demonstration** rather than a persistence or authenticated backend; applications
+must provide their own data fetching, CSRF protection for mutations, authorization
+and server-side validation. Avoid swapping *inside* Lit-managed light DOM,
+because Lit owns its rendered children; replace the custom-element host or an
+application-owned ancestor instead. Keep custom event listeners on stable
+ancestors when those hosts may be replaced. The React demo itself needs
+JavaScript; it shows an explanatory fallback without JavaScript rather than
+pretending to supply working React interaction.
+
+If your application needs a composable UI component, prefer light DOM plus
+native Syntyr classes. Choose Shadow DOM when encapsulation is necessary and
+reuse inherited public tokens and explicit CSS parts—not a parallel token
+registry. Do not ship an `@syntyr/lit` package without repeated production
+requirements that cannot be met by these patterns.
+
 ## Run and test the example
 
 ```sh
@@ -120,6 +153,7 @@ npm run build
 cd ../..
 python3 -m http.server 8765 --bind 127.0.0.1
 # visit http://127.0.0.1:8765/examples/lit/index.html
+# optional: /examples/lit/react-interop.html and /examples/lit/htmx-interop.html
 ```
 
 This example has an isolated `package.json` and lockfile. The build creates
@@ -130,10 +164,11 @@ the source stays available in the repository.
 After building the example, optionally run the browser interoperability checks:
 
 ```sh
-python3 tests/lit_browser.py --browsers chromium,firefox,webkit
+cd examples/lit && npm test
 ```
 
-Playwright and browser engines are developer-only test tools. A skipped,
+Playwright and browser engines are developer-only test tools. This isolated
+Node-based test runner avoids Python package downloads in CI. A skipped,
 uninstalled, or broken engine must be reported as unavailable, not as passing.
 
 ## Lit references

@@ -1,5 +1,5 @@
-# Standard-library-only CI. No npm, Node, or browser dependency is needed
-# to build, consume, or verify the shipped CSS.
+# The shipped CSS remains dependency-free. CI installs the pinned
+# maintainer-only Markdown renderer for the full documentation test suite.
 when:
   - event: pull_request
   - event: push
@@ -9,12 +9,19 @@ when:
 steps:
   - name: css-site-release-contract
     image: python:3.14-slim@sha256:9aaa474097d094040649f2162a627c0049b408f52138d980916788d80f04802f
+    environment:
+      # Official Python 3.14 lives under /usr/local, Debian packages under /usr/lib.
+      PYTHONPATH: /usr/lib/python3/dist-packages
     commands:
       # Python slim omits Git, but source/release contracts verify tracked paths.
       # The CI-only Git CLI is not a library runtime dependency.
-      - apt-get update && apt-get install -y --no-install-recommends git && rm -rf /var/lib/apt/lists/*
+      - apt-get update && apt-get install -y --no-install-recommends git python3-markdown-it && rm -rf /var/lib/apt/lists/*
       - git --version
+      # Woodpecker's PyPI egress is blocked (HTTP 403); use Debian's pure-Python
+      # maintainer-only package and verify it matches requirements-docs.txt.
+      - python3 -c 'from importlib.metadata import version; assert version("markdown-it-py") == "3.0.0"'
       - python3 scripts/build.py --check
+      - python3 scripts/maintenance_policy.py
       - python3 scripts/export_api_metadata.py --check
       - python3 scripts/build_agent_docs.py --check
       - python3 -m unittest discover -s tests -v

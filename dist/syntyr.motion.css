@@ -62,4 +62,436 @@
       }
     }
   }
+
+  /* Website-block effects: baseline remains visible and motion is opt-in. */
+  @keyframes syn-block-fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes syn-block-rise {
+    from { opacity: 0; translate: 0 var(--syn-block-reveal-distance, 1.5rem); }
+    to { opacity: 1; translate: 0 0; }
+  }
+  @keyframes syn-block-slide-left {
+    from { opacity: 0; translate: var(--syn-block-reveal-distance, 1.5rem) 0; }
+    to { opacity: 1; translate: 0 0; }
+  }
+  @keyframes syn-block-slide-right {
+    from { opacity: 0; translate: calc(-1 * var(--syn-block-reveal-distance, 1.5rem)) 0; }
+    to { opacity: 1; translate: 0 0; }
+  }
+  @keyframes syn-block-zoom {
+    from { opacity: 0; scale: var(--syn-block-reveal-scale, .94); }
+    to { opacity: 1; scale: 1; }
+  }
+  @keyframes syn-parallax-shift {
+    from { translate: 0 var(--syn-parallax-travel, 2.5rem); }
+    to { translate: 0 calc(-1 * var(--syn-parallax-travel, 2.5rem)); }
+  }
+
+  /* Overscan the media inside a clipped stacking context; keep text in flow. */
+  :where(.syn-root[data-syn-parallax], .syn-root [data-syn-parallax]) {
+    position: relative;
+    isolation: isolate;
+    overflow: clip;
+  }
+  :where(.syn-root[data-syn-parallax], .syn-root [data-syn-parallax]) > [data-syn-parallax-layer] {
+    position: absolute;
+    inset-inline: 0;
+    inset-block: calc(-1 * var(--syn-parallax-travel, 2.5rem));
+    inline-size: 100%;
+    block-size: calc(100% + 2 * var(--syn-parallax-travel, 2.5rem));
+    object-fit: cover;
+    z-index: 0;
+    pointer-events: none;
+  }
+  :where(.syn-root[data-syn-parallax], .syn-root [data-syn-parallax]) > [data-syn-parallax-content] {
+    position: relative;
+    z-index: 1;
+  }
+  :where(.syn-root[data-syn-hover="zoom"], .syn-root [data-syn-hover="zoom"]) {
+    overflow: clip;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    /* Native view timelines only: older browsers keep visible static content. */
+    @supports (animation-timeline: view()) and (animation-range: entry 0% entry 100%) {
+      :where(.syn-root[data-syn-scroll], .syn-root [data-syn-scroll]) {
+        animation-duration: 1s;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 100%;
+      }
+      :where(.syn-root[data-syn-scroll="fade"], .syn-root [data-syn-scroll="fade"]) {
+        animation-name: syn-block-fade;
+      }
+      :where(.syn-root[data-syn-scroll="rise"], .syn-root [data-syn-scroll="rise"]) {
+        animation-name: syn-block-rise;
+      }
+      :where(.syn-root[data-syn-scroll="slide-left"], .syn-root [data-syn-scroll="slide-left"]) {
+        animation-name: syn-block-slide-left;
+      }
+      :where(.syn-root[data-syn-scroll="slide-right"], .syn-root [data-syn-scroll="slide-right"]) {
+        animation-name: syn-block-slide-right;
+      }
+      :where(.syn-root[data-syn-scroll="zoom"], .syn-root [data-syn-scroll="zoom"]) {
+        animation-name: syn-block-zoom;
+      }
+    }
+    @supports (view-timeline-name: --syn-parallax) and (animation-timeline: --syn-parallax) {
+      :where(.syn-root[data-syn-parallax], .syn-root [data-syn-parallax]) {
+        view-timeline-name: --syn-parallax;
+        view-timeline-axis: block;
+      }
+      :where(.syn-root[data-syn-parallax], .syn-root [data-syn-parallax]) > [data-syn-parallax-layer] {
+        animation: syn-parallax-shift 1s linear both;
+        animation-timeline: --syn-parallax;
+        animation-range: cover 0% cover 100%;
+      }
+    }
+    @media (hover: hover) and (pointer: fine) {
+      :where(.syn-root[data-syn-hover="zoom"], .syn-root [data-syn-hover="zoom"]) [data-syn-hover-media] {
+        transition: scale var(--syn-motion-duration, 220ms) var(--syn-ease-out, ease-out);
+      }
+      :where(.syn-root[data-syn-hover="zoom"]:hover, .syn-root[data-syn-hover="zoom"]:focus-within,
+             .syn-root [data-syn-hover="zoom"]:hover, .syn-root [data-syn-hover="zoom"]:focus-within) [data-syn-hover-media] {
+        scale: var(--syn-hover-zoom, 1.06);
+      }
+    }
+  }
+
+  /* Reuse the static syn-gradient-wash from effects.css; never animate core. */
+  @keyframes syn-gradient-drift {
+    from { translate: -4% 0; }
+    to { translate: 4% 0; }
+  }
+  @keyframes syn-text-glint {
+    from { background-position: 100% 50%; }
+    to { background-position: 0 50%; }
+  }
+  @keyframes syn-text-underline {
+    from { text-decoration-color: transparent; }
+    to { text-decoration-color: var(--syn-accent); }
+  }
+
+  :where(.syn-root.syn-gradient-wash[data-syn-gradient="drift"],
+         .syn-root .syn-gradient-wash[data-syn-gradient="drift"]) {
+    position: relative;
+    isolation: isolate;
+    overflow: clip;
+  }
+  /* Position ordinary content above the decorative gradient overlay. */
+  :where(.syn-root.syn-gradient-wash[data-syn-gradient="drift"],
+         .syn-root .syn-gradient-wash[data-syn-gradient="drift"]) > [data-syn-gradient-content] {
+    position: relative;
+    z-index: 1;
+  }
+  :where(.syn-root[data-syn-text="underline"], .syn-root [data-syn-text="underline"]) {
+    text-decoration-line: underline;
+    text-decoration-thickness: .1em;
+    text-decoration-color: var(--syn-accent);
+    text-underline-offset: .18em;
+  }
+  @media (prefers-reduced-motion: no-preference) and (prefers-contrast: no-preference) and (forced-colors: none) {
+    :where(.syn-root.syn-gradient-wash[data-syn-gradient="drift"],
+           .syn-root .syn-gradient-wash[data-syn-gradient="drift"])::before {
+      content: "";
+      position: absolute;
+      inset: -18%;
+      z-index: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse at 30% 40%,
+          color-mix(in srgb, var(--syn-accent) 14%, transparent), transparent 55%),
+        radial-gradient(ellipse at 70% 65%,
+          color-mix(in srgb, var(--syn-accent-2) 12%, transparent), transparent 58%);
+      animation: syn-gradient-drift var(--syn-gradient-drift-duration, 14s) ease-in-out infinite alternate;
+    }
+    @supports (animation-timeline: view()) and (animation-range: entry 0% entry 100%) {
+      :where(.syn-root[data-syn-text="underline"], .syn-root [data-syn-text="underline"]) {
+        animation: syn-text-underline 1s linear both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 100%;
+      }
+    }
+    @supports (background-clip: text) or (-webkit-background-clip: text) {
+      :where(.syn-root[data-syn-text="glint"], .syn-root [data-syn-text="glint"]) {
+        background-image: linear-gradient(105deg,
+          var(--syn-text) 28%, var(--syn-accent) 48%, var(--syn-text) 68%);
+        background-size: 240% auto;
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        animation: syn-text-glint var(--syn-text-glint-duration, 9s) linear infinite alternate;
+      }
+    }
+  }
+  /* Do not leave text transparent or override contrast-enhanced browser colors. */
+  @media (forced-colors: active) {
+    :where(.syn-root[data-syn-text="glint"], .syn-root [data-syn-text="glint"]) {
+      background: none;
+      color: CanvasText;
+    }
+    :where(.syn-root[data-syn-text="underline"], .syn-root [data-syn-text="underline"]) {
+      text-decoration-color: CanvasText;
+    }
+  }
+
+  /* Website UI animations are separate from scroll-linked and icon motion.
+     No baseline state is hidden; no animation runs without data-syn-animate. */
+  @keyframes syn-animate-fade-in { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes syn-animate-fade-out { from { opacity: 1; } to { opacity: 0; } }
+  @keyframes syn-animate-slide-up {
+    from { opacity: 0; translate: 0 var(--syn-animation-distance, 1rem); }
+    to { opacity: 1; translate: 0 0; }
+  }
+  @keyframes syn-animate-slide-down {
+    from { opacity: 0; translate: 0 calc(-1 * var(--syn-animation-distance, 1rem)); }
+    to { opacity: 1; translate: 0 0; }
+  }
+  @keyframes syn-animate-slide-left {
+    from { opacity: 0; translate: var(--syn-animation-distance, 1rem) 0; }
+    to { opacity: 1; translate: 0 0; }
+  }
+  @keyframes syn-animate-slide-right {
+    from { opacity: 0; translate: calc(-1 * var(--syn-animation-distance, 1rem)) 0; }
+    to { opacity: 1; translate: 0 0; }
+  }
+  @keyframes syn-animate-zoom-in {
+    from { opacity: 0; scale: var(--syn-animation-scale, .94); }
+    to { opacity: 1; scale: 1; }
+  }
+  @keyframes syn-animate-zoom-out {
+    from { opacity: 1; scale: 1; }
+    to { opacity: 0; scale: var(--syn-animation-scale, .94); }
+  }
+  @keyframes syn-animate-pop {
+    0% { opacity: 0; scale: .85; }
+    65% { opacity: 1; scale: 1.06; }
+    100% { opacity: 1; scale: 1; }
+  }
+  @keyframes syn-animate-bounce {
+    0%, 100% { translate: 0 0; }
+    50% { translate: 0 calc(-.3 * var(--syn-animation-distance, 1rem)); }
+  }
+  @keyframes syn-animate-pulse {
+    0%, 100% { scale: 1; }
+    50% { scale: 1.06; }
+  }
+  @keyframes syn-animate-shake {
+    0%, 100% { translate: 0 0; }
+    20%, 60% { translate: -.35rem 0; }
+    40%, 80% { translate: .35rem 0; }
+  }
+  @keyframes syn-animate-rotate {
+    from { rotate: 0deg; }
+    to { rotate: var(--syn-animation-rotation, 360deg); }
+  }
+  @keyframes syn-animate-rotate-in {
+    from { opacity: 0; rotate: -12deg; }
+    to { opacity: 1; rotate: 0deg; }
+  }
+  @keyframes syn-animate-flip-in {
+    from { opacity: 0; rotate: y -80deg; }
+    to { opacity: 1; rotate: y 0deg; }
+  }
+
+  /* CSS-only playback controls. Looping is never the default. Reduced motion
+     gets a static document because no animation rule is activated for it. */
+  @media (prefers-reduced-motion: no-preference) {
+    :where(.syn-root[data-syn-animate], .syn-root [data-syn-animate]) {
+      /* Override inherited preset values so unknown names cannot animate. */
+      --syn-animation-keyframes: none;
+      --_syn-animation-loop-count: 1;
+      animation-name: var(--syn-animation-keyframes);
+      animation-duration: var(--syn-animation-duration, 420ms);
+      animation-delay: var(--syn-animation-delay, 0ms);
+      animation-timing-function: var(--syn-animation-easing, ease-out);
+      animation-iteration-count: var(--syn-animation-iterations, var(--_syn-animation-loop-count));
+      animation-direction: var(--syn-animation-direction, normal);
+      animation-play-state: var(--syn-animation-play-state, running);
+      animation-fill-mode: var(--syn-animation-fill-mode, none);
+    }
+    /* CSS typed arithmetic supports speed as a unitless multiplier. On
+       older browsers, the base duration still works at 1x speed. */
+    @supports (animation-duration: calc(1s / 2)) {
+      :where(.syn-root[data-syn-animate], .syn-root [data-syn-animate]) {
+        animation-duration: calc(var(--syn-animation-duration, 420ms) / var(--syn-animation-speed, 1));
+      }
+    }
+    :where(.syn-root[data-syn-animate="fade-in"], .syn-root [data-syn-animate="fade-in"]) {
+      --syn-animation-keyframes: syn-animate-fade-in;
+    }
+    :where(.syn-root[data-syn-animate="fade-out"], .syn-root [data-syn-animate="fade-out"]) {
+      --syn-animation-keyframes: syn-animate-fade-out;
+    }
+    :where(.syn-root[data-syn-animate="slide-up"], .syn-root [data-syn-animate="slide-up"]) {
+      --syn-animation-keyframes: syn-animate-slide-up;
+    }
+    :where(.syn-root[data-syn-animate="slide-down"], .syn-root [data-syn-animate="slide-down"]) {
+      --syn-animation-keyframes: syn-animate-slide-down;
+    }
+    :where(.syn-root[data-syn-animate="slide-left"], .syn-root [data-syn-animate="slide-left"]) {
+      --syn-animation-keyframes: syn-animate-slide-left;
+    }
+    :where(.syn-root[data-syn-animate="slide-right"], .syn-root [data-syn-animate="slide-right"]) {
+      --syn-animation-keyframes: syn-animate-slide-right;
+    }
+    :where(.syn-root[data-syn-animate="zoom-in"], .syn-root [data-syn-animate="zoom-in"]) {
+      --syn-animation-keyframes: syn-animate-zoom-in;
+    }
+    :where(.syn-root[data-syn-animate="zoom-out"], .syn-root [data-syn-animate="zoom-out"]) {
+      --syn-animation-keyframes: syn-animate-zoom-out;
+    }
+    :where(.syn-root[data-syn-animate="pop"], .syn-root [data-syn-animate="pop"]) {
+      --syn-animation-keyframes: syn-animate-pop;
+    }
+    :where(.syn-root[data-syn-animate="bounce"], .syn-root [data-syn-animate="bounce"]) {
+      --syn-animation-keyframes: syn-animate-bounce;
+    }
+    :where(.syn-root[data-syn-animate="pulse"], .syn-root [data-syn-animate="pulse"]) {
+      --syn-animation-keyframes: syn-animate-pulse;
+    }
+    :where(.syn-root[data-syn-animate="shake"], .syn-root [data-syn-animate="shake"]) {
+      --syn-animation-keyframes: syn-animate-shake;
+    }
+    :where(.syn-root[data-syn-animate="rotate"], .syn-root [data-syn-animate="rotate"]) {
+      --syn-animation-keyframes: syn-animate-rotate;
+      animation-timing-function: var(--syn-animation-easing, linear);
+    }
+    :where(.syn-root[data-syn-animate="rotate-in"], .syn-root [data-syn-animate="rotate-in"]) {
+      --syn-animation-keyframes: syn-animate-rotate-in;
+    }
+    :where(.syn-root[data-syn-animate="flip-in"], .syn-root [data-syn-animate="flip-in"]) {
+      --syn-animation-keyframes: syn-animate-flip-in;
+    }
+    :where(.syn-root[data-syn-animate].syn-animate--loop,
+           .syn-root [data-syn-animate].syn-animate--loop) {
+      --_syn-animation-loop-count: infinite;
+    }
+  }
+
+  /* Logo marquee: two visually identical groups per row guarantee a seamless
+     half-track translation. This is independent of the website animation API.
+     Author duplicates are aria-hidden/inert; real logos appear only once to AT. */
+  @keyframes syn-logo-marquee-scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  :where(.syn-root.syn-logo-marquee, .syn-root .syn-logo-marquee) {
+    display: grid;
+    gap: var(--syn-logo-row-gap, clamp(.75rem, 2vw, 1.5rem));
+    inline-size: 100%;
+    min-inline-size: 0;
+  }
+  :where(.syn-root.syn-logo-marquee, .syn-root .syn-logo-marquee) > .syn-logo-marquee__row {
+    inline-size: 100%;
+    min-inline-size: 0;
+  }
+  :where(.syn-root.syn-logo-marquee, .syn-root .syn-logo-marquee) .syn-logo-marquee__track {
+    display: flex;
+    align-items: center;
+    inline-size: 100%;
+  }
+  :where(.syn-root.syn-logo-marquee, .syn-root .syn-logo-marquee) .syn-logo-marquee__group {
+    display: flex;
+    flex: none;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--syn-logo-gap, clamp(1rem, 3vw, 3rem));
+    box-sizing: border-box;
+    inline-size: 100%;
+    margin: 0;
+    padding: 0 calc(var(--syn-logo-gap, clamp(1rem, 3vw, 3rem)) / 2);
+    list-style: none;
+  }
+  :where(.syn-root.syn-logo-marquee, .syn-root .syn-logo-marquee) .syn-logo-marquee__group > li {
+    flex: none;
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    overflow-wrap: anywhere;
+  }
+  :where(.syn-root.syn-logo-marquee, .syn-root .syn-logo-marquee) .syn-logo-marquee__group img,
+  :where(.syn-root.syn-logo-marquee, .syn-root .syn-logo-marquee) .syn-logo-marquee__group svg {
+    display: block;
+    inline-size: auto;
+    max-inline-size: min(100%, var(--syn-logo-max-width, 10rem));
+    block-size: var(--syn-logo-height, clamp(1.4rem, 3vw, 2.4rem));
+    object-fit: contain;
+  }
+
+  :where(.syn-root.syn-logo-marquee, .syn-root .syn-logo-marquee) .syn-logo-marquee__wordmark {
+    display: inline-block;
+    color: var(--syn-text, currentColor);
+    font-size: var(--syn-logo-height, clamp(.9rem, 2vw, 1.3rem));
+    line-height: 1.4;
+    font-weight: 700;
+    letter-spacing: .06em;
+  }
+
+  :where(.syn-root.syn-logo-marquee, .syn-root .syn-logo-marquee)
+    .syn-logo-marquee__group[aria-hidden="true"] {
+    display: none;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    /* Animate only paired rows. Keyboard focus restores the static layout
+       so all original logos and their links are visible. */
+    :where(.syn-root.syn-logo-marquee, .syn-root .syn-logo-marquee)
+      > .syn-logo-marquee__row:not(:focus-within):has(> .syn-logo-marquee__track
+        > .syn-logo-marquee__group:first-child + .syn-logo-marquee__group:last-child) {
+      overflow: clip;
+      container-type: inline-size;
+    }
+    :where(.syn-root.syn-logo-marquee, .syn-root .syn-logo-marquee)
+      > .syn-logo-marquee__row:not(:focus-within)
+      > .syn-logo-marquee__track:has(> .syn-logo-marquee__group:first-child + .syn-logo-marquee__group:last-child) {
+      inline-size: max-content;
+      animation-name: syn-logo-marquee-scroll;
+      animation-duration: var(--syn-logo-duration, 32s);
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+      animation-play-state: var(--syn-logo-play-state, running);
+      will-change: transform;
+    }
+    :where(.syn-root.syn-logo-marquee, .syn-root .syn-logo-marquee)
+      > .syn-logo-marquee__row:not(:focus-within)
+      > .syn-logo-marquee__track:has(> .syn-logo-marquee__group:first-child + .syn-logo-marquee__group:last-child)
+      > .syn-logo-marquee__group {
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: space-around;
+      inline-size: max-content;
+      min-inline-size: 100cqi;
+      white-space: nowrap;
+    }
+    :where(.syn-root.syn-logo-marquee, .syn-root .syn-logo-marquee)
+      > .syn-logo-marquee__row:not(:focus-within)
+      > .syn-logo-marquee__track:has(> .syn-logo-marquee__group:first-child + .syn-logo-marquee__group:last-child)
+      > .syn-logo-marquee__group :is(img, svg) {
+      max-inline-size: var(--syn-logo-max-width, 10rem);
+    }
+    :where(.syn-root.syn-logo-marquee, .syn-root .syn-logo-marquee)
+      > .syn-logo-marquee__row[data-syn-logo-direction="right"] > .syn-logo-marquee__track {
+      animation-direction: reverse;
+    }
+    /* Typed arithmetic supports speed multipliers. Otherwise use duration. */
+    @supports (animation-duration: calc(1s / 2)) {
+      :where(.syn-root.syn-logo-marquee, .syn-root .syn-logo-marquee)
+        > .syn-logo-marquee__row:not(:focus-within)
+        > .syn-logo-marquee__track:has(> .syn-logo-marquee__group:first-child + .syn-logo-marquee__group:last-child) {
+        animation-duration: calc(var(--syn-logo-duration, 32s) / var(--syn-logo-speed, 1));
+      }
+    }
+    @media (hover: hover) {
+      :where(.syn-root.syn-logo-marquee, .syn-root .syn-logo-marquee)
+        > .syn-logo-marquee__row:hover
+        > .syn-logo-marquee__track:has(> .syn-logo-marquee__group:first-child + .syn-logo-marquee__group:last-child) {
+        animation-play-state: paused;
+      }
+    }
+  }
 }

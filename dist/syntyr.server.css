@@ -8,6 +8,7 @@
     &.syn-button:where(
       [data-loading],             /* Livewire 4 */
       .htmx-request,             /* HTMX */
+      .up-active,                /* Unpoly request origin */
       .phx-click-loading,        /* Phoenix LiveView */
       .phx-change-loading,
       .phx-submit-loading,
@@ -17,8 +18,8 @@
     }
   }
 
-  /* HTMX and LiveView often mark the enclosing form during submission. */
-  .syn-root :where(form.htmx-request, form.phx-submit-loading)
+  /* HTMX, Unpoly and LiveView often mark the enclosing form during submission. */
+  .syn-root :where(form.htmx-request, form.up-active, form.phx-submit-loading)
     :where(.syn-button[type="submit"]:not(:disabled):not([aria-disabled="true"])) {
     cursor: progress;
   }

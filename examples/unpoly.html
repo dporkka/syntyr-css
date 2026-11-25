@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Unpoly + Syntyr — server search</title>
+  <!-- Unpoly is a pinned example-only application dependency, not Syntyr runtime. -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/unpoly@3.15.0/unpoly.css">
+  <link rel="stylesheet" href="/dist/syntyr.core.css">
+  <link rel="stylesheet" href="/dist/syntyr.server.css">
+  <script src="https://cdn.jsdelivr.net/npm/unpoly@3.15.0/unpoly.js" defer></script>
+</head>
+<body>
+  <!-- Keep the theme root outside both replaceable Unpoly fragments. -->
+  <main class="syn-root syn-page" data-syn-theme="studio">
+    <div class="syn-container syn-stack">
+      <h1 class="syn-heading">Unpoly customer search</h1>
+      <form id="unpoly-search" class="syn-form"
+            action="/customers/unpoly" method="get"
+            up-target="#customer-results, #unpoly-search" up-fail-target="#unpoly-search"
+            up-navigate="false">
+        <label class="syn-label" for="unpoly-query">Customer</label>
+        <input id="unpoly-query" class="syn-input" name="q" type="search" value="<!-- QUERY -->">
+        <!-- VALIDATION -->
+        <button id="unpoly-submit" class="syn-button syn-button--primary" type="submit">Search</button>
+      </form>
+      <div id="customer-results" class="syn-panel" role="region"
+           aria-live="polite" aria-label="Customers"><!-- RESULTS --></div>
+    </div>
+  </main>
+</body>
+</html>

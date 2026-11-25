@@ -7,6 +7,7 @@ from __future__ import annotations
 
 from html.parser import HTMLParser
 import json
+from scripts.syntyr_check import _is_dynamic, _stylesheet_name, validate_html
 from pathlib import Path
 import re
 
@@ -17,15 +18,16 @@ RELEASES = (PUBLISHED, CANDIDATE)
 MAX_HTML_CHARS = 20_000
 MAX_RESULTS = 40
 
-SELECTOR = re.compile(r"(?<![\w-])\.(syn-[a-zA-Z0-9_-]+)(?![a-zA-Z0-9_-])")
+SELECTOR = re.compile(r"\.(syn-[a-zA-Z0-9_-]+)(?![a-zA-Z0-9_-])")
 TOKEN = re.compile(r"(?<![\w-])(--syn-[a-zA-Z0-9_-]+)\s*:")
 CSS_COMMENT = re.compile(r"/\*.*?\*/", re.S)
 PREFER = (
     "syntyr.core.css", "syntyr.recipes.css", "syntyr.semantic.css",
+    "syntyr.semantic-bundle.css",
     "syntyr.geometry.css", "syntyr.effects.css", "syntyr.viz.css",
     "syntyr.utilities.css", "syntyr.motion.css", "syntyr.symbols.css",
     "syntyr.native-recipes.css", "syntyr.server.css", "syntyr.print.css",
-    "syntyr.css", "syntyr.all.css",
+    "syntyr.css", "syntyr.all.css", "headless/interactions.css",
 )
 
 
@@ -34,20 +36,27 @@ class CatalogError(ValueError):
 
 
 class ClassExtractor(HTMLParser):
-    def __init__(self):
+    """Collect only literal Syntyr classes and linked known CSS entrypoints."""
+
+    def __init__(self, stylesheet_names: set[str]):
         super().__init__(convert_charrefs=True)
         self.names: set[str] = set()
+        self.linked_stylesheets: set[str] = set()
+        self.stylesheet_names = stylesheet_names
 
     def handle_starttag(self, tag, attrs):
-        self._parse_attrs(attrs)
+        data = dict(attrs)
+        if tag.lower() == "link" and "stylesheet" in (data.get("rel") or "").split():
+            name = _stylesheet_name(data.get("href") or "", self.stylesheet_names)
+            if name:
+                self.linked_stylesheets.add(name)
+        for key in ("class", "classname"):
+            value = data.get(key) or ""
+            if not _is_dynamic(value):
+                self.names.update(name for name in value.split() if name.startswith("syn-"))
 
     def handle_startendtag(self, tag, attrs):
-        self._parse_attrs(attrs)
-
-    def _parse_attrs(self, attrs):
-        for key, val in attrs:
-            if key == "class" and val:
-                self.names.update(name for name in val.split() if name.startswith("syn-"))
+        self.handle_starttag(tag, attrs)
 
 
 class SyntyrCatalog:
@@ -87,6 +96,13 @@ class SyntyrCatalog:
                     "classes": set(SELECTOR.findall(src)),
                     "tokens": set(TOKEN.findall(src)),
                 }
+        if release == CANDIDATE:
+            adapter = self.root / "integrations/headless/interactions.css"
+            src = CSS_COMMENT.sub("", adapter.read_text(encoding="utf-8"))
+            found["headless/interactions.css"] = {
+                "classes": set(SELECTOR.findall(src)),
+                "tokens": set(TOKEN.findall(src)),
+            }
         if "syntyr.core.css" not in found:
             raise RuntimeError(f"Missing checked-in core stylesheet for {release}")
         classes = set().union(*(v["classes"] for v in found.values()))
@@ -141,6 +157,63 @@ class SyntyrCatalog:
             }),
         }, "note": "Syntyr styles native HTML; it does not implement app behavior."}
 
+    def get_interaction_contracts(self, name: str = "", release: str = PUBLISHED):
+        """Describe candidate-only UI anatomy and behavior ownership; never execute."""
+        base = self._release(release)
+        if release != CANDIDATE:
+            raise CatalogError("Interaction contracts are unavailable in the published release; select the source candidate explicitly")
+        manifest = json.loads((self.root / "metadata/interaction-contracts.v1.json").read_text(encoding="utf-8"))
+        if manifest["source_version"] != release or manifest["schema_version"] != 1:
+            raise RuntimeError("Interaction contract metadata version needs review")
+        term = name.strip().casefold()
+        contracts = [c for c in manifest["contracts"] if not term or c["id"] == term]
+        if not contracts:
+            raise CatalogError(f"Unknown interaction contract {name!r}; list contracts without a name")
+        return {**base, "schema_version": manifest["schema_version"],
+                "contracts": contracts, "note": manifest["note"]}
+
+    def get_interaction_recipes(self, contract: str = "", release: str = PUBLISHED):
+        """Discover runnable recipe references, not executable actions or test results."""
+        contracts = self.get_interaction_contracts(contract, release)
+        selected = {item["id"] for item in contracts["contracts"]}
+        all_ids = {item["id"] for item in self.get_interaction_contracts("", release)["contracts"]}
+        manifest = json.loads((self.root / "metadata/interaction-recipes.json").read_text(encoding="utf-8"))
+        if (manifest["schema_version"] != 1 or manifest["source_version"] != release
+                or manifest["release_status"] != "unreleased-source-candidate"):
+            raise RuntimeError("Interaction recipe metadata version needs review")
+        # A recipe may be a fallback or an alternative, not a conforming implementation.
+        links = {
+            "native-select": [("combobox", "fallback")],
+            "native-popover": [("dropdown", "implementation")],
+            "native-modal-dialog": [("dialog", "implementation"), ("disclosure", "example")],
+            "native-table": [("sortable-table", "fallback")],
+            "radix-menu": [("dropdown", "alternative")],
+            "react-aria-combobox": [("combobox", "implementation")],
+            "react-aria-sortable-grid": [("sortable-table", "implementation")],
+            "radix-toast": [],
+        }
+        recipes = manifest["recipes"]
+        if len(recipes) != len(links) or {item["id"] for item in recipes} != set(links):
+            raise RuntimeError("Interaction recipe links need review")
+        if {name for pairs in links.values() for name, _ in pairs} != all_ids:
+            raise RuntimeError("Interaction contract links need review")
+        known = self._catalog(release)["files"]
+        result = []
+        for item in recipes:
+            relations = links[item["id"]]
+            if contract.strip() and not any(name in selected for name, _ in relations):
+                continue
+            stylesheets = sorted({path.removeprefix("dist/").removeprefix("integrations/")
+                                  for path in item["css"]})
+            if not set(stylesheets) <= set(known):
+                raise RuntimeError(f"Recipe stylesheet inventory needs review: {item['id']}")
+            result.append({**item, "stylesheets": stylesheets,
+                           "contract_links": [{"id": name, "relationship": relation}
+                                              for name, relation in relations]})
+        return {**self._release(release), "schema_version": manifest["schema_version"],
+                "recipes": result,
+                "note": "Recipe and test source references, not runtime actions, test results or accessibility certification."}
+
     def lookup_api(self, name: str, release: str = PUBLISHED):
         base = self._release(release)
         kind = "class" if name.startswith("syn-") else "token" if name.startswith("--syn-") else None
@@ -173,25 +246,56 @@ class SyntyrCatalog:
         return {**base, "themes": themes, "tokens": tokens,
                 "note": "Names and stylesheets only, not computed browser values. Results capped at 40."}
 
+    def _validation_contract(self, release: str) -> dict:
+        """Assemble the shared HTML validator contract from this release's CSS.
+
+        The source candidate's HTML states are not silently assumed to be
+        available in the published immutable alpha.4 release.
+        """
+        info = self._catalog(release)
+        classes = [
+            {"name": name, "stylesheets": sorted(
+                file for file, data in info["files"].items() if name in data["classes"]
+            )}
+            for name in sorted(info["classes"])
+        ]
+        if release == PUBLISHED:
+            attributes = {"data-syn-theme": ["grid", "noir", "studio"]}
+        else:
+            source_contract = json.loads((self.root / "metadata/syntyr-contract.json").read_text())
+            if source_contract.get("source_version") != release:
+                raise RuntimeError("Candidate validator metadata version differs from installed CSS")
+            attributes = source_contract["attributes"]
+        return {"classes": classes, "attributes": attributes,
+                "stylesheets": sorted(info["files"])}
+
     def validate_markup(self, html: str, release: str = PUBLISHED,
                         stylesheets: list[str] | None = None):
         base = self._release(release)
         if not isinstance(html, str) or len(html) > MAX_HTML_CHARS:
             raise CatalogError(f"HTML is too long or invalid (limit {MAX_HTML_CHARS} characters)")
-        extractor = ClassExtractor()
-        extractor.feed(html)
-        found = sorted(extractor.names)
         info = self._catalog(release)
         if not isinstance(stylesheets, (list, type(None))) or not all(isinstance(s, str) for s in (stylesheets or [])):
-            raise CatalogError("stylesheets must be an array of Syntyr CSS filenames")
-        provided = sorted(set(stylesheets or []))
-        invalid = sorted(set(provided) - set(info["files"]))
+            raise CatalogError("stylesheets must be an array of known Syntyr stylesheet identifiers")
+        invalid = sorted(set(stylesheets or []) - set(info["files"]))
         if invalid:
             raise CatalogError(f"Unknown stylesheet(s) in {release}: {', '.join(invalid)}")
+
+        extractor = ClassExtractor(set(info["files"]))
+        extractor.feed(html)
+        extractor.close()
+        provided = sorted(set(stylesheets) if stylesheets is not None else extractor.linked_stylesheets)
+        contract = self._validation_contract(release)
+        diagnostics = validate_html(html, contract,
+                                    stylesheets=set(provided) if stylesheets is not None else None)
+        found = sorted(extractor.names)
         known = [c for c in found if c in info["classes"]]
         missing = [c for c in found if c not in info["classes"]]
         loaded = set().union(*(info["files"][f]["classes"] for f in provided)) if provided else set()
         required = sorted({self._stylesheet(c, "class", release) for c in known if c not in loaded})
         return {**base, "classes_checked": known, "unknown_classes": missing,
                 "missing_stylesheets": required, "installed_stylesheets": provided,
-                "note": "Static class check only. Not a WCAG or runtime behavior audit. Non-syn classes belong to the host app."}
+                "diagnostics": diagnostics,
+                "note": ("Literal HTML class and release-aware state checks, not a WCAG or "
+                         "runtime audit. Missing stylesheet summaries with no linked/explicit "
+                         "CSS are recommendations; module diagnostics require CSS context.")}

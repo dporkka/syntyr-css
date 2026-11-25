@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "catalog_status": "research-not-a-storefront",
+  "currency": "USD",
+  "last_reviewed": "2026-11-18",
+  "note": "Research concepts only. Prices for non-core products are hypotheses, not offers. No payment is accepted and no premium customer deliverables are available. The MIT framework stays free.",
+  "products": [
+    {
+      "id": "core",
+      "name": "Syntyr Core",
+      "status": "available",
+      "display_price": "Free",
+      "price_usd": 0,
+      "billing_model": "free",
+      "license_status": "MIT",
+      "deliverable_ready": true,
+      "description": "MIT-licensed CSS framework, published palettes, native HTML components and documentation.",
+      "details_url": "../docs/distribution.html"
+    },
+    {
+      "id": "console-kit",
+      "name": "Console Kit",
+      "status": "research",
+      "display_price": "$59 one-time",
+      "price_usd": 59,
+      "billing_model": "one-time-proposed",
+      "license_status": "draft-not-operative",
+      "deliverable_ready": false,
+      "description": "Private prototype with 12 original SaaS screen types and 36 static variants. Eight original screenshots are public. Backend actions remain illustrative.",
+      "details_url": "../docs/console-kit.html",
+      "prototype_screen_types": 12,
+      "prototype_theme_variants": 36,
+      "prototype_status": "private-source-candidate"
+    },
+    {
+      "id": "pro",
+      "name": "Syntyr Pro",
+      "status": "research",
+      "display_price": "$149 one-time",
+      "price_usd": 149,
+      "billing_model": "one-time-proposed",
+      "license_status": "draft-not-operative",
+      "deliverable_ready": false,
+      "description": "Private source/preview candidate with 25 SaaS and operations screen types and 75 static theme variants. Includes governance, developer tools and collaboration screens, plus an optional local-only Go resource workflow reference. No live backend or authorized commercial download.",
+      "details_url": "../docs/products.html",
+      "prototype_screen_types": 25,
+      "prototype_theme_variants": 75,
+      "prototype_status": "private-source-candidate"
+    },
+    {
+      "id": "studio",
+      "name": "Syntyr Studio",
+      "status": "research",
+      "display_price": "$299 one-time",
+      "price_usd": 299,
+      "billing_model": "one-time-proposed",
+      "license_status": "draft-not-operative",
+      "deliverable_ready": false,
+      "description": "Private source/preview candidate with all 25 Pro application screen types plus 17 website page types (15 pages in three original B2B SaaS, professional-services and ecommerce kits and two additional standalone previews), for 126 themed static pages. Storefront checkout is an illustrative screen only; no live orders, payments or hosted editor.",
+      "details_url": "../docs/products.html",
+      "prototype_screen_types": 42,
+      "prototype_theme_variants": 126,
+      "prototype_status": "private-source-candidate"
+    },
+    {
+      "id": "agency",
+      "name": "Syntyr Agency",
+      "status": "research",
+      "display_price": "$499/year",
+      "price_usd": 499,
+      "billing_model": "annual-proposed",
+      "license_status": "draft-not-operative",
+      "deliverable_ready": false,
+      "description": "Proposed agency/team licensing, future releases and team-oriented support subject to demand validation.",
+      "details_url": "../docs/products.html"
+    }
+  ],
+  "prototype_inventory_snapshot_date": "2026-11-18"
+}

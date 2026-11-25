@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Framer site customization with plain CSS: Embed Syntyr-styled pricing callouts, feature comparisons or lightweight technical content on a Framer site…">
+  <meta name="syntyr-source-sha256" content="9f6325b531ea21e4ede93787e48ccfaba11cdb992448b8cc6d0ecb69d64c37bb">
+  <meta name="theme-color" content="#f5f7fb">
+  <title>Syntyr for Framer | Embeds &amp; CSS Components</title>
+  <link rel="canonical" href="https://syntyr-css.pages.dev/docs/framer">
+  <meta property="og:image" content="https://syntyr-css.pages.dev/assets/og-syntyr.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="alternate" type="text/markdown" href="framer.md" title="Markdown source">
+  <link rel="icon" href="../assets/syntyr-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="docs.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <a class="syn-button docs-skip" href="#doc-main">Skip to guide</a>
+  <div class="syn-shell">
+    <header class="syn-header docs-header">
+      <a class="syn-logo" href="../index.html">SYNTYR / CSS</a>
+      <nav class="syn-nav" aria-label="Documentation navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav>
+      <details class="site-mobile-menu"><summary>Menu</summary><nav aria-label="Mobile navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav></details>
+    </header>
+    <main id="doc-main" class="docs-article-page">
+      <nav class="syn-breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="reference.html">Documentation</a></li><li aria-current="page">Syntyr for Framer: reusable CSS components in embeds</li></ol></nav>
+      <header class="docs-article-heading">
+        <p class="syn-eyebrow">SYNTYR / DOCUMENTATION</p>
+        <p class="syn-muted">Current source documentation may describe unreleased alpha.5 features. <a href="distribution.html">Check released version compatibility.</a></p>
+        <p class="syn-caption">Prefer a machine-readable version? <a href="framer.md">Markdown source</a> · <a href="../llms.txt">LLM index</a></p>
+      </header>
+      <div class="docs-article-layout">
+        <article class="docs-prose" aria-label="Syntyr for Framer: reusable CSS components in embeds">
+<h1 id="syntyr-for-framer-reusable-css-components-in-embeds">Syntyr for Framer: reusable CSS components in embeds</h1>
+<p><strong>Framer site customization with plain CSS:</strong> Embed Syntyr-styled pricing callouts, feature comparisons or lightweight technical content on a Framer site using the project's Custom Code settings and an HTML-capable Embed component. Prefer the built-in Framer elements for ordinary page structure; use Syntyr when you specifically need portable, source-owned HTML.</p>
+<h2 id="why-use-syntyr-on-framer">Why use Syntyr on Framer?</h2>
+<p>The benefit is portability: a Syntyr component depends on its markup and stylesheet, not on a particular Framer component or generated CSS selector. It can reuse the same Studio/Grid/Noir token system as a separately hosted product site. A static Syntyr component uses no JavaScript runtime of its own and can be modified in source control independently of Framer.</p>
+<h2 id="how-to-install-syntyr-in-framer">How to install Syntyr in Framer</h2>
+<ol>
+<li>Publish a versioned <code>syntyr.embed.css</code> asset to an HTTPS origin. In <strong>Project Settings → Custom Code</strong>, use the project's <strong>Head</strong> placement to load the stylesheet for site-owned markup.</li>
+<li>Insert an <strong>Embed</strong> component where you want custom content. For an HTML-capable embed, paste Syntyr markup:</li>
+</ol>
+<pre tabindex="0"><code class="language-html">&lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;framer-demo&quot;&gt;
+  &lt;div class=&quot;syn-panel&quot;&gt;
+    &lt;h2 id=&quot;framer-demo&quot; class=&quot;syn-heading&quot;&gt;Launch-ready design&lt;/h2&gt;
+    &lt;p class=&quot;syn-muted&quot;&gt;A source-owned section for your Framer page.&lt;/p&gt;
+    &lt;a class=&quot;syn-button syn-button--primary&quot; href=&quot;/features&quot;&gt;Explore features&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+</code></pre>
+<ol start="3">
+<li><strong>Check the embed's document boundary.</strong> If Framer renders it inside an iframe, the parent Head link cannot style it. In that case embed a full HTML document with its <strong>own</strong> stylesheet link, or host the component as an HTTPS page and embed its URL.</li>
+<li>Publish and test the page at representative desktop and mobile widths.</li>
+</ol>
+<h2 id="limitations-and-framer-specific-considerations">Limitations and Framer-specific considerations</h2>
+<p>Framer's Embed and Custom Code features serve different paths. Embedding another URL can be blocked by the destination's <code>frame-ancestors</code>/X-Frame-Options headers, and it adds frame sizing and accessibility considerations. Syntyr does not integrate with the Framer Canvas, CMS, custom animations or built-in interactions by itself. Use Framer's native controls when those are a better fit.</p>
+<p><strong>Framer references:</strong> <a href="https://www.framer.com/help/articles/how-to-add-custom-code/">Adding custom code</a> and <a href="https://www.framer.com/help/articles/how-to-add-an-iframe-or-embed-script/">Embed/iframe instructions</a>.</p>
+<h2 id="verify-the-result-before-publishing">Verify the result before publishing</h2>
+<p>Check the public, published URL rather than relying only on an editor preview. Confirm that the Syntyr stylesheet returns HTTP 200 with a CSS content type, that a button inside <code>.syn-root</code> has the desired theme, and that unrelated host navigation, product cards and forms remain unchanged. Test keyboard focus, accessible names, narrow screens around 320px, reduced motion and the platform's own responsive layouts. If an iframe is involved, test its height, keyboard navigation, sandbox attributes and HTTPS/CSP restrictions.</p>
+<p><strong>Release compatibility:</strong> The immutable <strong>alpha.4</strong> stylesheet <code>syntyr.core.css</code> is published. The <strong>alpha.5</strong> <code>syntyr.embed.css</code> bundle is a candidate build designed for existing themes; it is not part of the alpha.4 release. Build the candidate from the source repository and self-host a version-pinned copy for testing. Never load both bundles together, and verify theme-specific overrides before production rollout. Syntyr is a stylesheet, not an official integration or plug-in from the site platform.</p>
+<p>Explore the <a href="site-builders.html">platform integration overview</a>, <a href="distribution.html">Syntyr distribution and release guide</a>, or <a href="../examples/platform-embed.html">live host-theme example</a>.</p>
+        </article>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+<a class="docs-article-toc-link docs-article-toc-2" href="#why-use-syntyr-on-framer">Why use Syntyr on Framer?</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#how-to-install-syntyr-in-framer">How to install Syntyr in Framer</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#limitations-and-framer-specific-considerations">Limitations and Framer-specific considerations</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#verify-the-result-before-publishing">Verify the result before publishing</a>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#why-use-syntyr-on-framer">Why use Syntyr on Framer?</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#how-to-install-syntyr-in-framer">How to install Syntyr in Framer</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#limitations-and-framer-specific-considerations">Limitations and Framer-specific considerations</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#verify-the-result-before-publishing">Verify the result before publishing</a>
+            </nav>
+          </details>
+        </aside>
+      </div>
+      <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="framer.md">Markdown source</a></nav>
+    </main>
+    <footer class="syn-header"><span class="syn-caption">SYNTYR CSS · MIT CORE · EXPERIMENTAL</span><a href="../index.html">Home</a></footer>
+  </div>
+</body>
+</html>

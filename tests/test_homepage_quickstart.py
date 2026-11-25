@@ -50,6 +50,15 @@ class SiteOnboardingTests(unittest.TestCase):
         self.assertIn("unreleased", quickstart.lower())
         self.assertIn("self-host", quickstart.lower())
 
+    def test_hero_discloses_published_version_before_primary_cta(self):
+        hero = self.markup.split('<section class="site-hero"', 1)[1]
+        above_cta = hero.split('<div class="syn-actions">', 1)[0]
+        self.assertIn("alpha.4", above_cta)
+        self.assertIn("alpha.5", above_cta)
+        self.assertIn("unreleased", above_cta.lower())
+        self.assertIn(PINNED_CSS, above_cta)
+        self.assertNotIn("/dist/syntyr.", above_cta)
+
     def test_homepage_has_unambiguous_canonical_social_url(self):
         self.assertTrue(any(tag == "link" and attrs.get("rel") == "canonical"
                             and attrs.get("href") == "https://syntyr-css.pages.dev/"

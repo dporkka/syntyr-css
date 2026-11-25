@@ -1,0 +1,33 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "effects",
+  "type": "registry:item",
+  "title": "Syntyr effects CSS",
+  "description": "MIT Syntyr effects stylesheet. No runtime JavaScript.",
+  "dependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "dist/syntyr.effects.css",
+      "type": "registry:file",
+      "target": "~/syntyr/css/syntyr.effects.css",
+      "content": "/* Optional static effects. */\n@layer syn.effects {\n  /* All component rules match the root itself or a descendant, never a host sibling. */\n  :where(.syn-root, .syn-root *) {\n    &.syn-grid-effect {\n      background-image:\n        linear-gradient(to right, color-mix(in srgb, var(--syn-accent) var(--syn-grid-alpha, 5%), transparent) 1px, transparent 1px),\n        linear-gradient(to bottom, color-mix(in srgb, var(--syn-accent) var(--syn-grid-alpha, 5%), transparent) 1px, transparent 1px);\n      background-size: 2rem 2rem;\n    }\n    &.syn-glow { box-shadow: 0 0 22px color-mix(in srgb, var(--syn-accent) var(--syn-glow-alpha, 12%), transparent); }\n    /* Static atmospheric wash. This is decoration, not an interactive state. */\n    &.syn-gradient-wash {\n      background-image:\n        radial-gradient(ellipse at 15% 10%, color-mix(in srgb, var(--syn-accent) var(--syn-wash-alpha, 15%), transparent), transparent 55%),\n        radial-gradient(ellipse at 90% 80%, color-mix(in srgb, var(--syn-accent-2) var(--syn-wash-secondary-alpha, 10%), transparent), transparent 60%);\n    }\n    /* Gradient horizon. */\n    &.syn-horizon {\n      background-image:\n        linear-gradient(to bottom, transparent 45%, var(--syn-bg) 100%),\n        repeating-linear-gradient(to right, transparent 0 calc(3rem - 1px), color-mix(in srgb, var(--syn-accent) var(--syn-horizon-alpha, 10%), transparent) calc(3rem - 1px) 3rem),\n        repeating-linear-gradient(to bottom, transparent 0 calc(3rem - 1px), color-mix(in srgb, var(--syn-accent) var(--syn-horizon-alpha, 10%), transparent) calc(3rem - 1px) 3rem),\n        radial-gradient(ellipse at 70% 20%, color-mix(in srgb, var(--syn-accent) var(--syn-wash-alpha, 15%), transparent), transparent 55%);\n    }\n    /* Gradient atmosphere. */\n    &.syn-atmosphere {\n      background-image:\n        radial-gradient(ellipse at 85% 10%, color-mix(in srgb, var(--syn-accent) var(--syn-wash-alpha, 15%), transparent), transparent 55%),\n        radial-gradient(ellipse at 15% 90%, color-mix(in srgb, var(--syn-accent-2) var(--syn-wash-secondary-alpha, 10%), transparent), transparent 60%);\n      background-color: var(--syn-bg);\n    }\n    &.syn-scanlines { position: relative; isolation: isolate; }\n    &.syn-scanlines::after {\n      content: \"\"; pointer-events: none; position: absolute; inset: 0; z-index: 2;\n      background: repeating-linear-gradient(to bottom, transparent 0 3px, rgb(0 0 0 / var(--syn-scanline-alpha, 10%)) 3px 4px);\n    }\n    /* A zero-opacity grid still leaves the opaque horizon fade; remove that too. */\n    @media (prefers-contrast: more) {\n      &.syn-horizon { background-image: none; }\n    }\n    @media (forced-colors: active) {\n      &.syn-scanlines::after { display: none; }\n      &.syn-horizon, &.syn-atmosphere, &.syn-gradient-wash { background-image: none; }\n    }\n  }\n}\n"
+    },
+    {
+      "path": "LICENSE",
+      "type": "registry:file",
+      "target": "~/syntyr/LICENSE",
+      "content": "MIT License\n\nCopyright (c) 2026 Syntyr CSS contributors\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n"
+    }
+  ],
+  "meta": {
+    "syntyrVersion": "0.3.0-alpha.5",
+    "source": "MIT source candidate",
+    "runtimeJavaScript": false,
+    "fileDigests": {
+      "~/syntyr/css/syntyr.effects.css": "197d1c154963f45f9c41fd9c1a0cd87955c4602d11d13ccfd14d9c0aa2b47650",
+      "~/syntyr/LICENSE": "42f56369ac06362dbfe433d2d50b178bf74c369a55ea22337ab40fd9433521bf"
+    }
+  },
+  "docs": "Experimental source-candidate asset. Review exact version, HTML routes, keyboard behavior and integration before production use."
+}

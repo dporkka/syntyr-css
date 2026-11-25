@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="This report distinguishes the most recent automated findings from older pixel-sampling evidence. It is not a WCAG certification.">
-  <meta name="syntyr-source-sha256" content="d69ee22de445d23cf6ee2c8542255fa8a545a09b99ccdad5d6eed62c0f3a34e2">
+  <meta name="syntyr-source-sha256" content="c7993350a92901bc834840ddc5dcead0235bcbaed8f97b7edda033c4e2048029">
   <meta name="theme-color" content="#f5f7fb">
   <title>SYNTYR alpha.5 — outstanding accessibility review — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/accessibility-alpha5-review">
@@ -37,7 +37,45 @@
 <h1 id="syntyr-alpha5-outstanding-accessibility-review">SYNTYR alpha.5 — outstanding accessibility review</h1>
 <p>This report distinguishes the most recent automated findings from older
 pixel-sampling evidence. It is <strong>not</strong> a WCAG certification.</p>
-<h2 id="follow-up-audit-9f7f22b-november-15-2026">Follow-up audit: <code>9f7f22b</code> (November 15, 2026)</h2>
+<h2 id="fresh-exact-head-audit-70ec764-november-18-2026">Fresh exact-head audit: <code>70ec764</code> (November 18, 2026)</h2>
+<p><strong>Newest automated source snapshot, not alpha.5 release approval.</strong>
+This source candidate includes the focused fixes to keyboard-inaccessible
+documentation code blocks and a prohibited ARIA label on a nested form footer.</p>
+<ul>
+<li>Chromium with <strong>Playwright 1.65.2</strong> and pinned <strong>axe-core 4.10.3</strong>,
+checksum SHA-256
+<code>880970c081707360e64f34cea25ff91892f5bc95675b0776925b9709dd8a68bb</code>:
+<strong>37 pages</strong>, <strong>zero confirmed automated violation nodes</strong>, and
+<strong>15 incomplete color-contrast rule results comprising 165 element targets</strong>.</li>
+<li>Baseline <code>985fe01</code> had <strong>two serious scrollable-region-focusable nodes</strong>
+in the design-principles guide and one <strong>aria-prohibited-attr</strong> incomplete
+footer. The source candidate eliminated all three; the 165 remaining
+incomplete targets concern contrast, not confirmed failures.</li>
+<li>The reconciled source passed <strong>1,035 Python tests (one skipped)</strong>,
+generated-document/metadata/registry/CSS/Cloudflare and maintenance checks.
+Chromium/Firefox verified focused ArrowRight keyboard scrolling of the
+code examples at 320px/390px (also forced-colors emulation) and 1280px.</li>
+<li>Conservative pixel triage at <strong>1280/390/320px</strong> produced
+<strong>495 observations</strong>: <strong>459 screenshot samples above text thresholds</strong>,
+<strong>9 opaque computed placeholder pairs above threshold</strong>, and
+<strong>27 non-text entries</strong>, with <strong>zero sampled below or near threshold</strong>.
+The lowest sampled text result was approximately <strong>5.19:1</strong> against the
+ordinary-text 4.5:1 threshold, on the business example kicker.</li>
+</ul>
+<p><strong>Still open:</strong> manually adjudicate each of the 165 axe-incomplete contrast
+targets in real painted, interactive states. Samples are not glyph-level
+certification and may miss gradients, overlays or focus/hover appearance.
+True <strong>200%/400% browser zoom</strong>, native OS high contrast, screen-reader
+testing and representative application flows are not proven. The unpatched
+high-severity <code>picomatch</code> advisory in optional Expo development tooling
+remains separate and unresolved. <strong>Do not tag or publish alpha.5</strong> on these
+automated results alone.</p>
+<p>For reproduction, run the pinned local axe script with
+<code>tests/axe_audit.py</code>, then pass its JSON report to
+<code>tests/contrast_pixel_triage.py</code> at widths 1280, 390 and 320. The JSON
+reports were retained outside the source tree at the audited revision.
+Repeat the audit when main advances.</p>
+<h2 id="historical-follow-up-audit-9f7f22b-november-15-2026">Historical follow-up audit: <code>9f7f22b</code> (November 15, 2026)</h2>
 <p>This is a <strong>newer source-only candidate audit</strong>, not a published
 release or an accessibility certification. It incorporates the enlarged-text
 WebKit reflow fixes and the restored <code>examples/native-apis.html</code> audit coverage.</p>
@@ -389,7 +427,7 @@ verified</strong>.</li>
 </table>
 <p>These are axe-core <em>incomplete</em> element entries rather than proven defects.
 Regenerate the exact selector-level evidence with:</p>
-<pre><code class="language-sh">python3 tests/axe_audit.py --axe-file /tmp/axe.min.js \
+<pre tabindex="0"><code class="language-sh">python3 tests/axe_audit.py --axe-file /tmp/axe.min.js \
   --report /tmp/syntyr-axe-manual-review.json
 </code></pre>
 <p>The earlier pixel-sampling results below were collected against <code>4a623d0</code>,
@@ -486,7 +524,7 @@ involving pseudo-elements, four too-short text cases, four non-text-only cases,
 and one partially obscured element. They are <strong>not</strong> 325 proven defects.
 Generate a reproducible node-by-node triage report (selectors, HTML snippets,
 rule and failure summaries) in a local file using the developer-only audit:</p>
-<pre><code class="language-sh">python3 tests/axe_audit.py --axe-file /tmp/axe.min.js \
+<pre tabindex="0"><code class="language-sh">python3 tests/axe_audit.py --axe-file /tmp/axe.min.js \
   --report /tmp/syntyr-axe-manual-review.json
 </code></pre>
 <p>The automated checker cannot establish the effective paint underneath these foregrounds where gradients and pseudo-elements overlap text. Contrast-token unit tests are useful but do not certify composited backgrounds.</p>
@@ -566,7 +604,7 @@ and representative-product checks below remain open.</p>
 <p>Earlier automated browser evidence covered <strong>126 viewport cases</strong> across Chromium/Firefox/WebKit and <strong>168 enlarged-text reflow cases</strong> on a historical commit. These figures are not the latest branch coverage. The Chromium forced-colors primary-link screenshot and focus tests passed for all seven palettes in that snapshot. None of these checks substitute for native Windows High Contrast or other OS-level modes, real browser zoom, or a screen reader.</p>
 <h2 id="remaining-release-checklist">Remaining release checklist</h2>
 <ul>
-<li>[ ] Measure or adjudicate each of the <strong>161 unresolved</strong> text/background element entries in the latest 28-page candidate audit above. The 345-entry and 325-entry figures below describe earlier commits and are historical, not the current review queue.</li>
+<li>[ ] Measure or adjudicate each of the <strong>165 axe-incomplete contrast elements</strong> in the latest 37-page candidate audit above (70ec764). Earlier 161-, 162-, 345- and 325-entry figures are historical snapshots, not the current review queue.</li>
 <li>[ ] Test keyboard-only navigation, native dialog/popover focus, table regions, disclosure and form semantics in a representative real app.</li>
 <li>[ ] Perform real assistive-technology testing with NVDA, JAWS, VoiceOver or Orca and record evidence.</li>
 <li>[ ] Test true 200% and 400% browser zoom on supported browsers; verify navigation, reflow and target visibility.</li>
@@ -584,8 +622,10 @@ Playwright 1.65.2 image. These do not describe the newer 1.64.1 run.</li>
 </ul>
 <p>A passing axe-core run alone is <strong>not</strong> sufficient to claim WCAG conformance.</p>
         </article>
-        <aside class="docs-article-sidebar"><nav aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
-<a class="docs-article-toc-link docs-article-toc-2" href="#follow-up-audit-9f7f22b-november-15-2026">Follow-up audit: 9f7f22b (November 15, 2026)</a>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+<a class="docs-article-toc-link docs-article-toc-2" href="#fresh-exact-head-audit-70ec764-november-18-2026">Fresh exact-head audit: 70ec764 (November 18, 2026)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#historical-follow-up-audit-9f7f22b-november-15-2026">Historical follow-up audit: 9f7f22b (November 15, 2026)</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#follow-up-pixel-triage-after-pr-118-november-15-2026">Follow-up pixel triage after PR #118 (November 15, 2026)</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#verified-source-snapshot-038a24d-november-15-2026">Verified source snapshot: 038a24d (November 15, 2026)</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#historical-post-merge-snapshot-b19c331-november-14-2026-brasília">Historical post-merge snapshot: b19c331 (November 14, 2026, Brasília)</a>
@@ -595,7 +635,24 @@ Playwright 1.65.2 image. These do not describe the newer 1.64.1 run.</li>
 <a class="docs-article-toc-link docs-article-toc-2" href="#supplemental-browser-pixel-contrast-triage-merged-4a623d0">Supplemental browser-pixel contrast triage — merged 4a623d0</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#manual-verification-protocol">Manual verification protocol</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#remaining-release-checklist">Remaining release checklist</a>
-        </nav></aside>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#fresh-exact-head-audit-70ec764-november-18-2026">Fresh exact-head audit: 70ec764 (November 18, 2026)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#historical-follow-up-audit-9f7f22b-november-15-2026">Historical follow-up audit: 9f7f22b (November 15, 2026)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#follow-up-pixel-triage-after-pr-118-november-15-2026">Follow-up pixel triage after PR #118 (November 15, 2026)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#verified-source-snapshot-038a24d-november-15-2026">Verified source snapshot: 038a24d (November 15, 2026)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#historical-post-merge-snapshot-b19c331-november-14-2026-brasília">Historical post-merge snapshot: b19c331 (November 14, 2026, Brasília)</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#manual-only-release-requirements-still-open">Manual-only release requirements still open</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#historical-comparison-4a623d0-baseline">Historical comparison: 4a623d0 baseline</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#automated-axe-core-findings">Automated axe-core findings</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#supplemental-browser-pixel-contrast-triage-merged-4a623d0">Supplemental browser-pixel contrast triage — merged 4a623d0</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#manual-verification-protocol">Manual verification protocol</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#remaining-release-checklist">Remaining release checklist</a>
+            </nav>
+          </details>
+        </aside>
       </div>
       <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="accessibility-alpha5-review.md">Markdown source</a></nav>
     </main>

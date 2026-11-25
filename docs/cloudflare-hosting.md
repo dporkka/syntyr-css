@@ -22,6 +22,8 @@ The site retains relative HTML links, component examples, Markdown guides,
 terminal palette JSON, and public CSS assets. The optional documentation-only theme editor has its
 own small JavaScript file; consuming apps and other demos require none.
 
+See [the provider-neutral staging and experimental Nulang Cloud guide](nulang-cloud-hosting.md) for an optional portable artifact workflow. This does not replace the existing production Cloudflare hosting path.
+
 ## Cloudflare hosting
 
 Preferred for new deployments: Cloudflare Workers Static Assets. A simple
@@ -96,6 +98,12 @@ unversioned preview CSS immutable. Frozen public `/v/<version>/*`
 releases remain byte-for-byte unchanged. Third-party applications should
 still self-host or pin versioned assets, rather than copy the hashed
 documentation-only URLs.
+
+Before adding a new frozen CDN version, follow the [release freeze review
+procedure](release-freeze.md) and run `python3 scripts/freeze_site_release.py
+--check`. The `--apply` freeze operation requires an exact-commit human evidence record
+and a fresh deterministic CSS build; the read-only technical preflight,
+routine CI and candidate ZIP creation do not grant publication approval.
 
 The builder recognizes local linked stylesheet files that are included
 in the public allowlist. It rejects CSS containing unresolved `@import`

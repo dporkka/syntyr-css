@@ -20,12 +20,12 @@ class SyntyrBrandTests(unittest.TestCase):
     def test_current_stylesheet_paths_are_built_and_tracked(self):
         tracked = subprocess.check_output(
             ['git','ls-files','--','dist/'], cwd=ROOT, text=True).splitlines()
-        from scripts.build import distributions
+        from scripts.build import distributions, all_distributions
         expected = {f'dist/{name}' for name in distributions()}
         self.assertTrue(expected <= set(tracked), f'Git is missing {expected-set(tracked)}')
-        self.assertEqual({p.as_posix().split('/')[-1]
-                          for p in (ROOT/'dist').glob('*.css')},
-                         {path.split('/')[-1] for path in expected})
+        self.assertEqual({p.relative_to(ROOT / 'dist').as_posix()
+                          for p in (ROOT / 'dist').rglob('*.css')},
+                         set(all_distributions()))
         result = subprocess.run([sys.executable,'scripts/build.py','--check'],
                                 cwd=ROOT,capture_output=True,text=True)
         self.assertEqual(result.returncode,0,result.stdout+result.stderr)

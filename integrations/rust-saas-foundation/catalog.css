@@ -5,6 +5,19 @@
  */
 .syn-rust-foundation { min-height: 100svh; background: var(--syn-bg); color: var(--syn-text); }
 .syn-rust-foundation .wrap { width: min(100% - 2rem, 64rem); margin-inline: auto; padding-block: clamp(1rem, 3vw, 2rem); }
+.syn-rust-foundation .syn-rust-skip {
+  position: fixed;
+  inset: 0 auto auto .75rem;
+  z-index: 100;
+  padding: .75rem 1rem;
+  transform: translateY(-150%);
+  border: 2px solid var(--syn-accent);
+  border-radius: var(--syn-radius);
+  background: var(--syn-surface);
+  color: var(--syn-text);
+  text-decoration: none;
+}
+.syn-rust-foundation .syn-rust-skip:focus-visible { transform: translateY(.75rem); }
 .syn-rust-foundation header { border-bottom: 1px solid var(--syn-frame); background: var(--syn-surface); }
 .syn-rust-foundation header p { color: var(--syn-muted); }
 .syn-rust-foundation .items {
@@ -32,6 +45,7 @@
   outline-offset: 2px;
 }
 @media (forced-colors: active) {
+  .syn-rust-foundation .syn-rust-skip { background: Canvas; color: CanvasText; border-color: Highlight; }
   .syn-rust-foundation .item { border-color: CanvasText; }
   .syn-rust-foundation :is(a, button, input):focus-visible { outline-color: Highlight; }
 }

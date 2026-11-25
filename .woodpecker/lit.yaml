@@ -1,0 +1,18 @@
+# Optional browser verification for Lit, React custom elements and HTMX.
+# All JavaScript dependencies are isolated in examples/lit; none ship with CSS.
+when:
+  - event: pull_request
+  - event: push
+    branch: main
+  - event: manual
+
+steps:
+  - name: build-isolated-lit-consumers
+    image: node:24-bookworm-slim@sha256:dc26ae92c9fb15cf6b1d63e20f0944b2efe0f115b20e00be48fb23fceb061c54
+    commands:
+      - npm ci --prefix examples/lit --no-audit --no-fund
+      - npm run build --prefix examples/lit
+  - name: lit-browser-interoperability
+    image: mcr.microsoft.com/playwright:v1.65.0-noble@sha256:9beb546099e11f52d62e505537914870e01a67e0e6b00ae41da4775324e73dbe
+    commands:
+      - npm test --prefix examples/lit

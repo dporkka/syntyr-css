@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Syntyr CSS vs Pico CSS: compare scoped semantic HTML styling, classless defaults, theme tokens, SaaS layouts and a safe incremental migration path.">
+  <meta name="syntyr-source-sha256" content="df9f7829af70a0f616eb9f86e249699ad04acd26a4e9939e4044c2290ee1c4e3">
+  <meta name="theme-color" content="#f5f7fb">
+  <title>Syntyr vs Pico CSS | Semantic Styling Compared</title>
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Syntyr vs Pico CSS | Semantic Styling Compared">
+  <meta property="og:description" content="Syntyr CSS vs Pico CSS: compare scoped semantic HTML styling, classless defaults, theme tokens, SaaS layouts and a safe incremental migration path.">
+  <meta property="og:url" content="https://syntyr-css.pages.dev/docs/compare-pico">
+  <meta property="og:image" content="https://syntyr-css.pages.dev/assets/og-syntyr.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://syntyr-css.pages.dev/docs/compare-pico">
+  <link rel="alternate" type="text/markdown" href="compare-pico.md" title="Markdown source">
+  <link rel="icon" href="../assets/syntyr-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="docs.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <a class="syn-button docs-skip" href="#doc-main">Skip to guide</a>
+  <div class="syn-shell">
+    <header class="syn-header docs-header">
+      <a class="syn-logo" href="../index.html">SYNTYR / CSS</a>
+      <nav class="syn-nav" aria-label="Documentation navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav>
+      <details class="site-mobile-menu"><summary>Menu</summary><nav aria-label="Mobile navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav></details>
+    </header>
+    <main id="doc-main" class="docs-article-page">
+      <nav class="syn-breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="reference.html">Documentation</a></li><li aria-current="page">Syntyr CSS vs Pico CSS: semantic HTML with different scope</li></ol></nav>
+      <header class="docs-article-heading">
+        <p class="syn-eyebrow">SYNTYR / DOCUMENTATION</p>
+        <p class="syn-muted">Current source documentation may describe unreleased alpha.5 features. <a href="distribution.html">Check released version compatibility.</a></p>
+        <p class="syn-caption">Prefer a machine-readable version? <a href="compare-pico.md">Markdown source</a> · <a href="../llms.txt">LLM index</a></p>
+      </header>
+      <div class="docs-article-layout">
+        <article class="docs-prose" aria-label="Syntyr CSS vs Pico CSS: semantic HTML with different scope">
+<h1 id="syntyr-css-vs-pico-css-semantic-html-with-different-scope">Syntyr CSS vs Pico CSS: semantic HTML with different scope</h1>
+<p>Both <strong>Syntyr</strong> and <strong>Pico CSS</strong> value semantic HTML and low JavaScript overhead, but they make a different tradeoff between out-of-the-box document styling and explicit application components. Pico's default and classless styles simplify conventional HTML pages. Syntyr uses a scoped <code>syn-root</code>, explicit component classes and optional semantic modes for larger interfaces.</p>
+<p><strong>Version boundary:</strong> Syntyr alpha.4 is the published release. Some one-file semantic bundles described in alpha.5 source documents are <strong>unreleased</strong>; see <a href="distribution.html">distribution</a> before installing.</p>
+<h2 id="feature-comparison">Feature comparison</h2>
+<table>
+<thead>
+<tr>
+<th>Concern</th>
+<th>Syntyr CSS</th>
+<th>Pico CSS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Typical start</td>
+<td>Apply <code>syn-root</code> and classes to a region</td>
+<td>Style native HTML with a small semantic API</td>
+</tr>
+<tr>
+<td>Classless document styles</td>
+<td>Optional scoped semantic mode</td>
+<td>Dedicated classless distribution</td>
+</tr>
+<tr>
+<td>Layouts</td>
+<td>Explicit app shells and composable UI styles</td>
+<td>Minimal, readable site layout conventions</td>
+</tr>
+<tr>
+<td>Themes</td>
+<td><code>data-syn-theme</code> and <code>--syn-*</code> tokens</td>
+<td>Pico theme variables and color scheme controls</td>
+</tr>
+<tr>
+<td>JavaScript for styling</td>
+<td>Not required</td>
+<td>Not required</td>
+</tr>
+<tr>
+<td>Migration</td>
+<td>Map old selectors and tokens deliberately</td>
+<td>Keep Pico if its global markup contract suits the project</td>
+</tr>
+</tbody>
+</table>
+<h2 id="choose-pico-for-minimal-websites">Choose Pico for minimal websites</h2>
+<p>Pico is often the more direct option for readable blogs, text-focused sites and forms where styling native tags globally is acceptable. If you only need a few styled elements, a new component vocabulary adds maintenance rather than value.</p>
+<h2 id="choose-syntyr-for-bigger-ui-surfaces">Choose Syntyr for bigger UI surfaces</h2>
+<p>Syntyr is aimed at repeated SaaS dashboards, sidebars, dense business layouts and scoped styling inside an existing host application. You can still use semantic HTML, but explicit classes make styling ownership clearer. CSS won't create app behavior or data logic.</p>
+<h2 id="is-syntyr-a-drop-in-pico-replacement">Is Syntyr a drop-in Pico replacement?</h2>
+<p>No. Classes, tokens, scope and defaults differ. Migrate incrementally, remove conflicting global selectors and test forms, tables, input states and reduced-motion modes. Follow the detailed <a href="from-pico.html">Pico-to-Syntyr migration guide</a>.</p>
+<p>Also see <a href="compare.html">all alternatives</a>, <a href="faq.html">FAQ</a>, <a href="native-patterns.html">native patterns</a> and the <a href="https://picocss.com/docs/classless">official Pico classless styles guide</a>.</p>
+        </article>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+<a class="docs-article-toc-link docs-article-toc-2" href="#feature-comparison">Feature comparison</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#choose-pico-for-minimal-websites">Choose Pico for minimal websites</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#choose-syntyr-for-bigger-ui-surfaces">Choose Syntyr for bigger UI surfaces</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#is-syntyr-a-drop-in-pico-replacement">Is Syntyr a drop-in Pico replacement?</a>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#feature-comparison">Feature comparison</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#choose-pico-for-minimal-websites">Choose Pico for minimal websites</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#choose-syntyr-for-bigger-ui-surfaces">Choose Syntyr for bigger UI surfaces</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#is-syntyr-a-drop-in-pico-replacement">Is Syntyr a drop-in Pico replacement?</a>
+            </nav>
+          </details>
+        </aside>
+      </div>
+      <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="compare-pico.md">Markdown source</a></nav>
+    </main>
+    <footer class="syn-header"><span class="syn-caption">SYNTYR CSS · MIT CORE · EXPERIMENTAL</span><a href="../index.html">Home</a></footer>
+  </div>
+</body>
+</html>

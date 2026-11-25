@@ -10,6 +10,12 @@ or framework-specific component package.
 - Search the existing issues and pull requests to avoid duplicating work.
 - Start from the current `main` branch, use a focused feature branch, and
   describe the user-facing behavior, compatibility impact, and test evidence.
+- Start by composing existing semantic HTML, Syntyr classes and design tokens.
+  Proposals for a new class/variant/module must name the compositions considered,
+  explain why they fail, and identify the new API's ongoing test and maintenance cost.
+- Keep React, Tailwind, shadcn, Figma, and AI-agent/editor adapters optional and
+  independently removable. Do not introduce adapter syntax or vendor selectors
+  into `src/` or require adapter packages to use the core stylesheet.
 - Follow [ARCHITECTURE.md](ARCHITECTURE.md) and
   [docs/api-stability.md](docs/api-stability.md). Document changes to the
   `syn-*` class API, `--syn-*` variables, and `data-syn-*` attributes.
@@ -34,11 +40,13 @@ business notes, or entire source directories.
 
 ## Verify a proposed change
 
-From the repository root, with Python 3 installed:
+From the repository root, use Python 3.11 or later for the full verification sequence:
 
 ```sh
 python3 scripts/build.py
 python3 scripts/build.py --check
+python3 scripts/maintenance_policy.py
+python3 scripts/design_conformance.py
 python3 scripts/export_api_metadata.py --check
 python3 scripts/build_agent_docs.py
 python3 scripts/build_agent_docs.py --check
@@ -58,6 +66,15 @@ git status --porcelain -- dist/
 This must produce **no output**. A successful `build.py --check` run after
 `build.py` alone is insufficient: the first command may have already
 rewritten files you forgot to commit.
+
+The core Python and packaging contracts run for every PR. The Node/React/Next
+adoption workflow runs its npm step on relevant CSS, integration or consumer
+changes (or by manual request); documentation-only PRs do not need npm builds.
+Before an alpha release, run **all** relevant consumer and browser/accessibility
+checks regardless of any path-scoped PR skips. A skipped check is not a pass.
+Prefer editing existing canonical guides over introducing overlapping guides,
+and prefer enduring behavior tests over alpha-version-named test files. See
+[architecture maintenance policy](ARCHITECTURE.md#maintenance-surface-and-test-ownership).
 
 If you changed optional integrations, also check the relevant export scripts
 and tests documented in their guides. Browser tests use optional Playwright

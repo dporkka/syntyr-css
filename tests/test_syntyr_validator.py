@@ -88,6 +88,45 @@ class ValidatorTests(unittest.TestCase):
         self.assertEqual([d["code"] for d in validate_html(html, self.contract)],
                          ["invalid-attribute-value"])
 
+    def test_full_document_reports_known_classes_outside_root(self):
+        html = """<html><head><link rel="stylesheet" href="syntyr.core.css"></head>
+        <body>
+          <button class="syn-button">Outside</button>
+          <main class="syn-root"><button class="syn-button">Inside</button></main>
+          <div class="syn-panel">After root</div>
+        </body></html>"""
+        errors = [d for d in validate_html(html, self.contract)
+                  if d["code"] == "unscoped-class"]
+        self.assertEqual([d["class_name"] for d in errors],
+                         ["syn-button", "syn-panel"])
+        self.assertTrue(all("syn-root" in d["message"] for d in errors))
+
+    def test_full_document_accepts_root_on_element_and_void_tags(self):
+        html = """<html><head><link rel="stylesheet" href="syntyr.core.css"></head>
+        <body><main class="syn-root syn-panel">
+          <img src="icon.svg" alt="Icon">
+          <button class="syn-button">In scope after a void tag</button>
+          <section class="syn-panel"><button class="syn-button">Nested</button></section>
+        </main></body></html>"""
+        self.assertEqual(validate_html(html, self.contract), [])
+
+    def test_fragments_and_dynamic_ancestor_scopes_are_not_flagged(self):
+        fragment = '<button class="syn-button">Injected inside a host root</button>'
+        self.assertEqual(validate_html(fragment, self.contract,
+                                       stylesheets={"syntyr.core.css"}), [])
+        dynamic_page = """<html><head><link rel="stylesheet" href="syntyr.core.css"></head>
+        <body class="{{ root_class }}">
+          <button class="syn-button">Scope established by the template</button>
+        </body></html>"""
+        self.assertEqual(validate_html(dynamic_page, self.contract), [])
+
+    def test_inert_template_markup_may_be_inserted_into_a_different_root(self):
+        html = """<html><head><link rel="stylesheet" href="syntyr.core.css"></head>
+        <body><template id="new-panel"><button class="syn-button">Copy me</button></template>
+        <main class="syn-root"><button class="syn-button">Current</button></main>
+        </body></html>"""
+        self.assertEqual(validate_html(html, self.contract), [])
+
     def test_cli_reports_json_and_nonzero_status_for_errors(self):
         with tempfile.TemporaryDirectory() as temp:
             path = Path(temp) / "bad.html"

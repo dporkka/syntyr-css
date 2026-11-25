@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="See how Syntyr CSS styles an isolated website section without changing the host site theme. A portable, no-runtime-JavaScript embed example for CMS platforms.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Syntyr within an existing website</title>
+  <!-- Simulates an existing unlayered theme, with no Syntyr script. -->
+  <style>
+    body { font: 16px system-ui; margin: 2rem; }
+    button { color: #fff; background: #743a20; border: 3px solid #743a20; padding: .6rem 1rem; }
+  </style>
+  <link rel="stylesheet" href="../dist/syntyr.embed.css">
+</head>
+<body>
+  <header><h1>Existing site content</h1></header>
+  <p>The host theme continues to style controls outside the Syntyr region.</p>
+  <button id="cms-host-control" class="syn-button syn-button--primary" type="button">Existing site button</button>
+  <section class="syn-root" data-syn-theme="studio" aria-labelledby="cms-syntyr-title">
+    <div class="syn-panel">
+      <h2 class="syn-heading" id="cms-syntyr-title">Syntyr feature block</h2>
+      <p class="syn-muted">Only this region opts into Syntyr components and tokens.</p>
+      <button id="cms-syntyr-control" class="syn-button syn-button--primary" type="button">Syntyr action</button>
+      <a class="syn-button syn-button--outline" href="#cms-more">Explore feature</a>
+      <details id="cms-more">
+        <summary>More information</summary>
+        <p>Native disclosure; no script or framework required.</p>
+      </details>
+    </div>
+  </section>
+</body>
+</html>

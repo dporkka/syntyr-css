@@ -1,0 +1,35 @@
+{
+  "name": "syntyr-expo-native-smoke",
+  "version": "0.0.0",
+  "private": true,
+  "main": "index.ts",
+  "scripts": {
+    "sync": "node scripts/sync-adapter.mjs",
+    "start": "npm run sync && expo start",
+    "android": "npm run sync && expo start --android",
+    "ios": "npm run sync && expo start --ios",
+    "typecheck": "npm run sync && tsc --noEmit",
+    "test": "npm run sync && jest --runInBand",
+    "export:android": "npm run sync && expo export --platform android --output-dir dist/android",
+    "export:ios": "npm run sync && expo export --platform ios --output-dir dist/ios"
+  },
+  "dependencies": {
+    "expo": "~58.0.25",
+    "react": "19.3.0",
+    "react-native": "0.88.1"
+  },
+  "devDependencies": {
+    "@types/react": "~19.3.0",
+    "typescript": "~6.0.3",
+    "jest": "^30.2.0",
+    "jest-expo": "~58.0.14",
+    "@testing-library/react-native": "^14.0.0",
+    "@types/jest": "^30.0.0"
+  },
+  "jest": {
+    "preset": "jest-expo"
+  },
+  "overrides": {
+    "minimatch": "11.0.9"
+  }
+}

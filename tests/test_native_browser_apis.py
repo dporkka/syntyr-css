@@ -64,6 +64,15 @@ class NativeBrowserApisContract(unittest.TestCase):
         else:
             self.assertEqual(demo.group(1), 'https://syntyr-css.pages.dev/examples/native-apis.html')
 
+    def test_copyable_dialog_example_has_scoped_styling(self):
+        guide = (ROOT / 'docs/native-browser-apis.md').read_text()
+        example = guide.split('## Example: a dialog without an event handler', 1)[1]
+        example = example.split('```html', 1)[1].split('```', 1)[0]
+        self.assertIn('<section class="syn-root"', example)
+        self.assertIn('class="syn-dialog"', example)
+        self.assertIn('command="show-modal"', example)
+        self.assertIn('</section>', example)
+
     def test_content_sized_textarea_has_constraints_and_fallback(self):
         css = (ROOT / 'src/components/forms.css').read_text()
         self.assertIn('.syn-textarea--autosize', css)

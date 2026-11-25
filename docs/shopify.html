@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Shopify storefront CSS without a JavaScript widget framework: Use Syntyr to present campaign information, promotional callouts, comparison sections and…">
+  <meta name="syntyr-source-sha256" content="7a9b1f3dfafc3a38c33cf0bb29f21f39b129f8aeb12289a4aee5e436793254bb">
+  <meta name="theme-color" content="#f5f7fb">
+  <title>Syntyr for Shopify | CSS Components &amp; Setup</title>
+  <link rel="canonical" href="https://syntyr-css.pages.dev/docs/shopify">
+  <meta property="og:image" content="https://syntyr-css.pages.dev/assets/og-syntyr.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="alternate" type="text/markdown" href="shopify.md" title="Markdown source">
+  <link rel="icon" href="../assets/syntyr-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="docs.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <a class="syn-button docs-skip" href="#doc-main">Skip to guide</a>
+  <div class="syn-shell">
+    <header class="syn-header docs-header">
+      <a class="syn-logo" href="../index.html">SYNTYR / CSS</a>
+      <nav class="syn-nav" aria-label="Documentation navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav>
+      <details class="site-mobile-menu"><summary>Menu</summary><nav aria-label="Mobile navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav></details>
+    </header>
+    <main id="doc-main" class="docs-article-page">
+      <nav class="syn-breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="reference.html">Documentation</a></li><li aria-current="page">Syntyr for Shopify: CSS components for storefront themes</li></ol></nav>
+      <header class="docs-article-heading">
+        <p class="syn-eyebrow">SYNTYR / DOCUMENTATION</p>
+        <p class="syn-muted">Current source documentation may describe unreleased alpha.5 features. <a href="distribution.html">Check released version compatibility.</a></p>
+        <p class="syn-caption">Prefer a machine-readable version? <a href="shopify.md">Markdown source</a> · <a href="../llms.txt">LLM index</a></p>
+      </header>
+      <div class="docs-article-layout">
+        <article class="docs-prose" aria-label="Syntyr for Shopify: CSS components for storefront themes">
+<h1 id="syntyr-for-shopify-css-components-for-storefront-themes">Syntyr for Shopify: CSS components for storefront themes</h1>
+<p><strong>Shopify storefront CSS without a JavaScript widget framework:</strong> Use Syntyr to present campaign information, promotional callouts, comparison sections and branded content inside an Online Store theme. Syntyr supplies the presentation layer while Shopify continues to own products, inventory, cart behavior, checkout and Liquid data rendering.</p>
+<h2 id="why-use-syntyr-on-shopify">Why use Syntyr on Shopify?</h2>
+<p>Merchants often need an extra section that does not fit their theme's built-in choices. A Syntyr panel gives theme developers reusable CSS tokens, buttons and layouts while keeping editable Shopify section settings. There are no Syntyr runtime scripts or external web fonts to install. This is particularly useful for a small custom promotional section that should retain its own appearance when the main theme changes.</p>
+<h2 id="how-to-install-syntyr-in-a-shopify-online-store-theme">How to install Syntyr in a Shopify Online Store theme</h2>
+<ol>
+<li>Duplicate the active theme before editing code in <strong>Online Store → Themes</strong>. In the theme code editor, upload the candidate <code>dist/syntyr.embed.css</code> into <strong>Assets</strong> as <code>syntyr.embed.css</code>.</li>
+<li>Add the following tag <strong>once</strong> inside the <code>&lt;head&gt;</code> of <code>layout/theme.liquid</code>. The asset URL is resolved by Shopify.</li>
+</ol>
+<pre tabindex="0"><code class="language-liquid">{{ 'syntyr.embed.css' | asset_url | stylesheet_tag }}
+</code></pre>
+<ol start="3">
+<li>Copy the <a href="https://github.com/dporkka/syntyr-css/blob/main/integrations/shopify/sections/syntyr-feature.liquid">Syntyr feature section for Shopify</a> into <strong>Sections</strong> as <code>syntyr-feature.liquid</code>. It uses Shopify <code>section.settings</code> for its heading, descriptive text, button label and URL, with escaped Liquid output.</li>
+<li>Add <strong>Syntyr feature</strong> to a template in the theme editor, fill in its settings, and inspect the storefront preview on desktop and mobile.</li>
+</ol>
+<p><strong>Example of the section's core content:</strong></p>
+<pre tabindex="0"><code class="language-liquid">&lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot;&gt;
+  &lt;div class=&quot;syn-panel&quot;&gt;
+    &lt;h2 class=&quot;syn-heading&quot;&gt;{{ section.settings.heading | escape }}&lt;/h2&gt;
+    &lt;p class=&quot;syn-muted&quot;&gt;{{ section.settings.description | escape }}&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+</code></pre>
+<h2 id="limitations-and-shopify-specific-considerations">Limitations and Shopify-specific considerations</h2>
+<p>This integration is for <strong>Online Store theme markup</strong>, not Shopify checkout. Shopify's Custom CSS boxes have length limits (<strong>1,500 characters theme-wide, 500 per section</strong>) and restrict some CSS features; upload the full stylesheet as a theme asset instead. Existing theme CSS may still beat Syntyr with a higher-specificity selector or <code>!important</code>. Syntyr does not supply product grids wired to Shopify APIs or a functioning cart—those remain your theme/application's responsibilities.</p>
+<p><strong>Shopify references:</strong> <a href="https://help.shopify.com/en/manual/online-store/themes/customizing-themes/edit-code">Editing theme code</a> and <a href="https://help.shopify.com/en/manual/online-store/themes/customizing-themes/edit-code/add-css">Custom CSS restrictions</a>.</p>
+<h2 id="verify-the-result-before-publishing">Verify the result before publishing</h2>
+<p>Check the public, published URL rather than relying only on an editor preview. Confirm that the Syntyr stylesheet returns HTTP 200 with a CSS content type, that a button inside <code>.syn-root</code> has the desired theme, and that unrelated host navigation, product cards and forms remain unchanged. Test keyboard focus, accessible names, narrow screens around 320px, reduced motion and the platform's own responsive layouts. If an iframe is involved, test its height, keyboard navigation, sandbox attributes and HTTPS/CSP restrictions.</p>
+<p><strong>Release compatibility:</strong> The immutable <strong>alpha.4</strong> stylesheet <code>syntyr.core.css</code> is published. The <strong>alpha.5</strong> <code>syntyr.embed.css</code> bundle is a candidate build designed for existing themes; it is not part of the alpha.4 release. Build the candidate from the source repository and self-host a version-pinned copy for testing. Never load both bundles together, and verify theme-specific overrides before production rollout. Syntyr is a stylesheet, not an official integration or plug-in from the site platform.</p>
+<p>Explore the <a href="site-builders.html">platform integration overview</a>, <a href="distribution.html">Syntyr distribution and release guide</a>, or <a href="../examples/platform-embed.html">live host-theme example</a>.</p>
+        </article>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+<a class="docs-article-toc-link docs-article-toc-2" href="#why-use-syntyr-on-shopify">Why use Syntyr on Shopify?</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#how-to-install-syntyr-in-a-shopify-online-store-theme">How to install Syntyr in a Shopify Online Store theme</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#limitations-and-shopify-specific-considerations">Limitations and Shopify-specific considerations</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#verify-the-result-before-publishing">Verify the result before publishing</a>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#why-use-syntyr-on-shopify">Why use Syntyr on Shopify?</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#how-to-install-syntyr-in-a-shopify-online-store-theme">How to install Syntyr in a Shopify Online Store theme</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#limitations-and-shopify-specific-considerations">Limitations and Shopify-specific considerations</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#verify-the-result-before-publishing">Verify the result before publishing</a>
+            </nav>
+          </details>
+        </aside>
+      </div>
+      <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="shopify.md">Markdown source</a></nav>
+    </main>
+    <footer class="syn-header"><span class="syn-caption">SYNTYR CSS · MIT CORE · EXPERIMENTAL</span><a href="../index.html">Home</a></footer>
+  </div>
+</body>
+</html>

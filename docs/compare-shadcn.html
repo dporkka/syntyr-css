@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Syntyr vs shadcn/ui: compare framework-neutral CSS primitives with editable React components, interaction ownership, Tailwind styling and dependencies.">
+  <meta name="syntyr-source-sha256" content="6a0c4fe26bcd9c6a19fb0c7e07e1509fd05b3061c7d6863e9f66f36438c8e045">
+  <meta name="theme-color" content="#f5f7fb">
+  <title>Syntyr vs shadcn/ui | CSS vs React Components</title>
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Syntyr vs shadcn/ui | CSS vs React Components">
+  <meta property="og:description" content="Syntyr vs shadcn/ui: compare framework-neutral CSS primitives with editable React components, interaction ownership, Tailwind styling and dependencies.">
+  <meta property="og:url" content="https://syntyr-css.pages.dev/docs/compare-shadcn">
+  <meta property="og:image" content="https://syntyr-css.pages.dev/assets/og-syntyr.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://syntyr-css.pages.dev/docs/compare-shadcn">
+  <link rel="alternate" type="text/markdown" href="compare-shadcn.md" title="Markdown source">
+  <link rel="icon" href="../assets/syntyr-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="docs.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <a class="syn-button docs-skip" href="#doc-main">Skip to guide</a>
+  <div class="syn-shell">
+    <header class="syn-header docs-header">
+      <a class="syn-logo" href="../index.html">SYNTYR / CSS</a>
+      <nav class="syn-nav" aria-label="Documentation navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav>
+      <details class="site-mobile-menu"><summary>Menu</summary><nav aria-label="Mobile navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav></details>
+    </header>
+    <main id="doc-main" class="docs-article-page">
+      <nav class="syn-breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="reference.html">Documentation</a></li><li aria-current="page">Syntyr CSS vs shadcn/ui: CSS primitives or React components?</li></ol></nav>
+      <header class="docs-article-heading">
+        <p class="syn-eyebrow">SYNTYR / DOCUMENTATION</p>
+        <p class="syn-muted">Current source documentation may describe unreleased alpha.5 features. <a href="distribution.html">Check released version compatibility.</a></p>
+        <p class="syn-caption">Prefer a machine-readable version? <a href="compare-shadcn.md">Markdown source</a> · <a href="../llms.txt">LLM index</a></p>
+      </header>
+      <div class="docs-article-layout">
+        <article class="docs-prose" aria-label="Syntyr CSS vs shadcn/ui: CSS primitives or React components?">
+<h1 id="syntyr-css-vs-shadcnui-css-primitives-or-react-components">Syntyr CSS vs shadcn/ui: CSS primitives or React components?</h1>
+<p><strong>shadcn/ui</strong> and <strong>Syntyr CSS</strong> solve different parts of UI development. shadcn/ui distributes editable component source code and interactive patterns for React applications; Syntyr styles native HTML with framework-neutral CSS, optional modules and design tokens. Neither is a one-for-one replacement for the other.</p>
+<p><strong>Release boundary:</strong> Syntyr v0.3.0-alpha.4 is published. The alpha.5 source contains <strong>unreleased</strong> components and integrations; see the <a href="distribution.html">distribution guide</a>.</p>
+<h2 id="what-changes-when-you-choose-one">What changes when you choose one?</h2>
+<table>
+<thead>
+<tr>
+<th>Factor</th>
+<th>Syntyr CSS</th>
+<th>shadcn/ui</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Core deliverable</td>
+<td>Stylesheets, CSS classes and HTML recipes</td>
+<td>Component source installed into your application</td>
+</tr>
+<tr>
+<td>Framework</td>
+<td>Any renderer that outputs HTML</td>
+<td>React-oriented official component model</td>
+</tr>
+<tr>
+<td>Interactive widgets</td>
+<td>Host app or browser implements complex behavior</td>
+<td>Component patterns and underlying accessible UI primitives</td>
+</tr>
+<tr>
+<td>Styling</td>
+<td>Scoped CSS tokens and <code>syn-*</code> classes</td>
+<td>Tailwind utility classes and component styling conventions</td>
+</tr>
+<tr>
+<td>Dependency ownership</td>
+<td>No mandatory Syntyr runtime JS</td>
+<td>Depends on chosen components and their packages</td>
+</tr>
+<tr>
+<td>Best fit</td>
+<td>HTML-first websites and SaaS presentation</td>
+<td>Interactive React products needing editable widget code</td>
+</tr>
+</tbody>
+</table>
+<h2 id="when-syntyr-is-the-better-fit">When Syntyr is the better fit</h2>
+<p>Choose Syntyr for server-rendered pages, static sites, applications using HTMX or LiveView, or products that want to keep presentation portable across JavaScript frameworks. Syntyr does not ask you to copy a TypeScript component into every project. Use browser-native labels, buttons, forms and disclosures as the baseline.</p>
+<p>However, a styled button does not provide data fetching, async validation, complex combobox selection, focus-trapped overlays or table state. Your application must implement those behaviors or adopt a dedicated accessible primitive.</p>
+<h2 id="when-shadcnui-is-the-better-fit">When shadcn/ui is the better fit</h2>
+<p>Choose shadcn/ui when a React component codebase is already central and your team wants full ownership of interactive components. Its component system and Tailwind integration can be an advantage for dense product interfaces. It is not accurate to claim Syntyr supplies the same feature depth without implementation work.</p>
+<h2 id="can-they-be-used-together">Can they be used together?</h2>
+<p>They can coexist if styling boundaries are explicit. Keep Syntyr classes scoped to <code>syn-root</code>, audit Tailwind Preflight and layer order, and verify keyboard behavior rather than assuming a style adapter changes how widgets behave. The <a href="radix-integration.html">Radix states guide</a> documents one optional styling integration path.</p>
+<p>For more: <a href="compare.html">all Syntyr comparisons</a>, <a href="faq.html">frequently asked questions</a>, <a href="components.html">Syntyr components</a> and the <a href="https://ui.shadcn.com/docs">official shadcn/ui documentation</a>.</p>
+        </article>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+<a class="docs-article-toc-link docs-article-toc-2" href="#what-changes-when-you-choose-one">What changes when you choose one?</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#when-syntyr-is-the-better-fit">When Syntyr is the better fit</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#when-shadcnui-is-the-better-fit">When shadcn/ui is the better fit</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#can-they-be-used-together">Can they be used together?</a>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#what-changes-when-you-choose-one">What changes when you choose one?</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#when-syntyr-is-the-better-fit">When Syntyr is the better fit</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#when-shadcnui-is-the-better-fit">When shadcn/ui is the better fit</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#can-they-be-used-together">Can they be used together?</a>
+            </nav>
+          </details>
+        </aside>
+      </div>
+      <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="compare-shadcn.md">Markdown source</a></nav>
+    </main>
+    <footer class="syn-header"><span class="syn-caption">SYNTYR CSS · MIT CORE · EXPERIMENTAL</span><a href="../index.html">Home</a></footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Syntyr + native Custom Elements</title>
+  <link rel="stylesheet" href="../../dist/syntyr.core.css">
+  <style>syn-demo-native-status::part(panel) { border-style: dashed; }</style>
+  <script type="module" src="./main.js"></script>
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <main class="syn-shell">
+    <h1 class="syn-title">Framework-free Custom Elements</h1>
+    <p class="syn-lede">Optional browser-native example; Syntyr ships only CSS.</p>
+    <section id="native-container" class="syn-panel" data-syn-theme="noir">
+      <h2 class="syn-heading">Inherited Syntyr theme tokens</h2>
+      <syn-demo-native-status id="native-status" service="Relay" online>
+        <p data-native-fallback class="syn-status syn-status--success">Relay: online (server-rendered fallback)</p>
+      </syn-demo-native-status>
+    </section>
+    <p id="native-event-output">No status changes yet</p>
+    <p><a class="syn-button" href="./ssr.html">Declarative Shadow DOM example</a></p>
+  </main>
+</body>
+</html>

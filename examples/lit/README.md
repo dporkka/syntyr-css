@@ -8,6 +8,19 @@ allowlist. It demonstrates two independent Web Component styling strategies:
 - **Shadow DOM**: Lit keeps its default shadow boundary. Local `static styles`
   consume inherited `--syn-*` custom properties and expose `::part()` hooks.
 
+## Additional integration fixtures
+
+- `react-interop.html` uses React 19 custom-element event interop and Lit
+  light DOM with the unchanged Syntyr core stylesheet.
+- `htmx-interop.html` uses a native GET form, real HTMX 2.0.8, and a local
+  HTML response. With JavaScript disabled, the form navigates normally; with
+  HTMX it swaps the custom-element host while the theme root remains stable.
+
+The sample uses no remote runtime assets and neither framework is a Syntyr
+package dependency. These are integration tests, not production applications.
+Backend authorization, persistence, mutation validation and CSRF protection
+remain application concerns.
+
 ## Run locally
 
 From this directory, with Node.js and npm available:
@@ -20,19 +33,21 @@ python3 -m http.server 8765 --bind 127.0.0.1
 # Open http://127.0.0.1:8765/examples/lit/index.html
 ```
 
-The page uses a local bundled module and the repository's built CSS. The lockfile
+The pages use local bundled modules and the repository's built CSS. The lockfile
 pins the opt-in example dependencies. There is no runtime network request to a
 third-party CDN. Run `python3 scripts/build.py` at repository root if CSS
 artifacts need regeneration.
 
-To run browser coverage after building:
+To run Lit, React 19, and HTMX browser coverage after building:
 
 ```sh
-python3 tests/lit_browser.py --browsers chromium,firefox,webkit
+cd examples/lit
+npm test
 ```
 
-Requires a separate developer installation of Python Playwright and its browsers.
-Unavailable engines fail visibly rather than being counted as passing.
+Requires the locally pinned `@playwright/test` development dependency and
+installed browser binaries. The dedicated CI pipeline supplies all three browser
+engines; unavailable engines fail visibly rather than being counted as passing.
 
 The HTML includes static fallback markup for both components. Without JavaScript,
 this remains readable; enhanced buttons intentionally operate on **local demo

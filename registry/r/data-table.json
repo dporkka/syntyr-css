@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "data-table",
+  "type": "registry:item",
+  "title": "Records table",
+  "description": "Semantic, scrollable table with caption and column scopes.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://syntyr-css.pages.dev/registry/r/core.json"
+  ],
+  "files": [
+    {
+      "path": "blocks/snippets/data-table.html",
+      "type": "registry:file",
+      "target": "~/syntyr/blocks/data-table.html",
+      "content": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-table-heading\">\n  <h2 id=\"syn-table-heading\" class=\"syn-heading\">Active requests</h2>\n  <div class=\"syn-table-wrap\">\n    <table class=\"syn-table\">\n      <caption>Illustrative requests and their current state</caption>\n      <thead><tr><th scope=\"col\">Request</th><th scope=\"col\">Owner</th><th scope=\"col\">Status</th></tr></thead>\n      <tbody>\n        <tr><th scope=\"row\">REQ-103</th><td>Alex</td><td><span class=\"syn-status syn-status--success\">Ready</span></td></tr>\n        <tr><th scope=\"row\">REQ-104</th><td>Casey</td><td><span class=\"syn-status syn-status--warning\">Review</span></td></tr>\n      </tbody>\n    </table>\n  </div>\n</section>\n"
+    },
+    {
+      "path": "LICENSE",
+      "type": "registry:file",
+      "target": "~/syntyr/LICENSE",
+      "content": "MIT License\n\nCopyright (c) 2026 Syntyr CSS contributors\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n"
+    }
+  ],
+  "meta": {
+    "syntyrVersion": "0.3.0-alpha.5",
+    "source": "MIT source candidate",
+    "runtimeJavaScript": false,
+    "fileDigests": {
+      "~/syntyr/blocks/data-table.html": "9dc361dae6a51f2298371b40fca1a383047ef3359f109c5ef43c360f7eff72ab",
+      "~/syntyr/LICENSE": "42f56369ac06362dbfe433d2d50b178bf74c369a55ea22337ab40fd9433521bf"
+    }
+  },
+  "docs": "Experimental source-candidate asset. Review exact version, HTML routes, keyboard behavior and integration before production use."
+}

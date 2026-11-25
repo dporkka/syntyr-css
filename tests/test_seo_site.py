@@ -114,5 +114,39 @@ class SEOOutputTests(unittest.TestCase):
             self.assertLessEqual(len(description), 175)
 
 
+    def test_homepage_explains_css_framework_and_links_to_offers(self):
+        home = self.site["index.html"].decode()
+        self.assertIn("Lightweight CSS Framework for Semantic HTML", home)
+        self.assertIn("Lightweight CSS. <em>Less machinery.</em>", home)
+        self.assertIn('href="docs/catalog.html"', home)
+        self.assertIn('href="docs/pro.html"', home)
+        self.assertIn('href="docs/studio.html"', home)
+        self.assertIn('href="tools/"', home)
+
+    def test_indexable_examples_have_search_descriptions(self):
+        for stem in ("data-grid", "native-choice-filter-list", "native-workflows", "platform-embed"):
+            page = self.site[f"examples/{stem}.html"].decode()
+            description = meta(page, "description")
+            self.assertGreaterEqual(len(description), 95, stem)
+            self.assertLessEqual(len(description), 165, stem)
+
+    def test_commercial_concept_pages_are_discoverable_and_truthful(self):
+        sitemap = ElementTree.fromstring(self.site["sitemap.xml"])
+        urls = {node.text for node in sitemap.findall("{*}url/{*}loc")}
+        products = self.site["docs/products.html"].decode()
+        for name in ("pro", "studio"):
+            self.assertIn(SITE_URL + f"/docs/{name}", urls)
+            page = self.site[f"docs/{name}.html"].decode()
+            self.assertEqual(canonical(page), [SITE_URL + f"/docs/{name}"])
+            self.assertIn("NOT FOR SALE", page)
+            self.assertIn("mailto:", page)
+            self.assertIn('href="distribution.html"', page)
+            self.assertIn(f'href="{name}.html"', products)
+            self.assertNotIn('name="robots" content="noindex', page)
+        self.assertIn('href="../examples/data-grid.html"', self.site["docs/catalog.html"].decode())
+        self.assertIn('href="pro.html"', self.site["docs/blocks.html"].decode())
+        self.assertIn('href="../docs/studio.html"', self.site["tools/index.html"].decode())
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -1,0 +1,36 @@
+{
+  "version": "0.3.0-alpha.5",
+  "commit": "",
+  "checks": {
+    "contrast": {
+      "status": "pending",
+      "reviewer": "",
+      "evidence": ""
+    },
+    "screen_reader": {
+      "status": "pending",
+      "reviewer": "",
+      "evidence": ""
+    },
+    "real_browser_zoom": {
+      "status": "pending",
+      "reviewer": "",
+      "evidence": ""
+    },
+    "native_forced_colors": {
+      "status": "pending",
+      "reviewer": "",
+      "evidence": ""
+    },
+    "browser_support": {
+      "status": "pending",
+      "reviewer": "",
+      "evidence": ""
+    },
+    "brand_clearance": {
+      "status": "pending",
+      "reviewer": "",
+      "evidence": ""
+    }
+  }
+}

@@ -1,0 +1,99 @@
+# Sveltia CMS: replace this placeholder after copying the starter to your own repo.
+# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms/schema/sveltia-cms.json
+backend:
+  name: github
+  repo: REPLACE_OWNER/REPLACE_REPO
+  branch: main
+media_folder: media
+public_folder: /media
+publish_mode: editorial_workflow
+collections:
+  - name: pages
+    label: Pages
+    files:
+      - name: home
+        label: Homepage
+        file: content/pages/home.json
+        format: json
+        fields:
+          - name: title
+            label: SEO title
+            widget: string
+          - name: description
+            label: Meta description
+            widget: text
+          - name: theme
+            label: Syntyr theme
+            widget: select
+            options: [studio, grid, noir, industrial, terminal, corporate, minimal]
+          - name: sections
+            label: Page sections
+            widget: list
+            typeKey: type
+            types:
+              - name: hero
+                label: Hero
+                fields:
+                  - { name: id, label: Stable section ID, widget: string, hint: "Lowercase letters, digits, hyphens; do not change when reordering" }
+                  - { name: eyebrow, label: Eyebrow, widget: string }
+                  - { name: heading, label: Heading, widget: string }
+                  - { name: description, label: Description, widget: text }
+                  - name: button
+                    label: Button
+                    widget: object
+                    fields:
+                      - { name: label, widget: string }
+                      - { name: url, widget: string }
+              - name: features
+                label: Features
+                fields:
+                  - { name: id, label: Stable section ID, widget: string, hint: "Lowercase letters, digits, hyphens; do not change when reordering" }
+                  - { name: heading, widget: string }
+                  - name: items
+                    label: Feature cards
+                    widget: list
+                    fields:
+                      - { name: title, widget: string }
+                      - { name: description, widget: text }
+              - name: pricing
+                label: Pricing
+                fields:
+                  - { name: id, label: Stable section ID, widget: string, hint: "Lowercase letters, digits, hyphens; do not change when reordering" }
+                  - { name: heading, widget: string }
+                  - name: plans
+                    label: Plans
+                    widget: list
+                    fields:
+                      - { name: name, widget: string }
+                      - { name: price, widget: string }
+                      - name: features
+                        label: Features
+                        widget: list
+                        field: { name: feature, widget: string }
+                      - name: button
+                        widget: object
+                        fields:
+                          - { name: label, widget: string }
+                          - { name: url, widget: string }
+              - name: faq
+                label: FAQ
+                fields:
+                  - { name: id, label: Stable section ID, widget: string, hint: "Lowercase letters, digits, hyphens; do not change when reordering" }
+                  - { name: heading, widget: string }
+                  - name: items
+                    label: Questions
+                    widget: list
+                    fields:
+                      - { name: question, widget: string }
+                      - { name: answer, widget: text }
+              - name: cta
+                label: Call to action
+                fields:
+                  - { name: id, label: Stable section ID, widget: string, hint: "Lowercase letters, digits, hyphens; do not change when reordering" }
+                  - { name: heading, widget: string }
+                  - { name: description, widget: text }
+                  - name: button
+                    widget: object
+                    fields:
+                      - { name: label, widget: string }
+                      - { name: url, widget: string }

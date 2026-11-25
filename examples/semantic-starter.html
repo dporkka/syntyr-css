@@ -16,10 +16,13 @@
       <p>A small, responsive example: no component classes on the controls, no JavaScript, no compiler.</p>
     </header>
 
-    <article>
+    <nav aria-label="Page sections">
+      <a href="#preferences">Preferences</a> · <a href="#inventory">Example table</a> · <a href="#questions">Questions</a>
+    </nav>
+    <article id="preferences">
       <h2>Project preferences</h2>
       <p>Try the native controls. This static form navigates back to this page with query parameters; it does not save data.</p>
-      <form class="syn-form" action="?" method="get">
+      <form action="?" method="get">
         <label for="project">Project name
           <input id="project" name="project" autocomplete="off" required placeholder="Example dashboard">
         </label>
@@ -30,12 +33,27 @@
             <option value="noir">Noir</option>
           </select>
         </label>
-        <label><input type="checkbox" name="updates" value="yes"> Include updates</label>
+        <fieldset>
+          <legend>Updates</legend>
+          <label><input type="checkbox" name="updates" value="yes"> Include updates</label>
+        </fieldset>
         <button type="submit">Preview query URL</button>
       </form>
     </article>
 
-    <section aria-labelledby="next-heading">
+    <section id="inventory" aria-labelledby="inventory-heading">
+      <h2 id="inventory-heading">Accessible data table</h2>
+      <p>This is an illustrative snapshot; no data is fetched or updated.</p>
+      <table>
+        <caption>Example project inventory</caption>
+        <thead><tr><th scope="col">Asset</th><th scope="col">State</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Homepage</th><td>Active</td></tr>
+          <tr><th scope="row">Dashboard</th><td>Draft</td></tr>
+        </tbody>
+      </table>
+    </section>
+    <section id="questions" aria-labelledby="next-heading">
       <h2 id="next-heading">What else works?</h2>
       <details>
         <summary>Can I use this in an existing page?</summary>

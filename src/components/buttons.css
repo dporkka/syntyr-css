@@ -6,22 +6,28 @@
       display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
       min-height: var(--syn-control-height); padding: var(--syn-control-padding-block) var(--syn-button-padding-inline, 1rem);
       min-width: 0; max-width: 100%; text-align: center; overflow-wrap: anywhere;
-      border: var(--syn-button-border-width, 1px) solid var(--syn-border-default); border-radius: var(--syn-radius);
-      background: var(--syn-surface-interactive); color: var(--syn-text);
+      border: var(--syn-button-border-width, 1px) solid var(--syn-button-border-color, var(--syn-border-default)); border-radius: var(--syn-button-radius, var(--syn-radius));
+      background: var(--syn-button-bg, var(--syn-surface-interactive)); color: var(--syn-button-color, var(--syn-text));
       text-decoration: none; font: 600 var(--syn-type-sm)/1.2 var(--syn-font-ui); letter-spacing: -.005em;
       cursor: pointer; transition: background-color var(--syn-duration-fast) var(--syn-ease), border-color var(--syn-duration-fast) var(--syn-ease), color var(--syn-duration-fast) var(--syn-ease);
     }
-    &.syn-button:where(:not(:disabled):not([aria-disabled="true"]):hover) { border-color: var(--syn-border-hover); background: var(--syn-surface-hover); }
+    &.syn-button:where(:not(:disabled):not([aria-disabled="true"]):hover) { border-color: var(--syn-button-hover-border-color, var(--syn-border-hover)); background: var(--syn-button-hover-bg, var(--syn-surface-hover)); }
     &.syn-button:where(:not(:disabled):not([aria-disabled="true"]):active) { box-shadow: inset 0 2px 3px rgb(0 0 0 / 14%); }
-    &.syn-button--primary { background: var(--syn-accent); border-color: var(--syn-accent); color: var(--syn-on-accent); }
-    &.syn-button--primary:where(:not(:disabled):not([aria-disabled="true"]):hover) { background: var(--syn-primary-hover-bg); border-color: var(--syn-on-accent); color: var(--syn-on-accent); }
-    &.syn-button--outline { background: transparent; border-color: var(--syn-accent); color: var(--syn-accent); }
-    &.syn-button--outline:where(:not(:disabled):not([aria-disabled="true"]):hover) { background: var(--syn-accent-soft); }
-    &.syn-button--danger { color: var(--syn-danger); border-color: var(--syn-danger); background: transparent; }
-    &.syn-button--danger:where(:not(:disabled):not([aria-disabled="true"]):hover) { background: color-mix(in srgb, var(--syn-danger), transparent 88%); }
+    &.syn-button--primary { background: var(--syn-button-bg, var(--syn-accent)); border-color: var(--syn-button-border-color, var(--syn-accent)); color: var(--syn-button-color, var(--syn-on-accent)); }
+    &.syn-button--primary:where(:not(:disabled):not([aria-disabled="true"]):hover) { background: var(--syn-button-hover-bg, var(--syn-primary-hover-bg)); border-color: var(--syn-button-hover-border-color, var(--syn-on-accent)); color: var(--syn-button-hover-color, var(--syn-on-accent)); }
+    &.syn-button--outline { background: var(--syn-button-bg, transparent); border-color: var(--syn-button-border-color, var(--syn-accent)); color: var(--syn-button-color, var(--syn-accent)); }
+    &.syn-button--outline:where(:not(:disabled):not([aria-disabled="true"]):hover) { background: var(--syn-button-hover-bg, var(--syn-accent-soft)); border-color: var(--syn-button-hover-border-color, var(--syn-button-border-color, var(--syn-accent))); }
+    &.syn-button--danger { color: var(--syn-button-color, var(--syn-danger)); border-color: var(--syn-button-border-color, var(--syn-danger)); background: var(--syn-button-bg, transparent); }
+    &.syn-button--danger:where(:not(:disabled):not([aria-disabled="true"]):hover) { background: var(--syn-button-hover-bg, color-mix(in srgb, var(--syn-danger), transparent 88%)); border-color: var(--syn-button-hover-border-color, var(--syn-button-border-color, var(--syn-danger))); }
     &.syn-button--small { min-height: 2.25rem; padding: .4rem .65rem; font-size: var(--syn-type-xs); }
-    &.syn-button--ghost { background: transparent; border-color: transparent; }
-    &.syn-button--ghost:where(:not(:disabled):not([aria-disabled="true"]):hover) { background: var(--syn-accent-soft); border-color: var(--syn-frame); }
+    /* Icon-only actions need an accessible name on the actual button. */
+    &.syn-button--icon {
+      min-inline-size: max(2.75rem, var(--syn-control-height));
+      inline-size: max(2.75rem, var(--syn-control-height));
+      padding-inline: .6rem;
+    }
+    &.syn-button--ghost { background: var(--syn-button-bg, transparent); border-color: var(--syn-button-border-color, transparent); }
+    &.syn-button--ghost:where(:not(:disabled):not([aria-disabled="true"]):hover) { background: var(--syn-button-hover-bg, var(--syn-accent-soft)); border-color: var(--syn-button-hover-border-color, var(--syn-frame)); }
       &.syn-button:where([aria-pressed="true"], [data-syn-state="active"]) {
       border-color: var(--syn-accent);
       background: var(--syn-surface-pressed);

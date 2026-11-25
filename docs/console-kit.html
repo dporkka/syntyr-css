@@ -17,6 +17,11 @@
     .kit-screen .syn-button { align-self:flex-start; }
     .kit-list { margin:0; padding-inline-start:1.4rem; }
     .kit-list li { margin-block:.6rem; }
+    .kit-theme-links { display:flex; flex-wrap:wrap; gap:.6rem; margin:1rem 0; }
+    .kit-theme-links a { border:1px solid var(--syn-frame); padding:.6rem .85rem; color:var(--syn-text); }
+    .kit-theme-group { border-block:1px solid var(--syn-frame); padding:.7rem 0; }
+    .kit-theme-group > summary { cursor:pointer; padding:.6rem 0; font:700 1.1rem/1.5 var(--syn-font); }
+    .kit-theme-group > summary:focus-visible { outline:3px solid var(--syn-accent); outline-offset:3px; }
     .kit-preview-gallery { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,19rem),1fr)); gap:1.25rem; margin-block:1.5rem 2.5rem; }
     .kit-preview { margin:0; padding:0; min-width:0; border:1px solid var(--syn-frame); background:var(--syn-surface); }
     .kit-preview a { display:block; }
@@ -33,7 +38,7 @@
     <header class="syn-header">
       <a class="syn-logo" href="index.html">// SYNTYR</a>
       <nav class="syn-nav" aria-label="Page navigation">
-        <a href="index.html">GALLERY</a><a href="../examples/console.html">GRID DEMO</a>
+        <a href="products.html">PRODUCTS &amp; ROADMAP</a><a href="index.html">GALLERY</a><a href="../examples/console.html">GRID DEMO</a>
         <a href="../examples/resources.html">NOIR DEMO</a>
       </nav>
     </header>
@@ -43,7 +48,7 @@
         <h1 class="kit-title" id="kit-title">Console Kit <span style="color:var(--syn-accent)">concept.</span></h1>
         <p class="syn-lede">Complete, original application screens for independent developers who prefer HTML, Go templates, HTMX, or Astro over a new component runtime.</p>
         <p class="kit-badge">PRIVATE PROTOTYPE / NOT AVAILABLE FOR PURCHASE</p>
-        <p class="syn-muted">An internal prototype now contains 8 original screen types across Grid, Noir and Studio themes (24 static variants). It remains private for design-partner and accessibility review; no customer license, payment integration, delivery date or sale exists. The public website shares marketing screenshots and the existing MIT examples below, but does not distribute the private prototype source.</p>
+        <p class="syn-muted">The private prototype currently contains 12 original screen types across Grid, Noir and Studio themes (36 static variants), including approvals and three CRM compositions. The eight screenshots below illustrate the original eight screens, not the full current prototype. It remains private for design-partner and accessibility review; no customer license, production payment integration, delivery date or sale exists. The public website shares marketing screenshots and the existing MIT examples below, but does not distribute the private prototype source.</p>
         <p class="syn-muted">Proposed introductory price to test: <strong class="kit-price">$59</strong> one-time, if sufficient demand exists. This is not an offer, purchase page, or preorder. No payment is being accepted.</p>
         <p class="syn-caption">This is research, not a purchase form. Screenshots show synthetic data and inactive backend operations. They are not proof of a deployed application.</p>
         <div class="syn-actions">
@@ -56,25 +61,21 @@
       <section class="syn-region" aria-labelledby="kit-captures-title">
         <p class="syn-eyebrow">STATIC / SAMPLE DATA / PRIVATE PROTOTYPE</p>
         <h2 class="syn-heading" id="kit-captures-title">Eight genuine static-screen previews from the private prototype</h2>
-        <p class="syn-muted">These eight genuine desktop screenshots cover all eight original screen types, captured at a fixed viewport from the separately authored private prototype. Open an image to inspect its original resolution. This is not an interactive demo: links, data, authentication and billing in the kit require integration with your own backend.</p>
-        <div class="kit-preview-gallery">
+        <p class="syn-muted">These eight genuine desktop screenshots cover the prototype's original eight screen types, captured at a fixed viewport from the separately authored private prototype; additional private approvals and CRM compositions are not pictured. Open an image to inspect its original resolution. This is not an interactive demo: links, data, authentication and billing in the kit require integration with your own backend.</p>
+        <nav class="kit-theme-links" aria-label="Preview themes">
+          <a href="#kit-theme-studio">Studio screens</a>
+          <a href="#kit-theme-grid">Grid screens</a>
+          <a href="#kit-theme-noir">Noir screens</a>
+        </nav>
+        <p class="syn-caption">Select a theme to expand its screenshots. This gallery uses native disclosures without JavaScript; all eight image files remain available. Only public screenshots are provided, not the private source.</p>
+        <details class="kit-theme-group" id="kit-theme-studio" open>
+          <summary>Studio theme — 3 authentic screen previews</summary>
+          <div class="kit-preview-gallery">
           <figure class="kit-preview">
             <a href="previews/studio-overview.webp" aria-label="Open Studio dashboard prototype screenshot">
               <img src="previews/studio-overview.webp" loading="lazy" decoding="async" width="1120" height="700" alt="Studio dashboard prototype with a light sidebar, overview metrics and fictional activity data">
             </a>
             <figcaption><strong>Studio / Dashboard overview</strong>Professional SaaS defaults, synthetic KPIs and responsive navigation.</figcaption>
-          </figure>
-          <figure class="kit-preview">
-            <a href="previews/grid-resources.webp" aria-label="Open Grid resources prototype screenshot">
-              <img src="previews/grid-resources.webp" loading="lazy" decoding="async" width="1120" height="700" alt="Grid resource index prototype with technical dark theme, sample resource table and static search form">
-            </a>
-            <figcaption><strong>Grid / Resource index</strong>Technical visual system with a filter form and illustrative tabular content.</figcaption>
-          </figure>
-          <figure class="kit-preview">
-            <a href="previews/noir-billing.webp" aria-label="Open Noir billing prototype screenshot">
-              <img src="previews/noir-billing.webp" loading="lazy" decoding="async" width="1120" height="700" alt="Noir billing overview prototype with warm dark surfaces, fictional invoice rows and sample pricing details">
-            </a>
-            <figcaption><strong>Noir / Billing overview</strong>Theme-aware account and billing layout; no payment flow is implemented.</figcaption>
           </figure>
           <figure class="kit-preview">
             <a href="previews/studio-editor.webp" aria-label="Open Studio create/edit form prototype screenshot">
@@ -88,6 +89,17 @@
             </a>
             <figcaption><strong>Studio / Settings</strong>Clear configuration groups and accessible form layouts.</figcaption>
           </figure>
+          </div>
+        </details>
+        <details class="kit-theme-group" id="kit-theme-grid">
+          <summary>Grid theme — 3 authentic screen previews</summary>
+          <div class="kit-preview-gallery">
+          <figure class="kit-preview">
+            <a href="previews/grid-resources.webp" aria-label="Open Grid resources prototype screenshot">
+              <img src="previews/grid-resources.webp" loading="lazy" decoding="async" width="1120" height="700" alt="Grid resource index prototype with technical dark theme, sample resource table and static search form">
+            </a>
+            <figcaption><strong>Grid / Resource index</strong>Technical visual system with a filter form and illustrative tabular content.</figcaption>
+          </figure>
           <figure class="kit-preview">
             <a href="previews/grid-detail.webp" aria-label="Open Grid resource detail prototype screenshot">
               <img src="previews/grid-detail.webp" loading="lazy" decoding="async" width="1120" height="700" alt="Grid resource detail prototype with fictional metadata, activity records and readonly actions">
@@ -95,18 +107,30 @@
             <figcaption><strong>Grid / Resource detail</strong>Record details, related information and status history.</figcaption>
           </figure>
           <figure class="kit-preview">
-            <a href="previews/noir-team.webp" aria-label="Open Noir team management prototype screenshot">
-              <img src="previews/noir-team.webp" loading="lazy" decoding="async" width="1120" height="700" alt="Noir team management prototype with fictional members, roles and invitation table">
-            </a>
-            <figcaption><strong>Noir / Team management</strong>Illustrative membership and role displays without authorization logic.</figcaption>
-          </figure>
-          <figure class="kit-preview">
             <a href="previews/grid-sign-in.webp" aria-label="Open Grid sign-in prototype screenshot">
               <img src="previews/grid-sign-in.webp" loading="lazy" decoding="async" width="1120" height="700" alt="Grid sign-in prototype with native input fields and fictional authentication flow">
             </a>
             <figcaption><strong>Grid / Sign-in</strong>Presentation-only account entry and recovery forms.</figcaption>
           </figure>
-        </div>
+          </div>
+        </details>
+        <details class="kit-theme-group" id="kit-theme-noir">
+          <summary>Noir theme — 2 authentic screen previews</summary>
+          <div class="kit-preview-gallery">
+          <figure class="kit-preview">
+            <a href="previews/noir-billing.webp" aria-label="Open Noir billing prototype screenshot">
+              <img src="previews/noir-billing.webp" loading="lazy" decoding="async" width="1120" height="700" alt="Noir billing overview prototype with warm dark surfaces, fictional invoice rows and sample pricing details">
+            </a>
+            <figcaption><strong>Noir / Billing overview</strong>Theme-aware account and billing layout; no payment flow is implemented.</figcaption>
+          </figure>
+          <figure class="kit-preview">
+            <a href="previews/noir-team.webp" aria-label="Open Noir team management prototype screenshot">
+              <img src="previews/noir-team.webp" loading="lazy" decoding="async" width="1120" height="700" alt="Noir team management prototype with fictional members, roles and invitation table">
+            </a>
+            <figcaption><strong>Noir / Team management</strong>Illustrative membership and role displays without authorization logic.</figcaption>
+          </figure>
+          </div>
+        </details>
       </section>
       <section class="syn-region" aria-labelledby="preview-title">
         <h2 class="syn-heading" id="preview-title">Two original free screens to evaluate</h2>
@@ -126,7 +150,7 @@
         <p class="syn-eyebrow">PRIVATE PREVIEW SCOPE / SUBJECT TO VALIDATION</p>
         <h2 id="scope-title" class="syn-heading">What the private prototype includes</h2>
         <ul class="kit-list">
-          <li>Eight complete layouts: overview, resources, details, create/edit, settings, team, billing, and sign-in designs</li>
+          <li>Twelve private layouts: eight core screens (overview, resources, details, create/edit, settings, team, billing and sign-in), governed approvals, and three CRM compositions</li>
           <li>Grid, Noir and Studio colorways, responsive and keyboard-friendly markup, plus examples of empty/error states</li>
           <li>Original HTML/CSS and implementation notes for server-rendered applications</li>
           <li>No forced vendor framework, telemetry, JavaScript widget bundle or runtime dependencies</li>

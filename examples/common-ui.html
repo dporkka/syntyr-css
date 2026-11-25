@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Syntyr CSS-first native HTML and common interface patterns with zero JavaScript.">
+  <title>Common HTML and UI patterns — Syntyr CSS</title>
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="../dist/syntyr.semantic.css">
+  <style>
+    .ui-showcase { padding-block: clamp(1.5rem, 4vw, 3rem); }
+    .ui-showcase section { margin-block: var(--syn-space-4); }
+    .ui-showcase section > :where(h2, p) { max-inline-size: 65ch; }
+    .ui-showcase .syn-list-group { max-inline-size: 34rem; }
+    .ui-showcase iframe { inline-size: 100%; min-block-size: 13rem; }
+  </style>
+</head>
+<body class="syn-root syn-page syn-semantic" data-syn-theme="studio">
+  <a class="syn-button" href="#main">Skip to examples</a>
+  <main id="main" class="syn-shell ui-showcase">
+    <hgroup>
+      <p class="syn-eyebrow">SYNTYR / CSS-FIRST COMPONENTS</p>
+      <h1>Native HTML and common UI</h1>
+      <p>Every state shown here is static or browser-native. No custom widgets or runtime JavaScript.</p>
+    </hgroup>
+    <nav class="syn-nav-tabs" aria-label="Example sections">
+      <ul>
+        <li><a href="common-ui.html" aria-current="page">Overview</a></li>
+        <li><a href="#content">Content</a></li>
+        <li><a href="#controls">Controls</a></li>
+      </ul>
+    </nav>
+    <section id="navigation" aria-labelledby="navigation-heading">
+      <h2 id="navigation-heading">List groups, avatars, and chips</h2>
+      <ul class="syn-list-group" role="list" aria-label="Workspace destinations">
+        <li><a class="syn-list-row" href="common-ui.html" aria-current="page"><span class="syn-avatar" aria-hidden="true">W</span><span>Workspace overview</span><span class="syn-chip">Current</span></a></li>
+        <li><a class="syn-list-row" href="#controls"><span class="syn-avatar syn-avatar--sm" aria-hidden="true">C</span><span>Native form controls</span></a></li>
+        <li><a class="syn-list-row" href="#content"><span class="syn-avatar syn-avatar--lg" aria-hidden="true">D</span><span>Document content</span></a></li>
+      </ul>
+      <p>Collaborators:</p>
+      <div class="syn-avatar-stack" role="group" aria-label="Collaborators: Alex, Chris, Jamie">
+        <span class="syn-avatar" aria-hidden="true">A</span>
+        <span class="syn-avatar" aria-hidden="true">C</span>
+        <span class="syn-avatar" aria-hidden="true">J</span>
+      </div>
+      <p><span class="syn-chip">Draft</span> <span class="syn-chip" data-syn-state="active">Selected filter (visual only)</span></p>
+    </section>
+    <section id="content" aria-labelledby="content-heading">
+      <h2 id="content-heading">Inline text, quotes, changes, and embedded media</h2>
+      <h3>Core-only content lists</h3>
+      <p>Native bullets and numbering remain intact, even for nested and compact variants.</p>
+      <ul class="syn-list syn-list--accent">
+        <li>Readable feature bullets</li>
+        <li>Accessible native nesting
+          <ul><li>Nested bullet</li><li>Another nested bullet</li></ul>
+        </li>
+      </ul>
+      <ol class="syn-list syn-list--compact" start="9">
+        <li>Review design tokens</li>
+        <li>Apply scoped styles</li>
+        <li>Validate keyboard navigation</li>
+      </ol>
+      <p>This version was updated <time datetime="2026-11-15">15 November 2026</time>.
+         Plan tier: <data value="growth">Growth</data>.</p>
+      <p><dfn>Native-first</dfn> means browser semantics remain authoritative.
+         <q>Use the platform</q> is a phrase often <cite>attributed to progressive enhancement guidance</cite>.
+         Formula: <var>x</var> + <var>y</var>.</p>
+      <p><del>Manual confirmation required</del> <ins>Automatic validation available</ins>.
+         Deletions remain struck through; insertions remain underlined.</p>
+      <div class="syn-divider-label">MEDIA</div>
+      <figure>
+        <picture>
+          <img src="../assets/syntyr-mark.svg" width="64" height="64" alt="Geometric Syntyr logo">
+        </picture>
+        <figcaption>A picture and its native caption. Image pixels are not transformed by Syntyr.</figcaption>
+      </figure>
+      <p>Below is an embedded local document with a descriptive iframe title.</p>
+      <iframe title="Native HTML elements example" src="native-elements.html" loading="lazy"></iframe>
+      <p><small>Canvases and SVG keep their native rendering and accessibility responsibilities.</small></p>
+      <svg viewBox="0 0 140 28" width="140" height="28" role="img" aria-label="Three illustrative bar lengths">
+        <rect x="0" y="4" width="28" height="20" fill="currentColor" opacity=".5"></rect>
+        <rect x="40" y="4" width="43" height="20" fill="currentColor" opacity=".7"></rect>
+        <rect x="95" y="4" width="45" height="20" fill="currentColor"></rect>
+      </svg>
+      <canvas width="140" height="24" role="img" aria-label="Blank canvas: application drawing code required">Canvas fallback text</canvas>
+    </section>
+    <section id="controls" aria-labelledby="controls-heading">
+      <h2 id="controls-heading">Native forms and notifications</h2>
+      <p class="syn-alert syn-alert--success">Sample successful validation. The status is communicated in text.</p>
+      <p class="syn-alert syn-alert--warning">Sample warning: changes are not saved on this example page.</p>
+      <form action="common-ui.html" method="get">
+        <fieldset>
+          <legend>Choose example settings</legend>
+          <label for="formats">Formats (select multiple)</label>
+          <select id="formats" name="formats" multiple size="3">
+            <optgroup label="Static"><option value="poster" selected>Poster</option><option value="billboard">Billboard</option></optgroup>
+            <optgroup label="Digital"><option value="screen">Digital screen</option></optgroup>
+          </select>
+          <label for="notes">Notes</label>
+          <textarea id="notes" name="notes" placeholder="Optional notes"></textarea>
+          <div class="syn-button-group" role="group" aria-label="Submit example form">
+            <button type="submit" name="choice" value="save">Submit example form</button>
+            <button type="reset">Reset</button>
+          </div>
+        </fieldset>
+      </form>
+      <p class="syn-muted">Submitting reloads this static page with query parameters. There is no backend persistence.</p>
+    </section>
+    <footer><a href="../docs/components.html">Read the component documentation</a></footer>
+  </main>
+</body>
+</html>

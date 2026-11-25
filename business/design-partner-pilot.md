@@ -1,6 +1,7 @@
 # Syntyr Console Kit — 10-interview design-partner pilot
 
-**Status: recruiting infrastructure prepared; no prospects contacted yet.**
+**Public baseline (2026-11-15): no verified prospects contacted.**
+This is the repository's initial research snapshot, not a claim about later offline activity. Run the private scorecard below for current evidence.
 A [public invitation is posted](https://github.com/dporkka/syntyr-css/issues/3), but no actual participants have been recruited. This is a zero-budget qualitative validation experiment, not a marketing
 automation or a promise to ship premium assets. Core CSS, Grid and Noir themes,
 the full component library, and the free examples remain MIT-licensed.
@@ -19,6 +20,21 @@ commercial/internal web application and be able to critique *actual code*
 rather than screenshots. Upvotes, GitHub stars, and generic compliments are
 not purchase evidence.
 
+**Niche priority for the ten slots:** five commercial SaaS builders using
+server-rendered HTML, two CRM/ERP or field-operations software builders, two
+small agencies delivering admin software or client portals, and one independent
+founder with a previous paid UI-kit purchase. Focus on people who have a
+*current interface to ship*, not those who merely enjoy a CSS aesthetic. This
+deliberately tests Syntyr's SaaS/operations niche, rather than pretending to
+sample all web developers.
+
+For each interview, establish the buyer's spending authority, the specific
+application screen they need, approximate engineering hours they currently
+spend building it, prior paid template purchases, and whether they can adopt
+the actual HTML/CSS preview. Keep these qualitative findings separate from
+would-buy answers; ten interviews cannot establish a reliable market-wide
+conversion rate.
+
 ## Recruitment scope
 
 Public review issue: https://github.com/dporkka/syntyr-css/issues/3
@@ -36,8 +52,10 @@ Good first channels:
   channel and GitHub Discussions at https://templ.guide/help-and-community/.
 - **HTMX:** the official community page lists Discord and GitHub Discussions:
   https://htmx.org/talk/. Ask moderators before sharing project links.
-- **Astro:** reach an Astro-focused developer already discussing open-source
-  website themes in opt-in spaces; prioritize use case over follower count.
+- **SaaS and operations app builders:** prioritize opt-in discussions where Go,
+  Django, Rails, LiveView or Livewire developers are shipping customer-facing
+  dashboards, CRMs, service portals and internal applications. Ask for feedback
+  on the actual admin screens, not just color palettes.
 - **Independent SaaS developers:** ask for one-to-one critique from existing
   contacts who use server rendering and actively buy design templates.
 
@@ -76,6 +94,23 @@ Good first channels:
    intent**, not actual revenue.
 
 ## Logging and thresholds
+
+### Private, reproducible research scorecard
+
+The committed `design-partner-pilot.csv` contains **ten synthetic target slots, not real people**. Do not commit names, email addresses, identifying descriptions, client data, interview notes, or private contact histories to this public repository.
+
+Copy it to the ignored `business/private/` directory and record real, consented research there:
+
+```sh
+mkdir -p business/private
+cp business/design-partner-pilot.csv business/private/design-partner-pilot.csv
+python3 scripts/commercial_pilot_report.py --csv business/private/design-partner-pilot.csv
+python3 scripts/commercial_pilot_report.py --csv business/private/design-partner-pilot.csv --json
+```
+
+The private CSV preserves the existing ten slots. Set `status` to exactly one of `not_contacted`, `invited`, `accepted`, `interviewed`, or `declined`. Set `intent` to `would_buy`, `maybe`, or `would_not_buy` **only after an interview**. Set `paid_commitment` to `documented` only if a completed interview includes explicit, independently documented buyer commitment; keep the supporting evidence privately. A verbal `would_buy` alone is not a commitment. The scorecard counts these separately and never infers orders, revenue, or conversion rates.
+
+The report is **aggregated only**: no contact identifiers or notes appear in standard or JSON output. The interview target is a research milestone, not permission to enable checkout; the commercial launch gates in [commercial-launch-gates.md](commercial-launch-gates.md) must be independently satisfied. Do not publish the local private file, aggregate counts that identify an individual, or claim confidence in conversion rates from ten interviews.
 
 - Update each slot's status `not_contacted` → `invited` → `accepted` →
   `interviewed` or `declined`. Store personally identifying respondent

@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Syntyr styles the presentation of an existing data grid . It does not implement virtualization, sorting, query execution, clipboard parsing, selection…">
+  <meta name="syntyr-source-sha256" content="236d144154ab967552c6db1e2cfe986671504ce36298bc21dd8bc6c7e9ef1602">
+  <meta name="theme-color" content="#f5f7fb">
+  <title>Data-grid presentation (opt-in, CSS-only) — Syntyr CSS docs</title>
+  <link rel="canonical" href="https://syntyr-css.pages.dev/docs/data-grid">
+  <link rel="alternate" type="text/markdown" href="data-grid.md" title="Markdown source">
+  <link rel="icon" href="../assets/syntyr-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="docs.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <a class="syn-button docs-skip" href="#doc-main">Skip to guide</a>
+  <div class="syn-shell">
+    <header class="syn-header docs-header">
+      <a class="syn-logo" href="../index.html">SYNTYR / CSS</a>
+      <nav class="syn-nav" aria-label="Documentation navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav>
+      <details class="site-mobile-menu"><summary>Menu</summary><nav aria-label="Mobile navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav></details>
+    </header>
+    <main id="doc-main" class="docs-article-page">
+      <nav class="syn-breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="reference.html">Documentation</a></li><li aria-current="page">Data-grid presentation (opt-in, CSS-only)</li></ol></nav>
+      <header class="docs-article-heading">
+        <p class="syn-eyebrow">SYNTYR / DOCUMENTATION</p>
+        <p class="syn-muted">Current source documentation may describe unreleased alpha.5 features. <a href="distribution.html">Check released version compatibility.</a></p>
+        <p class="syn-caption">Prefer a machine-readable version? <a href="data-grid.md">Markdown source</a> · <a href="../llms.txt">LLM index</a></p>
+      </header>
+      <div class="docs-article-layout">
+        <article class="docs-prose" aria-label="Data-grid presentation (opt-in, CSS-only)">
+<h1 id="data-grid-presentation-opt-in-css-only">Data-grid presentation (opt-in, CSS-only)</h1>
+<p>Syntyr styles <strong>the presentation of an existing data grid</strong>. It does not implement
+virtualization, sorting, query execution, clipboard parsing, selection, row editing,
+focus navigation, or authorized persistence. Apps such as Adacavo own those behaviors.</p>
+<h2 id="installation">Installation</h2>
+<p>Load <code>dist/syntyr.core.css</code> for tokens and then <code>dist/syntyr.data-grid.css</code>.
+For an application with its own theme tokens, the standalone grid CSS can be used
+without loading Syntyr core, provided the required <code>--syn-*</code> color, radius, and
+font tokens are mapped inside a <code>.syn-root</code> subtree.</p>
+<p>This module is not included in <code>syntyr.core.css</code> or <code>syntyr.css</code>; it is opt-in.
+The all-in-one demo bundle includes it. There is <strong>no JavaScript</strong> dependency.</p>
+<pre tabindex="0"><code class="language-html">&lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot; data-syn-density=&quot;compact&quot;&gt;
+  &lt;div class=&quot;syn-data-grid&quot; role=&quot;grid&quot; aria-label=&quot;Inventory&quot;
+       aria-rowcount=&quot;2&quot; aria-colcount=&quot;1&quot;&gt;
+    &lt;div class=&quot;syn-data-grid__viewport&quot; role=&quot;region&quot; tabindex=&quot;0&quot;
+         aria-label=&quot;Scrollable inventory&quot;&gt;
+      &lt;div class=&quot;syn-data-grid__header&quot; role=&quot;rowgroup&quot;&gt;
+        &lt;div role=&quot;row&quot; aria-rowindex=&quot;1&quot; class=&quot;syn-data-grid__header-row&quot;&gt;
+          &lt;div class=&quot;syn-data-grid__columnheader&quot; role=&quot;columnheader&quot;
+               style=&quot;width:14rem&quot;&gt;Inventory face&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div role=&quot;row&quot; aria-rowindex=&quot;2&quot; class=&quot;syn-data-grid__row&quot;
+           style=&quot;position:relative;height:2.5rem&quot;&gt;
+        &lt;div role=&quot;gridcell&quot; class=&quot;syn-data-grid__cell&quot;
+             style=&quot;width:14rem&quot; tabindex=&quot;0&quot; aria-readonly=&quot;true&quot;&gt;
+          &lt;span class=&quot;syn-data-grid__cell-text&quot;&gt;Face 102&lt;/span&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;footer class=&quot;syn-data-grid__footer&quot;&gt;1 record&lt;/footer&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+</code></pre>
+<h2 id="api-and-responsibilities">API and responsibilities</h2>
+<p>The host supplies these classes on the appropriate existing elements:
+<code>syn-data-grid</code>, <code>syn-data-grid__viewport</code>, <code>syn-data-grid__header</code>,
+<code>syn-data-grid__columnheader</code>, <code>syn-data-grid__row</code>, <code>syn-data-grid__cell</code>,
+<code>syn-data-grid__cell--numeric</code>, <code>syn-data-grid__editor</code>,
+<code>syn-data-grid__toolbar</code>, <code>syn-data-grid__status</code>,
+<code>syn-data-grid__loading</code> and <code>syn-data-grid__footer</code>.</p>
+<p>For ellipsis on long text, wrap cell text in a
+<code>&lt;span class=&quot;syn-data-grid__cell-text&quot;&gt;</code>; ellipsis cannot reliably apply to
+anonymous flex items. Keep the wrapper shrinkable. Editors and other interactive
+controls remain application-owned and need their own layout/focus handling.</p>
+<p>Nearest density scope wins: <code>compact</code>, <code>comfortable</code> (including resets), or
+<code>spacious</code> on the grid itself or an ancestor. Match any virtualizer's row
+measurement to the resulting computed <code>--syn-grid-row-block</code>.</p>
+<p>The host also supplies true state through standard ARIA attributes
+(<code>aria-selected</code>, <code>aria-invalid</code>, <code>aria-readonly</code>) and exposes
+<code>data-syn-dirty=&quot;true&quot;</code> and <code>data-syn-focused=&quot;true&quot;</code> when applicable.
+Do not derive permissions or errors from CSS.</p>
+<p>Column headers and cells must be given <strong>matching widths</strong> by the host.
+For virtualized rows, keep the virtualizer's measured/estimated row height
+consistent with rendered CSS height. Keep the header inside the same horizontal
+scroll container as the rows to prevent scroll drift.</p>
+<p>Use <code>data-syn-density=&quot;compact&quot;</code> only for visual spacing, not to change
+virtualization row heights implicitly. For real grid widgets, the host must
+implement a robust ARIA grid keyboard model and verify focus under virtualization,
+including 400% zoom, forced colors, and screen reader behavior. Empty/loading and
+paste error states need accessible descriptive text and focus management.</p>
+<p>The optional CSS uses Syntyr's quiet operational surfaces by default; opt into
+Grid/Noir palettes only when appropriate. Avoid glows or decorative motion
+on data-heavy workspaces.</p>
+        </article>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+<a class="docs-article-toc-link docs-article-toc-2" href="#installation">Installation</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#api-and-responsibilities">API and responsibilities</a>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#installation">Installation</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#api-and-responsibilities">API and responsibilities</a>
+            </nav>
+          </details>
+        </aside>
+      </div>
+      <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="data-grid.md">Markdown source</a></nav>
+    </main>
+    <footer class="syn-header"><span class="syn-caption">SYNTYR CSS · MIT CORE · EXPERIMENTAL</span><a href="../index.html">Home</a></footer>
+  </div>
+</body>
+</html>

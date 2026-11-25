@@ -19,8 +19,10 @@ import tempfile
 
 if __package__:
     from .build import distributions
+    from .release_approval import ReleaseBlocked, require_approval
 else:
     from build import distributions
+    from release_approval import ReleaseBlocked, require_approval
 
 ROOT = Path(__file__).resolve().parents[1]
 VERSION_PATTERN = re.compile(r"[0-9]+\.[0-9]+\.[0-9]+(?:-[0-9A-Za-z.-]+)?")
@@ -83,12 +85,34 @@ def preflight(root: Path) -> tuple[str, Path, dict, dict[str, bytes]]:
     return version, manifest_path, manifest, css
 
 
-def freeze(root: Path, apply: bool = False) -> None:
+def checked_source_commit(root: Path) -> str:
+    """Return the immutable source SHA only when tracked files match it."""
+    actual = subprocess.check_output(["git", "rev-parse", "HEAD"],
+                                     cwd=root, text=True).strip()
+    tracked_changes = subprocess.check_output(
+        ["git", "status", "--porcelain", "--untracked-files=no"],
+        cwd=root, text=True,
+    ).strip()
+    if tracked_changes:
+        raise ReleaseBlocked("Tracked source differs from the reviewed HEAD commit")
+    return actual
+
+
+def freeze(root: Path, apply: bool = False, *,
+           approval_path: Path | None = None, commit: str | None = None) -> None:
+    # Bind approval to the source *before* reading generated CSS.
+    initial_commit = checked_source_commit(root) if apply else None
+    if apply and commit is not None and commit != initial_commit:
+        raise ReleaseBlocked("Provided commit does not match the checked-out HEAD")
     version, manifest_path, manifest, css = preflight(root)
     hashes = {name: sha256(contents) for name, contents in css.items()}
     if not apply:
         print(f"READY to freeze {len(css)} CSS files for {version} (read-only preflight; not release approval)")
         return
+
+    if checked_source_commit(root) != initial_commit:
+        raise ReleaseBlocked("HEAD changed while collecting the CSS snapshot")
+    require_approval(root, version, initial_commit, approval_path)
 
     target = manifest_path.parent / version
     staged = Path(tempfile.mkdtemp(prefix=f".{version}-stage-", dir=manifest_path.parent))
@@ -109,6 +133,9 @@ def freeze(root: Path, apply: bool = False) -> None:
             stream.write("\n")
             stream.flush()
             os.fsync(stream.fileno())
+        # Minimize checkout/commit races before promoting the staged snapshot.
+        if checked_source_commit(root) != initial_commit:
+            raise ReleaseBlocked("HEAD changed while staging the CSS snapshot")
         staged.rename(target)
         moved = True
         manifest_tmp.replace(manifest_path)
@@ -130,9 +157,11 @@ def main() -> int:
                         help="read-only preflight (the default)")
     action.add_argument("--apply", action="store_true",
                         help="freeze the candidate after separate human release approval")
+    parser.add_argument("--approval", type=Path,
+                        help="JSON release evidence (default release/release-approval.json)")
     args = parser.parse_args()
     try:
-        freeze(ROOT, apply=args.apply)
+        freeze(ROOT, apply=args.apply, approval_path=args.approval)
     except (ValueError, OSError, subprocess.CalledProcessError, json.JSONDecodeError) as error:
         print(f"Release freeze blocked: {error}", file=sys.stderr)
         return 1

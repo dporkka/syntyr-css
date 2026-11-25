@@ -1,0 +1,39 @@
+{{define "page"}}<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contacts — Syntyr Go starter</title>
+  <link rel="stylesheet" href="/assets/syntyr.core.css">
+  <link rel="stylesheet" href="/assets/syntyr.server.css">
+  {{if .HTMXEnabled}}<script defer src="/vendor/htmx.min.js"></script>{{end}}
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <main class="syn-shell">
+    <header class="syn-header">
+      <div><h1 class="syn-heading">Contacts</h1><p>Server-rendered search with native GET fallback.</p></div>
+      <nav class="syn-inline" aria-label="Primary"><a href="/contacts" aria-current="page">Directory</a></nav>
+    </header>
+    <div class="syn-sidecar">
+      <section class="syn-stack" aria-labelledby="directory-heading">
+        <h2 class="syn-heading" id="directory-heading">Directory</h2>
+        <form class="syn-form" action="/contacts" method="get" role="search"
+              hx-get="/contacts" hx-target="#contacts" hx-swap="innerHTML" hx-push-url="true">
+          <label class="syn-label" for="search-contacts">Find a contact</label>
+          <div class="syn-inline">
+            <input class="syn-input" id="search-contacts" name="q" type="search"
+                   value="{{.Query}}" placeholder="Name, company or email">
+            <button class="syn-button syn-button--primary" type="submit">Search</button>
+          </div>
+        </form>
+        <div id="contacts">{{template "results" .}}</div>
+      </section>
+      <aside class="syn-panel" aria-labelledby="about-heading">
+        <h2 class="syn-heading" id="about-heading">How it works</h2>
+        <p>Syntyr styles the layout and native controls. Go owns rendering and filtering.</p>
+        <p>Install a local HTMX script and pass <code>-htmx</code> to enhance search without changing routes.</p>
+      </aside>
+    </div>
+  </main>
+</body>
+</html>{{end}}

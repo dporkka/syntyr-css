@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="description" content="A practical walkthrough for composing semantic SaaS landing pages from Syntyr's reusable HTML and CSS UI blocks.">
+  <title>Build a SaaS landing page with reusable Syntyr UI blocks — Syntyr CSS Blog</title>
+  <link rel="icon" href="../assets/syntyr-mark.svg" type="image/svg+xml">
+  <link rel="canonical" href="https://syntyr-css.pages.dev/blog/landing-page-ui-blocks">
+  <link rel="alternate" type="application/rss+xml" title="Syntyr CSS Blog" href="rss.xml">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Build a SaaS landing page with reusable Syntyr UI blocks">
+  <meta property="og:description" content="A practical walkthrough for composing semantic SaaS landing pages from Syntyr's reusable HTML and CSS UI blocks.">
+  <meta property="og:image" content="https://syntyr-css.pages.dev/assets/og-syntyr.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="../dist/syntyr.recipes.css">
+  <link rel="stylesheet" href="blog.css">
+  <meta property="article:published_time" content="2026-11-16">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Build a SaaS landing page with reusable Syntyr UI blocks","description":"A practical walkthrough for composing semantic SaaS landing pages from Syntyr's reusable HTML and CSS UI blocks.","datePublished":"2026-11-16","dateModified":"2026-11-16","mainEntityOfPage":"https://syntyr-css.pages.dev/blog/landing-page-ui-blocks","author":{"@type":"Organization","name":"Syntyr CSS"},"publisher":{"@type":"Organization","name":"Syntyr CSS"},"image":"https://syntyr-css.pages.dev/assets/og-syntyr.png","inLanguage":"en"}</script>
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <a href="#main" class="syn-button blog-skip">Skip to content</a>
+  <div class="syn-shell">
+    <header class="syn-header blog-header">
+      <a href="../index.html" class="syn-logo" aria-label="Syntyr CSS home">SYNTYR / CSS</a>
+      <nav class="syn-nav" aria-label="Main navigation">
+        <a href="../docs/">Documentation</a>
+        <a href="../docs/catalog.html">Components</a>
+        <a href="../docs/blocks.html">Blocks</a>
+        <a href="index.html" aria-current="page">Blog</a>
+        <a href="rss.xml" type="application/rss+xml">RSS</a>
+        <a href="https://github.com/dporkka/syntyr-css">GitHub</a>
+      </nav>
+    </header>
+    <main id="main" class="blog-main">
+      <nav class="syn-breadcrumbs blog-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="index.html">Blog</a></li><li aria-current="page">Tutorial</li></ol></nav>
+      <article class="blog-article">
+        <header class="blog-article-header">
+          <p class="syn-eyebrow">Tutorial / FIELD NOTES</p>
+          <h1 class="blog-post-title">Build a SaaS landing page with reusable Syntyr UI blocks</h1>
+          <p class="syn-lede blog-article-summary">Compose a hero, feature cards, FAQ, and CTA without a component runtime. A maintainable pattern for developer-first marketing sites.</p>
+          <p class="syn-caption">Syntyr team · <time datetime="2026-11-16">November 16, 2026</time></p>
+        </header>
+        <div class="syn-prose blog-article-body">
+<p>A SaaS landing page does not need to start as a JavaScript application. Most marketing pages are content, navigation, and calls to action. Their maintainability depends more on semantic structure, reusable compositions, and copy clarity than on the frontend framework.</p>
+<h2 id="blocks">Compose sections, don't reinvent elements</h2>
+<p>Syntyr provides copy-owned <a href="../docs/blocks.html">HTML UI blocks</a> assembled from its underlying component classes. The same classes work in static HTML, server templates, and framework components. For a first page, choose four sections: a hero, a feature grid, a short FAQ, and a concluding call to action.</p>
+<h2 id="hero">1. Begin with the product promise</h2>
+<p>The <code class="syn-code">syn-site-hero</code> recipe provides a deliberate visual anchor. A single heading should identify the value proposition, while the lead paragraph explains who benefits.</p>
+<pre class="blog-code"><code>&lt;section class="syn-site-hero" aria-labelledby="hero"&gt;
+  &lt;p class="syn-eyebrow"&gt;For operations teams&lt;/p&gt;
+  &lt;h1 id="hero" class="syn-site-heading"&gt;Less busywork. More clarity.&lt;/h1&gt;
+  &lt;p class="syn-lede"&gt;One workspace for your daily operations.&lt;/p&gt;
+  &lt;div class="syn-actions"&gt;
+    &lt;a class="syn-button syn-button--primary" href="/demo"&gt;
+      View demo&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre>
+<p>A call to action must go to a real route. Replace the example <code class="syn-code">/demo</code> path with a working page before publishing.</p>
+<h2 id="features">2. Make benefits scannable</h2>
+<p>Use <code class="syn-code">syn-feature-grid</code> with three <code class="syn-code">syn-feature-card</code> articles. Each card should describe an outcome and link to deeper evidence or documentation. Avoid repeating generic claims across cards.</p>
+<h2 id="faq">3. Answer questions with HTML disclosures</h2>
+<p>A short FAQ can use <code class="syn-code">&lt;details&gt;</code> and <code class="syn-code">&lt;summary&gt;</code> for each answer. The result remains readable without JavaScript. Use FAQ content to address real product constraints, pricing boundaries, and platform compatibility rather than manufacturing keyword variations.</p>
+<h2 id="cta">4. Close with one clear next step</h2>
+<p>The <code class="syn-code">syn-cta-band</code> block combines a short headline, supporting text, and a link. Reusing the visual pattern makes the page easier to maintain and keeps intent clear to users.</p>
+<h2 id="shipping">Ship it as a normal website</h2>
+<p>Load <code class="syn-code">syntyr.core.css</code> and <code class="syn-code">syntyr.recipes.css</code>, then publish the resulting HTML using any static host or server framework. Keep title tags, descriptions, canonical URLs, internal links, and structured data in the HTML response; avoid creating SEO metadata only after JavaScript hydration.</p>
+<p>Start with the <a href="../docs/blocks.html">block gallery</a>, <a href="../docs/blocks-guide.html">block integration guide</a>, and <a href="../examples/landing.html">landing-page example</a>. Syntyr's CSS covers presentation; your application owns real signup flows, analytics, and forms.</p>
+        </div>
+      </article>
+      <aside class="syn-cta-band blog-cta" aria-labelledby="article-cta">
+        <div><h2 id="article-cta" class="syn-heading">Explore the components behind this article</h2><p>See the copy-owned HTML blocks and production-oriented CSS recipes.</p></div>
+        <a class="syn-button syn-button--primary" href="../docs/blocks.html">Browse Syntyr blocks</a>
+      </aside>
+      <nav class="blog-article-return" aria-label="Article navigation"><a href="index.html">← All articles</a></nav>
+    </main>
+    <footer class="blog-footer syn-inline">
+      <p class="syn-caption">© 2026 Syntyr CSS · MIT-licensed core · HTML-first</p>
+      <nav class="syn-nav" aria-label="Footer navigation"><a href="../index.html">Home</a><a href="../docs/">Docs</a><a href="../docs/blocks.html">UI blocks</a><a href="rss.xml">RSS feed</a></nav>
+    </footer>
+  </div>
+</body>
+</html>

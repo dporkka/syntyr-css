@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>SYNTYR standalone CSS presets</title>
+  <!-- Swap only this file to compare minimal, saas and cinematic. -->
+  <link rel="stylesheet" href="../dist/presets/saas.css">
+</head>
+<body>
+  <main class="syn-root syn-page syn-semantic" data-syn-theme="studio" data-syn-intensity="quiet">
+    <div class="syn-shell">
+      <header class="syn-stack">
+        <p><strong>SYNTYR / NATIVE</strong> &nbsp; <span class="syn-badge">Zero runtime JS</span></p>
+        <h1 class="syn-display">One stylesheet. Real applications.</h1>
+        <p class="syn-body">A durable CSS contract for content, forms, dashboards and optional cinematic effects.</p>
+        <nav aria-label="Sections"><a href="#overview">Overview</a> · <a href="#preferences">Preferences</a> · <a href="#native">Native elements</a></nav>
+      </header>
+      <form class="syn-filter-bar" action="#overview" method="get" aria-label="Filter dashboard">
+        <label class="syn-filter-field" for="query">Search activity<input id="query" name="q" type="search" placeholder="Filter records"></label>
+        <button type="submit" class="syn-button">Filter</button>
+      </form>
+      <section id="overview" class="syn-region" aria-labelledby="overview-title">
+        <h2 id="overview-title">Overview</h2>
+        <div class="syn-stats">
+          <article class="syn-panel"><h3 class="syn-heading">Uptime</h3><p class="syn-display">99.9%</p><small>Monthly availability</small></article>
+          <article class="syn-panel"><h3 class="syn-heading">Workspaces</h3><p class="syn-display">248</p><small>Active organizations</small></article>
+          <article class="syn-panel"><h3 class="syn-heading">Response</h3><p class="syn-display">84ms</p><small>Median API latency</small></article>
+        </div>
+      </section>
+      <section id="preferences" class="syn-region" aria-labelledby="preferences-title">
+        <h2 id="preferences-title">Preferences</h2>
+        <article class="syn-panel syn-panel--raised syn-frame--precision">
+          <form action="#preferences" method="get">
+            <fieldset>
+              <legend>Notifications</legend>
+              <label for="email">Account email</label>
+              <input id="email" name="email" type="email" value="team@example.org" required>
+              <label for="frequency">Summary interval</label>
+              <select id="frequency" name="frequency">
+                <option>Daily</option><option>Weekly</option>
+              </select>
+              <label><input name="digest" type="checkbox" checked> Receive a digest</label>
+            </fieldset>
+            <p><button type="submit" class="syn-button syn-button--primary">Save preferences</button> <button type="reset">Reset</button></p>
+          </form>
+        </article>
+      </section>
+      <section id="native" aria-labelledby="native-title" class="syn-region">
+        <h2 id="native-title">Browser-native components</h2>
+        <details><summary>How does this work?</summary><p>HTML elements own their behavior. CSS controls only presentation.</p></details>
+        <p><button type="button" popovertarget="preset-popover">Open help</button></p>
+        <div id="preset-popover" popover><p>Built-in popover. No widget runtime.</p></div>
+        <p><label for="completion">Deployment progress</label><progress id="completion" max="100" value="75">75%</progress></p>
+        <p><button type="button" commandfor="preset-dialog" command="show-modal">Open dialog</button></p>
+        <dialog id="preset-dialog" aria-labelledby="dialog-title">
+          <h3 id="dialog-title">Native settings dialog</h3>
+          <p>No Syntyr widget runtime is involved.</p>
+          <form method="dialog"><button>Close dialog</button></form>
+        </dialog>
+        <table><caption>Preset quality gates</caption><thead><tr><th scope="col">Check</th><th scope="col">Expected</th></tr></thead><tbody><tr><th scope="row">Browser JS</th><td>0 bytes</td></tr><tr><th scope="row">Semantic scope</th><td>Opt in</td></tr></tbody></table>
+      </section>
+    </div>
+  </main>
+  <footer id="host-outside">Outside Syntyr's styling boundary</footer>
+</body>
+</html>

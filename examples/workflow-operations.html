@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Portable, accessible Syntyr workflow progress, activity and approval compositions with semantic HTML and no application JavaScript.">
+  <title>Syntyr — workflow operations compositions</title>
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="../dist/syntyr.recipes.css">
+  <link rel="stylesheet" href="workflow-operations.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <a class="syn-button ops-skip" href="#main">Skip to content</a>
+  <main id="main" class="syn-shell ops-page">
+    <header class="ops-hero">
+      <div>
+        <p class="syn-eyebrow">FREE / SOURCE CANDIDATE / NATIVE HTML</p>
+        <h1 class="syn-heading">Workflow operations</h1>
+        <p class="syn-muted">Three copy-owned compositions for SaaS, operations and agent-facing interfaces. All records below are illustrative and have no live backend.</p>
+      </div>
+      <a class="syn-button syn-button--outline" href="../docs/recipes.html">Implementation guide</a>
+    </header>
+    <nav class="ops-nav" aria-label="Workflow patterns">
+      <a href="#progress">Workflow progress</a>
+      <a href="#activity">Activity and diagnostics</a>
+      <a href="#decisions">Approval queue</a>
+    </nav>
+
+    <div class="ops-grid">
+      <section id="progress" class="syn-panel syn-region ops-section" aria-labelledby="progress-heading">
+        <div class="ops-section-heading">
+          <div><p class="syn-eyebrow">01 / CORE CSS</p><h2 class="syn-section-heading" id="progress-heading">Workflow progress</h2></div>
+          <span class="syn-status syn-status--warning">In progress</span>
+        </div>
+        <p class="syn-muted">A host-rendered ordered list. State text and the current step are provided by the server.</p>
+        <ol class="syn-steps syn-steps--vertical" role="list" aria-label="Illustrative release workflow">
+          <li class="syn-step" data-syn-state="complete">
+            <div><strong class="syn-step-label">Read source files</strong><p class="syn-step-detail">Completed at 09:12</p></div>
+          </li>
+          <li class="syn-step" data-syn-state="complete">
+            <div><strong class="syn-step-label">Validate changes</strong><p class="syn-step-detail">Completed with 18 checks</p></div>
+          </li>
+          <li class="syn-step" aria-current="step">
+            <div><strong class="syn-step-label">Human approval</strong><p class="syn-step-detail">Current step: an authorized reviewer must decide</p></div>
+          </li>
+          <li class="syn-step">
+            <div><strong class="syn-step-label">Publish release</strong><p class="syn-step-detail">Not started; blocked until approval</p></div>
+          </li>
+        </ol>
+      </section>
+
+      <section id="activity" class="syn-panel ops-section" aria-labelledby="activity-heading">
+        <div class="ops-section-heading">
+          <div><p class="syn-eyebrow">02 / RECIPES CSS</p><h2 class="syn-section-heading" id="activity-heading">Activity and diagnostics</h2></div>
+          <span class="syn-caption">ILLUSTRATIVE EVENTS</span>
+        </div>
+        <p class="syn-muted">A readable event log; disclosure details allow diagnostic output without burying the main outcome.</p>
+        <ol class="syn-activity-timeline" role="list" aria-label="Illustrative execution events">
+          <li>
+            <div class="ops-event">
+              <div><strong>Repository checked</strong><span class="syn-status syn-status--success">Succeeded</span></div>
+              <time datetime="2026-11-17T09:12:04-03:00">09:12:04 · 0.8 s</time>
+            </div>
+            <details class="syn-details">
+              <summary>Input and result</summary>
+              <pre class="ops-code"><code>Input: validate repository
+Result: clean working tree
+Duration: 0.8 seconds</code></pre>
+            </details>
+          </li>
+          <li>
+            <div class="ops-event">
+              <div><strong>Quality checks</strong><span class="syn-status syn-status--success">Succeeded</span></div>
+              <time datetime="2026-11-17T09:12:10-03:00">09:12:10 · 6.1 s</time>
+            </div>
+            <p class="syn-caption">18 checks reported success in this sample.</p>
+          </li>
+          <li>
+            <div class="ops-event">
+              <div><strong>Publishing request</strong><span class="syn-status syn-status--warning">Awaiting approval</span></div>
+              <time datetime="2026-11-17T09:12:17-03:00">09:12:17</time>
+            </div>
+            <details class="syn-details">
+              <summary>Why this is waiting</summary>
+              <p>An authorized reviewer must approve this illustrative request before a real application would continue.</p>
+            </details>
+          </li>
+        </ol>
+      </section>
+    </div>
+
+    <section id="decisions" class="ops-section" aria-labelledby="decisions-heading">
+      <header class="ops-section-heading">
+        <div><p class="syn-eyebrow">03 / COMPOSED APPROVALS</p><h2 class="syn-section-heading" id="decisions-heading">Approval queue</h2></div>
+        <span class="syn-caption">STATIC DEMONSTRATION / 2 REQUESTS</span>
+      </header>
+      <p class="syn-muted">Actions are deliberately disabled because this page has no server. Do not enable them until authorization, CSRF protection, idempotency and durable server-side decision handling exist.</p>
+      <div class="ops-decisions">
+        <article class="syn-app-card ops-decision" aria-labelledby="decision-a-title">
+          <div class="ops-section-heading">
+            <h3 id="decision-a-title" class="syn-heading">Deploy service update</h3>
+            <span class="syn-status syn-status--warning">Needs review</span>
+          </div>
+          <p>Environment: staging · Requested by release automation</p>
+          <p class="syn-caption">Evidence: source checks passed. Reviewer identity and permission must be verified server-side.</p>
+          <div class="ops-actions" role="group" aria-label="Deploy service update (unavailable demo actions)">
+            <button type="button" class="syn-button syn-button--primary" disabled>Approve (requires server)</button>
+            <button type="button" class="syn-button syn-button--outline" disabled>Reject (requires server)</button>
+          </div>
+        </article>
+        <article class="syn-app-card ops-decision" aria-labelledby="decision-b-title">
+          <div class="ops-section-heading">
+            <h3 id="decision-b-title" class="syn-heading">Permission escalation</h3>
+            <span class="syn-status syn-status--danger">Rejected</span>
+          </div>
+          <p>Request to expand a service account's permissions</p>
+          <p class="syn-caption">Illustrative final state: previously rejected by an authorized reviewer. The server must provide audit evidence and enforce finality.</p>
+        </article>
+      </div>
+    </section>
+    <footer class="syn-caption ops-footer">
+      Existing Syntyr classes only. No real execution, timers, polling, mutations, persistence or agent runtime.
+      <a href="../docs/recipes.html">Read server integration guidance</a>.
+    </footer>
+  </main>
+</body>
+</html>

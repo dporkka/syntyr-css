@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Projects · Syntyr Rust example</title>
+  <link rel="stylesheet" href="/assets/syntyr.core.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <a class="syn-button" href="#main">Skip to content</a>
+  <main id="main">
+    <header class="syn-panel">
+      <p class="syn-badge">RUST + AXUM + ASKAMA</p>
+      <h1 class="syn-heading">Projects</h1>
+      <p>Server-rendered operations dashboard, with local CSS and no client-side JavaScript.</p>
+    </header>
+
+    <section class="syn-panel" aria-labelledby="search-heading">
+      <h2 class="syn-heading" id="search-heading">Find a project</h2>
+      <form method="get" action="/" class="syn-form" role="search">
+        <label class="syn-label" for="project-search">Project or owner</label>
+        <p id="search-hint">Enter up to 40 characters; the server filters the result table.</p>
+        <input class="syn-input" id="project-search" name="q" type="search"
+               value="{{ query }}" maxlength="40"
+               aria-invalid="{% if has_error %}true{% else %}false{% endif %}"
+               aria-describedby="search-hint{% if has_error %} search-error{% endif %}">
+        {% if has_error %}
+        <p class="syn-alert syn-alert--danger" role="alert" id="search-error">{{ error }}</p>
+        {% endif %}
+        <button class="syn-button syn-button--primary" type="submit">Search projects</button>
+        <a class="syn-button" href="/">Reset</a>
+      </form>
+    </section>
+
+    <section class="syn-panel" aria-labelledby="results-heading">
+      <h2 class="syn-heading" id="results-heading">Results</h2>
+      <p role="status">{{ result_count }} matching projects</p>
+      <div class="syn-table-wrap">
+        <table class="syn-table">
+          <caption>Projects matching the current search</caption>
+          <thead><tr><th scope="col">Project</th><th scope="col">Owner</th><th scope="col">Status</th></tr></thead>
+          <tbody>
+          {% for project in projects %}
+            <tr><th scope="row">{{ project.name }}</th><td>{{ project.owner }}</td><td>{{ project.status }}</td></tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% if result_count == 0 %}
+      <p role="status">No matching projects. Try another search.</p>
+      {% endif %}
+    </section>
+  </main>
+</body>
+</html>

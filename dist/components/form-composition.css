@@ -8,6 +8,15 @@
       min-inline-size: 0;
     }
     &.syn-field > :where(.syn-help, .syn-error) { margin-block: 0; }
+    /* Progressive native feedback; focus outlines and error text remain authoritative. */
+    &.syn-field:focus-within > .syn-label { color: var(--syn-accent); }
+    &.syn-field:has(:user-invalid, [aria-invalid="true"]) > .syn-label { color: var(--syn-danger); }
+    /* A host-rendered server error must remain visible even when native
+       :user-invalid has not fired (or the browser considers the value valid). */
+    &.syn-field[data-syn-state="error"] > .syn-label { color: var(--syn-danger); }
+    &.syn-field[data-syn-state="error"] :where(.syn-input, .syn-select, .syn-textarea) {
+      border-color: var(--syn-danger);
+    }
     &.syn-field-row {
       display: grid;
       gap: var(--syn-space-2);
@@ -28,6 +37,10 @@
       inline-size: 100%;
       min-inline-size: 0;
     }
+    &.syn-input-group:has(> .syn-button) {
+      flex-wrap: wrap;
+      container-type: inline-size;
+    }
     &.syn-input-group > :where(.syn-input, .syn-select) {
       flex: 1 1 0%;
       inline-size: 0;
@@ -36,7 +49,15 @@
     }
     &.syn-input-group > .syn-button {
       flex: 0 0 auto;
+      max-inline-size: 100%;
+      overflow-wrap: anywhere;
+      white-space: normal;
       border-radius: 0;
+    }
+    /* Keep a readable query field if a translated submit label is long.
+       Addon-only groups retain their original intrinsic sizing. */
+    &.syn-input-group:has(> .syn-button) > :where(.syn-input, .syn-select) {
+      min-inline-size: min(100%, 9rem);
     }
     &.syn-input-addon {
       display: inline-flex;
@@ -58,6 +79,30 @@
       border-end-end-radius: var(--syn-radius);
     }
     &.syn-input-group > :not(:first-child) { border-inline-start: 0; }
+    /* Maintain a real border when long labels move the button to a new row. */
+    &.syn-input-group:has(> .syn-button) > .syn-button {
+      border-inline-start: 1px solid var(--syn-border-default);
+      margin-inline-start: -1px;
+    }
+    /* Stack connected submit controls only when the group's own space is too
+       narrow for enlarged text. Addon-only currency/units stay inline. */
+    @container (max-width: 12rem) {
+      &.syn-input-group:has(> .syn-button) > :where(.syn-input, .syn-select, .syn-button) {
+        flex: 1 1 100%;
+        inline-size: 100%;
+      }
+      &.syn-input-group:has(> .syn-button) > .syn-button {
+        border-inline-start: 1px solid var(--syn-border-default);
+        border-block-start: 0;
+      }
+      &.syn-input-group:has(> .syn-button) > :first-child {
+        border-start-end-radius: var(--syn-radius);
+      }
+      &.syn-input-group:has(> .syn-button) > :last-child {
+        border-end-start-radius: var(--syn-radius);
+      }
+    }
+    &.syn-input-group:focus-within > .syn-input-addon { border-block-color: var(--syn-border-focus); }
     @media (forced-colors: active) {
       &.syn-input-addon { border-color: CanvasText; }
     }

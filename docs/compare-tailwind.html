@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Compare Syntyr CSS and Tailwind CSS for components, utility-first styling, build tooling, performance tradeoffs and framework-neutral HTML projects.">
+  <meta name="syntyr-source-sha256" content="f1cd82324fb46d1280172c90c0fb3bf830869bab46e759671159cbfa6e683697">
+  <meta name="theme-color" content="#f5f7fb">
+  <title>Syntyr vs Tailwind CSS | Components vs Utilities</title>
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Syntyr vs Tailwind CSS | Components vs Utilities">
+  <meta property="og:description" content="Compare Syntyr CSS and Tailwind CSS for components, utility-first styling, build tooling, performance tradeoffs and framework-neutral HTML projects.">
+  <meta property="og:url" content="https://syntyr-css.pages.dev/docs/compare-tailwind">
+  <meta property="og:image" content="https://syntyr-css.pages.dev/assets/og-syntyr.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://syntyr-css.pages.dev/docs/compare-tailwind">
+  <link rel="alternate" type="text/markdown" href="compare-tailwind.md" title="Markdown source">
+  <link rel="icon" href="../assets/syntyr-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="docs.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <a class="syn-button docs-skip" href="#doc-main">Skip to guide</a>
+  <div class="syn-shell">
+    <header class="syn-header docs-header">
+      <a class="syn-logo" href="../index.html">SYNTYR / CSS</a>
+      <nav class="syn-nav" aria-label="Documentation navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav>
+      <details class="site-mobile-menu"><summary>Menu</summary><nav aria-label="Mobile navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav></details>
+    </header>
+    <main id="doc-main" class="docs-article-page">
+      <nav class="syn-breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="reference.html">Documentation</a></li><li aria-current="page">Syntyr CSS vs Tailwind CSS: components or utility-first styling?</li></ol></nav>
+      <header class="docs-article-heading">
+        <p class="syn-eyebrow">SYNTYR / DOCUMENTATION</p>
+        <p class="syn-muted">Current source documentation may describe unreleased alpha.5 features. <a href="distribution.html">Check released version compatibility.</a></p>
+        <p class="syn-caption">Prefer a machine-readable version? <a href="compare-tailwind.md">Markdown source</a> · <a href="../llms.txt">LLM index</a></p>
+      </header>
+      <div class="docs-article-layout">
+        <article class="docs-prose" aria-label="Syntyr CSS vs Tailwind CSS: components or utility-first styling?">
+<h1 id="syntyr-css-vs-tailwind-css-components-or-utility-first-styling">Syntyr CSS vs Tailwind CSS: components or utility-first styling?</h1>
+<p><strong>Syntyr vs Tailwind CSS</strong> comes down to the level of abstraction you want in your markup. Tailwind is a utility-first CSS framework for composing designs with many small classes; Syntyr supplies themed component classes and scoped design tokens you can apply to native HTML. Both approaches can produce fast, accessible applications, and neither requires JavaScript just to display CSS.</p>
+<p><strong>Version note:</strong> Syntyr alpha.4 is the published immutable release; alpha.5 source features remain <strong>unreleased</strong>. Validate classes against the <a href="distribution.html">distribution guide</a>.</p>
+<h2 id="key-differences-at-a-glance">Key differences at a glance</h2>
+<table>
+<thead>
+<tr>
+<th>Decision factor</th>
+<th>Syntyr CSS</th>
+<th>Tailwind CSS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Styling approach</td>
+<td><code>syn-*</code> component classes, theme tokens and optional semantic styles</td>
+<td>Composable utility classes near the markup</td>
+</tr>
+<tr>
+<td>Build workflow</td>
+<td>Prebuilt CSS can be linked or self-hosted without a consumer build step</td>
+<td>Common production workflow generates CSS from detected utilities</td>
+</tr>
+<tr>
+<td>Runtime JavaScript</td>
+<td>Not required by CSS</td>
+<td>Not required by CSS</td>
+</tr>
+<tr>
+<td>Custom design detail</td>
+<td>Token overrides, scoped classes and custom CSS</td>
+<td>Granular utilities, variants and arbitrary-value styling</td>
+</tr>
+<tr>
+<td>Design defaults</td>
+<td>Consistent component styles and several published palettes</td>
+<td>Team-defined compositions and theme conventions</td>
+</tr>
+<tr>
+<td>HTML ownership</td>
+<td>Native elements and any HTML renderer</td>
+<td>Native elements and any HTML renderer</td>
+</tr>
+</tbody>
+</table>
+<h2 id="choose-syntyr-when-a-reusable-interface-contract-is-the-goal">Choose Syntyr when a reusable interface contract is the goal</h2>
+<p>Syntyr can shorten repetitive page styling when a product has many related tables, forms, navigation regions and SaaS screens. A shared <code>syn-button</code> or card style reduces the number of visual decisions in each template. Themes are applied through <code>data-syn-theme</code> and documented <code>--syn-*</code> variables. CSS is scoped under <code>syn-root</code> to limit unintended changes elsewhere.</p>
+<p>This does <strong>not</strong> make Syntyr inherently smaller, faster or more accessible than a well-designed Tailwind application. Measure actual assets and test real markup.</p>
+<h2 id="choose-tailwind-when-utility-control-is-the-goal">Choose Tailwind when utility control is the goal</h2>
+<p>Tailwind gives developers precise layout and responsive control in components through utility classes and variants. It fits teams who already maintain a Tailwind pipeline and want wide ecosystem support. The downside can be repeated class-heavy markup or the need to establish component conventions of your own; for many teams that flexibility is exactly the attraction.</p>
+<p>Syntyr and Tailwind can coexist in separately owned regions, but account for Preflight, cascade layers and token collisions. A blanket claim of frictionless compatibility would be misleading.</p>
+<h2 id="migration-example-and-recommendation">Migration example and recommendation</h2>
+<p>For a pinned Syntyr release, self-host the stylesheet and style a native button as <code>&lt;button class=&quot;syn-button syn-button--primary&quot;&gt;Save&lt;/button&gt;</code> within <code>&lt;main class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot;&gt;</code>. The button submits or triggers your application logic as normal; Syntyr doesn't implement the action.</p>
+<p>Start with one isolated page, compare real CSS transfer and maintenance costs, then keep the approach that fits your workflow. See the <a href="faq.html">FAQ</a>, <a href="compare.html">all comparisons</a>, <a href="catalog.html">component catalog</a>, and <a href="https://tailwindcss.com/docs/styling-with-utility-classes">official Tailwind utility documentation</a>.</p>
+        </article>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+<a class="docs-article-toc-link docs-article-toc-2" href="#key-differences-at-a-glance">Key differences at a glance</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#choose-syntyr-when-a-reusable-interface-contract-is-the-goal">Choose Syntyr when a reusable interface contract is the goal</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#choose-tailwind-when-utility-control-is-the-goal">Choose Tailwind when utility control is the goal</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#migration-example-and-recommendation">Migration example and recommendation</a>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#key-differences-at-a-glance">Key differences at a glance</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#choose-syntyr-when-a-reusable-interface-contract-is-the-goal">Choose Syntyr when a reusable interface contract is the goal</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#choose-tailwind-when-utility-control-is-the-goal">Choose Tailwind when utility control is the goal</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#migration-example-and-recommendation">Migration example and recommendation</a>
+            </nav>
+          </details>
+        </aside>
+      </div>
+      <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="compare-tailwind.md">Markdown source</a></nav>
+    </main>
+    <footer class="syn-header"><span class="syn-caption">SYNTYR CSS · MIT CORE · EXPERIMENTAL</span><a href="../index.html">Home</a></footer>
+  </div>
+</body>
+</html>

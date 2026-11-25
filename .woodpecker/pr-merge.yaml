@@ -6,9 +6,15 @@ when:
 steps:
   - name: composed-main-contract
     image: python:3.14-slim@sha256:9aaa474097d094040649f2162a627c0049b408f52138d980916788d80f04802f
+    environment:
+      # Official Python 3.14 lives under /usr/local, Debian packages under /usr/lib.
+      PYTHONPATH: /usr/lib/python3/dist-packages
     commands:
-      - apt-get update && apt-get install -y --no-install-recommends git && rm -rf /var/lib/apt/lists/*
+      - apt-get update && apt-get install -y --no-install-recommends git python3-markdown-it && rm -rf /var/lib/apt/lists/*
       - git --version
+      # Woodpecker's PyPI egress is blocked (HTTP 403); use Debian's pure-Python
+      # maintainer-only package and verify it matches requirements-docs.txt.
+      - python3 -c 'from importlib.metadata import version; assert version("markdown-it-py") == "3.0.0"'
       - if [ "$(git rev-parse --is-shallow-repository)" = "true" ]; then git fetch --unshallow origin; fi
       - git fetch --no-tags origin main
       - python3 scripts/check_merge_candidate.py --base FETCH_HEAD

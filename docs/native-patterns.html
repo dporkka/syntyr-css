@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="This prerelease Syntyr example uses original CSS, not upstream Blades source. All patterns retain native HTML semantics and need no runtime JavaScript…">
-  <meta name="syntyr-source-sha256" content="f52abf8dcd9060f37919f50bf93934b4f568de059475d0aa3cff0f2403682edb">
+  <meta name="syntyr-source-sha256" content="75a1d0303f4294aea01e24a28db3971cd99a10279554ff49bcb64711df8eecd9">
   <meta name="theme-color" content="#f5f7fb">
   <title>Native platform patterns and component imports — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/native-patterns">
@@ -38,10 +38,104 @@
 <p>This prerelease Syntyr example uses original CSS, not upstream Blades source.
 All patterns retain native HTML semantics and need <strong>no runtime JavaScript</strong>.
 For a live static preview, see <a href="https://syntyr-css.pages.dev/examples/native-recipes.html">the native recipe example (live alpha.5 source preview)</a>.</p>
+<h2 id="native-visibility-is-authoritative">Native visibility is authoritative</h2>
+<p>Inside <code>.syn-root</code>, use the browser's <code>hidden</code> attribute to remove an element
+from layout even when it also has <code>.syn-button</code>, <code>.syn-grid</code>, or semantic styles.
+Syntyr's base layer preserves that native state. For find-in-page reveals, use
+<code>hidden=&quot;until-found&quot;</code>: the browser retains the element in layout and may
+reveal it on search or fragment navigation. Use a layout-containing box:
+do not force <code>display: none</code>, <code>display: inline</code>, or
+<code>display: contents</code>. Those values prevent find-in-page reveal;
+prefer a block, grid, or flex container. Do not replace these states with
+<code>aria-hidden</code>, which does not hide an element visually or from keyboard focus.</p>
+<h2 id="native-interaction-recipes">Native interaction recipes</h2>
+<p>The standard library includes the following <strong>five native interaction
+compositions</strong>, using existing core classes plus normal HTML. They do <strong>not</strong>
+require a new JavaScript runtime, Syntyr component subclass, or optional
+<code>syntyr.native-recipes.css</code> import. Use <code>syntyr.core.css</code> for the classed
+controls; load <code>syntyr.semantic.css</code> and opt in with <code>.syn-semantic</code> if
+you want unclassed <code>meter</code> and <code>output</code> styling.</p>
+<ul>
+<li><strong>Exclusive accordion:</strong> use <code>&lt;details class=&quot;syn-details&quot; name=&quot;faq&quot;&gt;</code>
+and a real <code>&lt;summary&gt;</code> for each item. Reuse the <code>name</code> only <em>within</em>
+an intended disclosure group; only one item opens at once in current
+browsers. Do not invent <code>role=&quot;tab&quot;</code>, <code>aria-expanded</code>, or keyboard handlers.</li>
+<li><strong>GET search:</strong> use <code>&lt;search&gt;</code>, <code>&lt;form method=&quot;get&quot; action=&quot;/inventory&quot;&gt;</code>,
+an associated label, and <code>&lt;input class=&quot;syn-input&quot; type=&quot;search&quot; name=&quot;q&quot;&gt;</code>.
+Native form navigation works with scripts disabled. Your server must filter
+results, preserve the query, escape untrusted input, and return a useful
+response; Syntyr does not implement a search endpoint.</li>
+<li><strong>Confirmation dialog:</strong> use a <code>commandfor</code> + <code>command=&quot;show-modal&quot;</code>
+button, <code>&lt;dialog class=&quot;syn-dialog&quot; aria-labelledby=&quot;...&quot;&gt;</code>, and a
+<code>&lt;form method=&quot;dialog&quot;&gt;</code> with Cancel/Confirm choices. <code>method=&quot;dialog&quot;</code>
+<strong>only closes the dialog</strong>; it does not submit a destructive action or
+authorize a mutation. A real save/delete must use a secure application
+endpoint or separately tested application logic. Provide a reachable
+non-dialog fallback for older browsers without invoker commands.</li>
+<li><strong>Datalist suggestions:</strong> connect a labeled text input's <code>list</code> to a
+native <code>&lt;datalist id=&quot;...&quot;&gt;</code>. Users can enter text not in the suggestions.
+For restricted values use native <code>&lt;select&gt;</code> with optional <code>&lt;optgroup&gt;</code>;
+do not claim <code>datalist</code> is an accessible custom combobox.</li>
+<li><strong>Meter and output:</strong> use <code>&lt;meter min max low high optimum value&gt;</code> for a
+bounded measurement and <code>&lt;output&gt;</code> for a computed or server-provided
+result. Provide readable labels and numeric text. Values do not update
+automatically: the server or application must calculate and synchronize
+them when inputs change.</li>
+</ul>
+<p><a href="https://syntyr-css.pages.dev/examples/native-interactions.html">Open the script-free native interaction demo</a>
+or <a href="https://syntyr-css.pages.dev/docs/catalog.html">copy each recipe from the component catalog</a>.
+The page is intentionally static: search reloads with a query string,
+dialog confirmation has no side effects, and output is a snapshot. In a
+production application, implement real search and mutations in the host.</p>
+<p>These patterns compose existing <code>syn-form</code>, <code>syn-input</code>, <code>syn-details</code>,
+<code>syn-dialog</code>, <code>syn-inline</code>, and native HTML; adding a separate
+<code>.syn-accordion</code>, <code>.syn-search</code>, or <code>.syn-confirm</code> class would duplicate
+styles, selectors, documentation, and long-term compatibility obligations.
+Native picker popup details and suggestion menus vary among browsers.
+Test keyboard interaction, forced colors, zoom/reflow, and real product
+copy in the target browsers. <strong>Application-owned behavior</strong> includes
+search filtering, validation on the server, destructive action
+authorization, and live calculations; none are provided by CSS.</p>
+<h2 id="native-horizontal-carousels">Native horizontal carousels</h2>
+<p>The existing opt-in <code>syntyr.media.css</code> module supplies
+<code>syn-media-rail--controls</code> for browser-generated previous/next buttons and
+<code>syn-media-rail--markers</code> for optional position markers. The underlying
+<code>syn-media-rail</code> continues to scroll and snap without those features.
+Every marked direct child must provide a localized <code>data-syn-scroll-label</code>
+for its accessible marker name.</p>
+<p><a href="https://syntyr-css.pages.dev/examples/media-entertainment.html">Copy the script-free example</a> and read
+<a href="https://syntyr-css.pages.dev/docs/media-entertainment.md">compatibility details and the full recipe</a>.
+Do not replace real ARIA tab widgets with CSS markers, or claim that markers
+provide autoplay, filtering, infinite looping or application state.</p>
+<h2 id="resource-outline-nested-native-navigation">Resource outline (nested native navigation)</h2>
+<p>A <strong>Resource outline</strong> is a CSS-only, progressively enhanced way to browse
+hierarchical folders, account groups and assets. Load <code>syntyr.core.css</code> and
+the optional <code>syntyr.native-recipes.css</code>; put <code>.syn-resource-outline</code>
+on a labeled <code>&lt;nav&gt;</code> within <code>.syn-root</code>. Use nested unordered lists,
+native disclosure via <code>&lt;details&gt;&lt;summary&gt;</code> for expandable groups, and real
+links for destinations. Mark exactly the current destination with
+<code>aria-current=&quot;page&quot;</code>. Use <code>open</code> on parent details when the current
+record is nested inside them. Lists remain navigable when JavaScript is off.</p>
+<p>This is <strong>not an ARIA tree</strong> widget: it deliberately avoids <code>role=&quot;tree&quot;</code>,
+roving tabindex, arrow-key claims or JS-managed selection. The browser
+provides native disclosure keyboard semantics (Tab, Enter/Space).
+A full WAI-ARIA treeview requires additional headless interaction logic
+and real assistive-technology testing; it does not belong in CSS.
+For moving resources, permissions, lazy loading, remote filtering, and drag
+and drop, the <strong>application</strong> must implement authorized behavior. No CSS
+state alone conveys permission to move an item.</p>
+<p>See <a href="../examples/resource-outline.html">the script-free resource outline example</a>.
+The nesting uses logical inline spacing to work in both LTR and RTL;
+after three visual indentation levels it stops adding horizontal offset so
+very deep folders remain readable at narrow widths and 400% zoom; semantic
+list hierarchy and native disclosures remain intact. Long names wrap rather
+than being silently truncated. Keep the
+selected location visible, ensure all links have real destinations,
+and test browser focus, high zoom, and forced colors in the host app.</p>
 <h2 id="individually-importable-css">Individually importable CSS</h2>
 <p>Use the following <strong>source-tree alpha.5 candidate</strong> entrypoints after this PR
 is merged and released; they are not available in the published alpha.4 package:</p>
-<pre><code class="language-css">@import &quot;@syntyr/css/components/tokens.css&quot;;
+<pre tabindex="0"><code class="language-css">@import &quot;@syntyr/css/components/tokens.css&quot;;
 @import &quot;@syntyr/css/components/base.css&quot;;
 @import &quot;@syntyr/css/components/buttons.css&quot;;
 @import &quot;@syntyr/css/components/forms.css&quot;;
@@ -57,11 +151,11 @@ duplicated. Runtime CSS dependencies, imports and JavaScript are not included in
 these distributables. In plain HTML, link the equivalent checked-in files under
 the dist directory. Use version-pinned self-hosted assets in production.</p>
 <p>If no selective loading is needed, use core plus the optional recipe sheet:</p>
-<pre><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.core.css&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.core.css&quot;&gt;
 &lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.native-recipes.css&quot;&gt;
 </code></pre>
 <h2 id="native-anchored-popovers-and-modal-commands">Native anchored popovers and modal commands</h2>
-<pre><code class="language-html">&lt;button type=&quot;button&quot; class=&quot;syn-button&quot; popovertarget=&quot;actions&quot;&gt;Actions&lt;/button&gt;
+<pre tabindex="0"><code class="language-html">&lt;button type=&quot;button&quot; class=&quot;syn-button&quot; popovertarget=&quot;actions&quot;&gt;Actions&lt;/button&gt;
 &lt;div id=&quot;actions&quot; popover class=&quot;syn-popover syn-popover--anchored&quot;&gt;
   &lt;a href=&quot;/settings&quot;&gt;Settings&lt;/a&gt;
 &lt;/div&gt;
@@ -83,27 +177,64 @@ motion, load the additional <code>syntyr.motion.css</code> file, then add
 <code>.syn-dialog--transition</code> to a <code>.syn-dialog</code>. Both class and file are
 required. The motion module honors reduced-motion preferences; without
 either opt-in, dialogs and popovers use their native static behavior.
+The native recipe gallery pairs its dialog command with a <code>&lt;details&gt;</code>
+disclosure exposing equivalent critical information on older engines.
 Native browsers own focus management, Escape and dialog inertness; the stylesheet
 does not implement a custom ARIA menu.</p>
+<h2 id="native-direction-aware-presentation">Native direction-aware presentation</h2>
+<p>The core popover's fixed-corner fallback and optional cut-corner panels use
+CSS <strong>logical</strong> inset properties. They follow the document's text direction
+(LTR or <strong>RTL</strong>) without a new theme or variant. Anchored popovers use the
+browser's native block/inline positioning and flip candidates when available.
+Optional activity timelines also place their markers on inline-start. Native
+<code>dir=&quot;rtl&quot;</code> controls direction; components keep semantic document order.</p>
 <h2 id="floating-labels">Floating labels</h2>
-<pre><code class="language-html">&lt;div class=&quot;syn-field syn-field--floating&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;div class=&quot;syn-field syn-field--floating&quot;&gt;
   &lt;input id=&quot;name&quot; name=&quot;name&quot; class=&quot;syn-input&quot; placeholder=&quot; &quot; required&gt;
   &lt;label for=&quot;name&quot; class=&quot;syn-floating-label&quot;&gt;Full name&lt;/label&gt;
 &lt;/div&gt;
 </code></pre>
+<p>Both floating and stacked labels remain real pointer targets; clicking a label
+focuses its associated native control without JavaScript.</p>
 <p>Keep a persistent programmatic label with for/id. The one-space placeholder
 is a deliberate :placeholder-shown state hook, <strong>not</strong> the accessible label.</p>
 <p>The field becomes a <strong>stacked, wrapping label above the input</strong> when its own
 container is narrow (21rem or less). This protects visible field identification
 when users enlarge text, including long translated labels. At wider sizes the
-floating presentation remains. The label is always a real <code>&lt;label for&gt;</code>; the
-CSS never substitutes placeholders for an accessible name. Test real browser
-zoom and translations in consuming applications.</p>
+floating presentation remains. In RTL documents (<code>dir=&quot;rtl&quot;</code>), the floating
+label shrinks toward the right-hand inline-start edge rather than drifting
+left. The label is always a real <code>&lt;label for&gt;</code>; the CSS never substitutes
+placeholders for an accessible name. Test real browser zoom and translations
+in consuming applications.</p>
 <p>Use only for text-like controls that implement placeholder-shown. Avoid for
 date, color, select, checkbox, radio and unsupported types. Validate contrast
 and long translated labels in the actual application.</p>
+<h3 id="label-first-floating-fields">Label-first floating fields</h3>
+<p>Use the same native label and input in either source order:</p>
+<pre tabindex="0"><code class="language-html">&lt;div class=&quot;syn-field syn-field--floating&quot;&gt;
+  &lt;label class=&quot;syn-floating-label&quot; for=&quot;company&quot;&gt;Company&lt;/label&gt;
+  &lt;input class=&quot;syn-input&quot; id=&quot;company&quot; name=&quot;company&quot; placeholder=&quot; &quot; autocomplete=&quot;organization&quot;&gt;
+&lt;/div&gt;
+</code></pre>
+<p>Modern browsers use :has() to float label-first markup when the input is
+focused or filled. Input-first markup remains the fallback for older engines.
+Keep a real for/id association; placeholder text is not an accessible label.
+At narrow container widths, both orders become a traditional stacked field.</p>
+<h3 id="native-file-feedback-and-search-controls">Native file feedback and search controls</h3>
+<p>Plain file inputs in .syn-semantic preserve their native file picker.
+For aria-invalid=&quot;true&quot;, Syntyr adds a visible error border to the file
+input even when the user-agent default has no border. Use a real explanation
+associated with aria-describedby; CSS does not perform validation or upload.
+The native search clear affordance is preserved with inline-end padding
+in both explicit .syn-input and scoped classless modes.</p>
+<pre tabindex="0"><code class="language-html">&lt;div class=&quot;syn-semantic&quot;&gt;
+  &lt;label for=&quot;proof&quot;&gt;Proof-of-posting photo&lt;/label&gt;
+  &lt;input type=&quot;file&quot; id=&quot;proof&quot; aria-invalid=&quot;true&quot; aria-describedby=&quot;proof-error&quot;&gt;
+  &lt;small id=&quot;proof-error&quot; class=&quot;syn-error&quot;&gt;Upload a photo to continue.&lt;/small&gt;
+&lt;/div&gt;
+</code></pre>
 <h2 id="semantic-timelines-and-captioned-code">Semantic timelines and captioned code</h2>
-<pre><code class="language-html">&lt;ol class=&quot;syn-timeline&quot; role=&quot;list&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;ol class=&quot;syn-timeline&quot; role=&quot;list&quot;&gt;
   &lt;li&gt;&lt;time datetime=&quot;2026-11-15&quot;&gt;15 November&lt;/time&gt;Published&lt;/li&gt;
 &lt;/ol&gt;
 
@@ -127,7 +258,7 @@ HTML, and use Astro islands only for behaviors that require application state.</
 that mutate data, use real forms/links and HTMX only as progressive enhancement.</li>
 </ul>
 <h3 id="go-htmltemplate">Go html/template</h3>
-<pre><code class="language-html">&lt;form class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot; action=&quot;/profile&quot; method=&quot;post&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;form class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot; action=&quot;/profile&quot; method=&quot;post&quot;&gt;
   &lt;div class=&quot;syn-field syn-field--floating&quot;&gt;
     &lt;input class=&quot;syn-input&quot; id=&quot;profile-email&quot; name=&quot;email&quot;
            type=&quot;email&quot; value=&quot;{{ .Email }}&quot; placeholder=&quot; &quot; required&gt;
@@ -138,7 +269,7 @@ that mutate data, use real forms/links and HTMX only as progressive enhancement.
 </code></pre>
 <p>The standard Go html/template engine escapes the Email value by context.</p>
 <h3 id="rust-askama">Rust Askama</h3>
-<pre><code class="language-html">&lt;form class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot; action=&quot;/profile&quot; method=&quot;post&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;form class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot; action=&quot;/profile&quot; method=&quot;post&quot;&gt;
   &lt;div class=&quot;syn-field syn-field--floating&quot;&gt;
     &lt;input class=&quot;syn-input&quot; id=&quot;profile-email&quot; name=&quot;email&quot;
            type=&quot;email&quot; value=&quot;{{ email }}&quot; placeholder=&quot; &quot; required&gt;
@@ -150,7 +281,7 @@ that mutate data, use real forms/links and HTMX only as progressive enhancement.
 <p>Use Askama's HTML autoescaping, unique IDs when rendering multiple forms, and
 normal server-side validation.</p>
 <h3 id="astro">Astro</h3>
-<pre><code class="language-astro">---
+<pre tabindex="0"><code class="language-astro">---
 import &quot;@syntyr/css/components/tokens.css&quot;;
 import &quot;@syntyr/css/components/base.css&quot;;
 import &quot;@syntyr/css/components/buttons.css&quot;;
@@ -170,7 +301,7 @@ import &quot;@syntyr/css/native-recipes.css&quot;;
 as in this form. Package imports
 are source candidate features until a corresponding npm release is published.</p>
 <h3 id="htmx-optional-enhancement">HTMX (optional enhancement)</h3>
-<pre><code class="language-html">&lt;form class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot; action=&quot;/profile&quot; method=&quot;post&quot;
+<pre tabindex="0"><code class="language-html">&lt;form class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot; action=&quot;/profile&quot; method=&quot;post&quot;
       hx-post=&quot;/profile&quot; hx-target=&quot;#profile-result&quot; hx-swap=&quot;outerHTML&quot;&gt;
   &lt;label for=&quot;profile-email&quot;&gt;Email address&lt;/label&gt;
   &lt;input class=&quot;syn-input&quot; id=&quot;profile-email&quot; name=&quot;email&quot; type=&quot;email&quot; required&gt;
@@ -185,17 +316,47 @@ Refer to <a href="framework-integrations.html">framework integrations</a> and th
 <a href="https://syntyr-css.pages.dev/docs/progressive-enhancement.md">progressive enhancement guide (online)</a> for host behavior
 and fallbacks.</p>
         </article>
-        <aside class="docs-article-sidebar"><nav aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+<a class="docs-article-toc-link docs-article-toc-2" href="#native-visibility-is-authoritative">Native visibility is authoritative</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#native-interaction-recipes">Native interaction recipes</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#native-horizontal-carousels">Native horizontal carousels</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#resource-outline-nested-native-navigation">Resource outline (nested native navigation)</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#individually-importable-css">Individually importable CSS</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#native-anchored-popovers-and-modal-commands">Native anchored popovers and modal commands</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#native-direction-aware-presentation">Native direction-aware presentation</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#floating-labels">Floating labels</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#label-first-floating-fields">Label-first floating fields</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#native-file-feedback-and-search-controls">Native file feedback and search controls</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#semantic-timelines-and-captioned-code">Semantic timelines and captioned code</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#server-rendering-and-framework-use">Server-rendering and framework use</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#go-htmltemplate">Go html/template</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#rust-askama">Rust Askama</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#astro">Astro</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#htmx-optional-enhancement">HTMX (optional enhancement)</a>
-        </nav></aside>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#native-visibility-is-authoritative">Native visibility is authoritative</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#native-interaction-recipes">Native interaction recipes</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#native-horizontal-carousels">Native horizontal carousels</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#resource-outline-nested-native-navigation">Resource outline (nested native navigation)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#individually-importable-css">Individually importable CSS</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#native-anchored-popovers-and-modal-commands">Native anchored popovers and modal commands</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#native-direction-aware-presentation">Native direction-aware presentation</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#floating-labels">Floating labels</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#label-first-floating-fields">Label-first floating fields</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#native-file-feedback-and-search-controls">Native file feedback and search controls</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#semantic-timelines-and-captioned-code">Semantic timelines and captioned code</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#server-rendering-and-framework-use">Server-rendering and framework use</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#go-htmltemplate">Go html/template</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#rust-askama">Rust Askama</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#astro">Astro</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#htmx-optional-enhancement">HTMX (optional enhancement)</a>
+            </nav>
+          </details>
+        </aside>
       </div>
       <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="native-patterns.md">Markdown source</a></nav>
     </main>

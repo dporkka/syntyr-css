@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Generate a copy-owned Syntyr CSS starter for a SaaS dashboard, business website or admin console in three published themes.">
+  <title>Starter Wizard — Syntyr CSS</title>
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="docs.css">
+  <script type="module" src="starter-wizard.mjs"></script>
+  <style>
+    .sw-main{max-width:76rem;margin-inline:auto;padding:clamp(1rem,3vw,2rem)}
+    .sw-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,18rem),1fr));gap:1rem}
+    .sw-grid fieldset{min-width:0;border:1px solid var(--syn-frame);border-radius:var(--syn-radius);padding:1rem}
+    .sw-grid label{display:block;margin-top:.75rem}
+    .sw-grid select{display:block;width:100%;min-height:2.75rem}
+    .sw-actions{display:flex;gap:1rem;flex-wrap:wrap;margin-block:1rem}
+    .sw-code{display:block;width:100%;min-height:22rem;font-family:var(--syn-mono,monospace);font-size:.9rem;line-height:1.45}
+    .sw-notes{max-width:78ch;overflow-wrap:anywhere}
+  </style>
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <a class="syn-button docs-skip" href="#main">Skip to starter configuration</a>
+  <div class="syn-shell">
+    <header class="syn-header docs-header">
+      <a class="syn-logo" href="index.html">SYNTYR / STARTER</a>
+      <nav class="syn-nav" aria-label="Starter navigation">
+        <a href="index.html">Documentation</a><a href="blocks.html">Free blocks</a>
+        <a href="playground.html">Playground</a><a href="guides.html">Guides</a>
+      </nav>
+      <details class="site-mobile-menu">
+        <summary aria-label="Mobile navigation">Menu</summary>
+        <nav aria-label="Starter mobile navigation">
+          <a href="index.html">Documentation</a><a href="blocks.html">Free blocks</a>
+          <a href="playground.html">Playground</a><a href="guides.html">Guides</a>
+        </nav>
+      </details>
+    </header>
+    <main id="main" class="sw-main">
+      <p class="syn-eyebrow">FIRST PROJECT / NO BUILD REQUIRED</p>
+      <h1>Build your first Syntyr interface</h1>
+      <p class="sw-notes">Choose a project, a theme, and your host stack. Generate a plain HTML starter with an offline stylesheet and a concrete integration handoff. No account, browser storage, external runtime or code upload is required.</p>
+      <p class="syn-caption">Published alpha.4 only: Studio, Grid and Noir. The experimental alpha.5 candidate has additional themes that are intentionally not offered here.</p>
+      <form id="starter-form">
+        <div class="sw-grid">
+          <fieldset><legend>Project type</legend>
+            <label for="sw-kind">What are you building?</label>
+            <select id="sw-kind" name="kind">
+              <option value="saas">SaaS dashboard</option>
+              <option value="business">Business website</option>
+              <option value="admin">Admin / operations console</option>
+            </select>
+          </fieldset>
+          <fieldset><legend>Theme</legend>
+            <label for="sw-theme">Select a published theme</label>
+            <select id="sw-theme" name="theme">
+              <option value="studio">Studio</option><option value="grid">Grid</option><option value="noir">Noir</option>
+            </select>
+          </fieldset>
+          <fieldset><legend>Integration</legend>
+            <label for="sw-stack">Where will it run?</label>
+            <select id="sw-stack" name="stack">
+              <option value="html">Plain HTML / CSS</option><option value="go">Go html/template</option><option value="react">React / JSX</option>
+            </select>
+          </fieldset>
+        </div>
+        <div class="sw-actions"><button class="syn-button syn-button--primary" type="submit">Generate starter</button></div>
+      </form>
+      <p id="starter-status" role="status" aria-live="polite">Choose options and generate the source. Your choices never leave this browser.</p>
+      <section id="starter-result" hidden aria-labelledby="sw-output-heading">
+        <h2 id="sw-output-heading">Your copy-owned starter</h2>
+        <p class="sw-notes" id="starter-instructions"></p>
+        <label for="starter-code">Generated HTML</label>
+        <textarea id="starter-code" class="sw-code" readonly spellcheck="false" aria-label="Generated HTML"></textarea>
+        <div class="sw-actions"><button id="starter-copy" class="syn-button" type="button" disabled>Copy HTML</button>
+          <a id="starter-edit" class="syn-button" href="playground.html">Edit starter in playground</a></div>
+        <p class="syn-caption">The playground imports the selected starter using a shareable, selection-only URL fragment; it does not transmit or persist generated HTML. After editing, export from the playground. The playground uses the current CSS candidate, so compare against the published alpha.4 package before shipping. Host applications own real data, authentication, billing and mutations.</p>
+      </section>
+      <noscript><p class="syn-alert">JavaScript is only needed to generate this optional documentation preview. <a href="index.html#install">Install Syntyr manually</a> or <a href="blocks.html">copy a native block</a> without JavaScript.</p></noscript>
+    </main>
+  </div>
+</body>
+</html>

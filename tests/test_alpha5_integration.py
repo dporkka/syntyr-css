@@ -8,17 +8,18 @@ ROOT = Path(__file__).resolve().parents[1]
 
 class Alpha5Integration(unittest.TestCase):
     def test_only_syntyr_distributions_and_complete_optional_modules(self):
-        from scripts.build import distributions
+        from scripts.build import distributions, assemble, assemble_embed
         definitions = distributions()
         expected = set(definitions)
-        self.assertTrue(all(name.startswith("syntyr") and name.endswith(".css") for name in expected))
+        self.assertTrue(all((name.startswith("syntyr") or name.startswith("presets/"))
+                            and name.endswith(".css") for name in expected))
         self.assertEqual(set(definitions), expected)
         for filename in expected:
-            self.assertEqual(
-                (ROOT / "dist" / filename).read_text(),
-                "\n".join((ROOT / "src" / part).read_text().strip()
-                          for part in definitions[filename]) + "\n",
-                filename)
+            assembled = (assemble_embed(definitions[filename])
+                         if filename == "syntyr.embed.css"
+                         else assemble(definitions[filename]))
+            self.assertEqual((ROOT / "dist" / filename).read_text(),
+                             assembled, filename)
         self.assertIn("geometry.css", definitions["syntyr.all.css"])
         self.assertIn("utilities.css", definitions["syntyr.all.css"])
         self.assertIn("symbols.css", definitions["syntyr.all.css"])

@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Syntyr CSS native HTML application screen example: Workspace setup; static, accessible and framework-neutral.">
+  <title>Workspace setup — Syntyr CSS application screens</title>
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="../dist/syntyr.recipes.css">
+  <link rel="stylesheet" href="app-screens.css">
+</head>
+<body class="syn-root syn-page app-screens" data-syn-theme="studio" data-syn-density="compact" data-syn-intensity="quiet">
+  <a class="syn-button app-skip" href="#main">Skip to main content</a>
+  <div class="syn-app-shell app-shell">
+    <aside class="syn-app-rail app-rail" aria-label="Example application sidebar">
+      <a class="app-brand" href="app-onboarding.html"><span class="app-logo" aria-hidden="true">N</span><span><strong>Northstar</strong><small>Sample workspace</small></span></a>
+      <span class="app-rail-label">Workspace</span>
+      <nav class="syn-app-nav app-nav" aria-label="Application screens">
+        <a href="app-onboarding.html" aria-current="page">Get started</a>
+        <a href="app-team.html">Team</a>
+        <a href="app-notifications.html">Notifications</a>
+        <a href="app-integrations.html">Integrations</a>
+        <a href="app-security.html">Security</a>
+      </nav>
+      <div class="app-rail-bottom">
+        <span class="app-rail-label">Other examples</span>
+        <a href="saas.html">Dashboard</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="../docs/app-screens.html">Integration guide</a>
+        <div class="app-profile"><span class="syn-avatar syn-avatar--sm" aria-hidden="true">AL</span><span><strong>Alex Lane</strong><small>Illustrative administrator</small></span></div>
+      </div>
+    </aside>
+    <main id="main" class="syn-workspace app-main">
+      <header class="app-page-header">
+        <div><p class="app-overline">NORTHSTAR / ONBOARDING</p><h1>Workspace setup</h1><p class="syn-muted">A clear first-run checklist that makes configuration progress visible.</p></div>
+        <span class="syn-badge">Demo data</span>
+      </header>
+      <p class="app-notice"><strong>Illustrative interface:</strong> This is a static HTML/CSS preview. Actions that require a server are disabled; no account, subscription, security, or integration data is changed.</p>
+
+      <section class="syn-app-card app-hero" aria-labelledby="getting-started">
+        <div><p class="app-overline">WELCOME</p><h2 id="getting-started">Get started with Northstar</h2><p class="syn-muted">Complete the essential steps before inviting your wider team.</p></div>
+        <div class="app-progress"><strong>2 of 5 complete</strong><progress value="2" max="5" aria-label="Two of five setup steps complete">2 of 5</progress><span class="syn-caption">Example progress, not persisted</span></div>
+      </section>
+      <div class="app-columns">
+        <section class="syn-app-card" id="onboarding-steps" aria-labelledby="steps-heading">
+          <div class="app-section-heading"><h2 id="steps-heading">Setup checklist</h2><span class="syn-caption">3 steps remaining</span></div>
+          <ol class="app-steps">
+            <li class="app-step"><span class="app-step-marker app-step-done" aria-hidden="true"></span><div><h3>Name your workspace <span class="syn-status syn-status--success">Complete (example)</span></h3><p>A recognizable name helps collaborators identify the right organization.</p></div></li>
+            <li class="app-step"><span class="app-step-marker app-step-done" aria-hidden="true"></span><div><h3>Set up your profile <span class="syn-status syn-status--success">Complete (example)</span></h3><p>Personal settings are owned by the authenticated application.</p></div></li>
+            <li class="app-step" aria-current="step"><span class="app-step-marker" aria-hidden="true">3</span><div><h3>Review team access <span class="syn-status syn-status--warning">Current step</span></h3><p>Choose appropriate roles and inspect outstanding invitations.</p><a class="syn-button syn-button--primary" href="app-team.html">Explore team screen</a></div></li>
+            <li class="app-step"><span class="app-step-marker" aria-hidden="true">4</span><div><h3>Plan notifications</h3><p>Select which workspace events matter to each member.</p><a href="app-notifications.html">View notification center</a></div></li>
+            <li class="app-step"><span class="app-step-marker" aria-hidden="true">5</span><div><h3>Review security</h3><p>Check session controls and identity safeguards.</p><a href="app-security.html">View security settings</a></div></li>
+          </ol>
+        </section>
+        <aside class="app-aside">
+          <section class="syn-app-card"><h2>Recommended next step</h2><p class="syn-muted">Review membership roles before connecting external services or sharing data.</p><a class="syn-button syn-button--outline" href="app-team.html">Review members</a></section>
+          <section class="syn-app-card"><h2>Connect your tools</h2><p class="syn-muted">See how connected and available integrations can be represented without implying live access.</p><a href="app-integrations.html">Browse integrations</a></section>
+        </aside>
+      </div>
+
+      <footer class="app-footer">Syntyr CSS · Five native application screens · <a href="../docs/app-screens.html">Integration guidance</a></footer>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,19 +1,69 @@
 ---
-name: syntyr-css
-description: Use Syntyr's documented CSS classes, modules, themes and semantic HTML to build accessible applications without inventing a JavaScript component API.
+name: syntyr
+description: Build accessible, semantic HTML interfaces using verified, version-pinned Syntyr CSS classes and themes; never invent a JavaScript component API.
 ---
 
 # Syntyr CSS consumer skill
 
-Use when a user asks you to build, redesign, or maintain an interface **using Syntyr CSS**.
+Use when creating, redesigning, or maintaining an interface **with Syntyr CSS**.
+This Skill is portable: it also works when copied into a consumer project. No
+Syntyr server, JavaScript runtime, npm installation, or network access is required.
 
-1. Determine which **version and CSS modules** are installed. Published immutable v0.3.0-alpha.4 supports Studio, Grid and Noir; current repository source v0.3.0-alpha.5 is unreleased and has additional modules/themes. Never silently mix the two.
-2. Read [AI quickstart](../../docs/ai-quickstart.md). For components, use [component documentation](../../docs/components.md) and [recipes](../../docs/recipes.md); a curated selector/module index is in [metadata/components.json](../../metadata/components.json). Source-only alpha.5 form compositions are documented in [form recipes](../../docs/component-recipes.md); projects already using Radix may opt into the separate [style adapter](../../docs/radix-integration.md).
-3. Prefer `syntyr.core.css`; add `syntyr.recipes.css`, `syntyr.semantic.css`, `syntyr.viz.css` or other optional modules only when their documented classes are needed. Do not load `syntyr.all.css` alongside modules.
-4. Use `.syn-root` as a styling scope and `data-syn-theme` for a palette. Use `.syn-semantic` only where the optional semantic stylesheet is loaded.
-5. Generate real, semantic HTML. Preserve labels, focus, responsive layout and native interaction. Syntyr has no required runtime JS, and it does not implement API calls, state changes, chart geometry or form handlers.
-6. For React use `className` and `htmlFor`; for HTMX/server templates preserve real routes/forms. Do not invent component exports or `syn-*` classes.
-7. Check proposed classes against the CSS/module for the **installed version**. Document extra application CSS explicitly rather than pretending a Syntyr class exists.
-8. When working with the current source checkout, validate static HTML with `python3 scripts/syntyr_check.py --format json path/to/page.html` or pipe a fragment through `python3 scripts/syntyr_check.py --format json --stylesheets syntyr.core.css -`. Use diagnostic `suggestions`, `allowed_values` and `required_stylesheets` as **hints**, not automatic fixes. The contract describes the unreleased source candidate, not the published alpha.4 CSS. For JSX and dynamic template expressions, use framework-aware tests and browser checks instead.
+## Discover the installed contract first
 
-If the source tree is not available, the published navigation entry point is https://syntyr-css.pages.dev/llms.txt. This skill is manually distributed; do not claim it is auto-installed or universally supported.
+1. If the Syntyr source checkout is available, run `python3 scripts/syntyr_agent.py info --project /path/to/app --json` first. Its read-only JSON reports verified asset hashes, release status, installed stylesheet filenames, themes and agent reference paths. Exit 0 means healthy, 1 means invalid/degraded and 2 means unconfigured. It does **not** verify that the host actually loads the CSS.
+   Otherwise, if the project contains `syntyr.agent.json`, read it before generating markup. `release` is the explicit CSS version; `assets_dir` is the local CSS location; `stylesheets` is the list installed by the optional offline setup tool.
+2. Read `references/api.json` next to this Skill if it exists. Its `classes`
+   and curated `components` are verified against that version, not the latest
+   unreleased source. The `themes` list is also version-specific.
+3. Without either local file, **do not assume** the latest source candidate is
+   installed. Determine the real CSS assets/imports first. The published immutable
+   `0.3.0-alpha.4` supports `studio`, `grid`, `noir`; `0.3.0-alpha.5` is an
+   *unreleased source candidate* and has additional APIs.
+4. In a verified **alpha.5 source checkout** only, inspect
+   `metadata/component-gallery.v1.json` for task-specific examples. Filter
+   `examples[].use_cases` and confirm every
+   `examples[].required_stylesheets` file is installed before selecting the
+   `html`. Open `catalog_url`/`playground_url` for the source pattern;
+   read `native_feature_requirements` and documented fallbacks. These fields
+   are curated discovery signals, not runtime compatibility or accessibility
+   certifications. Do not assume they exist in the pinned alpha.4 release.
+5. For detailed public guidance, consult the [AI quickstart](https://syntyr-css.pages.dev/docs/ai-quickstart.md),
+   [component guide](https://syntyr-css.pages.dev/docs/components.md),
+   [composition recipes](https://syntyr-css.pages.dev/docs/recipes.md) and
+   [LLM documentation index](https://syntyr-css.pages.dev/llms.txt).
+   Public docs may describe newer source-only APIs: always prefer the local
+   version-pinned contract over an unpinned website example.
+
+## Generate semantic, working application markup
+
+- Scope styles inside `.syn-root`; set `data-syn-theme` to a theme in the
+  installed contract. Default to `studio` for professional SaaS applications.
+- Use only selectors supported by the **installed** release and stylesheet.
+  If necessary, add clearly identified application CSS instead of inventing
+  `syn-*` classes. Syntyr's optional stylesheet modules must be loaded before
+  their classes can style anything. Never duplicate `syntyr.all.css` with modules.
+- Prefer native HTML semantics: `<a href>` for navigation, `<button>` for
+  actions, explicitly associated labels, accurate ARIA, real form handlers,
+  visible focus and responsive layouts. Avoid placeholder interactions.
+- In React use `className` and `htmlFor`; in HTMX/Datastar/server templates
+  retain functional URLs and server behavior. Syntyr supplies CSS styling,
+  not React components, authentication, sorting, data fetching, state
+  management, chart geometry, or keyboard interaction logic for comboboxes.
+- Use an appropriate behavioral library for advanced interactions. Verify
+  keyboard operation, reflow, focus, and contrast in a browser.
+
+## Verify before reporting success
+
+If the Syntyr source checkout is available, run:
+
+```sh
+python3 scripts/syntyr_agent.py check --project /path/to/project --json path/to/page.html
+```
+
+The optional checker verifies pinned CSS integrity and **literal `.html`**
+selectors and state values. Exit code 1 means errors; 2 means validation is
+incomplete (such as JSX/TSX), not success. Without the source checkout, use
+`references/api.json` and the actual installed CSS to verify selectors.
+React/Vue/Svelte and dynamic templates require framework-aware lint and real
+browser testing; no static Syntyr checker certifies WCAG compliance.

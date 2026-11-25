@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Ghost publishing site customization: Syntyr works with the HTML card in Ghost&#x27;s editor or with custom Handlebars theme templates. It is suited to featured…">
+  <meta name="syntyr-source-sha256" content="6e045aeaa42cdc072a3158c12547f714bda28421d0a5b5b57bcd528595728714">
+  <meta name="theme-color" content="#f5f7fb">
+  <title>Syntyr for Ghost | CSS for Posts &amp; Themes</title>
+  <link rel="canonical" href="https://syntyr-css.pages.dev/docs/ghost">
+  <meta property="og:image" content="https://syntyr-css.pages.dev/assets/og-syntyr.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="alternate" type="text/markdown" href="ghost.md" title="Markdown source">
+  <link rel="icon" href="../assets/syntyr-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="docs.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <a class="syn-button docs-skip" href="#doc-main">Skip to guide</a>
+  <div class="syn-shell">
+    <header class="syn-header docs-header">
+      <a class="syn-logo" href="../index.html">SYNTYR / CSS</a>
+      <nav class="syn-nav" aria-label="Documentation navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav>
+      <details class="site-mobile-menu"><summary>Menu</summary><nav aria-label="Mobile navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav></details>
+    </header>
+    <main id="doc-main" class="docs-article-page">
+      <nav class="syn-breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="reference.html">Documentation</a></li><li aria-current="page">Syntyr for Ghost: CSS components for posts and themes</li></ol></nav>
+      <header class="docs-article-heading">
+        <p class="syn-eyebrow">SYNTYR / DOCUMENTATION</p>
+        <p class="syn-muted">Current source documentation may describe unreleased alpha.5 features. <a href="distribution.html">Check released version compatibility.</a></p>
+        <p class="syn-caption">Prefer a machine-readable version? <a href="ghost.md">Markdown source</a> · <a href="../llms.txt">LLM index</a></p>
+      </header>
+      <div class="docs-article-layout">
+        <article class="docs-prose" aria-label="Syntyr for Ghost: CSS components for posts and themes">
+<h1 id="syntyr-for-ghost-css-components-for-posts-and-themes">Syntyr for Ghost: CSS components for posts and themes</h1>
+<p><strong>Ghost publishing site customization:</strong> Syntyr works with the HTML card in Ghost's editor or with custom Handlebars theme templates. It is suited to featured resource lists, membership benefit callouts and reusable editorial sections, where an ordinary content card needs a more consistent product-style interface.</p>
+<h2 id="why-use-syntyr-on-ghost">Why use Syntyr on Ghost?</h2>
+<p>Ghost is focused on publishing and memberships. Syntyr adds a configurable, MIT-licensed presentation layer without replacing Ghost's editorial workflow or membership infrastructure. You can reuse the same <code>syn-root</code> cards in a Ghost post and on an independently hosted landing page, rather than embedding a separate SPA. The styles are CSS-only; no special JavaScript client is required for headings, buttons, lists or native disclosure.</p>
+<h2 id="how-to-install-syntyr-on-a-ghost-publication">How to install Syntyr on a Ghost publication</h2>
+<ol>
+<li>Build <code>syntyr.embed.css</code> from the alpha.5 source and host it as a versioned static asset (or include it in a custom Ghost theme).</li>
+<li>From <strong>Ghost Admin → Settings → Advanced → Code Injection</strong>, add a stylesheet link to the <strong>Site Header</strong>. A theme developer can instead load it from the theme's <code>default.hbs</code>.</li>
+<li>In a post or page, choose an <strong>HTML card</strong> and paste an independent Syntyr component:</li>
+</ol>
+<pre tabindex="0"><code class="language-html">&lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;ghost-member&quot;&gt;
+  &lt;div class=&quot;syn-panel&quot;&gt;
+    &lt;h2 class=&quot;syn-heading&quot; id=&quot;ghost-member&quot;&gt;Member resources&lt;/h2&gt;
+    &lt;p class=&quot;syn-muted&quot;&gt;Explore our curated guides and downloads.&lt;/p&gt;
+    &lt;a class=&quot;syn-button syn-button--primary&quot; href=&quot;/resources/&quot;&gt;See resources&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+</code></pre>
+<ol start="4">
+<li>Test the public post in both your active theme's regular and dark appearances, if offered, and compare the panel with neighboring article typography.</li>
+</ol>
+<h2 id="limitations-and-ghost-specific-considerations">Limitations and Ghost-specific considerations</h2>
+<p>An HTML card is not a replacement for Ghost's membership logic, newsletters, forms or paywall: the linked destination still needs to be implemented within Ghost. Code Injection may affect every page, so only render Syntyr classes inside regions you own. Avoid setting <code>syn-root</code> on a whole article unless you want Syntyr to control all of that article's typography. Theme updates can alter selector specificity, so recheck your content blocks after an upgrade.</p>
+<p><strong>Ghost references:</strong> <a href="https://ghost.org/help/cards/">HTML cards</a> and <a href="https://ghost.org/help/code-injection-styles/">Adding styles through Code Injection</a>.</p>
+<h2 id="verify-the-result-before-publishing">Verify the result before publishing</h2>
+<p>Check the public, published URL rather than relying only on an editor preview. Confirm that the Syntyr stylesheet returns HTTP 200 with a CSS content type, that a button inside <code>.syn-root</code> has the desired theme, and that unrelated host navigation, product cards and forms remain unchanged. Test keyboard focus, accessible names, narrow screens around 320px, reduced motion and the platform's own responsive layouts. If an iframe is involved, test its height, keyboard navigation, sandbox attributes and HTTPS/CSP restrictions.</p>
+<p><strong>Release compatibility:</strong> The immutable <strong>alpha.4</strong> stylesheet <code>syntyr.core.css</code> is published. The <strong>alpha.5</strong> <code>syntyr.embed.css</code> bundle is a candidate build designed for existing themes; it is not part of the alpha.4 release. Build the candidate from the source repository and self-host a version-pinned copy for testing. Never load both bundles together, and verify theme-specific overrides before production rollout. Syntyr is a stylesheet, not an official integration or plug-in from the site platform.</p>
+<p>Explore the <a href="site-builders.html">platform integration overview</a>, <a href="distribution.html">Syntyr distribution and release guide</a>, or <a href="../examples/platform-embed.html">live host-theme example</a>.</p>
+        </article>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+<a class="docs-article-toc-link docs-article-toc-2" href="#why-use-syntyr-on-ghost">Why use Syntyr on Ghost?</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#how-to-install-syntyr-on-a-ghost-publication">How to install Syntyr on a Ghost publication</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#limitations-and-ghost-specific-considerations">Limitations and Ghost-specific considerations</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#verify-the-result-before-publishing">Verify the result before publishing</a>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#why-use-syntyr-on-ghost">Why use Syntyr on Ghost?</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#how-to-install-syntyr-on-a-ghost-publication">How to install Syntyr on a Ghost publication</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#limitations-and-ghost-specific-considerations">Limitations and Ghost-specific considerations</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#verify-the-result-before-publishing">Verify the result before publishing</a>
+            </nav>
+          </details>
+        </aside>
+      </div>
+      <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="ghost.md">Markdown source</a></nav>
+    </main>
+    <footer class="syn-header"><span class="syn-caption">SYNTYR CSS · MIT CORE · EXPERIMENTAL</span><a href="../index.html">Home</a></footer>
+  </div>
+</body>
+</html>

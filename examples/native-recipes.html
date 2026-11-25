@@ -6,6 +6,7 @@
   <meta name="description" content="Native HTML patterns with accessible floating labels, timeline, captioned code and popover.">
   <title>Syntyr CSS — Native patterns</title>
   <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="../dist/syntyr.semantic.css">
   <link rel="stylesheet" href="../dist/syntyr.native-recipes.css">
   <link rel="stylesheet" href="../dist/syntyr.motion.css">
 </head>
@@ -26,6 +27,17 @@
             <input class="syn-input" type="email" id="example-email" name="email" autocomplete="email" placeholder=" " required aria-describedby="email-help">
             <label class="syn-floating-label" for="example-email">Email address</label>
           </div>
+          <div class="syn-field syn-field--floating">
+            <label class="syn-floating-label" for="example-organization">Organization (label first)</label>
+            <input class="syn-input" type="text" id="example-organization" name="organization" autocomplete="organization" placeholder=" ">
+          </div>
+          <label class="syn-label" for="example-search">Search documents</label>
+          <input class="syn-input" type="search" id="example-search" name="q" placeholder="Search">
+          <div class="syn-semantic">
+            <label for="native-file-invalid">Upload a document</label>
+            <input type="file" id="native-file-invalid" aria-invalid="true" aria-describedby="native-file-error">
+            <small id="native-file-error" class="syn-error">A document is required to continue.</small>
+          </div>
           <p id="email-help" class="syn-help">The label remains present even when the input is filled.</p>
           <button class="syn-button syn-button--primary" type="submit">Submit email</button>
         </form>
@@ -42,7 +54,7 @@
         <h2 id="code-heading">Captioned code</h2>
         <figure class="syn-code-figure">
           <figcaption id="snippet-caption">login.go — sample handler</figcaption>
-          <pre tabindex="0" aria-labelledby="snippet-caption"><code>func handler(w http.ResponseWriter, r *http.Request) {
+          <pre tabindex="0"><code>func handler(w http.ResponseWriter, r *http.Request) {
     w.WriteHeader(http.StatusOK)
 }</code></pre>
         </figure>
@@ -63,6 +75,10 @@
           <p>Use Escape, light dismiss in supporting browsers, or the Close button.</p>
           <form method="dialog"><button class="syn-button syn-button--primary">Close</button></form>
         </dialog>
+        <details id="native-report-fallback" class="syn-details">
+          <summary>Read system report without a dialog</summary>
+          <p>System report: operational. This information is available even when dialog commands are unsupported.</p>
+        </details>
       </article>
     </section>
   </main>

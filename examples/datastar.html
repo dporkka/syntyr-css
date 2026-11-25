@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Datastar + Syntyr — server search</title>
+  <link rel="stylesheet" href="/dist/syntyr.core.css">
+  <link rel="stylesheet" href="/dist/syntyr.server.css">
+  <!-- Demo-only pinned dependency. Self-host Datastar in production. -->
+  <script type="module" src="https://cdn.jsdelivr.net/gh/starfederation/datastar@v1.0.5/bundles/datastar.js"></script>
+</head>
+<body>
+  <!-- Stable theme root; the SSE response updates only #customer-results. -->
+  <main class="syn-root syn-page" data-syn-theme="studio">
+    <div class="syn-container">
+      <header class="syn-stack">
+        <h1 class="syn-heading">Customer lookup</h1>
+        <p>Normal GET form without JavaScript; Datastar SSE search when enhanced.</p>
+      </header>
+      <form id="customer-search" class="syn-form" action="/customers/search" method="get"
+            data-indicator:_fetching=""
+            data-on:submit="!$_fetching && @get('/customers/search')"
+            data-attr:aria-busy="String($_fetching)">
+        <label class="syn-label" for="customer-query">Customer name</label>
+        <input id="customer-query" class="syn-input" type="search" name="q" value="" maxlength="120"
+               data-bind:q="" autocomplete="off" placeholder="Search customers">
+        <button id="search-button" class="syn-button syn-button--primary" type="submit"
+                data-attr:disabled="$_fetching"
+                data-attr:data-syn-state="$_fetching ? 'loading' : null">Search</button>
+        <output id="search-progress" role="status" aria-live="polite"
+                data-show="$_fetching" style="display: none">Searching…</output>
+      </form>
+      <section id="customer-results" class="syn-panel" role="region"
+               aria-label="Search results" aria-live="polite"><!-- RESULTS --></section>
+    </div>
+  </main>
+</body>
+</html>

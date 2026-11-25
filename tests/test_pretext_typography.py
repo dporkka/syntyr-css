@@ -12,7 +12,7 @@ def source(name):
 class TypographyLabContract(unittest.TestCase):
     def test_heading_wrapping_is_resilient(self):
         text = source("src/components/typography.css")
-        self.assertIn("overflow-wrap: break-word;", text)
+        self.assertIn("min-inline-size: 0; overflow-wrap: anywhere;", text)
         self.assertIn("min-inline-size: 0;", text)
 
     def test_explicit_typography_utilities_exist(self):

@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Status: opt-in source adapter (alpha.5 candidate), not published as a native package. Syntyr&#x27;s web CSS does not execute in the native iOS or Android…">
+  <meta name="syntyr-source-sha256" content="b258efc59b975f81158419eb7738639a77ec22c27f0ddc9c78303531c537aa76">
+  <meta name="theme-color" content="#f5f7fb">
+  <title>Syntyr on mobile: React Native, Expo, Flutter, SwiftUI and Compose — Syntyr CSS docs</title>
+  <link rel="canonical" href="https://syntyr-css.pages.dev/docs/mobile-frameworks">
+  <link rel="alternate" type="text/markdown" href="mobile-frameworks.md" title="Markdown source">
+  <link rel="icon" href="../assets/syntyr-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="docs.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <a class="syn-button docs-skip" href="#doc-main">Skip to guide</a>
+  <div class="syn-shell">
+    <header class="syn-header docs-header">
+      <a class="syn-logo" href="../index.html">SYNTYR / CSS</a>
+      <nav class="syn-nav" aria-label="Documentation navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav>
+      <details class="site-mobile-menu"><summary>Menu</summary><nav aria-label="Mobile navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav></details>
+    </header>
+    <main id="doc-main" class="docs-article-page">
+      <nav class="syn-breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="reference.html">Documentation</a></li><li aria-current="page">Syntyr on mobile: React Native, Expo, Flutter, SwiftUI and Compose</li></ol></nav>
+      <header class="docs-article-heading">
+        <p class="syn-eyebrow">SYNTYR / DOCUMENTATION</p>
+        <p class="syn-muted">Current source documentation may describe unreleased alpha.5 features. <a href="distribution.html">Check released version compatibility.</a></p>
+        <p class="syn-caption">Prefer a machine-readable version? <a href="mobile-frameworks.md">Markdown source</a> · <a href="../llms.txt">LLM index</a></p>
+      </header>
+      <div class="docs-article-layout">
+        <article class="docs-prose" aria-label="Syntyr on mobile: React Native, Expo, Flutter, SwiftUI and Compose">
+<h1 id="syntyr-on-mobile-react-native-expo-flutter-swiftui-and-compose">Syntyr on mobile: React Native, Expo, Flutter, SwiftUI and Compose</h1>
+<p><strong>Status: opt-in source adapter (alpha.5 candidate), not published as a native
+package.</strong> Syntyr's web CSS does <strong>not</strong> execute in the native iOS or Android
+renderers. The supported portable contract is <strong>literal design tokens</strong> from
+one existing source, <code>src/tokens.css</code>. Browser-only components and behaviors
+must be implemented with native controls.</p>
+<table>
+<thead>
+<tr>
+<th>Target</th>
+<th>Adoption route</th>
+<th>Scope</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>React Native / Expo (iOS, Android)</td>
+<td>Copy <code>integrations/react-native/{tokens,styles}.ts</code></td>
+<td>Native colors, spacing, fonts, basic surface/input/button style objects</td>
+</tr>
+<tr>
+<td>React Native Web / Expo Web</td>
+<td>Same native style adapter for shared screens; Syntyr CSS in web-only HTML</td>
+<td>Native <code>View</code> / <code>Text</code> do not become Syntyr HTML components</td>
+</tr>
+<tr>
+<td>Flutter</td>
+<td>Bundle <code>metadata/mobile/syntyr.tokens.json</code> as an asset</td>
+<td>Theme data mapped to Flutter widgets</td>
+</tr>
+<tr>
+<td>SwiftUI</td>
+<td>Add the JSON asset to an Xcode target</td>
+<td>Colors, spacing and metrics mapped to SwiftUI controls</td>
+</tr>
+<tr>
+<td>Jetpack Compose</td>
+<td>Add JSON to <code>src/main/assets/</code></td>
+<td>Colors and sizing mapped to Compose Material themes</td>
+</tr>
+<tr>
+<td>Ionic / Capacitor (web-powered)</td>
+<td>Load Syntyr's existing CSS normally</td>
+<td>Full browser CSS support in the WebView; test platform-specific accessibility</td>
+</tr>
+<tr>
+<td>NativeScript / .NET MAUI</td>
+<td>Parse the same portable JSON</td>
+<td>Custom native style bindings; no tested adapter shipped</td>
+</tr>
+</tbody>
+</table>
+<h2 id="exact-token-contract">Exact token contract</h2>
+<p>Run from the Syntyr repository root:</p>
+<pre tabindex="0"><code class="language-sh">python3 scripts/export_mobile_tokens.py
+python3 scripts/export_mobile_tokens.py --check
+python3 -m unittest discover -s tests -p test_mobile_adapters.py -v
+</code></pre>
+<p>The generated files are:</p>
+<ul>
+<li><code>metadata/mobile/syntyr.tokens.json</code>: all seven named Syntyr palettes,
+with 13 literal SRGB color roles each, per-palette <code>radius</code>/<code>cut</code>,
+shared spacing <code>1–5</code>, font sizes <code>xs/sm/base</code>, and control height.</li>
+<li><code>integrations/react-native/tokens.ts</code>: the <strong>same values</strong> as a standalone
+typed <code>as const</code> module, with <code>SyntyrMobileTheme</code>.</li>
+<li><code>integrations/react-native/styles.ts</code>: a small, copy-owned native recipe
+that uses those generated tokens. It is not a new component library.</li>
+</ul>
+<p>Unit <code>logical-points</code> means the generator converts Syntyr's literal CSS
+<code>rem</code> values using the explicit <strong>16px browser baseline</strong> (for example,
+<code>0.75rem -&gt; 12</code>). In a native UI, treat the numbers as dp on Android,
+points on iOS, or logical pixels in Flutter. This is a <strong>design scale
+mapping</strong>, not a promise of identical physical size, font metrics or dynamic
+type behavior. Native consumers must adapt to accessibility font scaling,
+platform text metrics and user device settings. Colors do not automatically
+follow system appearance; select the desired palette.</p>
+<p>Only literal values are exported. Derived <code>color-mix()</code>, runtime CSS
+variables, hover, grid, container queries, viewport-relative typography,
+motion and browser focus semantics <strong>are deliberately excluded</strong>. Do not
+parse <code>dist/syntyr.core.css</code> at runtime or use a WebView solely to get
+Syntyr-native styling.</p>
+<h2 id="react-native-expo-copy-owned-no-adapter-dependency">React Native / Expo: copy-owned, no adapter dependency</h2>
+<p>In an Expo or bare React Native app, copy both <code>integrations/react-native/*.ts</code>
+files into <code>src/theme/</code>, then use:</p>
+<pre tabindex="0"><code class="language-tsx">import { Pressable, StyleSheet, Text, View } from &quot;react-native&quot;;
+import { createSyntyrNativeStyles } from &quot;./theme/styles&quot;;
+
+const styles = StyleSheet.create(createSyntyrNativeStyles(&quot;studio&quot;));
+
+export function Example() {
+  return (
+    &lt;View style={styles.panel}&gt;
+      &lt;Text accessibilityRole=&quot;header&quot; style={styles.heading}&gt;Account&lt;/Text&gt;
+      &lt;Pressable accessibilityRole=&quot;button&quot; style={styles.button}&gt;
+        &lt;Text style={styles.buttonLabel}&gt;Continue&lt;/Text&gt;
+      &lt;/Pressable&gt;
+    &lt;/View&gt;
+  );
+}
+</code></pre>
+<p>See <a href="../examples/react-native/App.tsx">the interactive native screen</a> for an
+email field, a stateful button and a light/dark palette switch based on
+<code>useColorScheme()</code>. The example is <strong>source to copy into an existing app</strong>,
+not a separate installable Expo project; in the app, adjust relative imports.
+A separate <a href="https://github.com/dporkka/syntyr-css/tree/main/examples/expo-native-smoke">Expo SDK 58 development smoke fixture</a>
+is provided for reproducible native TypeScript, Jest/RNTL interaction tests,
+and production Android/iOS Metro bundle exports. Run <code>npm ci</code>,
+<code>npm run typecheck</code>, <code>npm test</code>, <code>npm run export:android</code>, and
+<code>npm run export:ios</code> from that fixture. <strong>Metro exports do not run on
+devices or produce signed native binaries</strong>; simulator/hardware checks are
+still required. The fixture imports the canonical adapter by an ignored
+build-local source copy, not a second design-system implementation.
+Use the host application's safe-area provider and navigation system as usual.
+The example uses real <code>TextInput</code> and <code>Pressable</code> controls with accessibility
+labels; gestures, screen reader behavior, validation, keyboard handling and
+focus management remain the native application's responsibility.</p>
+<p>Do <strong>not</strong> import <code>@syntyr/css</code>, <code>syntyr.core.css</code> or <code>syn-*</code> classes into
+Android/iOS React Native screens. An Expo Web or React Native Web route can
+load Syntyr CSS in <strong>web-only markup</strong>, or use the token adapter for shared
+native components. Syntyr does not require NativeWind, Uniwind, Tamagui or
+Restyle. If your application already uses a CSS-to-native system, feed it the
+token values explicitly; don't assume Syntyr selectors, pseudo-classes or
+browser layout features will be compiled correctly.</p>
+<h2 id="flutter">Flutter</h2>
+<p>Declare the copied JSON under <code>flutter/assets/syntyr.tokens.json</code> in
+<code>pubspec.yaml</code>:</p>
+<pre tabindex="0"><code class="language-yaml">flutter:
+  assets:
+    - assets/syntyr.tokens.json
+</code></pre>
+<p>In Dart, load once and build the palette for your widgets:</p>
+<pre tabindex="0"><code class="language-dart">import 'dart:convert';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show rootBundle;
+
+Future&lt;ThemeData&gt; loadSyntyrTheme(String name) async {
+  final root = jsonDecode(await rootBundle.loadString(
+    'assets/syntyr.tokens.json')) as Map&lt;String, dynamic&gt;;
+  final theme = (root['themes'] as Map&lt;String, dynamic&gt;)[name] as Map;
+  final colors = theme['colors'] as Map;
+  Color color(String role) =&gt;
+      Color(int.parse('FF${(colors[role] as String).substring(1)}', radix: 16));
+  return ThemeData(
+    scaffoldBackgroundColor: color('bg'),
+    colorScheme: ColorScheme.fromSeed(
+      seedColor: color('accent'),
+      surface: color('surface'),
+      onSurface: color('text'),
+    ),
+    cardColor: color('surface'),
+  );
+}
+</code></pre>
+<p><code>ColorScheme.fromSeed</code> computes unspecified Material roles rather than
+duplicating all Syntyr roles; map <code>muted</code>, <code>frame</code>, <code>danger</code>, and
+<code>on-accent</code> explicitly for exact custom widget colors.</p>
+<h2 id="swiftui">SwiftUI</h2>
+<p>Bundle the JSON in the app target, parse it with <code>JSONSerialization</code> or
+<code>Decodable</code>, then convert RGB hex to SwiftUI <code>Color</code>. For example:</p>
+<pre tabindex="0"><code class="language-swift">import SwiftUI
+
+func syntyrColor(_ hex: String) -&gt; Color {
+    let value = UInt64(hex.dropFirst(), radix: 16)!
+    return Color(
+        .sRGB,
+        red: Double((value &gt;&gt; 16) &amp; 0xff) / 255,
+        green: Double((value &gt;&gt; 8) &amp; 0xff) / 255,
+        blue: Double(value &amp; 0xff) / 255,
+        opacity: 1
+    )
+}
+
+// Given the selected palette's &quot;colors&quot; dictionary:
+// Text(&quot;Account&quot;).foregroundStyle(syntyrColor(colors[&quot;text&quot;]!))
+</code></pre>
+<p>Use semantic native accessibility roles and dynamic type; a fixed design
+font size is not a substitute for the user's preferred text size.</p>
+<h2 id="android-jetpack-compose">Android Jetpack Compose</h2>
+<p>Add the JSON to <code>app/src/main/assets/syntyr.tokens.json</code>, load it through
+<code>context.assets.open(...)</code>, and read <code>themes[themeName].colors</code>.
+For example, once <code>hex</code> is read from the JSON:</p>
+<pre tabindex="0"><code class="language-kotlin">import androidx.compose.ui.graphics.Color
+
+val syntyrSurface = Color(android.graphics.Color.parseColor(hex))
+</code></pre>
+<p>In your Compose theme, map the named palette roles to <code>MaterialTheme</code>
+<code>colorScheme</code> fields; keep user font scaling and touch-target conventions.
+This is a token import route, <strong>not</strong> a verified Compose UI toolkit.</p>
+<h2 id="ionic-capacitor">Ionic / Capacitor</h2>
+<p>Ionic and Capacitor usually render HTML/CSS inside a WebView, so use the
+existing <code>dist/syntyr.core.css</code> on HTML nodes within a <code>.syn-root</code>:</p>
+<pre tabindex="0"><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/assets/syntyr.core.css&quot;&gt;
+&lt;main class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot;&gt;
+  &lt;button class=&quot;syn-button syn-button--primary&quot; type=&quot;button&quot;&gt;Continue&lt;/button&gt;
+&lt;/main&gt;
+</code></pre>
+<p>Ionic components may use Shadow DOM; ordinary external selectors do not
+cross shadow roots. Prefer styling Syntyr-owned HTML, or the Ionic component's
+documented CSS custom properties/parts. Respect safe areas, on-screen
+keyboards and touch interactions.</p>
+<h2 id="boundary-and-maintenance-policy">Boundary and maintenance policy</h2>
+<ul>
+<li>One authored source: <code>src/tokens.css</code>. All native tokens are generated,
+deterministic and checked by <code>--check</code>. No second hand-maintained theme.</li>
+<li>The CSS package's exports and zero-dependency core are <strong>unchanged</strong>.
+Native consumers copy only the files they need; no React, Expo, Flutter,
+Swift or Compose dependencies are added to Syntyr.</li>
+<li>Runtime controls remain genuinely native. Native keyboard navigation,
+gesture handling, accessibility and OS adaptations are not made equivalent
+by colors or spacing alone.</li>
+<li>Native builds have <strong>not</strong> been run by the Syntyr test suite; token/adapter
+contract tests are run in CI or locally. Validate a real iOS/Android app
+before claiming full platform certification.</li>
+</ul>
+<p>References: <a href="https://reactnative.dev/docs/style.html">React Native styles</a>,
+<a href="https://docs.expo.dev/workflow/web/">Expo Web</a>,
+<a href="https://docs.expo.dev/versions/v55.0.0/config/metro/">Expo CSS limitations</a>.</p>
+        </article>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+<a class="docs-article-toc-link docs-article-toc-2" href="#exact-token-contract">Exact token contract</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#react-native-expo-copy-owned-no-adapter-dependency">React Native / Expo: copy-owned, no adapter dependency</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#flutter">Flutter</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#swiftui">SwiftUI</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#android-jetpack-compose">Android Jetpack Compose</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#ionic-capacitor">Ionic / Capacitor</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#boundary-and-maintenance-policy">Boundary and maintenance policy</a>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#exact-token-contract">Exact token contract</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#react-native-expo-copy-owned-no-adapter-dependency">React Native / Expo: copy-owned, no adapter dependency</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#flutter">Flutter</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#swiftui">SwiftUI</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#android-jetpack-compose">Android Jetpack Compose</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#ionic-capacitor">Ionic / Capacitor</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#boundary-and-maintenance-policy">Boundary and maintenance policy</a>
+            </nav>
+          </details>
+        </aside>
+      </div>
+      <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="mobile-frameworks.md">Markdown source</a></nav>
+    </main>
+    <footer class="syn-header"><span class="syn-caption">SYNTYR CSS · MIT CORE · EXPERIMENTAL</span><a href="../index.html">Home</a></footer>
+  </div>
+</body>
+</html>

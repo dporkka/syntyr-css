@@ -53,10 +53,35 @@ class HtmlIntegrationTests(unittest.TestCase):
         self.assertTrue(any(tag == "button" and "data-syn-semantic" in a for tag, a in parser.tags))
         self.assertEqual(
             [a.get("src") for tag, a in parser.tags if tag == "script"],
-            ["https://unpkg.com/htmx.org@2.0.8/dist/htmx.min.js"],
+            ["https://unpkg.com/htmx.org@2.0.8/dist/htmx.min.js",
+             "/examples/htmx-recovery.js"],
         )
         self.assertNotIn("onload=", html)
         self.assertNotIn("onclick=", html)
+
+    def test_htmx_history_cache_miss_has_full_document_even_with_hx_request_header(self):
+        from examples.htmx_server import DemoHandler
+
+        html = (ROOT / "examples/htmx.html").read_text(encoding="utf-8")
+        self.assertIn('"historyRestoreAsHxRequest":false', html)
+
+        server = ThreadingHTTPServer(("127.0.0.1", 0), DemoHandler)
+        thread = Thread(target=server.serve_forever, daemon=True)
+        thread.start()
+        try:
+            url = f"http://127.0.0.1:{server.server_port}/customers/search?q=Acme"
+            headers = {"HX-Request": "true", "HX-History-Restore-Request": "true"}
+            with urlopen(Request(url, headers=headers), timeout=5) as response:
+                document = response.read().decode("utf-8")
+                self.assertIn("<!doctype html>", document.lower())
+                self.assertIn('id="results"', document)
+                self.assertEqual(
+                    response.headers["Vary"], "HX-Request, HX-History-Restore-Request"
+                )
+        finally:
+            server.shutdown()
+            server.server_close()
+            thread.join(timeout=2)
 
     def test_server_returns_fragment_or_full_page_and_escapes_user_input(self):
         from examples.htmx_server import DemoHandler
@@ -70,7 +95,7 @@ class HtmlIntegrationTests(unittest.TestCase):
             with urlopen(Request(url, headers={"HX-Request": "true"})) as response:
                 fragment = response.read().decode()
                 self.assertEqual(response.headers["Content-Type"], "text/html; charset=utf-8")
-                self.assertEqual(response.headers["Vary"], "HX-Request")
+                self.assertEqual(response.headers["Vary"], "HX-Request, HX-History-Restore-Request")
                 self.assertNotIn("<!doctype", fragment.lower())
                 self.assertNotIn("<script>", fragment.lower())
                 self.assertIn("&lt;script&gt;", fragment)
@@ -79,6 +104,7 @@ class HtmlIntegrationTests(unittest.TestCase):
                 self.assertIn("<!doctype html>", document.lower())
                 self.assertIn('id="results"', document)
                 self.assertIn("&lt;script&gt;", document)
+                self.assertIn('name="q" value="&lt;script&gt;alert(1)&lt;/script&gt;"', document)
             with urlopen(base + "/examples/htmx.html") as response:
                 self.assertIn('data-syn-semantic', response.read().decode())
             with urlopen(base + "/dist/syntyr.core.css") as response:

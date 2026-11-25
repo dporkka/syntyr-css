@@ -1,0 +1,13 @@
+{
+  "expo": {
+    "name": "Syntyr Native Smoke",
+    "slug": "syntyr-native-smoke",
+    "version": "1.0.0",
+    "orientation": "default",
+    "userInterfaceStyle": "automatic",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  }
+}

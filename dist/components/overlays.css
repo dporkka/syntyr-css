@@ -2,12 +2,25 @@
   /* All component rules match the root itself or a descendant, never a host sibling. */
   :where(.syn-root, .syn-root *) {
     &.syn-popover, &.syn-dialog {
+      box-sizing: border-box;
+      /* Viewport axes are physical, including under vertical writing modes. */
+      max-width: calc(100vw - 2rem);
+      max-height: min(80vh, 40rem);
+      max-height: min(80dvh, 40rem);
+      overflow: auto;
       width: min(calc(100vw - 2rem), 26rem); padding: 1.5rem;
       border: 1px solid var(--syn-accent); border-radius: var(--syn-radius);
       background: var(--syn-surface); color: var(--syn-text);
       box-shadow: var(--syn-shadow-overlay);
     }
-    &.syn-popover { margin: .75rem; inset: auto 1rem 1rem auto; }
+    &.syn-popover { margin: .75rem; inset: auto;
+      /* Reserve the fixed corner's 1rem bottom inset and .75rem margin,
+         including on very short viewports. Anchored popovers inherit a
+         conservative cap without introducing separate component classes. */
+      max-height: max(0px, min(80vh, 40rem, calc(100vh - 1.75rem)));
+      max-height: max(0px, min(80dvh, 40rem, calc(100dvh - 1.75rem)));
+      inset-block-end: 1rem; inset-inline-end: 1rem;
+    }
     /* The ordinary corner popover remains the fallback if anchors are unsupported. */
     @supports (position-area: bottom) {
       &.syn-popover.syn-popover--anchored {
@@ -18,13 +31,97 @@
         position-try-fallbacks: flip-block, flip-inline;
       }
     }
-    &.syn-dialog { margin: auto; }
+    /* Compact, scriptless action-panel presentation. Links/buttons retain Tab behavior.
+       Only the optional menu adapter may add role=menu and arrow-key semantics. */
+    &.syn-popover.syn-dropdown {
+      inline-size: max-content;
+      min-inline-size: min(13rem, calc(100vw - 2rem));
+      max-inline-size: min(22rem, calc(100vw - 2rem));
+      max-block-size: min(70vh, 24rem);
+      max-block-size: min(70dvh, 24rem);
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      padding: .35rem;
+      border-color: var(--syn-border-floating);
+      background: var(--syn-surface-floating);
+    }
+    &.syn-dropdown__item {
+      display: flex;
+      align-items: center;
+      gap: .65rem;
+      inline-size: 100%;
+      min-block-size: 2.75rem;
+      padding-block: .65rem;
+      /* Cap horizontal padding when enlarged text consumes the narrow menu. */
+      padding-inline: min(.75rem, 4vw);
+      margin: 0;
+      border: 1px solid transparent;
+      border-radius: var(--syn-radius);
+      background: transparent;
+      color: var(--syn-text);
+      text-align: start;
+      text-decoration: none;
+      font: 550 var(--syn-type-sm)/1.35 var(--syn-font-ui);
+      overflow-wrap: anywhere;
+      cursor: pointer;
+    }
+    &.syn-dropdown__item:where(:not(:disabled):not([aria-disabled="true"]):hover, :focus-visible) {
+      background: var(--syn-surface-hover);
+      border-color: var(--syn-border-hover);
+    }
+    &.syn-dropdown__item:where([aria-current]:not([aria-current="false"]):not([aria-current=""]), [aria-checked="true"], [data-syn-state="selected"]) {
+      background: var(--syn-surface-pressed);
+      border-inline-start-color: var(--syn-accent);
+    }
+    &.syn-dropdown__item[data-syn-variant="danger"] { color: var(--syn-danger); }
+    &.syn-dropdown__item:is(:disabled, [aria-disabled="true"]) {
+      opacity: .55;
+      cursor: not-allowed;
+    }
+    &.syn-dropdown__group-label {
+      padding: .5rem .75rem .25rem;
+      color: var(--syn-text-subtle);
+      font: 650 var(--syn-type-xs)/1.4 var(--syn-font-ui);
+    }
+    &.syn-dropdown__separator {
+      height: 0;
+      border: 0;
+      border-block-start: 1px solid var(--syn-border-subtle);
+      margin: .35rem .5rem;
+    }
+    &.syn-dropdown__shortcut {
+      margin-inline-start: auto;
+      color: var(--syn-text-subtle);
+      font: 450 var(--syn-type-xs)/1.3 var(--syn-mono);
+    }
+    &.syn-dialog {
+      margin: auto;
+      max-block-size: calc(100vh - 2rem);
+      max-block-size: calc(100dvh - 2rem);
+      overflow-y: auto;
+      overscroll-behavior: contain;
+    }
     &.syn-dialog::backdrop { background: rgb(0 0 0 / 70%); }
     &.syn-details { padding: 1rem 0; border-block-start: 1px solid var(--syn-frame); }
-    &.syn-details summary { cursor: pointer; color: var(--syn-text); font-weight: 650; }
+    &.syn-details summary {
+      cursor: pointer;
+      color: var(--syn-text);
+      font-weight: 650;
+      min-block-size: 2.75rem;
+      padding-block: .5rem;
+      align-content: center;
+    }
     &.syn-details[open] summary { color: var(--syn-accent); }
     &.syn-details p { color: var(--syn-muted); margin: .6rem 0 0; }
-    @media (forced-colors: active) { &.syn-popover, &.syn-dialog, &.syn-details { border-color: CanvasText; } }
+    @media (forced-colors: active) {
+      &.syn-popover, &.syn-dialog, &.syn-details { border-color: CanvasText; }
+      &.syn-dropdown__item:where(:hover, :focus-visible, [aria-current]:not([aria-current="false"]):not([aria-current=""]), [aria-checked="true"], [data-syn-state="selected"]) {
+        border-color: Highlight;
+        color: HighlightText;
+        background: Highlight;
+      }
+      &.syn-dropdown__separator { border-color: CanvasText; }
+    }
 
     /* Native popovertarget supplies an implicit anchor in supporting browsers. */
     @supports (position-area: block-end) {
@@ -33,7 +130,32 @@
         position-try-fallbacks: flip-block, flip-inline;
         inset: auto;
         margin: .5rem 0;
-        max-inline-size: calc(100vw - 2rem);
+        /* Base overlay max-width/max-height already bound physical axes. */
+      }
+      /* Preserve the compact dropdown width even with logical anchor placement. */
+      &.syn-popover.syn-dropdown.syn-popover--anchored {
+        max-inline-size: min(22rem, calc(100vw - 2rem));
+      }
+    }
+    /* At browser zoom or in a short landscape viewport, neither side of
+       the trigger may have room for a menu. Center the scrollable native
+       popover instead of clipping its bottom actions outside the viewport. */
+    @media (max-height: 30rem) {
+      &.syn-popover.syn-dropdown.syn-popover--anchored {
+        position-area: none;
+        position-try-fallbacks: none;
+        inset: .5rem;
+        margin: auto;
+        block-size: fit-content;
+        /* Keep the viewport caps on physical axes after the logical sizing
+           above. max-inline-size maps to max-height in vertical-rl, so using
+           viewport width for that value can expose a tall offscreen panel. */
+        max-width: max(0px, min(22rem, calc(100vw - 1rem)));
+        /* The dropdown's 13rem min-inline-size maps to physical min-height
+           in vertical writing; release that floor only for short viewports. */
+        min-height: 0;
+        max-height: max(0px, calc(100vh - 1rem));
+        max-height: max(0px, calc(100dvh - 1rem));
       }
     }
   }

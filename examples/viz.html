@@ -37,7 +37,15 @@
     .viz-legend-mark[data-syn-state="down"] { background: var(--syn-danger); }
     .viz-heatmap-description { font-size: .72rem; line-height: 1.5; color: var(--syn-muted); margin: .5rem 0 0; }
     .viz-values { border-block-start: 1px solid var(--syn-border-subtle); margin-block-start: 1.35rem; padding-block-start: .6rem; overflow-x: auto; }
-    .viz-values summary { cursor: pointer; color: var(--syn-text); font-size: .78rem; font-weight: 600; }
+    .viz-values summary {
+      cursor: pointer;
+      color: var(--syn-text);
+      font-size: .78rem;
+      font-weight: 600;
+      min-block-size: 2.75rem;
+      padding-block: .5rem;
+      align-content: center;
+    }
     .viz-values summary:focus-visible { outline: 2px solid var(--syn-focus-ring); outline-offset: 3px; }
     .viz-values table { width: 100%; margin-block-start: .7rem; border-collapse: collapse; font-size: .75rem; }
     .viz-values th, .viz-values td { text-align: start; padding: .2rem .45rem; border-bottom: 1px solid var(--syn-border-subtle); }

@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Optional command navigation for Syntyr using native dialog, real links and a small copy-owned JavaScript module.">
+  <title>Syntyr CSS — Optional command launcher</title>
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="../dist/syntyr.recipes.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <a href="#main" class="syn-button">Skip to content</a>
+  <main class="syn-shell syn-stack" id="main">
+    <header class="syn-panel">
+      <h1 class="syn-heading">Keyboard-first navigation</h1>
+      <p class="syn-muted">The plain navigation below works with no JavaScript. When enhancement loads, the button and Ctrl/⌘ + K open a native modal dialog.</p>
+      <div class="syn-actions">
+        <a class="syn-button" href="#quick-destinations">Browse destinations</a>
+        <button type="button" data-command-open hidden>
+          Open command menu
+        </button>
+      </div>
+    </header>
+
+    <nav id="quick-destinations" class="syn-panel" aria-label="Quick destinations">
+      <h2 class="syn-heading">Quick destinations</h2>
+      <ul>
+        <li><a href="./preset-preview.html">Preview CSS presets</a></li>
+        <li><a href="./resource-outline.html">Browse native resource outline</a></li>
+        <li><a href="./saas.html">Explore SaaS dashboard</a></li>
+      </ul>
+    </nav>
+
+    <dialog class="syn-command-panel" data-command-dialog
+            aria-labelledby="command-title" aria-describedby="command-help">
+      <div class="syn-command-search">
+        <h2 class="syn-heading" id="command-title">Go to a destination</h2>
+        <p class="syn-muted" id="command-help">Type to filter, Tab to follow a link, or Escape to close.</p>
+        <label class="syn-label" for="command-query">Find a destination</label>
+        <input class="syn-input" type="search" id="command-query" data-command-query
+               placeholder="e.g. accessibility" autocomplete="off" autofocus>
+      </div>
+      <p class="syn-command-group-label" data-command-status role="status" aria-live="polite">3 destinations</p>
+      <ul class="syn-command-group" aria-label="Matching destinations">
+        <li><a class="syn-command-row" data-command-item data-command-keywords="presets theme styles layout"
+               href="./preset-preview.html"><span><strong>Preview CSS presets</strong>
+          <span class="syn-command-description">Compare the native CSS preset composition</span></span></a></li>
+        <li><a class="syn-command-row" data-command-item data-command-keywords="semantic native HTML hierarchy folders"
+               href="./resource-outline.html"><span><strong>Browse native resource outline</strong>
+          <span class="syn-command-description">Explore nested navigation without JavaScript</span></span></a></li>
+        <li><a class="syn-command-row" data-command-item data-command-keywords="dashboard SaaS overview application"
+               href="./saas.html"><span><strong>Explore SaaS dashboard</strong>
+          <span class="syn-command-description">See a responsive application dashboard</span></span></a></li>
+      </ul>
+      <p class="syn-muted" data-command-empty hidden>No destinations match. Change your search or press Escape.</p>
+      <div class="syn-command-search">
+        <button class="syn-button" type="button" data-command-close>Close menu</button>
+      </div>
+    </dialog>
+  </main>
+  <script type="module" src="command-launcher.mjs"></script>
+</body>
+</html>

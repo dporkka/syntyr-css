@@ -57,6 +57,35 @@ INSPECT = """() => {
 }"""
 
 
+# Minimum 24 CSS-pixel targets for standalone native controls. Associated
+# <label> targets can satisfy the rule even when a native checkbox is 13px.
+# This is a focused geometry regression, not a full WCAG 2.2 target-spacing audit.
+INSPECT_TOUCH_TARGETS = """() => {
+  const targets = document.querySelectorAll(
+    'button, summary, input:not([type="hidden"]), select, textarea, [role="button"], [role="tab"]'
+  );
+  return [...targets].filter(el => {
+    const style = getComputedStyle(el), r = el.getBoundingClientRect();
+    if (el.disabled || !r.width || !r.height
+        || style.display === 'none' || style.visibility === 'hidden') return false;
+    if (el.closest('details:not([open])') && !el.closest('summary')) return false;
+    if (r.width >= 24 && r.height >= 24) return false;
+    const labels = [...document.querySelectorAll('label[for]')]
+      .filter(label => el.id && label.htmlFor === el.id);
+    const wrapped = el.closest('label');
+    if (wrapped) labels.push(wrapped);
+    return !labels.some(label => {
+      const box = label.getBoundingClientRect();
+      return box.width >= 24 && box.height >= 24;
+    });
+  }).slice(0, 12).map(el => {
+    const r = el.getBoundingClientRect();
+    return [el.tagName, (el.textContent || el.getAttribute('aria-label') || '').trim().slice(0, 48),
+            Math.round(r.width), Math.round(r.height)];
+  });
+}"""
+
+
 class QuietHandler(SimpleHTTPRequestHandler):
     def log_message(self, *_args):
         pass
@@ -89,6 +118,9 @@ def check(browser, engine, origin, pages):
                 assert layout["scrollWidth"] <= layout["clientWidth"] + 1 and not layout["clipped"], (
                     engine, name, width, scale, layout
                 )
+                if width in (320, 390) and scale == 1:
+                    too_small = page.evaluate(INSPECT_TOUCH_TARGETS)
+                    assert not too_small, (engine, name, "touch targets below 24px", too_small)
                 if name == "examples/viz.html" and width == 320 and scale == 2:
                     heatmap = page.locator(".syn-viz-heatmap").first
                     grid = heatmap.evaluate("""e => ({

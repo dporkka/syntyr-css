@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Syntyr CSS vs Bootstrap: compare native HTML components, JavaScript plugins, CSS scopes, theme tokens, ecosystem maturity and migration guidance.">
+  <meta name="syntyr-source-sha256" content="5b43f3d88bc5539ca5024ea37e8e228bc98ec2468eb10424d8df9f8394e8f57f">
+  <meta name="theme-color" content="#f5f7fb">
+  <title>Syntyr vs Bootstrap | CSS Framework Comparison</title>
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Syntyr vs Bootstrap | CSS Framework Comparison">
+  <meta property="og:description" content="Syntyr CSS vs Bootstrap: compare native HTML components, JavaScript plugins, CSS scopes, theme tokens, ecosystem maturity and migration guidance.">
+  <meta property="og:url" content="https://syntyr-css.pages.dev/docs/compare-bootstrap">
+  <meta property="og:image" content="https://syntyr-css.pages.dev/assets/og-syntyr.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://syntyr-css.pages.dev/docs/compare-bootstrap">
+  <link rel="alternate" type="text/markdown" href="compare-bootstrap.md" title="Markdown source">
+  <link rel="icon" href="../assets/syntyr-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="docs.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <a class="syn-button docs-skip" href="#doc-main">Skip to guide</a>
+  <div class="syn-shell">
+    <header class="syn-header docs-header">
+      <a class="syn-logo" href="../index.html">SYNTYR / CSS</a>
+      <nav class="syn-nav" aria-label="Documentation navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav>
+      <details class="site-mobile-menu"><summary>Menu</summary><nav aria-label="Mobile navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav></details>
+    </header>
+    <main id="doc-main" class="docs-article-page">
+      <nav class="syn-breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="reference.html">Documentation</a></li><li aria-current="page">Syntyr CSS vs Bootstrap: choosing a CSS UI framework</li></ol></nav>
+      <header class="docs-article-heading">
+        <p class="syn-eyebrow">SYNTYR / DOCUMENTATION</p>
+        <p class="syn-muted">Current source documentation may describe unreleased alpha.5 features. <a href="distribution.html">Check released version compatibility.</a></p>
+        <p class="syn-caption">Prefer a machine-readable version? <a href="compare-bootstrap.md">Markdown source</a> · <a href="../llms.txt">LLM index</a></p>
+      </header>
+      <div class="docs-article-layout">
+        <article class="docs-prose" aria-label="Syntyr CSS vs Bootstrap: choosing a CSS UI framework">
+<h1 id="syntyr-css-vs-bootstrap-choosing-a-css-ui-framework">Syntyr CSS vs Bootstrap: choosing a CSS UI framework</h1>
+<p>Syntyr and Bootstrap both supply reusable classes for common interface patterns, but they target different priorities. <strong>Bootstrap</strong> has a broad, mature collection of layout utilities, components, examples and optional JavaScript plugins. <strong>Syntyr</strong> focuses on scoped CSS components, semantic HTML and native browser behavior, with no required library runtime JavaScript for styling.</p>
+<p><strong>Version note:</strong> Syntyr v0.3.0-alpha.4 is published; new alpha.5 source modules are <strong>unreleased</strong>. Check the <a href="distribution.html">release and distribution details</a>.</p>
+<h2 id="feature-comparison">Feature comparison</h2>
+<table>
+<thead>
+<tr>
+<th>Concern</th>
+<th>Syntyr CSS</th>
+<th>Bootstrap</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Primary model</td>
+<td>Scoped <code>syn-root</code> and <code>syn-*</code> components</td>
+<td>Established Bootstrap component and utility classes</td>
+</tr>
+<tr>
+<td>Native HTML forms</td>
+<td>Standard forms with optional Syntyr presentation</td>
+<td>Form control styles and layout utilities</td>
+</tr>
+<tr>
+<td>JavaScript</td>
+<td>No Syntyr runtime required for styles; application owns enhanced behavior</td>
+<td>CSS can work alone; specific components use Bootstrap JavaScript</td>
+</tr>
+<tr>
+<td>Theming</td>
+<td><code>data-syn-theme</code> and <code>--syn-*</code> tokens</td>
+<td>CSS variables, Sass options and color modes</td>
+</tr>
+<tr>
+<td>Ecosystem</td>
+<td>Smaller, evolving design system</td>
+<td>Extensive documentation, examples and third-party integrations</td>
+</tr>
+<tr>
+<td>Styling reach</td>
+<td>Explicit scoped region</td>
+<td>Bootstrap Reboot and other styles can affect the page globally</td>
+</tr>
+</tbody>
+</table>
+<h2 id="why-pick-syntyr">Why pick Syntyr?</h2>
+<p>Consider Syntyr when you want tighter style scoping for an existing site, design tokens that serve multiple visual styles, or HTML-first application screens without inheriting a full JavaScript component convention. It can pair with server-rendered templates, HTMX, LiveView and React because the browser receives ordinary HTML.</p>
+<p>Native disclosures and browser APIs can handle some interactions, but do not automatically replace every Bootstrap widget. Cross-browser fallbacks and application behavior still need testing. See <a href="progressive-enhancement.html">progressive enhancement</a> and <a href="accessibility.html">accessibility</a>.</p>
+<h2 id="why-pick-bootstrap">Why pick Bootstrap?</h2>
+<p>Bootstrap is a strong choice for teams that want familiar grids, conventional navigation, examples and a broad support ecosystem. Its documented JavaScript plugins can provide production-tested behaviors that Syntyr intentionally leaves to the host application. If your current Bootstrap application works, migrating just for novelty may introduce more risk than value.</p>
+<h2 id="migrating-from-bootstrap">Migrating from Bootstrap</h2>
+<p>Try one standalone <code>syn-root</code> region rather than loading competing component styles indiscriminately. Audit both frameworks' resets, CSS order, button classes, responsive breakpoints and interaction ownership. Replace widgets only after confirming keyboard, touch and screen-reader behaviors.</p>
+<p>Compare more options in the <a href="compare.html">Syntyr alternatives hub</a>, check the <a href="faq.html">FAQ</a>, and read the <a href="https://getbootstrap.com/docs/5.3/getting-started/introduction/">official Bootstrap introduction</a>.</p>
+        </article>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+<a class="docs-article-toc-link docs-article-toc-2" href="#feature-comparison">Feature comparison</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#why-pick-syntyr">Why pick Syntyr?</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#why-pick-bootstrap">Why pick Bootstrap?</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#migrating-from-bootstrap">Migrating from Bootstrap</a>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#feature-comparison">Feature comparison</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#why-pick-syntyr">Why pick Syntyr?</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#why-pick-bootstrap">Why pick Bootstrap?</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#migrating-from-bootstrap">Migrating from Bootstrap</a>
+            </nav>
+          </details>
+        </aside>
+      </div>
+      <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="compare-bootstrap.md">Markdown source</a></nav>
+    </main>
+    <footer class="syn-header"><span class="syn-caption">SYNTYR CSS · MIT CORE · EXPERIMENTAL</span><a href="../index.html">Home</a></footer>
+  </div>
+</body>
+</html>

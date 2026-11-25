@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Responsive Syntyr CSS intrinsic layouts with no runtime JavaScript.">
+  <title>Intrinsic compositions — Syntyr CSS</title>
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <main class="syn-shell">
+    <header class="syn-header">
+      <div><p class="syn-eyebrow">CSS-first compositions</p><h1 class="syn-heading">Intrinsic layout</h1></div>
+      <nav class="syn-inline" aria-label="Example navigation">
+        <a href="../docs/composition-adoption.html">Read guide</a>
+        <a href="../docs/components.html">Components</a>
+      </nav>
+    </header>
+    <section class="syn-stack" aria-labelledby="sidecar-heading">
+      <h2 id="sidecar-heading" class="syn-heading">Main content and a sidecar</h2>
+      <div class="syn-sidecar">
+        <section class="syn-panel" aria-labelledby="workspace-heading">
+          <h3 id="workspace-heading" class="syn-heading">Workspace</h3>
+          <p>A flexible primary region that stacks above its aside in narrow containers.</p>
+          <div class="syn-inline" style="--syn-inline-gap:.5rem">
+            <a href="../docs/components.html" class="syn-button syn-button--primary">Components</a>
+            <a href="../docs/distribution.html" class="syn-button">Install</a>
+            <a href="../docs/accessibility.html" class="syn-button">Accessibility</a>
+          </div>
+        </section>
+        <aside class="syn-panel" aria-label="Workspace details">
+          <h3 class="syn-heading">Details</h3>
+          <p>No screen-width breakpoint, layout script or extra component dependency.</p>
+        </aside>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

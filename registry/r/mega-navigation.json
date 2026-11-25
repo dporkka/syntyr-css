@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "mega-navigation",
+  "type": "registry:item",
+  "title": "Native expandable mega menu",
+  "description": "Keyboard-friendly disclosure with grouped destination links and no menu runtime.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://syntyr-css.pages.dev/registry/r/core.json",
+    "https://syntyr-css.pages.dev/registry/r/recipes.json"
+  ],
+  "files": [
+    {
+      "path": "blocks/snippets/mega-navigation.html",
+      "type": "registry:file",
+      "target": "~/syntyr/blocks/mega-navigation.html",
+      "content": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-label=\"Expandable website navigation example\">\n  <nav aria-label=\"Products and resources\" class=\"syn-stack\">\n    <div class=\"syn-inline\" style=\"--syn-inline-justify:space-between\">\n      <a class=\"syn-logo\" href=\"/\">NORTH / STUDIO</a>\n      <a class=\"syn-button syn-button--outline\" href=\"/contact\">Get in touch</a>\n    </div>\n    <details class=\"syn-details\" open>\n      <summary>Explore our solutions</summary>\n      <div class=\"syn-stack\">\n        <p class=\"syn-muted\">Browse product areas or jump straight to a guide.</p>\n        <div class=\"syn-feature-grid\">\n          <section class=\"syn-feature-card\">\n            <h2 class=\"syn-heading\">Products</h2>\n            <ul class=\"syn-stack\">\n              <li><a href=\"/products/analytics\">Analytics platform</a></li>\n              <li><a href=\"/products/automation\">Workflow automation</a></li>\n            </ul>\n          </section>\n          <section class=\"syn-feature-card\">\n            <h2 class=\"syn-heading\">Resources</h2>\n            <ul class=\"syn-stack\">\n              <li><a href=\"/docs\">Documentation</a></li>\n              <li><a href=\"/journal\">Journal</a></li>\n            </ul>\n          </section>\n        </div>\n      </div>\n    </details>\n  </nav>\n</section>\n"
+    },
+    {
+      "path": "LICENSE",
+      "type": "registry:file",
+      "target": "~/syntyr/LICENSE",
+      "content": "MIT License\n\nCopyright (c) 2026 Syntyr CSS contributors\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n"
+    }
+  ],
+  "meta": {
+    "syntyrVersion": "0.3.0-alpha.5",
+    "source": "MIT source candidate",
+    "runtimeJavaScript": false,
+    "fileDigests": {
+      "~/syntyr/blocks/mega-navigation.html": "5436c892da9eb1ff06be035ff6b2b6cb4cedd036a1b278171ba29640f0ada32b",
+      "~/syntyr/LICENSE": "42f56369ac06362dbfe433d2d50b178bf74c369a55ea22337ab40fd9433521bf"
+    }
+  },
+  "docs": "Experimental source-candidate asset. Review exact version, HTML routes, keyboard behavior and integration before production use."
+}

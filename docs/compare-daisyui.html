@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Compare Syntyr CSS and daisyUI for Tailwind plugin workflows, component classes, theming, JavaScript requirements and standalone CSS distribution.">
+  <meta name="syntyr-source-sha256" content="05f40aba3b000691243121b835215f643692808f2bf915f023df8d7679906ed1">
+  <meta name="theme-color" content="#f5f7fb">
+  <title>Syntyr vs daisyUI | Standalone CSS or Tailwind</title>
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Syntyr vs daisyUI | Standalone CSS or Tailwind">
+  <meta property="og:description" content="Compare Syntyr CSS and daisyUI for Tailwind plugin workflows, component classes, theming, JavaScript requirements and standalone CSS distribution.">
+  <meta property="og:url" content="https://syntyr-css.pages.dev/docs/compare-daisyui">
+  <meta property="og:image" content="https://syntyr-css.pages.dev/assets/og-syntyr.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://syntyr-css.pages.dev/docs/compare-daisyui">
+  <link rel="alternate" type="text/markdown" href="compare-daisyui.md" title="Markdown source">
+  <link rel="icon" href="../assets/syntyr-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="docs.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <a class="syn-button docs-skip" href="#doc-main">Skip to guide</a>
+  <div class="syn-shell">
+    <header class="syn-header docs-header">
+      <a class="syn-logo" href="../index.html">SYNTYR / CSS</a>
+      <nav class="syn-nav" aria-label="Documentation navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav>
+      <details class="site-mobile-menu"><summary>Menu</summary><nav aria-label="Mobile navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav></details>
+    </header>
+    <main id="doc-main" class="docs-article-page">
+      <nav class="syn-breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="reference.html">Documentation</a></li><li aria-current="page">Syntyr CSS vs daisyUI: standalone CSS or Tailwind plugin?</li></ol></nav>
+      <header class="docs-article-heading">
+        <p class="syn-eyebrow">SYNTYR / DOCUMENTATION</p>
+        <p class="syn-muted">Current source documentation may describe unreleased alpha.5 features. <a href="distribution.html">Check released version compatibility.</a></p>
+        <p class="syn-caption">Prefer a machine-readable version? <a href="compare-daisyui.md">Markdown source</a> · <a href="../llms.txt">LLM index</a></p>
+      </header>
+      <div class="docs-article-layout">
+        <article class="docs-prose" aria-label="Syntyr CSS vs daisyUI: standalone CSS or Tailwind plugin?">
+<h1 id="syntyr-css-vs-daisyui-standalone-css-or-tailwind-plugin">Syntyr CSS vs daisyUI: standalone CSS or Tailwind plugin?</h1>
+<p><strong>daisyUI</strong> provides named component styles as a Tailwind CSS plugin <strong>or as standalone prebuilt CSS</strong>; <strong>Syntyr</strong> provides independently distributed CSS modules and a scoped design system for native HTML. Both can style ordinary HTML without a dedicated JavaScript component runtime, so the meaningful difference is the styling workflow and ecosystem rather than a blanket &quot;no JavaScript&quot; claim.</p>
+<p><strong>Release note:</strong> Syntyr alpha.4 is published; additional alpha.5 source modules are <strong>unreleased</strong>. Check <a href="distribution.html">distribution</a> before choosing a module.</p>
+<h2 id="syntyr-and-daisyui-compared">Syntyr and daisyUI compared</h2>
+<table>
+<thead>
+<tr>
+<th>Factor</th>
+<th>Syntyr CSS</th>
+<th>daisyUI</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Distribution</td>
+<td>Prebuilt or self-hosted CSS assets</td>
+<td>Tailwind plugin or standalone prebuilt CSS (full CDN stylesheet and individual component files)</td>
+</tr>
+<tr>
+<td>Component API</td>
+<td><code>syn-*</code> names and scoped style tokens</td>
+<td>Semantic classes such as <code>btn</code>, <code>card</code> and theme utilities</td>
+</tr>
+<tr>
+<td>Runtime JavaScript</td>
+<td>Not required for styles</td>
+<td>Not required for styles</td>
+</tr>
+<tr>
+<td>Themes</td>
+<td>Published Grid, Noir and Studio; candidate themes in source</td>
+<td>Extensive theme and semantic color conventions</td>
+</tr>
+<tr>
+<td>Integration</td>
+<td>Any HTML renderer; no Tailwind dependency</td>
+<td>Tailwind integration recommended; standalone styles usable without Tailwind</td>
+</tr>
+<tr>
+<td>Browser behavior</td>
+<td>Native HTML or host-owned interactions</td>
+<td>Native HTML or host-owned interactions</td>
+</tr>
+</tbody>
+</table>
+<h2 id="choose-syntyr-for-standalone-stylesheets">Choose Syntyr for standalone stylesheets</h2>
+<p>If your site uses server templates, static HTML or a platform where configuring Tailwind is inconvenient, compare both prebuilt CSS options: Syntyr can be self-hosted, and daisyUI 5 also offers standalone prebuilt CSS (including individual component files) without Tailwind. Scope it with <code>syn-root</code>, use explicit component classes and override documented <code>--syn-*</code> tokens. You can load optional modules only where needed.</p>
+<p>This is primarily a scoping, design-token and workflow distinction—not proof that either library is faster or that daisyUI requires a build step. Verify the CSS files you actually load and, when using a Tailwind build, the CSS it produces.</p>
+<h2 id="choose-daisyui-for-an-existing-tailwind-workflow">Choose daisyUI for an existing Tailwind workflow</h2>
+<p>daisyUI is especially convenient when your product already uses Tailwind and wants named component abstractions without giving up utility overrides. It offers a broad component and theme catalog, so teams already invested in that ecosystem may gain little from migrating.</p>
+<h2 id="can-you-combine-syntyr-and-daisyui">Can you combine Syntyr and daisyUI?</h2>
+<p>Possibly, but don't layer duplicate component and reset styles over the same elements without a deliberate ownership plan. Check <code>@layer</code>, order, theme variables, accessibility and responsive layouts. Migrate a small view first.</p>
+<p>See the <a href="compare.html">comparison index</a>, <a href="faq.html">Syntyr FAQ</a>, <a href="theme-customization.html">theme customization</a> and <a href="https://daisyui.com/docs/v5/">official daisyUI 5 release notes</a>.</p>
+        </article>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+<a class="docs-article-toc-link docs-article-toc-2" href="#syntyr-and-daisyui-compared">Syntyr and daisyUI compared</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#choose-syntyr-for-standalone-stylesheets">Choose Syntyr for standalone stylesheets</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#choose-daisyui-for-an-existing-tailwind-workflow">Choose daisyUI for an existing Tailwind workflow</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#can-you-combine-syntyr-and-daisyui">Can you combine Syntyr and daisyUI?</a>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#syntyr-and-daisyui-compared">Syntyr and daisyUI compared</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#choose-syntyr-for-standalone-stylesheets">Choose Syntyr for standalone stylesheets</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#choose-daisyui-for-an-existing-tailwind-workflow">Choose daisyUI for an existing Tailwind workflow</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#can-you-combine-syntyr-and-daisyui">Can you combine Syntyr and daisyUI?</a>
+            </nav>
+          </details>
+        </aside>
+      </div>
+      <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="compare-daisyui.md">Markdown source</a></nav>
+    </main>
+    <footer class="syn-header"><span class="syn-caption">SYNTYR CSS · MIT CORE · EXPERIMENTAL</span><a href="../index.html">Home</a></footer>
+  </div>
+</body>
+</html>

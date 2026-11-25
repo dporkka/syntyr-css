@@ -103,7 +103,31 @@ MEASURE_JS = r'''(items) => {
         color: style.color, fontSize: parseFloat(style.fontSize),
         weight: parseInt(style.fontWeight, 10) || 400, rects});
     }
-    output.push({...item, fragments, error: fragments.length ? null : 'no_visible_text_rect'});
+    // Placeholder text is painted by the user agent, not a DOM text node.
+    // Only compute a contrast pair for a *displayed* placeholder, never for a
+    // populated input that merely retains a placeholder attribute. An opaque
+    // solid control background is required later by score_solid_placeholder.
+    let placeholder = null;
+    if (!fragments.length && /^(INPUT|TEXTAREA)$/.test(el.tagName) &&
+        el.placeholder && el.matches(':placeholder-shown') &&
+        el.getClientRects().length) {
+      const pseudo = getComputedStyle(el, '::placeholder');
+      const style = getComputedStyle(el);
+      if (style.display !== 'none' && style.visibility === 'visible') {
+        placeholder = {
+          text: el.placeholder.slice(0, 80),
+          foreground: pseudo.color,
+          background: style.backgroundColor,
+          background_image: style.backgroundImage,
+          opacity: pseudo.opacity,
+          element_opacity: style.opacity,
+          font_size_px: parseFloat(pseudo.fontSize),
+          font_weight: parseInt(pseudo.fontWeight, 10) || 400
+        };
+      }
+    }
+    output.push({...item, fragments, placeholder,
+      error: fragments.length ? null : 'no_visible_text_rect'});
   }
   for (const el of hide) {
     for (const node of [el, ...el.querySelectorAll('*')]) {
@@ -127,6 +151,40 @@ def sample_rect_pixels(img, rect):
     return candidates
 
 
+
+def score_solid_placeholder(item):
+    """Compute visible placeholder contrast over a solid opaque control fill.
+
+    This is *not* a pixel sample or a WCAG/paint certification. Background
+    images, transparency, and potentially composited surfaces stay unresolved.
+    """
+    value = item.get('placeholder')
+    if not value or not value.get('text') or value.get('background_image') != 'none':
+        return None
+    try:
+        if (float(value.get('opacity', 0)) < 0.99999 or
+                float(value.get('element_opacity', 0)) < 0.99999):
+            return None
+    except (ValueError, TypeError):
+        return None
+    foreground = parse_rgb(value.get('foreground', ''))
+    background = parse_rgb(value.get('background', ''))
+    if foreground is None or background is None:
+        return None
+    ratio = contrast_ratio(foreground, background)
+    threshold = text_contrast_threshold(
+        value.get('font_size_px', 16), value.get('font_weight', 400))
+    return {
+        'status': ('computed_placeholder_below_threshold'
+                   if ratio < threshold else 'computed_placeholder_above_threshold'),
+        'computed_ratio': round(ratio, 3),
+        'threshold': threshold,
+        'placeholder_text': value['text'],
+        'foreground': value['foreground'],
+        'background': value['background'],
+        'method': 'computed visible placeholder foreground versus opaque solid control background',
+    }
+
 def score_item(item, img):
     result = {key: item[key] for key in ('page', 'selector', 'failure_summary')}
     result['status'] = 'unsampled'
@@ -135,6 +193,11 @@ def score_item(item, img):
         result['status'] = 'non_text'
         return result
     if item.get('error'):
+        if item['error'] == 'no_visible_text_rect':
+            placeholder = score_solid_placeholder(item)
+            if placeholder is not None:
+                result.update(placeholder)
+                return result
         result['reason'] = item['error']
         return result
     scored = []
@@ -214,12 +277,13 @@ def main():
         finally:
             browser.close()
     review = {
-        'method': 'Chromium pixel sampling with transparent text glyph fill, not WCAG certification',
+        'method': 'Chromium pixel sampling plus computed opaque visible-placeholder colors; not WCAG certification',
         'source_commit': head,
         'source_worktree_clean': clean,
         'source_axe_report': str(args.axe_report),
         'viewport_widths': args.widths,
-        'limitations': ['Sampling does not certify glyph-level contrast or compositing accuracy',
+        'limitations': ['Computed placeholder pairs do not certify painted glyphs, overlays or ancestor effects',
+                        'Sampling does not certify glyph-level contrast or compositing accuracy',
                         'Pseudo-elements, occlusion, partial visibility and text shadows may affect samples',
                         'Interactive states, native OS contrast, real browser zoom, screen readers not tested',
                         'Manual adjudication of all axe incomplete nodes remains required'],

@@ -1,0 +1,12 @@
+{{define "results"}}
+<p role="status" aria-live="polite">{{len .Contacts}} contact{{if ne (len .Contacts) 1}}s{{end}} found.</p>
+{{if .Contacts}}
+<table class="syn-table">
+  <caption>Matching contacts</caption>
+  <thead><tr><th scope="col">Name</th><th scope="col">Company</th><th scope="col">Email</th></tr></thead>
+  <tbody>{{range .Contacts}}
+    <tr><th scope="row">{{.Name}}</th><td>{{.Company}}</td><td><a href="mailto:{{.Email}}">{{.Email}}</a></td></tr>
+  {{end}}</tbody>
+</table>
+{{else}}<p class="syn-empty">No matching contacts. Try another query.</p>{{end}}
+{{end}}

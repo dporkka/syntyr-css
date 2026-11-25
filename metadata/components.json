@@ -35,6 +35,20 @@
       "notes": "Choose native headings and accessible labels."
     },
     {
+      "name": "Content list",
+      "module": "syntyr.core.css",
+      "elements": [
+        "ul",
+        "ol"
+      ],
+      "classes": [
+        "syn-list",
+        "syn-list--compact",
+        "syn-list--accent"
+      ],
+      "notes": "Native list markers and order preserved. Use in core-only scopes; semantic mode handles unclassed lists."
+    },
+    {
       "name": "Form fields",
       "module": "syntyr.core.css",
       "elements": [
@@ -174,6 +188,38 @@
       "notes": "Supply textual cell labels, data-syn-level and real data."
     },
     {
+      "name": "Geospatial workspace",
+      "module": "syntyr.geo.css",
+      "elements": [
+        "section",
+        "aside",
+        "figure",
+        "div",
+        "a",
+        "button",
+        "ul"
+      ],
+      "classes": [
+        "syn-geo-shell",
+        "syn-geo-workspace",
+        "syn-geo-sidebar",
+        "syn-geo-viewport",
+        "syn-geo-map",
+        "syn-geo-overlay",
+        "syn-geo-controls",
+        "syn-geo-control",
+        "syn-geo-marker",
+        "syn-geo-marker-layer",
+        "syn-geo-cluster",
+        "syn-geo-legend",
+        "syn-geo-swatch",
+        "syn-geo-scale",
+        "syn-geo-attribution",
+        "syn-geo-data-list"
+      ],
+      "notes": "Optional renderer-neutral CSS; load core then geo. The host renderer owns projection, attribution, marker positions, zooming, clustering and screen-reader data alternatives. See docs/geo.md."
+    },
+    {
       "name": "Advanced geometry frames",
       "module": "syntyr.geometry.css",
       "elements": [
@@ -229,6 +275,319 @@
         "syn-record-fields"
       ],
       "notes": "Unreleased alpha.5, CSS-only optional layouts. Use a GET form, labelled stages, focusable board overflow and definition-list details; application implements filtering and pipeline state."
+    },
+    {
+      "name": "Operation feedback",
+      "module": "syntyr.recipes.css",
+      "elements": [
+        "div",
+        "section",
+        "h2",
+        "h3",
+        "p"
+      ],
+      "classes": [
+        "syn-operation-feedback"
+      ],
+      "notes": "Experimental alpha.5 static presentation only. Host must set true pending, saved, failed, conflict or unsaved state, manage requests, announcements, retry and authorization."
+    },
+    {
+      "name": "Record change pair",
+      "module": "syntyr.recipes.css",
+      "elements": [
+        "dl",
+        "div",
+        "dt",
+        "dd",
+        "span",
+        "del",
+        "ins"
+      ],
+      "classes": [
+        "syn-record-fields",
+        "syn-change-pair",
+        "syn-change-before",
+        "syn-change-after"
+      ],
+      "notes": "Experimental alpha.5 semantic before/after styling nested in existing record fields. Text labels and native del/ins convey changes; backend supplies true revision values and conflict policy."
+    },
+    {
+      "name": "File lifecycle",
+      "module": "syntyr.recipes.css",
+      "elements": [
+        "ol",
+        "li",
+        "div",
+        "span",
+        "strong",
+        "progress"
+      ],
+      "classes": [
+        "syn-file-queue",
+        "syn-file-item",
+        "syn-file-item-header"
+      ],
+      "notes": "Unreleased alpha.5 CSS-only queue snapshots. Native input lives in core; host owns upload progress, failure and completion truth, validation, retry, status announcements and storage."
+    },
+    {
+      "name": "Native dropdowns and menus",
+      "module": "syntyr.core.css",
+      "elements": [
+        "div",
+        "a",
+        "button",
+        "select"
+      ],
+      "classes": [
+        "syn-popover",
+        "syn-dropdown",
+        "syn-dropdown__item",
+        "syn-dropdown__group-label",
+        "syn-dropdown__separator",
+        "syn-dropdown__shortcut",
+        "syn-select--enhanced"
+      ],
+      "notes": "Scriptless action panels use Tab/Escape. Optional @syntyr/css/menu.mjs adds ARIA menu keyboard behavior only when explicitly initialized; see docs/dropdowns.md."
+    },
+    {
+      "name": "Scrollable card rail",
+      "module": "syntyr.recipes.css",
+      "elements": [
+        "div",
+        "section"
+      ],
+      "classes": [
+        "syn-scroll-rail"
+      ],
+      "notes": "Experimental alpha.5. Use a named, keyboard-focusable overflow region. Cards are direct children; native snap without mandatory JS. Configure --syn-scroll-rail-card-width locally."
+    },
+    {
+      "name": "Bento feature grid",
+      "module": "syntyr.recipes.css",
+      "elements": [
+        "div",
+        "article"
+      ],
+      "classes": [
+        "syn-bento-grid",
+        "syn-bento-card--wide"
+      ],
+      "notes": "Experimental alpha.5. Container-aware wide card spans; use meaningful article headings and syn-feature-card for surfaces."
+    }
+  ],
+  "recipes": [
+    {
+      "id": "crm-filter",
+      "description": "Server-driven filter toolbar with wrapping fields and submit/reset actions.",
+      "stylesheets": [
+        "syntyr.core.css",
+        "syntyr.recipes.css"
+      ],
+      "root": {
+        "tag": "form",
+        "classes": [
+          "syn-filter-bar"
+        ]
+      },
+      "slots": [
+        {
+          "name": "field",
+          "tag": "label",
+          "classes": [
+            "syn-filter-field"
+          ],
+          "optional": false,
+          "repeatable": true
+        },
+        {
+          "name": "query",
+          "tag": "label",
+          "classes": [
+            "syn-filter-field",
+            "syn-filter-field--query"
+          ],
+          "optional": true,
+          "repeatable": false
+        },
+        {
+          "name": "actions",
+          "tag": "div",
+          "classes": [
+            "syn-filter-actions"
+          ],
+          "optional": false,
+          "repeatable": false
+        }
+      ],
+      "variants": {
+        "data-syn-density": [
+          "comfortable",
+          "compact"
+        ]
+      },
+      "host_behavior": "Supply method=get, named controls, actual action URL and meaningful reset link. The host filters results; CSS does not execute queries.",
+      "example": "examples/saas-workflows.html"
+    },
+    {
+      "id": "resource-table",
+      "description": "Horizontally scrollable semantic data table with optional numeric cells and native pagination links.",
+      "stylesheets": [
+        "syntyr.core.css"
+      ],
+      "root": {
+        "tag": "div",
+        "classes": [
+          "syn-table-wrap"
+        ]
+      },
+      "slots": [
+        {
+          "name": "table",
+          "tag": "table",
+          "classes": [
+            "syn-table"
+          ],
+          "optional": false,
+          "repeatable": false
+        },
+        {
+          "name": "numeric-cell",
+          "tag": "td",
+          "classes": [
+            "syn-cell--numeric"
+          ],
+          "optional": true,
+          "repeatable": true
+        },
+        {
+          "name": "pagination",
+          "tag": "nav",
+          "classes": [
+            "syn-pagination"
+          ],
+          "optional": true,
+          "repeatable": false
+        }
+      ],
+      "variants": {
+        "data-syn-density": [
+          "comfortable",
+          "compact"
+        ]
+      },
+      "host_behavior": "Provide caption, real th scope associations, keyboard-reachable horizontal overflow where needed, actual page links and server-side sort/filter. CSS does not sort, page or select records.",
+      "example": "examples/saas-workflows.html"
+    },
+    {
+      "id": "app-shell",
+      "description": "Responsive application shell with navigation rail and primary workspace.",
+      "stylesheets": [
+        "syntyr.core.css",
+        "syntyr.recipes.css"
+      ],
+      "root": {
+        "tag": "div",
+        "classes": [
+          "syn-app-shell"
+        ]
+      },
+      "slots": [
+        {
+          "name": "rail",
+          "tag": "aside",
+          "classes": [
+            "syn-app-rail"
+          ],
+          "optional": false,
+          "repeatable": false
+        },
+        {
+          "name": "navigation",
+          "tag": "nav",
+          "classes": [
+            "syn-app-nav"
+          ],
+          "optional": false,
+          "repeatable": false
+        },
+        {
+          "name": "workspace",
+          "tag": "main",
+          "classes": [
+            "syn-workspace"
+          ],
+          "optional": false,
+          "repeatable": false
+        }
+      ],
+      "variants": {
+        "data-syn-theme": [
+          "studio",
+          "grid",
+          "noir"
+        ]
+      },
+      "host_behavior": "Provide labelled navigation, unique main landmark, actual routes and authorization for each destination. Theme must be placed on .syn-root or a scoped ancestor.",
+      "example": "examples/operations-console.html"
+    },
+    {
+      "id": "validated-form",
+      "description": "Labeled field/error compositions for host-validated forms.",
+      "stylesheets": [
+        "syntyr.core.css"
+      ],
+      "root": {
+        "tag": "form",
+        "classes": [
+          "syn-form"
+        ]
+      },
+      "slots": [
+        {
+          "name": "field",
+          "tag": "div",
+          "classes": [
+            "syn-field"
+          ],
+          "optional": false,
+          "repeatable": true
+        },
+        {
+          "name": "label",
+          "tag": "label",
+          "classes": [
+            "syn-label"
+          ],
+          "optional": false,
+          "repeatable": true
+        },
+        {
+          "name": "input",
+          "tag": "input",
+          "classes": [
+            "syn-input"
+          ],
+          "optional": false,
+          "repeatable": true
+        },
+        {
+          "name": "error",
+          "tag": "p",
+          "classes": [
+            "syn-error"
+          ],
+          "optional": true,
+          "repeatable": true
+        }
+      ],
+      "variants": {
+        "data-syn-density": [
+          "comfortable",
+          "compact"
+        ]
+      },
+      "host_behavior": "Host supplies server/client validation, error text, stable error IDs, aria-describedby, aria-invalid and focus to an error summary when submission fails. CSS never performs validation or focus changes.",
+      "example": "examples/form-composition.html"
     }
   ]
 }

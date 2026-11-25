@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="This source-candidate recipe extends Syntyr&#x27;s optional syntyr.recipes.css with file-upload presentation, an action footer, and nested resource navigation…">
+  <meta name="syntyr-source-sha256" content="6f291c1384c7a5a510b890da680b618b1a67887a84eed25c5e5c607ecfd999d9">
+  <meta name="theme-color" content="#f5f7fb">
+  <title>Native business workflows — Syntyr CSS docs</title>
+  <link rel="canonical" href="https://syntyr-css.pages.dev/docs/native-workflows">
+  <link rel="alternate" type="text/markdown" href="native-workflows.md" title="Markdown source">
+  <link rel="icon" href="../assets/syntyr-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="docs.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <a class="syn-button docs-skip" href="#doc-main">Skip to guide</a>
+  <div class="syn-shell">
+    <header class="syn-header docs-header">
+      <a class="syn-logo" href="../index.html">SYNTYR / CSS</a>
+      <nav class="syn-nav" aria-label="Documentation navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav>
+      <details class="site-mobile-menu"><summary>Menu</summary><nav aria-label="Mobile navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav></details>
+    </header>
+    <main id="doc-main" class="docs-article-page">
+      <nav class="syn-breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="reference.html">Documentation</a></li><li aria-current="page">Native business workflows</li></ol></nav>
+      <header class="docs-article-heading">
+        <p class="syn-eyebrow">SYNTYR / DOCUMENTATION</p>
+        <p class="syn-muted">Current source documentation may describe unreleased alpha.5 features. <a href="distribution.html">Check released version compatibility.</a></p>
+        <p class="syn-caption">Prefer a machine-readable version? <a href="native-workflows.md">Markdown source</a> · <a href="../llms.txt">LLM index</a></p>
+      </header>
+      <div class="docs-article-layout">
+        <article class="docs-prose" aria-label="Native business workflows">
+<h1 id="native-business-workflows">Native business workflows</h1>
+<p>This source-candidate recipe extends Syntyr's optional <code>syntyr.recipes.css</code> with
+file-upload presentation, an action footer, and nested resource navigation.
+It composes the existing <code>.syn-detail-layout</code> and <code>.syn-error-summary</code>;
+there is no separate master-detail runtime, file-drop library, or custom treeview.
+See the <a href="../examples/native-workflows.html">script-free example</a>.</p>
+<h2 id="use-plain-html">Use plain HTML</h2>
+<p>Load the version-matched <code>syntyr.core.css</code> and <code>syntyr.recipes.css</code>.
+Place the classes inside <code>.syn-root</code>, with an explicit theme when desired.
+The styles are opt-in and no JavaScript is required to expand folders, pick
+files, jump to records, or associate submit buttons with the form.</p>
+<h3 id="uploads-and-explicit-submit-intents">Uploads and explicit submit intents</h3>
+<pre tabindex="0"><code class="language-html">&lt;form id=&quot;resource-editor&quot; action=&quot;/resources/42&quot; method=&quot;post&quot;
+      enctype=&quot;multipart/form-data&quot;&gt;
+  &lt;!-- Application supplies an actual CSRF token for this request. --&gt;
+  &lt;label for=&quot;files&quot;&gt;Attachments&lt;/label&gt;
+  &lt;div class=&quot;syn-upload-field&quot;&gt;
+    &lt;input class=&quot;syn-input&quot; id=&quot;files&quot; type=&quot;file&quot; name=&quot;attachments&quot;
+           accept=&quot;image/png,image/jpeg,application/pdf&quot; multiple
+           aria-describedby=&quot;files-help&quot;&gt;
+    &lt;p id=&quot;files-help&quot;&gt;Choose images or PDF documents.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/form&gt;
+&lt;footer class=&quot;syn-form-actions&quot;&gt;
+  &lt;div class=&quot;syn-form-actions__buttons&quot;&gt;
+    &lt;button class=&quot;syn-button&quot; form=&quot;resource-editor&quot; type=&quot;submit&quot;
+            name=&quot;intent&quot; value=&quot;save&quot;&gt;Save&lt;/button&gt;
+    &lt;button class=&quot;syn-button syn-button--primary&quot;
+            form=&quot;resource-editor&quot; type=&quot;submit&quot;
+            name=&quot;intent&quot; value=&quot;save-close&quot;&gt;Save and close&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/footer&gt;
+</code></pre>
+<p>The HTML <code>form</code> attribute associates buttons outside the <code>form</code> element
+with that form. Only the clicked submit button's <code>intent</code> value is sent,
+so the server can choose the correct action. A third-party HTMX or React
+runtime is not necessary for native submission; use one only for application
+behaviors that require it. Do not use <code>method=&quot;dialog&quot;</code> for a save action.</p>
+<p>The <strong>server</strong> must enforce authenticated object-level authorization, CSRF
+protection, request size limits, file size limits, MIME/content verification,
+extension and malware policies, safe storage, and error recovery. The
+<code>accept</code> attribute is merely picker guidance, <strong>not</strong> validation. Preserve
+selected intent on failed validation, and return accessible error messages.
+For any mutation that changes records, enforce authorization regardless of
+which submitter was used. Existing attachments are application data, not
+newly selected files.</p>
+<p>The public example disables both POST buttons because it has no endpoint.
+A real application may enable them only when its endpoint exists and handles
+both intents correctly. The browser owns the file chooser. Drag-and-drop can
+be added in an application but cannot replace the keyboard-operable file input.</p>
+<h3 id="resource-disclosure-navigation-and-master-detail-links">Resource disclosure navigation and master-detail links</h3>
+<pre tabindex="0"><code class="language-html">&lt;div class=&quot;syn-detail-layout&quot;&gt;
+  &lt;aside class=&quot;syn-detail-aside&quot;&gt;
+    &lt;nav aria-label=&quot;Resources&quot;&gt;
+      &lt;ul&gt;
+        &lt;li&gt;&lt;details class=&quot;syn-details&quot; open&gt;&lt;summary&gt;North&lt;/summary&gt;
+          &lt;ul&gt;&lt;li&gt;&lt;a href=&quot;#record-42&quot;&gt;Resource 42&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;
+        &lt;/details&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/nav&gt;
+  &lt;/aside&gt;
+  &lt;section class=&quot;syn-detail-main&quot; aria-label=&quot;Record details&quot;&gt;
+    &lt;article id=&quot;record-42&quot; tabindex=&quot;-1&quot;&gt;
+      &lt;h2&gt;Resource 42&lt;/h2&gt;
+    &lt;/article&gt;
+  &lt;/section&gt;
+&lt;/div&gt;
+</code></pre>
+<p>Use genuine nested <code>ul</code>, <code>details</code>, and <code>summary</code>, with ordinary links.
+This is <strong>disclosure navigation</strong>, not an ARIA treeview; do not add
+<code>role=&quot;tree&quot;</code> or <code>role=&quot;treeitem&quot;</code> without implementing the full keyboard
+model. Each anchor must target a real element or working server route.
+For server-rendered selection, render the selected record and use
+<code>aria-current=&quot;page&quot;</code> on its corresponding link only.</p>
+<p>At narrow widths, the existing detail shell wraps the sidebar above
+the inspector. File-picker padding and attachment-list indentation are bounded
+by viewport width to avoid horizontal overflow with enlarged browser text. RTL relies on logical padding and borders; focus outlines
+and forced-colors borders remain visible. Verify keyboard navigation,
+200% and 400% zoom, and focus after postback using a real browser.
+If asynchronous updates are introduced, the host application owns focus,
+history, announcements and saved-state feedback.</p>
+<h3 id="avoid-duplicate-components">Avoid duplicate components</h3>
+<ul>
+<li>Reuse <code>.syn-error-summary</code> for failed server responses, and link the
+summary to invalid fields.</li>
+<li>Reuse <code>.syn-detail-layout</code>, <code>.syn-detail-main</code> and <code>.syn-detail-aside</code>
+rather than inventing a new split-view primitive.</li>
+<li>Reuse native file controls and core <code>.syn-input</code> styling; Syntyr does
+not implement upload progress, storage, directory traversal or drag/drop.</li>
+</ul>
+        </article>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+<a class="docs-article-toc-link docs-article-toc-2" href="#use-plain-html">Use plain HTML</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#uploads-and-explicit-submit-intents">Uploads and explicit submit intents</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#resource-disclosure-navigation-and-master-detail-links">Resource disclosure navigation and master-detail links</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#avoid-duplicate-components">Avoid duplicate components</a>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#use-plain-html">Use plain HTML</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#uploads-and-explicit-submit-intents">Uploads and explicit submit intents</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#resource-disclosure-navigation-and-master-detail-links">Resource disclosure navigation and master-detail links</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#avoid-duplicate-components">Avoid duplicate components</a>
+            </nav>
+          </details>
+        </aside>
+      </div>
+      <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="native-workflows.md">Markdown source</a></nav>
+    </main>
+    <footer class="syn-header"><span class="syn-caption">SYNTYR CSS · MIT CORE · EXPERIMENTAL</span><a href="../index.html">Home</a></footer>
+  </div>
+</body>
+</html>

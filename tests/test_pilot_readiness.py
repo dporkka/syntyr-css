@@ -17,18 +17,20 @@ class PilotReadinessTests(unittest.TestCase):
         self.assertIn("400%", doc)
         self.assertIn("not equivalent", doc.lower())
 
-    def test_design_partner_tracker_has_ten_real_slots_with_no_fabricated_results(self):
+    def test_public_design_partner_seed_is_safe_and_progress_can_be_recorded(self):
         with (ROOT / "business/design-partner-pilot.csv").open(newline="") as file:
             rows = list(csv.DictReader(file))
         self.assertEqual(len(rows), 10)
         self.assertEqual(len({row["slot"] for row in rows}), 10)
-        self.assertTrue(all(row["status"] == "not_contacted" for row in rows))
-        self.assertTrue(all(not row["respondent"] for row in rows))
-        self.assertTrue(all(not row["paid_commitment"] for row in rows))
+        self.assertTrue(all(not row["respondent"] and not row["notes"] for row in rows))
+        # The public template must permit honest status changes after interviews.
+        self.assertTrue(all(row["status"] in {
+            "not_contacted", "invited", "accepted", "interviewed", "declined"
+        } for row in rows))
 
     def test_design_partner_pilot_includes_qualification_and_outreach_boundaries(self):
         guide = (ROOT / "business/design-partner-pilot.md").read_text()
-        for item in ("Go/templ", "HTMX", "Astro", "10", "$59", "consent", "paid",
+        for item in ("Go/templ", "HTMX", "CRM", "10", "$59", "consent", "paid",
                      "https://github.com/dporkka/syntyr-css/issues"):
             self.assertIn(item, guide)
         self.assertIn("not_contacted", guide)
@@ -48,7 +50,9 @@ class PilotReadinessTests(unittest.TestCase):
     def test_public_kit_copy_truthfully_distinguishes_private_preview_from_sale(self):
         page = (ROOT / "docs/console-kit.html").read_text()
         self.assertIn("PRIVATE PROTOTYPE", page)
-        self.assertIn("24", page)
+        self.assertIn("12 original screen types", page)
+        self.assertIn("36 static variants", page)
+        self.assertIn("eight screenshots below", page)
         self.assertIn("NOT AVAILABLE FOR PURCHASE", page)
         self.assertNotIn("BUY NOW", page)
         spec = (ROOT / "business/console-kit-spec.md").read_text()

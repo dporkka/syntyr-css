@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Syntyr styles your own HTML , without JavaScript, build tooling, framework dependencies, plugins or proprietary APIs. It does not automatically reskin…">
+  <meta name="syntyr-source-sha256" content="96980576e47d9c61668a2a47125d5722e2872952bb30b717817aa89501df80bf">
+  <meta name="theme-color" content="#f5f7fb">
+  <title>Use Syntyr with WordPress, Wix, Shopify, Webflow, Framer and other platforms — Syntyr CSS docs</title>
+  <link rel="canonical" href="https://syntyr-css.pages.dev/docs/site-builders">
+  <link rel="alternate" type="text/markdown" href="site-builders.md" title="Markdown source">
+  <link rel="icon" href="../assets/syntyr-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="docs.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <a class="syn-button docs-skip" href="#doc-main">Skip to guide</a>
+  <div class="syn-shell">
+    <header class="syn-header docs-header">
+      <a class="syn-logo" href="../index.html">SYNTYR / CSS</a>
+      <nav class="syn-nav" aria-label="Documentation navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav>
+      <details class="site-mobile-menu"><summary>Menu</summary><nav aria-label="Mobile navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav></details>
+    </header>
+    <main id="doc-main" class="docs-article-page">
+      <nav class="syn-breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="reference.html">Documentation</a></li><li aria-current="page">Use Syntyr with WordPress, Wix, Shopify, Webflow, Framer and other platforms</li></ol></nav>
+      <header class="docs-article-heading">
+        <p class="syn-eyebrow">SYNTYR / DOCUMENTATION</p>
+        <p class="syn-muted">Current source documentation may describe unreleased alpha.5 features. <a href="distribution.html">Check released version compatibility.</a></p>
+        <p class="syn-caption">Prefer a machine-readable version? <a href="site-builders.md">Markdown source</a> · <a href="../llms.txt">LLM index</a></p>
+      </header>
+      <div class="docs-article-layout">
+        <article class="docs-prose" aria-label="Use Syntyr with WordPress, Wix, Shopify, Webflow, Framer and other platforms">
+<h1 id="use-syntyr-with-wordpress-wix-shopify-webflow-framer-and-other-platforms">Use Syntyr with WordPress, Wix, Shopify, Webflow, Framer and other platforms</h1>
+<p>Syntyr styles <strong>your own HTML</strong>, without JavaScript, build tooling, framework
+dependencies, plugins or proprietary APIs. It does <strong>not</strong> automatically reskin
+native CMS widgets, checkout, platform data services or their editor interfaces.</p>
+<h2 id="platform-by-platform-setup-guides">Platform-by-platform setup guides</h2>
+<p>Each guide covers benefits for that platform, installation steps, real HTML
+examples, limitations, and checks for the published site. These are portable
+CSS recipes, <strong>not</strong> official platform plugins, partnerships or end-to-end
+certification for every platform account.</p>
+<ul>
+<li><a href="wordpress.html">Syntyr for WordPress</a> — Gutenberg and child themes</li>
+<li><a href="shopify.html">Syntyr for Shopify</a> — Liquid sections and storefront assets</li>
+<li><a href="wix.html">Syntyr for Wix / Wix Studio</a> — HTML iframe embeds</li>
+<li><a href="webflow.html">Syntyr for Webflow</a> — Code Embed and custom Head CSS</li>
+<li><a href="framer.html">Syntyr for Framer</a> — Custom Code and iframe-aware embeds</li>
+<li><a href="squarespace.html">Syntyr for Squarespace</a> — plan-aware HTML Code Blocks</li>
+<li><a href="ghost.html">Syntyr for Ghost</a> — HTML cards and editorial themes</li>
+<li><a href="hubspot.html">Syntyr for HubSpot CMS</a> — custom modules and landing pages</li>
+<li><a href="drupal.html">Syntyr for Drupal</a> — theme libraries and Twig</li>
+<li><a href="joomla.html">Syntyr for Joomla</a> — custom site templates and modules</li>
+<li><a href="carrd.html">Syntyr for Carrd</a> — one-page custom HTML sections</li>
+<li><a href="duda.html">Syntyr for Duda</a> — HTML Widgets for agency sites</li>
+<li><a href="tilda.html">Syntyr for Tilda</a> — T123 HTML blocks and Head code</li>
+</ul>
+<h2 id="pick-the-correct-css">Pick the correct CSS</h2>
+<p>Use <code>syntyr.core.css</code> for a site that Syntyr owns. For a Syntyr feature inside
+an existing site or CMS theme, use <code>syntyr.embed.css</code> from the <strong>unreleased
+alpha.5 source candidate</strong>. It contains the same core tokens and components
+but removes their outer CSS cascade layers. A typical unlayered theme declaration
+otherwise overrides <em>all</em> normal layered rules, regardless of specificity.
+The embed CSS remains scoped to the <code>syn-root</code> class. It does not guarantee
+victory over more specific host selectors or <code>!important</code>, and it does not
+inject CSS across iframe boundaries.</p>
+<p><strong>Release boundary:</strong> <code>syntyr.embed.css</code> is not in the published immutable
+alpha.4 release; build it locally using <code>python3 scripts/build.py</code> and self-host
+<code>dist/syntyr.embed.css</code> for alpha.5 development. Do not invent an alpha.5 CDN
+URL. For production today, alpha.4 <code>syntyr.core.css</code> is published, but its
+layered cascade needs validation against each host theme. Do <strong>not</strong> load both
+core and embed stylesheets together.</p>
+<p>Load the stylesheet once in your page's <code>&lt;head&gt;</code>:</p>
+<pre tabindex="0"><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/assets/syntyr.embed.css&quot;&gt;
+</code></pre>
+<p>Then place this content in a platform-provided <strong>visible HTML</strong> block or theme
+template (not in a head-code field):</p>
+<pre tabindex="0"><code class="language-html">&lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;syntyr-title&quot;&gt;
+  &lt;div class=&quot;syn-panel&quot;&gt;
+    &lt;h2 class=&quot;syn-heading&quot; id=&quot;syntyr-title&quot;&gt;Our services&lt;/h2&gt;
+    &lt;p class=&quot;syn-muted&quot;&gt;A self-contained, accessible feature.&lt;/p&gt;
+    &lt;a href=&quot;/services&quot; class=&quot;syn-button syn-button--primary&quot;&gt;Explore&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+</code></pre>
+<p>Keep <code>syn-root</code> on the <em>component wrapper</em>, not the site's <code>&lt;body&gt;</code>. Do not
+apply the optional <code>syn-semantic</code> class to the whole CMS document or use
+<code>syn-page</code> unless a full-height page is intended. Replace the sample URL with
+your own site paths. For production, prefer a <strong>self-hosted, immutable versioned
+asset</strong> over an unversioned CDN.</p>
+<h2 id="installation-matrix">Installation matrix</h2>
+<table>
+<thead>
+<tr>
+<th>Platform</th>
+<th>Load CSS</th>
+<th>Place visible HTML</th>
+<th>Important boundary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>WordPress</strong> (self-hosted/theme access)</td>
+<td>Enqueue CSS in child theme or site plugin</td>
+<td>Gutenberg Custom HTML, template or custom block</td>
+<td>HTML may be sanitized by role; CSS is not automatically loaded by an HTML block</td>
+</tr>
+<tr>
+<td><strong>Shopify</strong> Online Store</td>
+<td>Theme Assets + one Liquid stylesheet tag</td>
+<td>Section, Custom Liquid or template</td>
+<td>Storefront theme only; not checkout</td>
+</tr>
+<tr>
+<td><strong>Wix / Wix Studio</strong></td>
+<td>Inside HTML embed iframe</td>
+<td>Embed HTML element or custom element</td>
+<td>Dashboard Custom Code cannot reliably style managed Wix elements</td>
+</tr>
+<tr>
+<td><strong>Webflow</strong></td>
+<td>Site/Page Settings &gt; Custom Code &gt; Head</td>
+<td>Designer Code Embed</td>
+<td>Custom-code plan permissions and publishing apply</td>
+</tr>
+<tr>
+<td><strong>Framer</strong></td>
+<td>Project Settings &gt; Custom Code &gt; head</td>
+<td>Embed component or supported HTML</td>
+<td>If embed is an iframe, stylesheet must load inside it</td>
+</tr>
+<tr>
+<td><strong>Squarespace</strong></td>
+<td>Permitted Code Injection/Custom CSS</td>
+<td>Code Block</td>
+<td>Plan/security restrictions; CSS editor is intended for limited tweaks</td>
+</tr>
+<tr>
+<td><strong>Ghost</strong></td>
+<td>Code Injection header or theme CSS</td>
+<td>HTML card or theme template</td>
+<td>Site-owned markup only</td>
+</tr>
+<tr>
+<td><strong>HubSpot CMS</strong></td>
+<td>Theme / page / custom module stylesheet</td>
+<td>Custom module/template</td>
+<td>CMS policy and custom-code privileges</td>
+</tr>
+<tr>
+<td><strong>Drupal / Joomla</strong></td>
+<td>Theme library or template stylesheet</td>
+<td>Custom block/template/module</td>
+<td>Prefer theme-managed assets</td>
+</tr>
+<tr>
+<td><strong>Carrd / Duda / Tilda / other builders</strong></td>
+<td>Head code or iframe HTML when supported</td>
+<td>Custom HTML/embed</td>
+<td>Unavailable when custom HTML/CSS is prohibited</td>
+</tr>
+</tbody>
+</table>
+<h3 id="wordpress">WordPress</h3>
+<p>Copy the alpha.5 build's CSS into a child theme at
+<code>assets/syntyr.embed.css</code>, then adapt
+<a href="https://github.com/dporkka/syntyr-css/blob/main/integrations/wordpress/syntyr-enqueue.php">the WordPress enqueue example</a>
+into the child theme's <code>functions.php</code> or a site-specific plugin. Add the
+example <code>&lt;section&gt;</code> through a Custom HTML block. Do not assume a
+<code>&lt;link&gt;</code> tag pasted into a post will be preserved; permissions determine
+HTML sanitization. On block themes, Additional CSS may be available
+through Site Editor &gt; Styles, but is less convenient for a full distribution.
+WordPress.com and managed hosts can restrict theme access and custom code.</p>
+<h3 id="shopify">Shopify</h3>
+<p>Copy the CSS to theme <code>assets/syntyr.embed.css</code>, then load once in
+<code>layout/theme.liquid</code> inside <code>&lt;head&gt;</code>:</p>
+<pre tabindex="0"><code class="language-liquid">{{ 'syntyr.embed.css' | asset_url | stylesheet_tag }}
+</code></pre>
+<p>Copy <a href="https://github.com/dporkka/syntyr-css/blob/main/integrations/shopify/sections/syntyr-feature.liquid">the Shopify feature section</a>
+into theme <strong>Sections</strong> and insert “Syntyr feature” in the theme editor.
+The sample uses editable text, URL settings, and HTML-escaped outputs.
+This targets <strong>Online Store themes</strong>, not checkout extensions. Avoid
+pasting the CSS into Shopify's Custom CSS field: its 1,500-character
+theme-wide and 500-character section limits, as well as forbidden at-rules,
+make it unsuitable for a complete CSS distribution.</p>
+<h3 id="wix-wix-studio">Wix / Wix Studio</h3>
+<p>For a visible standalone feature, add an <strong>Embed HTML</strong> element; this is
+an iframe. Paste a complete iframe document containing the stylesheet link
+and Syntyr <code>&lt;section&gt;</code>:</p>
+<pre tabindex="0"><code class="language-html">&lt;!doctype html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;https://YOUR-HOST.example/syntyr.embed.css&quot;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot;&gt;
+    &lt;div class=&quot;syn-panel&quot;&gt;&lt;h2 class=&quot;syn-heading&quot;&gt;Hello from Syntyr&lt;/h2&gt;&lt;/div&gt;
+  &lt;/section&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>Use your own HTTPS-hosted stylesheet, and size the embed so its contents
+aren't clipped. Styling in the parent Wix document cannot reach into
+the iframe. Wix dashboard Custom Code is not the same as Velo/site code:
+it cannot access Wix APIs and must not rely on Wix-generated classes or
+page DOM nodes remaining stable. Custom elements and Velo can provide deeper
+integrations but are optional and platform-specific.</p>
+<h3 id="webflow">Webflow</h3>
+<p>Add the link tag to <strong>Site Settings &gt; Custom Code &gt; Head</strong> or page-level
+Head, then insert the feature markup using a <strong>Code Embed</strong>. Publish the
+site to confirm behavior. Embedded code and CSS may conflict with the native
+Designer, and custom-code permissions vary by plan.</p>
+<h3 id="framer">Framer</h3>
+<p>Add the link tag to <strong>Project Settings &gt; Custom Code</strong>, placed in the
+head, and insert the feature markup using a supported Embed or code component.
+An isolated iframe needs the stylesheet <strong>inside its own document</strong>.
+Verify the published URL rather than assuming the editor canvas reflects
+external code.</p>
+<h3 id="other-builders">Other builders</h3>
+<p>Squarespace Code Blocks, Ghost HTML cards, HubSpot CMS custom modules,
+Drupal/Joomla theme templates, and other builders can use the same
+asset + <code>syn-root</code> recipe when they allow both CSS and custom HTML.
+If only an iframe is supported, host an HTML page that links Syntyr inside
+the frame. If a platform forbids custom CSS or visible HTML, do not target
+private generated classes: native widgets are <strong>not compatible by default</strong>.</p>
+<h2 id="verify-on-the-published-site">Verify on the published site</h2>
+<ol>
+<li>Verify the CSS URL succeeds, is served as CSS and matches the installed version.</li>
+<li>Compare native site buttons/cards outside <code>syn-root</code> before and after.</li>
+<li>Test the Syntyr feature at 320px, with keyboard navigation, reduced motion,
+forced colors, and the host theme's global typography/forms rules.</li>
+<li>For an iframe, check sizing, accessibility, asset origin, CSP and sandboxing.</li>
+<li>Host theme CSS with higher specificity/<code>!important</code> may still need a local,
+narrowly scoped override; the embed distribution addresses <strong>cascade-layer
+precedence</strong>, not every possible site builder rule.</li>
+<li>Recheck after builder or theme updates; no provider account integration
+has been end-to-end verified by this source-only compatibility suite.</li>
+</ol>
+<p>See <a href="../examples/platform-embed.html">the static host-theme fixture</a>
+for an offline, zero-JavaScript example with a host button outside Syntyr.</p>
+<h3 id="official-platform-references">Official platform references</h3>
+<ul>
+<li>WordPress: https://wordpress.org/documentation/article/custom-html/</li>
+<li>Shopify CSS restrictions: https://help.shopify.com/en/manual/online-store/themes/customizing-themes/edit-code/add-css</li>
+<li>Shopify theme asset tags: https://shopify.dev/docs/storefronts/themes/best-practices/javascript-and-stylesheet-tags</li>
+<li>Wix code boundaries: https://dev.wix.com/docs/overview/site-features-tools/about-custom-code</li>
+<li>Wix embed: https://support.wix.com/en/article/wix-editor-about-embeds-and-codes-on-your-site</li>
+<li>Webflow custom code: https://help.webflow.com/hc/en-us/articles/33961357265299-Custom-code-in-head-and-body-tags</li>
+<li>Framer custom code: https://www.framer.com/help/articles/how-to-add-custom-code/</li>
+<li>Squarespace: https://support.squarespace.com/hc/en-us/articles/206545567-Add-custom-CSS-to-your-site</li>
+</ul>
+        </article>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+<a class="docs-article-toc-link docs-article-toc-2" href="#platform-by-platform-setup-guides">Platform-by-platform setup guides</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#pick-the-correct-css">Pick the correct CSS</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#installation-matrix">Installation matrix</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#wordpress">WordPress</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#shopify">Shopify</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#wix-wix-studio">Wix / Wix Studio</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#webflow">Webflow</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#framer">Framer</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#other-builders">Other builders</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#verify-on-the-published-site">Verify on the published site</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#official-platform-references">Official platform references</a>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#platform-by-platform-setup-guides">Platform-by-platform setup guides</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#pick-the-correct-css">Pick the correct CSS</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#installation-matrix">Installation matrix</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#wordpress">WordPress</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#shopify">Shopify</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#wix-wix-studio">Wix / Wix Studio</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#webflow">Webflow</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#framer">Framer</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#other-builders">Other builders</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#verify-on-the-published-site">Verify on the published site</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#official-platform-references">Official platform references</a>
+            </nav>
+          </details>
+        </aside>
+      </div>
+      <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="site-builders.md">Markdown source</a></nav>
+    </main>
+    <footer class="syn-header"><span class="syn-caption">SYNTYR CSS · MIT CORE · EXPERIMENTAL</span><a href="../index.html">Home</a></footer>
+  </div>
+</body>
+</html>

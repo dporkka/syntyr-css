@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Build MIT-licensed interface compositions with Syntyr CSS, including forms, layout flows, responsive sections, and SaaS presentation patterns.">
-  <meta name="syntyr-source-sha256" content="90b655daafc020f700c02c25641872086376cfa58cf6c91beacc144321ac8c25">
+  <meta name="syntyr-source-sha256" content="6bd9448999c5407fcf92a6974086a2a6fbc86a29ff441b3536ac09d611b55965">
   <meta name="theme-color" content="#f5f7fb">
   <title>MIT-licensed composition recipes — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/recipes">
@@ -36,6 +36,7 @@
         <article class="docs-prose" aria-label="MIT-licensed composition recipes">
 <h1 id="mit-licensed-composition-recipes">MIT-licensed composition recipes</h1>
 <p>For copyable input groups, labeled fields, container-responsive settings forms and optional headless UI styling, see <a href="component-recipes.html">form composition recipes</a> and the <a href="radix-integration.html">Radix adapter</a>. For layered depth, incident-detail layouts, command presentation, timelines, and editorial product sections, see <a href="premium-compositions.html">premium compositions</a>.</p>
+<p>For native file uploads, multi-action forms, and nested resource navigation, see <a href="native-workflows.html">native business workflows</a> and the <a href="../examples/native-workflows.html">script-free example</a>. These compose the existing error-summary and detail-layout patterns without introducing a JavaScript dependency.</p>
 <p>These original Syntyr recipes are free to copy, edit, commercialize, and distribute under MIT. No Tailwind Plus source or premium assets were copied. For live examples see <a href="index.html">the gallery</a>, the <a href="../examples/console.html">Grid console</a>, and the <a href="../examples/pricing.html">Noir pricing layout</a>.</p>
 <h2 id="optional-vertical-flow">Optional vertical flow</h2>
 <p>Use <code>.syn-flow</code> from <code>syntyr.recipes.css</code> on a content group to add
@@ -45,7 +46,7 @@ child component's own display. It does not globally reset margins or modify
 unwrapped host markup. When children already have vertical margins, adjust
 them at the application level to avoid unexpectedly large combined spacing.
 For prose with heading rhythm, prefer the existing <code>.syn-prose</code> class.</p>
-<pre><code class="language-html">&lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot;&gt;
   &lt;div class=&quot;syn-flow&quot; style=&quot;--syn-flow-gap: 1.5rem&quot;&gt;
     &lt;h2 class=&quot;syn-section-heading&quot;&gt;A native-first design system&lt;/h2&gt;
     &lt;p&gt;Readable content with consistent configurable vertical rhythm.&lt;/p&gt;
@@ -57,7 +58,7 @@ For prose with heading rhythm, prefer the existing <code>.syn-prose</code> class
 All spacing remains controlled by ordinary CSS custom properties.</p>
 <h2 id="1-responsive-telemetry-cards">1. Responsive telemetry cards</h2>
 <p>The <code>.syn-region</code> element establishes a <strong>named inline-size container</strong>. Unlike media queries, the cards respond to the width of the enclosing widget/sidebar. This is a native browser feature; no JavaScript observer is needed.</p>
-<pre><code class="language-html">&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;grid&quot; aria-label=&quot;Network telemetry&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;grid&quot; aria-label=&quot;Network telemetry&quot;&gt;
   &lt;div class=&quot;syn-stats&quot;&gt;
     &lt;article class=&quot;syn-stat&quot;&gt;&lt;span class=&quot;syn-stat-label&quot;&gt;UPTIME&lt;/span&gt;&lt;p class=&quot;syn-stat-value&quot;&gt;99.8%&lt;/p&gt;&lt;/article&gt;
     &lt;article class=&quot;syn-stat&quot;&gt;&lt;span class=&quot;syn-stat-label&quot;&gt;NODES&lt;/span&gt;&lt;p class=&quot;syn-stat-value&quot;&gt;24&lt;/p&gt;&lt;/article&gt;
@@ -66,7 +67,7 @@ All spacing remains controlled by ordinary CSS custom properties.</p>
 &lt;/section&gt;
 </code></pre>
 <h2 id="2-accessible-empty-state">2. Accessible empty state</h2>
-<pre><code class="language-html">&lt;section class=&quot;syn-empty&quot; aria-labelledby=&quot;empty-heading&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;section class=&quot;syn-empty&quot; aria-labelledby=&quot;empty-heading&quot;&gt;
   &lt;p class=&quot;syn-eyebrow&quot;&gt;QUEUE / EMPTY&lt;/p&gt;
   &lt;h2 id=&quot;empty-heading&quot;&gt;No pending actions&lt;/h2&gt;
   &lt;p class=&quot;syn-muted&quot;&gt;New items appear here once submitted.&lt;/p&gt;
@@ -75,7 +76,7 @@ All spacing remains controlled by ordinary CSS custom properties.</p>
 </code></pre>
 <p>This is a <em>visual composition</em>, not a live queue implementation. Preserve real links, meaningful labels, and server-side behavior.</p>
 <h2 id="3-three-card-pricing-display">3. Three-card pricing display</h2>
-<pre><code class="language-html">&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;noir&quot; aria-label=&quot;Illustrative plans&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;noir&quot; aria-label=&quot;Illustrative plans&quot;&gt;
   &lt;div class=&quot;syn-pricing&quot;&gt;
     &lt;article class=&quot;syn-price-card&quot;&gt;
       &lt;h2&gt;Personal&lt;/h2&gt;
@@ -99,12 +100,12 @@ All spacing remains controlled by ordinary CSS custom properties.</p>
 &lt;/section&gt;
 </code></pre>
 <h2 id="4-stateful-native-button-host-controlled">4. Stateful native button (host controlled)</h2>
-<pre><code class="language-html">&lt;button type=&quot;button&quot; class=&quot;syn-button&quot; aria-pressed=&quot;true&quot;&gt;Grid view&lt;/button&gt;
+<pre tabindex="0"><code class="language-html">&lt;button type=&quot;button&quot; class=&quot;syn-button&quot; aria-pressed=&quot;true&quot;&gt;Grid view&lt;/button&gt;
 &lt;button type=&quot;button&quot; class=&quot;syn-button&quot; aria-busy=&quot;true&quot;&gt;Syncing status&lt;/button&gt;
 </code></pre>
 <p><code>aria-pressed=&quot;true&quot;</code> conveys a real toggle state to accessibility APIs; set it only when a toggle actually is pressed. <code>aria-busy</code> signals that updates are in progress; it <strong>does not</strong> disable a button or create loading logic. The UI state must come from your application/server. If a state is only decorative, use <code>data-syn-state=&quot;active&quot;</code> instead of misusing ARIA.</p>
 <h2 id="token-only-custom-theme">Token-only custom theme</h2>
-<pre><code class="language-css">/* Unlayered application CSS intentionally overrides Syntyr's layered tokens. */
+<pre tabindex="0"><code class="language-css">/* Unlayered application CSS intentionally overrides Syntyr's layered tokens. */
 .syn-root[data-syn-theme=&quot;custom&quot;] {
   --syn-bg: #0b1019;
   --syn-surface: #192333;
@@ -121,10 +122,10 @@ All spacing remains controlled by ordinary CSS custom properties.</p>
 <ul>
 <li><strong>Filter bar:</strong> <code>.syn-filter-bar</code> arranges labelled <code>.syn-filter-field</code> controls and a wrapping <code>.syn-filter-actions</code> group. Use <code>.syn-filter-field--query</code> for a wider search field. A <code>method=&quot;get&quot;</code> form remains usable without JavaScript; the application must apply filters and preserve query values.</li>
 <li><strong>Pipeline:</strong> <code>.syn-pipeline</code> contains named <code>section.syn-pipeline-lane</code> columns; each lane contains a semantic <code>ul.syn-pipeline-list</code> of <code>li.syn-pipeline-card</code>. Set <code>tabindex=&quot;0&quot;</code> and an accessible name on the scrollable board so keyboard users can reach overflow. Links inside cards remain ordinary links. Drag-and-drop, permissions, saved filters, counts, and stage transitions must be implemented by the host application.</li>
-<li><strong>Record metadata:</strong> <code>dl.syn-record-fields</code> groups each <code>dt</code> and <code>dd</code> in a direct child <code>div</code> for readable, responsive key/value pairs. Use a real <code>time</code> element for dates.</li>
+<li><strong>Record metadata:</strong> <code>dl.syn-record-fields</code> groups each <code>dt</code> and <code>dd</code> in a direct child <code>div</code> for readable, responsive key/value pairs. Use a real <code>time</code> element for dates. <strong>Subgrid</strong> aligns labels and values across rows when supported. A named inline-size <code>container</code> on the <code>dl</code> stacks each pair below <strong>24rem</strong>, independently of viewport size; older browsers retain the original intrinsic two-column/wrapping <strong>fallback</strong>. No extra classes, media breakpoints, or JavaScript are required.</li>
 <li><strong>Density:</strong> <code>data-syn-density=&quot;compact&quot;</code> compresses control, row and card spacing without shrinking type. <code>data-syn-density=&quot;comfortable&quot;</code> restores default metrics inside compact ancestors. <code>data-syn-density=&quot;spacious&quot;</code> provides larger controls and rows for review-heavy screens. These attributes may be on <code>.syn-root</code> or nested elements. <code>comfortable</code> is the default when density is unspecified.</li>
 </ul>
-<pre><code class="language-html">&lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot; data-syn-density=&quot;compact&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot; data-syn-density=&quot;compact&quot;&gt;
   &lt;form class=&quot;syn-filter-bar&quot; method=&quot;get&quot; action=&quot;/opportunities&quot;&gt;
     &lt;label class=&quot;syn-label syn-filter-field syn-filter-field--query&quot; for=&quot;crm-query&quot;&gt;
       Search
@@ -150,6 +151,128 @@ All spacing remains controlled by ordinary CSS custom properties.</p>
 &lt;/section&gt;
 </code></pre>
 <p>The styles are layout primitives, not a grid widget or CRM engine. Keep keyboard focus visible, do not imply drag interactions, and render truthful stage counts. Preserve authorization and validate any user-controlled query parameters on the server.</p>
+<h2 id="resizable-workspace-optional-behavior">Resizable workspace (optional behavior)</h2>
+<p>The <strong>Resizable workspace</strong> composition is separate from the existing
+<code>.syn-split</code> (which is simply a responsive two-column grid). Load
+<code>syntyr.core.css</code> and <code>syntyr.recipes.css</code> for
+<code>.syn-resizable-workspace</code>, <code>.syn-resizable-workspace__panes</code>,
+<code>.syn-resizable-workspace__pane</code> and
+<code>.syn-resizable-workspace__separator</code>. The <code>--syn-workspace-leading</code> CSS
+property expresses the first pane's share. Without JavaScript the two panes
+remain readable and the inert separator is hidden.</p>
+<p><a href="../examples/resizable-workspace.html">Runnable example</a> includes a
+<strong>copy-owned, optional</strong> module with pointer capture and keyboard support.
+It enables the separator only after initialization and keeps
+<code>aria-valuenow</code> synchronized with the visible split. Arrow Left/Right move
+by 2 percentage points (Shift: 10), with Home/End for bounds (20–70).
+The example respects RTL and stacks its panes when its <strong>own container</strong>
+is narrow; the separator is hidden in the stacked layout. No storage,
+network requests or global event listeners are required.</p>
+<p><strong>Running the packaged interactive demo:</strong> Extract the ZIP, change into its
+top-level <code>syntyr-css-&lt;version&gt;</code> directory, and serve the local assets over
+HTTP (not <code>file://</code>, which blocks relative module scripts in browsers):</p>
+<pre tabindex="0"><code class="language-sh">python3 -m http.server 8000 --bind 127.0.0.1
+</code></pre>
+<p>Open <code>http://127.0.0.1:8000/examples/resizable-workspace.html</code>.
+A <code>file://</code> launch still shows the static two-pane fallback; drag and
+keyboard resizing require the local module to load over HTTP. Stop the
+server with Ctrl-C. No external network requests are needed.</p>
+<p>The resize value and user preference are <strong>application-owned</strong>: persistence,
+server rendering, saved layouts, authorization, and responsive restoration
+belong to the consuming application. A live client must keep the
+separator's ARIA bounds, visible panel sizes and keyboard/pointer behavior in
+sync. The script is demonstrative, <strong>not</strong> part of the zero-JS CSS runtime.
+Test real zoom, touch, forced colors, keyboard and screen-reader support
+before production use.</p>
+<h2 id="operation-feedback-and-record-revisions-alpha5-source-candidate">Operation feedback and record revisions (alpha.5 source candidate)</h2>
+<p>The optional <code>syntyr.recipes.css</code> provides <strong>two presentation patterns</strong>, not a
+transaction state machine or history service. <a href="../examples/operation-revisions.html">View the static example</a>.</p>
+<ul>
+<li><strong>Operation feedback:</strong> use <code>.syn-operation-feedback</code> and an actual
+<code>data-syn-state=&quot;unsaved|pending|saved|failed|conflict&quot;</code>. All five states use
+explicit textual headings and supporting details, not color alone.
+<code>--syn-operation-edge</code> can be overridden per instance if the host's palette
+needs a different border; do not interpret these colors as business results.</li>
+<li><strong>Record revisions:</strong> keep the existing <code>dl.syn-record-fields</code> and place
+<code>.syn-change-pair</code> inside a <code>dd</code>. Its optional <code>.syn-change-before</code> and
+<code>.syn-change-after</code> children wrap at narrow widths, including when embedded
+in a sidebar. Use visible &quot;Previous&quot;, &quot;Updated&quot;, &quot;Added&quot; or &quot;Removed&quot; labels
+with native <code>del</code>/<code>ins</code> elements. Omit the absent side for additions/removals;
+don't manufacture a previous value. The same pair may appear in a table cell
+or review panel; no duplicate definition-list component is needed.</li>
+</ul>
+<p>At extreme user text sizes, the <code>syn-page-header</code> and <code>syn-app-card</code>
+compositions allow long words and dates to wrap instead of expanding the viewport.
+The optional developer-only browser smoke test (tests/operation_revisions_browser.js)
+covers reflow, keyboard focus and forced colors in Playwright. Enlarging root
+text is a stress test, <strong>not</strong> proof of native 400% browser zoom or a manual
+screen-reader audit.</p>
+<pre tabindex="0"><code class="language-html">&lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot;&gt;
+  &lt;section class=&quot;syn-operation-feedback&quot; data-syn-state=&quot;conflict&quot;
+       aria-labelledby=&quot;revision-conflict&quot;&gt;
+    &lt;h2 id=&quot;revision-conflict&quot;&gt;Someone updated this record&lt;/h2&gt;
+    &lt;p&gt;Review their changes before submitting a new version.&lt;/p&gt;
+  &lt;/section&gt;
+  &lt;dl class=&quot;syn-record-fields&quot;&gt;
+    &lt;div&gt;&lt;dt&gt;Campaign name&lt;/dt&gt;&lt;dd&gt;&lt;div class=&quot;syn-change-pair&quot;&gt;
+      &lt;span class=&quot;syn-change-before&quot;&gt;&lt;small&gt;Previous&lt;/small&gt;&lt;del&gt;Fall&lt;/del&gt;&lt;/span&gt;
+      &lt;span class=&quot;syn-change-after&quot;&gt;&lt;small&gt;Updated&lt;/small&gt;&lt;ins&gt;Winter&lt;/ins&gt;&lt;/span&gt;
+    &lt;/div&gt;&lt;/dd&gt;&lt;/div&gt;
+  &lt;/dl&gt;
+&lt;/section&gt;
+</code></pre>
+<p><strong>Host behavior contract:</strong> Render the state <strong>only when it is true</strong>. A pending
+request requires the host to manage loading and submission controls; &quot;saved&quot;
+requires a confirmed server response, not an optimistic assumption. On
+failure preserve inputs; on conflict enforce record version checking
+(e.g., ETag/If-Match or an optimistic lock), offer a real comparison/reload
+path, and never overwrite concurrently edited data without policy checks.
+Authorize mutations, protect against CSRF where applicable, and record audit
+history on the server. For asynchronous updates, create a persistent
+<code>role=&quot;status&quot;</code> region before updating its content, and use <code>role=&quot;alert&quot;</code>
+only when immediate interruption is justified; <strong>the static gallery does not
+claim any live announcements</strong>. CSS cannot retry requests, manage focus,
+detect stale versions, or persist records. Test the integration at 320 CSS
+pixels, 400% zoom, keyboard-only navigation, screen readers and forced colors.</p>
+<h2 id="file-selection-and-lifecycle-presentation-alpha5-source-candidate">File selection and lifecycle presentation (alpha.5 source candidate)</h2>
+<p>Use the existing native file input (<code>.syn-input[type=&quot;file&quot;]</code>) with a real
+<code>label</code>, then load optional <code>syntyr.recipes.css</code> for an ordered
+<code>ol.syn-file-queue</code> containing <code>li.syn-file-item</code> entries. An optional
+<code>.syn-file-item-header</code> keeps names and textual status together without
+forcing a fixed width. Use only one truthfully rendered state per entry:
+<code>data-syn-state=&quot;queued|uploading|complete|failed&quot;</code>.
+Preserve <code>role=&quot;list&quot;</code> on the ordered queue when removing visual markers:
+Safari/VoiceOver can otherwise omit the list and its item count from
+accessibility announcements outside a navigation landmark.</p>
+<p><a href="../examples/file-lifecycle.html">Open the static file-lifecycle example</a>.
+This recipe is <strong>presentation only</strong>, not a drag-and-drop zone, upload engine,
+retry handler, virus scanner, or file storage client. File choice works
+natively without JavaScript, but choosing a file does not upload it.</p>
+<pre tabindex="0"><code class="language-html">&lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot;&gt;
+  &lt;label class=&quot;syn-label&quot; for=&quot;attachments&quot;&gt;Attachments&lt;/label&gt;
+  &lt;input id=&quot;attachments&quot; class=&quot;syn-input&quot; type=&quot;file&quot; multiple&gt;
+  &lt;ol class=&quot;syn-file-queue&quot; role=&quot;list&quot;&gt;
+    &lt;li class=&quot;syn-file-item&quot; data-syn-state=&quot;uploading&quot;&gt;
+      &lt;div class=&quot;syn-file-item-header&quot;&gt;
+        &lt;strong&gt;report.pdf&lt;/strong&gt;&lt;span&gt;Uploading · 42%&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;progress class=&quot;syn-meter&quot; value=&quot;42&quot; max=&quot;100&quot;
+                aria-label=&quot;Report upload progress&quot;&gt;42%&lt;/progress&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/section&gt;
+</code></pre>
+<p><strong>Host application contract:</strong> Do not render completion until the server
+confirms durable storage. Compute actual byte-based progress if available;
+omit <code>value</code> on <code>&lt;progress&gt;</code> only when an upload is genuinely indeterminate.
+Honor file size/type limits, authorization, CSRF protections when applicable,
+safe filenames, cancellation, retries, and server-side scanning as required.
+Retain selected files after recoverable errors when the browser permits,
+and expose real error details with field associations. Create a persistent
+live status region in the host if asynchronous changes require announcements;
+CSS and a static snapshot cannot announce an update. No automatic drag/drop
+or upload happens with these classes. Test responsive zoom, forced colors,
+keyboard navigation, real upload failure and assistive technology in the host.</p>
 <h2 id="reusing-recipes-across-stacks">Reusing recipes across stacks</h2>
 <ul>
 <li><strong>Go / templ, PHP, Django, Rust templates:</strong> Make recipes server-rendered partials and pass content as arguments.</li>
@@ -159,7 +282,7 @@ All spacing remains controlled by ordinary CSS custom properties.</p>
 <p>Favor stable component classes and CSS variables over copying long lists of generated utilities. See <a href="components.html">contract</a> and <a href="tailwind-research.html">Tailwind research</a>.</p>
 <h2 id="accessible-navigation-and-loading-placeholders">Accessible navigation and loading placeholders</h2>
 <p>Breadcrumbs use a real ordered list inside a labeled navigation landmark. The separator is a CSS border rather than spoken punctuation:</p>
-<pre><code class="language-html">&lt;nav class=&quot;syn-breadcrumbs&quot; aria-label=&quot;Breadcrumb&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;nav class=&quot;syn-breadcrumbs&quot; aria-label=&quot;Breadcrumb&quot;&gt;
   &lt;ol&gt;
     &lt;li&gt;&lt;a href=&quot;/&quot;&gt;Home&lt;/a&gt;&lt;/li&gt;
     &lt;li&gt;&lt;span aria-current=&quot;page&quot;&gt;Reports&lt;/span&gt;&lt;/li&gt;
@@ -167,14 +290,14 @@ All spacing remains controlled by ordinary CSS custom properties.</p>
 &lt;/nav&gt;
 </code></pre>
 <p>Page controls are <strong>real links</strong>, not inert buttons. Match the selected page to the actual URL, and label any symbol-only links:</p>
-<pre><code class="language-html">&lt;nav class=&quot;syn-pagination&quot; aria-label=&quot;Results pages&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;nav class=&quot;syn-pagination&quot; aria-label=&quot;Results pages&quot;&gt;
   &lt;a class=&quot;syn-page-link&quot; href=&quot;?page=1&quot;&gt;1&lt;/a&gt;
   &lt;a class=&quot;syn-page-link&quot; href=&quot;?page=2&quot; aria-current=&quot;page&quot;&gt;2&lt;/a&gt;
   &lt;a class=&quot;syn-page-link&quot; href=&quot;?page=3&quot;&gt;3&lt;/a&gt;
 &lt;/nav&gt;
 </code></pre>
 <p>Skeletons are deliberately static. Hide the visual placeholder from assistive technology and announce loading outside it with application-owned state. Do not leave an infinite loading message or use fake progress values:</p>
-<pre><code class="language-html">&lt;section aria-busy=&quot;true&quot; aria-label=&quot;Reports&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;section aria-busy=&quot;true&quot; aria-label=&quot;Reports&quot;&gt;
   &lt;p role=&quot;status&quot;&gt;Loading reports…&lt;/p&gt;
   &lt;span class=&quot;syn-skeleton&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;
   &lt;span class=&quot;syn-skeleton syn-skeleton--short&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;
@@ -190,11 +313,71 @@ All spacing remains controlled by ordinary CSS custom properties.</p>
 <li>When using HTMX, Datastar or another enhancement layer, keep GET filters, ordinary links and form labels working without client-side JavaScript.</li>
 </ul>
 <p>The scoped <code>examples/saas-workflows.css</code> stylesheet contains layout glue only and is <strong>not</strong> added to the distributed core or all-in-one bundle.</p>
+<h2 id="composed-operations-workflows-progress-activity-and-decisions-alpha5-source-only">Composed operations workflows: progress, activity and decisions (alpha.5 source only)</h2>
+<p>The <a href="../examples/workflow-operations.html">live workflow-operations demonstration</a>
+shows three task-specific patterns inspired by operational and AI agent interfaces.
+It deliberately <strong>adds no new Syntyr component API or runtime dependency</strong>.
+The example consumes the unreleased source-candidate <code>syntyr.core.css</code> and
+<code>syntyr.recipes.css</code>; it is <strong>not included in published alpha.4</strong>.
+The example-specific stylesheet is layout glue and is not distributed as core CSS.</p>
+<h3 id="1-progress-ordered-list-and-authoritative-state">1. Progress: ordered list and authoritative state</h3>
+<pre tabindex="0"><code class="language-html">&lt;section class=&quot;syn-root syn-region&quot; data-syn-theme=&quot;studio&quot;&gt;
+  &lt;h2&gt;Deployment progress&lt;/h2&gt;
+  &lt;ol class=&quot;syn-steps syn-steps--vertical&quot; role=&quot;list&quot; aria-label=&quot;Deployment progress&quot;&gt;
+    &lt;li class=&quot;syn-step&quot; data-syn-state=&quot;complete&quot;&gt;
+      &lt;span class=&quot;syn-step-label&quot;&gt;Checks complete&lt;/span&gt;
+    &lt;/li&gt;
+    &lt;li class=&quot;syn-step&quot; aria-current=&quot;step&quot;&gt;
+      &lt;span class=&quot;syn-step-label&quot;&gt;Approval pending (current)&lt;/span&gt;
+    &lt;/li&gt;
+    &lt;li class=&quot;syn-step&quot;&gt;
+      &lt;span class=&quot;syn-step-label&quot;&gt;Publish (not started)&lt;/span&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/section&gt;
+</code></pre>
+<p>The server must decide which step is current and which are complete or failed.
+Only one step has <code>aria-current=&quot;step&quot;</code>; CSS never computes progress.
+If there is no current step, remove <code>aria-current</code> rather than fabricating one.</p>
+<h3 id="2-execution-activity-event-list-and-native-disclosures">2. Execution activity: event list and native disclosures</h3>
+<pre tabindex="0"><code class="language-html">&lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot;&gt;
+  &lt;h2&gt;Activity&lt;/h2&gt;
+  &lt;ol class=&quot;syn-activity-timeline&quot; role=&quot;list&quot; aria-label=&quot;Execution events&quot;&gt;
+    &lt;li&gt;
+      &lt;strong&gt;Validation succeeded&lt;/strong&gt;
+      &lt;time datetime=&quot;2026-11-17T09:12:10-03:00&quot;&gt;09:12:10&lt;/time&gt;
+      &lt;details class=&quot;syn-details&quot;&gt;
+        &lt;summary&gt;View sanitized diagnostics&lt;/summary&gt;
+        &lt;pre&gt;&lt;code&gt;18 checks passed&lt;/code&gt;&lt;/pre&gt;
+      &lt;/details&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/section&gt;
+</code></pre>
+<p>Server applications supply trusted status, duration and log content. Render
+diagnostics as escaped <strong>text</strong>, never injected HTML; redact secrets and personal
+data. For live updates, the application—not CSS—owns polling/streaming, retry,
+completion announcements and <code>aria-busy</code> lifecycle. Do not announce an entire
+rapidly updated event feed with <code>aria-live=&quot;assertive&quot;</code>.</p>
+<h3 id="3-approval-honest-actions-and-durable-outcomes">3. Approval: honest actions and durable outcomes</h3>
+<p>Compose an <code>article.syn-app-card</code>, a visible <code>syn-status</code> and ordinary native
+buttons or forms. In a static preview, <strong>disable mutation buttons</strong>; do not show
+fake approval confirmations. In a working application, bind each approval/rejection
+to a real authenticated <strong>POST</strong> route. Verify role and object authorization,
+CSRF protection, the decision's current revision and idempotency on the server.
+Do not optimistically remove a request or claim success before the server commits
+its decision. Surface rejected, expired, conflict and network-failure states,
+and maintain an auditable record with actor and timestamp. Only expose actions
+the current reviewer is permitted to take.</p>
+<p>Prefer the existing <code>syn-steps</code>, <code>syn-activity-timeline</code>, <code>syn-details</code> and
+<code>syn-app-card</code> compositions before adding variants, React widgets or extra
+CSS modules. The demo uses them unchanged and works with server templates,
+HTMX, or React. This is a <strong>presentation example</strong>, not a workflow engine.</p>
 <h2 id="intrinsic-responsive-layouts-optional-recipes-css">Intrinsic responsive layouts (optional recipes CSS)</h2>
 <p>Load <code>syntyr.core.css</code> plus <code>syntyr.recipes.css</code>. The layout primitives are
 scoped to <code>.syn-root</code> and require no JavaScript, framework or viewport media
 queries. Their children are ordinary semantic HTML.</p>
-<pre><code class="language-html">&lt;section class=&quot;syn-root&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;section class=&quot;syn-root&quot;&gt;
   &lt;div class=&quot;syn-sidebar&quot; style=&quot;--syn-sidebar-width: 14rem&quot;&gt;
     &lt;aside&gt;Navigation or filters&lt;/aside&gt;
     &lt;main&gt;Main content&lt;/main&gt;
@@ -220,8 +403,96 @@ which can display different numbers of columns at intermediate widths.</p>
 <code>--syn-type-lede</code> and <code>--syn-reading-width</code> can be overridden in plain
 application CSS. Keep real document headings and reading order.</p>
 <p>See <a href="../examples/minimalist-patterns.html">the working minimalist demo</a>.</p>
+<h2 id="collection-workspaces-and-error-recovery-source-candidate">Collection workspaces and error recovery (source candidate)</h2>
+<p>The optional recipes stylesheet contains <code>.syn-collection-toolbar</code>, <code>.syn-collection-actions</code>,
+<code>.syn-bulk-actions</code>, <code>.syn-table--compact</code>, <code>.syn-result-state</code> and
+<code>.syn-error-summary</code>. They extend the existing <code>.syn-filter-bar</code>, <code>.syn-table</code>,
+<code>.syn-detail-layout</code> and base form classes; they do not ship a JS data grid.</p>
+<p><a href="../examples/resource-workspace.html">Static resource and error example</a> demonstrates:</p>
+<ul>
+<li>A native GET search form with named query parameters (disabled in the static demo so it cannot navigate to an unimplemented route). Implement <code>/resources</code> on your server; the static example route does not filter results.</li>
+<li>A titled table, an optional dense presentation, explicit result states, and disabled bulk-action preview. The backend must enforce selection, authorization, CSRF and idempotency for mutations.</li>
+<li>A server-rendered error summary with field-anchor links, <code>aria-invalid</code>, and an <code>aria-describedby</code> reference to a visible field error. Preserve entered values and ensure the server response moves keyboard focus to the error summary after a failed submission (or sends an equivalent heading-focused full-page response). Never claim client-side styling performs validation.</li>
+<li>Preserve search/filter/sort state in URL parameters. Announce actual result counts, not sample counts. Display no-result or service-error state only when it is true.</li>
+</ul>
+<p>The example is illustrative, <strong>not a configured server</strong>. Avoid relying on color alone to convey status. Test with a keyboard, screen reader, 320 CSS-pixel viewport, text zoom and forced-colors mode.</p>
+<p>For a <strong>runnable, zero-JavaScript reference</strong>, see the <a href="https://github.com/dporkka/syntyr-css/tree/main/examples/go-resource-workbench">Go resource workbench</a>. It composes the existing filter, table, bulk-action and inspector classes with real server-side GET filtering, status filters, sorting, column and theme settings, record links and read-only bulk-selection previews, and real previous/next pagination with preserved view state. Checked-row previews are limited to records on the current server-rendered page, whereas an explicit matching-scope preview spans all filtered pages. Unlike the static markup, the Go example actually constrains result sets. An empty checked selection never means all matching records: selecting the full matching set is an explicit separate link. The example additionally demonstrates a local-only native POST edit for owner and status with a signed CSRF form token, input validation and a safe redirect. Its in-memory changes reset on restart; the unauthenticated server refuses non-loopback binds. It has no accounts, tenant isolation, persistent records or durable authorization; production apps must supply those behaviors.</p>
+<h2 id="native-query-filters-and-record-review-alpha5-source-candidate">Native query filters and record review (alpha.5 source candidate)</h2>
+<p>The <a href="../examples/query-review.html">copy-owned filter and review composition</a>
+reuses <code>.syn-filter-bar</code>, <code>.syn-filter-choices</code>, <code>.syn-chip</code>,
+and <code>dl.syn-record-fields</code>. The example is a <strong>static server-rendered snapshot</strong>;
+it does not filter results or perform edits without a host application.</p>
+<ul>
+<li>Submit labelled controls with a native <code>method=&quot;get&quot;</code> form. The server must validate the query and re-render selected values, counts, and the matching results.</li>
+<li>Render each removable filter as a real link that drops exactly one encoded query parameter while preserving the others. Use descriptive accessible names, not icon-only removal affordances. The server must generate these URLs from validated state.</li>
+<li>Review record details as <code>dl</code> / <code>dt</code> / <code>dd</code> pairs and use Edit links to disabled example fields in this static snapshot; hosts must substitute real, authorized edit routes. Never style a static text value as a working editable field.</li>
+<li>Filtering, authorization, permissions, mutations, and persistence belong to the host. These composition classes add <strong>no new core CSS or mandatory JavaScript</strong>.</li>
+</ul>
+<h2 id="enterprise-collection-sheet-and-evidence-compositions-alpha5-source-candidate">Enterprise collection, sheet and evidence compositions (alpha.5 source candidate)</h2>
+<p>The optional <code>syntyr.recipes.css</code> also includes reusable patterns tested against
+Adacavo-style resource workflows. They are original MIT-licensed presentation
+recipes, <strong>not a port of Adacavo's application code</strong>. See the
+<a href="../examples/enterprise-compositions.html">zero-JavaScript example</a>.</p>
+<ul>
+<li><code>.syn-view-switcher</code> contains real links (<code>aria-current=&quot;page&quot;</code>) for
+server-selected views, or host-controlled toggle buttons
+(<code>aria-pressed=&quot;true&quot;</code>). A link doesn't implement filtering, and a button
+needs a real event handler; never claim a view switched solely from CSS.</li>
+<li><code>.syn-sheet</code> and <code>.syn-sheet-header</code>, <code>.syn-sheet-body</code>,
+<code>.syn-sheet-footer</code> style a native <strong>nonmodal</strong> <code>[popover]</code> panel, or a
+native modal <code>&lt;dialog&gt;</code>. Native <code>popovertarget</code> works without JavaScript
+in supported browsers. A popover <strong>does not</strong> trap focus or make the rest of
+the page inert. For modal editing, call <code>showModal()</code> or use supported
+<code>commandfor</code>/<code>command=&quot;show-modal&quot;</code> and retain a direct-page fallback.
+The <code>--syn-sheet-width</code> CSS property defaults to <code>30rem</code>; set it on the
+sheet to adjust width. When closed, neither element is forced visible by
+the grid display rules. At extreme text zoom or short viewport heights,
+the whole sheet scrolls so its footer actions remain reachable; the body
+retains a minimum scroll region. When the body can overflow independently,
+make that region keyboard-focusable (<code>tabindex=&quot;0&quot;</code>) and name it with
+<code>aria-labelledby</code> referencing a visible heading, as the example does.
+Check both record details and each footer action at 320px and 400% text.
+Don't set <code>aria-modal=&quot;true&quot;</code> on the nonmodal popover.</li>
+<li><code>.syn-evidence-grid</code>, <code>.syn-evidence-card</code>, <code>.syn-evidence-media</code>,
+<code>.syn-evidence-body</code>, <code>.syn-evidence-meta</code> and <code>.syn-evidence-actions</code>
+present <code>figure</code>, <code>figcaption</code>, <code>dl</code> and <code>time</code> records. Use
+<code>.syn-evidence-media--placeholder</code> for text-only media fallbacks so
+enlarged text can expand vertically rather than being clipped. Reuse the
+existing <code>.syn-status</code> for server-validated textual status. Application
+code owns uploads, verification, EXIF/GPS, image fallbacks, and approvals.</li>
+</ul>
+<p>All styles require a <code>.syn-root</code> ancestor, use semantic tokens, and are
+excluded from <code>syntyr.core.css</code>. The illustration uses labeled placeholders,
+not real customer evidence. Test keyboard and touch interactions, actual
+screen-reader focus behavior, 400% zoom, forced colors, RTL, and lengthy
+translated metadata in the consuming app before production use.</p>
+<h2 id="permission-matrix-rolecapability-review">Permission matrix — role/capability review</h2>
+<p>The <a href="../examples/permission-matrix.html">copy-owned permissions example</a> combines
+Syntyr core and recipes with a small application-local stylesheet. It takes
+enterprise-table and accessible-form ideas from mature design systems without
+adding a component to Syntyr's core or introducing JavaScript.</p>
+<ul>
+<li>Real `table`, `caption`, column/row headers and visible `input type=&quot;checkbox&quot;`
+controls communicate the role/capability intersection to assistive technology.
+Every checkbox has an explicit, role-and-capability-specific label.</li>
+<li>A named, keyboard-focusable scroll region preserves the wide matrix at mobile
+widths and large zoom levels. Test scrolling with a keyboard and screen reader.</li>
+<li>Viewer/Editor inputs are an unsaved local demonstration. The disabled
+Administrator column demonstrates a system-fixed role, not a policy imposed
+by Syntyr. Browser-disabled fields will not submit in a real form.</li>
+<li>To make this a working settings page, render it from trusted server policy,
+wrap it in an authenticated mutation form with CSRF protection and a policy
+version, then validate every capability server-side before an atomic update.
+Audit the actor and changes; never trust a checked box or a hidden role field
+for authorization.</li>
+<li>Do not present a static demo as a live access-control feature, persist changes
+in browser storage, or claim accessibility compliance without manual testing.</li>
+</ul>
+<p>The markup belongs to the host application; this is an integration pattern,
+not a JavaScript permissions widget or a substitute for authorization.</p>
         </article>
-        <aside class="docs-article-sidebar"><nav aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#optional-vertical-flow">Optional vertical flow</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#1-responsive-telemetry-cards">1. Responsive telemetry cards</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#2-accessible-empty-state">2. Accessible empty state</a>
@@ -229,11 +500,50 @@ application CSS. Keep real document headings and reading order.</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#4-stateful-native-button-host-controlled">4. Stateful native button (host controlled)</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#token-only-custom-theme">Token-only custom theme</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#crm-and-vertical-saas-patterns-alpha5-source-candidate">CRM and vertical SaaS patterns (alpha.5 source candidate)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#resizable-workspace-optional-behavior">Resizable workspace (optional behavior)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#operation-feedback-and-record-revisions-alpha5-source-candidate">Operation feedback and record revisions (alpha.5 source candidate)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#file-selection-and-lifecycle-presentation-alpha5-source-candidate">File selection and lifecycle presentation (alpha.5 source candidate)</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#reusing-recipes-across-stacks">Reusing recipes across stacks</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#accessible-navigation-and-loading-placeholders">Accessible navigation and loading placeholders</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#server-rendered-saas-filter-and-settings-patterns">Server-rendered SaaS filter and settings patterns</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#composed-operations-workflows-progress-activity-and-decisions-alpha5-source-only">Composed operations workflows: progress, activity and decisions (alpha.5 source only)</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#1-progress-ordered-list-and-authoritative-state">1. Progress: ordered list and authoritative state</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#2-execution-activity-event-list-and-native-disclosures">2. Execution activity: event list and native disclosures</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#3-approval-honest-actions-and-durable-outcomes">3. Approval: honest actions and durable outcomes</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#intrinsic-responsive-layouts-optional-recipes-css">Intrinsic responsive layouts (optional recipes CSS)</a>
-        </nav></aside>
+<a class="docs-article-toc-link docs-article-toc-2" href="#collection-workspaces-and-error-recovery-source-candidate">Collection workspaces and error recovery (source candidate)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#native-query-filters-and-record-review-alpha5-source-candidate">Native query filters and record review (alpha.5 source candidate)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#enterprise-collection-sheet-and-evidence-compositions-alpha5-source-candidate">Enterprise collection, sheet and evidence compositions (alpha.5 source candidate)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#permission-matrix-rolecapability-review">Permission matrix — role/capability review</a>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#optional-vertical-flow">Optional vertical flow</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#1-responsive-telemetry-cards">1. Responsive telemetry cards</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#2-accessible-empty-state">2. Accessible empty state</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#3-three-card-pricing-display">3. Three-card pricing display</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#4-stateful-native-button-host-controlled">4. Stateful native button (host controlled)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#token-only-custom-theme">Token-only custom theme</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#crm-and-vertical-saas-patterns-alpha5-source-candidate">CRM and vertical SaaS patterns (alpha.5 source candidate)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#resizable-workspace-optional-behavior">Resizable workspace (optional behavior)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#operation-feedback-and-record-revisions-alpha5-source-candidate">Operation feedback and record revisions (alpha.5 source candidate)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#file-selection-and-lifecycle-presentation-alpha5-source-candidate">File selection and lifecycle presentation (alpha.5 source candidate)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#reusing-recipes-across-stacks">Reusing recipes across stacks</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#accessible-navigation-and-loading-placeholders">Accessible navigation and loading placeholders</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#server-rendered-saas-filter-and-settings-patterns">Server-rendered SaaS filter and settings patterns</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#composed-operations-workflows-progress-activity-and-decisions-alpha5-source-only">Composed operations workflows: progress, activity and decisions (alpha.5 source only)</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#1-progress-ordered-list-and-authoritative-state">1. Progress: ordered list and authoritative state</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#2-execution-activity-event-list-and-native-disclosures">2. Execution activity: event list and native disclosures</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#3-approval-honest-actions-and-durable-outcomes">3. Approval: honest actions and durable outcomes</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#intrinsic-responsive-layouts-optional-recipes-css">Intrinsic responsive layouts (optional recipes CSS)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#collection-workspaces-and-error-recovery-source-candidate">Collection workspaces and error recovery (source candidate)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#native-query-filters-and-record-review-alpha5-source-candidate">Native query filters and record review (alpha.5 source candidate)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#enterprise-collection-sheet-and-evidence-compositions-alpha5-source-candidate">Enterprise collection, sheet and evidence compositions (alpha.5 source candidate)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#permission-matrix-rolecapability-review">Permission matrix — role/capability review</a>
+            </nav>
+          </details>
+        </aside>
       </div>
       <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="recipes.md">Markdown source</a></nav>
     </main>

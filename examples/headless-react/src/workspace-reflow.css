@@ -1,0 +1,56 @@
+/* Isolated React integration-demo reflow, not part of the Syntyr CSS core.
+   At small viewports and very large text, native controls need to wrap while
+   only the scrollable table region may overflow horizontally. */
+@media (max-width: 420px) {
+  .syn-root .syn-shell {
+    box-sizing: border-box;
+    inline-size: 100%;
+    max-inline-size: 100%;
+    overflow-x: clip;
+    padding-inline: 8px;
+  }
+  .syn-root .syn-shell > .syn-panel { padding-inline: 8px; }
+  .syn-root .syn-shell .syn-bulk-actions {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    padding-inline: 8px;
+  }
+  .syn-root .syn-shell .syn-collection-actions {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    inline-size: 100%;
+  }
+  .syn-root .syn-shell .syn-collection-actions > .syn-button {
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    overflow-wrap: anywhere;
+    white-space: normal;
+    padding-inline: 8px;
+  }
+  .syn-root .syn-shell .syn-filter-field,
+  .syn-root .syn-shell .syn-filter-field > .syn-input {
+    min-inline-size: 0;
+    max-inline-size: 100%;
+  }
+  .syn-root .syn-shell .syn-combobox-field {
+    flex-wrap: wrap;
+    min-inline-size: 0;
+  }
+  .syn-root .syn-shell .syn-combobox-field > .syn-input,
+  .syn-root .syn-shell .syn-combobox-field > .syn-button {
+    flex: 1 1 100%;
+    min-inline-size: 0;
+    max-inline-size: 100%;
+  }
+  .syn-root .syn-shell .syn-combobox-field > .syn-button {
+    overflow-wrap: anywhere;
+    padding-inline: 8px;
+  }
+  .syn-root .syn-shell .syn-table-wrap {
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    overflow-x: auto;
+  }
+}

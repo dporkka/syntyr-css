@@ -1,0 +1,671 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="A curated web design resources directory: inspiration galleries, design systems, CSS, typography, color, icons, motion, accessibility and practical tools.">
+  <title>Best Web Design Resources &amp; Inspiration — Syntyr CSS</title>
+  <link rel="icon" href="../assets/syntyr-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <style>
+    /* Editorial styling only: no new public CSS API or runtime dependencies. */
+    html { scroll-behavior: smooth; }
+    .resource-skip { position:absolute; top:-8rem; left:1rem; z-index:10; }
+    .resource-skip:focus-visible { top:1rem; }
+    .resource-shell { max-width: 76rem; margin-inline:auto; padding: 0 clamp(1rem,3.5vw,2.5rem); }
+    .resource-header { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; padding:1.15rem 0; border-bottom:1px solid var(--syn-border-subtle, var(--syn-frame)); }
+    .resource-brand { font-weight:800; font-size:1.1rem; letter-spacing:-.045em; text-decoration:none; }
+    .resource-brand small { font-weight:500; color:var(--syn-muted); font-size:.85rem; }
+    .resource-header nav { display:flex; flex-wrap:wrap; gap:.6rem 1.25rem; }
+    .resource-header nav a { color:var(--syn-muted); text-underline-offset:.2em; font-size:.925rem; }
+    .resource-header nav a[aria-current="page"] { color:var(--syn-text); font-weight:700; }
+    .resource-hero { padding:clamp(3rem,8vw,6rem) 0 clamp(2.5rem,6vw,4rem); display:grid; grid-template-columns:minmax(0,1.55fr) minmax(14rem,.45fr); align-items:end; gap:2rem; }
+    .resource-hero h1 { font-size:clamp(2.8rem,6.2vw,5.75rem); line-height:1.04; max-width:17ch; letter-spacing:-.065em; margin:.8rem 0 1.4rem; }
+    .resource-hero h1 em { color:var(--syn-accent); font-style:normal; }
+    .resource-lede { max-width:63ch; font-size:clamp(1.05rem,1.8vw,1.25rem); line-height:1.7; color:var(--syn-muted); }
+    .resource-stats { border:1px solid var(--syn-border-subtle, var(--syn-frame)); background:var(--syn-surface); padding:1.3rem; border-radius:.65rem; }
+    .resource-stat { display:flex; align-items:baseline; justify-content:space-between; gap:1rem; padding:.7rem 0; border-bottom:1px solid var(--syn-border-subtle, var(--syn-frame)); }
+    .resource-stat:last-child { border:0; }
+    .resource-stat strong { font-size:1.9rem; line-height:1.15; letter-spacing:-.05em; }
+    .resource-stat span { font-size:.86rem; color:var(--syn-muted); }
+    .resource-nav-wrap { border-block:1px solid var(--syn-border-subtle, var(--syn-frame)); padding:2rem 0 2.2rem; }
+    .resource-nav-wrap h2, .resource-intro h2 { font-size:clamp(1.45rem,2.5vw,2rem); margin:.35rem 0 1.2rem; letter-spacing:-.04em; }
+    .resource-nav { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,13rem),1fr)); gap:.6rem; }
+    .resource-category-link { display:flex; justify-content:space-between; align-items:center; gap:.8rem; background:var(--syn-surface); padding:.9rem 1rem; border:1px solid var(--syn-border-subtle, var(--syn-frame)); border-radius:.5rem; text-decoration:none; font-weight:600; line-height:1.4; }
+    .resource-category-link:hover, .resource-category-link:focus-visible { border-color:var(--syn-accent); background:var(--syn-surface-hi); }
+    .resource-category-link small { border-radius:1rem; min-width:1.7rem; padding:.12rem .35rem; text-align:center; background:var(--syn-surface-hi); color:var(--syn-muted); }
+    .resource-intro { padding:3rem 0 3.6rem; border-bottom:1px solid var(--syn-border-subtle, var(--syn-frame)); }
+    .resource-intro > p { color:var(--syn-muted); max-width:65ch; line-height:1.7; }
+    .resource-priorities { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,17rem),1fr)); gap:.9rem; padding:0; list-style:none; margin:1.6rem 0 0; }
+    .resource-priority { padding:1.2rem; background:var(--syn-surface); border:1px solid var(--syn-border-subtle, var(--syn-frame)); border-radius:.6rem; }
+    .resource-priority-header { display:flex; align-items:center; justify-content:space-between; }
+    .resource-priority-number { font:700 .8rem/1.4 var(--syn-mono, monospace); color:var(--syn-accent); }
+    .resource-priority-tier { border-radius:5rem; border:1px solid var(--syn-frame); padding:.17rem .55rem; font-size:.72rem; font-weight:650; color:var(--syn-muted); }
+    .resource-priority h3 { font-size:1.08rem; letter-spacing:-.02em; line-height:1.35; margin:1rem 0 .55rem; }
+    .resource-priority h3 a { text-underline-offset:.2em; }
+    .resource-priority p { margin:0; font-size:.91rem; line-height:1.6; color:var(--syn-muted); }
+    .resource-section { padding:clamp(2.8rem,5vw,4.5rem) 0; border-bottom:1px solid var(--syn-border-subtle, var(--syn-frame)); scroll-margin-top:1.25rem; }
+    .resource-section-heading { display:flex; justify-content:space-between; align-items:start; flex-wrap:wrap; gap:.75rem 1.5rem; margin-bottom:1.65rem; }
+    .resource-section-heading h2 { font-size:clamp(1.65rem,3vw,2.35rem); line-height:1.1; letter-spacing:-.045em; margin:.45rem 0; }
+    .resource-section-heading p { max-width:65ch; line-height:1.6; margin:0; }
+    .resource-count { flex-shrink:0; color:var(--syn-muted); font-size:.8rem; font-weight:700; padding:.55rem .8rem; background:var(--syn-surface); border:1px solid var(--syn-border-subtle,var(--syn-frame)); border-radius:2rem; }
+    .resource-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,16rem),1fr)); gap:.9rem; }
+    .resource-card { min-width:0; padding:1.2rem; border:1px solid var(--syn-border-subtle,var(--syn-frame)); background:var(--syn-surface); border-radius:.6rem; display:flex; flex-direction:column; }
+    .resource-card:hover, .resource-card:focus-within { border-color:var(--syn-accent); }
+    .resource-card-head { display:flex; justify-content:space-between; margin-bottom:.7rem; }
+    .resource-kind { color:var(--syn-muted); font-size:.72rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; }
+    .resource-card h3 { font-size:1.1rem; line-height:1.35; letter-spacing:-.025em; margin:0 0 .55rem; overflow-wrap:anywhere; }
+    .resource-card h3 a { text-decoration:none; }
+    .resource-card h3 a:hover, .resource-card h3 a:focus-visible { text-decoration:underline; text-underline-offset:.2em; }
+    .resource-external { font-weight:400; font-size:.83em; color:var(--syn-accent); }
+    .resource-description { color:var(--syn-muted); margin:0; font-size:.925rem; line-height:1.62; }
+    .resource-disclaimer { margin:2.5rem 0 3rem; padding:1.4rem 1.6rem; border-left:3px solid var(--syn-accent); background:var(--syn-surface); }
+    .resource-disclaimer h2 { margin:0 0 .5rem; font-size:1.2rem; }
+    .resource-disclaimer p { margin:.55rem 0; color:var(--syn-muted); line-height:1.6; }
+    .resource-footer { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; border-top:1px solid var(--syn-border-subtle,var(--syn-frame)); padding:2rem 0 3rem; }
+    .resource-footer nav { display:flex; flex-wrap:wrap; gap:.75rem 1.5rem; }
+    .resource-footer a { text-underline-offset:.25em; }
+    :where(a):focus-visible { outline:2px solid var(--syn-accent); outline-offset:3px; }
+    @media (max-width:44rem) { .resource-hero { grid-template-columns:1fr; } .resource-stats { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:.5rem; } .resource-stat { display:block; border:0; padding:.3rem; } .resource-stat strong { display:block; } .resource-stat span { display:block; font-size:.7rem; } }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior:auto; } }
+    @media (forced-colors: active) { .resource-category-link, .resource-card, .resource-priority, .resource-disclaimer { border-color:CanvasText; } }
+  </style>
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <a href="#main" class="syn-button resource-skip">Skip to content</a>
+  <div class="resource-shell">
+    <header class="resource-header">
+      <a class="resource-brand" href="../index.html" aria-label="Syntyr CSS home">SYNTYR <small>/ CSS</small></a>
+      <nav aria-label="Site navigation"><a href="../index.html">Home</a><a href="catalog.html">Components</a><a href="blocks.html">Blocks</a><a href="guides.html">Guides</a><a href="design-resources.html" aria-current="page">Resources</a></nav>
+    </header>
+    <main id="main">
+      <div class="resource-hero">
+        <div>
+          <p class="syn-eyebrow">SYNTYR / CURATED DIRECTORY</p>
+          <h1>Better web design starts with <em>better references.</em></h1>
+          <p class="resource-lede">Explore excellent design resources, from real product UI and design systems to typography, CSS, motion and accessibility. Each link tells you what it is useful for—plus a separate research shortlist for Syntyr.</p>
+          <p class="syn-muted">Independent editorial selection · Updated November 2026 · No paid placement</p>
+        </div>
+        <aside class="resource-stats" aria-label="Directory summary">
+          <div class="resource-stat"><strong>82</strong><span>Curated resources</span></div>
+          <div class="resource-stat"><strong>10</strong><span>Topics</span></div>
+          <div class="resource-stat"><strong>8</strong><span>Syntyr study priorities</span></div>
+        </aside>
+      </div>
+      <section class="resource-nav-wrap" aria-labelledby="browse-title">
+        <p class="syn-eyebrow">FIND YOUR STARTING POINT</p>
+        <h2 id="browse-title">Browse by category</h2>
+        <nav class="resource-nav" aria-label="Resource categories">
+          <a class="resource-category-link" href="#inspiration"><span>Website &amp; product inspiration</span><small>10</small></a>
+          <a class="resource-category-link" href="#design-systems"><span>Design systems &amp; behavior</span><small>14</small></a>
+          <a class="resource-category-link" href="#component-libraries"><span>UI kits &amp; component libraries</span><small>10</small></a>
+          <a class="resource-category-link" href="#html-css"><span>Native HTML, CSS &amp; accessibility</span><small>9</small></a>
+          <a class="resource-category-link" href="#typography"><span>Typography &amp; fluid scales</span><small>7</small></a>
+          <a class="resource-category-link" href="#color"><span>Color &amp; contrast</span><small>6</small></a>
+          <a class="resource-category-link" href="#icons"><span>Icons, SVGs &amp; illustration</span><small>7</small></a>
+          <a class="resource-category-link" href="#motion"><span>Motion, animation &amp; interaction</span><small>7</small></a>
+          <a class="resource-category-link" href="#tooling"><span>Design, prototyping &amp; documentation</span><small>6</small></a>
+          <a class="resource-category-link" href="#qa"><span>Performance, testing &amp; QA</span><small>6</small></a>
+        </nav>
+      </section>
+      <section class="resource-intro" id="syntyr-priorities" aria-labelledby="priorities-title">
+        <p class="syn-eyebrow">SYNTYR / DESIGN RESEARCH</p>
+        <h2 id="priorities-title">What Syntyr should borrow inspiration from</h2>
+        <p>These are <strong>research directions, not claimed product features</strong>. Study the problem-solving pattern and document the interaction contract. Keep Syntyr’s CSS core framework-neutral, self-hostable and free of required JavaScript.</p>
+        <ol class="resource-priorities">
+        <li class="resource-priority">
+          <div class="resource-priority-header"><span class="resource-priority-number">01</span><span class="resource-priority-tier">Now</span></div>
+          <h3><a href="https://www.w3.org/WAI/ARIA/apg/">W3C APG</a> + <a href="https://inclusive-components.design/">Inclusive Components</a></h3>
+          <p>Codify semantics, focus management and keyboard behavior before styling new primitives.</p>
+        </li>
+        <li class="resource-priority">
+          <div class="resource-priority-header"><span class="resource-priority-number">02</span><span class="resource-priority-tier">Now</span></div>
+          <h3><a href="https://every-layout.dev/">Every Layout</a> + <a href="https://utopia.fyi/">Utopia</a></h3>
+          <p>Offer intrinsic CSS layout recipes and fluid spacing/type scales, avoiding breakpoint bloat.</p>
+        </li>
+        <li class="resource-priority">
+          <div class="resource-priority-header"><span class="resource-priority-number">03</span><span class="resource-priority-tier">Now</span></div>
+          <h3><a href="https://carbondesignsystem.com/">Carbon</a> + <a href="https://polaris.shopify.com/">Polaris</a></h3>
+          <p>Document tables, filters, action hierarchy, errors, empty states and destructive confirmations.</p>
+        </li>
+        <li class="resource-priority">
+          <div class="resource-priority-header"><span class="resource-priority-number">04</span><span class="resource-priority-tier">Next</span></div>
+          <h3><a href="https://developers.arcgis.com/calcite-design-system/">Calcite</a> + <a href="https://www.patternfly.org/">PatternFly</a></h3>
+          <p>Create opt-in map-adjacent side panels and enterprise task layouts with real responsive contracts.</p>
+        </li>
+        <li class="resource-priority">
+          <div class="resource-priority-header"><span class="resource-priority-number">05</span><span class="resource-priority-tier">Next</span></div>
+          <h3><a href="https://base-ui.com/">Base UI</a> + <a href="https://ark-ui.com/">Ark UI</a></h3>
+          <p>Study state-machine and headless composition contracts; keep JavaScript adapters optional.</p>
+        </li>
+        <li class="resource-priority">
+          <div class="resource-priority-header"><span class="resource-priority-number">06</span><span class="resource-priority-tier">Next</span></div>
+          <h3><a href="https://cloudscape.design/">Cloudscape</a> + <a href="https://eui.elastic.co/">Elastic UI</a></h3>
+          <p>Learn from dense dashboards: bulk selections, filtering, inspection, pagination and keyboard paths.</p>
+        </li>
+        <li class="resource-priority">
+          <div class="resource-priority-header"><span class="resource-priority-number">07</span><span class="resource-priority-tier">Next</span></div>
+          <h3><a href="https://mobbin.com/">Mobbin</a> + <a href="https://refero.design/">Refero</a></h3>
+          <p>Benchmark real onboarding, billing, settings and SaaS workflows before introducing new recipes.</p>
+        </li>
+        <li class="resource-priority">
+          <div class="resource-priority-header"><span class="resource-priority-number">08</span><span class="resource-priority-tier">Later</span></div>
+          <h3><a href="https://motion.dev/">Motion</a> + <a href="https://rive.app/">Rive</a></h3>
+          <p>Borrow restraint, timing and reduced-motion guidance for optional effects only.</p>
+        </li>
+        </ol>
+      </section>
+
+      <section class="resource-section" id="inspiration" aria-labelledby="inspiration-heading">
+        <div class="resource-section-heading">
+          <div><p class="syn-eyebrow">01 / DIRECTORY</p><h2 id="inspiration-heading">Website &amp; product inspiration</h2><p class="syn-muted">Real shipped interfaces, landing pages, screens and flows—use them to study decisions, not to copy designs.</p></div>
+          <span class="resource-count">10 resources</span>
+        </div>
+        <div class="resource-grid">
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Gallery</span></div>
+            <h3><a href="https://www.awwwards.com/">Awwwards <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Award-winning websites and ambitious visual experiences. Best for editorial ideas and creative direction.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Gallery</span></div>
+            <h3><a href="https://www.siteinspire.com/">SiteInspire <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Curated website examples searchable by visual style, subject and design approach.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Gallery</span></div>
+            <h3><a href="https://land-book.com/">Land-book <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Landing-page gallery useful for page structure, typography and SaaS presentation.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Gallery</span></div>
+            <h3><a href="https://recent.design/">Recent (formerly Godly) <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Curated digital design across sites, products and visual identities.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Gallery</span></div>
+            <h3><a href="https://onepagelove.com/">One Page Love <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Single-page sites and landing-page references for concise marketing flows.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Gallery</span></div>
+            <h3><a href="https://www.lapa.ninja/">Lapa Ninja <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Landing-page screenshots and web design references organized for discovery.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Product UX</span></div>
+            <h3><a href="https://mobbin.com/">Mobbin <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Reference screens from shipped mobile and web apps, including onboarding and settings flows.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Product UX</span></div>
+            <h3><a href="https://refero.design/">Refero <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Product and website UI references organized by screens and elements.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Product UX</span></div>
+            <h3><a href="https://pageflows.com/">Page Flows <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Recorded user flows that show how real products handle multi-step interactions.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">SaaS UX</span></div>
+            <h3><a href="https://www.saasframe.io/">SaaSFrame <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">SaaS-focused interface screenshots, pricing, onboarding and dashboard patterns.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="resource-section" id="design-systems" aria-labelledby="design-systems-heading">
+        <div class="resource-section-heading">
+          <div><p class="syn-eyebrow">02 / DIRECTORY</p><h2 id="design-systems-heading">Design systems &amp; behavior</h2><p class="syn-muted">Study component states, accessibility contracts, token architecture and real operational interfaces.</p></div>
+          <span class="resource-count">14 resources</span>
+        </div>
+        <div class="resource-grid">
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Standards</span></div>
+            <h3><a href="https://www.w3.org/WAI/ARIA/apg/">WAI-ARIA Authoring Practices <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Authoritative widget behavior, keyboard interaction and semantic accessibility patterns.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Headless</span></div>
+            <h3><a href="https://base-ui.com/">Base UI <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Unstyled accessible React primitives; useful for studying complex state and composition.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Headless</span></div>
+            <h3><a href="https://www.radix-ui.com/primitives">Radix Primitives <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Accessible, composable React primitives with detailed interaction guidance.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Headless</span></div>
+            <h3><a href="https://ark-ui.com/">Ark UI <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Cross-framework headless components backed by explicit interaction state machines.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Headless</span></div>
+            <h3><a href="https://react-spectrum.adobe.com/react-aria/">React Aria <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Accessible component behavior and internationalization patterns; not CSS-only.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Design system</span></div>
+            <h3><a href="https://spectrum.adobe.com/">Adobe Spectrum <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Mature component rules, design foundations and content guidance.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Geospatial</span></div>
+            <h3><a href="https://developers.arcgis.com/calcite-design-system/">Esri Calcite <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Geospatial interfaces with panels, navigation, data exploration and map-adjacent patterns.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Enterprise</span></div>
+            <h3><a href="https://www.patternfly.org/">PatternFly <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Enterprise UI patterns for complex tasks, administration and dense data.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Enterprise</span></div>
+            <h3><a href="https://carbondesignsystem.com/">IBM Carbon <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Systematic tokens, table behaviors, statuses and accessibility documentation.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Product system</span></div>
+            <h3><a href="https://polaris.shopify.com/">Shopify Polaris <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Merchant-admin workflows, forms, navigation, empty states and content conventions.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Product system</span></div>
+            <h3><a href="https://primer.style/">GitHub Primer <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Developer-oriented patterns, design tokens, responsive layout and UI clarity.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Enterprise</span></div>
+            <h3><a href="https://cloudscape.design/">AWS Cloudscape <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Documented cloud console workflows, navigation and dense operational interfaces.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Enterprise</span></div>
+            <h3><a href="https://eui.elastic.co/">Elastic UI (EUI) <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Data-heavy search, filters, tables and analytics interface patterns.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Product system</span></div>
+            <h3><a href="https://atlassian.design/">Atlassian Design System <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Patterns for enterprise collaboration, complex forms and information architecture.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="resource-section" id="component-libraries" aria-labelledby="component-libraries-heading">
+        <div class="resource-section-heading">
+          <div><p class="syn-eyebrow">03 / DIRECTORY</p><h2 id="component-libraries-heading">UI kits &amp; component libraries</h2><p class="syn-muted">Useful implementations and compositions; distinguish source licenses from screenshot or design inspiration.</p></div>
+          <span class="resource-count">10 resources</span>
+        </div>
+        <div class="resource-grid">
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">React</span></div>
+            <h3><a href="https://ui.shadcn.com/">shadcn/ui <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Copy-owned React components, design tokens and a component registry workflow.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Commercial</span></div>
+            <h3><a href="https://tailwindcss.com/plus">Tailwind Plus <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Commercial UI blocks and application layouts for studying production-ready composition.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">HTML/CSS</span></div>
+            <h3><a href="https://www.hyperui.dev/">HyperUI <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Open-source Tailwind component patterns for websites and e-commerce.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">UI kit</span></div>
+            <h3><a href="https://preline.co/">Preline <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Prebuilt UI blocks and examples for dashboards, navigation and marketing.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">CSS</span></div>
+            <h3><a href="https://daisyui.com/">daisyUI <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Semantic Tailwind class patterns and theme-based component styling.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">UI kit</span></div>
+            <h3><a href="https://flowbite.com/">Flowbite <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Tailwind-based UI components, templates and interaction examples.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Community</span></div>
+            <h3><a href="https://uiverse.io/">Uiverse <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Community-shared CSS and interaction effects for microinteraction inspiration.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Motion UI</span></div>
+            <h3><a href="https://magicui.design/">Magic UI <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Animated landing-page sections and expressive UI components; use effects selectively.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">UI kit</span></div>
+            <h3><a href="https://originui.com/">Origin UI <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Polished, reusable input, navigation and component variants.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">CSS</span></div>
+            <h3><a href="https://open-props.style/">Open Props <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Reusable CSS custom properties for motion, spacing, typography and colors.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="resource-section" id="html-css" aria-labelledby="html-css-heading">
+        <div class="resource-section-heading">
+          <div><p class="syn-eyebrow">04 / DIRECTORY</p><h2 id="html-css-heading">Native HTML, CSS &amp; accessibility</h2><p class="syn-muted">A strong fit for Syntyr’s low-dependency, framework-neutral architecture.</p></div>
+          <span class="resource-count">9 resources</span>
+        </div>
+        <div class="resource-grid">
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Reference</span></div>
+            <h3><a href="https://developer.mozilla.org/en-US/docs/Web/HTML">MDN HTML <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Reference for semantic elements and native browser capabilities.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Reference</span></div>
+            <h3><a href="https://developer.mozilla.org/en-US/docs/Web/CSS">MDN CSS <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Language reference, examples and browser-compatible CSS guidance.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Standards</span></div>
+            <h3><a href="https://www.w3.org/WAI/">W3C Web Accessibility Initiative <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Accessibility standards, tutorials and inclusive design guidance.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Accessibility</span></div>
+            <h3><a href="https://inclusive-components.design/">Inclusive Components <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Practical essays on robust, accessible interactive patterns.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Layout</span></div>
+            <h3><a href="https://every-layout.dev/">Every Layout <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Intrinsic layout primitives that respond to available space instead of fixed breakpoints.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">CSS</span></div>
+            <h3><a href="https://moderncss.dev/">Modern CSS <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Modern CSS solutions emphasizing progressively enhanced, maintainable styles.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">CSS</span></div>
+            <h3><a href="https://css-tricks.com/">CSS-Tricks <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Practical CSS techniques and browser platform explanations.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Learning</span></div>
+            <h3><a href="https://web.dev/learn/css">web.dev Learn CSS <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Structured, free lessons on CSS fundamentals and modern features.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Compatibility</span></div>
+            <h3><a href="https://caniuse.com/">Can I use <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Browser-support tables for CSS, HTML, accessibility and platform APIs.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="resource-section" id="typography" aria-labelledby="typography-heading">
+        <div class="resource-section-heading">
+          <div><p class="syn-eyebrow">05 / DIRECTORY</p><h2 id="typography-heading">Typography &amp; fluid scales</h2><p class="syn-muted">Use type systems to establish visual hierarchy and readable, responsive pages.</p></div>
+          <span class="resource-count">7 resources</span>
+        </div>
+        <div class="resource-grid">
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Fonts</span></div>
+            <h3><a href="https://fonts.google.com/">Google Fonts <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Large font catalog with specimen previews and per-family license information.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Fonts</span></div>
+            <h3><a href="https://www.fontshare.com/">Fontshare <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Curated font families and typographic specimens; review each license.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Self-host</span></div>
+            <h3><a href="https://fontsource.org/">Fontsource <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Self-hosting packages for fonts, reducing dependence on third-party runtime requests.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Inspiration</span></div>
+            <h3><a href="https://www.typewolf.com/">Typewolf <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Real-world typography pairings and sites that use specific typefaces.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Fluid scales</span></div>
+            <h3><a href="https://utopia.fyi/">Utopia <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Fluid type and spacing scale generator built around CSS clamp().</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Tool</span></div>
+            <h3><a href="https://typescale.com/">Type Scale <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Interactive modular typography scales for sizing and hierarchy.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Fonts</span></div>
+            <h3><a href="https://www.fontsquirrel.com/">Font Squirrel <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Catalog of fonts with licensing details and practical font tools.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="resource-section" id="color" aria-labelledby="color-heading">
+        <div class="resource-section-heading">
+          <div><p class="syn-eyebrow">06 / DIRECTORY</p><h2 id="color-heading">Color &amp; contrast</h2><p class="syn-muted">Build palettes that remain clear across themes, states and contrast requirements.</p></div>
+          <span class="resource-count">6 resources</span>
+        </div>
+        <div class="resource-grid">
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Palette</span></div>
+            <h3><a href="https://coolors.co/">Coolors <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Fast palette exploration and color scheme generation.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Preview</span></div>
+            <h3><a href="https://www.realtimecolors.com/">Realtime Colors <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Preview color and type decisions on a sample interface.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Palette</span></div>
+            <h3><a href="https://color.adobe.com/">Adobe Color <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Harmony tools, palette exploration and color-wheel workflows.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Palette</span></div>
+            <h3><a href="https://colorhunt.co/">Color Hunt <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Curated color palette collections for early visual exploration.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Palette</span></div>
+            <h3><a href="https://huemint.com/">Huemint <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Generate color palettes with contextual UI previews.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Accessibility</span></div>
+            <h3><a href="https://webaim.org/resources/contrastchecker/">WebAIM Contrast Checker <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Measure foreground/background contrast for accessible text and controls.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="resource-section" id="icons" aria-labelledby="icons-heading">
+        <div class="resource-section-heading">
+          <div><p class="syn-eyebrow">07 / DIRECTORY</p><h2 id="icons-heading">Icons, SVGs &amp; illustration</h2><p class="syn-muted">Favor coherent icon families, predictable licensing and self-hosted assets.</p></div>
+          <span class="resource-count">7 resources</span>
+        </div>
+        <div class="resource-grid">
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Icons</span></div>
+            <h3><a href="https://lucide.dev/">Lucide <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Consistent open-source SVG icons well suited to modern application interfaces.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Icons</span></div>
+            <h3><a href="https://iconify.design/">Iconify <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Unified access to many icon families; check licenses per collection.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Icons</span></div>
+            <h3><a href="https://heroicons.com/">Heroicons <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Clean SVG icon set designed for modern product interfaces.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Icons</span></div>
+            <h3><a href="https://phosphoricons.com/">Phosphor Icons <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Flexible, multi-weight icon family for interface hierarchy.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Icons</span></div>
+            <h3><a href="https://tabler.io/icons">Tabler Icons <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Large, consistent SVG icon set with an outlined visual language.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Illustration</span></div>
+            <h3><a href="https://undraw.co/illustrations">unDraw <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Editable-color illustrations for empty states and marketing compositions.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">SVG</span></div>
+            <h3><a href="https://www.svgrepo.com/">SVG Repo <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Searchable SVG resources with item-level licensing requirements.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="resource-section" id="motion" aria-labelledby="motion-heading">
+        <div class="resource-section-heading">
+          <div><p class="syn-eyebrow">08 / DIRECTORY</p><h2 id="motion-heading">Motion, animation &amp; interaction</h2><p class="syn-muted">Reference for optional enhancements, never prerequisites for essential Syntyr UI.</p></div>
+          <span class="resource-count">7 resources</span>
+        </div>
+        <div class="resource-grid">
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Animation</span></div>
+            <h3><a href="https://motion.dev/">Motion <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Animation APIs and examples for transitions, gestures and layout changes.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Animation</span></div>
+            <h3><a href="https://gsap.com/">GSAP <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Timeline-driven motion and scroll effects for complex presentation work.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Interactive</span></div>
+            <h3><a href="https://rive.app/">Rive <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Interactive vector animations with state-driven playback.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Animation assets</span></div>
+            <h3><a href="https://lottiefiles.com/">LottieFiles <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Animation asset workflows, previews and Lottie ecosystem tools.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">CSS motion</span></div>
+            <h3><a href="https://animista.net/">Animista <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Inspect and generate small CSS animation snippets.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Timing</span></div>
+            <h3><a href="https://easings.net/">Easings.net <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Visual comparisons of easing curves for natural transitions.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Web platform</span></div>
+            <h3><a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API">MDN Web Animations API <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Browser-native animation interface, timing concepts and compatibility.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="resource-section" id="tooling" aria-labelledby="tooling-heading">
+        <div class="resource-section-heading">
+          <div><p class="syn-eyebrow">09 / DIRECTORY</p><h2 id="tooling-heading">Design, prototyping &amp; documentation</h2><p class="syn-muted">Tools for building, evaluating and documenting design systems.</p></div>
+          <span class="resource-count">6 resources</span>
+        </div>
+        <div class="resource-grid">
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Design</span></div>
+            <h3><a href="https://www.figma.com/community">Figma Community <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Design files, examples, kits and plugins from creators.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Design</span></div>
+            <h3><a href="https://penpot.app/">Penpot <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Open-source, browser-based collaborative UI design and prototyping.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Diagramming</span></div>
+            <h3><a href="https://excalidraw.com/">Excalidraw <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Low-friction interface sketches, flows and diagrams.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Documentation</span></div>
+            <h3><a href="https://storybook.js.org/">Storybook <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Component documentation and isolated state exploration.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Review</span></div>
+            <h3><a href="https://www.chromatic.com/">Chromatic <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Visual review and regression testing of component interfaces.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">CSS showcase</span></div>
+            <h3><a href="https://stylestage.moderncss.dev/">Style Stage <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Demonstrates how one semantic HTML document can support diverse CSS designs.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="resource-section" id="qa" aria-labelledby="qa-heading">
+        <div class="resource-section-heading">
+          <div><p class="syn-eyebrow">10 / DIRECTORY</p><h2 id="qa-heading">Performance, testing &amp; QA</h2><p class="syn-muted">Measure the real quality of a design—not just how a screenshot looks.</p></div>
+          <span class="resource-count">6 resources</span>
+        </div>
+        <div class="resource-grid">
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Audit</span></div>
+            <h3><a href="https://developer.chrome.com/docs/lighthouse/overview">Lighthouse <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Audits accessibility, performance, SEO and best practices.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Accessibility</span></div>
+            <h3><a href="https://www.deque.com/axe/devtools/">axe DevTools <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Automated accessibility checks paired with manual review.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Performance</span></div>
+            <h3><a href="https://pagespeed.web.dev/">PageSpeed Insights <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Field and lab performance signals for public web pages.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Performance</span></div>
+            <h3><a href="https://www.webpagetest.org/">WebPageTest <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">In-depth loading, rendering and waterfall diagnostics.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Compatibility</span></div>
+            <h3><a href="https://www.browserstack.com/">BrowserStack <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Cross-browser and device test infrastructure.</p>
+          </article>
+          <article class="resource-card" data-resource>
+            <div class="resource-card-head"><span class="resource-kind">Accessibility</span></div>
+            <h3><a href="https://accessibilityinsights.io/">Accessibility Insights <span class="resource-external" aria-hidden="true">↗</span></a></h3>
+            <p class="resource-description">Free automated and assisted accessibility test workflows.</p>
+          </article>
+        </div>
+      </section>
+      <aside class="resource-disclaimer" aria-labelledby="resource-note-title">
+        <h2 id="resource-note-title">Editorial and license notes</h2>
+        <p>Links are for learning and comparison, not an endorsement or permission to redistribute code, screenshots, fonts, icon packs or brand assets. Licensing varies by resource, individual asset and plan; read the upstream terms before any reuse. Some tools offer paid features or subscriptions.</p>
+        <p>Syntyr should borrow general solutions—interaction semantics, information architecture, responsive constraints and visual hierarchy—not proprietary branding or distinctive visual trade dress. Prefer original implementations and keep attribution and required notices when a source license permits code reuse.</p>
+      </aside>
+    </main>
+    <footer class="resource-footer">
+      <span class="syn-caption">SYNTYR CSS / INDEPENDENT DESIGN DIRECTORY</span>
+      <nav aria-label="Footer links"><a href="../index.html">Home</a><a href="index.html">Documentation</a><a href="design-principles.html">Design principles</a><a href="catalog.html">Components</a><a href="#main">Back to top</a></nav>
+    </footer>
+  </div>
+</body>
+</html>

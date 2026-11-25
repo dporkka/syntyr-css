@@ -1,4 +1,4 @@
-"""Cross-framework browser benchmark for Syntyr, plain CSS, Pure, Tailwind, Uno.
+"""Cross-framework browser benchmark for Syntyr, plain CSS, Pure, Tailwind, Uno, daisyUI.
 
 This benchmark compares idiomatic styling implementations of the same semantic
 DOM and text. It does NOT prove visual pixel parity or field Core Web Vitals.
@@ -18,6 +18,7 @@ import argparse
 from contextlib import contextmanager
 from functools import partial
 import gzip
+from html.parser import HTMLParser
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 import json
 from pathlib import Path
@@ -29,7 +30,7 @@ import time
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "benchmarks/frameworks/generated"
-FRAMEWORKS = ("syntyr", "plain", "pure", "tailwind", "uno")
+FRAMEWORKS = ("syntyr", "plain", "pure", "tailwind", "uno", "daisyui")
 FIXTURES = ("dashboard", "marketing")
 BROWSERS = ("chromium", "firefox", "webkit")
 VIEWPORTS = {"mobile": {"width": 390, "height": 844},
@@ -68,6 +69,32 @@ def validate_selection(frameworks: list[str], browsers: list[str],
             raise ValueError(f"Invalid or duplicate {name}: {selected}")
     if runs <= 0:
         raise ValueError("runs must be positive")
+
+
+def markup_stats(path: Path) -> dict:
+    """Count generated HTML and class sizes without guessing LLM tokenization."""
+    class Inspector(HTMLParser):
+        def __init__(self):
+            super().__init__(convert_charrefs=True)
+            self.classes = []
+            self.bytes_in_values = 0
+
+        def handle_starttag(self, tag, attrs):
+            for key, value in attrs:
+                if key == "class" and value is not None:
+                    self.classes.extend(value.split())
+                    self.bytes_in_values += len(value.encode("utf-8"))
+
+        def handle_startendtag(self, tag, attrs):
+            self.handle_starttag(tag, attrs)
+
+    source = path.read_bytes()
+    reader = Inspector()
+    reader.feed(source.decode("utf-8"))
+    reader.close()
+    return {"html_bytes": len(source), "class_tokens": len(reader.classes),
+            "distinct_class_tokens": len(set(reader.classes)),
+            "class_attribute_bytes": reader.bytes_in_values}
 
 
 def css_sizes(path: Path) -> dict:
@@ -276,6 +303,8 @@ def benchmark(output: Path, frameworks: list[str], browsers: list[str],
                         "warm": "second navigation in the same context"},
             "stylesheets": {name: css_sizes(output / f"{name}.css")
                             for name in frameworks},
+            "markup": {fixture: {name: markup_stats(output / name / f"{fixture}.html")
+                                 for name in frameworks} for fixture in fixtures},
             "results": [],
             "limitations": [
                 "Synthetic localhost browser benchmark; not field Core Web Vitals, INP, or production ranking.",
@@ -283,6 +312,7 @@ def benchmark(output: Path, frameworks: list[str], browsers: list[str],
                 "Compare screenshots and anchor geometry before drawing design-equivalent conclusions.",
                 "Style recalculation and layout timing use Chromium CDP only; absent values are null.",
                 "Raw and gzip/Brotli CSS sizes are not HTTP transfer measurements; localhost serves CSS uncompressed.",
+                "HTML bytes and class counts are measured source sizes, not LLM token counts or generation cost.",
                 "Scripts executed by Playwright are test instrumentation, not application runtime JS.",
                 "No synthetic paint-duration estimate: browser trace required for paint-cost conclusions.",
             ]}

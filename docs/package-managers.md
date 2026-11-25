@@ -13,9 +13,10 @@ python3 scripts/build.py --check
 python3 -m unittest discover -s tests -v
 npm pack --dry-run --json --ignore-scripts
 npm pack --ignore-scripts
+python3 scripts/audit_npm_package.py  # verifies the real tarball, requires npm only for this check
 ```
 
-The final command creates `syntyr-css-0.3.0-alpha.5.tgz` locally; it does not publish to a registry. For a real Vite/React/Astro/Next application using a package manager, install that local archive for testing:
+The `npm pack` command creates `syntyr-css-0.3.0-alpha.5.tgz` locally; it does not publish to a registry. The subsequent audit packs a **separate temporary tarball**, validates every exported CSS file and its bytes against source, rejects extra files (including secrets), links and archive traversal, and deletes the temporary archive. For an already-created tarball, run `python3 scripts/audit_npm_package.py --archive /path/to/package.tgz` without invoking npm. This maintainer check is not a consumer build step. For a real Vite/React/Astro/Next application using a package manager, install that local archive for testing:
 
 ```sh
 npm install /path/to/syntyr-css-0.3.0-alpha.5.tgz

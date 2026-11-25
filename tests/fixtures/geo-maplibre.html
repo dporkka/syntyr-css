@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Syntyr Geo / live MapLibre integration test fixture</title>
+  <link rel="stylesheet" href="../../dist/syntyr.core.css">
+  <link rel="stylesheet" href="../../dist/syntyr.geo.css">
+  <style>
+    body { margin: 0; padding: 12px; }
+    .syn-geo-shell { max-inline-size: 1100px; margin-inline: auto; }
+    .syn-geo-viewport { --syn-geo-height: 32rem; }
+    .syn-geo-sidebar a { display: inline-flex; min-block-size: 44px; align-items: center; }
+    .fixture-filter { display: grid; gap: .3rem; min-inline-size: 0; }
+    .fixture-filter :is(input, select) { box-sizing: border-box; inline-size: 100%; min-inline-size: 0; }
+    #site-details { display: grid; gap: .5rem; padding: .75rem; min-inline-size: 0; border: 1px solid var(--syn-border-default); border-radius: var(--syn-radius); }
+    #site-details :is(h3, p, dl) { margin: 0; }
+    #site-details dl { display: grid; gap: .4rem; }
+    #site-details dt { color: var(--syn-muted); }
+    #site-details dd { margin: 0; overflow-wrap: anywhere; }
+  </style>
+</head>
+<body class="syn-root" data-syn-theme="studio">
+  <main class="syn-geo-shell">
+    <h1>MapLibre / Syntyr Geo integration</h1>
+    <p>Offline synthetic locations. This is a developer-only map and UI test, not an authorized API or real geographic dataset.</p>
+    <div class="syn-geo-workspace">
+      <aside class="syn-geo-sidebar" aria-labelledby="sites-heading">
+        <h2 id="sites-heading">Site inventory</h2>
+        <p>List, filters, markers and details must stay in sync. The host application owns interaction state.</p>
+        <label class="fixture-filter" for="site-search">
+          Find a site
+          <input id="site-search" type="search" name="q" disabled placeholder="Search fictional sites">
+        </label>
+        <label class="fixture-filter" for="site-status">
+          Site status
+          <select id="site-status" name="status" disabled>
+            <option value="all">All statuses</option>
+            <option value="active">Active</option>
+            <option value="maintenance">Maintenance</option>
+          </select>
+        </label>
+        <nav aria-label="Site list">
+          <h3>Filtered sites</h3>
+          <ul id="site-list" class="syn-geo-data-list">
+            <li data-site-id="site-a"><span data-site-label="site-a">Site A — active</span></li>
+            <li data-site-id="site-b"><span data-site-label="site-b">Site B — maintenance</span></li>
+            <li data-site-id="site-c"><span data-site-label="site-c">Site C — active</span></li>
+          </ul>
+        </nav>
+        <p id="site-count" role="status">3 fictional sites in the list</p>
+        <section id="site-details" aria-labelledby="site-details-title" tabindex="-1">
+          <h3 id="site-details-title">Site details</h3>
+          <p id="site-selected-name">Site A</p>
+          <dl>
+            <div><dt>Status</dt><dd id="site-selected-status">Active</dd></div>
+            <div><dt>Coordinates</dt><dd id="site-selected-coordinates">-73.900, 40.700 (synthetic)</dd></div>
+          </dl>
+          <p id="site-selection-announcement" role="status">Site A selected</p>
+        </section>
+        <noscript><p>Map interaction requires JavaScript. The fictional list and initial details remain readable.</p></noscript>
+      </aside>
+      <section class="syn-geo-viewport" aria-label="Interactive MapLibre map">
+        <div id="map" class="syn-geo-map"></div>
+        <div class="syn-geo-overlay">
+          <div class="syn-geo-controls" role="group" aria-label="Map actions">
+            <button id="geo-zoom" class="syn-geo-control" type="button" disabled aria-label="Zoom in">+</button>
+          </div>
+          <div class="syn-geo-bottom">
+            <div class="syn-geo-legend" role="group" aria-label="Map legend">
+              <p class="syn-geo-legend-title">Sites</p>
+              <ul class="syn-geo-legend-list">
+                <li><span class="syn-geo-swatch" aria-hidden="true"></span>Active</li>
+                <li><span class="syn-geo-swatch" data-syn-geo-kind="zone" aria-hidden="true"></span>Maintenance</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <p class="syn-geo-attribution">Offline synthetic style / no external tiles</p>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

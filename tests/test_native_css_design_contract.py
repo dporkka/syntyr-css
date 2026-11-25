@@ -12,8 +12,8 @@ class NativeCSSDesignContract(unittest.TestCase):
         tokens = source("src/tokens.css")
         buttons = source("src/components/buttons.css")
         self.assertIn("--syn-primary-hover-bg: var(--syn-accent);", tokens)
-        self.assertIn("background: var(--syn-primary-hover-bg);", buttons)
-        self.assertIn("border-color: var(--syn-on-accent);", buttons)
+        self.assertIn("background: var(--syn-button-hover-bg, var(--syn-primary-hover-bg));", buttons)
+        self.assertIn("border-color: var(--syn-button-hover-border-color, var(--syn-on-accent));", buttons)
         self.assertNotIn("white 10%", buttons)
 
     def test_platform_controls_font_rendering(self):

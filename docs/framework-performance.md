@@ -1,7 +1,7 @@
 # Reproducible framework performance comparison (experimental)
 
 This optional developer-only benchmark compares Syntyr, handwritten plain CSS,
-Pure.css, Tailwind CSS v4, and UnoCSS. Syntyr consumers need none of these
+Pure.css, Tailwind CSS v4, UnoCSS, and daisyUI 5 (built as a Tailwind v4 plugin). Syntyr consumers need none of these
 npm/Python development tools.
 
 **Not a fastest-framework ranking.** The variants preserve document structure,
@@ -10,6 +10,8 @@ pixel-identical. Pure requires small layout styles because it does not supply a
 complete dashboard system. Therefore style, layout and LCP comparisons are
 confounded by visual differences. Inspect warnings and screenshots before
 drawing conclusions; further visual parity is necessary for speed claims.
+
+For a controlled **SaaS dashboard** comparison across Syntyr, Tailwind v4, Tailwind+daisyUI and plain CSS, including actual GET filtering, shared visual normalization, browser checks and optional axe-core, see [the dedicated parity benchmark](../benchmarks/frameworks/SAAS_PARITY.md). It makes different tradeoffs from the idiomatic styling benchmark below and cannot support a universal framework-speed ranking.
 
 ## Preparation
 
@@ -43,8 +45,13 @@ python3 -m venv /tmp/syntyr-benchmark-venv
 For a quick smoke test, use --runs 2 --browsers chromium. A blocked browser
 launch is a failure to validate that lane, not evidence of compatibility.
 
+The benchmark-only `daisyui@5.8.0` dependency is pinned in the nested lockfile.
+It is **not** installed by Syntyr core or included in browser-facing Syntyr
+CSS. The compiler uses the actual daisyUI Tailwind 4 plugin with a single
+light theme and the same HTML tags and content as all five other fixtures.
+
 Generated CSS/HTML, node_modules and browser artifacts are not committed to
-Syntyr or included in its release. Pure, Tailwind and Uno are independent
+Syntyr or included in its release. Pure, Tailwind, Uno and daisyUI are independent
 third-party frameworks; their source licenses remain with their authors.
 
 ## Measurements and methodological limits
@@ -64,6 +71,9 @@ third-party frameworks; their source licenses remain with their authors.
   report null for these values. Paint is not measured.
 - Raw/gzip CSS asset sizes and optional Brotli asset sizes if the Python
   brotli module is installed. These are not actual HTTP transfer sizes.
+- Raw HTML byte length, literal class counts, unique classes, and bytes in
+  `class` attribute values for each fixture/framework. These values measure
+  source verbosity, **not** actual LLM tokens, agent correctness, or agent cost.
 - Screenshot files and stable visual anchor bounding rectangles.
   geometry_warnings flags width/height differences exceeding 20% relative
   to the reference; absence of warnings does not imply pixel parity.
@@ -85,7 +95,11 @@ production image loading or optional Grid/Noir cinematic effects.
    traces; style recalculation is not paint cost or real-user INP.
 5. Never treat gzip sizes as real HTTP transfer bytes, or local synthetic
    LCP/CLS as real-world Core Web Vitals.
-6. This is experimental comparison infrastructure, not a Syntyr runtime,
+6. This is an apples-to-apples **semantic DOM** comparison, not a controlled
+   experiment with separately prompted coding agents. Do not claim agent
+   superiority without a task corpus, blinded model runs, actual framework
+   compilations, accessibility scans, and repeated paired comparisons.
+7. This is experimental comparison infrastructure, not a Syntyr runtime,
    compiler dependency or required release gate.
 
 See [performance validation](performance-validation.md),

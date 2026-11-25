@@ -1,0 +1,90 @@
+/* Optional email-product presentation. Does not style outbound HTML email.
+   Load after syntyr.core.css. Forms, selection, sending and persistence are host owned. */
+@layer syn.email {
+  :where(.syn-root, .syn-root *) {
+    /* Compositions use existing buttons, input, label, panel and checkbox styles. */
+    &.syn-email-signup {
+      display: flex; flex-wrap: wrap; align-items: end;
+      gap: var(--syn-space-2); min-inline-size: 0;
+    }
+    &.syn-email-signup > :where(.syn-field, .syn-label) {
+      flex: 1 1 16rem; min-inline-size: min(100%, 16rem);
+    }
+    &.syn-email-signup > .syn-button { flex: 0 1 auto; }
+
+    /* Container query follows the embed area, not the device viewport. */
+    &.syn-email-workspace { container: syn-email / inline-size; min-inline-size: 0; }
+    &.syn-email-layout { display: grid; gap: var(--syn-space-3); min-inline-size: 0; }
+    &.syn-email-sidebar, &.syn-email-main { min-inline-size: 0; }
+    &.syn-email-sidebar {
+      border: 1px solid var(--syn-border-default); border-radius: var(--syn-radius);
+      background: var(--syn-surface); overflow: hidden;
+    }
+    &.syn-email-inbox { list-style: none; padding: 0; margin: 0; min-inline-size: 0; }
+    &.syn-email-item { min-inline-size: 0; border-block-end: 1px solid var(--syn-border-subtle); }
+    &.syn-email-item:last-child { border-block-end: 0; }
+    &.syn-email-item > a {
+      display: grid; gap: .3rem; padding: var(--syn-space-2);
+      min-block-size: var(--syn-control-height); min-inline-size: 0;
+      color: var(--syn-text); text-decoration: none; overflow-wrap: anywhere;
+    }
+    &.syn-email-item > a:hover { background: var(--syn-surface-hover); }
+    &.syn-email-item > a:focus-visible {
+      outline: 2px solid var(--syn-focus-ring); outline-offset: -2px;
+    }
+    &.syn-email-item > a:is([aria-current="page"], [aria-current="location"]) {
+      background: var(--syn-accent-soft); box-shadow: inset 3px 0 var(--syn-accent);
+    }
+    &.syn-email-item[data-syn-unread="true"] > a { font-weight: 650; }
+    &.syn-email-item[data-syn-unread="true"] .syn-email-subject::before {
+      content: ""; display: inline-block; vertical-align: middle;
+      inline-size: .5rem; block-size: .5rem; margin-inline-end: .45rem;
+      border-radius: 50%; background: var(--syn-accent);
+    }
+    &.syn-email-meta { display: flex; flex-wrap: wrap; align-items: baseline;
+      justify-content: space-between; gap: .25rem .75rem; min-inline-size: 0; }
+    &.syn-email-subject { min-inline-size: 0; overflow-wrap: anywhere; }
+    &.syn-email-preview, &.syn-email-time {
+      color: var(--syn-muted); font-size: var(--syn-type-sm); font-weight: 400;
+    }
+    &.syn-email-preview { margin: 0; overflow-wrap: anywhere; }
+    &.syn-email-time { white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+    /* Message view is for trusted UI data; hosts must sanitize rich content. */
+    &.syn-email-message {
+      display: grid; align-content: start; gap: var(--syn-space-3);
+      min-inline-size: 0; padding: clamp(.75rem, 2vw, 1.5rem);
+      border: 1px solid var(--syn-border-default); border-radius: var(--syn-radius);
+      background: var(--syn-surface); color: var(--syn-text);
+    }
+    &.syn-email-message-header { display: flex; flex-wrap: wrap; gap: .5rem 1rem;
+      align-items: start; justify-content: space-between; }
+    &.syn-email-message-header > * { min-inline-size: 0; }
+    &.syn-email-body { min-inline-size: 0; max-inline-size: 75ch;
+      overflow-wrap: anywhere; line-height: var(--syn-line); }
+    &.syn-email-body[data-syn-format="plain"] { white-space: pre-wrap; }
+
+    &.syn-email-compose { display: grid; gap: var(--syn-space-3); min-inline-size: 0; }
+    &.syn-email-recipient-list {
+      display: flex; flex-wrap: wrap; align-items: center;
+      gap: .4rem; min-inline-size: 0; padding: 0; margin: 0; list-style: none;
+    }
+    &.syn-email-recipient-list > li { min-inline-size: 0; overflow-wrap: anywhere; }
+    &.syn-email-compose .syn-textarea { min-block-size: 12rem; }
+    &.syn-email-preferences { display: grid; gap: var(--syn-space-2); min-inline-size: 0; }
+    &.syn-email-preferences > fieldset { min-inline-size: 0; }
+    &.syn-email-code { inline-size: min(100%, 14rem); text-align: center;
+      letter-spacing: .18em; font-variant-numeric: tabular-nums; }
+
+    @container syn-email (min-width: 48rem) {
+      &.syn-email-layout { grid-template-columns: minmax(14rem, .8fr) minmax(0, 1.6fr); }
+    }
+    @media (forced-colors: active) {
+      &.syn-email-sidebar, &.syn-email-message { border-color: CanvasText; }
+      &.syn-email-item > a:is([aria-current="page"], [aria-current="location"]) { outline: 2px solid Highlight; outline-offset: -2px; box-shadow: none; }
+      &.syn-email-item[data-syn-unread="true"] .syn-email-subject::before {
+        background: Highlight; outline: 1px solid CanvasText;
+      }
+    }
+  }
+}

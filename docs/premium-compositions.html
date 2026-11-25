@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Syntyr borrows design principles , not layouts or proprietary assets, from polished developer tools. The Syntyr implementations are original MIT-licensed…">
-  <meta name="syntyr-source-sha256" content="95105623a8082baf4ca4638620021fb303a17a04f59c4e80881b270bf7e9e9a3">
+  <meta name="syntyr-source-sha256" content="556184b845fe3c0ea924ac70034c2a7626e4251827ea21a06685788891efcde6">
   <meta name="theme-color" content="#f5f7fb">
   <title>Premium compositions: restrained SaaS, command UI, and product storytelling — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/premium-compositions">
@@ -36,7 +36,7 @@
         <article class="docs-prose" aria-label="Premium compositions: restrained SaaS, command UI, and product storytelling">
 <h1 id="premium-compositions-restrained-saas-command-ui-and-product-storytelling">Premium compositions: restrained SaaS, command UI, and product storytelling</h1>
 <p>Syntyr borrows <em>design principles</em>, not layouts or proprietary assets, from polished developer tools. The Syntyr implementations are original MIT-licensed, <strong>opt-in CSS-only recipes</strong>. Load <code>syntyr.core.css</code> first and then <code>syntyr.recipes.css</code>:</p>
-<pre><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.core.css&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.core.css&quot;&gt;
 &lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.recipes.css&quot;&gt;
 </code></pre>
 <p><a href="../examples/premium-compositions.html">View the working HTML example</a> (illustrative data; no live services). No new runtime package, JavaScript, web font, icon set, or theme is required.</p>
@@ -74,7 +74,7 @@
 </table>
 <p>All surface tokens recompute in nested <code>data-syn-theme</code> contexts; they do not hardcode individual brand colors. Floating is <em>not</em> position: fixed and does not create an actual overlay or dialog. Use HTML <code>&lt;dialog&gt;</code> or <code>popover</code> where corresponding browser behavior is needed. Avoid combining multiple <code>syn-surface--*</code> depth classes on the same element.</p>
 <h2 id="2-page-anatomy-and-detail-inspector">2. Page anatomy and detail inspector</h2>
-<pre><code class="language-html">&lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot;&gt;
   &lt;header class=&quot;syn-page-header&quot;&gt;
     &lt;div&gt;&lt;h1&gt;Incident detail&lt;/h1&gt;&lt;p&gt;Application-generated status&lt;/p&gt;&lt;/div&gt;
     &lt;div class=&quot;syn-page-header__actions&quot;&gt;&lt;a href=&quot;/incidents&quot;&gt;All incidents&lt;/a&gt;&lt;/div&gt;
@@ -89,6 +89,13 @@
 </code></pre>
 <p>Use <code>.syn-page-header__meta</code> to group quiet metadata. The shell wraps with native flexbox rather than assuming the entire viewport width; it remains useful inside an already constrained application region. Follow normal HTML landmark rules: one main landmark per page, not nested main landmarks in a page that already has a <code>&lt;main&gt;</code>. Replace the inner <code>&lt;main&gt;</code> in this standalone snippet with a <code>&lt;section&gt;</code> if integrating inside an existing main.</p>
 <h2 id="3-search-and-command-presentation-raycast-inspired-restraint">3. Search and command presentation (Raycast-inspired restraint)</h2>
+<p>A <a href="../examples/command-launcher.html">working, progressively enhanced command launcher</a>
+reuses these classes without introducing a second visual API. It offers real
+destination links as a <strong>no-JavaScript fallback</strong>; a small, copy-owned optional
+module activates a native <code>dialog</code>, Ctrl/⌘ + K, safe text filtering and Escape
+dismissal. This is <strong>navigation</strong>, not a general action executor or ARIA
+combobox: keyboard users Tab through real links. Host applications must own
+authorization, remote search, and mutations. No required Syntyr runtime is added.</p>
 <p><code>.syn-command-panel</code>, <code>.syn-command-group</code>, <code>.syn-command-group-label</code>, <code>.syn-command-row</code>, <code>.syn-command-key</code>, and <code>.syn-command-description</code> are strictly visual.</p>
 <p>Use a real <code>&lt;search&gt;</code> containing a labeled native GET form for search that works without JavaScript. Use real anchors for navigable destinations, and <code>&lt;kbd&gt;</code> for <em>informational</em> keyboard shortcut labels. The CSS deliberately does <strong>not</strong> register keyboard shortcuts, implement arrow navigation, filter results, or claim focus trapping. Shortcut activation, a live command index, aria-activedescendant/listbox navigation, dialog focus management, and authorization are <strong>application</strong> responsibilities.</p>
 <p>If the application implements a custom keyboard-controlled command list, choose the correct ARIA semantics and provide mouse, touch, and keyboard input parity. Do not add <code>role=&quot;option&quot;</code> or <code>aria-selected</code> to ordinary navigation links without implementing the matching listbox model. The recipe highlights <code>aria-current=&quot;true&quot;</code> for a genuinely current destination link; it is not a substitute for actual selection state.</p>
@@ -108,7 +115,7 @@
 <p>Syntyr consumers do not need browsers, a JavaScript runtime, or an axe-core
 dependency. Maintainers can run the optional Playwright regression test after
 installing the browser engines in a separate development environment:</p>
-<pre><code class="language-sh">python3 tests/premium_compositions_browser.py \
+<pre tabindex="0"><code class="language-sh">python3 tests/premium_compositions_browser.py \
   --browsers chromium firefox webkit \
   --axe-file /path/to/local/axe.min.js
 </code></pre>
@@ -129,7 +136,8 @@ reported as blocked, never silently passed.</p>
 <h2 id="implementation-provenance">Implementation provenance</h2>
 <p>The refinements borrow general ideas: precise information hierarchy (Linear), keyboard discoverability (Raycast), layered material roles (Vercel), useful operational metadata (Sentry), and restrained editorial presentation (Stripe and Resend). They do <strong>not</strong> reproduce any company's branded UI or assets.</p>
         </article>
-        <aside class="docs-article-sidebar"><nav aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#1-depth-roles-use-the-least-emphasis-that-works">1. Depth roles — use the least emphasis that works</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#2-page-anatomy-and-detail-inspector">2. Page anatomy and detail inspector</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#3-search-and-command-presentation-raycast-inspired-restraint">3. Search and command presentation (Raycast-inspired restraint)</a>
@@ -137,7 +145,20 @@ reported as blocked, never silently passed.</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#progressive-enhancement-and-accessibility">Progressive enhancement and accessibility</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#browser-validation-developer-only">Browser validation (developer-only)</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#implementation-provenance">Implementation provenance</a>
-        </nav></aside>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#1-depth-roles-use-the-least-emphasis-that-works">1. Depth roles — use the least emphasis that works</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#2-page-anatomy-and-detail-inspector">2. Page anatomy and detail inspector</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#3-search-and-command-presentation-raycast-inspired-restraint">3. Search and command presentation (Raycast-inspired restraint)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#4-activity-timeline-and-marketing-showcase">4. Activity timeline and marketing showcase</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#progressive-enhancement-and-accessibility">Progressive enhancement and accessibility</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#browser-validation-developer-only">Browser validation (developer-only)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#implementation-provenance">Implementation provenance</a>
+            </nav>
+          </details>
+        </aside>
       </div>
       <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="premium-compositions.md">Markdown source</a></nav>
     </main>

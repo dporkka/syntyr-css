@@ -14,7 +14,7 @@ import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
 BENCH = ROOT / "benchmarks/frameworks"
-FRAMEWORKS = ("syntyr", "plain", "pure", "tailwind", "uno")
+FRAMEWORKS = ("syntyr", "plain", "pure", "tailwind", "uno", "daisyui")
 FIXTURES = ("marketing", "dashboard")
 
 # Semantic DOM is identical in all variants. Class names intentionally differ,
@@ -75,6 +75,27 @@ UTILITIES = {
 }
 STYLES["tailwind"] = UTILITIES
 STYLES["uno"] = UTILITIES
+# daisyUI is a genuine Tailwind plugin; semantic classes are kept alongside
+# Tailwind layout utilities where the plugin does not prescribe a composition.
+STYLES["daisyui"] = {
+    "page": "min-h-screen bg-base-200 text-base-content",
+    "shell": "mx-auto max-w-6xl px-5 py-8",
+    "header": "mb-8 flex flex-wrap items-center justify-between gap-5 py-6",
+    "title": "text-3xl font-semibold",
+    "subtle": "text-sm opacity-70",
+    "grid": "grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4",
+    "card": "card border border-base-300 bg-base-100 p-5 shadow-sm",
+    "stat": "stat-value",
+    "button": "btn btn-primary",
+    "form": "flex flex-wrap items-center gap-3",
+    "input": "input",
+    "tablebox": "overflow-x-auto",
+    "table": "table table-zebra",
+    "badge": "badge badge-success",
+    "cell": "px-3 py-5",
+    "hero": "rounded-xl bg-neutral p-8 text-neutral-content",
+    "section": "my-8",
+}
 
 # Plain reference & Pure's layout fallback intentionally share structure.
 # Pure's buttons/tables/forms are genuine Pure components, not emulated.
@@ -221,7 +242,7 @@ def prepare_css(framework: str, output: Path, root: Path = ROOT) -> Path:
         if not pure.is_file():
             raise FileNotFoundError("Pure CSS package unavailable: run npm ci in benchmarks/frameworks")
         css = pure.read_text(encoding="utf8") + "\n" + BASE_CSS + PURE_ADAPTER
-    elif framework in ("tailwind", "uno"):
+    elif framework in ("tailwind", "uno", "daisyui"):
         src = output / f"{framework}.compiled.css"
         if not src.is_file():
             raise FileNotFoundError(f"{framework} compiled output missing: run npm run build in benchmarks/frameworks")

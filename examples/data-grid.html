@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="Preview a read-only CSS data grid with scrollable columns and semantic table roles. Learn which sorting, editing and accessibility behaviors belong to your app.">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Syntyr data grid — static presentation example</title>
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="../dist/syntyr.data-grid.css">
+</head>
+<body>
+<main class="syn-root syn-shell" data-syn-theme="studio" data-syn-density="compact">
+  <h1>Inventory workspace</h1>
+  <p>A read-only table demonstration. Applications own sorting, editing, virtualization and persistence. Interactive grids require host-managed arrow-key navigation and focus.</p>
+  <section class="syn-data-grid">
+    <div class="syn-data-grid__viewport" tabindex="0" role="table" aria-label="Scrollable inventory table" aria-rowcount="3" aria-colcount="3">
+      <div role="rowgroup" class="syn-data-grid__header">
+        <div role="row" aria-rowindex="1" class="syn-data-grid__header-row">
+        <div role="columnheader" style="width:10rem" class="syn-data-grid__columnheader">Asset</div>
+        <div role="columnheader" style="width:9rem" class="syn-data-grid__columnheader">Status</div>
+        <div role="columnheader" style="width:8rem" class="syn-data-grid__columnheader">Revenue</div>
+        </div>
+      </div>
+      <div role="rowgroup" style="position:relative;block-size:4rem">
+        <div role="row" aria-rowindex="2" class="syn-data-grid__row" style="block-size:2rem">
+          <div role="cell" style="width:10rem" class="syn-data-grid__cell"><span class="syn-data-grid__cell-text">Face 102</span></div>
+          <div role="cell" style="width:9rem" class="syn-data-grid__cell" data-syn-selected="true"><span class="syn-data-grid__cell-text">Booked</span></div>
+          <div role="cell" style="width:8rem" class="syn-data-grid__cell syn-data-grid__cell--numeric"><span class="syn-data-grid__cell-text">$4,200</span></div>
+        </div>
+        <div role="row" aria-rowindex="3" class="syn-data-grid__row" style="top:2rem;block-size:2rem">
+          <div role="cell" style="width:10rem" class="syn-data-grid__cell"><span class="syn-data-grid__cell-text">Face 103</span></div>
+          <div role="cell" style="width:9rem" class="syn-data-grid__cell" data-syn-dirty="true"><span class="syn-data-grid__cell-text">Review</span></div>
+          <div role="cell" style="width:8rem" class="syn-data-grid__cell syn-data-grid__cell--numeric"><span class="syn-data-grid__cell-text">$2,850</span></div>
+        </div>
+      </div>
+    </div>
+    <footer class="syn-data-grid__footer">2 inventory records. This example does not implement application commands.</footer>
+  </section>
+</main>
+</body></html>

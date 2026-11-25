@@ -52,7 +52,9 @@ Do not combine either of those with the new one-file bundle: this duplicates CSS
 2. Load the pinned Syntyr stylesheet and opt into `.syn-root.syn-semantic`.
    Without these classes, no Syntyr semantic styling is applied.
 3. Keep real form labels, methods, actions, buttons, table headers, `details`
-   and other native elements. Add `.syn-shell` or `.syn-form` where useful.
+   and other native elements. Classless `form` and `fieldset` gain useful
+   vertical layout in semantic mode; use `.syn-form` for the explicit class API.
+   Add `.syn-shell` where a page-width constraint is useful.
 4. Translate existing `--pico-*` customizations **by design role**, not by
    search-and-replace. Syntyr's `--syn-*` tokens are not one-to-one aliases.
 5. If HTMX or another library adds temporary classes to formerly unclassed
@@ -60,7 +62,10 @@ Do not combine either of those with the new one-file bundle: this duplicates CSS
    The `data-syn-semantic` marker is an **alpha.5-only** selector enhancement
    for retaining semantic styling through transient class changes; do not use
    it as an alpha.4 compatibility guarantee.
-6. Test keyboard navigation, light/dark behavior, small screens, 200%/400%
+6. Run the optional `python3 scripts/syntyr_check.py --semantic your-page.html`
+   checker on literal HTML to catch labeling, reference and table-state mistakes.
+   Dynamic templates still need rendered-page checks.
+7. Test keyboard navigation, light/dark behavior, small screens, 200%/400%
    browser zoom, forced colors, and screen readers in the actual application.
 
 ## When not to migrate

@@ -3,6 +3,7 @@
 .ops-skip { position: absolute; inset-block-start: -10rem; inset-inline-start: 1rem; z-index: 20; }
 .ops-skip:focus { inset-block-start: 1rem; }
 .ops-rail-head { display: grid; gap: .4rem; }
+.ops-workspace-trigger { inline-size: 100%; min-inline-size: 0; justify-content: space-between; text-align: start; white-space: normal; overflow-wrap: anywhere; }
 .ops-rail-foot { margin-block-start: auto; padding-block-start: 1.25rem; border-block-start: 1px solid var(--syn-frame); }
 .ops-rail-note { display: block; color: var(--syn-muted); font-size: .78rem; }
 .ops-heading-row { display: flex; flex-wrap: wrap; gap: .75rem 1.5rem; align-items: center; justify-content: space-between; }

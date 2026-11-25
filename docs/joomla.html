@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Joomla template customization with Syntyr: Add scoped CSS components to a Joomla front-end template, child template or custom module output. Syntyr is…">
+  <meta name="syntyr-source-sha256" content="a0df911eb751ac1b8592283ddca92f73de9091a243c4a5ba18ba55d1c9aa5182">
+  <meta name="theme-color" content="#f5f7fb">
+  <title>Syntyr for Joomla | Template CSS Components</title>
+  <link rel="canonical" href="https://syntyr-css.pages.dev/docs/joomla">
+  <meta property="og:image" content="https://syntyr-css.pages.dev/assets/og-syntyr.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="alternate" type="text/markdown" href="joomla.md" title="Markdown source">
+  <link rel="icon" href="../assets/syntyr-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="docs.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <a class="syn-button docs-skip" href="#doc-main">Skip to guide</a>
+  <div class="syn-shell">
+    <header class="syn-header docs-header">
+      <a class="syn-logo" href="../index.html">SYNTYR / CSS</a>
+      <nav class="syn-nav" aria-label="Documentation navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav>
+      <details class="site-mobile-menu"><summary>Menu</summary><nav aria-label="Mobile navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav></details>
+    </header>
+    <main id="doc-main" class="docs-article-page">
+      <nav class="syn-breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="reference.html">Documentation</a></li><li aria-current="page">Syntyr for Joomla: CSS components inside site templates</li></ol></nav>
+      <header class="docs-article-heading">
+        <p class="syn-eyebrow">SYNTYR / DOCUMENTATION</p>
+        <p class="syn-muted">Current source documentation may describe unreleased alpha.5 features. <a href="distribution.html">Check released version compatibility.</a></p>
+        <p class="syn-caption">Prefer a machine-readable version? <a href="joomla.md">Markdown source</a> · <a href="../llms.txt">LLM index</a></p>
+      </header>
+      <div class="docs-article-layout">
+        <article class="docs-prose" aria-label="Syntyr for Joomla: CSS components inside site templates">
+<h1 id="syntyr-for-joomla-css-components-inside-site-templates">Syntyr for Joomla: CSS components inside site templates</h1>
+<p><strong>Joomla template customization with Syntyr:</strong> Add scoped CSS components to a Joomla front-end template, child template or custom module output. Syntyr is useful for directory summaries, product-service cards and campaign callouts that need a more refined interface without changing Joomla's installed extensions or its administration template.</p>
+<h2 id="why-use-syntyr-on-joomla">Why use Syntyr on Joomla?</h2>
+<p>Joomla already separates a site's public template from its CMS content and extension logic. Syntyr can be added as an independent stylesheet and used only on specific module or article regions. Designers get token-based styling and native HTML patterns, while developers retain the ability to edit the component in template source. No Syntyr JavaScript runtime, frontend build process or proprietary editor plugin is required.</p>
+<h2 id="how-to-install-syntyr-in-a-joomla-template">How to install Syntyr in a Joomla template</h2>
+<ol>
+<li>Work in a custom or <strong>child site template</strong>, not in an unmodified core template that an update could replace. Copy the candidate <code>dist/syntyr.embed.css</code> into the template's static CSS directory.</li>
+<li>Register <strong>and activate</strong> the stylesheet using Joomla's <strong>Web Asset Manager</strong>. Registering a style in the template's <code>joomla.asset.json</code> only makes the asset known to Joomla; it does <strong>not</strong> load the CSS until you mark it as used. For example, after registering the style under the name <code>syntyr.embed</code>, call the following from your site template's PHP rendering code:</li>
+</ol>
+<pre tabindex="0"><code class="language-php">&lt;?php
+$wa = $this-&gt;getWebAssetManager();
+$wa-&gt;useStyle('syntyr.embed'); // The name must match the registered style asset.
+?&gt;
+</code></pre>
+<p>Alternatively, if your template does not use an asset JSON declaration, Joomla supports <code>$wa-&gt;registerAndUseStyle('syntyr.embed', 'YOUR-ASSET-URI.css')</code> to register and enable the style in one call. Replace the URI with the correct template asset URI for your Joomla installation. Confirm the stylesheet <code>&lt;link&gt;</code> is emitted on the rendered page; simply registering a file is insufficient.
+3. Insert a Syntyr component in a custom module or template override that outputs permitted HTML:</p>
+<pre tabindex="0"><code class="language-html">&lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;jm-services&quot;&gt;
+  &lt;div class=&quot;syn-panel&quot;&gt;
+    &lt;h2 id=&quot;jm-services&quot; class=&quot;syn-heading&quot;&gt;Service directory&lt;/h2&gt;
+    &lt;p class=&quot;syn-muted&quot;&gt;A reusable callout in the Joomla site template.&lt;/p&gt;
+    &lt;a class=&quot;syn-button syn-button--primary&quot; href=&quot;/services&quot;&gt;Find a service&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+</code></pre>
+<ol start="4">
+<li>Verify the stylesheet order and HTML output on the public site, then compare with the active template's module and menu styling.</li>
+</ol>
+<h2 id="limitations-and-joomla-specific-considerations">Limitations and Joomla-specific considerations</h2>
+<p>Joomla's visual article editors may sanitize custom markup according to filtering and role settings. Styling a custom module does not automatically style third-party extensions, forms or ecommerce flows. If your template generates additional styles after Syntyr, a more specific rule may win; use a wrapper-scoped override rather than adding platform-internal CSS to Syntyr itself. Administrative styling is a separate template concern.</p>
+<p><strong>Joomla references:</strong> <a href="https://manual.joomla.org/docs/5.4/general-concepts/web-asset-manager/">Web Asset Manager: registering versus using styles</a> and <a href="https://manual.joomla.org/docs/next/building-extensions/">official extension and template development overview</a>.</p>
+<h2 id="verify-the-result-before-publishing">Verify the result before publishing</h2>
+<p>Check the public, published URL rather than relying only on an editor preview. Confirm that the Syntyr stylesheet returns HTTP 200 with a CSS content type, that a button inside <code>.syn-root</code> has the desired theme, and that unrelated host navigation, product cards and forms remain unchanged. Test keyboard focus, accessible names, narrow screens around 320px, reduced motion and the platform's own responsive layouts. If an iframe is involved, test its height, keyboard navigation, sandbox attributes and HTTPS/CSP restrictions.</p>
+<p><strong>Release compatibility:</strong> The immutable <strong>alpha.4</strong> stylesheet <code>syntyr.core.css</code> is published. The <strong>alpha.5</strong> <code>syntyr.embed.css</code> bundle is a candidate build designed for existing themes; it is not part of the alpha.4 release. Build the candidate from the source repository and self-host a version-pinned copy for testing. Never load both bundles together, and verify theme-specific overrides before production rollout. Syntyr is a stylesheet, not an official integration or plug-in from the site platform.</p>
+<p>Explore the <a href="site-builders.html">platform integration overview</a>, <a href="distribution.html">Syntyr distribution and release guide</a>, or <a href="../examples/platform-embed.html">live host-theme example</a>.</p>
+        </article>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+<a class="docs-article-toc-link docs-article-toc-2" href="#why-use-syntyr-on-joomla">Why use Syntyr on Joomla?</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#how-to-install-syntyr-in-a-joomla-template">How to install Syntyr in a Joomla template</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#limitations-and-joomla-specific-considerations">Limitations and Joomla-specific considerations</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#verify-the-result-before-publishing">Verify the result before publishing</a>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#why-use-syntyr-on-joomla">Why use Syntyr on Joomla?</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#how-to-install-syntyr-in-a-joomla-template">How to install Syntyr in a Joomla template</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#limitations-and-joomla-specific-considerations">Limitations and Joomla-specific considerations</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#verify-the-result-before-publishing">Verify the result before publishing</a>
+            </nav>
+          </details>
+        </aside>
+      </div>
+      <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="joomla.md">Markdown source</a></nav>
+    </main>
+    <footer class="syn-header"><span class="syn-caption">SYNTYR CSS · MIT CORE · EXPERIMENTAL</span><a href="../index.html">Home</a></footer>
+  </div>
+</body>
+</html>

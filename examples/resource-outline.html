@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Script-free, accessible hierarchical resource navigation using Syntyr CSS and native details.">
+  <title>Resource outline — Syntyr CSS</title>
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="../dist/syntyr.native-recipes.css">
+</head>
+<body class="syn-root" data-syn-theme="studio">
+  <main class="syn-shell">
+    <header style="overflow-wrap: anywhere">
+      <p class="syn-eyebrow">Native enterprise recipes</p>
+      <h1 class="syn-title">Resource outline</h1>
+      <p class="syn-lede">Navigate folders and records without a JavaScript tree widget.</p>
+    </header>
+    <div class="syn-grid">
+      <section class="syn-panel">
+        <h2 class="syn-heading">Asset browser</h2>
+        <nav class="syn-resource-outline" aria-label="Assets and campaigns">
+          <ul>
+            <li>
+              <details open>
+                <summary>North region</summary>
+                <ul>
+                  <li><a href="#north-billboards">Billboards</a></li>
+                  <li>
+                    <details open>
+                      <summary>Campaigns</summary>
+                      <ul>
+                        <li><a href="#campaign-402" aria-current="page">Winter campaign 402</a></li>
+                        <li><a href="#campaign-403">Spring campaign 403</a></li>
+                      </ul>
+                    </details>
+                  </li>
+                </ul>
+              </details>
+            </li>
+            <li>
+              <details>
+                <summary>South region</summary>
+                <ul>
+                  <li><a href="#south-inventory">Inventory overview</a></li>
+                </ul>
+              </details>
+            </li>
+          </ul>
+        </nav>
+      </section>
+      <section class="syn-panel" aria-labelledby="record-title">
+        <h2 id="record-title" class="syn-heading">Resource details</h2>
+        <p id="campaign-402">Winter campaign 402 is selected in the outline.</p>
+        <p id="campaign-403">Spring campaign 403</p>
+        <p id="north-billboards">North region billboard inventory</p>
+        <p id="south-inventory">South region inventory</p>
+        <p class="syn-muted">This demo uses in-page links and native disclosure. It has no remote data, authorization, drag-and-drop or saving behavior.</p>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

@@ -1,0 +1,222 @@
+/* Optional enterprise data-grid presentation. All interaction belongs to the host.
+   Load syntyr.core.css (tokens) plus syntyr.data-grid.css, or provide --syn-* tokens. */
+@layer syn.components {
+  :where(.syn-root, .syn-root *) {
+    &.syn-data-grid {
+      --syn-grid-row-block: var(--syn-grid-density-row-block, 2.5rem);
+      --syn-grid-pad-inline: var(--syn-grid-density-pad-inline, .65rem);
+      --syn-grid-focus: var(--syn-focus-ring, var(--syn-accent));
+      --syn-grid-hover: var(--syn-surface-raised, var(--syn-surface-hi));
+      --syn-grid-selected: var(--syn-surface-pressed, var(--syn-accent-soft));
+      --syn-grid-muted: var(--syn-text-subtle, var(--syn-muted));
+      --syn-grid-edge: var(--syn-border-subtle, var(--syn-frame));
+      display: flex;
+      flex-direction: column;
+      min-inline-size: 0;
+      overflow: hidden;
+      border: 1px solid var(--syn-border-default, var(--syn-frame));
+      border-radius: var(--syn-radius);
+      background: var(--syn-surface);
+      color: var(--syn-text);
+      font: var(--syn-type-sm)/1.4 var(--syn-font-ui);
+    }
+  }
+  /* Inherited density values follow the nearest scope, including comfortable resets.
+     The grid may supply its own data-syn-density; no ancestor selector wins over it. */
+  :where(.syn-root[data-syn-density="compact"],
+         .syn-root [data-syn-density="compact"]) {
+    --syn-grid-density-row-block: 2rem;
+    --syn-grid-density-pad-inline: .5rem;
+  }
+  :where(.syn-root[data-syn-density="comfortable"],
+         .syn-root [data-syn-density="comfortable"]) {
+    --syn-grid-density-row-block: 2.5rem;
+    --syn-grid-density-pad-inline: .65rem;
+  }
+  :where(.syn-root[data-syn-density="spacious"],
+         .syn-root [data-syn-density="spacious"]) {
+    --syn-grid-density-row-block: 3rem;
+    --syn-grid-density-pad-inline: .9rem;
+  }
+  :where(.syn-root .syn-data-grid__viewport) {
+    min-inline-size: 0;
+    overflow: auto;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+  }
+  /* The viewport is a keyboard scroll target, so it receives the global
+     outset focus ring. `.syn-data-grid` clips with `overflow: hidden` and
+     leaves 1px of clearance against the 3px + 3px ring, which hides the
+     indicator on three sides. Paint the ring on the wrapper that cannot
+     clip it, and drop the inner one so the two never stack. Browsers
+     without :has() keep the previous behaviour instead of losing the ring. */
+  @supports selector(:has(*)) {
+    :where(.syn-root .syn-data-grid:has(> .syn-data-grid__viewport:focus-visible),
+           .syn-root.syn-data-grid:has(> .syn-data-grid__viewport:focus-visible)) {
+      outline: 3px solid var(--syn-focus-ring);
+      outline-offset: 2px;
+    }
+    :where(.syn-root .syn-data-grid__viewport:focus-visible) { outline: none; }
+  }
+  :where(.syn-root .syn-data-grid__header) {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: 2;
+    display: flex;
+    inline-size: max-content;
+    min-inline-size: 100%;
+    border-block-end: 1px solid var(--syn-grid-edge);
+    background: var(--syn-surface-hi);
+  }
+  :where(.syn-root .syn-data-grid__header-row) {
+    display: flex;
+    inline-size: max-content;
+    min-inline-size: 100%;
+  }
+  :where(.syn-root .syn-data-grid__columnheader) {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: space-between;
+    min-inline-size: 0;
+    gap: .25rem;
+    padding: .4rem var(--syn-grid-pad-inline);
+    color: var(--syn-grid-muted);
+    font: 650 var(--syn-type-xs)/1.35 var(--syn-font-ui);
+  }
+  :where(.syn-root .syn-data-grid__columnheader button) {
+    appearance: none;
+    border: 0;
+    border-radius: var(--syn-radius);
+    padding: .25rem;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+  }
+  :where(.syn-root .syn-data-grid__columnheader button:disabled) {
+    opacity: .65;
+    cursor: default;
+  }
+  :where(.syn-root .syn-data-grid__columnheader button:not(:disabled):hover) {
+    background: var(--syn-grid-hover);
+    color: var(--syn-text);
+  }
+  :where(.syn-root .syn-data-grid__row) {
+    position: absolute;
+    inset-inline-start: 0;
+    display: flex;
+    inline-size: max-content;
+    min-inline-size: 100%;
+    border-block-end: 1px solid var(--syn-grid-edge);
+    background: var(--syn-surface);
+  }
+  :where(.syn-root .syn-data-grid__row:hover) { background: var(--syn-grid-hover); }
+  :where(.syn-root .syn-data-grid__cell) {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    min-inline-size: 0;
+    min-block-size: var(--syn-grid-row-block);
+    padding-inline: var(--syn-grid-pad-inline);
+    overflow: hidden;
+    white-space: nowrap;
+    color: var(--syn-text);
+    outline: none;
+  }
+  /* Text inside a flex cell needs a real shrinkable container for ellipsis. */
+  :where(.syn-root .syn-data-grid__cell-text) {
+    flex: 0 1 auto;
+    min-inline-size: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  /* Actual interactive grids use aria-selected; this static read-only
+     table example uses a purely presentational data-syn-selected hook. */
+  :where(.syn-root .syn-data-grid__cell:is([aria-selected="true"], [data-syn-selected="true"])) {
+    background: var(--syn-grid-selected);
+    box-shadow: inset 3px 0 var(--syn-accent);
+  }
+  :where(.syn-root .syn-data-grid__cell[data-syn-focused="true"]) {
+    background: var(--syn-grid-selected);
+  }
+  :where(.syn-root .syn-data-grid__cell:focus-visible) {
+    outline: 2px solid var(--syn-grid-focus);
+    outline-offset: -2px;
+  }
+  :where(.syn-root .syn-data-grid__cell[aria-invalid="true"]) {
+    background: color-mix(in srgb, var(--syn-danger) 12%, var(--syn-surface));
+    text-decoration: underline wavy var(--syn-danger);
+    text-underline-offset: 3px;
+  }
+  :where(.syn-root .syn-data-grid__cell[aria-readonly="true"]) {
+    cursor: default;
+  }
+  :where(.syn-root .syn-data-grid__cell[aria-readonly="false"]) { cursor: cell; }
+  :where(.syn-root .syn-data-grid__cell[data-syn-dirty="true"]) {
+    box-shadow: inset 0 -2px var(--syn-warning);
+  }
+  :where(.syn-root .syn-data-grid__cell--numeric) {
+    justify-content: flex-end;
+    text-align: end;
+    font-variant-numeric: tabular-nums;
+  }
+  :where(.syn-root .syn-data-grid__editor) {
+    inline-size: 100%;
+    min-inline-size: 0;
+    block-size: calc(var(--syn-grid-row-block) - .3rem);
+    padding-inline: .4rem;
+    border: 1px solid var(--syn-grid-focus);
+    border-radius: var(--syn-radius);
+    background: var(--syn-surface);
+    color: var(--syn-text);
+    font: inherit;
+  }
+  :where(.syn-root .syn-data-grid__editor:focus-visible,
+         .syn-root .syn-data-grid__columnheader button:focus-visible) {
+    outline: 2px solid var(--syn-grid-focus);
+    outline-offset: 1px;
+  }
+  :where(.syn-root .syn-data-grid__footer,
+         .syn-root .syn-data-grid__loading) {
+    padding: .5rem var(--syn-grid-pad-inline);
+    color: var(--syn-grid-muted);
+    font-size: var(--syn-type-xs);
+  }
+  :where(.syn-root .syn-data-grid__footer) { border-block-start: 1px solid var(--syn-grid-edge); }
+  :where(.syn-root .syn-data-grid__toolbar) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .5rem;
+    padding: .65rem;
+    border-block-end: 1px solid var(--syn-grid-edge);
+    background: var(--syn-surface);
+  }
+  :where(.syn-root .syn-data-grid__status) {
+    color: var(--syn-grid-muted);
+    font-size: var(--syn-type-xs);
+    font-variant-numeric: tabular-nums;
+  }
+  @media (forced-colors: active) {
+    :where(.syn-root .syn-data-grid__cell:is([aria-selected="true"], [data-syn-selected="true"])) {
+      outline: 2px solid Highlight;
+      outline-offset: -2px;
+      box-shadow: none;
+    }
+    :where(.syn-root .syn-data-grid__cell[aria-invalid="true"]) {
+      outline: 1px dashed Mark;
+      outline-offset: -1px;
+    }
+    :where(.syn-root .syn-data-grid__cell[data-syn-dirty="true"]) {
+      border-block-end: 2px solid Mark;
+      box-shadow: none;
+    }
+    /* Selection remains highlighted while the keyboard focus is clearly distinct. */
+    :where(.syn-root .syn-data-grid__cell:focus-visible) {
+      outline: 3px double CanvasText;
+      outline-offset: -3px;
+    }
+  }
+}

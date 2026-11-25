@@ -6,6 +6,12 @@
     color: var(--syn-text);
     background: var(--syn-bg);
   }
+  /* Keep native [hidden] authoritative over author-level component display rules.
+     hidden=until-found must retain the browser's find-in-page reveal behavior. */
+  :where(.syn-root[hidden]:not([hidden="until-found" i]),
+         .syn-root [hidden]:not([hidden="until-found" i])) {
+    display: none !important;
+  }
   .syn-root :where([data-syn-theme]) { color: var(--syn-text); background-color: var(--syn-bg); }
   .syn-root.syn-page { min-height: 100svh; }
   .syn-root :where(h1,h2,h3,h4,p) { margin-block-start: 0; }

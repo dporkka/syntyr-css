@@ -33,7 +33,7 @@ export function predictWithPretext(element, pretext) {
     return skip("unsupported-white-space", measured);
   if (!["normal", "keep-all"].includes(style.wordBreak))
     return skip("unsupported-word-break", measured);
-  if (!["normal", "break-word"].includes(style.overflowWrap))
+  if (style.overflowWrap !== "break-word")
     return skip("unsupported-overflow-wrap", measured);
   if (["balance", "pretty"].includes(style.textWrapStyle) ||
       /\b(balance|pretty)\b/.test(style.textWrap || ""))
@@ -47,8 +47,8 @@ export function predictWithPretext(element, pretext) {
   const letterSpacing = style.letterSpacing === "normal" ? 0 : Number.parseFloat(style.letterSpacing);
   if (![lineHeight, fontSize, letterSpacing].every(Number.isFinite) || lineHeight <= 0 || fontSize <= 0)
     return skip("unresolved-font-metrics", measured);
-  const box = element.getBoundingClientRect();
-  const contentWidth = box.width - ["paddingLeft", "paddingRight", "borderLeftWidth", "borderRightWidth"]
+  // clientWidth excludes transforms, borders, and classic scrollbar space.
+  const contentWidth = element.clientWidth - ["paddingLeft", "paddingRight"]
     .reduce((sum, key) => sum + (Number.parseFloat(style[key]) || 0), 0);
   if (contentWidth <= 0) return skip("no-content-width", measured);
   const font = `${style.fontStyle || "normal"} ${style.fontWeight || "400"} ${style.fontSize} ${style.fontFamily}`;

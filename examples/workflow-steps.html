@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Syntyr's native HTML workflow stepper across vertical, responsive and error states.">
+  <title>Syntyr — native workflow steps</title>
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <main class="syn-shell">
+    <header class="syn-stage-header">
+      <div>
+        <p class="syn-eyebrow">CSS-first · native ordered lists</p>
+        <h1 class="syn-heading">Workflow steps</h1>
+        <p class="syn-muted">No scripts, fake routing, or backend actions. Status labels are available as text.</p>
+      </div>
+    </header>
+    <section class="syn-panel syn-region" aria-labelledby="wide-steps">
+      <h2 id="wide-steps" class="syn-section-heading">New workspace</h2>
+      <ol class="syn-steps" role="list" aria-label="Workspace setup progress">
+        <li class="syn-step" data-syn-state="complete">
+          <div><strong class="syn-step-label">Create account</strong><p class="syn-step-detail">Complete</p></div>
+        </li>
+        <li class="syn-step" data-syn-state="complete">
+          <div><strong class="syn-step-label">Select plan</strong><p class="syn-step-detail">Complete</p></div>
+        </li>
+        <li class="syn-step" aria-current="step">
+          <div><strong class="syn-step-label">Configure workspace</strong><p class="syn-step-detail">Current step</p></div>
+        </li>
+        <li class="syn-step">
+          <div><strong class="syn-step-label">Invite teammates</strong><p class="syn-step-detail">Not started</p></div>
+        </li>
+      </ol>
+    </section>
+    <section class="syn-panel syn-region" aria-labelledby="vertical-steps">
+      <h2 id="vertical-steps" class="syn-section-heading">Always-vertical workflow</h2>
+      <ol class="syn-steps syn-steps--vertical" role="list" aria-label="Approval progress">
+        <li class="syn-step" data-syn-state="complete">
+          <div><strong class="syn-step-label">Submitted</strong><p class="syn-step-detail">Complete</p></div>
+        </li>
+        <li class="syn-step" data-syn-state="error" aria-current="step">
+          <div><strong class="syn-step-label">Compliance review</strong><p class="syn-step-detail">Action required: reviewer needs additional documentation</p></div>
+        </li>
+        <li class="syn-step">
+          <div><strong class="syn-step-label">Published</strong><p class="syn-step-detail">Not started</p></div>
+        </li>
+      </ol>
+    </section>
+    <p><a href="../docs/components.md">Read the component contract</a></p>
+  </main>
+</body>
+</html>

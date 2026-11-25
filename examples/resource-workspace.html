@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Resource workspace and form recovery — Syntyr recipe</title>
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="../dist/syntyr.recipes.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <a href="#main" class="syn-button">Skip to example</a>
+  <main id="main" class="syn-workspace">
+    <header class="syn-page-header">
+      <div><h1>Resource workspace</h1><p>CSS-only demonstration using fictional records. Filtering, sorting, selections and server validation require an application.</p></div>
+    </header>
+    <section class="syn-app-card" aria-labelledby="collection-title">
+      <h2 id="collection-title">Resources</h2>
+      <div class="syn-collection-toolbar">
+        <!-- Backend contract example: GET /resources?q=...; no server implementation included. -->
+        <form class="syn-filter-bar" method="get" action="/resources" aria-label="Filter resources">
+          <label class="syn-filter-field syn-filter-field--query" for="resource-query">Search
+            <input class="syn-input" id="resource-query" type="search" name="q" value="" placeholder="Name or reference" disabled>
+          </label>
+          <div class="syn-filter-actions"><button class="syn-button" type="submit" disabled>Search (requires backend)</button></div>
+        </form>
+        <div class="syn-collection-actions"><a class="syn-button" href="#form-errors">See validation example</a></div>
+      </div>
+      <p class="syn-help">Disabled demonstration controls: server implementation required to return real results.</p>
+      <div class="syn-table-wrap" tabindex="0" role="region" aria-label="Resource results; scroll horizontally to view all columns">
+        <table class="syn-table syn-table--compact">
+          <caption>Two illustrative resources; no live search or sort is attached.</caption>
+          <thead><tr><th scope="col">Resource</th><th scope="col">Sector</th><th scope="col">State</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">RS-204</th><td>North</td><td><span class="syn-status syn-status--success">Online</span></td></tr>
+            <tr><th scope="row">RS-088</th><td>West</td><td><span class="syn-status syn-status--warning">Review</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="syn-bulk-actions">
+        <span>0 selected · Example bulk-action bar</span>
+        <button class="syn-button" type="button" disabled>Archive selected (requires backend)</button>
+      </div>
+      <details>
+        <summary>Preview no-results state</summary>
+        <div class="syn-result-state" role="note" aria-label="No results pattern">
+        <strong>No matching resources</strong>
+        <p>The server should render this state only when a real query returns zero matches. Preserve query parameters and provide a reset route.</p>
+        </div>
+      </details>
+    </section>
+    <section class="syn-app-card" aria-labelledby="form-title">
+      <h2 id="form-title">Failed form submission pattern</h2>
+      <p class="syn-help">Static demonstration of a failed server response; nothing here is saved.</p>
+      <div class="syn-error-summary" id="form-errors" tabindex="-1" role="region" aria-labelledby="error-title">
+        <h3 id="error-title">There is a problem</h3>
+        <ul><li><a href="#resource-name">Enter a resource name</a></li></ul>
+      </div>
+      <div class="syn-field">
+        <label for="resource-name">Resource name</label>
+        <input class="syn-input" id="resource-name" name="name" value="" aria-invalid="true" aria-describedby="resource-name-error" required>
+        <p class="syn-error" id="resource-name-error">Enter a resource name.</p>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

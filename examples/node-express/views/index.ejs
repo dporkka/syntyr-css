@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Syntyr Express/EJS example</title>
+    <link rel="stylesheet" href="/css/syntyr.core.css">
+  </head>
+  <body>
+    <main class="syn-root" data-syn-theme="studio">
+      <article class="syn-panel">
+        <h1 class="syn-heading">Find accounts</h1>
+        <form action="/search" method="get" role="search">
+          <label class="syn-label" for="query">Account name</label>
+          <input class="syn-input" id="query" name="q" value="<%= query %>" />
+          <button class="syn-button syn-button--primary" type="submit">Search</button>
+        </form>
+        <p role="status"><%= matches.length %> accounts</p>
+        <ul>
+          <% for (const name of matches) { %>
+            <li><%= name %></li>
+          <% } %>
+        </ul>
+      </article>
+    </main>
+  </body>
+</html>

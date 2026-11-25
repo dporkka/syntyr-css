@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Accessible server-rendered form states — Syntyr</title>
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="../dist/syntyr.recipes.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <main class="syn-shell">
+    <header class="syn-header">
+      <h1 class="syn-heading">Form state contracts</h1>
+      <a href="../docs/component-recipes.html">Integration guide</a>
+    </header>
+    <p class="syn-lede">Static examples of states the server or browser controls. No JavaScript or backend is included.</p>
+    <section class="syn-panel" aria-labelledby="error-title">
+      <h2 id="error-title">Server-returned invalid form</h2>
+      <div class="syn-error-summary" role="alert" aria-labelledby="errors-title">
+        <p id="errors-title"><strong>Check your account details</strong></p>
+        <ul><li><a href="#account">An account name is required.</a></li></ul>
+      </div>
+      <form class="syn-form" action="" method="get">
+        <div class="syn-field">
+          <label class="syn-label" for="account">Account name</label>
+          <input class="syn-input" id="account" name="account" required aria-invalid="true"
+                 aria-describedby="account-help account-error" value="">
+          <p class="syn-help" id="account-help">Shown on your invoices.</p>
+          <p class="syn-error" id="account-error">Enter an account name.</p>
+        </div>
+        <button class="syn-button syn-button--primary" type="submit">Save account</button>
+      </form>
+    </section>
+    <section class="syn-panel" aria-labelledby="valid-title" style="margin-block-start:1rem">
+      <h2 id="valid-title">Validated and disabled states</h2>
+      <div class="syn-form">
+        <div class="syn-field">
+          <label class="syn-label" for="valid-name">Approved workspace</label>
+          <input class="syn-input" id="valid-name" value="Approved example" data-syn-validation="valid" readonly>
+          <p class="syn-help">The server confirmed this value; readonly means it cannot be edited here.</p>
+        </div>
+        <div class="syn-field">
+          <label class="syn-label" for="disabled-name">Managed account</label>
+          <input class="syn-input" id="disabled-name" value="Managed by an administrator" disabled>
+        </div>
+      </div>
+    </section>
+    <section class="syn-panel" aria-labelledby="tokens-title" style="margin-block-start:1rem">
+      <h2 id="tokens-title">Local token overrides</h2>
+      <div class="syn-actions">
+        <button class="syn-button syn-button--primary" type="button"
+                style="--syn-button-bg:#2354a1;--syn-button-border-color:#2354a1;--syn-button-hover-bg:#184280">Custom primary</button>
+        <button class="syn-button" type="button">Unmodified default</button>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

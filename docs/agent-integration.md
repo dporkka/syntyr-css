@@ -19,6 +19,51 @@ A consumer may copy [`agents/syntyr/SKILL.md`](../agents/syntyr/SKILL.md) as an 
 
 The repository's root `AGENTS.md` guides agents contributing to Syntyr itself. It does **not** automatically become instructions in a separate application repository.
 
+## Offline first-run agent setup (source checkout)
+
+An optional Python standard-library command installs a **portable consumer Skill**,
+release-pinned CSS, and a small verified selector reference into an existing app.
+It runs from a Syntyr source checkout and does **not** install any application
+runtime dependencies, connect to services, or publish a package:
+
+```sh
+python3 scripts/syntyr_agent.py init --project /path/to/my-app --json
+python3 scripts/syntyr_agent.py info --project /path/to/my-app --json
+python3 scripts/syntyr_agent.py check --project /path/to/my-app --json /path/to/my-app/page.html
+```
+
+`init` defaults to the **published, immutable alpha.4 CSS** and writes
+`syntyr.agent.json`, versioned CSS files under `vendor/syntyr/<release>/`,
+and `.agents/skills/syntyr/SKILL.md` plus `references/api.json`. Rerunning is
+idempotent. Different existing files or symlinked output paths are rejected
+without overwriting project content. For tooling that expects another skill
+location, specify `--agent claude` or `--agent cursor`; `--agent codex` and
+`--agent generic` use the portable `.agents/skills/` path. Projects must still
+load the copied CSS in their own HTML/framework entrypoint: installation does
+**not** silently modify application code or guarantee CSS integration.
+
+Choose `--release 0.3.0-alpha.5` only when deliberately testing the
+**unreleased source candidate**. The generated `api.json` lists selectors
+actually present in the selected CSS files; source-only selectors cannot
+appear in an alpha.4 reference.
+
+`info` is read-only project discovery for coding agents. It reports the configured
+release (published or source candidate), its actual pinned CSS asset hashes and
+integrity statuses, supported themes, and portable Skill/reference paths. Exit
+code **0** means the pinned installation is healthy, **1** means degraded or
+invalid, and **2** means the project was not initialized. Do not infer active
+stylesheet imports or framework support from this inventory: the host
+application must still load and test the appropriate CSS. The command does
+not scan application code or need application dependencies.
+
+`check` validates the installed CSS asset hashes and literal `.html` files\nagainst that project's pinned release, returning structured, source-located
+JSON diagnostics. Its exit codes are **0** for checked and error-free HTML,
+**1** for errors, and **2** for incomplete coverage (for example, JSX/TSX or
+no HTML files). It is not a React/Vue/Svelte parser or a browser accessibility
+test. Generated CSS assets are not proof that the app has actually imported
+them. The separate local MCP adapter remains available for smaller markup
+fragments and interactive catalog queries.
+
 ## Optional local MCP adapter
 
 An optional **read-only local MCP server** can now expose the checked-in
@@ -27,7 +72,11 @@ use Syntyr CSS, is not installed by the npm package, and does not expose a
 hosted endpoint. See the [MCP adapter source and installation guide](https://github.com/dporkka/syntyr-css/tree/main/agent_mcp)
 for the separate Python SDK installation, version-safe tools, and limits.
 It defaults to the published immutable `0.3.0-alpha.4` CSS rather than
-silently offering source-only `0.3.0-alpha.5` selectors.
+silently offering source-only `0.3.0-alpha.5` selectors. The read-only
+`validate_markup` tool reuses the [static checker](editor-integration.md#optional-static-html-diagnostics)
+for source-located, machine-readable errors, available class suggestions, and
+valid theme/state values. Responses are constrained to the selected release's
+checked-in CSS rather than presenting candidate-only selectors as fixes.
 
 ## Documents and machine-readable inventory
 
@@ -62,3 +111,30 @@ The consolidated reference is deterministic and checked in CI through the Python
 ## What Syntyr does not do
 
 Syntyr styles browser HTML/CSS. It does not supply a JavaScript component runtime, chart rendering engine, AI API, CRUD handlers, form submission or remote data access. The optional local read-only MCP adapter is a separate developer tool, never a CSS runtime dependency. Use your existing application technology for those responsibilities.
+
+## Deterministic section composition (source candidate)
+
+From a source checkout, optional Node.js 22+ authoring tooling can discover the
+canonical website section fields and assemble ordinary HTML without a model
+generating arbitrary tags. No npm install or browser-side JavaScript is needed.
+This is separate from the Python-only CSS build and the immutable alpha.4 release.
+
+```sh
+node scripts/compose.mjs --list 0.3.0-alpha.5
+node scripts/compose.mjs <<'JSON'
+{"release":"0.3.0-alpha.5","title":"Product demo","theme":"studio","sections":[{"section_id":"hero-product","fields":{"text2":"A clearer workspace."}},{"section_id":"faq"}]}
+JSON
+```
+
+The JSON result includes an editable `syntyr.page.v1` project, complete HTML,
+required `syntyr.all.css` and a list of local image assets. Save the HTML next
+to the matching candidate stylesheet from `dist/` and copy the listed assets
+from `assets/` into an `assets/` directory alongside the HTML. The source
+model validates field names and values, escapes content, scopes repeated IDs
+and uses its existing safe-link fallback. Section order is preserved. Only
+known canonical sections and 1–50 section instances are accepted.
+
+This generator produces the static section layer; it does not compose or
+install host widget controllers, implement routes/forms, generate production
+copy, or certify accessibility. Review example content and destinations, and
+use the release-pinned markup validator and real browser tests before shipping.

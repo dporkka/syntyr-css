@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Syntyr + native form-associated custom elements</title>
+  <link rel="stylesheet" href="../../dist/syntyr.core.css">
+  <script type="module" src="./asset-range.js"></script>
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <main class="syn-shell">
+    <h1 class="syn-title">Form-associated Custom Element interoperability</h1>
+    <p>Native labeled number fields submit without JavaScript. With JavaScript,
+       ElementInternals adds cross-field validation and one native form value pair.</p>
+    <form id="inventory-form" class="syn-form syn-panel" action="./form-result.html" method="get">
+      <fieldset id="inventory-group" class="syn-fieldset">
+        <legend>Inventory count</legend>
+        <syn-demo-asset-range name="assets" required>
+          <label class="syn-label">Minimum assets
+            <input data-asset-min class="syn-input" type="number" inputmode="numeric"
+                   name="assets_min" min="0" step="1" value="50" required>
+          </label>
+          <label class="syn-label">Maximum assets
+            <input data-asset-max class="syn-input" type="number" inputmode="numeric"
+                   name="assets_max" min="0" step="1" value="500" required>
+          </label>
+          <p class="syn-error" role="status" data-asset-error></p>
+        </syn-demo-asset-range>
+      </fieldset>
+      <div>
+        <button class="syn-button syn-button--primary" type="submit">Search inventory</button>
+        <button class="syn-button" type="reset">Reset</button>
+      </div>
+    </form>
+    <p>Example only. A production server must validate both values and their order.</p>
+    <p><a class="syn-button" href="./index.html">Back to Web Components</a></p>
+  </main>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="Explore native HTML choice cards, filter forms and collection layouts styled with Syntyr CSS. Browser-managed input states, no widget runtime required.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Syntyr / Native choice, filter and list patterns</title>
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <main id="main" class="syn-shell syn-stack">
+    <h1>Native choices, filtering and collection rows</h1>
+    <p>CSS-only presentation. The browser owns form selection and validation; submitting these GET forms simply reloads this demonstration page.</p>
+
+    <section aria-labelledby="choice-title" class="syn-panel syn-stack">
+      <h2 id="choice-title">Choice cards</h2>
+      <form action="native-choice-filter-list.html" method="get" class="syn-form">
+        <fieldset class="syn-fieldset">
+          <legend>Subscription plan</legend>
+          <div class="syn-grid" style="--syn-grid-min: 13rem">
+            <label class="syn-choice-card">
+              <input class="syn-input" type="radio" name="plan" value="starter" checked>
+              <span><strong>Starter</strong><small>For a small team</small></span>
+            </label>
+            <label class="syn-choice-card">
+              <input class="syn-input" type="radio" name="plan" value="growth">
+              <span><strong>Growth</strong><small>For a growing team</small></span>
+            </label>
+            <label class="syn-choice-card">
+              <input class="syn-input" type="radio" name="plan" value="enterprise" disabled>
+              <span><strong>Enterprise</strong><small>Contact sales to enable</small></span>
+            </label>
+          </div>
+        </fieldset>
+        <button type="submit" class="syn-button syn-button--primary">Select plan</button>
+      </form>
+    </section>
+
+    <section aria-labelledby="validation-title" class="syn-panel syn-stack">
+      <h2 id="validation-title">Server and browser validation</h2>
+      <p>This sample includes a server-provided error state. A real server must re-render error messages after submission and focus the error summary as appropriate.</p>
+      <form action="native-choice-filter-list.html" method="get" class="syn-form">
+        <div class="syn-field" data-syn-state="error">
+          <label for="billing-email" class="syn-label">Billing email</label>
+          <input class="syn-input" id="billing-email" name="email" type="email" required value="bad@" aria-invalid="true" aria-describedby="billing-help billing-error">
+          <p class="syn-help" id="billing-help">We will send invoices to this address.</p>
+          <p class="syn-error" id="billing-error">Enter a valid email address.</p>
+        </div>
+        <button type="submit" class="syn-button">Update billing email</button>
+      </form>
+    </section>
+
+    <section aria-labelledby="filter-title" class="syn-panel syn-stack">
+      <h2 id="filter-title">Native filter controls</h2>
+      <form action="native-choice-filter-list.html" method="get" class="syn-form">
+        <fieldset class="syn-fieldset">
+          <legend>Campaign status</legend>
+          <div class="syn-filter-choices">
+            <label class="syn-chip"><input type="radio" name="status" value="all" checked> All</label>
+            <label class="syn-chip"><input type="radio" name="status" value="active"> Active</label>
+            <label class="syn-chip"><input type="radio" name="status" value="archived"> Archived</label>
+          </div>
+        </fieldset>
+        <button type="submit" class="syn-button">Apply filter</button>
+      </form>
+    </section>
+
+    <section aria-labelledby="rows-title" class="syn-panel syn-stack">
+      <h2 id="rows-title">Collection rows</h2>
+      <ul class="syn-list-group" role="list">
+        <li class="syn-list-row">
+          <span class="syn-avatar syn-list-row__media" aria-hidden="true">A</span>
+          <span class="syn-list-row__body">
+            <a id="campaign-a" href="#campaign-a"><strong>North district campaign</strong></a>
+            <small>42 displays · Updated today</small>
+          </span>
+          <span class="syn-list-row__actions"><a href="#campaign-a">View</a></span>
+        </li>
+        <li class="syn-list-row">
+          <span class="syn-avatar syn-list-row__media" aria-hidden="true">B</span>
+          <span class="syn-list-row__body">
+            <a id="campaign-b" href="#campaign-b"><strong>Airport route campaign</strong></a>
+            <small>12 displays · Scheduled</small>
+          </span>
+          <span class="syn-list-row__actions"><a href="#campaign-b">View</a></span>
+        </li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

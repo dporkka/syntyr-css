@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Accessible, native, keyboard-scrollable enterprise data tables.">
+  <title>Syntyr · Native data tables</title>
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio" data-syn-density="compact">
+  <main class="syn-shell" id="main">
+    <header class="syn-header">
+      <a class="syn-logo" href="../index.html">SYNTYR / CSS</a>
+      <a href="../docs/data-tables.html">Table guide</a>
+    </header>
+    <section class="syn-stack" aria-labelledby="table-heading">
+      <h1 class="syn-title" id="table-heading">Native enterprise tables</h1>
+      <p class="syn-muted">This static snapshot is sorted by account. Sorting, data loading, and pagination belong to the host application.</p>
+      <p class="syn-help">Tab to the table region. Use arrow keys to scroll when needed.</p>
+      <div class="syn-table-wrap syn-table-wrap--scroll"
+           role="region" tabindex="0" aria-label="Scrollable sample revenue table"
+           style="--syn-table-scroll-height:20rem">
+        <table class="syn-table syn-table--sticky syn-table--striped">
+          <caption>Illustrative quarterly revenue, sorted by account ascending</caption>
+          <thead>
+            <tr>
+              <th scope="col" aria-sort="ascending"><span class="syn-table-sort">Account</span></th>
+              <th scope="col">Status</th>
+              <th scope="col" class="syn-cell--numeric">Revenue</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Atlas Outdoor</th><td><span class="syn-status syn-status--success">Active</span></td><td class="syn-cell--numeric">$24,000</td></tr>
+            <tr><th scope="row">Beacon Media</th><td><span class="syn-status syn-status--warning">Review</span></td><td class="syn-cell--numeric">$18,400</td></tr>
+            <tr><th scope="row">Cedar Digital</th><td><span class="syn-status syn-status--success">Active</span></td><td class="syn-cell--numeric">$31,700</td></tr>
+            <tr><th scope="row">Delta Signage</th><td><span class="syn-status syn-status--danger">Overdue</span></td><td class="syn-cell--numeric">$6,800</td></tr>
+            <tr><th scope="row">Eastline Ads</th><td><span class="syn-status syn-status--success">Active</span></td><td class="syn-cell--numeric">$12,500</td></tr>
+            <tr><th scope="row">Fieldstone OOH</th><td><span class="syn-status syn-status--warning">Review</span></td><td class="syn-cell--numeric">$14,900</td></tr>
+            <tr><th scope="row">Granite Media</th><td><span class="syn-status syn-status--success">Active</span></td><td class="syn-cell--numeric">$22,100</td></tr>
+            <tr><th scope="row">Harbor Screens</th><td><span class="syn-status syn-status--success">Active</span></td><td class="syn-cell--numeric">$7,200</td></tr>
+            <tr><th scope="row">Indigo Display</th><td><span class="syn-status syn-status--warning">Review</span></td><td class="syn-cell--numeric">$4,800</td></tr>
+            <tr><th scope="row">Juniper Networks</th><td><span class="syn-status syn-status--success">Active</span></td><td class="syn-cell--numeric">$42,300</td></tr>
+            <tr><th scope="row">Kite City Ads</th><td><span class="syn-status syn-status--success">Active</span></td><td class="syn-cell--numeric">$9,600</td></tr>
+            <tr><th scope="row">Lumen Billboard</th><td><span class="syn-status syn-status--danger">Overdue</span></td><td class="syn-cell--numeric">$3,800</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="syn-caption">Change the theme or density attribute in HTML to reuse the same structure without JavaScript.</p>
+    </section>
+  </main>
+</body>
+</html>

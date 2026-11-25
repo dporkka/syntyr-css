@@ -1,0 +1,59 @@
+<section class="syn-root syn-region" data-syn-theme="studio" aria-labelledby="syn-resource-workspace-heading">
+  <header class="syn-collection-toolbar">
+    <div>
+      <h2 id="syn-resource-workspace-heading" class="syn-heading">Resources</h2>
+      <p class="syn-muted">Illustrative records. Search, edits, and permissions require your application.</p>
+    </div>
+    <div class="syn-collection-actions">
+      <a class="syn-button syn-button--primary" href="/resources/new">Create resource</a>
+    </div>
+  </header>
+  <form class="syn-filter-bar syn-panel" action="/resources" method="get" role="search" aria-label="Filter resources">
+    <div class="syn-filter-field syn-filter-field--query">
+      <label class="syn-label" for="syn-rw-search">Find resources</label>
+      <input class="syn-input" id="syn-rw-search" name="q" type="search" placeholder="Name or identifier">
+    </div>
+    <div class="syn-filter-field">
+      <label class="syn-label" for="syn-rw-status">Status</label>
+      <select class="syn-select" id="syn-rw-status" name="status">
+        <option value="">All statuses</option>
+        <option value="active">Active</option>
+        <option value="pending">Pending review</option>
+      </select>
+    </div>
+    <div class="syn-filter-actions"><button class="syn-button syn-button--primary" type="submit">Filter</button></div>
+  </form>
+  <div class="syn-panel">
+    <div class="syn-table-wrap" role="region" aria-label="Resources; scroll horizontally for more columns" tabindex="0">
+      <table class="syn-table">
+        <caption>Illustrative resources, sorted by name</caption>
+        <thead>
+          <tr><th scope="col">Name</th><th scope="col">Owner</th><th scope="col">Status</th><th scope="col">Details</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">North warehouse</th><td>Morgan</td>
+            <td><span class="syn-status syn-status--success">Active</span></td>
+            <td><a href="/resources/north-warehouse">View</a></td>
+          </tr>
+          <tr>
+            <th scope="row">West terminal</th><td>Casey</td>
+            <td><span class="syn-status syn-status--warning">Pending</span></td>
+            <td><a href="/resources/west-terminal">View</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <nav aria-label="Resource pages" class="syn-inline">
+      <span aria-current="page">Page 1 of 2</span>
+      <a href="/resources?page=2">Next page</a>
+    </nav>
+  </div>
+  <details>
+    <summary>Alternative empty-result state (illustration)</summary>
+    <div class="syn-result-state">
+      <h3 class="syn-heading">No matching resources</h3>
+      <p>Try different filters or <a href="/resources/new">create a resource</a>.</p>
+    </div>
+  </details>
+</section>

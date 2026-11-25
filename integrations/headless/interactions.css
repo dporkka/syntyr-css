@@ -1,0 +1,134 @@
+/* Optional, headless-library-owned menu, combobox and toast presentation.
+   Load after syntyr.core.css. Does NOT implement any ARIA, focus, filtering,
+   keyboard behavior, dismissals or notification lifecycle.
+   Portal content must mount inside .syn-root (e.g. body.syn-root).
+   No selectors target unclassed host markup or library internals. */
+@layer syn.components {
+  :where(.syn-root, .syn-root *) {
+    &.syn-menu-surface, &.syn-combobox-popover {
+      box-sizing: border-box;
+      min-inline-size: min(14rem, calc(100vw - 2rem));
+      max-inline-size: calc(100vw - 2rem);
+      max-block-size: min(25rem, calc(100dvh - 2rem));
+      overflow: auto;
+      padding: .35rem;
+      border: 1px solid var(--syn-border-default);
+      border-radius: var(--syn-radius);
+      background: var(--syn-surface-floating);
+      color: var(--syn-text);
+      box-shadow: var(--syn-shadow-overlay);
+    }
+    &.syn-menu-item, &.syn-combobox-option {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      min-block-size: var(--syn-control-height);
+      padding: .5rem .75rem;
+      border-radius: var(--syn-radius);
+      color: var(--syn-text);
+      background: transparent;
+      font: 500 var(--syn-type-sm)/1.4 var(--syn-font-ui);
+      overflow-wrap: anywhere;
+      user-select: none;
+    }
+    &.syn-menu-item:where([data-highlighted], [data-focused], [data-focus-visible]),
+    &.syn-combobox-option:where([data-focused], [data-focus-visible]) {
+      outline: 2px solid var(--syn-focus-ring);
+      outline-offset: -2px;
+      background: var(--syn-surface-hover);
+    }
+    &.syn-menu-item:where([data-state="checked"], [aria-checked="true"]),
+    &.syn-combobox-option:where([data-selected], [aria-selected="true"]) {
+      font-weight: 700;
+      border-inline-start: 3px solid var(--syn-accent);
+      background: var(--syn-accent-soft);
+    }
+    &.syn-menu-item:where([data-disabled], [aria-disabled="true"]),
+    &.syn-combobox-option:where([data-disabled], [aria-disabled="true"]) {
+      opacity: .55;
+      cursor: not-allowed;
+    }
+    &.syn-menu-separator {
+      block-size: 1px;
+      margin-block: .35rem;
+      background: var(--syn-border-default);
+    }
+    &.syn-combobox {
+      display: grid;
+      gap: .4rem;
+      min-inline-size: 0;
+      max-inline-size: 30rem;
+    }
+    &.syn-combobox-field {
+      display: flex;
+      gap: .375rem;
+      min-inline-size: 0;
+    }
+    &.syn-combobox-field > .syn-input {
+      flex: 1 1 10rem;
+      min-inline-size: 0;
+    }
+    &.syn-combobox-field > .syn-button { flex: none; }
+    &.syn-combobox-listbox {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+
+    /* Only the host toast primitive owns timers, queue, focus and announcements. */
+    &.syn-toast-region {
+      position: fixed;
+      z-index: 1000;
+      inset-inline-end: max(1rem, env(safe-area-inset-right));
+      inset-block-end: max(1rem, env(safe-area-inset-bottom));
+      box-sizing: border-box;
+      inline-size: min(24rem, calc(100vw - 2rem));
+      max-block-size: calc(100dvh - 2rem);
+      display: grid;
+      gap: .75rem;
+      align-content: end;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+    &.syn-toast {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: .25rem .75rem;
+      padding: 1rem;
+      border: 1px solid var(--syn-border-default);
+      border-inline-start: 3px solid var(--syn-accent);
+      border-radius: var(--syn-radius);
+      background: var(--syn-surface-floating);
+      color: var(--syn-text);
+      box-shadow: var(--syn-shadow-overlay);
+      min-inline-size: 0;
+      overflow-wrap: anywhere;
+    }
+    &.syn-toast[data-tone="success"] { border-inline-start-color: var(--syn-success); }
+    &.syn-toast[data-tone="error"] { border-inline-start-color: var(--syn-danger); }
+    &.syn-toast-title { font-weight: 700; }
+    &.syn-toast-description { color: var(--syn-text-subtle); font-size: var(--syn-type-sm); }
+    &.syn-toast-title, &.syn-toast-description { grid-column: 1; }
+    &.syn-toast > .syn-button { grid-column: 2; grid-row: 1 / span 2; align-self: center; }
+  }
+  @media (forced-colors: active) {
+    :where(.syn-root, .syn-root *) {
+      &.syn-menu-surface, &.syn-combobox-popover, &.syn-toast { border-color: CanvasText; }
+      &.syn-menu-item:where([data-highlighted], [data-focused], [data-focus-visible]),
+      &.syn-combobox-option:where([data-focused], [data-focus-visible]) {
+        outline-color: Highlight;
+      }
+      &.syn-combobox-option:where([data-selected], [aria-selected="true"]),
+      &.syn-menu-item:where([data-state="checked"], [aria-checked="true"]) {
+        border-inline-start-color: Highlight;
+      }
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    :where(.syn-root, .syn-root *) :is(.syn-menu-surface, .syn-combobox-popover, .syn-toast) {
+      animation-duration: .01ms;
+      transition-duration: .01ms;
+    }
+  }
+}

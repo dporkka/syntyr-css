@@ -24,9 +24,10 @@
   background-image:radial-gradient(circle,color-mix(in srgb,var(--syn-accent) 52%,transparent) 1px,transparent 1.5px);
   background-size:1rem 1rem;
 }
-/* Keep small descriptive text readable even when an accent dot/hatch lies
-   directly behind a glyph. The decorative patterns remain untouched. */
-.syn-root :is(.syn-block-asset--dot-field,.syn-block-asset--diagonal)>span {
+/* Keep small descriptive text on an opaque semantic surface when fine
+   grid lines, accent dots or hatches would otherwise cross the glyphs.
+   Decorative backgrounds remain visible beyond the caption. */
+.syn-root :is(.syn-block-asset--fine-grid,.syn-block-asset--dot-field,.syn-block-asset--diagonal)>span {
   background:var(--syn-surface);
   padding:.2rem .35rem;
   border-radius:.2rem;

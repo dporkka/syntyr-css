@@ -20,8 +20,24 @@ class AgentMcpSdkTests(unittest.TestCase):
                 names = {tool.name for tool in listing.tools}
                 self.assertGreaterEqual(names, {
                     "search_components", "get_component", "lookup_api",
-                    "get_theme_tokens", "validate_markup",
+                    "get_theme_tokens", "validate_markup", "get_interaction_contracts",
+                    "get_interaction_recipes",
                 })
+                contracts = await client.call_tool("get_interaction_contracts", {
+                    "name": "dialog", "release": "0.3.0-alpha.5",
+                })
+                self.assertFalse(contracts.is_error)
+                self.assertEqual(contracts.structured_content["contracts"][0]["id"], "dialog")
+                recipes = await client.call_tool("get_interaction_recipes", {
+                    "contract": "combobox", "release": "0.3.0-alpha.5",
+                })
+                self.assertFalse(recipes.is_error)
+                self.assertEqual({r["id"] for r in recipes.structured_content["recipes"]},
+                                 {"native-select", "react-aria-combobox"})
+                unavailable_recipes = await client.call_tool("get_interaction_recipes", {})
+                self.assertTrue(unavailable_recipes.is_error)
+                unavailable = await client.call_tool("get_interaction_contracts", {})
+                self.assertTrue(unavailable.is_error)
                 result = await client.call_tool("lookup_api", {
                     "name": "syn-button--primary", "release": "0.3.0-alpha.4",
                 })
@@ -34,6 +50,17 @@ class AgentMcpSdkTests(unittest.TestCase):
                 })
                 self.assertTrue(invalid.is_error)
                 self.assertIn("unavailable", str(invalid.content).lower())
+                check = await client.call_tool("validate_markup", {
+                    "html": '<button class="syn-buttn" data-syn-theme="industrial">Go</button>',
+                    "release": "0.3.0-alpha.4", "stylesheets": ["syntyr.core.css"],
+                })
+                self.assertFalse(check.is_error)
+                result = check.structured_content
+                self.assertEqual(result["unknown_classes"], ["syn-buttn"])
+                self.assertEqual({d["code"] for d in result["diagnostics"]},
+                                 {"unknown-class", "invalid-attribute-value"})
+                typo = next(d for d in result["diagnostics"] if d["code"] == "unknown-class")
+                self.assertIn("syn-button", [s["name"] for s in typo["suggestions"]])
                 for tool in listing.tools:
                     self.assertIs(tool.annotations.read_only_hint, True)
         asyncio.run(run())

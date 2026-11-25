@@ -8,15 +8,20 @@
   <link rel="stylesheet" href="../dist/syntyr.all.css">
   <link rel="stylesheet" href="docs.css">
   <link rel="stylesheet" href="playground.css">
+  <script src="playground-catalog.js" defer></script>
+  <script src="playground-snippet.js" defer></script>
   <script src="playground.js" defer></script>
+  <script src="playground-editor.js" defer></script>
 </head>
 <body class="syn-root syn-page" data-syn-theme="studio">
   <div class="syn-shell">
     <header class="syn-header">
       <a class="syn-logo" href="index.html">SYNTYR <span class="syn-muted">/ COMPONENT LAB</span></a>
       <nav class="syn-nav" aria-label="Playground navigation">
+        <a href="catalog.html">COMPONENT CATALOG</a>
         <a href="index.html">GALLERY</a>
         <a href="theme-editor.html">THEME EDITOR</a>
+        <a href="page-builder.html">PAGE BUILDER</a>
         <a href="#typography-title">TYPE LAB</a>
         <a href="#geometry-title">GEOMETRY MIXER</a>
         <a href="editor-integration.md">EDITOR SETUP</a>
@@ -26,7 +31,7 @@
       <section class="syn-stage" aria-labelledby="playground-title">
         <span class="syn-eyebrow">DEVELOPER EXPERIENCE / BUILD-FREE</span>
         <h1 id="playground-title" class="syn-title">Component playground</h1>
-        <p class="syn-lede">Edit native HTML, switch palettes, and render Syntyr's real CSS in an isolated preview. No bundler, account, or external service required.</p>
+        <p class="syn-lede">Choose a real catalog component, search examples, edit native HTML, tune panel tokens, and preview responsive layouts. The CSS core stays JavaScript-free.</p>
       </section>
 
       <div class="playground-layout">
@@ -54,14 +59,37 @@
               </select>
             </label>
           </div>
-          <label class="syn-label" for="playground-markup">EDITABLE HTML</label>
+          <div class="playground-discovery">
+            <label class="syn-label" for="playground-search">SEARCH COMPONENTS &amp; BLOCKS</label>
+            <input class="syn-input" id="playground-search" type="search" autocomplete="off" placeholder="Search buttons, forms, tables, navigation…" aria-describedby="playground-search-status">
+            <p class="syn-caption" id="playground-search-status" role="status" aria-live="polite">Choose a starter or catalog example above.</p>
+            <aside class="playground-reference" id="playground-reference" aria-labelledby="playground-reference-title">
+              <h3 class="syn-heading" id="playground-reference-title">Example guidance</h3>
+              <p class="syn-caption">Catalog module: <code id="playground-reference-module">syntyr.core.css</code></p>
+              <p class="syn-caption">Copy/export stylesheets: <code id="playground-required-stylesheets">syntyr.core.css</code></p>
+              <p class="syn-muted" id="playground-reference-description">Choose an example for implementation guidance.</p>
+              <p class="syn-caption" id="playground-reference-guidance">Accessibility and application behavior remain your responsibility.</p>
+              <p class="syn-caption"><a href="components.html">Component API</a> · <a href="component-recipes.html">HTML recipes</a> · <a id="playground-source-link" href="catalog.html">View original component</a> · <a href="blocks.html">Free UI blocks</a> · <a href="how-to.html">How-To guides</a></p>
+            </aside>
+          </div>
+          <label class="syn-label" for="playground-markup" id="playground-markup-label">EDITABLE HTML</label>
           <textarea class="syn-textarea playground-code" id="playground-markup" spellcheck="false" rows="17" aria-describedby="playground-help"></textarea>
-          <p class="syn-muted" id="playground-help">The preview is sandboxed: scripts and form submission cannot run. Changes appear automatically, or press Render.</p>
+          <div id="playground-editor-mount" class="playground-codemirror" hidden></div>
+          <div class="playground-token-controls">
+            <label class="syn-label" for="playground-panel-radius">PANEL RADIUS <output id="playground-panel-radius-value" for="playground-panel-radius">12px</output>
+              <input id="playground-panel-radius" class="syn-input" type="range" min="0" max="32" step="1" value="12">
+            </label>
+            <label class="syn-label" for="playground-panel-padding">PANEL PADDING <output id="playground-panel-padding-value" for="playground-panel-padding">24px</output>
+              <input id="playground-panel-padding" class="syn-input" type="range" min="8" max="48" step="2" value="24">
+            </label>
+          </div>
+          <p class="syn-muted" id="playground-help">Edit HTML with CodeMirror 6 syntax highlighting, indentation and undo; a native textarea remains available if the editor cannot load. The preview blocks scripts and form submission. Copy configured HTML includes the selected theme, panel tokens and self-hosted stylesheet links for the selected example. Added classes from other modules need their own links.</p>
           <div class="syn-inline">
             <button class="syn-button syn-button--primary" id="playground-render" type="button">RENDER PREVIEW</button>
-            <button class="syn-button" id="playground-copy" type="button">COPY HTML</button>
+            <button class="syn-button" id="playground-copy" type="button">COPY CONFIGURED HTML</button>
           </div>
           <p id="playground-status" role="status" aria-live="polite" class="syn-caption">Ready to preview.</p>
+          <textarea id="playground-copy-fallback" class="syn-textarea" aria-label="Configured HTML for manual copying" readonly rows="9" spellcheck="false" hidden></textarea>
         </section>
 
         <section class="syn-panel playground-view" aria-labelledby="playground-view-title">
@@ -69,8 +97,18 @@
             <h2 id="playground-view-title" class="syn-heading">Live preview</h2>
             <span class="syn-badge">ISOLATED</span>
           </div>
-          <iframe id="playground-preview" title="Sandboxed Syntyr component preview" sandbox="allow-same-origin" referrerpolicy="no-referrer"></iframe>
-          <p class="syn-caption">Syntyr styling runs with ordinary CSS. Only this documentation page uses JavaScript to update the preview.</p>
+          <label class="syn-label" for="playground-viewport">PREVIEW WIDTH
+            <select id="playground-viewport" class="syn-select">
+              <option value="fluid">Available width</option>
+              <option value="390">Mobile · 390px</option>
+              <option value="768">Tablet · 768px</option>
+              <option value="1200">Desktop · 1200px</option>
+            </select>
+          </label>
+          <div class="playground-canvas">
+            <iframe id="playground-preview" title="Sandboxed Syntyr component preview" sandbox="allow-same-origin" referrerpolicy="no-referrer"></iframe>
+          </div>
+          <p class="syn-caption">Syntyr styling runs with ordinary CSS. Only documentation uses JavaScript for editing and previewing. <a href="playground-editor.licenses.txt">CodeMirror and dependency licenses</a>.</p>
         </section>
       </div>
       <section class="syn-panel playground-typography" aria-labelledby="typography-title">
@@ -170,8 +208,8 @@
       </section>
       <section class="syn-panel playground-footer" aria-labelledby="playground-next-title">
         <h2 id="playground-next-title" class="syn-heading">Build with the same API</h2>
-        <p>Load <code>syntyr.core.css</code> in your application and optionally add <code>syntyr.utilities.css</code> or <code>syntyr.recipes.css</code>. The preview uses the combined CSS file for convenient exploration.</p>
-        <p><a href="components.md">Component reference</a> · <a href="theme-customization.md">Theme and token customization</a> · <a href="editor-integration.md">Editor autocomplete setup</a></p>
+        <p>Load <code>syntyr.core.css</code> in your application and optionally add <code>syntyr.utilities.css</code> or <code>syntyr.recipes.css</code>. The preview and copied snippets both use the specific stylesheets declared by the selected example. Self-host those files from the same pinned release and move the generated <code>&lt;link&gt;</code> tags into your page's <code>&lt;head&gt;</code>. If you add classes from other optional modules, add their stylesheets manually.</p>
+        <p><a href="catalog.html">Searchable gallery</a> · <a href="components.md">Component reference</a> · <a href="theme-customization.md">Theme and token customization</a> · <a href="editor-integration.md">Editor autocomplete setup</a></p>
       </section>
     </main>
   </div>

@@ -1,0 +1,93 @@
+{
+  "title": "Syntyr CMS Starter",
+  "description": "A portable, accessible Syntyr landing page edited with Git-backed CMS tools.",
+  "theme": "studio",
+  "sections": [
+    {
+      "type": "hero",
+      "eyebrow": "STATIC-FIRST / EDITABLE",
+      "heading": "Edit content. Keep your HTML.",
+      "description": "Your design belongs to Syntyr, your content lives in JSON, and your editor can change without changing your website.",
+      "button": {
+        "label": "Explore features",
+        "url": "/#section-features"
+      },
+      "id": "hero"
+    },
+    {
+      "type": "features",
+      "heading": "Built for long-lived websites",
+      "items": [
+        {
+          "title": "Framework independent",
+          "description": "The same page works with native HTML, Go, Python or a JavaScript application."
+        },
+        {
+          "title": "No client renderer",
+          "description": "Prebuilt HTML and CSS ship without an application JavaScript bundle."
+        },
+        {
+          "title": "Git-backed changes",
+          "description": "CMS editors update source files instead of holding content in a proprietary database."
+        }
+      ],
+      "id": "features"
+    },
+    {
+      "type": "pricing",
+      "heading": "Choose a starting point",
+      "plans": [
+        {
+          "name": "Free",
+          "price": "$0",
+          "features": [
+            "MIT-licensed Syntyr core",
+            "Native HTML blocks"
+          ],
+          "button": {
+            "label": "View features",
+            "url": "/#section-features"
+          }
+        },
+        {
+          "name": "Premium",
+          "price": "Explore",
+          "features": [
+            "Optional advanced templates",
+            "Compatible with the free core"
+          ],
+          "button": {
+            "label": "Learn more",
+            "url": "https://syntyr-css.pages.dev/"
+          }
+        }
+      ],
+      "id": "pricing"
+    },
+    {
+      "type": "faq",
+      "heading": "Frequently asked questions",
+      "items": [
+        {
+          "question": "Do I need a CMS at runtime?",
+          "answer": "No. Sveltia and Pages CMS are editors; the published page is HTML and CSS."
+        },
+        {
+          "question": "Can I switch between editors?",
+          "answer": "Yes. Both examples edit the same JSON document; rebuilding uses the same renderer."
+        }
+      ],
+      "id": "faq"
+    },
+    {
+      "type": "cta",
+      "heading": "Start with the free core",
+      "description": "Copy this starter into your own Git repository and connect the editor you prefer.",
+      "button": {
+        "label": "Syntyr documentation",
+        "url": "https://syntyr-css.pages.dev/docs/"
+      },
+      "id": "cta"
+    }
+  ]
+}

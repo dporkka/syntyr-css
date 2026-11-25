@@ -12,6 +12,8 @@ import { predictWithPretext } from "./integrations/pretext/audit.mjs";
 
 await document.fonts.ready;
 const element = document.querySelector(".syn-root .syn-body");
+// Match Pretext’s supported wrapping policy on the sample under test.
+element.style.overflowWrap = "break-word";
 const report = predictWithPretext(element, pretext);
 if (report.status === "measured" && report.differs) {
   console.warn("Review browser vs predictive line breaks:", report);
@@ -23,7 +25,7 @@ if (report.overflowInline || report.overflowBlock) {
 
 The adapter obtains computed font size, line height, spacing and **content width**; it calls Pretext's `prepare()` and `layout()` APIs, then compares the predictive line count with the browser's text range rectangles. Unlike Pretext's hot-path reuse pattern, this one-shot adapter prepares on every call: run it for occasional diagnostics, **not** on every animation frame or for many virtualization rows. For high-frequency prediction, cache `prepare()` per text, font and options and call `layout()` for each new width.
 
-Predictions are skipped for rich inline elements, unsupported wrapping and CSS font variations. A prediction is **not** an accessibility result or a browser layout guarantee. Also consider language, font fallback, browser minimum font sizes, optical sizing, hyphenation, variable fonts and bidirectional text. Native DOM rendering and browser inspection remain authoritative.
+Predictions require explicit `overflow-wrap: break-word` and are skipped for rich inline elements, other wrapping policies (including `normal` and `anywhere`), and CSS font variations. Width is derived from the untransformed client box minus horizontal padding, so borders, classic scrollbars and transforms do not inflate the available text width. A prediction is **not** an accessibility result or a browser layout guarantee. Also consider language, font fallback, browser minimum font sizes, optical sizing, hyphenation, variable fonts and bidirectional text. Native DOM rendering and browser inspection remain authoritative.
 
 ## No dependency leakage
 

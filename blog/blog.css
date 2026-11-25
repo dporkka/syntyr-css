@@ -1,0 +1,46 @@
+/* Site-only composition adjustments. Presentation primitives remain in Syntyr. */
+.blog-skip { position: absolute; inset-block-start: -10rem; inset-inline-start: 1rem; z-index: 10; }
+.blog-skip:focus-visible { inset-block-start: 1rem; }
+.blog-header { border-block-end: 1px solid var(--syn-border-subtle); }
+.blog-header .syn-nav a { min-block-size: 2.75rem; display: inline-flex; align-items: center; }
+.blog-main { padding-block: clamp(1.5rem, 4vw, 3rem); }
+.blog-breadcrumb { margin-block-end: clamp(1.25rem, 3vw, 2rem); }
+.blog-hero { margin-block-end: clamp(2rem, 6vw, 4rem); }
+.blog-hero .syn-lede { max-inline-size: 58ch; }
+.blog-list { margin-block-end: clamp(2rem, 5vw, 4rem); }
+.blog-section-title { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 1rem; margin-block-end: 1.25rem; }
+.blog-section-title .syn-section-heading { margin-block-end: 0; }
+.blog-section-title a { min-block-size: 2.75rem; display: inline-flex; align-items: center; }
+.blog-grid { align-items: stretch; }
+.blog-card { display: flex; flex-direction: column; gap: .9rem; min-height: 17rem; }
+.blog-card > * { margin-block: 0; }
+.blog-card-meta { justify-content: space-between; gap: .5rem; }
+.blog-card-title { font: 650 clamp(1.2rem, 1.5vw + 1rem, 1.65rem)/1.25 var(--syn-font-display); letter-spacing: -.025em; }
+.blog-card-title a { color: var(--syn-text); text-decoration: none; }
+.blog-card-title a:hover { color: var(--syn-accent); }
+.blog-card-link { margin-block-start: auto; padding-block-start: .5rem; font-weight: 650; }
+.blog-guidance { margin-block-end: 2rem; }
+.blog-guidance p { max-inline-size: 72ch; }
+.blog-guidance .syn-heading { margin-block-end: 1rem; }
+.blog-cta { margin-block: clamp(2rem, 5vw, 4rem); }
+.blog-cta .syn-heading { margin: 0 0 .5rem; }
+.blog-cta p { margin: 0; }
+.blog-article { max-inline-size: 72rem; }
+.blog-article-header { max-inline-size: 56rem; margin-block: clamp(1rem, 3vw, 2rem) clamp(2rem, 5vw, 3rem); }
+.blog-post-title { font: 700 clamp(2.25rem, 4vw + 1rem, 4.25rem)/1.12 var(--syn-font-display); letter-spacing: -.05em; text-wrap: balance; overflow-wrap: anywhere; margin-block: .75rem 1.5rem; }
+.blog-article-summary { font-size: clamp(1.05rem, 1.2vw + .8rem, 1.35rem); }
+.blog-article-body { max-inline-size: 72ch; }
+.blog-article-body p, .blog-article-body li { line-height: 1.75; }
+.blog-article-body h2 { font: 650 clamp(1.45rem, 2vw + 1rem, 2rem)/1.2 var(--syn-font-display); letter-spacing: -.025em; scroll-margin-block-start: 2rem; }
+.blog-article-body a { text-underline-offset: .2em; }
+.blog-article-body .syn-panel { overflow-x: auto; }
+.blog-article-body table { border-collapse: collapse; width: 100%; min-inline-size: 32rem; }
+.blog-article-body th, .blog-article-body td { border-block-end: 1px solid var(--syn-border-subtle); text-align: start; vertical-align: top; padding: .7rem; }
+.blog-article-body caption { text-align: start; margin-block-end: .5rem; }
+.blog-code { overflow-x: auto; max-inline-size: 100%; padding: 1rem 1.25rem; border: 1px solid var(--syn-border-subtle); background: var(--syn-surface-recessed); color: var(--syn-text); font: .85rem/1.65 var(--syn-mono); }
+.blog-code code { white-space: pre; }
+.blog-article-return { margin-block-end: 3rem; }
+.blog-footer { border-block-start: 1px solid var(--syn-border-subtle); padding-block: 1.5rem 3rem; justify-content: space-between; }
+.blog-footer p { margin: 0; }
+@media (max-width: 37rem) { .blog-header { align-items: flex-start; } .blog-header .syn-nav { gap: .45rem 1rem; } .blog-code { padding: .75rem; } }
+@media (forced-colors: active) { .blog-code, .blog-article-body .syn-panel { border-color: CanvasText; } }

@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Webflow custom component styling: Syntyr works with site-owned HTML inserted through Webflow&#x27;s Code Embed and styled by a separately hosted CSS asset. Use…">
+  <meta name="syntyr-source-sha256" content="dbe14dc0969a93c07fad52b2671f646aa77245309bdf860868d266af6415526f">
+  <meta name="theme-color" content="#f5f7fb">
+  <title>Syntyr for Webflow | Custom CSS &amp; HTML Guide</title>
+  <link rel="canonical" href="https://syntyr-css.pages.dev/docs/webflow">
+  <meta property="og:image" content="https://syntyr-css.pages.dev/assets/og-syntyr.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="alternate" type="text/markdown" href="webflow.md" title="Markdown source">
+  <link rel="icon" href="../assets/syntyr-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="docs.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <a class="syn-button docs-skip" href="#doc-main">Skip to guide</a>
+  <div class="syn-shell">
+    <header class="syn-header docs-header">
+      <a class="syn-logo" href="../index.html">SYNTYR / CSS</a>
+      <nav class="syn-nav" aria-label="Documentation navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav>
+      <details class="site-mobile-menu"><summary>Menu</summary><nav aria-label="Mobile navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav></details>
+    </header>
+    <main id="doc-main" class="docs-article-page">
+      <nav class="syn-breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="reference.html">Documentation</a></li><li aria-current="page">Syntyr for Webflow: custom CSS components and HTML embeds</li></ol></nav>
+      <header class="docs-article-heading">
+        <p class="syn-eyebrow">SYNTYR / DOCUMENTATION</p>
+        <p class="syn-muted">Current source documentation may describe unreleased alpha.5 features. <a href="distribution.html">Check released version compatibility.</a></p>
+        <p class="syn-caption">Prefer a machine-readable version? <a href="webflow.md">Markdown source</a> · <a href="../llms.txt">LLM index</a></p>
+      </header>
+      <div class="docs-article-layout">
+        <article class="docs-prose" aria-label="Syntyr for Webflow: custom CSS components and HTML embeds">
+<h1 id="syntyr-for-webflow-custom-css-components-and-html-embeds">Syntyr for Webflow: custom CSS components and HTML embeds</h1>
+<p><strong>Webflow custom component styling:</strong> Syntyr works with site-owned HTML inserted through Webflow's Code Embed and styled by a separately hosted CSS asset. Use it to build a distinct feature panel, technical product comparison, small design-system element or interactive-looking static layout while leaving your Webflow CMS collections and Designer components intact.</p>
+<h2 id="why-use-syntyr-on-webflow">Why use Syntyr on Webflow?</h2>
+<p>Webflow's visual Designer is useful for building most page layouts, but teams sometimes need a portable component shared across several projects. Syntyr provides stable <code>syn-</code> component names, token-based themes and semantic HTML. The same HTML block can be reused outside Webflow without exporting your whole site. No Syntyr client-side runtime is required, although your existing Webflow site may use scripts.</p>
+<h2 id="how-to-install-syntyr-in-webflow">How to install Syntyr in Webflow</h2>
+<ol>
+<li>Self-host the candidate <code>syntyr.embed.css</code> at a versioned HTTPS asset URL or another approved asset endpoint.</li>
+<li>In <strong>Site settings → Custom code → Head</strong>, add a single stylesheet link. Alternatively, use the page-level custom Head field if only one page needs the bundle. Save and publish.</li>
+</ol>
+<pre tabindex="0"><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://YOUR-ASSET-HOST.example/syntyr.embed.css&quot;&gt;
+</code></pre>
+<ol start="3">
+<li>In Webflow Designer, add a <strong>Code Embed</strong> element where the feature belongs. Paste ordinary content markup—<strong>not</strong> an entire HTML page:</li>
+</ol>
+<pre tabindex="0"><code class="language-html">&lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;wf-offer&quot;&gt;
+  &lt;div class=&quot;syn-panel&quot;&gt;
+    &lt;h2 class=&quot;syn-heading&quot; id=&quot;wf-offer&quot;&gt;Compare plans&lt;/h2&gt;
+    &lt;p class=&quot;syn-muted&quot;&gt;Use a portable component alongside Webflow sections.&lt;/p&gt;
+    &lt;a class=&quot;syn-button syn-button--primary&quot; href=&quot;/plans&quot;&gt;View plans&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+</code></pre>
+<ol start="4">
+<li>Check the published Webflow page and verify the stylesheet appears in its Network panel.</li>
+</ol>
+<h2 id="limitations-and-webflow-specific-considerations">Limitations and Webflow-specific considerations</h2>
+<p>Custom code availability depends on the Webflow <strong>Site/Workspace plan and permissions</strong>. Head custom code and Code Embed serve different purposes. Do not place <code>&lt;html&gt;</code>, <code>&lt;head&gt;</code> or <code>&lt;body&gt;</code> inside a Code Embed; and do not depend on Webflow's generated internal class names. CMS collection data, forms, animations and Ecommerce interactions still need Webflow's own features or independently developed logic.</p>
+<p><strong>Webflow reference:</strong> <a href="https://help.webflow.com/hc/en-us/articles/33961357265299-Custom-code-in-head-and-body-tags">Custom code in head and body</a>.</p>
+<h2 id="verify-the-result-before-publishing">Verify the result before publishing</h2>
+<p>Check the public, published URL rather than relying only on an editor preview. Confirm that the Syntyr stylesheet returns HTTP 200 with a CSS content type, that a button inside <code>.syn-root</code> has the desired theme, and that unrelated host navigation, product cards and forms remain unchanged. Test keyboard focus, accessible names, narrow screens around 320px, reduced motion and the platform's own responsive layouts. If an iframe is involved, test its height, keyboard navigation, sandbox attributes and HTTPS/CSP restrictions.</p>
+<p><strong>Release compatibility:</strong> The immutable <strong>alpha.4</strong> stylesheet <code>syntyr.core.css</code> is published. The <strong>alpha.5</strong> <code>syntyr.embed.css</code> bundle is a candidate build designed for existing themes; it is not part of the alpha.4 release. Build the candidate from the source repository and self-host a version-pinned copy for testing. Never load both bundles together, and verify theme-specific overrides before production rollout. Syntyr is a stylesheet, not an official integration or plug-in from the site platform.</p>
+<p>Explore the <a href="site-builders.html">platform integration overview</a>, <a href="distribution.html">Syntyr distribution and release guide</a>, or <a href="../examples/platform-embed.html">live host-theme example</a>.</p>
+        </article>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+<a class="docs-article-toc-link docs-article-toc-2" href="#why-use-syntyr-on-webflow">Why use Syntyr on Webflow?</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#how-to-install-syntyr-in-webflow">How to install Syntyr in Webflow</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#limitations-and-webflow-specific-considerations">Limitations and Webflow-specific considerations</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#verify-the-result-before-publishing">Verify the result before publishing</a>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#why-use-syntyr-on-webflow">Why use Syntyr on Webflow?</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#how-to-install-syntyr-in-webflow">How to install Syntyr in Webflow</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#limitations-and-webflow-specific-considerations">Limitations and Webflow-specific considerations</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#verify-the-result-before-publishing">Verify the result before publishing</a>
+            </nav>
+          </details>
+        </aside>
+      </div>
+      <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="webflow.md">Markdown source</a></nav>
+    </main>
+    <footer class="syn-header"><span class="syn-caption">SYNTYR CSS · MIT CORE · EXPERIMENTAL</span><a href="../index.html">Home</a></footer>
+  </div>
+</body>
+</html>

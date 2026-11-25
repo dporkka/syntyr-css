@@ -14,14 +14,16 @@ import sys
 from playwright.sync_api import sync_playwright
 
 ROOT = Path(__file__).resolve().parents[1]
-PAGES = ("index.html", "docs/index.html", "docs/catalog.html", "docs/blocks.html", "docs/guides.html", "examples/console.html",
+PAGES = ("index.html", "docs/index.html", "docs/catalog.html", "docs/blocks.html", "docs/guides.html", "docs/design-principles.html", "examples/console.html",
          "examples/resources.html", "examples/pricing.html",
-         "docs/console-kit.html", "examples/saas.html",
+         "docs/console-kit.html", "examples/saas.html", "examples/settings-billing.html",
+         "examples/app-onboarding.html", "examples/app-team.html", "examples/app-notifications.html",
+         "examples/app-integrations.html", "examples/app-security.html",
          "examples/business.html", "examples/terminal.html", "examples/geometry-terminal.html",
          "examples/operations-console.html", "examples/themes.html",
          "examples/vertigo-admin.html", "examples/vertigo-resource-workflow.html", "examples/saas-workflows.html", "examples/crm.html", "examples/minimalist-patterns.html", "examples/design-states.html", "examples/symbols.html", "examples/native-elements.html",
-         "examples/native-apis.html", "examples/flagship-studio.html", "examples/flagship-noir.html", "examples/flagship-grid.html",
-         "examples/semantic-starter.html", "examples/premium-compositions.html",
+         "examples/native-apis.html", "examples/dropdowns.html", "examples/flagship-studio.html", "examples/flagship-noir.html", "examples/flagship-grid.html",
+         "examples/semantic-starter.html", "examples/workflow-steps.html", "examples/enterprise-compositions.html", "examples/premium-compositions.html", "examples/operation-revisions.html",
 )
 
 def assert_page(browser, name: str, viewport: int) -> None:
@@ -51,6 +53,12 @@ def assert_page(browser, name: str, viewport: int) -> None:
         assert "light-dark(" in css, (name, css)
     else:
         assert css in ("#76e7f7", "#f1b574", "#2458c6", "#ffb36b", "#65e8a0", "#155ac8", "#313a45"), (name, css)
+    if name == "examples/native-elements.html" and viewport == 320:
+        # A native file input must not force a semantic fieldset grid track
+        # wider than the viewport. Check the offending region, not only body.
+        fieldset = page.get_by_role("group", name="Native inputs")
+        bounds = fieldset.evaluate("e => ({client: e.clientWidth, scroll: e.scrollWidth})")
+        assert bounds["scroll"] <= bounds["client"] + 1, (name, viewport, bounds)
     overflow = page.evaluate("() => document.documentElement.scrollWidth - document.documentElement.clientWidth")
     assert overflow <= 1, (name, viewport, overflow)
     assert not errors, (name, errors)
@@ -68,6 +76,16 @@ def assert_page(browser, name: str, viewport: int) -> None:
         assert comfortable > compact, (compact, comfortable)
         if viewport == 320:
             assert board.evaluate("e => e.scrollWidth > e.clientWidth")
+    if name == "examples/workflow-steps.html":
+        assert page.get_by_role("list", name="Workspace setup progress").count() == 1
+        assert page.locator(".syn-steps").count() == 2
+        assert page.locator('.syn-steps:not(.syn-steps--vertical) > [aria-current="step"]').count() == 1
+        assert page.locator(".syn-steps--vertical > .syn-step").count() == 3
+        flow = page.locator(".syn-steps").first.evaluate("e => getComputedStyle(e).gridAutoFlow")
+        forced_flow = page.locator(".syn-steps--vertical").evaluate("e => getComputedStyle(e).gridAutoFlow")
+        assert flow == ("column" if viewport >= 1280 else "row"), (viewport, flow)
+        assert forced_flow == "row", (viewport, forced_flow)
+        assert page.locator(".syn-step").first.evaluate("e => getComputedStyle(e, '::before').content") != "none"
     if name == "examples/semantic-starter.html":
         assert page.locator('link[rel="stylesheet"]').count() == 1
         assert page.locator('body.syn-root.syn-semantic').count() == 1
@@ -78,6 +96,46 @@ def assert_page(browser, name: str, viewport: int) -> None:
         assert button.is_visible()
         assert button.evaluate('e => getComputedStyle(e).display') in ('flex', 'inline-flex')
         assert page.locator('script').count() == 0
+        assert page.locator('form:not([class])').evaluate(
+            "e => getComputedStyle(e).display") == "grid"
+        assert page.locator('fieldset:not([class])').evaluate(
+            "e => getComputedStyle(e).display") == "grid"
+        assert page.locator('table caption').inner_text() == "Example project inventory"
+        assert page.get_by_role("navigation", name="Page sections").is_visible()
+        summary = page.locator('details > summary').first
+        assert summary.evaluate("e => e.getBoundingClientRect().height") >= 44
+        summary.click()
+        assert page.locator("details").first.get_attribute("open") is not None
+        # Hidden must beat classed/semantic display rules; find-in-page reveal stays intact.
+        visibility = page.evaluate("""() => {
+          const root = document.querySelector('body.syn-root.syn-semantic');
+          const make = (tag, name, hidden) => {
+            const element = document.createElement(tag);
+            element.className = name;
+            element.setAttribute('hidden', hidden);
+            root.append(element);
+            return element;
+          };
+          const button = make('button', 'syn-button', '');
+          const semantic = make('button', '', '');
+          const grid = make('div', 'syn-grid', '');
+          const findable = make('div', 'syn-grid', 'until-found');
+          const display = element => getComputedStyle(element).display;
+          const initial = [display(button), display(semantic), display(grid),
+                           display(findable), getComputedStyle(findable).contentVisibility];
+          button.removeAttribute('hidden');
+          const shown = display(button);
+          root.setAttribute('hidden', '');
+          const rootHidden = display(root);
+          root.removeAttribute('hidden');
+          for (const element of [button, semantic, grid, findable]) element.remove();
+          return { initial, shown, rootHidden };
+        }""")
+        assert visibility["initial"][:3] == ["none"] * 3, visibility
+        assert visibility["initial"][3] != "none", visibility
+        assert visibility["initial"][4] == "hidden", visibility
+        assert visibility["shown"] == "inline-flex", visibility
+        assert visibility["rootHidden"] == "none", visibility
     if name == "docs/catalog.html":
         cards = page.locator(".catalog-card")
         total = cards.count()

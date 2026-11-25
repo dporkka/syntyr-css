@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Syntyr is a CSS presentation layer with no runtime JavaScript . Interactive menu and combobox ARIA patterns require keyboard, focus, filtering and…">
+  <meta name="syntyr-source-sha256" content="bcef2ff732924ee691f0f23b971f3fbdf5c963ae75e5f7e0ab94c74ab8e868b4">
+  <meta name="theme-color" content="#f5f7fb">
+  <title>Optional accessible menus, comboboxes, data grids and notifications — Syntyr CSS docs</title>
+  <link rel="canonical" href="https://syntyr-css.pages.dev/docs/headless-interactions">
+  <link rel="alternate" type="text/markdown" href="headless-interactions.md" title="Markdown source">
+  <link rel="icon" href="../assets/syntyr-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="docs.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <a class="syn-button docs-skip" href="#doc-main">Skip to guide</a>
+  <div class="syn-shell">
+    <header class="syn-header docs-header">
+      <a class="syn-logo" href="../index.html">SYNTYR / CSS</a>
+      <nav class="syn-nav" aria-label="Documentation navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav>
+      <details class="site-mobile-menu"><summary>Menu</summary><nav aria-label="Mobile navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav></details>
+    </header>
+    <main id="doc-main" class="docs-article-page">
+      <nav class="syn-breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="reference.html">Documentation</a></li><li aria-current="page">Optional accessible menus, comboboxes, data grids and notifications</li></ol></nav>
+      <header class="docs-article-heading">
+        <p class="syn-eyebrow">SYNTYR / DOCUMENTATION</p>
+        <p class="syn-muted">Current source documentation may describe unreleased alpha.5 features. <a href="distribution.html">Check released version compatibility.</a></p>
+        <p class="syn-caption">Prefer a machine-readable version? <a href="headless-interactions.md">Markdown source</a> · <a href="../llms.txt">LLM index</a></p>
+      </header>
+      <div class="docs-article-layout">
+        <article class="docs-prose" aria-label="Optional accessible menus, comboboxes, data grids and notifications">
+<h1 id="optional-accessible-menus-comboboxes-data-grids-and-notifications">Optional accessible menus, comboboxes, data grids and notifications</h1>
+<p>Syntyr is a CSS presentation layer with <strong>no runtime JavaScript</strong>. Interactive
+menu and combobox ARIA patterns require keyboard, focus, filtering and
+selection logic; CSS cannot implement those.</p>
+<p>The <a href="../integrations/headless/interactions.css">opt-in headless adapter</a>
+provides token-driven styling for explicit menu, combobox and toast classes.
+It does NOT ship in the Syntyr core CSS, all.css or presets.</p>
+<ul>
+<li>Menus: <code>.syn-menu-surface</code>, <code>.syn-menu-item</code>, <code>.syn-menu-separator</code>.
+<a href="https://www.radix-ui.com/primitives/docs/components/dropdown-menu">Radix DropdownMenu</a>
+owns ARIA roles, arrow navigation, typeahead, dismissal and focus.</li>
+<li>Comboboxes: <code>.syn-combobox</code>, <code>.syn-combobox-field</code>,
+<code>.syn-combobox-popover</code>, <code>.syn-combobox-listbox</code>,
+<code>.syn-combobox-option</code>. <a href="https://react-aria.adobe.com/ComboBox">React Aria ComboBox</a>
+owns the filtered options, selection and accessible active focus.</li>
+<li>Sortable data grids: existing <code>.syn-table</code> and <code>.syn-table-sort</code> classes
+style a real <a href="https://react-aria.adobe.com/Table">React Aria Table</a>. React Aria
+owns the grid keyboard model, focus and sort announcements; the host
+actually sorts the rows and supplies accurate data. No extra CSS module
+or Syntyr JavaScript is required.</li>
+<li>Toasts: <code>.syn-toast-region</code>, <code>.syn-toast</code>, <code>.syn-toast-title</code>,
+<code>.syn-toast-description</code>. <a href="https://www.radix-ui.com/primitives/docs/components/toast">Radix Toast</a>
+owns notification timing, focus, hover pauses, dismissals and live regions.</li>
+</ul>
+<p>No styles target generic ARIA roles or library internals. The adapter only
+matches Syntyr-named classes and documented state hooks such as
+<code>[data-highlighted]</code>, <code>[data-focused]</code>, <code>[aria-selected=&quot;true&quot;]</code>, and
+<code>[data-disabled]</code>. Application semantics remain authoritative.</p>
+<h2 id="run-the-isolated-react-example">Run the isolated React example</h2>
+<p><a href="https://github.com/dporkka/syntyr-css/tree/main/examples/headless-react">Source</a> provides actual React, Radix and React
+Aria controls, not inert HTML copies. Its npm dependencies are optional
+<strong>application dependencies</strong>. They are not dependencies of Syntyr itself.</p>
+<pre tabindex="0"><code class="language-sh">cd examples/headless-react
+npm ci
+npm run build
+npx playwright install chromium  # optional browser-test setup
+npm test                      # eight Chromium keyboard/state smoke tests
+npm run dev
+</code></pre>
+<p>The example imports both CSS files directly from the repository.
+In your own application, include the core stylesheet before the optional
+integration stylesheet:</p>
+<pre tabindex="0"><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.core.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/headless/interactions.css&quot;&gt;
+</code></pre>
+<p>Or import <code>@syntyr/css/core.css</code> followed by
+<code>@syntyr/css/headless.css</code> if the installed release includes this new export.
+The example is <em>not</em> hosted as an executable React app in Syntyr's
+static documentation site. The existing source branch may be newer than
+the published release; always check your installed version.</p>
+<p><strong>Portal scoping:</strong> Radix and React Aria often portal menu/listbox/toast
+content to <code>document.body</code>. The example uses <code>body.syn-root</code> so its portal
+content inherits theme tokens and CSS rules. In other apps mount portals
+within a stable styled <code>.syn-root</code>. Without this, unscoped portal content
+will look unstyled. Keep root scope stable across updates.</p>
+<h2 id="choosing-the-behavior-owner">Choosing the behavior owner</h2>
+<table>
+<thead>
+<tr>
+<th>Need</th>
+<th>Lowest-maintenance baseline</th>
+<th>When to add headless behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Choose from a short list</td>
+<td>Labeled native <code>&lt;select&gt;</code> with built-in keyboard typeahead</td>
+<td>Searchable, async, multi-select or rich-options combobox</td>
+</tr>
+<tr>
+<td>Find an item by text</td>
+<td>GET search form; <code>&lt;datalist&gt;</code> only when its browser limits are acceptable</td>
+<td>Filtered suggestions with controlled selection, async results or IME support</td>
+</tr>
+<tr>
+<td>Show optional actions</td>
+<td>Native <code>popover</code> with links and buttons</td>
+<td>ARIA menu with roving focus, typeahead and menu-item keyboard semantics</td>
+</tr>
+<tr>
+<td>Sort a normal data table</td>
+<td>Server-sorted HTML table with GET links and truthful <code>aria-sort</code></td>
+<td>Keyboard-navigable grid with selection, editing, resizing or complex sorting</td>
+</tr>
+<tr>
+<td>Confirm destructive action</td>
+<td>Native modal <code>&lt;dialog&gt;</code> (and a navigable fallback where needed)</td>
+<td>An application-owned dialog abstraction with audited focus behavior</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Contract:</strong> Syntyr never infers behavior from a <code>syn-*</code> class and never
+sets ARIA state on your behalf. A behavior owner must provide accessible
+names, state transitions, focus/keyboard handling, IME, disabled/selection
+rules, and asynchronous status announcements as required by its widget.
+The host owns data fetching, permissions, persistence, server validation
+and actual sort order. A visually styled grid is not a functioning grid.</p>
+<p>The React Aria example includes an accessible sortable table with
+<code>sortDescriptor</code> and <code>onSortChange</code>. Unlike a static table, it
+intentionally opts into the grid keyboard model. For noninteractive tables,
+prefer <a href="data-tables.html">native server-sortable tables</a>, and <strong>do not</strong>
+apply <code>role=&quot;grid&quot;</code> merely to activate visual styling.</p>
+<h2 id="react-aria-enterprise-resource-workflow-optional">React Aria enterprise resource workflow (optional)</h2>
+<p>The <a href="https://github.com/dporkka/syntyr-css/blob/main/examples/headless-react/src/App.tsx">runnable React integration</a> also
+illustrates a small, real in-memory resource workspace: search by name,
+keyboard- and pointer-operated multi-selection, an explicit <strong>Select matching</strong>
+action, a non-mutating selection preview, and a read-only record-details panel.
+It composes React Aria Table with existing Syntyr core and <strong>optional recipes</strong>
+stylesheets; it is <strong>not</strong> a Syntyr CSS runtime dependency.</p>
+<p>This fixture loads all three sample records locally. <strong>Matching</strong> means exactly
+the currently loaded, filtered records, not every record in a server database.
+Changing the filter clears the selection and detail view so hidden rows cannot
+be acted on inadvertently. React Aria can emit an <code>all</code> selection key; the
+fixture converts it to explicit local IDs instead of carrying a broad token.</p>
+<p>For a real paginated/remote inventory, decide whether bulk selection means
+visible page, filtered query, or explicitly selected IDs. Keep the scope and
+count visible, require confirmation for destructive changes, authorize every
+ID/scope server-side, and handle stale filters and result-set changes. Do not
+reuse the local selection logic as a server-wide bulk action. The preview
+button deliberately makes <strong>no</strong> persistent change.</p>
+<h2 id="native-alternatives-that-need-no-headless-dependencies">Native alternatives that need no headless dependencies</h2>
+<p>For a short list of links/actions, use HTML <code>popover</code> with regular
+<code>&lt;a&gt;</code> and <code>&lt;button&gt;</code> controls. This is a <em>popover</em>, not an ARIA
+application menu: Tab/Shift+Tab are expected rather than Arrow-key
+menu interactions. For small suggestion lists, native <code>input[list]</code> and
+<code>datalist</code> may be sufficient, though their presentation and accessibility
+differ by browser and are not completely themeable.</p>
+<p>A true ARIA menu needs Arrow navigation, typeahead, Escape, disabled state
+and focus restoration. A rich combobox needs correct ARIA relations,
+keyboard navigation and IME composition support. Do not recreate these
+with hand-written CSS-only role attributes.</p>
+<h2 id="toast-boundaries-and-accessibility">Toast boundaries and accessibility</h2>
+<p>Toasts are for temporary, noncritical notifications. A confirmation or
+irreversible decision must not auto-dismiss: use inline feedback or a dialog.
+Do not indiscriminately apply <code>role=&quot;alert&quot;</code> to every toast. The
+host implementation owns announcements, queue limits, timing and
+dismissal. The example deliberately labels its actions as demos rather
+than claiming any backend persistence.</p>
+<p>Test focus and announcements in real browsers and with a screen reader,
+plus reduced-motion, forced-colors, high zoom and narrow viewports.
+Syntyr's CSS contract tests are <strong>not</strong> accessibility certification.</p>
+<p>See <a href="radix-integration.html">Radix state adapter</a>,
+<a href="framework-integrations.html">framework integrations</a> and
+<a href="native-browser-apis.html">native browser API guidance</a>.</p>
+        </article>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+<a class="docs-article-toc-link docs-article-toc-2" href="#run-the-isolated-react-example">Run the isolated React example</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#choosing-the-behavior-owner">Choosing the behavior owner</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#react-aria-enterprise-resource-workflow-optional">React Aria enterprise resource workflow (optional)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#native-alternatives-that-need-no-headless-dependencies">Native alternatives that need no headless dependencies</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#toast-boundaries-and-accessibility">Toast boundaries and accessibility</a>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#run-the-isolated-react-example">Run the isolated React example</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#choosing-the-behavior-owner">Choosing the behavior owner</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#react-aria-enterprise-resource-workflow-optional">React Aria enterprise resource workflow (optional)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#native-alternatives-that-need-no-headless-dependencies">Native alternatives that need no headless dependencies</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#toast-boundaries-and-accessibility">Toast boundaries and accessibility</a>
+            </nav>
+          </details>
+        </aside>
+      </div>
+      <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="headless-interactions.md">Markdown source</a></nav>
+    </main>
+    <footer class="syn-header"><span class="syn-caption">SYNTYR CSS · MIT CORE · EXPERIMENTAL</span><a href="../index.html">Home</a></footer>
+  </div>
+</body>
+</html>

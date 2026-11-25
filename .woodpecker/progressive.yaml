@@ -1,0 +1,17 @@
+# Fast script-disabled progressive browser gate on every PR.
+# Reuse Lit's locked Node Playwright tooling (already validated in CI), rather
+# than pip-install from a package index that CI proxies can block. Node is a
+# development-only test driver; Syntyr CSS still ships zero runtime JS.
+when:
+  - event: pull_request
+  - event: push
+    branch: main
+
+steps:
+  - name: scriptless-progressive-chromium-firefox-webkit
+    image: mcr.microsoft.com/playwright:v1.65.0-noble@sha256:9beb546099e11f52d62e505537914870e01a67e0e6b00ae41da4775324e73dbe
+    commands:
+      # The test-only HTTP GET fixture uses only the Python standard library.
+      - command -v python3 >/dev/null || (apt-get update && apt-get install -y --no-install-recommends python3 && rm -rf /var/lib/apt/lists/*)
+      - npm ci --prefix examples/lit --no-audit --no-fund
+      - npm run test:progressive --prefix examples/lit

@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Framework-neutral accessible copy interaction with an optional native clipboard module.">
+  <title>Optional copy action — Syntyr</title>
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <style>/* Preserve native hidden state when older component CSS sets display. */
+    [data-syn-copy-target][hidden] { display: none; }
+  </style>
+</head>
+<body class="syn-root" data-syn-theme="studio">
+  <main class="syn-shell">
+    <section class="syn-panel" aria-labelledby="copy-title">
+      <p class="syn-eyebrow">PROGRESSIVE ENHANCEMENT</p>
+      <h1 id="copy-title" class="syn-heading">Copy without a framework</h1>
+      <p>Content remains readable and selectable when JavaScript or the Clipboard API is unavailable.</p>
+      <pre><code id="copy-source">npm install @syntyr/css</code></pre>
+      <button class="syn-button syn-button--primary" type="button" hidden
+              data-syn-copy-target="copy-source" data-syn-copy-status="copy-status">Copy command</button>
+      <p id="copy-status" role="status" aria-live="polite"></p>
+      <p><a href="../docs/clipboard.html">Read the opt-in API guide</a></p>
+    </section>
+  </main>
+  <script type="module" src="copy-demo.mjs"></script>
+</body>
+</html>

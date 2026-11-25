@@ -3,7 +3,48 @@
 This report distinguishes the most recent automated findings from older
 pixel-sampling evidence. It is **not** a WCAG certification.
 
-## Follow-up audit: `9f7f22b` (November 15, 2026)
+## Fresh exact-head audit: `70ec764` (November 18, 2026)
+
+**Newest automated source snapshot, not alpha.5 release approval.**
+This source candidate includes the focused fixes to keyboard-inaccessible
+documentation code blocks and a prohibited ARIA label on a nested form footer.
+
+- Chromium with **Playwright 1.65.2** and pinned **axe-core 4.10.3**,
+  checksum SHA-256
+  `880970c081707360e64f34cea25ff91892f5bc95675b0776925b9709dd8a68bb`:
+  **37 pages**, **zero confirmed automated violation nodes**, and
+  **15 incomplete color-contrast rule results comprising 165 element targets**.
+- Baseline `985fe01` had **two serious scrollable-region-focusable nodes**
+  in the design-principles guide and one **aria-prohibited-attr** incomplete
+  footer. The source candidate eliminated all three; the 165 remaining
+  incomplete targets concern contrast, not confirmed failures.
+- The reconciled source passed **1,035 Python tests (one skipped)**,
+  generated-document/metadata/registry/CSS/Cloudflare and maintenance checks.
+  Chromium/Firefox verified focused ArrowRight keyboard scrolling of the
+  code examples at 320px/390px (also forced-colors emulation) and 1280px.
+- Conservative pixel triage at **1280/390/320px** produced
+  **495 observations**: **459 screenshot samples above text thresholds**,
+  **9 opaque computed placeholder pairs above threshold**, and
+  **27 non-text entries**, with **zero sampled below or near threshold**.
+  The lowest sampled text result was approximately **5.19:1** against the
+  ordinary-text 4.5:1 threshold, on the business example kicker.
+
+**Still open:** manually adjudicate each of the 165 axe-incomplete contrast
+targets in real painted, interactive states. Samples are not glyph-level
+certification and may miss gradients, overlays or focus/hover appearance.
+True **200%/400% browser zoom**, native OS high contrast, screen-reader
+testing and representative application flows are not proven. The unpatched
+high-severity `picomatch` advisory in optional Expo development tooling
+remains separate and unresolved. **Do not tag or publish alpha.5** on these
+automated results alone.
+
+For reproduction, run the pinned local axe script with
+`tests/axe_audit.py`, then pass its JSON report to
+`tests/contrast_pixel_triage.py` at widths 1280, 390 and 320. The JSON
+reports were retained outside the source tree at the audited revision.
+Repeat the audit when main advances.
+
+## Historical follow-up audit: `9f7f22b` (November 15, 2026)
 
 This is a **newer source-only candidate audit**, not a published
 release or an accessibility certification. It incorporates the enlarged-text
@@ -323,7 +364,7 @@ Earlier automated browser evidence covered **126 viewport cases** across Chromiu
 
 ## Remaining release checklist
 
-- [ ] Measure or adjudicate each of the **161 unresolved** text/background element entries in the latest 28-page candidate audit above. The 345-entry and 325-entry figures below describe earlier commits and are historical, not the current review queue.
+- [ ] Measure or adjudicate each of the **165 axe-incomplete contrast elements** in the latest 37-page candidate audit above (70ec764). Earlier 161-, 162-, 345- and 325-entry figures are historical snapshots, not the current review queue.
 - [ ] Test keyboard-only navigation, native dialog/popover focus, table regions, disclosure and form semantics in a representative real app.
 - [ ] Perform real assistive-technology testing with NVDA, JAWS, VoiceOver or Orca and record evidence.
 - [ ] Test true 200% and 400% browser zoom on supported browsers; verify navigation, reflow and target visibility.

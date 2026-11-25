@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="description" content="Learn how native HTML and Syntyr CSS support accessible forms, navigation, disclosures, focus states, and progressive enhancement.">
+  <title>Accessible interfaces start with native HTML, not ARIA patches — Syntyr CSS Blog</title>
+  <link rel="icon" href="../assets/syntyr-mark.svg" type="image/svg+xml">
+  <link rel="canonical" href="https://syntyr-css.pages.dev/blog/accessible-native-html">
+  <link rel="alternate" type="application/rss+xml" title="Syntyr CSS Blog" href="rss.xml">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Accessible interfaces start with native HTML, not ARIA patches">
+  <meta property="og:description" content="Learn how native HTML and Syntyr CSS support accessible forms, navigation, disclosures, focus states, and progressive enhancement.">
+  <meta property="og:image" content="https://syntyr-css.pages.dev/assets/og-syntyr.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="../dist/syntyr.recipes.css">
+  <link rel="stylesheet" href="blog.css">
+  <meta property="article:published_time" content="2026-11-16">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Accessible interfaces start with native HTML, not ARIA patches","description":"Learn how native HTML and Syntyr CSS support accessible forms, navigation, disclosures, focus states, and progressive enhancement.","datePublished":"2026-11-16","dateModified":"2026-11-16","mainEntityOfPage":"https://syntyr-css.pages.dev/blog/accessible-native-html","author":{"@type":"Organization","name":"Syntyr CSS"},"publisher":{"@type":"Organization","name":"Syntyr CSS"},"image":"https://syntyr-css.pages.dev/assets/og-syntyr.png","inLanguage":"en"}</script>
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <a href="#main" class="syn-button blog-skip">Skip to content</a>
+  <div class="syn-shell">
+    <header class="syn-header blog-header">
+      <a href="../index.html" class="syn-logo" aria-label="Syntyr CSS home">SYNTYR / CSS</a>
+      <nav class="syn-nav" aria-label="Main navigation">
+        <a href="../docs/">Documentation</a>
+        <a href="../docs/catalog.html">Components</a>
+        <a href="../docs/blocks.html">Blocks</a>
+        <a href="index.html" aria-current="page">Blog</a>
+        <a href="rss.xml" type="application/rss+xml">RSS</a>
+        <a href="https://github.com/dporkka/syntyr-css">GitHub</a>
+      </nav>
+    </header>
+    <main id="main" class="blog-main">
+      <nav class="syn-breadcrumbs blog-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="index.html">Blog</a></li><li aria-current="page">Accessibility</li></ol></nav>
+      <article class="blog-article">
+        <header class="blog-article-header">
+          <p class="syn-eyebrow">Accessibility / FIELD NOTES</p>
+          <h1 class="blog-post-title">Accessible interfaces start with native HTML, not ARIA patches</h1>
+          <p class="syn-lede blog-article-summary">Build resilient forms, links, disclosures, and layouts with browser semantics and Syntyr's progressively enhanced CSS.</p>
+          <p class="syn-caption">Syntyr team · <time datetime="2026-11-16">November 16, 2026</time></p>
+        </header>
+        <div class="syn-prose blog-article-body">
+<p>Accessibility problems often begin when a familiar browser element is replaced with a custom imitation. A clickable <code class="syn-code">&lt;div&gt;</code> does not acquire button semantics just because it has a click handler. Native HTML already implements much of the interaction contract that products otherwise rebuild.</p>
+<h2 id="elements">Choose an element for its job</h2>
+<p>Use <code class="syn-code">&lt;a href&gt;</code> for navigation, <code class="syn-code">&lt;button&gt;</code> for actions, <code class="syn-code">&lt;label&gt;</code> for form controls, and <code class="syn-code">&lt;details&gt;</code> with <code class="syn-code">&lt;summary&gt;</code> for simple disclosures. These choices preserve expected keyboard behavior without requiring a JavaScript widget runtime.</p>
+<p>Syntyr styles those elements through small opt-in classes. The underlying DOM remains plain HTML, so a server-rendered document still works if client scripts fail or never load.</p>
+<h2 id="form">A form that keeps its native contract</h2>
+<pre class="blog-code"><code>&lt;form class="syn-root" action="/contact" method="post"&gt;
+  &lt;label class="syn-label" for="email"&gt;Work email&lt;/label&gt;
+  &lt;input class="syn-input" id="email" name="email"
+         type="email" autocomplete="email" required&gt;
+  &lt;button class="syn-button syn-button--primary"
+          type="submit"&gt;Contact us&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+<p>The browser supplies basic required-field and email-format validation. Your server must still validate and authorize the submitted data. The CSS library does not provide storage, confirmation email, or application security.</p>
+<h2 id="navigation">Navigation and focus are content, not decoration</h2>
+<p>Give each page a main landmark, a meaningful heading hierarchy, and a visible keyboard focus state. Navigation should contain links to real destinations. When a disclosure is hidden, its contents should not remain unexpectedly reachable with the keyboard.</p>
+<p>Skip links reduce repeated navigation for keyboard users. Breadcrumbs provide another predictable route through content, particularly in documentation and multi-page blogs. They should use a real navigation landmark with an accessible label and an ordered list.</p>
+<h2 id="verification">Test the actual browser behavior</h2>
+<ul>
+<li>Navigate from the address bar through the page with Tab and Shift+Tab.</li>
+<li>Zoom to 200% and 400% and check reflow without horizontal page scrolling.</li>
+<li>Check forced-color modes and reduced-motion preferences.</li>
+<li>Use a screen reader to verify labels, headings, and landmark order.</li>
+<li>Run automated audits, then perform manual keyboard and content checks.</li>
+</ul>
+<p>Native elements reduce the amount of interaction code you need to maintain; they do not eliminate the need to test your content and workflows. See Syntyr's <a href="../docs/accessibility.html">accessibility guidance</a> and <a href="../docs/native-browser-apis.html">browser API patterns</a> for practical constraints and examples.</p>
+        </div>
+      </article>
+      <aside class="syn-cta-band blog-cta" aria-labelledby="article-cta">
+        <div><h2 id="article-cta" class="syn-heading">Explore the components behind this article</h2><p>See the copy-owned HTML blocks and production-oriented CSS recipes.</p></div>
+        <a class="syn-button syn-button--primary" href="../docs/blocks.html">Browse Syntyr blocks</a>
+      </aside>
+      <nav class="blog-article-return" aria-label="Article navigation"><a href="index.html">← All articles</a></nav>
+    </main>
+    <footer class="blog-footer syn-inline">
+      <p class="syn-caption">© 2026 Syntyr CSS · MIT-licensed core · HTML-first</p>
+      <nav class="syn-nav" aria-label="Footer navigation"><a href="../index.html">Home</a><a href="../docs/">Docs</a><a href="../docs/blocks.html">UI blocks</a><a href="rss.xml">RSS feed</a></nav>
+    </footer>
+  </div>
+</body>
+</html>

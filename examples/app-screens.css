@@ -1,0 +1,200 @@
+/* Original, opt-in SaaS application compositions built from Syntyr CSS.
+   This stylesheet belongs to the examples, not the shared library API. */
+.app-screens {
+  --app-line: var(--syn-border-subtle);
+  --app-radius: .85rem;
+  background: var(--syn-bg);
+  color: var(--syn-text);
+  overflow-wrap: anywhere;
+}
+.app-screens *, .app-screens *::before, .app-screens *::after { box-sizing: border-box; }
+.app-screens :where(a,button,input,select,textarea):focus-visible {
+  outline: 3px solid var(--syn-focus-ring);
+  outline-offset: 2px;
+}
+.app-screens .app-skip { position: absolute; top: -10rem; left: 1rem; z-index: 30; }
+.app-screens .app-skip:focus-visible { top: 1rem; }
+.app-screens .app-shell { min-inline-size: 0; }
+.app-screens .app-rail {
+  display: flex; flex-direction: column; gap: .9rem;
+  background: var(--syn-surface-recessed); padding: 20px 12px;
+  min-inline-size: 0;
+}
+.app-screens .app-brand {
+  display: flex; align-items: center; flex-wrap: wrap; gap: 10px;
+  padding: 4px 10px 14px; color: var(--syn-text); text-decoration: none;
+  min-inline-size: 0;
+}
+.app-screens .app-brand > span:last-child { display: grid; gap: 1px; min-inline-size: 0; }
+.app-screens .app-brand strong { font-size: .95rem; font-weight: 740; }
+.app-screens .app-brand small { font-size: .75rem; color: var(--syn-muted); }
+.app-screens .app-logo {
+  flex: none; display: grid; place-items: center; block-size: 34px; inline-size: 34px;
+  border-radius: 10px; color: var(--syn-on-accent);
+  background: var(--syn-accent); font-weight: 750;
+}
+.app-screens .app-rail-label {
+  margin-inline: 10px; font-size: .7rem; line-height: 1.5;
+  font-weight: 750; letter-spacing: .055em; text-transform: uppercase; color: var(--syn-muted);
+}
+.app-screens .app-nav { display: flex; flex-wrap: wrap; gap: 4px; min-inline-size: 0; }
+.app-screens .app-nav a {
+  display: flex; align-items: center; min-inline-size: 0;
+  min-block-size: 42px; padding: 9px 12px; font-weight: 550;
+  border-radius: 9px; color: var(--syn-text); line-height: 1.4;
+}
+.app-screens .app-nav a:is(:hover,[aria-current="page"]) {
+  color: var(--syn-text); background: var(--syn-surface); box-shadow: none;
+}
+.app-screens .app-nav a[aria-current="page"] {
+  font-weight: 750; box-shadow: inset 3px 0 var(--syn-accent);
+}
+.app-screens .app-rail-bottom { display: grid; gap: 10px; margin-block-start: auto; }
+.app-screens .app-rail-bottom > a { font-size: .86rem; padding-inline: 10px; color: var(--syn-muted); }
+.app-screens .app-profile { border-block-start: 1px solid var(--app-line); padding: 15px 10px 0; display: flex; align-items: center; gap: 10px; }
+.app-screens .app-profile > span:last-child { display: grid; min-inline-size: 0; }
+.app-screens .app-profile strong { font-size: .85rem; }
+.app-screens .app-profile small { font-size: .74rem; color: var(--syn-muted); }
+.app-screens .app-main {
+  display: grid; grid-template-columns: minmax(0,1fr);
+  align-content: start; gap: clamp(16px, 2vw, 24px); min-inline-size: 0;
+  padding: clamp(14px, 2.8vw, 34px); background: var(--syn-surface);
+}
+.app-screens .app-page-header {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  flex-wrap: wrap; gap: 14px; border-block-end: 1px solid var(--app-line);
+  padding-block-end: 18px; min-inline-size: 0;
+}
+.app-screens .app-page-header > div { min-inline-size: 0; }
+.app-screens .app-overline {
+  margin: 0 0 7px; color: var(--syn-muted); font-size: .7rem;
+  letter-spacing: .07em; font-weight: 750;
+}
+.app-screens .app-page-header h1 { margin: 0 0 6px; font-size: clamp(1.5rem, 2vw, 2.15rem); letter-spacing: -.035em; line-height: 1.2; }
+.app-screens .app-page-header .syn-muted { margin: 0; font-size: .88rem; max-inline-size: 67ch; }
+.app-screens .app-notice {
+  border: 1px solid var(--app-line); border-radius: 10px; padding: 12px 14px;
+  background: var(--syn-surface-recessed); color: var(--syn-muted);
+  margin: 0; font-size: .79rem; line-height: 1.55;
+}
+.app-screens .app-notice strong { color: var(--syn-text); }
+.app-screens .app-columns {
+  display: grid; grid-template-columns: minmax(0,1fr); gap: 18px; align-items: start; min-inline-size: 0;
+}
+.app-screens .app-content-stack, .app-screens .app-aside { display: grid; grid-template-columns: minmax(0,1fr); gap: 16px; min-inline-size: 0; }
+.app-screens .syn-app-card {
+  border: 1px solid var(--app-line); border-radius: var(--app-radius);
+  padding: clamp(13px, 1.4vw, 23px); box-shadow: none; min-inline-size: 0;
+}
+.app-screens .syn-app-card > :where(h2,h3):first-child { margin: 0 0 12px; }
+.app-screens .syn-app-card h2 { font-size: 1.08rem; letter-spacing: -.02em; }
+.app-screens .syn-app-card h3 { font-size: 1rem; }
+.app-screens .syn-app-card :where(p,li) { line-height: 1.55; }
+.app-screens .syn-app-card .syn-muted { font-size: .84rem; }
+.app-screens .syn-app-card .syn-button { max-inline-size: 100%; white-space: normal; overflow-wrap: anywhere; text-align: center; }
+.app-screens .app-hero {
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 16px; background: var(--syn-surface-recessed);
+}
+.app-screens .app-hero h2 { margin: 0 0 6px; font-size: 1.25rem; }
+.app-screens .app-hero p:last-child { margin: 0; }
+.app-screens .app-progress { display: grid; gap: 8px; min-inline-size: min(100%,200px); max-inline-size: 100%; }
+.app-screens .app-progress strong { font-size: .85rem; }
+.app-screens .app-progress progress { inline-size: 100%; }
+.app-screens .app-section-heading {
+  display: flex; flex-wrap: wrap; justify-content: space-between;
+  align-items: flex-start; gap: 12px; margin-block-end: 17px;
+}
+.app-screens .app-section-heading > div { min-inline-size: 0; }
+.app-screens .app-section-heading h2, .app-screens .app-section-heading h3 { margin: 0 0 5px; }
+.app-screens .app-section-heading .syn-muted { margin: 0; }
+.app-screens .app-steps { display: grid; gap: 0; list-style: none; padding: 0; margin: 0; }
+.app-screens .app-step { display: grid; grid-template-columns: 36px minmax(0,1fr); gap: 12px; padding-block: 18px; border-block-start: 1px solid var(--app-line); }
+.app-screens .app-step h3 { margin: 0 0 5px; }
+.app-screens .app-step p { margin: 0 0 9px; color: var(--syn-muted); font-size: .83rem; }
+.app-screens .app-step a { display: inline-flex; max-inline-size: 100%; }
+.app-screens .app-step-marker {
+  display: grid; place-items: center; inline-size: 32px; block-size: 32px;
+  border-radius: 50%; border: 1px solid var(--syn-border-default);
+  color: var(--syn-text); font-size: .85rem; font-weight: 700;
+}
+.app-screens .app-step-done::before {
+  content: ""; inline-size: 13px; block-size: 8px; border-inline-start: 2px solid currentColor;
+  border-block-end: 2px solid currentColor; transform: rotate(-45deg) translate(1px,-1px);
+}
+.app-screens .app-step[aria-current="step"] .app-step-marker {
+  background: var(--syn-accent); border-color: var(--syn-accent); color: var(--syn-on-accent);
+}
+.app-screens .app-step .syn-status { display: inline-block; vertical-align: middle; margin-inline-start: 5px; }
+.app-screens .app-metrics {
+  display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,8rem),1fr));
+  gap: 9px; margin-block-end: 17px;
+}
+.app-screens .app-metrics div { display: grid; gap: 2px; border: 1px solid var(--app-line); border-radius: 10px; padding: 12px; background: var(--syn-surface-recessed); }
+.app-screens .app-metrics strong { font-size: 1.3rem; line-height: 1.2; }
+.app-screens .app-metrics span { font-size: .74rem; color: var(--syn-muted); }
+.app-screens .syn-table-wrap { max-inline-size: 100%; overflow-x: auto; }
+.app-screens .syn-table { min-inline-size: 35rem; }
+.app-screens .syn-table caption { text-align: left; font-size: .76rem; color: var(--syn-muted); padding-block: 8px; }
+.app-screens .app-person { display: flex; align-items: center; gap: 9px; }
+.app-screens .app-person > span:last-child { display: grid; gap: 2px; }
+.app-screens .app-person small { font-weight: 400; color: var(--syn-muted); }
+.app-screens .app-list-item { display: grid; gap: 7px; padding: 12px; font-size: .82rem; }
+.app-screens .app-list-item small { color: var(--syn-muted); }
+.app-screens .app-definition { margin: 12px 0; display: grid; gap: 12px; }
+.app-screens .app-definition div { padding-block-end: 9px; border-block-end: 1px solid var(--app-line); }
+.app-screens .app-definition dt { font-size: .86rem; font-weight: 700; }
+.app-screens .app-definition dd { margin: 3px 0 0; font-size: .78rem; color: var(--syn-muted); }
+.app-screens .app-inline-tabs { margin-block-end: 17px; }
+.app-screens .app-feed { display: grid; gap: 0; list-style: none; padding: 0; margin: 0; }
+.app-screens .app-feed li {
+  display: grid; grid-template-columns: 12px minmax(0,1fr);
+  gap: 12px; padding: 16px 0; border-block-start: 1px solid var(--app-line);
+}
+.app-screens .app-feed strong { font-size: .85rem; }
+.app-screens .app-feed p { font-size: .81rem; color: var(--syn-muted); margin: 4px 0 7px; }
+.app-screens .app-feed li > a { grid-column: 2; justify-self: start; font-size: .82rem; }
+.app-screens .app-feed-dot { inline-size: 8px; block-size: 8px; border-radius: 50%; margin-block-start: 8px; border: 1px solid var(--syn-border-default); }
+.app-screens .app-feed [data-app-unread] .app-feed-dot { background: var(--syn-accent); border-color: var(--syn-accent); }
+.app-screens .app-preview-fieldset { display: grid; gap: 10px; border: 1px solid var(--app-line); border-radius: 10px; padding: 12px; margin-block: 16px; min-inline-size: 0; }
+.app-screens .app-preview-fieldset legend { padding-inline: 5px; font-weight: 650; font-size: .85rem; }
+.app-screens .app-preview-fieldset label { display: flex; gap: 9px; align-items: flex-start; font-size: .82rem; }
+.app-screens .app-preview-fieldset input { flex: none; margin-block-start: 2px; }
+.app-screens .app-integration-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,15rem),1fr)); gap: 14px; }
+.app-screens .app-integration { display: flex; flex-direction: column; align-items: flex-start; gap: 9px; }
+.app-screens .app-integration h4 { margin: 0; font-size: 1rem; }
+.app-screens .app-integration .syn-muted { margin: 0; }
+.app-screens .app-integration .syn-button { margin-block-start: auto; }
+.app-screens .app-integration-icon { display: grid; place-items: center; inline-size: 38px; block-size: 38px; border: 1px solid var(--app-line); border-radius: 10px; background: var(--syn-surface-recessed); color: var(--syn-text); font: 700 .75rem var(--syn-font-ui); }
+.app-screens .app-empty { min-block-size: 8rem; border-color: var(--app-line); }
+.app-screens .app-empty p { max-inline-size: 65ch; color: var(--syn-muted); font-size: .83rem; }
+.app-screens .app-checklist { padding-inline-start: 1.25rem; font-size: .82rem; }
+.app-screens .app-checklist li { margin-block: 8px; }
+.app-screens .app-footer { border-block-start: 1px solid var(--app-line); padding-block: 16px; color: var(--syn-muted); font-size: .76rem; }
+@media (min-width: 53rem) {
+  .app-screens .app-rail { position: sticky; top: 0; block-size: 100svh; overflow-y: auto; border-block-end: 0; }
+  .app-screens .app-nav { display: grid; }
+}
+@media (min-width: 75rem) {
+  .app-screens .app-columns { grid-template-columns: minmax(0,1fr) minmax(0,16.5rem); }
+}
+@media (max-width: 52.99rem) {
+  .app-screens .app-rail-bottom { display: none; }
+  .app-screens .app-rail { gap: 8px; padding: 14px; }
+  .app-screens .app-brand { padding-block: 0; }
+  .app-screens .app-nav a { flex: 1 1 9rem; min-inline-size: 0; }
+}
+@media (max-width: 35rem) {
+  .app-screens .app-page-header { padding-block-end: 12px; }
+  .app-screens .app-hero { display: grid; }
+  .app-screens .app-step { gap: 8px; }
+  .app-screens .app-section-heading > button { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .app-screens { scroll-behavior: auto; }
+}
+@media (forced-colors: active) {
+  .app-screens :where(.app-notice,.app-metrics div,.app-integration-icon,.app-preview-fieldset,.syn-app-card) { border-color: CanvasText; }
+  .app-screens .app-nav a[aria-current="page"]:not(:focus-visible), .app-screens .app-step[aria-current="step"] .app-step-marker { outline: 2px solid Highlight; outline-offset: -2px; }
+  .app-screens .app-feed [data-app-unread] .app-feed-dot { border-color: Highlight; background: Highlight; }
+}

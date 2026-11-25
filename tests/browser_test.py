@@ -248,7 +248,7 @@ class BrowserTests(unittest.TestCase):
         self.page.set_content(f"""<style>{css}</style>
         <section class="syn-root" data-syn-theme="studio">
           <table class="syn-table"><tbody>
-            <tr aria-selected="true" id="selected"><td>Selected</td></tr>
+            <tr data-syn-state="selected" id="selected"><td>Selected</td></tr>
             <tr id="other"><td>Other</td></tr>
           </tbody></table>
         </section>""")
@@ -261,6 +261,27 @@ class BrowserTests(unittest.TestCase):
         non_selected = self.page.locator("#other").evaluate(
             "e => getComputedStyle(e).backgroundColor")
         self.assertNotEqual(non_selected, base)
+
+    def test_aria_selected_does_not_invent_selection_on_static_table(self):
+        css = (ROOT / "dist/syntyr.core.css").read_text()
+        self.page.set_content(f"""<style>{css}</style>
+          <main class="syn-root" data-syn-theme="studio">
+            <table class="syn-table"><tbody>
+              <tr id="ordinary-aria" aria-selected="true"><td>Ordinary</td></tr>
+              <tr id="ordinary-data" data-syn-state="selected"><td>Highlighted</td></tr>
+            </tbody></table>
+            <table role="grid" class="syn-table"><tbody>
+              <tr id="grid-aria" aria-selected="true"><td>Grid row</td></tr>
+            </tbody></table>
+          </main>""")
+        color = lambda selector: self.page.locator(selector).evaluate(
+            "e => getComputedStyle(e).backgroundColor")
+        self.assertNotEqual(color("#ordinary-aria"), color("#ordinary-data"))
+        self.assertEqual(color("#grid-aria"), color("#ordinary-data"))
+        ordinary = self.page.locator("#ordinary-aria")
+        base = color("#ordinary-aria")
+        ordinary.hover()
+        self.assertNotEqual(color("#ordinary-aria"), base)
 
     def test_compact_density_shortens_actual_text_controls(self):
         css = (ROOT / "dist/syntyr.core.css").read_text()

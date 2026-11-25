@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Integrate Syntyr CSS with server-rendered HTML, HTMX, LiveView, Livewire, and frontend frameworks without requiring client-side JavaScript.">
-  <meta name="syntyr-source-sha256" content="4cb867c3568cef25730694080e572a9e3e8120727328a33b8f87bbce8ed23fd0">
+  <meta name="syntyr-source-sha256" content="666b88024c86a5c4383d11858f3946b68673e5edd4e5711bdc4fdf0b8ff99b95">
   <meta name="theme-color" content="#f5f7fb">
   <title>Syntyr CSS integration guide: server-rendered HTML and frontend stacks — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/framework-integrations">
@@ -38,6 +38,86 @@
 <p>Syntyr is a <strong>CSS presentation layer</strong>, not a state manager, request client, or component runtime.
 It has no JavaScript initialization, no required build tool, and no runtime dependency.
 Every example uses the same <code>syn-</code> classes, CSS tokens and standard HTML.</p>
+<h2 id="copy-a-catalog-example-into-your-stack">Copy a catalog example into your stack</h2>
+<p>The <a href="catalog.html">49-example component catalog</a> has a <strong>Copy HTML</strong> action for
+snippets and an optional <strong>Copy full page</strong> action that includes the
+<strong>actual required stylesheets</strong>, the document shell and <code>.syn-root</code> theme
+scope. Copying uses docs-only JavaScript; view the ordinary HTML source
+without JavaScript. For complete layouts, choose the existing
+<a href="blocks.html">99 MIT blocks</a> instead of rebuilding a pricing or dashboard
+section from scratch.</p>
+<p>The full-page option expects you to self-host the same <strong>unreleased alpha.5</strong>
+CSS files under <code>/dist/</code>; change those paths if your app uses <code>/public/css/</code>,
+<code>/assets/</code>, or a build-time import. Do not mix alpha.5 examples with
+published alpha.4 assets. Only load the CSS modules your example names;
+<code>syntyr.all.css</code> replaces these modules, not accompanies them.</p>
+<h3 id="plain-html-or-server-rendered-partial">Plain HTML or server-rendered partial</h3>
+<p>Copy the full page, or add core once to your layout:</p>
+<pre tabindex="0"><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/dist/syntyr.core.css&quot;&gt;
+&lt;main class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot;&gt;
+  &lt;article class=&quot;syn-panel&quot;&gt;
+    &lt;h1 class=&quot;syn-heading&quot;&gt;Overview&lt;/h1&gt;
+    &lt;a class=&quot;syn-button&quot; href=&quot;/reports&quot;&gt;View reports&lt;/a&gt;
+  &lt;/article&gt;
+&lt;/main&gt;
+</code></pre>
+<p>Use a real server route for <code>/reports</code>. For reusable HTML partials, place
+<code>.syn-root</code> on an ancestor that survives page/fragment replacements.</p>
+<h3 id="react-nextjs-jsx">React / Next.js JSX</h3>
+<p>Copy the component's <em>markup</em>, not the full <code>&lt;!doctype&gt;</code> page, into JSX.
+Import the CSS once in the application entry or root layout and use
+<code>className</code> and <code>htmlFor</code> instead of <code>class</code> and <code>for</code>:</p>
+<pre tabindex="0"><code class="language-jsx">// Import /dist/syntyr.core.css once from the app's supported global CSS entry.
+export function SearchPanel() {
+  return (
+    &lt;section className=&quot;syn-root syn-panel&quot; data-syn-theme=&quot;studio&quot;&gt;
+      &lt;form action=&quot;/search&quot; method=&quot;get&quot; className=&quot;syn-form&quot;&gt;
+        &lt;label className=&quot;syn-label&quot; htmlFor=&quot;search-term&quot;&gt;Search records&lt;/label&gt;
+        &lt;input className=&quot;syn-input&quot; id=&quot;search-term&quot; name=&quot;q&quot; type=&quot;search&quot; /&gt;
+        &lt;button className=&quot;syn-button&quot; type=&quot;submit&quot;&gt;Search&lt;/button&gt;
+      &lt;/form&gt;
+    &lt;/section&gt;
+  );
+}
+</code></pre>
+<p>No client component or hydration is necessary just to style a form. The
+application route owns request handling and escaping.</p>
+<h3 id="vue-nuxt-template">Vue / Nuxt template</h3>
+<p>Vue's template retains <code>class</code> and <code>for</code>; load CSS once using the framework's
+supported CSS entry. Native GET submission still works with scripting off:</p>
+<pre tabindex="0"><code class="language-vue">&lt;template&gt;
+  &lt;section class=&quot;syn-root syn-panel&quot; data-syn-theme=&quot;studio&quot;&gt;
+    &lt;form class=&quot;syn-form&quot; method=&quot;get&quot; action=&quot;/search&quot;&gt;
+      &lt;label class=&quot;syn-label&quot; for=&quot;vue-search&quot;&gt;Search records&lt;/label&gt;
+      &lt;input class=&quot;syn-input&quot; id=&quot;vue-search&quot; name=&quot;q&quot; type=&quot;search&quot;&gt;
+      &lt;button class=&quot;syn-button&quot; type=&quot;submit&quot;&gt;Search&lt;/button&gt;
+    &lt;/form&gt;
+  &lt;/section&gt;
+&lt;/template&gt;
+</code></pre>
+<h3 id="htmx-enhanced-native-get">HTMX-enhanced native GET</h3>
+<p>Keep the exact same HTML contract, adding HTMX attributes only if your app
+has deliberately loaded a pinned HTMX runtime:</p>
+<pre tabindex="0"><code class="language-html">&lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot;&gt;
+  &lt;form action=&quot;/records&quot; method=&quot;get&quot; class=&quot;syn-form&quot;
+        hx-get=&quot;/records&quot; hx-target=&quot;#record-results&quot; hx-push-url=&quot;true&quot;&gt;
+    &lt;label class=&quot;syn-label&quot; for=&quot;record-query&quot;&gt;Records&lt;/label&gt;
+    &lt;input class=&quot;syn-input&quot; id=&quot;record-query&quot; name=&quot;q&quot; type=&quot;search&quot;&gt;
+    &lt;button class=&quot;syn-button&quot; type=&quot;submit&quot;&gt;Find&lt;/button&gt;
+  &lt;/form&gt;
+  &lt;div id=&quot;record-results&quot; aria-live=&quot;polite&quot;&gt;&lt;/div&gt;
+&lt;/section&gt;
+</code></pre>
+<p>Without HTMX, this still submits an ordinary GET. With HTMX, the server must
+return a safe HTML fragment for normal HTMX requests, a <strong>complete page</strong> for
+direct navigation and history restoration, and correctly vary cached
+representations. Do not swap the stable <code>.syn-root</code>. Read the more detailed
+HTMX behavior and error contracts below before building production search.</p>
+<p>Some catalog examples demonstrate static UI rather than complete application
+behavior. Replace demo-relative URLs and duplicate IDs; validate accessibility,
+form submission, CSRF and authorization in your own app. Check the catalog's
+<a href="catalog.html#catalog-browser-support">browser compatibility and fallbacks</a>
+for <code>popover</code>, named disclosures and invoker commands.</p>
 <h2 id="choose-one-styling-mode">Choose one styling mode</h2>
 <ol>
 <li><strong>Explicit classes (recommended for apps):</strong> load <code>syntyr.core.css</code>, use
@@ -48,7 +128,7 @@ For an element that an interaction framework will add classes to, opt it in once
 with <code>data-syn-semantic</code>. This preserves semantic styling while host-managed
 classes such as <code>htmx-request</code> are added and removed.</li>
 </ol>
-<pre><code class="language-html">&lt;section class=&quot;syn-root syn-semantic&quot; data-syn-theme=&quot;studio&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;section class=&quot;syn-root syn-semantic&quot; data-syn-theme=&quot;studio&quot;&gt;
   &lt;button data-syn-semantic hx-get=&quot;/status&quot; hx-target=&quot;#status&quot;&gt;Check status&lt;/button&gt;
   &lt;div id=&quot;status&quot; aria-live=&quot;polite&quot;&gt;&lt;/div&gt;
 &lt;/section&gt;
@@ -64,14 +144,22 @@ elements elsewhere. Do not put it on elements styled by a separate component
 library unless you explicitly want Syntyr semantic styling there. Prefer
 <code>.syn-button</code> for already-classed controls. The marker does <strong>not</strong> make the
 control stateful, disabled, or accessible by itself.</p>
+<p>For accessible advanced menus, comboboxes and toasts, see the <a href="headless-interactions.html">optional headless interaction guide</a>. All framework JavaScript remains application-owned.</p>
 <h2 id="htmx-progressive-enhancement">HTMX: progressive enhancement</h2>
+<p>For a dedicated collection of 12 copy-owned patterns (tables, search, forms, dialogs, polling and loading feedback), see the <a href="htmx-components.html">HTMX components guide</a> and <a href="htmx-playground.html">live server-backed playground</a>. These recipes reuse existing Syntyr classes and an independently removable, CSS-only request-state adapter.</p>
+<p>For a <strong>Go standard-library runnable starter</strong> with no third-party Go modules,
+see <a href="https://github.com/dporkka/syntyr-css/tree/main/examples/go-htmx">examples/go-htmx</a>. The default server runs
+without JavaScript; optional locally vendored HTMX uses the same GET endpoint.
+Its Go tests verify full-page vs fragment responses, HTMX history restoration,
+escaping, method handling and the CSS serving path. This is a development fixture, not a production auth
+or CSRF implementation.</p>
 <p>A complete example with a real stdlib Python HTTP server is at:
 <a href="https://github.com/dporkka/syntyr-css/blob/main/examples/htmx.html">examples/htmx.html</a>,
 <a href="https://github.com/dporkka/syntyr-css/blob/main/examples/htmx_server.py">examples/htmx_server.py</a>, and
 <a href="https://github.com/dporkka/syntyr-css/blob/main/examples/htmx.css">examples/htmx.css</a>.
 These links lead to source files, not a live Cloudflare demonstration.</p>
 <p>From the repository root:</p>
-<pre><code class="language-sh">python3 examples/htmx_server.py
+<pre tabindex="0"><code class="language-sh">python3 examples/htmx_server.py
 # open http://127.0.0.1:8765/examples/htmx.html
 </code></pre>
 <p>The optional demo loads <strong>pinned HTMX 2.0.8</strong> from a third-party CDN. The CSS
@@ -79,16 +167,29 @@ library doesn't load HTMX automatically. Production applications should
 self-host the pinned HTMX asset for control over performance, integrity, and CSP.</p>
 <p>The search form uses a real <code>action</code> and <code>method=get</code>. When HTMX sends
 <code>HX-Request: true</code>, the server returns only the result fragment. Ordinary
-navigation gets a complete HTML document. The server emits <code>Vary: HX-Request</code>
-to keep caches from mixing the representations, and escapes user-controlled
-query text before inserting it in HTML.</p>
+navigation gets a complete HTML document. The server emits
+<code>Vary: HX-Request, HX-History-Restore-Request</code> to keep caches from mixing
+normal fragments and full history-restore documents, and escapes
+user-controlled query text before inserting it in HTML.</p>
 <p>For best results:</p>
 <ul>
 <li>Put <code>.syn-root</code> and <code>data-syn-theme</code> <strong>outside</strong> the swapped element.</li>
 <li>Swap the narrowest stable target (normally <code>innerHTML</code> inside a results container).</li>
 <li>Give labels and inputs stable IDs; preserve native form submission as a fallback.</li>
-<li>Use the framework's <code>hx-indicator</code> and <code>hx-disabled-elt</code> when appropriate;
-<code>aria-busy</code> does <strong>not</strong> block duplicate submissions by itself.</li>
+<li>Use <code>hx-push-url=&quot;true&quot;</code> when search/filter results should be bookmarkable.
+Ensure the same URL serves a complete document on reload, restores escaped
+field values, and returns only the intended fragment for normal HTMX requests.</li>
+<li>If full documents and partial responses share an endpoint, set
+<code>historyRestoreAsHxRequest: false</code> in HTMX 2 and return a complete HTML
+document when <code>HX-History-Restore-Request: true</code> is present, even if a
+proxy or client also sends <code>HX-Request: true</code>. Set <code>Vary</code> for both headers
+or disable caching. A history cache miss must not receive a fragment.</li>
+<li>Use <code>hx-disabled-elt</code> to lock an in-flight submit button when duplicate
+submissions are undesirable. An <code>hx-indicator</code> only provides feedback.</li>
+<li>If a control must survive a larger swap, consider <code>hx-preserve</code> with a stable
+ID on both sides of the swap; prefer narrow targets first.</li>
+<li>A loading cursor, <code>aria-busy</code>, and <code>hx-indicator</code> are only feedback:
+they do <strong>not</strong> block duplicate submissions by themselves.</li>
 <li>Do not create a permanent Syntyr HTMX runtime or register Syntyr lifecycle events.</li>
 <li>For strict CSP, use <code>includeIndicatorStyles: false</code> and an external stylesheet.
 The demo shows this pattern with a small <strong>application-owned</strong> <code>htmx.css</code>.</li>
@@ -98,12 +199,118 @@ failure paths in an actual browser.</li>
 <p>The demo server intentionally exposes only four static assets and one GET route,
 listens on localhost, and is <strong>not</strong> included in the Cloudflare static-site build.
 A static host cannot serve its dynamic search endpoint without a backend.</p>
+<h3 id="htmx-4-migration-separate-from-syntyr">HTMX 4 migration (separate from Syntyr)</h3>
+<p>The runnable example intentionally pins HTMX <strong>2.0.8</strong>. HTMX <strong>4.0.1</strong>
+uses the same Syntyr stylesheet and component HTML, but its <em>HTMX-owned</em>
+API changes. A browser smoke test applies the migration in an isolated
+fixture rather than silently changing the v2 example:</p>
+<ul>
+<li>Replace <code>hx-disabled-elt=&quot;#search-button&quot;</code> with
+<code>hx-disable=&quot;#search-button&quot;</code>. In HTMX 4 the <em>old</em> <code>hx-disable</code> meaning
+(ignore a subtree) moved to <code>hx-ignore</code>.</li>
+<li>Use <code>includeIndicatorCSS: false</code> (rather than the v2
+<code>includeIndicatorStyles: false</code>) with the application-owned
+<code>htmx.css</code> indicator stylesheet.</li>
+<li>HTMX 4 refetches full documents for history navigation, instead of
+depending on the v2 browser snapshot cache. Full-page GET rendering
+and escaped form-value restoration must still work.</li>
+<li>HTMX 4 makes attribute inheritance explicit and swaps HTTP errors by
+default; review the framework's migration guide before upgrading
+any application. Syntyr does not override these semantics.</li>
+</ul>
+<p>To exercise both versions against the real browser runtime without
+installing either into Syntyr:</p>
+<pre tabindex="0"><code class="language-sh">curl -fsSL https://unpkg.com/htmx.org@2.0.8/dist/htmx.min.js -o /tmp/syntyr-htmx2.js
+curl -fsSL https://cdn.jsdelivr.net/npm/htmx.org@4.0.1/dist/htmx.min.js -o /tmp/syntyr-htmx4.js
+HTMX_JS_PATH=/tmp/syntyr-htmx2.js HTMX4_JS_PATH=/tmp/syntyr-htmx4.js python3 tests/htmx_browser.py
+</code></pre>
+<p>Playwright is an <strong>optional testing dependency</strong>. In the smoke test,
+the HTML response uses HTMX 4's external script and renamed controls
+while keeping the identical Syntyr CSS, class names, and stable theme root.
+This is not a claim that every HTMX extension or version-specific behavior
+is drop-in compatible.</p>
+<h2 id="composable-server-html-components-go-standard-library">Composable server HTML components (Go standard library)</h2>
+<p>Syntyr components do not require a browser runtime or React-style hydration.
+To make server-side <strong>composition</strong> concrete, the
+<a href="https://github.com/dporkka/syntyr-css/tree/main/examples/server-components-go">Go standard-library component example</a>
+provides five copy-owned <code>html/template</code> partials: labeled search field,
+status/error notice, button, result table and pagination. It includes a
+runnable GET-only example and tests for HTML escaping, server validation,
+<code>aria-describedby</code>, and encoded query-preserving links. No new stylesheet,
+JavaScript dependency, component protocol or Go library is introduced.</p>
+<pre tabindex="0"><code class="language-go-html-template">&lt;form action=&quot;/&quot; method=&quot;get&quot; role=&quot;search&quot; class=&quot;syn-form&quot;&gt;
+  {{template &quot;syn.field&quot; .Query}}
+  {{template &quot;syn.button&quot; .SearchButton}}
+&lt;/form&gt;
+{{template &quot;syn.table&quot; .Records}}
+{{template &quot;syn.pagination&quot; .Pager}}
+</code></pre>
+<p>The input values come from your server. Each component emits ordinary HTML
+with classes already in <code>syntyr.core.css</code>, and <code>html/template</code> contextually
+escapes untrusted data. The app owns distinct IDs, request validation, query
+encoding, CSRF for mutation forms, authorization and error status codes.
+For HTMX/Datastar/Turbo responses, render the same partials into fragments,
+but retain full-page rendering for direct navigation and history restoration.
+This is an <strong>example</strong>, not a new Syntyr runtime API or a claim of an official
+adapter for every backend language. See the
+<a href="https://github.com/dporkka/syntyr-css/blob/main/examples/server-components-go/README.md">copyable template README</a>
+for the complete contract and setup instructions.</p>
+<h3 id="additional-copy-owned-server-component-adapters">Additional copy-owned server component adapters</h3>
+<p>The <a href="https://github.com/dporkka/syntyr-css/tree/main/examples/server-components-templ">Go templ adapter</a>
+uses the same five native HTML component contracts as the Go standard-library
+example, with independent <code>Field</code>, <code>Notice</code>, <code>Button</code>, <code>Table</code> and
+<code>Pagination</code> components. It has an isolated, pinned <code>github.com/a-h/templ</code>
+build-time/runtime module dependency (Go 1.26+); run <code>templ generate</code> before
+tests or starting the example. Generated Go code is not checked in.</p>
+<p>The <a href="https://github.com/dporkka/syntyr-css/tree/main/examples/server-components-node">Node.js standard-library adapter</a>
+exposes corresponding composable HTML functions. It requires no npm packages;
+Node owns request routing and escaping, and the example serves a single
+allowlisted CSS asset. Pagination links are root-relative and use
+<code>URLSearchParams</code>, not interpolation of arbitrary URLs. Run its built-in
+<code>node --test</code> suite to exercise escaped values, safe links, error linkage,
+HTTP methods and GET fallback.</p>
+<p>These integrations are <strong>copy-owned examples</strong>, not npm exports or shipped
+runtime packages. They reuse <code>syntyr.core.css</code> and the same semantic HTML;
+none adds a JavaScript controller, hydration requirement, new <code>syn-*</code> class,
+CSS module or runtime to Syntyr's core. Each server must still handle its own
+user permissions, CSRF defenses for mutations, status codes, and navigation.</p>
+<h3 id="htmx-and-datastar-fragments-built-from-the-same-components">HTMX and Datastar fragments built from the same components</h3>
+<p>The <a href="https://github.com/dporkka/syntyr-css/tree/main/examples/server-components-node/fragments">Node.js HTML fragment demo</a>
+reuses the <strong>same copy-owned</strong> <code>field</code>, <code>notice</code>, <code>button</code>, <code>table</code> and
+<code>pagination</code> functions from the Node.js adapter for both initial HTML pages
+and optional HTMX/Datastar updates. It requires no npm packages or new
+Syntyr component runtime. Run <code>node examples/server-components-node/fragments/server.mjs</code>
+from the repo root, after building CSS, to open <code>/htmx</code> and <code>/datastar</code>.</p>
+<ul>
+<li><strong>HTMX 2.0.8:</strong> native GET fallback, fragments targeting a stable
+<code>#resource-workspace</code>, <code>hx-push-url</code> for searchable history, and complete
+HTML for <code>HX-History-Restore-Request</code>. A tiny app-owned external script
+explicitly permits swapping <em>only</em> server-marked HTTP 422 validation
+fragments, while normal GET errors retain HTTP 400. Cache output varies
+by the HTMX request/history headers.</li>
+<li><strong>Datastar v1.0.5:</strong> ordinary GET fallback and a pinned, optional
+enhancement that sends <code>datastar</code> JSON signals, receives
+<code>event: datastar-patch-elements</code> through SSE and morphs the same component
+HTML. Signal input is bounded and type-checked; the serialized SSE patch
+is flattened to a single <code>data:</code> line <em>after</em> HTML escaping. <code>Vary: Accept</code>
+distinguishes ordinary pages from SSE. Bad signals receive HTTP 400;
+field-validation errors for valid SSE requests are represented accessibly
+inside a successful event response.</li>
+</ul>
+<p>In both modes, <code>.syn-root</code> persists outside the replaceable fragment;
+existing <code>syn-*</code> selectors and tokens are unchanged. Browser scripts belong
+solely to the <strong>demo app</strong> (pinned external URLs in the example), not to
+Syntyr Core. Self-host your browser dependencies and set an appropriate CSP
+before production use. The example handles <strong>read-only GET requests only</strong>;
+server authorization and CSRF protections for writes remain application-owned.
+The <a href="https://github.com/dporkka/syntyr-css/blob/main/examples/server-components-node/fragments/README.md">example README</a>
+contains reproducible HTTP and optional Chromium browser tests.</p>
 <h2 id="server-driven-html-optional-request-state-bridge">Server-driven HTML: optional request-state bridge</h2>
 <p><strong>No adapter is necessary to render Syntyr components.</strong> Serve core CSS from
 your application and output the same <code>syn-</code> classes in HEEx, Blade, ERB, templ,
 Jinja, Twig or Razor. You only need a second CSS file if you want native
 framework loading classes and attributes to show Syntyr's progress cursor:</p>
-<pre><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.core.css&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.core.css&quot;&gt;
 &lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.server.css&quot;&gt;
 </code></pre>
 <p>Or, when using a CSS-aware package build system, import
@@ -112,10 +319,12 @@ The optional <code>syntyr.server.css</code> is included in <code>syntyr.all.css<
 The npm package is an unreleased alpha.5 candidate; self-host prebuilt
 files or a pinned release until that version is actually published.</p>
 <p>The bridge is <strong>presentation-only</strong>. It styles the cursor on Syntyr buttons
-during <code>data-loading</code>, <code>.htmx-request</code>, <code>.phx-click-loading</code>,
-<code>.phx-submit-loading</code>, <code>.phx-change-loading</code>, or
+during <code>data-loading</code>, <code>.htmx-request</code>, <code>.up-active</code>,
+<code>.phx-click-loading</code>, <code>.phx-submit-loading</code>, <code>.phx-change-loading</code>, or
 <code>[data-syn-state=&quot;loading&quot;]</code>. It also supports <code>turbo-frame[busy]</code> and
-request classes on enclosing HTMX/LiveView forms. It never manages
+request classes on enclosing HTMX, Unpoly and LiveView forms.
+Datastar can explicitly bind <code>data-syn-state</code> to its own request-indicator
+signal; Syntyr does not inspect or create Datastar signals. It never manages
 <code>aria-busy</code>, disabled state, network requests, focus, announcements,
 morphing, DOM lifecycle, or retries. Native disabled buttons retain
 their disabled cursor; visual feedback does not block double submissions.</p>
@@ -129,7 +338,7 @@ make styling survive framework patches.</p>
 <p><a href="https://github.com/dporkka/syntyr-css/blob/main/examples/server-rendered/liveview.heex">Copyable HEEx form</a>
 uses the normal <code>phx-change</code> and <code>phx-submit</code> handlers. Server assigns
 control the value and validation error:</p>
-<pre><code class="language-heex">&lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot;&gt;
+<pre tabindex="0"><code class="language-heex">&lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot;&gt;
   &lt;form id=&quot;campaign-form&quot; class=&quot;syn-form&quot; phx-change=&quot;validate&quot; phx-submit=&quot;save&quot;&gt;
     &lt;label class=&quot;syn-label&quot; for=&quot;campaign-name&quot;&gt;Campaign&lt;/label&gt;
     &lt;input id=&quot;campaign-name&quot; class=&quot;syn-input&quot; name=&quot;campaign[name]&quot;
@@ -147,7 +356,7 @@ JavaScript bootstrap in your Phoenix application, not in Syntyr.</p>
 <h2 id="laravel-livewire-blade">Laravel Livewire (Blade)</h2>
 <p><a href="https://github.com/dporkka/syntyr-css/blob/main/examples/server-rendered/livewire.blade.php">Copyable Blade form</a>
 uses <code>wire:submit</code>, <code>wire:model.live</code>, and Blade validation messages:</p>
-<pre><code class="language-blade">&lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot;&gt;
+<pre tabindex="0"><code class="language-blade">&lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot;&gt;
   &lt;form class=&quot;syn-form&quot; wire:submit=&quot;save&quot;&gt;
     &lt;label class=&quot;syn-label&quot; for=&quot;campaign-name&quot;&gt;Campaign&lt;/label&gt;
     &lt;input id=&quot;campaign-name&quot; class=&quot;syn-input&quot; wire:model.live=&quot;name&quot;
@@ -165,8 +374,11 @@ prefer Livewire's own <code>wire:loading</code> and <code>wire:target</code> con
 client runtime comes from the Laravel application.</p>
 <h2 id="rails-hotwire-turbo-frames">Rails Hotwire / Turbo Frames</h2>
 <p><a href="https://github.com/dporkka/syntyr-css/blob/main/examples/server-rendered/turbo.html">Copyable Turbo form</a>
-uses a normal GET form to update only a matching frame:</p>
-<pre><code class="language-html">&lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot;&gt;
+uses a normal GET form to update only a matching frame. For a running
+server-backed fixture with a real Turbo 8.0.23 browser integration,
+see <a href="https://github.com/dporkka/syntyr-css/blob/main/examples/turbo.html">examples/turbo.html</a>
+and <a href="https://github.com/dporkka/syntyr-css/blob/main/examples/hypertext_server.py">examples/hypertext_server.py</a>:</p>
+<pre tabindex="0"><code class="language-html">&lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot;&gt;
   &lt;form action=&quot;/campaigns&quot; method=&quot;get&quot; data-turbo-frame=&quot;campaign-results&quot;&gt;
     &lt;label for=&quot;q&quot;&gt;Campaign&lt;/label&gt;
     &lt;input id=&quot;q&quot; class=&quot;syn-input&quot; name=&quot;q&quot;&gt;
@@ -176,9 +388,42 @@ uses a normal GET form to update only a matching frame:</p>
 &lt;/section&gt;
 </code></pre>
 <p>The server must return a matching <code>&lt;turbo-frame id=&quot;campaign-results&quot;&gt;</code>
-element. Turbo toggles <code>turbo-frame[busy]</code> while it fetches a replacement.
-Turbo Streams and full-page visits must keep the Syntyr root appropriately
-scoped. Forms with mutations still need application-owned authentication,
+element. Turbo toggles <code>turbo-frame[busy]</code> while it fetches a replacement. The
+optional CSS bridge styles enabled Syntyr buttons <strong>inside</strong> a busy frame;
+for a button outside that frame, bind an application-owned
+<code>data-syn-state=&quot;loading&quot;</code> rather than expecting CSS to infer cross-frame
+request ownership.
+For the runnable example, start <code>python3 examples/hypertext_server.py</code> and
+open <code>http://127.0.0.1:8767/examples/turbo.html</code>. The server distinguishes
+<code>Turbo-Frame: customer-results</code> from native navigation, returns a matching
+frame for enhanced requests, returns complete HTML for native GET requests,
+and sets <code>Vary: Turbo-Frame</code> to avoid cross-representation caching issues.
+The Turbo browser dependency is pinned and demo-only; self-host the bundle
+in production. Syntyr never includes it.</p>
+<h3 id="turbo-streams-independent-server-updated-regions">Turbo Streams: independent server-updated regions</h3>
+<p>The same runnable Turbo 8 example now includes a <strong>GET stream form</strong> outside
+the frame. Add <code>data-turbo-stream=&quot;true&quot;</code> to the form, keep the target inside a
+stable <code>.syn-root</code>, and return an action targeting that element:</p>
+<pre tabindex="0"><code class="language-html">&lt;form action=&quot;/customers/turbo-stream&quot; method=&quot;get&quot; data-turbo-stream=&quot;true&quot;&gt;
+  &lt;label for=&quot;stream-q&quot;&gt;Customers&lt;/label&gt;
+  &lt;input id=&quot;stream-q&quot; class=&quot;syn-input&quot; name=&quot;q&quot;&gt;
+  &lt;button class=&quot;syn-button&quot; type=&quot;submit&quot;&gt;Update&lt;/button&gt;
+&lt;/form&gt;
+&lt;div id=&quot;turbo-stream-results&quot; class=&quot;syn-panel&quot; aria-live=&quot;polite&quot;&gt;&lt;/div&gt;
+</code></pre>
+<p>An enhanced request with <code>Accept: text/vnd.turbo-stream.html</code> gets a
+<code>text/vnd.turbo-stream.html</code> response with a <code>&lt;turbo-stream action=&quot;update&quot; target=&quot;turbo-stream-results&quot;&gt;</code> and escaped, server-rendered HTML in a
+<code>&lt;template&gt;</code>. Native GET navigation returns a complete document with
+the result in the correct region, not duplicate results in both the frame
+and stream target. Set <code>Vary: Accept</code> to distinguish the two representations.
+The example uses normal HTTP responses rather than WebSockets or SSE; Turbo
+Streams can also arrive over those transports when the application provides them.
+The original frame remains mounted when the stream updates its separate target.</p>
+<p>Turbo Streams and full-page visits must keep the Syntyr root appropriately
+scoped. Where Turbo must preserve a client-managed element, use
+<code>data-turbo-permanent</code> with a stable unique ID on both versions. Do not put
+an entire theme root inside a routinely replaced frame.
+Forms with mutations still need application-owned authentication,
 CSRF protection and server validation. This recipe does not ship Turbo.</p>
 <h2 id="go-templ-and-other-server-template-engines">Go templ and other server template engines</h2>
 <p><a href="https://github.com/dporkka/syntyr-css/blob/main/examples/server-rendered/search.templ">Copyable Go templ search template</a>
@@ -191,11 +436,20 @@ and other HTML renderers need no special integration: render actual
 classes, apply <code>aria-invalid</code> and <code>aria-describedby</code> from server
 validation, and keep static assets versioned. Choose framework-native
 partials/components and anti-CSRF mechanisms.</p>
-<p><strong>Verification scope:</strong> the optional bridge and the copyable templates
-are statically tested with Python's standard library; the repository's
-existing HTMX demo has integration coverage. These examples are not a
-claim that Phoenix, Laravel, Rails, or Go runtime tests have run. Add
-framework-owned end-to-end tests when you adopt a template in an app.</p>
+<p><strong>Verification scope:</strong> the optional bridge and copyable templates have
+Python standard-library contract tests. HTMX has an existing opt-in browser
+suite; Datastar has an opt-in browser test using a pinned bundle.
+Unpoly 3.15.0 and Turbo 8.0.23 have real, opt-in browser tests in
+<code>tests/hypertext_browser.py</code> that cover request feedback, DOM replacement,
+Turbo Stream updates, Unpoly 422 validation/error recovery, theme-root
+survival, and no-JavaScript form fallback in Chromium and Firefox
+(and in WebKit only on a compatible Playwright container). The demo servers
+also have request/response tests. Simulated browser checks confirm that
+Livewire 4's <code>data-loading</code> and LiveView's <code>phx-*loading</code> cursor selectors
+are scoped to Syntyr and do not override native disabled controls.
+This is <strong>not</strong> a claim that Phoenix,
+Laravel, Rails, or Go application runtime tests have run. Add framework-owned
+end-to-end tests when adopting templates.</p>
 <h2 id="lit-web-components">Lit / Web Components</h2>
 <p>Syntyr works with Lit but does not depend on it. Lit components using light DOM
 can use ordinary <code>.syn-*</code> classes within a Syntyr root. Components with Shadow
@@ -206,7 +460,7 @@ not automatically style the inside of a shadow root. See the
 and <a href="component-authoring.html">component-authoring conventions</a>.</p>
 <h2 id="alpinejs">Alpine.js</h2>
 <p>Use native attributes for real state, and Syntyr classes for presentation:</p>
-<pre><code class="language-html">&lt;div class=&quot;syn-root&quot; x-data=&quot;{ selected: false }&quot;&gt;
+<pre tabindex="0"><code class="language-html">&lt;div class=&quot;syn-root&quot; x-data=&quot;{ selected: false }&quot;&gt;
   &lt;button class=&quot;syn-button&quot; type=&quot;button&quot;
           :aria-pressed=&quot;String(selected)&quot; @click=&quot;selected = !selected&quot;&gt;
     Toggle details
@@ -216,13 +470,103 @@ and <a href="component-authoring.html">component-authoring conventions</a>.</p>
 <p>Mount Alpine once in the host app. For <code>x-cloak</code>, define a tiny application
 rule <code>[x-cloak] { display: none !important; }</code> before Alpine initializes.
 Syntyr doesn't manage Alpine state.</p>
-<h2 id="datastar">Datastar</h2>
-<p>Bind standard <code>aria-*</code>, <code>data-syn-state</code>, and class attributes to Datastar
-signals. Style the resulting HTML as ordinary DOM. Keep the Syntyr theme root
-outside morph targets, and let Datastar own request and signal behavior.
-No Syntyr Datastar plugin is needed.</p>
+<h2 id="datastar-signals-htmlsse-morphing">Datastar (signals + HTML/SSE morphing)</h2>
+<p><a href="https://github.com/dporkka/syntyr-css/blob/main/examples/datastar.html">Runnable Datastar example</a>
+and <a href="https://github.com/dporkka/syntyr-css/blob/main/examples/datastar_server.py">stdlib HTTP server</a>
+demonstrate a real GET fallback and a Datastar SSE response:</p>
+<pre tabindex="0"><code class="language-sh">python3 examples/datastar_server.py
+# open http://127.0.0.1:8766/examples/datastar.html
+</code></pre>
+<p>The demo opts into a <strong>pinned Datastar v1.0.5</strong> browser script. That is an
+application/demo dependency, not bundled or injected by Syntyr. Self-host the
+pinned script in production.</p>
+<pre tabindex="0"><code class="language-html">&lt;main class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot;&gt;
+  &lt;form action=&quot;/customers/search&quot; method=&quot;get&quot;
+        data-indicator:_fetching
+        data-on:submit=&quot;!$_fetching &amp;&amp; @get('/customers/search')&quot;
+        data-attr:aria-busy=&quot;String($_fetching)&quot;&gt;
+    &lt;label class=&quot;syn-label&quot; for=&quot;q&quot;&gt;Customer&lt;/label&gt;
+    &lt;input id=&quot;q&quot; name=&quot;q&quot; class=&quot;syn-input&quot; data-bind:q&gt;
+    &lt;button type=&quot;submit&quot; class=&quot;syn-button&quot;
+            data-attr:disabled=&quot;$_fetching&quot;
+            data-attr:data-syn-state=&quot;$_fetching ? 'loading' : null&quot;&gt;
+      Search
+    &lt;/button&gt;
+    &lt;output role=&quot;status&quot; data-show=&quot;$_fetching&quot; style=&quot;display: none&quot;&gt;
+      Searching…
+    &lt;/output&gt;
+  &lt;/form&gt;
+  &lt;section id=&quot;customer-results&quot; aria-live=&quot;polite&quot;&gt;&lt;/section&gt;
+&lt;/main&gt;
+</code></pre>
+<p>The framework owns <code>data-indicator</code>, <code>data-bind:q</code>, <code>data-on:submit</code>,
+disabled state, and the SSE morph. The server returns
+<code>event: datastar-patch-elements</code> with a matching <code>id=&quot;customer-results&quot;</code>
+and escapes user content. Serialize each SSE patch as a single data line:
+normalize carriage returns and line feeds <em>after</em> HTML escaping, since HTML
+escaping alone does not prevent attacker-controlled SSE record boundaries.
+Because Datastar GET requests send signal values
+inside a <code>datastar</code> query parameter, the sample endpoint reads that JSON for
+SSE requests and reads ordinary <code>q</code> for no-JavaScript GET requests.</p>
+<p><strong>Keep <code>.syn-root</code> and the form outside the morphed results section.</strong>
+The native GET fallback re-renders the escaped search term into the form
+value as well as the results, so users do not lose what they searched for.
+Syntyr's <code>data-syn-state</code> bridge is optional; the native disabled state and
+status message work independently of the progress cursor. Never rely on
+<code>aria-busy</code> or a CSS class alone to prevent duplicate mutations.</p>
+<p>Datastar <code>data-on:submit</code> automatically prevents native form navigation when
+the framework has initialized. Keep a real <code>action</code> and <code>method</code> so the form
+still works without Datastar. Prefer <code>data-class:*</code> to toggle state classes
+without overwriting a stable <code>syn-*</code> component class; use <code>data-attr:aria-*</code>
+to communicate interactive state. Keep the Syntyr theme root out of any
+SSE morph target and return a stable ID for the target.</p>
+<p>Datastar expressions execute JavaScript. Do not interpolate untrusted data into
+<code>data-*</code> expressions, do not put secrets in signals, validate on the server,
+and adopt Datastar's documented nonce-based <strong>CSP</strong> mode when forbidding
+<code>unsafe-eval</code>. Syntyr requires neither <code>unsafe-eval</code> nor a nonce.
+Neither framework owns the other's initialization lifecycle.</p>
+<h2 id="unpoly">Unpoly</h2>
+<p><a href="https://github.com/dporkka/syntyr-css/blob/main/examples/unpoly.html">Runnable Unpoly 3.15.0 demo</a>
+shares the <a href="https://github.com/dporkka/syntyr-css/blob/main/examples/hypertext_server.py">local HTTP server</a>
+with the Turbo demo. Run <code>python3 examples/hypertext_server.py</code> and open
+<code>http://127.0.0.1:8767/examples/unpoly.html</code>.
+The example pins the JS and CSS bundles; both belong to the demo application,
+not Syntyr. Self-host both in production.</p>
+<p>Unpoly can update multiple fragments from a single response. The runnable
+example uses <code>up-target=&quot;#customer-results, #unpoly-search&quot;</code> so a successful
+search refreshes the result and re-renders the form, including clearing any
+previous validation error. An empty query returns HTTP <strong>422</strong>, with
+<code>up-fail-target=&quot;#unpoly-search&quot;</code> replacing only the form and an associated
+<code>aria-invalid=&quot;true&quot;</code> / <code>aria-describedby=&quot;unpoly-search-error&quot;</code> message.
+A subsequent valid submission clears both the invalid state and message.
+The no-JavaScript fallback receives a complete document, including the
+form error, instead of an orphaned fragment. These are <strong>server-side application
+behaviors</strong>, not Syntyr CSS features.</p>
+<p>Unpoly adds <code>.up-active</code> to an initiating link or form and <code>.up-loading</code>
+to the targeted fragment. Syntyr's optional <code>syntyr.server.css</code> styles the
+progress cursor on an enabled <code>.syn-button.up-active</code> or the enabled
+submit button inside <code>form.up-active</code>, without hiding, dimming, or blocking
+the target. Unpoly owns response handling, loading feedback and morphing.</p>
+<pre tabindex="0"><code class="language-html">&lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot;&gt;
+  &lt;form action=&quot;/customers&quot; method=&quot;get&quot;
+        up-target=&quot;#customer-results, #customer-search&quot; up-fail-target=&quot;#customer-search&quot;
+        id=&quot;customer-search&quot;&gt;
+    &lt;label class=&quot;syn-label&quot; for=&quot;customer-query&quot;&gt;Customer&lt;/label&gt;
+    &lt;input id=&quot;customer-query&quot; class=&quot;syn-input&quot; name=&quot;q&quot;&gt;
+    &lt;button class=&quot;syn-button&quot; type=&quot;submit&quot;&gt;Search&lt;/button&gt;
+  &lt;/form&gt;
+  &lt;div id=&quot;customer-results&quot; aria-live=&quot;polite&quot;&gt;&lt;/div&gt;
+&lt;/section&gt;
+</code></pre>
+<p>The example server responds with an HTML document containing
+<code>#customer-results</code>; Unpoly extracts and replaces the matching fragment.
+Without JavaScript, a native GET responds with the same complete document.</p>
+<p>Retain a real <code>action</code>, <code>method</code> and stable target ID. Keep the Syntyr root
+outside any fragment Unpoly replaces; do not interpret <code>.up-loading</code> as a
+reason to suppress keyboard interaction or hide results. Syntyr does not
+include Unpoly or override its default CSS.</p>
 <h2 id="react-nextjs">React / Next.js</h2>
-<pre><code class="language-jsx">import &quot;./syntyr.core.css&quot;;
+<pre tabindex="0"><code class="language-jsx">import &quot;./syntyr.core.css&quot;;
 
 export function StatusCard({ status }) {
   return (
@@ -242,6 +586,24 @@ the framework). No Syntyr provider, hooks, hydration, or dependency on React.</p
 <code>data-syn-state</code> using each framework's built-in template syntax.
 Do not wrap simple visual classes in additional runtime components unless the
 application benefits from reusable semantic component boundaries.</p>
+<h3 id="runnable-sveltekit-3-form-action-and-nested-layout-reference">Runnable SvelteKit 3 form-action and nested-layout reference</h3>
+<p><a href="https://github.com/dporkka/syntyr-css/tree/main/examples/sveltekit">examples/sveltekit</a>
+is a self-contained SvelteKit 3 app with a native HTML POST form and optional
+<code>use:enhance</code>. It uses existing Syntyr <code>syn-field</code>, <code>syn-error-summary</code>,
+<code>syn-operation-feedback</code>, <code>syn-app-shell</code>, <code>syn-detail-layout</code>, and
+<code>syn-panel</code> classes rather than introducing framework-specific CSS.</p>
+<p>The root <code>+layout.svelte</code> provides the persistent application shell, while
+<code>settings/+layout.svelte</code> composes a nested content and inspector layout.
+A small <code>AppPanel.svelte</code> shows Svelte 5 named <code>actions</code> and <code>footer</code>
+snippets; they are owned by SvelteKit, not by a new Syntyr templating runtime.
+<code>settings/+page.server.js</code> handles server validation and sends either
+an action failure or a success acknowledgement. A normal browser POST is
+functional without JavaScript; enhancement only adds in-flight feedback
+and error-summary focus management. The example <strong>does not persist data</strong>
+and is not a production authentication or CSRF implementation.</p>
+<p>From the repository root, first generate CSS with <code>python3 scripts/build.py</code>,
+then run <code>cd examples/sveltekit &amp;&amp; npm install &amp;&amp; npm run test &amp;&amp; npm run build</code>.
+The root Syntyr package still has zero required JavaScript dependencies.</p>
 <h2 id="astro-hugo-zola-django-rails-gotempl-and-rust-templates">Astro, Hugo, Zola, Django, Rails, Go/templ and Rust templates</h2>
 <p>Serve <code>syntyr.core.css</code> as a normal static asset. Write HTML partials
 with real headings, forms and links. Optional interactive islands can use
@@ -271,23 +633,69 @@ changes, HTMX fragments, responsiveness and accessibility.</li>
 and unnecessary hydration. Measure actual page LCP, CLS and INP.</li>
 </ul>
         </article>
-        <aside class="docs-article-sidebar"><nav aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+<a class="docs-article-toc-link docs-article-toc-2" href="#copy-a-catalog-example-into-your-stack">Copy a catalog example into your stack</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#plain-html-or-server-rendered-partial">Plain HTML or server-rendered partial</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#react-nextjs-jsx">React / Next.js JSX</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#vue-nuxt-template">Vue / Nuxt template</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#htmx-enhanced-native-get">HTMX-enhanced native GET</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#choose-one-styling-mode">Choose one styling mode</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#htmx-progressive-enhancement">HTMX: progressive enhancement</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#htmx-4-migration-separate-from-syntyr">HTMX 4 migration (separate from Syntyr)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#composable-server-html-components-go-standard-library">Composable server HTML components (Go standard library)</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#additional-copy-owned-server-component-adapters">Additional copy-owned server component adapters</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#htmx-and-datastar-fragments-built-from-the-same-components">HTMX and Datastar fragments built from the same components</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#server-driven-html-optional-request-state-bridge">Server-driven HTML: optional request-state bridge</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#phoenix-liveview-heex">Phoenix LiveView (HEEx)</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#laravel-livewire-blade">Laravel Livewire (Blade)</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#rails-hotwire-turbo-frames">Rails Hotwire / Turbo Frames</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#turbo-streams-independent-server-updated-regions">Turbo Streams: independent server-updated regions</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#go-templ-and-other-server-template-engines">Go templ and other server template engines</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#lit-web-components">Lit / Web Components</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#alpinejs">Alpine.js</a>
-<a class="docs-article-toc-link docs-article-toc-2" href="#datastar">Datastar</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#datastar-signals-htmlsse-morphing">Datastar (signals + HTML/SSE morphing)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#unpoly">Unpoly</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#react-nextjs">React / Next.js</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#vue-nuxt-and-svelte-sveltekit">Vue / Nuxt and Svelte / SvelteKit</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#runnable-sveltekit-3-form-action-and-nested-layout-reference">Runnable SvelteKit 3 form-action and nested-layout reference</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#astro-hugo-zola-django-rails-gotempl-and-rust-templates">Astro, Hugo, Zola, Django, Rails, Go/templ and Rust templates</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#existing-tailwind-or-component-library-applications">Existing Tailwind or component-library applications</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#performance-and-compatibility-contract">Performance and compatibility contract</a>
-        </nav></aside>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#copy-a-catalog-example-into-your-stack">Copy a catalog example into your stack</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#plain-html-or-server-rendered-partial">Plain HTML or server-rendered partial</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#react-nextjs-jsx">React / Next.js JSX</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#vue-nuxt-template">Vue / Nuxt template</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#htmx-enhanced-native-get">HTMX-enhanced native GET</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#choose-one-styling-mode">Choose one styling mode</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#htmx-progressive-enhancement">HTMX: progressive enhancement</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#htmx-4-migration-separate-from-syntyr">HTMX 4 migration (separate from Syntyr)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#composable-server-html-components-go-standard-library">Composable server HTML components (Go standard library)</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#additional-copy-owned-server-component-adapters">Additional copy-owned server component adapters</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#htmx-and-datastar-fragments-built-from-the-same-components">HTMX and Datastar fragments built from the same components</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#server-driven-html-optional-request-state-bridge">Server-driven HTML: optional request-state bridge</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#phoenix-liveview-heex">Phoenix LiveView (HEEx)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#laravel-livewire-blade">Laravel Livewire (Blade)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#rails-hotwire-turbo-frames">Rails Hotwire / Turbo Frames</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#turbo-streams-independent-server-updated-regions">Turbo Streams: independent server-updated regions</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#go-templ-and-other-server-template-engines">Go templ and other server template engines</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#lit-web-components">Lit / Web Components</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#alpinejs">Alpine.js</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#datastar-signals-htmlsse-morphing">Datastar (signals + HTML/SSE morphing)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#unpoly">Unpoly</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#react-nextjs">React / Next.js</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#vue-nuxt-and-svelte-sveltekit">Vue / Nuxt and Svelte / SvelteKit</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#runnable-sveltekit-3-form-action-and-nested-layout-reference">Runnable SvelteKit 3 form-action and nested-layout reference</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#astro-hugo-zola-django-rails-gotempl-and-rust-templates">Astro, Hugo, Zola, Django, Rails, Go/templ and Rust templates</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#existing-tailwind-or-component-library-applications">Existing Tailwind or component-library applications</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#performance-and-compatibility-contract">Performance and compatibility contract</a>
+            </nav>
+          </details>
+        </aside>
       </div>
       <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="framework-integrations.md">Markdown source</a></nav>
     </main>

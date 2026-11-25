@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "article-toc",
+  "type": "registry:item",
+  "title": "Article with contents sidebar",
+  "description": "A long-form article and real anchor-linked table of contents in a wrapping sidecar.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://syntyr-css.pages.dev/registry/r/core.json"
+  ],
+  "files": [
+    {
+      "path": "blocks/snippets/article-toc.html",
+      "type": "registry:file",
+      "target": "~/syntyr/blocks/article-toc.html",
+      "content": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-layout-article-heading\">\n  <p class=\"syn-eyebrow\">PRACTICAL GUIDE</p>\n  <h2 class=\"syn-heading\" id=\"syn-layout-article-heading\">A practical way to write clearer product pages</h2>\n  <p class=\"syn-lede\">An article and an in-page contents list that reflow without a JavaScript scroll handler.</p>\n  <div class=\"syn-sidecar\">\n    <article class=\"syn-stack\" aria-label=\"Guide content\">\n      <section class=\"syn-stack\" aria-labelledby=\"syn-layout-article-summary\">\n        <h3 id=\"syn-layout-article-summary\">Begin with one question</h3>\n        <p>What does a reader need to understand or accomplish here? Put the answer near the beginning, using familiar language and a meaningful heading.</p>\n        <p>Provide context without burying the action beneath decorative content.</p>\n      </section>\n      <section class=\"syn-stack\" aria-labelledby=\"syn-layout-article-practices\">\n        <h3 id=\"syn-layout-article-practices\">Make the next step obvious</h3>\n        <p>Group related material, keep link names descriptive, and prefer short paragraphs when scanning is likely.</p>\n        <ul class=\"syn-feature-list\"><li>Use one heading per idea.</li><li>Explain unfamiliar terminology.</li><li>Offer a clear path forward.</li></ul>\n        <p><a href=\"/guides/content\">Read the full content guide</a></p>\n      </section>\n    </article>\n    <aside class=\"syn-panel syn-stack\">\n      <nav aria-label=\"On this page\">\n        <strong>On this page</strong>\n        <ol class=\"syn-stack\">\n          <li><a href=\"#syn-layout-article-summary\">Begin with one question</a></li>\n          <li><a href=\"#syn-layout-article-practices\">Make the next step obvious</a></li>\n        </ol>\n      </nav>\n      <p class=\"syn-caption\">The in-page links target real headings; adjust IDs when copying more than once.</p>\n    </aside>\n  </div>\n</section>\n"
+    },
+    {
+      "path": "LICENSE",
+      "type": "registry:file",
+      "target": "~/syntyr/LICENSE",
+      "content": "MIT License\n\nCopyright (c) 2026 Syntyr CSS contributors\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n"
+    }
+  ],
+  "meta": {
+    "syntyrVersion": "0.3.0-alpha.5",
+    "source": "MIT source candidate",
+    "runtimeJavaScript": false,
+    "fileDigests": {
+      "~/syntyr/blocks/article-toc.html": "05904802eb42ff83cdb959e920aee6f8ddd9cdb8e4a54c196ab7a477c909b867",
+      "~/syntyr/LICENSE": "42f56369ac06362dbfe433d2d50b178bf74c369a55ea22337ab40fd9433521bf"
+    }
+  },
+  "docs": "Experimental source-candidate asset. Review exact version, HTML routes, keyboard behavior and integration before production use."
+}

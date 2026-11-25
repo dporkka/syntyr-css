@@ -1,0 +1,35 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "auth-recovery",
+  "type": "registry:item",
+  "title": "Account recovery",
+  "description": "Email recovery request presentation with security integration notes.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://syntyr-css.pages.dev/registry/r/core.json"
+  ],
+  "files": [
+    {
+      "path": "blocks/snippets/auth-recovery.html",
+      "type": "registry:file",
+      "target": "~/syntyr/blocks/auth-recovery.html",
+      "content": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-recovery-heading\">\n  <div class=\"syn-panel\">\n    <h2 class=\"syn-heading\" id=\"syn-recovery-heading\">Recover account access</h2>\n    <p>Enter the email address associated with your account. If eligible, the service will send a recovery link.</p>\n    <form class=\"syn-form\" method=\"post\" action=\"/password/forgot\">\n      <label class=\"syn-label\" for=\"syn-recovery-email\">Email address</label>\n      <input class=\"syn-input\" id=\"syn-recovery-email\" name=\"email\" type=\"email\" autocomplete=\"email\" required>\n      <button class=\"syn-button syn-button--primary\" type=\"submit\">Request recovery link</button>\n    </form>\n    <p class=\"syn-help\">The server should return a non-enumerating response and enforce token expiry, rate limits and CSRF protection.</p>\n    <a href=\"/sign-in\">Return to sign in</a>\n  </div>\n</section>\n"
+    },
+    {
+      "path": "LICENSE",
+      "type": "registry:file",
+      "target": "~/syntyr/LICENSE",
+      "content": "MIT License\n\nCopyright (c) 2026 Syntyr CSS contributors\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n"
+    }
+  ],
+  "meta": {
+    "syntyrVersion": "0.3.0-alpha.5",
+    "source": "MIT source candidate",
+    "runtimeJavaScript": false,
+    "fileDigests": {
+      "~/syntyr/blocks/auth-recovery.html": "898b3fe8d8d0284099fcae60dfb976bf1c7b9b2d9fc62f38e185902023b9ede5",
+      "~/syntyr/LICENSE": "42f56369ac06362dbfe433d2d50b178bf74c369a55ea22337ab40fd9433521bf"
+    }
+  },
+  "docs": "Experimental source-candidate asset. Review exact version, HTML routes, keyboard behavior and integration before production use."
+}

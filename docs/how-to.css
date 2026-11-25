@@ -1,0 +1,14 @@
+/* Docs-only How-To index; not part of the Syntyr CSS distribution. */
+@layer docs {
+  .howto-controls { display: grid; gap: .5rem; max-width: 38rem; margin-block: 1.5rem .8rem; }
+  .howto-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); gap: 1.25rem; margin-block: 1rem 3rem; }
+  .howto-card { display: grid; align-content: start; gap: .9rem; min-width: 0; }
+  .howto-card[hidden], #howto-empty[hidden], #howto-controls[hidden] { display: none; }
+  .howto-card h2, .howto-card p { margin: 0; }
+  .howto-card .syn-badge { justify-self: start; }
+  .howto-steps { display: grid; gap: .65rem; padding-inline-start: 1.35rem; margin: .2rem 0; }
+  .howto-steps li { padding-inline-start: .25rem; }
+  .howto-actions { align-items: center; gap: .8rem; margin-top: auto; }
+  .howto-actions a:not(.syn-button) { overflow-wrap: anywhere; }
+  @media (forced-colors: active) { .howto-card { outline: 1px solid CanvasText; } }
+}

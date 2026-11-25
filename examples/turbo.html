@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Turbo Frames + Syntyr — server search</title>
+  <link rel="stylesheet" href="/dist/syntyr.core.css">
+  <link rel="stylesheet" href="/dist/syntyr.server.css">
+  <!-- Turbo is a pinned example-only application dependency. -->
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@hotwired/turbo@8.0.23/dist/turbo.es2017-esm.min.js"></script>
+</head>
+<body>
+  <!-- A stable theme root wraps the replaceable Turbo frame. -->
+  <main class="syn-root syn-page" data-syn-theme="studio">
+    <div class="syn-container syn-stack">
+      <h1 class="syn-heading">Turbo Frames customer search</h1>
+      <turbo-frame id="customer-results">
+        <form id="turbo-search" class="syn-form"
+              action="/customers/turbo" method="get"
+              data-turbo-frame="customer-results">
+          <label class="syn-label" for="turbo-query">Customer</label>
+          <input id="turbo-query" class="syn-input" name="q" type="search" value="<!-- QUERY -->">
+          <button id="turbo-submit" class="syn-button syn-button--primary" type="submit">Search</button>
+        </form>
+        <div id="customer-result-list" class="syn-panel" role="region"
+             aria-label="Customers" aria-live="polite"><!-- RESULTS --></div>
+      </turbo-frame>
+      <!-- Turbo Streams can update independent targets without replacing the frame. -->
+      <section class="syn-stack" aria-label="Turbo stream search">
+        <form id="turbo-stream-search" class="syn-form" action="/customers/turbo-stream"
+              method="get" data-turbo-stream="true">
+          <label class="syn-label" for="turbo-stream-query">Update search results</label>
+          <input id="turbo-stream-query" class="syn-input" name="q" type="search" value="<!-- QUERY -->">
+          <button id="turbo-stream-submit" class="syn-button" type="submit">Update results</button>
+        </form>
+        <div id="turbo-stream-results" class="syn-panel" role="region"
+             aria-label="Stream results" aria-live="polite"><!-- STREAM_RESULTS --></div>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

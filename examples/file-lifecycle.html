@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Syntyr native file picker and illustrative queued, uploading, completed and failed file presentation.">
+  <title>Syntyr — Native file lifecycle recipes</title>
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="../dist/syntyr.recipes.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <a class="syn-button" href="#main">Skip to file examples</a>
+  <main id="main" class="syn-shell syn-flow">
+    <header class="syn-page-header" style="overflow-wrap: anywhere">
+      <div>
+        <p class="syn-eyebrow">SYNTYR / OPTIONAL CSS RECIPES</p>
+        <h1>File selection and upload lifecycle</h1>
+        <p class="syn-muted">A native picker and four independent, illustrative queue snapshots. This page does not upload files or run background tasks.</p>
+      </div>
+      <a class="syn-button" href="../docs/recipes.html">Read integration guide</a>
+    </header>
+    <section class="syn-app-card syn-flow" aria-labelledby="picker-heading">
+      <h2 id="picker-heading">Native file selection</h2>
+      <div class="syn-field" style="overflow-wrap: anywhere">
+        <label class="syn-label" for="files">Choose attachments</label>
+        <input class="syn-input" id="files" type="file" name="files" multiple aria-describedby="file-hint">
+        <p class="syn-help" id="file-hint">Choosing files only opens your browser's local picker. No upload or preview is implemented in this example.</p>
+      </div>
+    </section>
+    <section class="syn-app-card syn-flow" aria-labelledby="queue-heading">
+      <h2 id="queue-heading">Lifecycle state snapshots</h2>
+      <p class="syn-caption">The entries below are illustrative, static examples. They do not reflect files selected above. A host application must supply real file state and progress.</p>
+      <ol class="syn-file-queue" role="list">
+        <li class="syn-file-item" data-syn-state="queued">
+          <div class="syn-file-item-header">
+            <strong>site-map.pdf</strong>
+            <span class="syn-status">Queued</span>
+          </div>
+          <p class="syn-caption">2.4 MB · Waiting for upload approval</p>
+        </li>
+        <li class="syn-file-item" data-syn-state="uploading">
+          <div class="syn-file-item-header">
+            <strong>creative-final.png</strong>
+            <span class="syn-status syn-status--warning">Uploading (illustrative)</span>
+          </div>
+          <progress class="syn-meter" value="42" max="100" aria-label="Illustrative creative-final.png upload progress">42%</progress>
+          <p class="syn-caption">42% in this static snapshot. No network request exists.</p>
+        </li>
+        <li class="syn-file-item" data-syn-state="complete">
+          <div class="syn-file-item-header">
+            <strong>contract-signed.pdf</strong>
+            <span class="syn-status syn-status--success">Complete (illustrative)</span>
+          </div>
+          <progress class="syn-meter" value="100" max="100" aria-label="Illustrative contract-signed.pdf upload progress">100%</progress>
+          <p class="syn-caption">Example completion only; no server verified this file.</p>
+        </li>
+        <li class="syn-file-item" data-syn-state="failed">
+          <div class="syn-file-item-header">
+            <strong>asset-photo.webp</strong>
+            <span class="syn-status syn-status--danger">Failed (illustrative)</span>
+          </div>
+          <p class="syn-caption">Example error: file exceeds allowed upload size. This page does not offer a retry action.</p>
+        </li>
+      </ol>
+    </section>
+    <p class="syn-caption">Never interpret the static states as a real upload. The host application owns validation, progress, cancellation, retry, status announcements and secure file storage.</p>
+  </main>
+</body>
+</html>

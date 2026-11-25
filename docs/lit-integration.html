@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Syntyr is a CSS-first design system , not a Lit or Web Components runtime. The Syntyr core has zero required JavaScript , no Node.js install requirement…">
-  <meta name="syntyr-source-sha256" content="341c18ddeef806a3dcb63afcf3bed28ad515e47c171f5b7637a11edcdcd6c86d">
+  <meta name="description" content="Syntyr is a CSS-first design system , not a Lit or Web Components runtime. For a zero-framework example using native HTMLElement and Declarative Shadow…">
+  <meta name="syntyr-source-sha256" content="216a618c99bc41a256da22ca53f96c4780903368260e9c555523bdcdb538d6e6">
   <meta name="theme-color" content="#f5f7fb">
   <title>Syntyr + Lit: optional Web Components interoperability — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/lit-integration">
@@ -36,6 +36,9 @@
         <article class="docs-prose" aria-label="Syntyr + Lit: optional Web Components interoperability">
 <h1 id="syntyr-lit-optional-web-components-interoperability">Syntyr + Lit: optional Web Components interoperability</h1>
 <p>Syntyr is a <strong>CSS-first design system</strong>, not a Lit or Web Components runtime.
+For a zero-framework example using native <code>HTMLElement</code> and Declarative Shadow DOM,
+see the <a href="https://github.com/dporkka/syntyr-css/tree/main/examples/web-components">native Custom Elements fixture</a>.
+The Lit integration below remains optional and independent.
 The Syntyr core has <strong>zero required JavaScript</strong>, no Node.js install requirement,
 and no dependency on Lit. A consumer application may independently choose Lit
 to implement behavior. This guide demonstrates the integration using real
@@ -45,7 +48,7 @@ Lit 3 components in <a href="https://github.com/dporkka/syntyr-css/tree/main/exa
 <p>A Lit component can opt out of Shadow DOM by overriding <code>createRenderRoot()</code>
 to return <code>this</code>. The markup is rendered into the regular document, so
 Syntyr's selectors work <strong>if the component is inside <code>.syn-root</code></strong>:</p>
-<pre><code class="language-js">import { LitElement, html } from &quot;lit&quot;;
+<pre tabindex="0"><code class="language-js">import { LitElement, html } from &quot;lit&quot;;
 
 class ExampleStatus extends LitElement {
   createRenderRoot() { return this; }
@@ -74,7 +77,7 @@ toggle as an alternative to a real server action.</p>
 In contrast, inherited CSS custom properties such as <code>--syn-text</code>,
 <code>--syn-surface</code>, and <code>--syn-accent</code> can cross the shadow boundary.</p>
 <p>Define internal styles using Lit's <code>static styles = css</code> and public tokens:</p>
-<pre><code class="language-js">import { LitElement, html, css } from &quot;lit&quot;;
+<pre tabindex="0"><code class="language-js">import { LitElement, html, css } from &quot;lit&quot;;
 
 class ExampleSignal extends LitElement {
   static styles = css`
@@ -130,22 +133,51 @@ consumer's security responsibility.</li>
 </ul>
 <p>See also the <a href="component-authoring.html">component-authoring contract</a> and
 <a href="framework-integrations.html">framework integrations</a>.</p>
+<h2 id="framework-interoperability-react-19-and-htmx">Framework interoperability: React 19 and HTMX</h2>
+<p>These examples verify <strong>consumers</strong>, not new Syntyr components or runtime APIs:</p>
+<ul>
+<li><a href="https://github.com/dporkka/syntyr-css/blob/main/examples/lit/react-interop.html">React 19 source</a>: React owns its state
+and subscribes to the Lit element's native <code>syn-demo-status-change</code> custom event
+through <code>onsyn-demo-status-change</code>. No Syntyr React adapter is involved.</li>
+<li><a href="https://github.com/dporkka/syntyr-css/blob/main/examples/lit/htmx-interop.html">HTMX source</a>: a native
+<code>&lt;form action=&quot;./htmx-result.html&quot; method=&quot;get&quot;&gt;</code> navigates to a readable,
+static result document without JavaScript. With HTMX, the same response
+replaces the <code>#htmx-result</code> subtree. The <code>.syn-root</code> stays outside the swap,
+and the new Lit custom element upgrades without a Syntyr lifecycle hook.</li>
+</ul>
+<p>Both demos use pinned, locally bundled dependencies after <code>npm ci</code>. They perform
+no third-party runtime network fetches. The HTMX fixture is a <strong>static GET
+demonstration</strong> rather than a persistence or authenticated backend; applications
+must provide their own data fetching, CSRF protection for mutations, authorization
+and server-side validation. Avoid swapping <em>inside</em> Lit-managed light DOM,
+because Lit owns its rendered children; replace the custom-element host or an
+application-owned ancestor instead. Keep custom event listeners on stable
+ancestors when those hosts may be replaced. The React demo itself needs
+JavaScript; it shows an explanatory fallback without JavaScript rather than
+pretending to supply working React interaction.</p>
+<p>If your application needs a composable UI component, prefer light DOM plus
+native Syntyr classes. Choose Shadow DOM when encapsulation is necessary and
+reuse inherited public tokens and explicit CSS parts—not a parallel token
+registry. Do not ship an <code>@syntyr/lit</code> package without repeated production
+requirements that cannot be met by these patterns.</p>
 <h2 id="run-and-test-the-example">Run and test the example</h2>
-<pre><code class="language-sh">cd examples/lit
+<pre tabindex="0"><code class="language-sh">cd examples/lit
 npm ci
 npm run build
 cd ../..
 python3 -m http.server 8765 --bind 127.0.0.1
 # visit http://127.0.0.1:8765/examples/lit/index.html
+# optional: /examples/lit/react-interop.html and /examples/lit/htmx-interop.html
 </code></pre>
 <p>This example has an isolated <code>package.json</code> and lockfile. The build creates
 <code>examples/lit/dist/demo.js</code> locally (gitignored), <strong>not</strong> a distributable
 Syntyr runtime file. The Cloudflare site does not publish this demo by default;
 the source stays available in the repository.</p>
 <p>After building the example, optionally run the browser interoperability checks:</p>
-<pre><code class="language-sh">python3 tests/lit_browser.py --browsers chromium,firefox,webkit
+<pre tabindex="0"><code class="language-sh">cd examples/lit &amp;&amp; npm test
 </code></pre>
-<p>Playwright and browser engines are developer-only test tools. A skipped,
+<p>Playwright and browser engines are developer-only test tools. This isolated
+Node-based test runner avoids Python package downloads in CI. A skipped,
 uninstalled, or broken engine must be reported as unavailable, not as passing.</p>
 <h2 id="lit-references">Lit references</h2>
 <ul>
@@ -158,14 +190,29 @@ uninstalled, or broken engine must be reported as unavailable, not as passing.</
 <p>The example is an original integration demonstration, <strong>not</strong> a fork or
 redistribution of the Lit source code.</p>
         </article>
-        <aside class="docs-article-sidebar"><nav aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#choose-the-correct-styling-boundary">Choose the correct styling boundary</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#light-dom-use-syntyr-component-classes-directly">Light DOM: use Syntyr component classes directly</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#shadow-dom-inherit-tokens-not-selectors">Shadow DOM: inherit tokens, not selectors</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#reactive-state-accessibility-and-custom-event-conventions">Reactive state, accessibility and custom event conventions</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#framework-interoperability-react-19-and-htmx">Framework interoperability: React 19 and HTMX</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#run-and-test-the-example">Run and test the example</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#lit-references">Lit references</a>
-        </nav></aside>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#choose-the-correct-styling-boundary">Choose the correct styling boundary</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#light-dom-use-syntyr-component-classes-directly">Light DOM: use Syntyr component classes directly</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#shadow-dom-inherit-tokens-not-selectors">Shadow DOM: inherit tokens, not selectors</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#reactive-state-accessibility-and-custom-event-conventions">Reactive state, accessibility and custom event conventions</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#framework-interoperability-react-19-and-htmx">Framework interoperability: React 19 and HTMX</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#run-and-test-the-example">Run and test the example</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#lit-references">Lit references</a>
+            </nav>
+          </details>
+        </aside>
       </div>
       <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="lit-integration.md">Markdown source</a></nav>
     </main>

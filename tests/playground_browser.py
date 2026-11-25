@@ -28,7 +28,11 @@ def verify(browser, viewport):
     frame.locator(".syn-panel").wait_for()
     panel_radius = frame.locator(".syn-panel").evaluate("e => getComputedStyle(e).borderTopLeftRadius")
     assert panel_radius == "12px", ("panel radius token not applied", panel_radius)
-    page.locator("#playground-markup").fill('<div id="safe">Edited HTML</div><script>parent.document.body.dataset.injected="yes"</script>')
+    editor = page.locator('#playground-editor-mount .cm-content[contenteditable="true"]')
+    editor.wait_for()
+    editor.click()
+    page.keyboard.press('ControlOrMeta+A')
+    page.keyboard.insert_text('<div id="safe">Edited HTML</div><script>parent.document.body.dataset.injected="yes"</script>')
     frame.locator("#safe").wait_for()
     assert page.locator("body").get_attribute("data-injected") is None, "sandbox permitted parent script injection"
     page.locator("#type-lab-text").fill("Multilingual العربية 漢字 " + "WWW-VERY-LONG-IDENTIFIER-" * 4)
@@ -45,6 +49,18 @@ def verify(browser, viewport):
     page.locator("#type-lab-wrap").select_option("pretty")
     assert page.locator("#type-lab-preview").get_attribute("class") == "syn-body syn-u-text-pretty"
     assert page.locator("body").evaluate("e => e.scrollWidth <= window.innerWidth + 1"), "playground overflows"
+    # Nested grid items must retain a small min-content contribution even
+    # when their headings contain an unbroken identifier.
+    widths = page.evaluate("""() => {
+      const grid = document.createElement('div');
+      grid.style.cssText = 'display:grid;grid-template-columns:1fr 1fr;width:240px;max-width:100%';
+      grid.innerHTML = '<section><h2 class="syn-heading">' + 'W'.repeat(80) + '</h2></section><section>Other</section>';
+      document.body.append(grid);
+      const result = {width:grid.clientWidth, scroll:grid.scrollWidth};
+      grid.remove();
+      return result;
+    }""")
+    assert widths["scroll"] <= widths["width"] + 1, widths
     assert not page_errors, page_errors
     context.close()
 

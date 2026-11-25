@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Syntyr + Declarative Shadow DOM</title>
+  <link rel="stylesheet" href="../../dist/syntyr.core.css">
+  <script type="module" src="./status-toggle.js"></script>
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <main class="syn-shell">
+    <h1 class="syn-title">Server-rendered Shadow DOM</h1>
+    <p class="syn-lede">The server-provided Shadow DOM stays visible without JavaScript; upgrade reuses its nodes.</p>
+    <syn-demo-native-status service="SSR hub" online>
+      <template shadowrootmode="open">
+        <link rel="stylesheet" href="./status-toggle.css">
+        <section part="panel" data-server-rendered="true">
+          <div data-busy-region aria-busy="false">
+            <h3 part="title">SSR hub</h3>
+            <button part="toggle" type="button" disabled>Mark offline</button>
+          </div>
+          <p part="status" role="status">Online</p>
+        </section>
+      </template>
+      <p data-native-fallback>SSR hub: online</p>
+    </syn-demo-native-status>
+    <p><a class="syn-button" href="./index.html">Back to native example</a></p>
+  </main>
+</body>
+</html>

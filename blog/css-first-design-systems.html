@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="description" content="Compare CSS-first and JavaScript-first design systems, including rendering, accessibility, portability, and long-term maintenance tradeoffs.">
+  <title>CSS-first vs. JavaScript-first design systems: choosing the right foundation — Syntyr CSS Blog</title>
+  <link rel="icon" href="../assets/syntyr-mark.svg" type="image/svg+xml">
+  <link rel="canonical" href="https://syntyr-css.pages.dev/blog/css-first-design-systems">
+  <link rel="alternate" type="application/rss+xml" title="Syntyr CSS Blog" href="rss.xml">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="CSS-first vs. JavaScript-first design systems: choosing the right foundation">
+  <meta property="og:description" content="Compare CSS-first and JavaScript-first design systems, including rendering, accessibility, portability, and long-term maintenance tradeoffs.">
+  <meta property="og:image" content="https://syntyr-css.pages.dev/assets/og-syntyr.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="../dist/syntyr.recipes.css">
+  <link rel="stylesheet" href="blog.css">
+  <meta property="article:published_time" content="2026-11-16">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"CSS-first vs. JavaScript-first design systems: choosing the right foundation","description":"Compare CSS-first and JavaScript-first design systems, including rendering, accessibility, portability, and long-term maintenance tradeoffs.","datePublished":"2026-11-16","dateModified":"2026-11-16","mainEntityOfPage":"https://syntyr-css.pages.dev/blog/css-first-design-systems","author":{"@type":"Organization","name":"Syntyr CSS"},"publisher":{"@type":"Organization","name":"Syntyr CSS"},"image":"https://syntyr-css.pages.dev/assets/og-syntyr.png","inLanguage":"en"}</script>
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <a href="#main" class="syn-button blog-skip">Skip to content</a>
+  <div class="syn-shell">
+    <header class="syn-header blog-header">
+      <a href="../index.html" class="syn-logo" aria-label="Syntyr CSS home">SYNTYR / CSS</a>
+      <nav class="syn-nav" aria-label="Main navigation">
+        <a href="../docs/">Documentation</a>
+        <a href="../docs/catalog.html">Components</a>
+        <a href="../docs/blocks.html">Blocks</a>
+        <a href="index.html" aria-current="page">Blog</a>
+        <a href="rss.xml" type="application/rss+xml">RSS</a>
+        <a href="https://github.com/dporkka/syntyr-css">GitHub</a>
+      </nav>
+    </header>
+    <main id="main" class="blog-main">
+      <nav class="syn-breadcrumbs blog-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="index.html">Blog</a></li><li aria-current="page">Architecture</li></ol></nav>
+      <article class="blog-article">
+        <header class="blog-article-header">
+          <p class="syn-eyebrow">Architecture / FIELD NOTES</p>
+          <h1 class="blog-post-title">CSS-first vs. JavaScript-first design systems: choosing the right foundation</h1>
+          <p class="syn-lede blog-article-summary">Where should the design system end and the application begin? A practical guide to CSS-first architecture, dependencies, and maintenance.</p>
+          <p class="syn-caption">Syntyr team · <time datetime="2026-11-16">November 16, 2026</time></p>
+        </header>
+        <div class="syn-prose blog-article-body">
+<p>A design system can be a collection of reusable presentation rules or an entire component runtime. Those are different responsibilities. Choosing between them changes how many dependencies an application inherits, how easily a team can change frameworks, and which browser behaviors it can use directly.</p>
+<h2 id="separate">Separate design from behavior</h2>
+<p>CSS-first systems define tokens, typographic scales, layouts, and visual treatments that work with ordinary HTML. They can style markup rendered by a static generator, server template, web component, or React application. JavaScript-first systems typically add components that own markup, internal state, and behavior.</p>
+<p>Neither model makes accessibility automatic. A native <code class="syn-code">&lt;button&gt;</code> retains its keyboard and activation semantics; a complex combobox still needs careful focus management, labeling, and testing regardless of its styling library. The valuable boundary is the one that assigns behavior only where behavior is necessary.</p>
+<h2 id="tradeoffs">Compare the tradeoffs</h2>
+<div class="syn-panel"><table><caption class="syn-caption">Architectural considerations, not performance guarantees</caption><thead><tr><th scope="col">Concern</th><th scope="col">CSS-first</th><th scope="col">JS-first</th></tr></thead><tbody><tr><th scope="row">Static HTML</th><td>Styled directly</td><td>May require hydration or framework rendering</td></tr><tr><th scope="row">Stateful widgets</th><td>Application or optional adapter owns logic</td><td>Often bundled in component primitives</td></tr><tr><th scope="row">Framework changes</th><td>Style classes can travel with HTML</td><td>Component APIs may need migration</td></tr><tr><th scope="row">Maintenance</th><td>CSS and browser behavior remain primary</td><td>Runtime and framework versions need tracking</td></tr></tbody></table></div>
+<p>CSS-first is most compelling for sites that render on the server, content-rich products, and teams that want a small dependency graph. A JavaScript component library earns its cost when accessible, stateful controls would otherwise be repeatedly implemented and maintained by every team.</p>
+<h2 id="build">Start with a small, composable contract</h2>
+<p>Syntyr makes its visual API explicit through <code class="syn-code">syn-*</code> classes and <code class="syn-code">--syn-*</code> tokens. Load core CSS, then opt into marketing-oriented recipes only for the pages that need them:</p>
+<pre class="blog-code"><code>&lt;link rel="stylesheet" href="/dist/syntyr.core.css"&gt;
+&lt;link rel="stylesheet" href="/dist/syntyr.recipes.css"&gt;
+&lt;section class="syn-root" data-syn-theme="studio"&gt;
+  &lt;div class="syn-feature-grid"&gt;
+    &lt;article class="syn-feature-card"&gt;…&lt;/article&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre>
+<p>The example URLs are relative to a self-hosted copy of the Syntyr distribution. In production, pin a versioned release rather than silently inheriting changes from an unversioned asset.</p>
+<h2 id="decision">A useful decision rule</h2>
+<p>Begin with semantic HTML and CSS when browser-native behavior meets the requirement. Add narrowly scoped JavaScript when it creates material value, such as asynchronous search or a multi-step transaction. If a widget needs a full accessibility and state machine, use a well-tested optional adapter rather than reimplementing it casually.</p>
+<p>For Syntyr's documented component vocabulary, explore the <a href="../docs/catalog.html">component catalog</a>, <a href="../docs/framework-integrations.html">framework integrations</a>, and <a href="../docs/progressive-enhancement.html">progressive enhancement guide</a>.</p>
+        </div>
+      </article>
+      <aside class="syn-cta-band blog-cta" aria-labelledby="article-cta">
+        <div><h2 id="article-cta" class="syn-heading">Explore the components behind this article</h2><p>See the copy-owned HTML blocks and production-oriented CSS recipes.</p></div>
+        <a class="syn-button syn-button--primary" href="../docs/blocks.html">Browse Syntyr blocks</a>
+      </aside>
+      <nav class="blog-article-return" aria-label="Article navigation"><a href="index.html">← All articles</a></nav>
+    </main>
+    <footer class="blog-footer syn-inline">
+      <p class="syn-caption">© 2026 Syntyr CSS · MIT-licensed core · HTML-first</p>
+      <nav class="syn-nav" aria-label="Footer navigation"><a href="../index.html">Home</a><a href="../docs/">Docs</a><a href="../docs/blocks.html">UI blocks</a><a href="rss.xml">RSS feed</a></nav>
+    </footer>
+  </div>
+</body>
+</html>

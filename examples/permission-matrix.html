@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Syntyr copy-owned enterprise role permissions matrix using native checkbox and table semantics, without application JavaScript.">
+  <title>Role permissions — Syntyr Studio example</title>
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="../dist/syntyr.recipes.css">
+  <link rel="stylesheet" href="permission-matrix.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <a class="syn-button matrix-skip" href="#main">Skip to main content</a>
+  <main id="main" class="syn-shell matrix-page">
+    <nav class="syn-breadcrumbs" aria-label="Breadcrumb">
+      <ol><li><a href="../docs/index.html">Components</a></li><li><span aria-current="page">Role permissions</span></li></ol>
+    </nav>
+    <header class="matrix-header">
+      <div>
+        <p class="syn-eyebrow">STUDIO / ENTERPRISE WORKFLOWS</p>
+        <h1 class="syn-heading">Role permissions</h1>
+        <p class="syn-muted">Review access by capability and role. Native table headers keep each choice understandable.</p>
+      </div>
+      <a class="syn-button syn-button--outline" href="../docs/recipes.html">Read integration guidance</a>
+    </header>
+    <section class="syn-panel matrix-section" aria-labelledby="roles-heading">
+      <h2 class="syn-section-heading" id="roles-heading">Workspace policy preview</h2>
+      <p id="preview-note" class="syn-muted">These are illustrative defaults. You can change the Viewer and Editor checkboxes locally, but changes are <strong>not saved</strong> and do not grant or revoke permissions. The Administrator column is a disabled example of a fixed system role.</p>
+      <div class="syn-table-wrap matrix-scroll" role="region" aria-label="Scrollable role permissions matrix" tabindex="0" aria-describedby="preview-note">
+        <table class="syn-table matrix-table">
+          <caption>Illustrative capabilities for three workspace roles; not an authorization source.</caption>
+          <thead>
+            <tr><th scope="col">Capability</th><th scope="col" data-role="Viewer">Viewer</th><th scope="col" data-role="Editor">Editor</th><th scope="col" data-role="Administrator">Administrator</th></tr>
+          </thead>
+          <tbody>
+        <tr>
+          <th scope="row" data-capability="view_records">View records<small class="matrix-muted">Browse customer and project records</small></th>
+          <td>
+            <label class="matrix-choice" for="matrix-viewer-view-records">
+              <input id="matrix-viewer-view-records" name="viewer.view_records" type="checkbox" checked>
+              <span class="matrix-visually-hidden">Viewer: View records</span>
+            </label>
+          </td>
+          <td>
+            <label class="matrix-choice" for="matrix-editor-view-records">
+              <input id="matrix-editor-view-records" name="editor.view_records" type="checkbox" checked>
+              <span class="matrix-visually-hidden">Editor: View records</span>
+            </label>
+          </td>
+          <td>
+            <label class="matrix-choice" for="matrix-admin-view-records">
+              <input id="matrix-admin-view-records" name="admin.view_records" type="checkbox" checked disabled>
+              <span class="matrix-visually-hidden">Administrator: View records</span>
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row" data-capability="create_records">Create records<small class="matrix-muted">Add a customer or project</small></th>
+          <td>
+            <label class="matrix-choice" for="matrix-viewer-create-records">
+              <input id="matrix-viewer-create-records" name="viewer.create_records" type="checkbox">
+              <span class="matrix-visually-hidden">Viewer: Create records</span>
+            </label>
+          </td>
+          <td>
+            <label class="matrix-choice" for="matrix-editor-create-records">
+              <input id="matrix-editor-create-records" name="editor.create_records" type="checkbox" checked>
+              <span class="matrix-visually-hidden">Editor: Create records</span>
+            </label>
+          </td>
+          <td>
+            <label class="matrix-choice" for="matrix-admin-create-records">
+              <input id="matrix-admin-create-records" name="admin.create_records" type="checkbox" checked disabled>
+              <span class="matrix-visually-hidden">Administrator: Create records</span>
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row" data-capability="edit_records">Edit records<small class="matrix-muted">Update existing customer details</small></th>
+          <td>
+            <label class="matrix-choice" for="matrix-viewer-edit-records">
+              <input id="matrix-viewer-edit-records" name="viewer.edit_records" type="checkbox">
+              <span class="matrix-visually-hidden">Viewer: Edit records</span>
+            </label>
+          </td>
+          <td>
+            <label class="matrix-choice" for="matrix-editor-edit-records">
+              <input id="matrix-editor-edit-records" name="editor.edit_records" type="checkbox" checked>
+              <span class="matrix-visually-hidden">Editor: Edit records</span>
+            </label>
+          </td>
+          <td>
+            <label class="matrix-choice" for="matrix-admin-edit-records">
+              <input id="matrix-admin-edit-records" name="admin.edit_records" type="checkbox" checked disabled>
+              <span class="matrix-visually-hidden">Administrator: Edit records</span>
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row" data-capability="export_records">Export data<small class="matrix-muted">Download permitted reports</small></th>
+          <td>
+            <label class="matrix-choice" for="matrix-viewer-export-records">
+              <input id="matrix-viewer-export-records" name="viewer.export_records" type="checkbox" checked>
+              <span class="matrix-visually-hidden">Viewer: Export data</span>
+            </label>
+          </td>
+          <td>
+            <label class="matrix-choice" for="matrix-editor-export-records">
+              <input id="matrix-editor-export-records" name="editor.export_records" type="checkbox" checked>
+              <span class="matrix-visually-hidden">Editor: Export data</span>
+            </label>
+          </td>
+          <td>
+            <label class="matrix-choice" for="matrix-admin-export-records">
+              <input id="matrix-admin-export-records" name="admin.export_records" type="checkbox" checked disabled>
+              <span class="matrix-visually-hidden">Administrator: Export data</span>
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row" data-capability="manage_team">Manage team<small class="matrix-muted">Invite or remove workspace members</small></th>
+          <td>
+            <label class="matrix-choice" for="matrix-viewer-manage-team">
+              <input id="matrix-viewer-manage-team" name="viewer.manage_team" type="checkbox">
+              <span class="matrix-visually-hidden">Viewer: Manage team</span>
+            </label>
+          </td>
+          <td>
+            <label class="matrix-choice" for="matrix-editor-manage-team">
+              <input id="matrix-editor-manage-team" name="editor.manage_team" type="checkbox">
+              <span class="matrix-visually-hidden">Editor: Manage team</span>
+            </label>
+          </td>
+          <td>
+            <label class="matrix-choice" for="matrix-admin-manage-team">
+              <input id="matrix-admin-manage-team" name="admin.manage_team" type="checkbox" checked disabled>
+              <span class="matrix-visually-hidden">Administrator: Manage team</span>
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row" data-capability="approve_invoices">Approve invoices<small class="matrix-muted">Approve financial operations</small></th>
+          <td>
+            <label class="matrix-choice" for="matrix-viewer-approve-invoices">
+              <input id="matrix-viewer-approve-invoices" name="viewer.approve_invoices" type="checkbox">
+              <span class="matrix-visually-hidden">Viewer: Approve invoices</span>
+            </label>
+          </td>
+          <td>
+            <label class="matrix-choice" for="matrix-editor-approve-invoices">
+              <input id="matrix-editor-approve-invoices" name="editor.approve_invoices" type="checkbox">
+              <span class="matrix-visually-hidden">Editor: Approve invoices</span>
+            </label>
+          </td>
+          <td>
+            <label class="matrix-choice" for="matrix-admin-approve-invoices">
+              <input id="matrix-admin-approve-invoices" name="admin.approve_invoices" type="checkbox" checked disabled>
+              <span class="matrix-visually-hidden">Administrator: Approve invoices</span>
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row" data-capability="view_audit">View audit history<small class="matrix-muted">Inspect changes and security events</small></th>
+          <td>
+            <label class="matrix-choice" for="matrix-viewer-view-audit">
+              <input id="matrix-viewer-view-audit" name="viewer.view_audit" type="checkbox" checked>
+              <span class="matrix-visually-hidden">Viewer: View audit history</span>
+            </label>
+          </td>
+          <td>
+            <label class="matrix-choice" for="matrix-editor-view-audit">
+              <input id="matrix-editor-view-audit" name="editor.view_audit" type="checkbox" checked>
+              <span class="matrix-visually-hidden">Editor: View audit history</span>
+            </label>
+          </td>
+          <td>
+            <label class="matrix-choice" for="matrix-admin-view-audit">
+              <input id="matrix-admin-view-audit" name="admin.view_audit" type="checkbox" checked disabled>
+              <span class="matrix-visually-hidden">Administrator: View audit history</span>
+            </label>
+          </td>
+        </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="syn-caption matrix-note">The scrollable table region can receive keyboard focus. Labels announce both the role and capability. Disabled controls are not submitted by browsers; a server must derive effective permissions from its own trusted policy.</p>
+    </section>
+    <div class="matrix-bottom">
+      <section class="syn-panel matrix-section" aria-labelledby="server-heading">
+        <h2 class="syn-section-heading" id="server-heading">Server integration</h2>
+        <ol class="matrix-guidelines">
+          <li>Read authenticated actor and tenant from the server session, not hidden form fields.</li>
+          <li>Authorize role updates using trusted policy, including restrictions on modifying administrator privileges.</li>
+          <li>Validate all submitted capabilities, enforce CSRF protection and reject stale policy versions.</li>
+          <li>Persist atomically, audit the actor and policy diff, and show truthful success or error feedback.</li>
+        </ol>
+        <p class="syn-caption">Syntyr provides presentation, not authentication, authorization, persistence or audit logging.</p>
+      </section>
+      <aside class="syn-panel matrix-section" aria-labelledby="access-heading">
+        <h2 class="syn-section-heading" id="access-heading">Reading this matrix</h2>
+        <p><span class="syn-status syn-status--success">Checked</span> means the illustrative role includes that capability.</p>
+        <p><span class="syn-badge">Unavailable</span> describes a capability omitted from that role. Color is not the sole indicator; every control has an explicit checked state.</p>
+        <details class="syn-details">
+          <summary>Why is the administrator column disabled?</summary>
+          <p>A fixed system role is one possible product policy. If your product permits editing it, remove disabled states and implement a reviewed authorization workflow. Do not infer actual permissions from the HTML.</p>
+        </details>
+      </aside>
+    </div>
+    <footer class="syn-caption matrix-footer">SYNTYR / MIT EXAMPLE / STATIC POLICY PREVIEW / ZERO APPLICATION JAVASCRIPT</footer>
+  </main>
+</body>
+</html>

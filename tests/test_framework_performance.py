@@ -17,7 +17,7 @@ def load(path):
 
 
 class FrameworkFixturesTest(unittest.TestCase):
-    def test_all_five_variants_have_identical_semantic_dom_and_content(self):
+    def test_all_six_variants_have_identical_semantic_dom_and_content(self):
         tool = load(FIXTURES)
         for fixture in ("dashboard", "marketing"):
             pages = [tool.make_page(framework, fixture, rows=32)

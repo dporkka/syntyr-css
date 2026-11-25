@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Optional Web Animations API motion companion for Syntyr, using progressive native browser features and reduced-motion support.">
+  <title>Syntyr — Optional native animation library</title>
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="../dist/syntyr.motion.css">
+  <link rel="stylesheet" href="../dist/syntyr.effects.css">
+  <script type="module" src="./animation-demo.mjs"></script>
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <div class="syn-shell">
+    <header class="syn-header">
+      <a class="syn-logo" href="../index.html">SYNTYR</a>
+      <nav class="syn-nav" aria-label="Example navigation">
+        <a href="https://syntyr-css.pages.dev/docs/animation">READ THE ANIMATION GUIDE</a>
+        <a href="../docs/index.html">ALL COMPONENTS</a>
+      </nav>
+    </header>
+    <main>
+      <section class="syn-stage" aria-labelledby="title">
+        <p class="syn-eyebrow">OPTIONAL / ZERO-DEPENDENCY JAVASCRIPT</p>
+        <h1 id="title" class="syn-title">Motion when you ask for it.</h1>
+        <p class="syn-lede">This page uses native Web Animations and IntersectionObserver. Everything remains visible and usable with JavaScript disabled or reduced motion enabled.</p>
+      </section>
+      <section class="syn-stage" aria-labelledby="controls-title">
+        <h2 id="controls-title" class="syn-heading">On-demand animation</h2>
+        <p>Effects are one-shot, trigger only by the buttons below, and return to normal CSS state when complete.</p>
+        <div class="syn-stack">
+          <div class="syn-cluster">
+            <button type="button" id="animate-one" class="syn-button syn-button--primary">ANIMATE FIRST CARD</button>
+            <button type="button" id="animate-all" class="syn-button">STAGGER ALL CARDS</button>
+          </div>
+          <p id="animation-status" role="status" aria-live="polite">Select an animation to preview.</p>
+          <div class="syn-grid" id="motion-cards">
+            <article class="syn-panel"><h3 class="syn-heading">Native browser engine</h3><p>Opacity and individual translate properties stay independent of ordinary component styles.</p></article>
+            <article class="syn-panel"><h3 class="syn-heading">Lightweight timing</h3><p>Stagger sequencing uses WAAPI delays, not JavaScript timers.</p></article>
+            <article class="syn-panel"><h3 class="syn-heading">Accessible default</h3><p>No visibility changes happen before an actual animation begins.</p></article>
+          </div>
+        </div>
+      </section>
+      <section class="syn-stage" aria-labelledby="website-css-presets-title">
+        <p class="syn-eyebrow">CSS-ONLY / WEBSITE ELEMENTS</p>
+        <h2 class="syn-heading" id="website-css-presets-title">15 website animations</h2>
+        <p>Fade, slide, zoom and emphasis cues use <code>data-syn-animate</code>. Effects are off unless opted in. The pulse and rotation can loop indefinitely; the bounce has three cycles. You can adjust duration and speed per element. The labels remain static and readable.</p>
+        <div class="syn-grid">
+          <article class="syn-panel">
+            <h3 class="syn-heading">Fade in</h3>
+            <span data-syn-animate="fade-in" class="syn-badge" aria-hidden="true">◆</span>
+            <p class="syn-caption">fade-in / optional CSS</p>
+          </article>
+          <article class="syn-panel">
+            <h3 class="syn-heading">Fade out</h3>
+            <span data-syn-animate="fade-out" class="syn-badge" aria-hidden="true">◆</span>
+            <p class="syn-caption">fade-out / optional CSS</p>
+          </article>
+          <article class="syn-panel">
+            <h3 class="syn-heading">Slide up</h3>
+            <span data-syn-animate="slide-up" class="syn-badge" aria-hidden="true">◆</span>
+            <p class="syn-caption">slide-up / optional CSS</p>
+          </article>
+          <article class="syn-panel">
+            <h3 class="syn-heading">Slide down</h3>
+            <span data-syn-animate="slide-down" class="syn-badge" aria-hidden="true">◆</span>
+            <p class="syn-caption">slide-down / optional CSS</p>
+          </article>
+          <article class="syn-panel">
+            <h3 class="syn-heading">Slide left</h3>
+            <span data-syn-animate="slide-left" class="syn-badge" aria-hidden="true">◆</span>
+            <p class="syn-caption">slide-left / optional CSS</p>
+          </article>
+          <article class="syn-panel">
+            <h3 class="syn-heading">Slide right</h3>
+            <span data-syn-animate="slide-right" class="syn-badge" aria-hidden="true">◆</span>
+            <p class="syn-caption">slide-right / optional CSS</p>
+          </article>
+          <article class="syn-panel">
+            <h3 class="syn-heading">Zoom in</h3>
+            <span data-syn-animate="zoom-in" class="syn-badge" aria-hidden="true">◆</span>
+            <p class="syn-caption">zoom-in / optional CSS</p>
+          </article>
+          <article class="syn-panel">
+            <h3 class="syn-heading">Zoom out</h3>
+            <span data-syn-animate="zoom-out" class="syn-badge" aria-hidden="true">◆</span>
+            <p class="syn-caption">zoom-out / optional CSS</p>
+          </article>
+          <article class="syn-panel">
+            <h3 class="syn-heading">Pop</h3>
+            <span data-syn-animate="pop" class="syn-badge" aria-hidden="true">◆</span>
+            <p class="syn-caption">pop / optional CSS</p>
+          </article>
+          <article class="syn-panel">
+            <h3 class="syn-heading">Bounce</h3>
+            <span data-syn-animate="bounce" class="syn-badge" style="--syn-animation-iterations: 3; --syn-animation-duration: 650ms" aria-hidden="true">◆</span>
+            <p class="syn-caption">bounce / optional CSS</p>
+          </article>
+          <article class="syn-panel">
+            <h3 class="syn-heading">Pulse</h3>
+            <span data-syn-animate="pulse" class="syn-badge syn-animate--loop" style="--syn-animation-duration: 1600ms; --syn-animation-direction: alternate" aria-hidden="true">◆</span>
+            <p class="syn-caption">pulse / optional CSS</p>
+          </article>
+          <article class="syn-panel">
+            <h3 class="syn-heading">Shake</h3>
+            <span data-syn-animate="shake" class="syn-badge" aria-hidden="true">◆</span>
+            <p class="syn-caption">shake / optional CSS</p>
+          </article>
+          <article class="syn-panel">
+            <h3 class="syn-heading">Rotate</h3>
+            <span data-syn-animate="rotate" class="syn-badge syn-animate--loop"
+                  style="--syn-animation-duration: 1200ms; --syn-animation-speed: 2; --syn-animation-rotation: -360deg"
+                  aria-hidden="true">◆</span>
+            <p class="syn-caption">rotate / 2× speed / counterclockwise</p>
+          </article>
+          <article class="syn-panel">
+            <h3 class="syn-heading">Rotate in</h3>
+            <span data-syn-animate="rotate-in" class="syn-badge" aria-hidden="true">◆</span>
+            <p class="syn-caption">rotate-in / optional CSS</p>
+          </article>
+          <article class="syn-panel">
+            <h3 class="syn-heading">Flip in</h3>
+            <span data-syn-animate="flip-in" class="syn-badge" aria-hidden="true">◆</span>
+            <p class="syn-caption">flip-in / optional CSS</p>
+          </article>
+        </div>
+      </section>
+      <section class="syn-stage" aria-labelledby="website-loop-controls-title">
+        <p class="syn-eyebrow">OPTIONAL / NATIVE WEB ANIMATIONS API</p>
+        <h2 class="syn-heading" id="website-loop-controls-title">Replay and repeat an animation</h2>
+        <p>Choose a preset, rotation direction, speed multiplier, repeat count, and optional alternating cycles. Play, pause, resume or cancel without a third-party runtime. Controls appear only when JavaScript is enabled.</p>
+        <div class="syn-stack">
+          <div class="syn-cluster" id="website-animation-controls" hidden>
+            <label for="website-animation-preset">Effect</label>
+            <select class="syn-select" id="website-animation-preset">
+              <option value="fade-in">Fade in</option>
+              <option value="fade-out">Fade out</option>
+              <option value="slide-up">Slide up</option>
+              <option value="slide-down">Slide down</option>
+              <option value="slide-left">Slide left</option>
+              <option value="slide-right">Slide right</option>
+              <option value="zoom-in">Zoom in</option>
+              <option value="zoom-out">Zoom out</option>
+              <option value="pop">Pop</option>
+              <option value="bounce">Bounce</option>
+              <option value="pulse">Pulse</option>
+              <option value="shake">Shake</option>
+              <option value="rotate">Rotate</option>
+              <option value="rotate-in">Rotate in</option>
+              <option value="flip-in">Flip in</option>
+            </select>
+            <label for="website-animation-repeat">Repeat</label>
+            <select class="syn-select" id="website-animation-repeat">
+              <option value="1">Once</option>
+              <option value="2">2 times</option>
+              <option value="3">3 times</option>
+              <option value="infinite">Loop forever</option>
+            </select>
+            <label for="website-animation-speed">Speed</label>
+            <input class="syn-input" type="range" id="website-animation-speed"
+                   min="0.25" max="4" step="0.25" value="1">
+            <output id="website-animation-speed-value" for="website-animation-speed">1×</output>
+            <label for="website-animation-rotation">Rotate direction</label>
+            <select class="syn-select" id="website-animation-rotation">
+              <option value="360">Clockwise</option>
+              <option value="-360">Counterclockwise</option>
+            </select>
+            <label for="website-animation-direction">Cycle direction</label>
+            <select class="syn-select" id="website-animation-direction">
+              <option value="normal">Normal</option>
+              <option value="alternate">Alternate</option>
+            </select>
+            <button class="syn-button syn-button--primary" type="button" id="website-animation-play">Play selected animation</button>
+            <button class="syn-button" type="button" id="website-animation-pause">Pause</button>
+            <button class="syn-button" type="button" id="website-animation-resume">Resume</button>
+            <button class="syn-button" type="button" id="website-animation-stop">Cancel</button>
+          </div>
+          <article class="syn-panel" id="website-animation-target">
+            <h3 class="syn-heading">Motion preview</h3>
+            <p>A plain Syntyr panel; ordinary HTML state is never changed by a visual effect.</p>
+          </article>
+          <p class="syn-caption" id="website-animation-status" role="status" aria-live="polite">Animation controls become available when JavaScript runs.</p>
+        </div>
+      </section>
+      <section class="syn-stage syn-logo-marquee" aria-labelledby="logo-marquee-title">
+        <p class="syn-eyebrow">LOGO MARQUEE / CSS-ONLY</p>
+        <h2 class="syn-heading" id="logo-marquee-title">Two continuous logo rows</h2>
+        <p>A responsive copy-and-paste marquee: the top row moves left and the bottom moves right. Use <code>--syn-logo-duration</code> or <code>--syn-logo-speed</code> per row. Hover to pause in place. Tab to a row to show its original logos in a static list. In reduced-motion mode, both rows stay static.</p>
+          <div class="syn-logo-marquee__row" role="group" aria-label="Customer logos, row 1" tabindex="0"
+               data-syn-logo-direction="left"
+               style="--syn-logo-duration: 24s; --syn-logo-speed: 1">
+            <div class="syn-logo-marquee__track">
+              <ul class="syn-logo-marquee__group" aria-label="Example customer logos">
+                <li><span class="syn-logo-marquee__wordmark">NORTHSTAR</span></li>
+                <li><span class="syn-logo-marquee__wordmark">KINETIC</span></li>
+                <li><span class="syn-logo-marquee__wordmark">LUMINA</span></li>
+                <li><span class="syn-logo-marquee__wordmark">VECTOR</span></li>
+                <li><span class="syn-logo-marquee__wordmark">SUMMIT</span></li>
+                <li><span class="syn-logo-marquee__wordmark">MONO</span></li>
+                <li><span class="syn-logo-marquee__wordmark">ORBIT</span></li>
+                <li><span class="syn-logo-marquee__wordmark">HORIZON</span></li>
+              </ul>
+              <ul class="syn-logo-marquee__group" aria-hidden="true" inert>
+                <li><span class="syn-logo-marquee__wordmark">NORTHSTAR</span></li>
+                <li><span class="syn-logo-marquee__wordmark">KINETIC</span></li>
+                <li><span class="syn-logo-marquee__wordmark">LUMINA</span></li>
+                <li><span class="syn-logo-marquee__wordmark">VECTOR</span></li>
+                <li><span class="syn-logo-marquee__wordmark">SUMMIT</span></li>
+                <li><span class="syn-logo-marquee__wordmark">MONO</span></li>
+                <li><span class="syn-logo-marquee__wordmark">ORBIT</span></li>
+                <li><span class="syn-logo-marquee__wordmark">HORIZON</span></li>
+              </ul>
+            </div>
+          </div>
+          <div class="syn-logo-marquee__row" role="group" aria-label="Customer logos, row 2" tabindex="0"
+               data-syn-logo-direction="right"
+               style="--syn-logo-duration: 28s; --syn-logo-speed: 1.25">
+            <div class="syn-logo-marquee__track">
+              <ul class="syn-logo-marquee__group" aria-label="Example customer logos">
+                <li><span class="syn-logo-marquee__wordmark">FJORD</span></li>
+                <li><span class="syn-logo-marquee__wordmark">AURORA</span></li>
+                <li><span class="syn-logo-marquee__wordmark">CANOPY</span></li>
+                <li><span class="syn-logo-marquee__wordmark">ALTITUDE</span></li>
+                <li><span class="syn-logo-marquee__wordmark">FORMANT</span></li>
+                <li><span class="syn-logo-marquee__wordmark">NOVA</span></li>
+                <li><span class="syn-logo-marquee__wordmark">ECHO</span></li>
+                <li><span class="syn-logo-marquee__wordmark">ATLAS</span></li>
+              </ul>
+              <ul class="syn-logo-marquee__group" aria-hidden="true" inert>
+                <li><span class="syn-logo-marquee__wordmark">FJORD</span></li>
+                <li><span class="syn-logo-marquee__wordmark">AURORA</span></li>
+                <li><span class="syn-logo-marquee__wordmark">CANOPY</span></li>
+                <li><span class="syn-logo-marquee__wordmark">ALTITUDE</span></li>
+                <li><span class="syn-logo-marquee__wordmark">FORMANT</span></li>
+                <li><span class="syn-logo-marquee__wordmark">NOVA</span></li>
+                <li><span class="syn-logo-marquee__wordmark">ECHO</span></li>
+                <li><span class="syn-logo-marquee__wordmark">ATLAS</span></li>
+              </ul>
+            </div>
+          </div>
+        <div id="logo-marquee-controls" hidden class="syn-stack">
+          <h3 class="syn-heading">Try logo row settings</h3>
+          <p class="syn-caption">Interactive demonstration only. The embedded marquee itself runs entirely in CSS.</p>
+          <div class="syn-grid">
+            <fieldset class="syn-panel syn-stack">
+              <legend>Top logo row</legend>
+              <label for="logo-row-1-direction">Direction</label>
+              <select id="logo-row-1-direction" class="syn-select">
+                <option value="left" selected>Scroll left</option>
+                <option value="right">Scroll right</option>
+              </select>
+              <label for="logo-row-1-speed">Speed</label>
+              <input id="logo-row-1-speed" class="syn-input" type="range"
+                     min="0.5" max="3" step="0.25" value="1">
+              <output id="logo-row-1-speed-value" for="logo-row-1-speed">1×</output>
+            </fieldset>
+            <fieldset class="syn-panel syn-stack">
+              <legend>Bottom logo row</legend>
+              <label for="logo-row-2-direction">Direction</label>
+              <select id="logo-row-2-direction" class="syn-select">
+                <option value="left">Scroll left</option>
+                <option value="right" selected>Scroll right</option>
+              </select>
+              <label for="logo-row-2-speed">Speed</label>
+              <input id="logo-row-2-speed" class="syn-input" type="range"
+                     min="0.5" max="3" step="0.25" value="1.25">
+              <output id="logo-row-2-speed-value" for="logo-row-2-speed">1.25×</output>
+            </fieldset>
+          </div>
+          <div class="syn-cluster">
+            <button type="button" class="syn-button" id="logo-marquee-pause"
+                    aria-pressed="false">Pause both logo rows</button>
+          </div>
+        </div>
+      </section>
+      <section class="syn-stage" aria-labelledby="viewport-title">
+        <h2 id="viewport-title" class="syn-heading">Opt-in viewport entry</h2>
+        <p>The two paragraphs below use <code>data-syn-reveal</code>. They never start hidden, even if the observer is unsupported.</p>
+        <div class="syn-cluster" aria-hidden="true">
+          <span class="syn-badge" data-syn-reveal="fade">FADE EFFECT</span>
+          <span class="syn-badge" data-syn-reveal="enter">ENTER EFFECT</span>
+        </div>
+        <p>The decorative markers above demonstrate viewport animation; this explanation remains fully visible.</p>
+        <p><a class="syn-button syn-button--outline" href="https://syntyr-css.pages.dev/docs/animation">VIEW API DOCUMENTATION</a></p>
+      </section>
+      <section class="syn-stage" aria-labelledby="block-effects-title">
+        <p class="syn-eyebrow">CSS-ONLY / SCROLL-LINKED</p>
+        <h2 class="syn-heading" id="block-effects-title" data-syn-scroll="rise">Website block effects</h2>
+        <p>Native CSS adds optional scroll entrances, with no JavaScript observer. Unsupported browsers and reduced-motion users simply see static content.</p>
+        <div class="syn-grid">
+          <article class="syn-panel" data-syn-scroll="fade">
+            <h3 class="syn-heading">Scroll fade</h3><p>Opacity follows the native view timeline.</p>
+          </article>
+          <article class="syn-panel" data-syn-scroll="slide-left">
+            <h3 class="syn-heading">Slide into view</h3><p>Blocks can slide without changing layout.</p>
+          </article>
+          <article class="syn-panel" data-syn-scroll="zoom">
+            <h3 class="syn-heading">Zoom reveal</h3><p>Use a restrained scale on short cards.</p>
+          </article>
+          <a class="syn-panel" data-syn-hover="zoom" href="../docs/animation.html">
+            <div data-syn-hover-media aria-hidden="true" style="block-size: 6rem; background: linear-gradient(120deg, var(--syn-accent-soft), var(--syn-surface-hi));"></div>
+            <h3 class="syn-heading">Hover image zoom</h3><p>Hover or focus the card to preview.</p>
+          </a>
+        </div>
+      </section>
+      <section class="syn-stage" data-syn-parallax aria-labelledby="block-parallax-title" style="min-block-size: 21rem; --syn-parallax-travel: 2rem">
+        <div data-syn-parallax-layer aria-hidden="true" style="background: radial-gradient(circle at 65% 15%, var(--syn-accent-soft), transparent 55%), linear-gradient(145deg, var(--syn-surface-hi), var(--syn-bg));"></div>
+        <div data-syn-parallax-content class="syn-stack">
+          <p class="syn-eyebrow">PARALLAX / NO SCROLL HANDLER</p>
+          <h2 class="syn-heading" id="block-parallax-title">Decorative depth behind a block</h2>
+          <p>The native view timeline moves only the background layer. This readable foreground stays in normal flow.</p>
+          <p><a class="syn-button syn-button--outline" href="../docs/animation.html">CSS EFFECTS USAGE</a></p>
+        </div>
+      </section>
+      <section class="syn-stage" aria-labelledby="text-effects-title">
+        <p class="syn-eyebrow">CSS-ONLY / TYPOGRAPHY</p>
+        <h2 id="text-effects-title" data-syn-text="underline">Underline as you scroll</h2>
+        <p>Text stays selectable and accessible; the animated underline is decorative.</p>
+        <h3 class="syn-heading" data-syn-text="glint">Subtle animated headline accent</h3>
+      </section>
+      <section class="syn-stage syn-gradient-wash" data-syn-gradient="drift" aria-labelledby="gradient-effects-title">
+        <div class="syn-stack" data-syn-gradient-content>
+          <p class="syn-eyebrow">CSS-ONLY / GRADIENT WASH</p>
+          <h2 id="gradient-effects-title" class="syn-heading">Atmospheric block gradient</h2>
+          <p>The static wash is from Syntyr effects; the separate motion stylesheet adds an opt-in composited drift.</p>
+          <a class="syn-button syn-button--outline" href="../docs/animation.html">See the CSS effect guide</a>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

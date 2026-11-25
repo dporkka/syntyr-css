@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "verify": "python3 ../../scripts/verify_static_generators.py dist --base-path /syntyr-astro/"
   },
   "dependencies": {
     "@syntyr/css": "file:../..",

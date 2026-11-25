@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Syntyr&#x27;s copy interaction is one opt-in native ESM module , independent of React, HTMX, Vue, Svelte, Tailwind and the CSS core. It uses the browser…">
+  <meta name="syntyr-source-sha256" content="fc5dc56a07f16fe56a0e73d6f1612d7efe6bb0e7c6579bded83cc21d46494e0a">
+  <meta name="theme-color" content="#f5f7fb">
+  <title>Optional framework-neutral copy interaction — Syntyr CSS docs</title>
+  <link rel="canonical" href="https://syntyr-css.pages.dev/docs/clipboard">
+  <link rel="alternate" type="text/markdown" href="clipboard.md" title="Markdown source">
+  <link rel="icon" href="../assets/syntyr-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="docs.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <a class="syn-button docs-skip" href="#doc-main">Skip to guide</a>
+  <div class="syn-shell">
+    <header class="syn-header docs-header">
+      <a class="syn-logo" href="../index.html">SYNTYR / CSS</a>
+      <nav class="syn-nav" aria-label="Documentation navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav>
+      <details class="site-mobile-menu"><summary>Menu</summary><nav aria-label="Mobile navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav></details>
+    </header>
+    <main id="doc-main" class="docs-article-page">
+      <nav class="syn-breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="reference.html">Documentation</a></li><li aria-current="page">Optional framework-neutral copy interaction</li></ol></nav>
+      <header class="docs-article-heading">
+        <p class="syn-eyebrow">SYNTYR / DOCUMENTATION</p>
+        <p class="syn-muted">Current source documentation may describe unreleased alpha.5 features. <a href="distribution.html">Check released version compatibility.</a></p>
+        <p class="syn-caption">Prefer a machine-readable version? <a href="clipboard.md">Markdown source</a> · <a href="../llms.txt">LLM index</a></p>
+      </header>
+      <div class="docs-article-layout">
+        <article class="docs-prose" aria-label="Optional framework-neutral copy interaction">
+<h1 id="optional-framework-neutral-copy-interaction">Optional framework-neutral copy interaction</h1>
+<p>Syntyr's copy interaction is <strong>one opt-in native ESM module</strong>, independent of
+React, HTMX, Vue, Svelte, Tailwind and the CSS core. It uses the browser
+Clipboard API; <strong>no third-party dependencies, global listeners, auto-init,
+legacy <code>execCommand</code>, or clipboard write on import</strong>.</p>
+<p><a href="../examples/copy.html">Try the runnable demonstration</a>. The MIT CSS remains
+fully usable without JavaScript. Only import this module for a real copy action.</p>
+<h2 id="plain-html">Plain HTML</h2>
+<pre tabindex="0"><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntyr.core.css&quot;&gt;
+&lt;style&gt;[data-syn-copy-target][hidden] { display: none; }&lt;/style&gt;
+&lt;section class=&quot;syn-root&quot;&gt;
+  &lt;pre&gt;&lt;code id=&quot;install-command&quot;&gt;npm install @syntyr/css&lt;/code&gt;&lt;/pre&gt;
+  &lt;button class=&quot;syn-button&quot; type=&quot;button&quot; hidden
+          data-syn-copy-target=&quot;install-command&quot;
+          data-syn-copy-status=&quot;copy-result&quot;&gt;Copy command&lt;/button&gt;
+  &lt;p id=&quot;copy-result&quot; role=&quot;status&quot; aria-live=&quot;polite&quot;&gt;&lt;/p&gt;
+&lt;/section&gt;
+&lt;script type=&quot;module&quot; src=&quot;/js/enable-copy.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+<pre tabindex="0"><code class="language-js">// enable-copy.js (only when the optional module is explicitly imported)
+// Copy dist/syntyr.copy.mjs to /js/syntyr.copy.mjs on your site.
+import { enhanceCopyButtons } from '/js/syntyr.copy.mjs';
+const detach = enhanceCopyButtons();
+// In an SPA teardown or component unmount: detach().
+</code></pre>
+<p>For applications with a bundler, the same module is exported from the npm
+package (once the release containing the optional module is published):</p>
+<pre tabindex="0"><code class="language-js">import { enhanceCopyButtons } from '@syntyr/css/copy';
+</code></pre>
+<p>Copy buttons should start with <code>hidden</code> and the scoped guard above so older
+component CSS cannot accidentally override the browser's hidden state. A blocked script or missing Clipboard
+API never leaves a misleading, active copy button. The underlying content
+remains readable and manually selectable. JavaScript only reveals valid
+controls on secure contexts where <code>navigator.clipboard.writeText</code> is available.
+Web browsers may still reject clipboard access: the module announces
+failure without falsely claiming a successful copy.</p>
+<p>Use an adjacent <code>role=&quot;status&quot;</code> element for feedback <strong>outside</strong> the button.
+The target is resolved by ID at click time, so a host can replace the contents
+without copying stale values. <code>&lt;input&gt;</code> and <code>&lt;textarea&gt;</code> use their current
+<code>value</code>; other elements use <code>textContent</code>, never <code>innerHTML</code>.
+Keep copy sources and status targets in the <strong>same document</strong>.</p>
+<h2 id="framework-and-server-integrations">Framework and server integrations</h2>
+<p>In HTMX, call <code>enhanceCopyButtons(fragment)</code> after a swap and call its
+returned cleanup function when you remove that fragment. In React or Vue,
+call it in the component's mount lifecycle and detach on unmount.
+It is idempotent on the same button: repeated calls cannot stack listeners.
+The module does not observe mutations or own framework lifecycle.</p>
+<p>For any clipboard action involving sensitive data, the host app must control
+which content can be rendered and copied. This is presentation behavior, not
+an authorization or data-fetching layer.</p>
+<h2 id="distribution-and-compatibility">Distribution and compatibility</h2>
+<p>Use <code>@syntyr/css/copy</code> only with a release that includes this optional export;
+for source/checkouts use <code>dist/syntyr.copy.mjs</code>. The experimental alpha.5
+candidate is <strong>not</strong> a claim of an already-published package update.
+A HTTPS or localhost context is generally required for the Clipboard API.
+Syntyr's base CSS and package default entrypoint import no JavaScript.
+Browser support, CSP and user-activation behavior remain host concerns.</p>
+        </article>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+<a class="docs-article-toc-link docs-article-toc-2" href="#plain-html">Plain HTML</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#framework-and-server-integrations">Framework and server integrations</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#distribution-and-compatibility">Distribution and compatibility</a>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#plain-html">Plain HTML</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#framework-and-server-integrations">Framework and server integrations</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#distribution-and-compatibility">Distribution and compatibility</a>
+            </nav>
+          </details>
+        </aside>
+      </div>
+      <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="clipboard.md">Markdown source</a></nav>
+    </main>
+    <footer class="syn-header"><span class="syn-caption">SYNTYR CSS · MIT CORE · EXPERIMENTAL</span><a href="../index.html">Home</a></footer>
+  </div>
+</body>
+</html>

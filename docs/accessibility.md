@@ -2,6 +2,42 @@
 
 **Status:** experimental alpha; not a WCAG certification or professional audit.
 
+## Responsive follow-up — November 15, 2026
+
+On the source merged by PR #135 (commit 0b04607), the published-site
+layout suite passed **2,964/2,964** reflow cases: 76 allowlisted HTML
+pages, 13 viewport/text configurations, and Chromium, Firefox, and pinned
+Playwright 1.65.2 WebKit 27.2. These cover 320–1920 CSS-pixel widths,
+mobile landscape, and 150%/200% root-text enlargement. This is **not**
+native browser zoom.
+
+For separate browser-UI zoom verification, an isolated X11 virtual display
+was used to send the browser's native zoom keyboard shortcuts, rather than
+CSS zoom, device emulation, or pinch/visual viewport scaling. Fourteen
+representative pages passed at **200% and 400%** in both Chromium
+(**28/28 checks**) and Firefox (**28/28 checks**): the original 1280
+CSS-pixel viewport became 640 and 320 CSS pixels respectively, with
+physical X11 window dimensions unchanged. The checks found no
+document-level horizontal overflow or off-viewport controls. Pages
+included the homepage, documentation, playground, pricing, forms, CRM,
+console, Noir landing, and visualization gallery. Screenshots and
+machine-local logs are test artifacts, not proof of a complete human
+visual assessment. **Safari native zoom was not verified.**
+
+The follow-up mobile audit identified ten native disclosure summaries with
+19–22 CSS-pixel heights (three FAQ examples and seven chart data
+expansions). A targeted change gives these standalone controls a 44px
+minimum hit area at default text size, retaining native open/close and
+focus behavior. The published-site browser matrix now checks native
+controls for at least 24×24 CSS-pixel target geometry at 320px and 390px
+unless a larger associated label supplies the target. This is a **focused
+regression check**, not a full WCAG 2.2 target-spacing or touchscreen
+conformance audit.
+
+Manual assistive technology, Safari browser zoom, real hardware touch
+testing, contrast exceptions, and native OS forced-colors review remain
+outstanding.
+
 ## Audited source snapshot (November 15, 2026; commit `038a24d`)
 
 At pinned `main` commit `038a24d`, deterministic CSS/metadata/adapters/site

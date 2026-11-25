@@ -1,0 +1,74 @@
+name: Syntyr product and pricing research
+description: Help validate proposed Syntyr Pro, Studio, Agency and Console Kit offerings (not for sale)
+title: "[Product research] "
+labels: ["feedback"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **No sales or preorders are available.** This is research; pricing, deliverables and licenses are proposals, not commitments. The current Syntyr Core CSS framework stays MIT-licensed.
+
+        **This GitHub issue is public.** Do not share customer data, private business information, secrets, email addresses, payment details or anything confidential.
+  - type: dropdown
+    id: product
+    attributes:
+      label: Which proposed product would solve your problem?
+      options:
+        - Console Kit
+        - Syntyr Pro
+        - Syntyr Studio
+        - Syntyr Agency
+        - None of these
+    validations:
+      required: true
+  - type: dropdown
+    id: current-project
+    attributes:
+      label: What are you currently building?
+      options:
+        - Production SaaS or business application
+        - MVP with a planned release
+        - Client project at an agency or consultancy
+        - Business website or landing page
+        - Exploring options; no active project
+    validations:
+      required: true
+  - type: dropdown
+    id: price-point
+    attributes:
+      label: Which price range would be reasonable for the outcome you need?
+      options:
+        - Free only
+        - $1–$59 one-time
+        - $60–$149 one-time
+        - $150–$299 one-time
+        - $300+ one-time
+        - Recurring pricing if substantial updates and support are included
+        - Unsure
+    validations:
+      required: true
+  - type: dropdown
+    id: buying-history
+    attributes:
+      label: Have you bought a paid UI kit or template for a real project?
+      options:
+        - Yes, within the last 12 months
+        - Yes, more than 12 months ago
+        - No
+        - Prefer not to say
+    validations:
+      required: false
+  - type: textarea
+    id: job-to-be-done
+    attributes:
+      label: What specific page, component or workflow would you pay to avoid implementing yourself?
+      description: Describe the use case and must-have integration constraints; exclude confidential details.
+    validations:
+      required: true
+  - type: textarea
+    id: purchase-barrier
+    attributes:
+      label: What would prevent you from purchasing or adopting it?
+      description: Examples include accessibility, portability, licensing, component quality, or missing framework support.
+    validations:
+      required: false

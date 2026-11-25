@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Syntyr + Lit + HTMX</title>
+  <link rel="stylesheet" href="../../dist/syntyr.core.css">
+  <meta name="htmx-config" content='{"includeIndicatorStyles":false}'>
+  <script type="module" src="./dist/htmx-demo.js"></script>
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <main class="syn-shell">
+    <h1 class="syn-title">Syntyr + Lit in HTMX</h1>
+    <p class="syn-lede">A native GET form replaces a custom-element host. The Syntyr theme root remains stable outside the swap.</p>
+    <form action="./htmx-result.html" method="get"
+          hx-get="./htmx-result.html" hx-target="#htmx-result"
+          hx-select="#htmx-result" hx-swap="outerHTML">
+      <input type="hidden" name="q" value="relay">
+      <button class="syn-button syn-button--primary" type="submit">Load relay status</button>
+    </form>
+    <section id="htmx-result" aria-live="polite">
+      <syn-demo-status-panel service="Initial service">
+        <article data-lit-fallback class="syn-panel">
+          <h2 class="syn-heading">Initial service</h2>
+          <p class="syn-status">Not yet checked</p>
+        </article>
+      </syn-demo-status-panel>
+    </section>
+    <p id="htmx-event-output" role="status" aria-live="polite">Waiting for relay event</p>
+    <p><a class="syn-button" href="./index.html">Back to Lit examples</a></p>
+  </main>
+</body>
+</html>

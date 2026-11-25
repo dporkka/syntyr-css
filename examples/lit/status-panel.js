@@ -35,17 +35,20 @@ export class DemoStatusPanel extends LitElement {
 
   render() {
     return html`
-      <article class="syn-panel" aria-label="Service status">
-        <p class="syn-eyebrow">LIGHT DOM / SYNTYR CLASSES</p>
-        <h3 class="syn-heading">${this.service}</h3>
+      <div class="syn-panel">
+        <article data-busy-region aria-label="Service status" aria-busy=${String(this.busy)}>
+          <p class="syn-eyebrow">LIGHT DOM / SYNTYR CLASSES</p>
+          <h3 class="syn-heading">${this.service}</h3>
+          <p class="syn-muted">The component renders into the light DOM. No shadow stylesheet is needed.</p>
+          <button class="syn-button syn-button--primary" type="button"
+                  ?disabled=${this.busy} @click=${this._toggleStatus}>
+            ${this.online ? "Mark offline" : "Mark online"}
+          </button>
+        </article>
+        <!-- Live region must not be a descendant of aria-busy=true. -->
         <p class="syn-status ${this.online ? "syn-status--success" : "syn-status--warning"}"
-           role="status">${this.online ? "Online" : "Offline"}</p>
-        <p class="syn-muted">The component renders into the light DOM. No shadow stylesheet is needed.</p>
-        <button class="syn-button syn-button--primary" type="button"
-                ?disabled=${this.busy} @click=${this._toggleStatus}>
-          ${this.online ? "Mark offline" : "Mark online"}
-        </button>
-      </article>
+           role="status">${this.busy ? "Updating status…" : this.online ? "Online" : "Offline"}</p>
+      </div>
     `;
   }
 }

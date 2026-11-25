@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Learn shared UI design principles, accessible component states, semantic HTML compositions, and static palette contrast checks in Syntyr CSS.">
+  <meta name="syntyr-source-sha256" content="f704c5e969515b0d09fcb722067a33031c4552346aa69bf84de493dcda1bf666">
+  <meta name="theme-color" content="#f5f7fb">
+  <title>Design principles and conformance contract — Syntyr CSS docs</title>
+  <link rel="canonical" href="https://syntyr-css.pages.dev/docs/design-principles">
+  <link rel="alternate" type="text/markdown" href="design-principles.md" title="Markdown source">
+  <link rel="icon" href="../assets/syntyr-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="docs.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <a class="syn-button docs-skip" href="#doc-main">Skip to guide</a>
+  <div class="syn-shell">
+    <header class="syn-header docs-header">
+      <a class="syn-logo" href="../index.html">SYNTYR / CSS</a>
+      <nav class="syn-nav" aria-label="Documentation navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav>
+      <details class="site-mobile-menu"><summary>Menu</summary><nav aria-label="Mobile navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav></details>
+    </header>
+    <main id="doc-main" class="docs-article-page">
+      <nav class="syn-breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="reference.html">Documentation</a></li><li aria-current="page">Design principles and conformance contract</li></ol></nav>
+      <header class="docs-article-heading">
+        <p class="syn-eyebrow">SYNTYR / DOCUMENTATION</p>
+        <p class="syn-muted">Current source documentation may describe unreleased alpha.5 features. <a href="distribution.html">Check released version compatibility.</a></p>
+        <p class="syn-caption">Prefer a machine-readable version? <a href="design-principles.md">Markdown source</a> · <a href="../llms.txt">LLM index</a></p>
+      </header>
+      <div class="docs-article-layout">
+        <article class="docs-prose" aria-label="Design principles and conformance contract">
+<h1 id="design-principles-and-conformance-contract">Design principles and conformance contract</h1>
+<p>Status: <strong>unreleased alpha.5 source guidance</strong>. Syntyr is a scoped, CSS-first
+presentation system, not a JavaScript widget library. This guide distills
+practices shared by mature design systems (Material, Fluent, Carbon, Spectrum,
+Atlassian, Apple HIG and USWDS) into <strong>portable rules</strong> rather than borrowing
+any brand's visual assets or platform-specific components.</p>
+<p><strong>Priority order:</strong> semantic meaning and accessibility &gt; readable hierarchy and
+feedback &gt; predictable composition &gt; optional aesthetics. When those conflict,
+an ornamental effect or familiar-looking mockup must give way.</p>
+<h2 id="universal-defaults">Universal defaults</h2>
+<ol>
+<li><strong>Information hierarchy:</strong> one clear page purpose, useful heading order,
+one primary action per decision area and subdued secondary actions. Use
+headings for structure, not to obtain a large font.</li>
+<li><strong>Consistent spacing:</strong> begin with <code>--syn-space-1</code> through
+<code>--syn-space-5</code>. Group related controls closely, separate different
+content regions deliberately. There is no universally correct 8px grid.</li>
+<li><strong>Readable typography:</strong> prefer <code>--syn-type-body</code>, <code>--syn-type-heading</code>,
+<code>--syn-type-section</code>, <code>--syn-type-display</code> and the shared body leading.
+Use legible text and avoid substituting tiny fonts for compact density.</li>
+<li><strong>Semantic HTML and familiar behavior:</strong> actions use buttons; navigation
+uses links; labeled inputs use native controls; tables have real headers.
+Prefer <code>details</code>, <code>dialog</code> and <code>popover</code> when their native behavior fits.</li>
+<li><strong>Meaningful color roles:</strong> use <code>--syn-bg</code>, <code>--syn-surface</code>, <code>--syn-text</code>,
+<code>--syn-muted</code>, <code>--syn-accent</code>, <code>--syn-on-accent</code>, and named
+success/warning/danger tokens. Color is never the only status cue.</li>
+<li><strong>Accessible interaction:</strong> visible <code>:focus-visible</code>, contrast, keyboard
+reachability, target size, label/description associations, readable error
+text, narrow-screen reflow, 200%/400% zoom and reduced motion.
+Target WCAG 2.2 AA in representative, <em>rendered</em> application flows.</li>
+<li><strong>Responsive context:</strong> adapt layouts to available space; prefer intrinsic
+layout and container queries for embedded regions. Never let dense tables
+silently clip important data; make overflow regions keyboard reachable.</li>
+<li><strong>Feedback and recovery:</strong> every mutation needs truthful pending, success
+and error feedback from its host application; invalid fields should explain
+correction and preserve input. CSS does not implement validation or alerts.</li>
+<li><strong>Progressive disclosure:</strong> defer uncommon settings inside clearly named
+native disclosures or separate screens. Do not hide essential actions.</li>
+<li><strong>Independent customization:</strong> theme, density, geometry, typography and
+intensity are separate axes. Customizations change semantic tokens; avoid
+per-theme component forks and <code>!important</code> escalation.</li>
+</ol>
+<p>These are implementation principles, not proof that a particular page satisfies
+accessibility law. See <a href="https://github.com/dporkka/syntyr-css/blob/main/DESIGN.md">DESIGN.md</a>, <a href="https://github.com/dporkka/syntyr-css/blob/main/ARCHITECTURE.md">architecture</a>
+and <a href="accessibility.html">the accessibility guide</a>.</p>
+<h2 id="component-state-contract">Component state contract</h2>
+<table>
+<thead>
+<tr>
+<th>Component family</th>
+<th>Real semantics</th>
+<th>Required presentation and verification</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Action buttons</td>
+<td><code>button type=&quot;button&quot;</code> or <code>button type=&quot;submit&quot;</code>; <code>a href</code> only for navigation</td>
+<td>default, hover when meaningful, <code>:focus-visible</code>, pressed, true disabled; distinguish toggle <code>aria-pressed</code> from decoration</td>
+</tr>
+<tr>
+<td>Inputs and form groups</td>
+<td>paired <code>label</code> + <code>id</code>, <code>fieldset</code>/<code>legend</code>, optional <code>aria-describedby</code></td>
+<td>default, focus, disabled, <code>:user-invalid</code> or synchronized <code>aria-invalid</code>, explicit error text</td>
+</tr>
+<tr>
+<td>Navigation</td>
+<td><code>nav</code>, real links, <code>aria-current</code> on current destination</td>
+<td>visible keyboard focus, active destination, wrapping/overflow, short discernible names</td>
+</tr>
+<tr>
+<td>Data tables</td>
+<td><code>caption</code>, <code>th scope</code>, numeric cells when helpful</td>
+<td>row/cell hierarchy, legible density, focusable overflow region, optional <code>aria-sort</code> only when sorting exists</td>
+</tr>
+<tr>
+<td>Native overlays</td>
+<td><code>details</code>/<code>summary</code>, <code>dialog</code>, or <code>popover</code></td>
+<td>open/closed, visible focus, Escape/dismissal according to browser API; host owns custom focus logic</td>
+</tr>
+<tr>
+<td>Feedback and status</td>
+<td>meaningful text, optionally <code>role=&quot;status&quot;</code>/<code>role=&quot;alert&quot;</code></td>
+<td>not color-only; convey busy, success, warning and errors truthfully</td>
+</tr>
+<tr>
+<td>Loading</td>
+<td>host-owned lifecycle and message; optional decorative <code>.syn-skeleton</code></td>
+<td>never use skeletons as the only status announcement; <code>aria-busy</code> does not disable a button</td>
+</tr>
+<tr>
+<td>Panels and layouts</td>
+<td><code>main</code>, <code>section</code>, headings, labels</td>
+<td>stable reading order, logical spacing, mobile reflow and no accidental nesting of landmarks</td>
+</tr>
+</tbody>
+</table>
+<p>A state that exists only visually is not a substitute for a corresponding native
+or accessible semantic state. Avoid fabricating <code>aria-selected</code>, <code>aria-busy</code>
+or <code>aria-disabled</code> to make a screenshot resemble a working application.
+See <a href="components.html">components</a>, <a href="component-authoring.html">component authoring</a>
+and <a href="component-recipes.html">form composition recipes</a>.</p>
+<h2 id="composition-examples">Composition examples</h2>
+<p>The following copy-owned patterns use <strong>only <code>syntyr.core.css</code></strong>. The
+backend/application is responsible for actual operations, authorization,
+pending-state announcements, validation and persistence. Paths and records
+are illustrative, not implemented service endpoints.</p>
+<h3 id="1-responsive-overview-with-sensible-emphasis">1. Responsive overview with sensible emphasis</h3>
+<pre tabindex="0"><code class="language-html">&lt;main class=&quot;syn-root syn-page&quot; data-syn-theme=&quot;studio&quot;
+      data-syn-density=&quot;comfortable&quot;&gt;
+  &lt;header&gt;
+    &lt;h1&gt;Campaign overview&lt;/h1&gt;
+    &lt;p class=&quot;syn-muted&quot;&gt;Review active campaigns and recent changes.&lt;/p&gt;
+    &lt;a class=&quot;syn-button syn-button--primary&quot; href=&quot;/campaigns/new&quot;&gt;New campaign&lt;/a&gt;
+  &lt;/header&gt;
+  &lt;section class=&quot;syn-region&quot; aria-labelledby=&quot;overview-heading&quot;&gt;
+    &lt;h2 id=&quot;overview-heading&quot;&gt;Current activity&lt;/h2&gt;
+    &lt;div class=&quot;syn-stats&quot;&gt;
+      &lt;article class=&quot;syn-stat&quot;&gt;
+        &lt;h3 class=&quot;syn-stat-label&quot;&gt;Active campaigns&lt;/h3&gt;
+        &lt;p class=&quot;syn-stat-value&quot;&gt;12&lt;/p&gt;
+      &lt;/article&gt;
+      &lt;article class=&quot;syn-stat&quot;&gt;
+        &lt;h3 class=&quot;syn-stat-label&quot;&gt;Pending reviews&lt;/h3&gt;
+        &lt;p class=&quot;syn-stat-value&quot;&gt;3&lt;/p&gt;
+      &lt;/article&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+&lt;/main&gt;
+</code></pre>
+<p>Use <code>.syn-region</code> <em>outside</em> the responsive <code>.syn-stats</code> children so the
+container query measures the available panel width, not the viewport.
+Display real values from the application rather than assuming CSS can compute
+metrics.</p>
+<h3 id="2-native-get-filter-and-accessible-data-table">2. Native GET filter and accessible data table</h3>
+<pre tabindex="0"><code class="language-html">&lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot; aria-labelledby=&quot;records-title&quot;&gt;
+  &lt;h2 id=&quot;records-title&quot;&gt;Accounts&lt;/h2&gt;
+  &lt;form class=&quot;syn-form&quot; method=&quot;get&quot; action=&quot;/accounts&quot;&gt;
+    &lt;label class=&quot;syn-label&quot; for=&quot;account-query&quot;&gt;Account name&lt;/label&gt;
+    &lt;input class=&quot;syn-input&quot; id=&quot;account-query&quot; type=&quot;search&quot; name=&quot;q&quot;&gt;
+    &lt;div class=&quot;syn-actions&quot;&gt;
+      &lt;button class=&quot;syn-button syn-button--primary&quot; type=&quot;submit&quot;&gt;Filter accounts&lt;/button&gt;
+      &lt;a class=&quot;syn-button&quot; href=&quot;/accounts&quot;&gt;Clear filter&lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/form&gt;
+  &lt;div class=&quot;syn-table-wrap&quot; role=&quot;region&quot; aria-label=&quot;Accounts table&quot;
+       tabindex=&quot;0&quot;&gt;
+    &lt;table class=&quot;syn-table&quot;&gt;
+      &lt;caption&gt;Account directory&lt;/caption&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;&lt;th scope=&quot;col&quot;&gt;Account&lt;/th&gt;&lt;th scope=&quot;col&quot;&gt;Status&lt;/th&gt;&lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;&lt;th scope=&quot;row&quot;&gt;Northwind&lt;/th&gt;&lt;td&gt;Active&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;th scope=&quot;row&quot;&gt;Contoso&lt;/th&gt;&lt;td&gt;Review needed&lt;/td&gt;&lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+</code></pre>
+<p>Avoid <code>role=&quot;grid&quot;</code> unless the application implements grid keyboard
+interaction. If the backend filters the table, preserve the user's query and
+announce updated results appropriately. These CSS classes style the native
+elements but never sort, search or persist data.</p>
+<h3 id="3-labeled-settings-with-progressive-disclosure">3. Labeled settings with progressive disclosure</h3>
+<pre tabindex="0"><code class="language-html">&lt;main class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot;&gt;
+  &lt;h1&gt;Organization settings&lt;/h1&gt;
+  &lt;form class=&quot;syn-form&quot; action=&quot;/settings&quot; method=&quot;post&quot;&gt;
+    &lt;fieldset class=&quot;syn-fieldset&quot;&gt;
+      &lt;legend&gt;Organization details&lt;/legend&gt;
+      &lt;div class=&quot;syn-field&quot;&gt;
+        &lt;label class=&quot;syn-label&quot; for=&quot;org-name&quot;&gt;Name&lt;/label&gt;
+        &lt;input class=&quot;syn-input&quot; id=&quot;org-name&quot; name=&quot;name&quot; required
+               aria-describedby=&quot;org-hint&quot;&gt;
+        &lt;p class=&quot;syn-help&quot; id=&quot;org-hint&quot;&gt;Shown to your teammates.&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;details class=&quot;syn-details&quot;&gt;
+        &lt;summary&gt;Advanced settings&lt;/summary&gt;
+        &lt;label class=&quot;syn-label&quot; for=&quot;timezone&quot;&gt;Time zone&lt;/label&gt;
+        &lt;select class=&quot;syn-select&quot; id=&quot;timezone&quot; name=&quot;timezone&quot;&gt;
+          &lt;option value=&quot;UTC&quot;&gt;UTC&lt;/option&gt;
+          &lt;option value=&quot;America/Sao_Paulo&quot;&gt;Brasília&lt;/option&gt;
+        &lt;/select&gt;
+      &lt;/details&gt;
+    &lt;/fieldset&gt;
+    &lt;button class=&quot;syn-button syn-button--primary&quot; type=&quot;submit&quot;&gt;
+      Save settings
+    &lt;/button&gt;
+  &lt;/form&gt;
+&lt;/main&gt;
+</code></pre>
+<p>A real POST handler must check CSRF, permissions and validity. On an error,
+rerender entered values, set <code>aria-invalid=&quot;true&quot;</code> for invalid fields,
+associate the actual error text via <code>aria-describedby</code>, and provide a
+perceivable status. The demo deliberately does not fake saved-state feedback.</p>
+<p>For richer CRM, filter toolbar and enterprise layout compositions, reuse
+<a href="recipes.html">existing recipes</a>, <a href="data-tables.html">data-table guidance</a>
+and <a href="../examples/crm.html">the static CRM example</a>. Do not create redundant
+CSS classes solely to implement these HTML patterns.</p>
+<h2 id="deliberate-non-defaults">Deliberate non-defaults</h2>
+<p><strong>Never universalize</strong> Material-style elevation, glass effects, a specific
+border radius, an 8px-only grid, desktop-like density, animation, or a single
+navigation pattern. These are product/platform choices. Studio's quiet neutral
+presentation is the default; Grid, Noir, strong effects, geometry and
+additional density are opt-in. Style must never reduce semantic or accessibility
+quality. Respect <code>prefers-reduced-motion</code> and <code>forced-colors</code>.</p>
+<h2 id="automated-check-and-review-protocol">Automated check and review protocol</h2>
+<p>Run the source-level semantic palette check:</p>
+<pre tabindex="0"><code class="language-sh">python3 scripts/design_conformance.py
+python3 scripts/design_conformance.py --format json
+python3 -m unittest discover -s tests -p 'test_design_conformance.py'
+</code></pre>
+<p>It evaluates <strong>12 defined semantic foreground/background roles across seven
+built-in palettes (84 pair checks)</strong> and fails closed for missing or
+nonliteral colors. Roles are explicit so design changes cannot silently skip a
+required pairing. This checks static source colors, including the primary
+button foreground, link/accent, statuses, visible focus/accent against surfaces,
+and strong borders. It is included in the standard Python test suite.</p>
+<h2 id="what-automated-checks-do-not-prove">What automated checks do not prove</h2>
+<p>The tool <strong>does not validate rendered contrast</strong> involving gradients,
+<code>color-mix()</code>, overlays, icon graphics, every hover/focus interaction,
+user-defined palettes, <code>light-dark()</code> computed values, nested theme paint
+compositing or transparent surfaces. Nor does it validate keyboard behavior,
+screen-reader announcements, zoom/resize, actual touch targets, server errors,
+or brand/legal accessibility certification.</p>
+<p>For release approval, separately run the browser/reflow/axe matrices and
+record genuine keyboard, screen-reader, 200%/400% browser zoom, real OS
+high-contrast and manual color-contrast evidence. Inconclusive axe nodes stay
+unresolved until checked on their <em>effective painted backgrounds</em>. See the
+<a href="accessibility-alpha5-review.html">alpha.5 review log</a>. Do not claim WCAG
+conformance from this palette report.</p>
+        </article>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+<a class="docs-article-toc-link docs-article-toc-2" href="#universal-defaults">Universal defaults</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#component-state-contract">Component state contract</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#composition-examples">Composition examples</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#1-responsive-overview-with-sensible-emphasis">1. Responsive overview with sensible emphasis</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#2-native-get-filter-and-accessible-data-table">2. Native GET filter and accessible data table</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#3-labeled-settings-with-progressive-disclosure">3. Labeled settings with progressive disclosure</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#deliberate-non-defaults">Deliberate non-defaults</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#automated-check-and-review-protocol">Automated check and review protocol</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#what-automated-checks-do-not-prove">What automated checks do not prove</a>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#universal-defaults">Universal defaults</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#component-state-contract">Component state contract</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#composition-examples">Composition examples</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#1-responsive-overview-with-sensible-emphasis">1. Responsive overview with sensible emphasis</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#2-native-get-filter-and-accessible-data-table">2. Native GET filter and accessible data table</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#3-labeled-settings-with-progressive-disclosure">3. Labeled settings with progressive disclosure</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#deliberate-non-defaults">Deliberate non-defaults</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#automated-check-and-review-protocol">Automated check and review protocol</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#what-automated-checks-do-not-prove">What automated checks do not prove</a>
+            </nav>
+          </details>
+        </aside>
+      </div>
+      <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="design-principles.md">Markdown source</a></nav>
+    </main>
+    <footer class="syn-header"><span class="syn-caption">SYNTYR CSS · MIT CORE · EXPERIMENTAL</span><a href="../index.html">Home</a></footer>
+  </div>
+</body>
+</html>

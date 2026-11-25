@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Compare Syntyr CSS with Tailwind, Bootstrap, shadcn/ui, daisyUI, Pico and plain CSS. Explore practical tradeoffs, integration options and release compatibility.">
+  <meta name="syntyr-source-sha256" content="a3897909ee8d15da445fcc32883a41616f271e1fa377fd7254258ff75c048c05">
+  <meta name="theme-color" content="#f5f7fb">
+  <title>Syntyr Alternatives | Compare CSS &amp; UI Libraries</title>
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Syntyr Alternatives | Compare CSS &amp; UI Libraries">
+  <meta property="og:description" content="Compare Syntyr CSS with Tailwind, Bootstrap, shadcn/ui, daisyUI, Pico and plain CSS. Explore practical tradeoffs, integration options and release compatibility.">
+  <meta property="og:url" content="https://syntyr-css.pages.dev/docs/compare">
+  <meta property="og:image" content="https://syntyr-css.pages.dev/assets/og-syntyr.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://syntyr-css.pages.dev/docs/compare">
+  <link rel="alternate" type="text/markdown" href="compare.md" title="Markdown source">
+  <link rel="icon" href="../assets/syntyr-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="docs.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <a class="syn-button docs-skip" href="#doc-main">Skip to guide</a>
+  <div class="syn-shell">
+    <header class="syn-header docs-header">
+      <a class="syn-logo" href="../index.html">SYNTYR / CSS</a>
+      <nav class="syn-nav" aria-label="Documentation navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav>
+      <details class="site-mobile-menu"><summary>Menu</summary><nav aria-label="Mobile navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav></details>
+    </header>
+    <main id="doc-main" class="docs-article-page">
+      <nav class="syn-breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="reference.html">Documentation</a></li><li aria-current="page">Syntyr CSS alternatives: compare Tailwind, Bootstrap, shadcn/ui and more</li></ol></nav>
+      <header class="docs-article-heading">
+        <p class="syn-eyebrow">SYNTYR / DOCUMENTATION</p>
+        <p class="syn-muted">Current source documentation may describe unreleased alpha.5 features. <a href="distribution.html">Check released version compatibility.</a></p>
+        <p class="syn-caption">Prefer a machine-readable version? <a href="compare.md">Markdown source</a> · <a href="../llms.txt">LLM index</a></p>
+      </header>
+      <div class="docs-article-layout">
+        <article class="docs-prose" aria-label="Syntyr CSS alternatives: compare Tailwind, Bootstrap, shadcn/ui and more">
+<h1 id="syntyr-css-alternatives-compare-tailwind-bootstrap-shadcnui-and-more">Syntyr CSS alternatives: compare Tailwind, Bootstrap, shadcn/ui and more</h1>
+<p>Deciding between CSS frameworks and UI component libraries? Syntyr emphasizes scoped semantic HTML, ready-to-use component styling, design tokens and zero required runtime JavaScript. The right choice depends on your project's styling, interaction and delivery constraints—not a universal performance ranking.</p>
+<p><strong>Release boundary:</strong> Syntyr v0.3.0-alpha.4 is the published release. Some recipes and semantic convenience bundles documented from the alpha.5 source tree are <strong>unreleased</strong>. Review the <a href="distribution.html">distribution guide</a> before evaluating a feature.</p>
+<h2 id="syntyr-vs-popular-css-and-ui-libraries">Syntyr vs popular CSS and UI libraries</h2>
+<table>
+<thead>
+<tr>
+<th>Alternative</th>
+<th>Best at</th>
+<th>What Syntyr emphasizes instead</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="compare-tailwind.html">Tailwind CSS</a></td>
+<td>Utility-first styling and granular composition</td>
+<td>Ready-to-use <code>syn-*</code> components and scoped tokens</td>
+</tr>
+<tr>
+<td><a href="compare-bootstrap.html">Bootstrap</a></td>
+<td>Mature conventions, templates and optional JS plugins</td>
+<td>CSS-first design and browser-native enhancement</td>
+</tr>
+<tr>
+<td><a href="compare-shadcn.html">shadcn/ui</a></td>
+<td>Editable source-owned, interactive React components</td>
+<td>HTML/CSS primitives that work with any renderer</td>
+</tr>
+<tr>
+<td><a href="compare-daisyui.html">daisyUI</a></td>
+<td>Themed semantic components with Tailwind integration or standalone CSS</td>
+<td>Scoped design tokens and a separate native-HTML component contract</td>
+</tr>
+<tr>
+<td><a href="compare-pico.html">Pico CSS</a></td>
+<td>Minimal semantic and classless page styles</td>
+<td>Scoped opt-in styling and more application-oriented compositions</td>
+</tr>
+<tr>
+<td><a href="compare-native-css.html">Plain CSS</a></td>
+<td>Maximum flexibility with no library dependency</td>
+<td>A reusable style contract across repeated screens</td>
+</tr>
+</tbody>
+</table>
+<p>These are different kinds of tools: Tailwind is a utility framework; shadcn/ui is a component distribution model; daisyUI can integrate with Tailwind or ship as standalone CSS; and CSS itself is the browser language. They are not interchangeable on every axis.</p>
+<h2 id="which-approach-fits-your-project">Which approach fits your project?</h2>
+<p><strong>Choose Syntyr</strong> for a multi-page SaaS interface, server-rendered application or static site where consistent styling, semantic HTML and simple distribution matter more than a headless widget runtime.</p>
+<p><strong>Choose Tailwind</strong> when your team prefers utility-first styling. <strong>Choose daisyUI</strong> for its themed component classes, either within a Tailwind build or using its prebuilt CDN styles without Tailwind. Neither needs a JavaScript widget runtime just to display CSS.</p>
+<p><strong>Choose Bootstrap</strong> for conventional ready-made responsive components, plentiful examples and a longstanding ecosystem. <strong>Choose shadcn/ui</strong> when rich interactive React components that you own and edit are the main need.</p>
+<p><strong>Choose plain CSS</strong> when the interface is small, unique, and an additional design system would be more maintenance than value.</p>
+<h2 id="does-syntyr-need-javascript">Does Syntyr need JavaScript?</h2>
+<p>Not for its styling. Native <code>&lt;details&gt;</code>, forms and links work through browser behavior, while application state and complex interactions remain the host application's responsibility. Other CSS-first libraries can also avoid runtime JavaScript for styling. Don't equate <em>no required Syntyr JavaScript</em> with <em>a complete application without JavaScript</em>.</p>
+<h2 id="how-to-test-syntyr-before-migrating">How to test Syntyr before migrating</h2>
+<ol>
+<li>Follow the <a href="distribution.html">pinned installation guide</a> and start with a single page or component region.</li>
+<li>Set <code>class=&quot;syn-root&quot;</code> on the styled region and use the published classes from the <a href="catalog.html">catalog</a>.</li>
+<li>Verify responsive behavior, contrast, keyboard flows, host framework compatibility and actual transferred CSS.</li>
+<li>Only then consider replacing existing styles. An incremental migration is safer than a global rewrite.</li>
+</ol>
+<p>Read the <a href="faq.html">frequently asked questions</a>, <a href="components.html">Syntyr component reference</a>, and <a href="framework-integrations.html">framework integrations</a>. All comparisons are editorial guides, not measured superiority claims.</p>
+        </article>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+<a class="docs-article-toc-link docs-article-toc-2" href="#syntyr-vs-popular-css-and-ui-libraries">Syntyr vs popular CSS and UI libraries</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#which-approach-fits-your-project">Which approach fits your project?</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#does-syntyr-need-javascript">Does Syntyr need JavaScript?</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#how-to-test-syntyr-before-migrating">How to test Syntyr before migrating</a>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#syntyr-vs-popular-css-and-ui-libraries">Syntyr vs popular CSS and UI libraries</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#which-approach-fits-your-project">Which approach fits your project?</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#does-syntyr-need-javascript">Does Syntyr need JavaScript?</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#how-to-test-syntyr-before-migrating">How to test Syntyr before migrating</a>
+            </nav>
+          </details>
+        </aside>
+      </div>
+      <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="compare.md">Markdown source</a></nav>
+    </main>
+    <footer class="syn-header"><span class="syn-caption">SYNTYR CSS · MIT CORE · EXPERIMENTAL</span><a href="../index.html">Home</a></footer>
+  </div>
+</body>
+</html>

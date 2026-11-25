@@ -7,79 +7,167 @@
       "values": [
         {
           "name": "syn-actions",
-          "description": "Syntyr CSS class (components/buttons.css)."
+          "description": "Flexibly spaced action buttons or links; actions still need native behavior."
         },
         {
           "name": "syn-activity-list",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Activity list presentation in the recipes.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-activity-timeline",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Activity timeline presentation in the recipes.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-alert",
-          "description": "Syntyr CSS class (components/typography.css)."
+          "description": "Inline informational or status notice; write the message in readable text."
         },
         {
           "name": "syn-alert--danger",
-          "description": "Syntyr CSS class (components/typography.css)."
+          "description": "Danger-state variant of a text-based alert."
+        },
+        {
+          "name": "syn-alert--success",
+          "description": "Success-state variant of a text-based alert."
+        },
+        {
+          "name": "syn-alert--warning",
+          "description": "Warning-state variant of a text-based alert."
+        },
+        {
+          "name": "syn-animate--loop",
+          "description": "Loop appearance variant of the animate component; see motion.css for styles."
         },
         {
           "name": "syn-app-card",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "App card presentation in the recipes.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-app-card-header",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "App card header presentation in the recipes.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-app-nav",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Navigation region styling for an application workspace."
         },
         {
           "name": "syn-app-rail",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "App rail presentation in the recipes.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-app-shell",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Application shell layout for navigation and main content."
         },
         {
           "name": "syn-app-topbar",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "App topbar presentation in the recipes.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-ascii",
-          "description": "Syntyr CSS class (symbols.css)."
+          "description": "Ascii presentation in the symbols.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-ascii--accent",
-          "description": "Syntyr CSS class (symbols.css)."
+          "description": "Accent appearance variant of the ascii component; see symbols.css for styles."
+        },
+        {
+          "name": "syn-ascii--banner",
+          "description": "Banner appearance variant of the ascii component; see ascii.css for styles."
+        },
+        {
+          "name": "syn-ascii--compact",
+          "description": "Compact appearance variant of the ascii component; see ascii.css for styles."
+        },
+        {
+          "name": "syn-ascii--cursor",
+          "description": "Cursor appearance variant of the ascii component; see ascii.css for styles."
+        },
+        {
+          "name": "syn-ascii--decode",
+          "description": "Decode appearance variant of the ascii component; see ascii.css for styles."
+        },
+        {
+          "name": "syn-ascii--dither",
+          "description": "Dither appearance variant of the ascii component; see ascii.css for styles."
+        },
+        {
+          "name": "syn-ascii--gradient",
+          "description": "Gradient appearance variant of the ascii component; see ascii.css for styles."
+        },
+        {
+          "name": "syn-ascii--loader",
+          "description": "Loader appearance variant of the ascii component; see ascii.css for styles."
         },
         {
           "name": "syn-ascii--muted",
-          "description": "Syntyr CSS class (symbols.css)."
+          "description": "Muted appearance variant of the ascii component; see symbols.css for styles."
+        },
+        {
+          "name": "syn-ascii--phosphor",
+          "description": "Phosphor appearance variant of the ascii component; see ascii.css for styles."
+        },
+        {
+          "name": "syn-ascii--rain",
+          "description": "Rain appearance variant of the ascii component; see ascii.css for styles."
+        },
+        {
+          "name": "syn-ascii--scan",
+          "description": "Scan appearance variant of the ascii component; see ascii.css for styles."
+        },
+        {
+          "name": "syn-ascii--typewriter",
+          "description": "Typewriter appearance variant of the ascii component; see ascii.css for styles."
+        },
+        {
+          "name": "syn-ascii--wave",
+          "description": "Wave appearance variant of the ascii component; see ascii.css for styles."
         },
         {
           "name": "syn-atmosphere",
-          "description": "Syntyr CSS class (effects.css)."
+          "description": "Atmosphere presentation in the effects.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-avatar",
+          "description": "Compact avatar presentation; provide meaningful image alternatives."
+        },
+        {
+          "name": "syn-avatar--lg",
+          "description": "Large-size variant of avatar presentation."
+        },
+        {
+          "name": "syn-avatar--sm",
+          "description": "Small-size variant of avatar presentation."
+        },
+        {
+          "name": "syn-avatar-stack",
+          "description": "Avatar stack presentation in the components/patterns.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-badge",
-          "description": "Syntyr CSS class (components/typography.css)."
+          "description": "Compact status or category label; do not rely on color alone."
         },
         {
           "name": "syn-badge--accent",
-          "description": "Syntyr CSS class (components/typography.css)."
+          "description": "Accent-emphasis variant of a badge or status label."
+        },
+        {
+          "name": "syn-bento-card--wide",
+          "description": "Span two bento tracks only when the parent container has enough room."
+        },
+        {
+          "name": "syn-bento-grid",
+          "description": "Optional container-aware card grid for responsive feature compositions."
         },
         {
           "name": "syn-body",
-          "description": "Syntyr CSS class (components/typography.css)."
+          "description": "Body presentation in the components/typography.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-breadcrumbs",
-          "description": "Syntyr CSS class (components/patterns.css)."
+          "description": "Breadcrumb navigation styling; use a real navigation list."
+        },
+        {
+          "name": "syn-bulk-actions",
+          "description": "Bulk actions presentation in the recipes.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-button",
@@ -87,15 +175,19 @@
         },
         {
           "name": "syn-button--danger",
-          "description": "Syntyr CSS class (components/buttons.css)."
+          "description": "Danger-emphasis variant for destructive actions; confirmation is host-owned."
         },
         {
           "name": "syn-button--ghost",
-          "description": "Syntyr CSS class (components/buttons.css)."
+          "description": "Low-emphasis ghost button appearance for native buttons or links."
+        },
+        {
+          "name": "syn-button--icon",
+          "description": "Icon-only button variant; provide an accessible name."
         },
         {
           "name": "syn-button--outline",
-          "description": "Syntyr CSS class (components/buttons.css)."
+          "description": "Outlined button variant for secondary actions."
         },
         {
           "name": "syn-button--primary",
@@ -103,175 +195,407 @@
         },
         {
           "name": "syn-button--small",
-          "description": "Syntyr CSS class (components/buttons.css)."
+          "description": "Compact-size button variant; preserve accessible interaction targets."
+        },
+        {
+          "name": "syn-button-group",
+          "description": "Grouped buttons or action links; each retains native semantics."
         },
         {
           "name": "syn-caption",
-          "description": "Syntyr CSS class (components/typography.css)."
+          "description": "Secondary caption text for supporting context."
         },
         {
           "name": "syn-cell--nowrap",
-          "description": "Syntyr CSS class (components/data.css)."
+          "description": "Nowrap appearance variant of the cell component; see components/data.css for styles."
         },
         {
           "name": "syn-cell--numeric",
-          "description": "Syntyr CSS class (components/data.css)."
+          "description": "Numeric appearance variant of the cell component; see components/data.css for styles."
         },
         {
           "name": "syn-cell--wrap",
-          "description": "Syntyr CSS class (components/data.css)."
+          "description": "Wrap appearance variant of the cell component; see components/data.css for styles."
+        },
+        {
+          "name": "syn-change-after",
+          "description": "Updated or added revision value with visible text label."
+        },
+        {
+          "name": "syn-change-before",
+          "description": "Previous or removed revision value with visible text label."
+        },
+        {
+          "name": "syn-change-pair",
+          "description": "Responsive before/after value pair for existing semantic record fields."
         },
         {
           "name": "syn-chart",
-          "description": "Syntyr CSS class (viz.css)."
+          "description": "Chart presentation in the viz.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-chart-axis",
-          "description": "Syntyr CSS class (viz.css)."
+          "description": "Chart axis presentation in the viz.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-chart-grid",
-          "description": "Syntyr CSS class (viz.css)."
+          "description": "Chart grid presentation in the viz.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-chart-key",
-          "description": "Syntyr CSS class (viz.css)."
+          "description": "Chart key presentation in the viz.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-chart-legend",
-          "description": "Syntyr CSS class (viz.css)."
+          "description": "Chart legend presentation in the viz.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-chart-legend-item",
-          "description": "Syntyr CSS class (viz.css)."
+          "description": "Chart legend item presentation in the viz.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-chart-title",
-          "description": "Syntyr CSS class (viz.css)."
+          "description": "Chart title presentation in the viz.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-chart-tooltip",
-          "description": "Syntyr CSS class (viz.css)."
+          "description": "Chart tooltip presentation in the viz.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-check",
-          "description": "Syntyr CSS class (components/forms.css)."
+          "description": "Inline label layout for native checkbox or radio inputs; state remains native."
+        },
+        {
+          "name": "syn-chip",
+          "description": "Compact metadata chip or filter label; state is host-owned."
+        },
+        {
+          "name": "syn-choice-card",
+          "description": "Choice card presentation in the components/patterns.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-code",
-          "description": "Syntyr CSS class (components/typography.css)."
+          "description": "Inline or block code presentation; preserve native code semantics."
         },
         {
           "name": "syn-code-figure",
-          "description": "Syntyr CSS class (native-recipes.css)."
+          "description": "Code figure presentation in the native-recipes.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-code-scroll",
+          "description": "Code scroll presentation in the components/data.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-collection-actions",
+          "description": "Collection actions presentation in the recipes.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-collection-toolbar",
+          "description": "Collection toolbar presentation in the recipes.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-command-description",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Command description presentation in the recipes.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-command-group",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Command group presentation in the recipes.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-command-group-label",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Command group label presentation in the recipes.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-command-key",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Command key presentation in the recipes.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-command-panel",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Command panel presentation in the recipes.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-command-row",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Command row presentation in the recipes.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-command-search",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Command search presentation in the recipes.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-cta-band",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Cta band presentation in the recipes.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-data-grid",
+          "description": "Enterprise data-grid presentation; selection, sorting and virtualization are host-owned."
+        },
+        {
+          "name": "syn-data-grid__cell",
+          "description": "Data-grid cell part; use the data-grid structure and accessible row semantics."
+        },
+        {
+          "name": "syn-data-grid__cell--numeric",
+          "description": "Cell part of the data grid component with numeric styling; see data-grid.css for markup."
+        },
+        {
+          "name": "syn-data-grid__cell-text",
+          "description": "Cell text part of the data grid component; see data-grid.css for markup."
+        },
+        {
+          "name": "syn-data-grid__columnheader",
+          "description": "Column-header part of a data grid; real sorting is host-owned."
+        },
+        {
+          "name": "syn-data-grid__editor",
+          "description": "Editor part of the data grid component; see data-grid.css for markup."
+        },
+        {
+          "name": "syn-data-grid__footer",
+          "description": "Footer part of the data grid component; see data-grid.css for markup."
+        },
+        {
+          "name": "syn-data-grid__header",
+          "description": "Header part of the data grid component; see data-grid.css for markup."
+        },
+        {
+          "name": "syn-data-grid__header-row",
+          "description": "Header row part of the data grid component; see data-grid.css for markup."
+        },
+        {
+          "name": "syn-data-grid__loading",
+          "description": "Loading part of the data grid component; see data-grid.css for markup."
+        },
+        {
+          "name": "syn-data-grid__row",
+          "description": "Data-grid row part; keyboard behavior and selection are host-owned."
+        },
+        {
+          "name": "syn-data-grid__status",
+          "description": "Status part of the data grid component; see data-grid.css for markup."
+        },
+        {
+          "name": "syn-data-grid__toolbar",
+          "description": "Toolbar part of the data grid component; see data-grid.css for markup."
+        },
+        {
+          "name": "syn-data-grid__viewport",
+          "description": "Viewport part of the data grid component; see data-grid.css for markup."
         },
         {
           "name": "syn-defer-section",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Defer section presentation in the recipes.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-detail-aside",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Detail aside presentation in the recipes.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-detail-layout",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Detail layout presentation in the recipes.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-detail-main",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Detail main presentation in the recipes.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-details",
-          "description": "Syntyr CSS class (components/overlays.css)."
+          "description": "Native details/summary disclosure styling; use real HTML details."
         },
         {
           "name": "syn-dialog",
-          "description": "Syntyr CSS class (components/overlays.css)."
+          "description": "Native dialog presentation; opening and focus behavior are browser/host-owned."
         },
         {
           "name": "syn-dialog--transition",
-          "description": "Syntyr CSS class (motion.css)."
+          "description": "Transition appearance variant of the dialog component; see motion.css for styles."
         },
         {
           "name": "syn-display",
-          "description": "Syntyr CSS class (components/typography.css)."
+          "description": "Large display typography for prominent page headings."
+        },
+        {
+          "name": "syn-divider-label",
+          "description": "Divider label presentation in the components/patterns.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-dropdown",
+          "description": "Dropdown presentation in the components/overlays.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-dropdown__group-label",
+          "description": "Group label part of the dropdown component; see components/overlays.css for markup."
+        },
+        {
+          "name": "syn-dropdown__item",
+          "description": "Item part of the dropdown component; see components/overlays.css for markup."
+        },
+        {
+          "name": "syn-dropdown__separator",
+          "description": "Separator part of the dropdown component; see components/overlays.css for markup."
+        },
+        {
+          "name": "syn-dropdown__shortcut",
+          "description": "Shortcut part of the dropdown component; see components/overlays.css for markup."
+        },
+        {
+          "name": "syn-email-body",
+          "description": "Email body presentation in the email.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-email-code",
+          "description": "Email code presentation in the email.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-email-compose",
+          "description": "Email compose presentation in the email.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-email-inbox",
+          "description": "Email inbox presentation in the email.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-email-item",
+          "description": "Email item presentation in the email.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-email-layout",
+          "description": "Email layout presentation in the email.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-email-main",
+          "description": "Email main presentation in the email.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-email-message",
+          "description": "Email message presentation in the email.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-email-message-header",
+          "description": "Email message header presentation in the email.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-email-meta",
+          "description": "Email meta presentation in the email.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-email-preferences",
+          "description": "Email preferences presentation in the email.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-email-preview",
+          "description": "Email preview presentation in the email.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-email-recipient-list",
+          "description": "Email recipient list presentation in the email.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-email-sidebar",
+          "description": "Email sidebar presentation in the email.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-email-signup",
+          "description": "Email signup presentation in the email.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-email-subject",
+          "description": "Email subject presentation in the email.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-email-time",
+          "description": "Email time presentation in the email.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-email-workspace",
+          "description": "Email workspace presentation in the email.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-empty",
-          "description": "Syntyr CSS class (components/patterns.css)."
+          "description": "Empty-state content presentation; provide meaningful guidance or recovery actions."
         },
         {
           "name": "syn-error",
-          "description": "Syntyr CSS class (components/forms.css)."
+          "description": "Visible form error text; associate with the relevant form control."
+        },
+        {
+          "name": "syn-error-summary",
+          "description": "Form validation summary presentation; host provides actual errors and focus."
+        },
+        {
+          "name": "syn-evidence-actions",
+          "description": "Evidence actions presentation in the recipes.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-evidence-body",
+          "description": "Evidence body presentation in the recipes.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-evidence-card",
+          "description": "Semantic figure-based evidence review presentation with captions and metadata, not a media viewer."
+        },
+        {
+          "name": "syn-evidence-grid",
+          "description": "Evidence grid presentation in the recipes.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-evidence-media",
+          "description": "Evidence media presentation in the recipes.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-evidence-media--placeholder",
+          "description": "Placeholder appearance variant of the evidence media component; see recipes.css for styles."
+        },
+        {
+          "name": "syn-evidence-meta",
+          "description": "Evidence meta presentation in the recipes.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-eyebrow",
-          "description": "Syntyr CSS class (components/typography.css)."
+          "description": "Eyebrow presentation in the components/typography.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-feature-card",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Feature card presentation in the recipes.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-feature-grid",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Feature grid presentation in the recipes.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-feature-list",
-          "description": "Syntyr CSS class (components/patterns.css)."
+          "description": "Feature list presentation in the components/patterns.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-field",
-          "description": "Syntyr CSS class (components/form-composition.css)."
+          "description": "Form field group for a native control, label, and optional help or error text."
         },
         {
           "name": "syn-field--floating",
-          "description": "Syntyr CSS class (native-recipes.css)."
+          "description": "Floating appearance variant of the field component; see native-recipes.css for styles."
         },
         {
           "name": "syn-field-body",
-          "description": "Syntyr CSS class (components/form-composition.css)."
+          "description": "Field body presentation in the components/form-composition.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-field-row",
-          "description": "Syntyr CSS class (components/form-composition.css)."
+          "description": "Responsive row composition for related form fields."
         },
         {
           "name": "syn-fieldset",
-          "description": "Syntyr CSS class (components/forms.css)."
+          "description": "Native fieldset styling; retain a meaningful legend."
+        },
+        {
+          "name": "syn-file-item",
+          "description": "File queue entry with host-owned queued, uploading, complete or failed state."
+        },
+        {
+          "name": "syn-file-item-header",
+          "description": "Flexible file name and visible status header for queue entries."
+        },
+        {
+          "name": "syn-file-queue",
+          "description": "Optional ordered file lifecycle list; not an upload engine."
         },
         {
           "name": "syn-filter-actions",
@@ -282,36 +606,48 @@
           "description": "Optional wrapping CRM GET filter form; host applies query parameters."
         },
         {
+          "name": "syn-filter-choices",
+          "description": "Filter choices presentation in the components/patterns.css module; use semantic HTML and consult its component example."
+        },
+        {
           "name": "syn-filter-field",
           "description": "Label and control group in an optional CRM filter bar."
         },
         {
           "name": "syn-filter-field--query",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Query appearance variant of the filter field component; see recipes.css for styles."
         },
         {
           "name": "syn-floating-label",
-          "description": "Syntyr CSS class (native-recipes.css)."
+          "description": "Floating label appearance; keep the input's accessible label."
         },
         {
           "name": "syn-flow",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Flow presentation in the recipes.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-fluid-display",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Fluid display presentation in the recipes.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-fluid-lede",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Fluid lede presentation in the recipes.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-form",
-          "description": "Syntyr CSS class (components/forms.css)."
+          "description": "Consistent spacing and structure for semantic HTML forms."
+        },
+        {
+          "name": "syn-form-actions",
+          "description": "Form submit/cancel action layout; server validation remains host-owned."
+        },
+        {
+          "name": "syn-form-actions__buttons",
+          "description": "Buttons part of the form actions component; see recipes.css for markup."
         },
         {
           "name": "syn-frame",
-          "description": "Syntyr CSS class (geometry.css)."
+          "description": "Frame presentation in the geometry.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-frame--accent",
@@ -319,15 +655,15 @@
         },
         {
           "name": "syn-frame--bevel",
-          "description": "Syntyr CSS class (geometry.css)."
+          "description": "Bevel appearance variant of the frame component; see geometry.css for styles."
         },
         {
           "name": "syn-frame--bracket",
-          "description": "Syntyr CSS class (geometry.css)."
+          "description": "Bracket appearance variant of the frame component; see geometry.css for styles."
         },
         {
           "name": "syn-frame--circuit",
-          "description": "Syntyr CSS class (geometry.css)."
+          "description": "Circuit appearance variant of the frame component; see geometry.css for styles."
         },
         {
           "name": "syn-frame--facet",
@@ -335,27 +671,115 @@
         },
         {
           "name": "syn-frame--industrial",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Industrial appearance variant of the frame component; see recipes.css for styles."
         },
         {
           "name": "syn-frame--inset",
-          "description": "Syntyr CSS class (geometry.css)."
+          "description": "Inset appearance variant of the frame component; see geometry.css for styles."
         },
         {
           "name": "syn-frame--notch",
-          "description": "Syntyr CSS class (geometry.css)."
+          "description": "Notch appearance variant of the frame component; see geometry.css for styles."
         },
         {
           "name": "syn-frame--precision",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Precision appearance variant of the frame component; see recipes.css for styles."
         },
         {
           "name": "syn-frame--soft",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Soft appearance variant of the frame component; see recipes.css for styles."
         },
         {
           "name": "syn-frame--step",
           "description": "Optional square-stepped top-right and bottom-left frame."
+        },
+        {
+          "name": "syn-geo-attribution",
+          "description": "Optional attribution surface; preserve map provider credits."
+        },
+        {
+          "name": "syn-geo-bottom",
+          "description": "Geo bottom presentation in the geo.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-geo-callout",
+          "description": "Geo callout presentation in the geo.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-geo-cluster",
+          "description": "Geo cluster presentation in the geo.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-geo-control",
+          "description": "Geo control presentation in the geo.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-geo-control-group",
+          "description": "Geo control group presentation in the geo.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-geo-controls",
+          "description": "Geo controls presentation in the geo.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-geo-data-list",
+          "description": "Geo data list presentation in the geo.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-geo-layer-list",
+          "description": "Geo layer list presentation in the geo.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-geo-legend",
+          "description": "Readable, labeled map legend; host must provide layer semantics."
+        },
+        {
+          "name": "syn-geo-legend-list",
+          "description": "Geo legend list presentation in the geo.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-geo-legend-title",
+          "description": "Geo legend title presentation in the geo.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-geo-map",
+          "description": "Map renderer mount surface; actual projection and map behavior belong to host."
+        },
+        {
+          "name": "syn-geo-marker",
+          "description": "44px visual marker target; renderer-managed marker positions stay renderer-managed."
+        },
+        {
+          "name": "syn-geo-marker-layer",
+          "description": "Static diagram overlay for percentage-positioned markers, not for renderer-managed markers."
+        },
+        {
+          "name": "syn-geo-overlay",
+          "description": "Pointer-transparent overlay for application-owned map controls and legends."
+        },
+        {
+          "name": "syn-geo-scale",
+          "description": "Scale presentation; actual scale and bar width require a real map renderer."
+        },
+        {
+          "name": "syn-geo-shell",
+          "description": "Named CSS container for map-based workspace layouts; use with core plus optional geo CSS."
+        },
+        {
+          "name": "syn-geo-sidebar",
+          "description": "Geo sidebar presentation in the geo.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-geo-swatch",
+          "description": "Geo swatch presentation in the geo.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-geo-viewport",
+          "description": "Geo viewport presentation in the geo.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-geo-workspace",
+          "description": "Responsive GIS sidebar plus map viewport; stacks based on container width."
         },
         {
           "name": "syn-glow",
@@ -363,7 +787,7 @@
         },
         {
           "name": "syn-gradient-wash",
-          "description": "Syntyr CSS class (effects.css)."
+          "description": "Gradient wash presentation in the effects.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-grid",
@@ -371,107 +795,335 @@
         },
         {
           "name": "syn-grid-effect",
-          "description": "Syntyr CSS class (effects.css)."
+          "description": "Grid effect presentation in the effects.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-header",
-          "description": "Syntyr CSS class (components/layout.css)."
+          "description": "Header presentation in the components/layout.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-heading",
-          "description": "Syntyr CSS class (components/typography.css)."
+          "description": "Default component or card heading typography."
         },
         {
           "name": "syn-help",
-          "description": "Syntyr CSS class (components/forms.css)."
+          "description": "Supporting form help text; connect it with aria-describedby where appropriate."
         },
         {
           "name": "syn-horizon",
-          "description": "Syntyr CSS class (effects.css)."
+          "description": "Horizon presentation in the effects.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-icon",
-          "description": "Syntyr CSS class (symbols.css)."
+          "description": "Icon presentation in the symbols.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-icon--bounce",
+          "description": "Bounce appearance variant of the icon component; see symbols.css for styles."
+        },
+        {
+          "name": "syn-icon--flash",
+          "description": "Flash appearance variant of the icon component; see symbols.css for styles."
+        },
+        {
+          "name": "syn-icon--flip",
+          "description": "Flip appearance variant of the icon component; see symbols.css for styles."
+        },
+        {
+          "name": "syn-icon--float",
+          "description": "Float appearance variant of the icon component; see symbols.css for styles."
+        },
+        {
+          "name": "syn-icon--heartbeat",
+          "description": "Heartbeat appearance variant of the icon component; see symbols.css for styles."
+        },
+        {
+          "name": "syn-icon--nudge-left",
+          "description": "Nudge left appearance variant of the icon component; see symbols.css for styles."
+        },
+        {
+          "name": "syn-icon--nudge-right",
+          "description": "Nudge right appearance variant of the icon component; see symbols.css for styles."
+        },
+        {
+          "name": "syn-icon--on-interact",
+          "description": "On interact appearance variant of the icon component; see symbols.css for styles."
+        },
+        {
+          "name": "syn-icon--ping",
+          "description": "Ping appearance variant of the icon component; see symbols.css for styles."
+        },
+        {
+          "name": "syn-icon--pop",
+          "description": "Pop appearance variant of the icon component; see symbols.css for styles."
+        },
+        {
+          "name": "syn-icon--pulse",
+          "description": "Pulse appearance variant of the icon component; see symbols.css for styles."
+        },
+        {
+          "name": "syn-icon--shake",
+          "description": "Shake appearance variant of the icon component; see symbols.css for styles."
+        },
+        {
+          "name": "syn-icon--spin",
+          "description": "Spin appearance variant of the icon component; see symbols.css for styles."
+        },
+        {
+          "name": "syn-icon--swing",
+          "description": "Swing appearance variant of the icon component; see symbols.css for styles."
+        },
+        {
+          "name": "syn-icon--wiggle",
+          "description": "Wiggle appearance variant of the icon component; see symbols.css for styles."
+        },
+        {
+          "name": "syn-image-gallery",
+          "description": "Image gallery presentation in the components/patterns.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-inline",
-          "description": "Syntyr CSS class (components/layout.css)."
+          "description": "Inline, wrapping layout for small groups of peers."
         },
         {
           "name": "syn-input",
-          "description": "Syntyr CSS class (components/forms.css)."
+          "description": "Native form input styling; use a real input with an associated label."
         },
         {
           "name": "syn-input-addon",
-          "description": "Syntyr CSS class (components/form-composition.css)."
+          "description": "Input addon presentation in the components/form-composition.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-input-group",
-          "description": "Syntyr CSS class (components/form-composition.css)."
+          "description": "Input and addon grouping; form behavior remains native or host-owned."
         },
         {
           "name": "syn-kpi-grid",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Responsive grid of key performance indicator cards or metrics."
         },
         {
           "name": "syn-label",
-          "description": "Syntyr CSS class (components/forms.css)."
+          "description": "Visible form label styling; use native label/for association."
         },
         {
           "name": "syn-layout",
-          "description": "Syntyr CSS class (components/layout.css)."
+          "description": "Responsive multi-column layout with token-configurable minimum widths."
         },
         {
           "name": "syn-lede",
-          "description": "Syntyr CSS class (components/typography.css)."
+          "description": "Lead paragraph typography beneath a heading."
+        },
+        {
+          "name": "syn-list",
+          "description": "Scoped native bullet or numbered list for core-only consumers."
+        },
+        {
+          "name": "syn-list--accent",
+          "description": "Accent-colored top-level list markers; native numbering preserved."
+        },
+        {
+          "name": "syn-list--compact",
+          "description": "Reduced vertical item rhythm for native list content."
+        },
+        {
+          "name": "syn-list-group",
+          "description": "Grouped markerless navigation or collection list; keep list semantics."
+        },
+        {
+          "name": "syn-list-row",
+          "description": "List row presentation in the components/patterns.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-list-row__actions",
+          "description": "Actions part of the list row component; see components/patterns.css for markup."
+        },
+        {
+          "name": "syn-list-row__body",
+          "description": "Body part of the list row component; see components/patterns.css for markup."
+        },
+        {
+          "name": "syn-list-row__media",
+          "description": "Media part of the list row component; see components/patterns.css for markup."
         },
         {
           "name": "syn-logo",
-          "description": "Syntyr CSS class (components/typography.css)."
+          "description": "Logo presentation in the components/typography.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-logo-marquee",
+          "description": "Logo marquee presentation in the motion.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-logo-marquee__group",
+          "description": "Group part of the logo marquee component; see motion.css for markup."
+        },
+        {
+          "name": "syn-logo-marquee__row",
+          "description": "Row part of the logo marquee component; see motion.css for markup."
+        },
+        {
+          "name": "syn-logo-marquee__track",
+          "description": "Track part of the logo marquee component; see motion.css for markup."
+        },
+        {
+          "name": "syn-logo-marquee__wordmark",
+          "description": "Wordmark part of the logo marquee component; see motion.css for markup."
+        },
+        {
+          "name": "syn-media-card",
+          "description": "Media card presentation in the media.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-media-card__action",
+          "description": "Action part of the media card component; see media.css for markup."
+        },
+        {
+          "name": "syn-media-card__badge",
+          "description": "Badge part of the media card component; see media.css for markup."
+        },
+        {
+          "name": "syn-media-card__link",
+          "description": "Link part of the media card component; see media.css for markup."
+        },
+        {
+          "name": "syn-media-card__meta",
+          "description": "Meta part of the media card component; see media.css for markup."
+        },
+        {
+          "name": "syn-media-card__title",
+          "description": "Title part of the media card component; see media.css for markup."
+        },
+        {
+          "name": "syn-media-card__visual",
+          "description": "Visual part of the media card component; see media.css for markup."
+        },
+        {
+          "name": "syn-media-figure",
+          "description": "Media figure presentation in the components/patterns.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-media-hero",
+          "description": "Media hero presentation in the media.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-media-hero__actions",
+          "description": "Actions part of the media hero component; see media.css for markup."
+        },
+        {
+          "name": "syn-media-hero__content",
+          "description": "Content part of the media hero component; see media.css for markup."
+        },
+        {
+          "name": "syn-media-hero__description",
+          "description": "Description part of the media hero component; see media.css for markup."
+        },
+        {
+          "name": "syn-media-hero__eyebrow",
+          "description": "Eyebrow part of the media hero component; see media.css for markup."
+        },
+        {
+          "name": "syn-media-hero__title",
+          "description": "Title part of the media hero component; see media.css for markup."
+        },
+        {
+          "name": "syn-media-navigation",
+          "description": "Media navigation presentation in the media.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-media-navigation__brand",
+          "description": "Brand part of the media navigation component; see media.css for markup."
+        },
+        {
+          "name": "syn-media-navigation__desktop",
+          "description": "Desktop part of the media navigation component; see media.css for markup."
+        },
+        {
+          "name": "syn-media-navigation__link",
+          "description": "Link part of the media navigation component; see media.css for markup."
+        },
+        {
+          "name": "syn-media-navigation__mobile",
+          "description": "Mobile part of the media navigation component; see media.css for markup."
+        },
+        {
+          "name": "syn-media-rail",
+          "description": "Media rail presentation in the media.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-media-rail--controls",
+          "description": "Opt-in native CSS carousel previous/next buttons; Scroll Snap remains usable without CSS Overflow 5 support."
+        },
+        {
+          "name": "syn-media-rail--markers",
+          "description": "Opt-in native CSS position markers; label each direct child with data-syn-scroll-label."
+        },
+        {
+          "name": "syn-media-search",
+          "description": "Media search presentation in the media.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-media-section",
+          "description": "Media section presentation in the media.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-media-section__heading",
+          "description": "Heading part of the media section component; see media.css for markup."
+        },
+        {
+          "name": "syn-media-shell",
+          "description": "Media shell presentation in the media.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-meter",
-          "description": "Syntyr CSS class (components/data.css)."
+          "description": "Meter presentation in the components/data.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-metric",
-          "description": "Syntyr CSS class (components/typography.css)."
+          "description": "Emphasized numeric or measurement presentation with meaningful text."
         },
         {
           "name": "syn-mono",
-          "description": "Syntyr CSS class (components/typography.css)."
+          "description": "Mono presentation in the components/typography.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-muted",
-          "description": "Syntyr CSS class (components/typography.css)."
+          "description": "Lower-emphasis supporting text; maintain readable contrast."
         },
         {
           "name": "syn-nav",
-          "description": "Syntyr CSS class (components/layout.css)."
+          "description": "Navigation link group styling; use semantic nav and links."
+        },
+        {
+          "name": "syn-nav-tabs",
+          "description": "Tab-like navigation styling; use links for pages, not fake ARIA tabs."
+        },
+        {
+          "name": "syn-operation-feedback",
+          "description": "Optional host-managed operation feedback with truthful state text."
         },
         {
           "name": "syn-page",
-          "description": "Syntyr CSS class (base.css)."
+          "description": "Page presentation in the base.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-page-header",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Page heading and action area layout for applications."
         },
         {
           "name": "syn-page-header__actions",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Actions part of the page header component; see recipes.css for markup."
         },
         {
           "name": "syn-page-header__meta",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Meta part of the page header component; see recipes.css for markup."
         },
         {
           "name": "syn-page-link",
-          "description": "Syntyr CSS class (components/patterns.css)."
+          "description": "Page link presentation in the components/patterns.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-pagination",
-          "description": "Syntyr CSS class (components/patterns.css)."
+          "description": "Pagination link and control presentation; host performs page changes."
         },
         {
           "name": "syn-panel",
@@ -479,11 +1131,11 @@
         },
         {
           "name": "syn-panel--cut",
-          "description": "Syntyr CSS class (components/layout.css)."
+          "description": "Cut appearance variant of the panel component; see components/layout.css for styles."
         },
         {
           "name": "syn-panel--raised",
-          "description": "Syntyr CSS class (components/layout.css)."
+          "description": "Raised-surface visual variant of a panel."
         },
         {
           "name": "syn-pipeline",
@@ -499,47 +1151,47 @@
         },
         {
           "name": "syn-pipeline-list",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Pipeline list presentation in the recipes.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-popover",
-          "description": "Syntyr CSS class (components/overlays.css)."
+          "description": "Native popover presentation; opening, focus and dismissal are host-owned."
         },
         {
           "name": "syn-popover--anchored",
-          "description": "Syntyr CSS class (components/overlays.css)."
+          "description": "Anchored appearance variant of the popover component; see components/overlays.css for styles."
         },
         {
           "name": "syn-popover--transition",
-          "description": "Syntyr CSS class (motion.css)."
+          "description": "Transition appearance variant of the popover component; see motion.css for styles."
         },
         {
           "name": "syn-price-card",
-          "description": "Syntyr CSS class (components/patterns.css)."
+          "description": "Price card presentation in the components/patterns.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-price-value",
-          "description": "Syntyr CSS class (components/patterns.css)."
+          "description": "Price value presentation in the components/patterns.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-pricing",
-          "description": "Syntyr CSS class (components/patterns.css)."
+          "description": "Responsive pricing card composition; commercial data is host-owned."
         },
         {
           "name": "syn-print-hide",
-          "description": "Syntyr CSS class (print.css)."
+          "description": "Print hide presentation in the print.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-prose",
-          "description": "Syntyr CSS class (components/typography.css)."
+          "description": "Readable long-form article typography with scoped content rhythm."
         },
         {
           "name": "syn-reading",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Reading presentation in the recipes.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-reading-progress",
-          "description": "Syntyr CSS class (motion.css)."
+          "description": "Reading progress presentation in the motion.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-record-fields",
@@ -550,96 +1202,148 @@
           "description": "Container query boundary for responsive compositions."
         },
         {
+          "name": "syn-resizable-workspace",
+          "description": "Resizable workspace presentation in the recipes.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-resizable-workspace__pane",
+          "description": "Pane part of the resizable workspace component; see recipes.css for markup."
+        },
+        {
+          "name": "syn-resizable-workspace__panes",
+          "description": "Panes part of the resizable workspace component; see recipes.css for markup."
+        },
+        {
+          "name": "syn-resizable-workspace__separator",
+          "description": "Separator part of the resizable workspace component; see recipes.css for markup."
+        },
+        {
+          "name": "syn-resource-outline",
+          "description": "Resource outline presentation in the native-recipes.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-result-state",
+          "description": "Result state presentation in the recipes.css module; use semantic HTML and consult its component example."
+        },
+        {
           "name": "syn-root",
           "description": "Required style scope for Syntyr components and themes."
         },
         {
           "name": "syn-rule",
-          "description": "Syntyr CSS class (components/typography.css)."
+          "description": "Rule presentation in the components/typography.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-scanlines",
-          "description": "Syntyr CSS class (effects.css)."
+          "description": "Scanlines presentation in the effects.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-scroll-rail",
+          "description": "Optional, keyboard-scrollable card rail with native scroll snapping; host owns any arrow controls or filtering."
         },
         {
           "name": "syn-section-heading",
-          "description": "Syntyr CSS class (components/typography.css)."
+          "description": "Section heading presentation in the components/typography.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-select",
-          "description": "Syntyr CSS class (components/forms.css)."
+          "description": "Native HTML select styling; provide a label and valid options."
+        },
+        {
+          "name": "syn-select--enhanced",
+          "description": "Enhanced appearance variant of the select component; see components/forms.css for styles."
         },
         {
           "name": "syn-semantic",
           "description": "Opt-in styling of native HTML elements."
         },
         {
+          "name": "syn-sheet",
+          "description": "Native popover or dialog side-sheet presentation; browser and host own opening, focus, and close behavior."
+        },
+        {
+          "name": "syn-sheet-body",
+          "description": "Sheet body presentation in the recipes.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-sheet-footer",
+          "description": "Sheet footer presentation in the recipes.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-sheet-header",
+          "description": "Heading and close-action area inside a native sheet."
+        },
+        {
           "name": "syn-shell",
-          "description": "Syntyr CSS class (components/layout.css)."
+          "description": "Constrained page-width container for a whole page or section."
         },
         {
           "name": "syn-showcase",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Showcase presentation in the recipes.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-showcase-copy",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Showcase copy presentation in the recipes.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-showcase-visual",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Showcase visual presentation in the recipes.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-sidebar",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Sidebar navigation or supporting-content layout."
+        },
+        {
+          "name": "syn-sidecar",
+          "description": "Sidecar presentation in the components/layout.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-site-heading",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Site heading presentation in the recipes.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-site-heading--editorial",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Editorial appearance variant of the site heading component; see recipes.css for styles."
         },
         {
           "name": "syn-site-hero",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Site hero presentation in the recipes.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-skeleton",
-          "description": "Syntyr CSS class (components/patterns.css)."
+          "description": "Visual loading placeholder; do not mistake styling for live loading state."
         },
         {
           "name": "syn-skeleton--short",
-          "description": "Syntyr CSS class (components/patterns.css)."
+          "description": "Short appearance variant of the skeleton component; see components/patterns.css for styles."
         },
         {
           "name": "syn-split",
-          "description": "Syntyr CSS class (components/patterns.css)."
+          "description": "Split presentation in the components/patterns.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-stack",
-          "description": "Syntyr CSS class (components/layout.css)."
+          "description": "Vertical layout with consistent, token-configurable spacing."
         },
         {
           "name": "syn-stage",
-          "description": "Syntyr CSS class (components/layout.css)."
+          "description": "Stage presentation in the components/layout.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-stage-header",
-          "description": "Syntyr CSS class (components/layout.css)."
+          "description": "Stage header presentation in the components/layout.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-stat",
-          "description": "Syntyr CSS class (components/patterns.css)."
+          "description": "Single metric with value and explanatory label."
         },
         {
           "name": "syn-stat-label",
-          "description": "Syntyr CSS class (components/patterns.css)."
+          "description": "Stat label presentation in the components/patterns.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-stat-value",
-          "description": "Syntyr CSS class (components/patterns.css)."
+          "description": "Stat value presentation in the components/patterns.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-stats",
@@ -647,163 +1351,207 @@
         },
         {
           "name": "syn-status",
-          "description": "Syntyr CSS class (components/data.css)."
+          "description": "Concise status label; include text independent of color."
         },
         {
           "name": "syn-status--danger",
-          "description": "Syntyr CSS class (components/data.css)."
+          "description": "Danger appearance variant of the status component; see components/data.css for styles."
         },
         {
           "name": "syn-status--success",
-          "description": "Syntyr CSS class (components/data.css)."
+          "description": "Success appearance variant of the status component; see components/data.css for styles."
         },
         {
           "name": "syn-status--warning",
-          "description": "Syntyr CSS class (components/data.css)."
+          "description": "Warning appearance variant of the status component; see components/data.css for styles."
+        },
+        {
+          "name": "syn-step",
+          "description": "Single item in a semantic process or progress sequence."
+        },
+        {
+          "name": "syn-step-detail",
+          "description": "Step detail presentation in the components/patterns.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-step-label",
+          "description": "Step label presentation in the components/patterns.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-steps",
+          "description": "Process sequence layout; status progression is host-owned."
+        },
+        {
+          "name": "syn-steps--vertical",
+          "description": "Vertical appearance variant of the steps component; see components/patterns.css for styles."
         },
         {
           "name": "syn-surface--accent",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Accent appearance variant of the surface component; see recipes.css for styles."
         },
         {
           "name": "syn-surface--floating",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Floating appearance variant of the surface component; see recipes.css for styles."
         },
         {
           "name": "syn-surface--lift",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Lift appearance variant of the surface component; see recipes.css for styles."
         },
         {
           "name": "syn-surface--raised",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Raised appearance variant of the surface component; see recipes.css for styles."
         },
         {
           "name": "syn-surface--recessed",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Recessed appearance variant of the surface component; see recipes.css for styles."
         },
         {
           "name": "syn-switcher",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Switcher presentation in the recipes.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-symbol",
-          "description": "Syntyr CSS class (symbols.css)."
+          "description": "Symbol presentation in the symbols.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-symbol--accent",
-          "description": "Syntyr CSS class (symbols.css)."
+          "description": "Accent appearance variant of the symbol component; see symbols.css for styles."
         },
         {
           "name": "syn-symbol--muted",
-          "description": "Syntyr CSS class (symbols.css)."
+          "description": "Muted appearance variant of the symbol component; see symbols.css for styles."
         },
         {
           "name": "syn-table",
-          "description": "Syntyr CSS class (components/data.css)."
+          "description": "Native HTML table styling; preserve th, scope, and proper headers."
+        },
+        {
+          "name": "syn-table--compact",
+          "description": "Compact-density native table variant."
+        },
+        {
+          "name": "syn-table--readable",
+          "description": "Optional min-width table presentation; use inside a keyboard-focusable syn-table-wrap region for narrow screens."
+        },
+        {
+          "name": "syn-table--sticky",
+          "description": "Sticky-header table presentation; check scroll and reflow behavior."
+        },
+        {
+          "name": "syn-table--striped",
+          "description": "Alternating row background variant for a native table."
         },
         {
           "name": "syn-table-emphasis",
-          "description": "Syntyr CSS class (components/data.css)."
+          "description": "Table emphasis presentation in the components/data.css module; use semantic HTML and consult its component example."
+        },
+        {
+          "name": "syn-table-sort",
+          "description": "Table sort presentation in the components/data.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-table-wrap",
-          "description": "Syntyr CSS class (components/data.css)."
+          "description": "Responsive overflow wrapper for a native table."
+        },
+        {
+          "name": "syn-table-wrap--scroll",
+          "description": "Scroll appearance variant of the table wrap component; see components/data.css for styles."
         },
         {
           "name": "syn-terminal",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Terminal presentation in the recipes.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-terminal-bar",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Terminal bar presentation in the recipes.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-terminal-body",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Terminal body presentation in the recipes.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-terminal-command",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Terminal command presentation in the recipes.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-terminal-cursor",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Terminal cursor presentation in the recipes.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-terminal-dots",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Terminal dots presentation in the recipes.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-terminal-error",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Terminal error presentation in the recipes.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-terminal-line",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Terminal line presentation in the recipes.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-terminal-meta",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Terminal meta presentation in the recipes.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-terminal-muted",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Terminal muted presentation in the recipes.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-terminal-output",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Terminal output presentation in the recipes.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-terminal-path",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Terminal path presentation in the recipes.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-terminal-prompt",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Terminal prompt presentation in the recipes.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-terminal-success",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Terminal success presentation in the recipes.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-terminal-title",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Terminal title presentation in the recipes.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-terminal-warning",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Terminal warning presentation in the recipes.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-text-support",
-          "description": "Syntyr CSS class (components/typography.css)."
+          "description": "Text support presentation in the components/typography.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-textarea",
-          "description": "Syntyr CSS class (components/forms.css)."
+          "description": "Native multiline text field styling; pair with a label."
         },
         {
           "name": "syn-textarea--autosize",
-          "description": "Syntyr CSS class (components/forms.css)."
+          "description": "Autosize appearance variant of the textarea component; see components/forms.css for styles."
         },
         {
           "name": "syn-timeline",
-          "description": "Syntyr CSS class (native-recipes.css)."
+          "description": "Chronological event or activity layout; preserve event text and order."
         },
         {
           "name": "syn-title",
-          "description": "Syntyr CSS class (components/typography.css)."
+          "description": "Title presentation in the components/typography.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-toolbar",
-          "description": "Syntyr CSS class (components/patterns.css)."
+          "description": "Aligned row of controls and actions; keyboard interactions are host-owned."
         },
         {
           "name": "syn-u-between",
-          "description": "Syntyr CSS class (utilities.css)."
+          "description": "Optional between utility; load utilities.css when used."
         },
         {
           "name": "syn-u-center",
-          "description": "Syntyr CSS class (utilities.css)."
+          "description": "Optional center utility; load utilities.css when used."
         },
         {
           "name": "syn-u-flex",
@@ -811,67 +1559,67 @@
         },
         {
           "name": "syn-u-gap-1",
-          "description": "Syntyr CSS class (utilities.css)."
+          "description": "Optional gap 1 utility; load utilities.css when used."
         },
         {
           "name": "syn-u-gap-2",
-          "description": "Syntyr CSS class (utilities.css)."
+          "description": "Optional gap 2 utility; load utilities.css when used."
         },
         {
           "name": "syn-u-gap-3",
-          "description": "Syntyr CSS class (utilities.css)."
+          "description": "Optional gap 3 utility; load utilities.css when used."
         },
         {
           "name": "syn-u-grid",
-          "description": "Syntyr CSS class (utilities.css)."
+          "description": "Optional grid utility; load utilities.css when used."
         },
         {
           "name": "syn-u-inline",
-          "description": "Syntyr CSS class (utilities.css)."
+          "description": "Optional inline utility; load utilities.css when used."
         },
         {
           "name": "syn-u-max-reading",
-          "description": "Syntyr CSS class (utilities.css)."
+          "description": "Optional max reading utility; load utilities.css when used."
         },
         {
           "name": "syn-u-min-w-0",
-          "description": "Syntyr CSS class (utilities.css)."
+          "description": "Optional min w 0 utility; load utilities.css when used."
         },
         {
           "name": "syn-u-mt-1",
-          "description": "Syntyr CSS class (utilities.css)."
+          "description": "Optional mt 1 utility; load utilities.css when used."
         },
         {
           "name": "syn-u-mt-2",
-          "description": "Syntyr CSS class (utilities.css)."
+          "description": "Optional mt 2 utility; load utilities.css when used."
         },
         {
           "name": "syn-u-mt-3",
-          "description": "Syntyr CSS class (utilities.css)."
+          "description": "Optional mt 3 utility; load utilities.css when used."
         },
         {
           "name": "syn-u-overflow-auto",
-          "description": "Syntyr CSS class (utilities.css)."
+          "description": "Optional overflow auto utility; load utilities.css when used."
         },
         {
           "name": "syn-u-p-1",
-          "description": "Syntyr CSS class (utilities.css)."
+          "description": "Optional p 1 utility; load utilities.css when used."
         },
         {
           "name": "syn-u-p-2",
-          "description": "Syntyr CSS class (utilities.css)."
+          "description": "Optional p 2 utility; load utilities.css when used."
         },
         {
           "name": "syn-u-p-3",
-          "description": "Syntyr CSS class (utilities.css)."
+          "description": "Optional p 3 utility; load utilities.css when used."
         },
         {
           "name": "syn-u-sr-only",
-          "description": "Syntyr CSS class (utilities.css)."
+          "description": "Screen-reader-only text utility; retains content for assistive technology."
         },
         {
           "name": "syn-u-stack",
-          "description": "Syntyr CSS class (utilities.css)."
+          "description": "Optional stack utility; load utilities.css when used."
         },
         {
           "name": "syn-u-text-balance",
@@ -879,7 +1627,7 @@
         },
         {
           "name": "syn-u-text-center",
-          "description": "Syntyr CSS class (utilities.css)."
+          "description": "Optional text center utility; load utilities.css when used."
         },
         {
           "name": "syn-u-text-pretty",
@@ -895,59 +1643,67 @@
         },
         {
           "name": "syn-u-wrap",
-          "description": "Syntyr CSS class (utilities.css)."
+          "description": "Optional wrap utility; load utilities.css when used."
+        },
+        {
+          "name": "syn-upload-field",
+          "description": "File-selection field presentation; native input or host owns file upload."
+        },
+        {
+          "name": "syn-view-switcher",
+          "description": "Server-selected view links or host-controlled view buttons; the host owns selection and navigation."
         },
         {
           "name": "syn-viz-bar",
-          "description": "Syntyr CSS class (viz.css)."
+          "description": "Viz bar presentation in the viz.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-viz-bar-fill",
-          "description": "Syntyr CSS class (viz.css)."
+          "description": "Viz bar fill presentation in the viz.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-viz-bar-label",
-          "description": "Syntyr CSS class (viz.css)."
+          "description": "Viz bar label presentation in the viz.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-viz-bar-track",
-          "description": "Syntyr CSS class (viz.css)."
+          "description": "Viz bar track presentation in the viz.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-viz-bars",
-          "description": "Syntyr CSS class (viz.css)."
+          "description": "Viz bars presentation in the viz.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-viz-cell",
-          "description": "Syntyr CSS class (viz.css)."
+          "description": "Viz cell presentation in the viz.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-viz-heatmap",
-          "description": "Syntyr CSS class (viz.css)."
+          "description": "Viz heatmap presentation in the viz.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-viz-sparkline",
-          "description": "Syntyr CSS class (viz.css)."
+          "description": "Viz sparkline presentation in the viz.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-viz-sparkline-area",
-          "description": "Syntyr CSS class (viz.css)."
+          "description": "Viz sparkline area presentation in the viz.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-viz-sparkline-path",
-          "description": "Syntyr CSS class (viz.css)."
+          "description": "Viz sparkline path presentation in the viz.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-viz-sr-only",
-          "description": "Syntyr CSS class (viz.css)."
+          "description": "Viz sr only presentation in the viz.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-viz-tracker",
-          "description": "Syntyr CSS class (viz.css)."
+          "description": "Viz tracker presentation in the viz.css module; use semantic HTML and consult its component example."
         },
         {
           "name": "syn-workspace",
-          "description": "Syntyr CSS class (recipes.css)."
+          "description": "Responsive application workspace layout with primary and supporting regions."
         }
       ]
     },
@@ -1012,11 +1768,65 @@
       ]
     },
     {
+      "name": "data-syn-color-space",
+      "description": "Experimental opt-in OKLCH hover mixing; default remains sRGB.",
+      "values": [
+        {
+          "name": "oklch"
+        }
+      ]
+    },
+    {
       "name": "data-syn-state",
       "description": "Host-managed decorative state, not an ARIA substitute.",
       "values": [
         {
           "name": "active"
+        },
+        {
+          "name": "complete"
+        },
+        {
+          "name": "conflict"
+        },
+        {
+          "name": "degraded"
+        },
+        {
+          "name": "down"
+        },
+        {
+          "name": "error"
+        },
+        {
+          "name": "failed"
+        },
+        {
+          "name": "healthy"
+        },
+        {
+          "name": "loading"
+        },
+        {
+          "name": "pending"
+        },
+        {
+          "name": "queued"
+        },
+        {
+          "name": "saved"
+        },
+        {
+          "name": "selected"
+        },
+        {
+          "name": "unknown"
+        },
+        {
+          "name": "unsaved"
+        },
+        {
+          "name": "uploading"
         }
       ]
     },

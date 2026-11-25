@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="description" content="Practical articles from Syntyr CSS on semantic HTML, CSS-first design systems, reusable UI blocks, accessibility, and modern frontend architecture.">
+  <title>Journal: CSS, HTML, UI patterns, and design systems — Syntyr CSS Blog</title>
+  <link rel="icon" href="../assets/syntyr-mark.svg" type="image/svg+xml">
+  <link rel="canonical" href="https://syntyr-css.pages.dev/blog/">
+  <link rel="alternate" type="application/rss+xml" title="Syntyr CSS Blog" href="rss.xml">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Journal: CSS, HTML, UI patterns, and design systems">
+  <meta property="og:description" content="Practical articles from Syntyr CSS on semantic HTML, CSS-first design systems, reusable UI blocks, accessibility, and modern frontend architecture.">
+  <meta property="og:image" content="https://syntyr-css.pages.dev/assets/og-syntyr.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="../dist/syntyr.recipes.css">
+  <link rel="stylesheet" href="blog.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Blog","name":"Syntyr CSS Blog","description":"Engineering notes on native HTML, CSS-first interfaces, accessibility, and reusable UI blocks.","url":"https://syntyr-css.pages.dev/blog/","publisher":{"@type":"Organization","name":"Syntyr CSS"}}</script>
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <a href="#main" class="syn-button blog-skip">Skip to content</a>
+  <div class="syn-shell">
+    <header class="syn-header blog-header">
+      <a href="../index.html" class="syn-logo" aria-label="Syntyr CSS home">SYNTYR / CSS</a>
+      <nav class="syn-nav" aria-label="Main navigation">
+        <a href="../docs/">Documentation</a>
+        <a href="../docs/catalog.html">Components</a>
+        <a href="../docs/blocks.html">Blocks</a>
+        <a href="index.html" aria-current="page">Blog</a>
+        <a href="rss.xml" type="application/rss+xml">RSS</a>
+        <a href="https://github.com/dporkka/syntyr-css">GitHub</a>
+      </nav>
+    </header>
+    <main id="main" class="blog-main">
+      <nav class="syn-breadcrumbs blog-breadcrumb" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li aria-current="page">Blog</li></ol></nav>
+      <section class="syn-site-hero blog-hero" aria-labelledby="blog-title">
+        <p class="syn-eyebrow">THE SYNTYR JOURNAL / WEB STANDARDS</p>
+        <h1 id="blog-title" class="syn-site-heading">Interfaces built to <strong>last.</strong></h1>
+        <p class="syn-lede">Engineering notes about CSS-first systems, native HTML, accessibility, and UI building blocks. Practical lessons for sites you can keep shipping.</p>
+        <div class="syn-actions"><a class="syn-button syn-button--primary" href="#latest">Read the latest</a><a class="syn-button syn-button--outline" href="../docs/blocks.html">Explore UI blocks</a></div>
+      </section>
+      <section id="latest" class="blog-list" aria-labelledby="latest-title">
+        <div class="blog-section-title">
+          <div><p class="syn-eyebrow">LATEST ARTICLES</p><h2 class="syn-section-heading" id="latest-title">From the workshop</h2></div>
+          <a href="rss.xml" type="application/rss+xml">Subscribe via RSS</a>
+        </div>
+        <div class="syn-feature-grid blog-grid">
+        <article class="syn-feature-card blog-card syn-surface--lift">
+          <div class="blog-card-meta syn-inline"><span class="syn-badge">Architecture</span><time class="syn-caption" datetime="2026-11-16">Nov 16, 2026</time></div>
+          <h3 class="blog-card-title"><a href="css-first-design-systems.html">CSS-first vs. JavaScript-first design systems: choosing the right foundation</a></h3>
+          <p class="syn-muted">Where should the design system end and the application begin? A practical guide to CSS-first architecture, dependencies, and maintenance.</p>
+          <a class="blog-card-link" href="css-first-design-systems.html" aria-label="Read CSS-first vs. JavaScript-first design systems: choosing the right foundation">Read article →</a>
+        </article>
+        <article class="syn-feature-card blog-card syn-surface--lift">
+          <div class="blog-card-meta syn-inline"><span class="syn-badge">Accessibility</span><time class="syn-caption" datetime="2026-11-16">Nov 16, 2026</time></div>
+          <h3 class="blog-card-title"><a href="accessible-native-html.html">Accessible interfaces start with native HTML, not ARIA patches</a></h3>
+          <p class="syn-muted">Build resilient forms, links, disclosures, and layouts with browser semantics and Syntyr's progressively enhanced CSS.</p>
+          <a class="blog-card-link" href="accessible-native-html.html" aria-label="Read Accessible interfaces start with native HTML, not ARIA patches">Read article →</a>
+        </article>
+        <article class="syn-feature-card blog-card syn-surface--lift">
+          <div class="blog-card-meta syn-inline"><span class="syn-badge">Tutorial</span><time class="syn-caption" datetime="2026-11-16">Nov 16, 2026</time></div>
+          <h3 class="blog-card-title"><a href="landing-page-ui-blocks.html">Build a SaaS landing page with reusable Syntyr UI blocks</a></h3>
+          <p class="syn-muted">Compose a hero, feature cards, FAQ, and CTA without a component runtime. A maintainable pattern for developer-first marketing sites.</p>
+          <a class="blog-card-link" href="landing-page-ui-blocks.html" aria-label="Read Build a SaaS landing page with reusable Syntyr UI blocks">Read article →</a>
+        </article>
+        </div>
+      </section>
+      <section class="syn-panel blog-guidance" aria-labelledby="working-heading">
+        <p class="syn-eyebrow">DESIGNED WITH SYNTYR</p>
+        <h2 id="working-heading" class="syn-heading">This blog is a real-world Syntyr example.</h2>
+        <p>Built with semantic HTML and the same <code class="syn-code">syn-site-hero</code>, <code class="syn-code">syn-feature-grid</code>, <code class="syn-code">syn-feature-card</code>, and <code class="syn-code">syn-cta-band</code> compositions available to every developer. No JavaScript is required to read or navigate it.</p>
+        <a href="../docs/blocks.html">Inspect the reusable HTML blocks</a>
+      </section>
+      <section class="syn-cta-band blog-cta" aria-labelledby="get-started">
+        <div><h2 id="get-started" class="syn-heading">Build a page from real HTML.</h2><p>Start with the Syntyr component catalog and adapt any block to your project.</p></div>
+        <a class="syn-button syn-button--primary" href="../docs/catalog.html">See components</a>
+      </section>
+    </main>
+    <footer class="blog-footer syn-inline">
+      <p class="syn-caption">© 2026 Syntyr CSS · MIT-licensed core · HTML-first</p>
+      <nav class="syn-nav" aria-label="Footer navigation"><a href="../index.html">Home</a><a href="../docs/">Docs</a><a href="../docs/blocks.html">UI blocks</a><a href="rss.xml">RSS feed</a></nav>
+    </footer>
+  </div>
+</body>
+</html>

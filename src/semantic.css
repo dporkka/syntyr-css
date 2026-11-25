@@ -4,6 +4,11 @@
 @layer syn.semantic {
   /* Preserve access to long, untranslated words when text is heavily enlarged. */
   :is(.syn-root.syn-semantic, .syn-root .syn-semantic) { overflow-wrap: anywhere; }
+  /* Native form composition is useful by default; explicit .syn-form and
+     framework classes keep their own layout contract. */
+  :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(form:not([class]), form[data-syn-semantic])) {
+    display: grid; gap: var(--syn-space-3); min-inline-size: 0; align-items: start;
+  }
   :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(button:not([class]), button[data-syn-semantic]), :is(input[type="submit"]:not([class]), input[type="submit"][data-syn-semantic]), :is(input[type="button"]:not([class]), input[type="button"][data-syn-semantic]), :is(input[type="reset"]:not([class]), input[type="reset"][data-syn-semantic])) {
     display: inline-flex; justify-content: center; align-items: center; gap: .5rem;
     min-height: var(--syn-control-height); padding: var(--syn-control-padding-block) 1rem;
@@ -22,6 +27,11 @@
   :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(input:not([class]), input[data-syn-semantic]):is(:not([type]), [type="text"], [type="email"], [type="search"], [type="password"], [type="url"], [type="tel"], [type="number"], [type="date"], [type="time"], [type="datetime-local"], [type="month"], [type="week"]), :is(select:not([class]), select[data-syn-semantic]), :is(textarea:not([class]), textarea[data-syn-semantic])):where(:not(:disabled):hover) { border-color: var(--syn-border-hover); }
   :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(input:not([class]), input[data-syn-semantic]):is(:not([type]), [type="text"], [type="email"], [type="search"], [type="password"], [type="url"], [type="tel"], [type="number"], [type="date"], [type="time"], [type="datetime-local"], [type="month"], [type="week"]), :is(select:not([class]), select[data-syn-semantic]), :is(textarea:not([class]), textarea[data-syn-semantic])):where(:focus) { border-color: var(--syn-border-focus); }
   :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(input:not([class]), input[data-syn-semantic]):is(:not([type]), [type="text"], [type="email"], [type="search"], [type="password"], [type="url"], [type="tel"], [type="number"], [type="date"], [type="time"], [type="datetime-local"], [type="month"], [type="week"]), :is(select:not([class]), select[data-syn-semantic]), :is(textarea:not([class]), textarea[data-syn-semantic])):disabled { background: var(--syn-surface-recessed); }
+  /* Only real [readonly] attributes; :read-only also matches noneditable
+     controls that do not support the readonly attribute. */
+  :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(input:not([class])[readonly], input[data-syn-semantic][readonly], textarea:not([class])[readonly], textarea[data-syn-semantic][readonly]) {
+    background: var(--syn-surface-recessed); border-style: dashed;
+  }
   :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(input:not([class]), input[data-syn-semantic]), :is(select:not([class]), select[data-syn-semantic]), :is(textarea:not([class]), textarea[data-syn-semantic])):where(:user-invalid, [aria-invalid="true"]) { border-color: var(--syn-danger); }
   :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(input[type="range"]:not([class]), input[type="range"][data-syn-semantic])) { width: 100%; }
   :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(input:not([class]), input[data-syn-semantic]), :is(textarea:not([class]), textarea[data-syn-semantic]))::placeholder { color: var(--syn-text-subtle); opacity: 1; }
@@ -34,14 +44,30 @@
   :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(label:not([class]), label[data-syn-semantic])) { display: grid; gap: .35rem; font-weight: 600; font-size: .9rem; }
   /* Native checkbox/radio labels stay inline, even when HTMX adds classes. */
   :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(label:not([class]):has(> input[type="checkbox"], > input[type="radio"]), label[data-syn-semantic]:has(> input[type="checkbox"], > input[type="radio"])) { display: block; cursor: pointer; }
-  :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(fieldset:not([class]), fieldset[data-syn-semantic])) { border: 1px solid var(--syn-frame); min-width: 0; padding: 1rem; }
+  :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(fieldset:not([class]), fieldset[data-syn-semantic])) {
+    display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--syn-space-2);
+    border: 1px solid var(--syn-frame); min-width: 0; padding: 1rem;
+  }
   :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(legend:not([class]), legend[data-syn-semantic])) { padding-inline: .4rem; }
   :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(article:not([class]), article[data-syn-semantic])) { padding: clamp(1rem, 3vw, 1.75rem); border: 1px solid var(--syn-frame); background: var(--syn-surface); min-width: 0; }
   :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(table:not([class]), table[data-syn-semantic])) { width: 100%; border-collapse: collapse; text-align: left; }
   :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(th:not([class]), th[data-syn-semantic]), :is(td:not([class]), td[data-syn-semantic])) { padding: .65rem; border-bottom: 1px solid var(--syn-frame); }
   :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(th:not([class]), th[data-syn-semantic])) { color: var(--syn-text-subtle); }
+  :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(caption:not([class]), caption[data-syn-semantic])) {
+    padding-block: .5rem; text-align: start; font-weight: 650; color: var(--syn-text);
+  }
   :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(details:not([class]), details[data-syn-semantic])) { padding-block: .75rem; border-block-start: 1px solid var(--syn-frame); }
-  :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(summary:not([class]), summary[data-syn-semantic])) { cursor: pointer; font-weight: 600; }
+  /* Open native disclosures receive a gentle visual boundary without
+     replacing summary markers, the name-group accordion, or focus handling. */
+  :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(details[open]:not([class]), details[open][data-syn-semantic])) {
+    padding-block-end: var(--syn-space-2);
+    border-block-end: 1px solid var(--syn-frame);
+  }
+  /* Keep the browser's disclosure marker, keyboard interaction and focus. */
+  :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(summary:not([class]), summary[data-syn-semantic])) {
+    cursor: pointer; font-weight: 600; min-block-size: 2.75rem;
+    padding-block: .5rem; align-content: center;
+  }
   :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(blockquote:not([class]), blockquote[data-syn-semantic])) { margin-inline: 0; padding: .5rem 1rem; border-inline-start: 2px solid var(--syn-accent); color: var(--syn-muted); }
   :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(hr:not([class]), hr[data-syn-semantic])) { border: 0; border-top: 1px solid var(--syn-frame); }
   :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(code:not([class]), code[data-syn-semantic])) { font-family: var(--syn-mono); color: var(--syn-accent); }
@@ -111,11 +137,247 @@
     font-family: var(--syn-mono);
     font-size: var(--syn-type-sm);
   }
+  /* Native modal/non-modal dialogs and popovers: style only, never force
+     display or emulate top-layer, focus or dismissal behavior. */
+  :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(dialog:not([class]), dialog[data-syn-semantic], [popover]:not([class]), [popover][data-syn-semantic])) {
+    box-sizing: border-box;
+    min-inline-size: 0;
+    max-inline-size: min(90vw, 36rem);
+    max-block-size: min(80dvh, 40rem);
+    overflow: auto;
+    padding: var(--syn-space-3);
+    border: 1px solid var(--syn-frame-strong);
+    border-radius: var(--syn-radius);
+    background: var(--syn-surface-raised);
+    color: var(--syn-text);
+    box-shadow: var(--syn-shadow-overlay);
+  }
+  :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(dialog:not([class]), dialog[data-syn-semantic]))::backdrop {
+    background: rgb(0 0 0 / 60%);
+  }
+  :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(progress:not([class]), progress[data-syn-semantic])) {
+    inline-size: min(100%, 18rem);
+    max-inline-size: 100%;
+    block-size: 1rem;
+    accent-color: var(--syn-accent);
+    vertical-align: middle;
+  }
+  /* Ordinary document content: preserve HTML list markers and heading semantics.
+     Every selector is class-free by default, or explicitly opted in. */
+  :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(ul:not([class]), ul[data-syn-semantic]), :is(ol:not([class]), ol[data-syn-semantic]), :is(menu:not([class]), menu[data-syn-semantic])) {
+    margin-block: var(--syn-space-2);
+    padding-inline-start: 1.5rem;
+    max-inline-size: 100%;
+  }
+  :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(li:not([class]), li[data-syn-semantic])) {
+    margin-block: var(--syn-list-item-gap, .25rem);
+    overflow-wrap: anywhere;
+  }
+  /* Nested lists retain their browser-native disc/circle/square and decimal
+     hierarchy. Only their local vertical rhythm is reduced; no marker reset. */
+  :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(
+    :is(ul:not([class]), ol:not([class]), menu:not([class]), ul[data-syn-semantic], ol[data-syn-semantic], menu[data-syn-semantic])
+    :is(ul:not([class]), ol:not([class]), menu:not([class]), ul[data-syn-semantic], ol[data-syn-semantic], menu[data-syn-semantic])
+  ) {
+    margin-block: var(--syn-space-1);
+    padding-inline-start: 1.5rem;
+  }
+  :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(dl:not([class]), dl[data-syn-semantic])) {
+    margin-block: var(--syn-space-2);
+  }
+  :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(dt:not([class]), dt[data-syn-semantic])) {
+    font-weight: 650;
+    margin-block-start: var(--syn-space-2);
+  }
+  :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(dd:not([class]), dd[data-syn-semantic])) {
+    margin-inline-start: 0;
+    margin-block: .15rem .5rem;
+    color: var(--syn-text-subtle);
+    overflow-wrap: anywhere;
+  }
+  :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(h5:not([class]), h5[data-syn-semantic]), :is(h6:not([class]), h6[data-syn-semantic])) {
+    color: var(--syn-text);
+    margin-block: .75rem .5rem;
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+  }
+  :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(h5:not([class]), h5[data-syn-semantic])) { font-size: var(--syn-type-base); }
+  :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(h6:not([class]), h6[data-syn-semantic])) { font-size: var(--syn-type-sm); }
+  :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(address:not([class]), address[data-syn-semantic])) {
+    color: var(--syn-text-subtle);
+    font-style: normal;
+  }
+  /* Replaced media retain intrinsic aspect ratios; inline images remain inline. */
+  :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(img:not([class]), img[data-syn-semantic]), :is(video:not([class]), video[data-syn-semantic]), :is(audio:not([class]), audio[data-syn-semantic])) {
+    max-inline-size: 100%;
+  }
+  :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(img:not([class]), img[data-syn-semantic]), :is(video:not([class]), video[data-syn-semantic])) {
+    block-size: auto;
+  }
+  :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(samp:not([class]), samp[data-syn-semantic])) {
+    font-family: var(--syn-mono);
+    background: var(--syn-surface-recessed);
+    color: var(--syn-text);
+    padding-inline: .2em;
+  }
+  :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(small:not([class]), small[data-syn-semantic])) {
+    font-size: .875em;
+    color: var(--syn-text-subtle);
+  }
+  :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(abbr:not([class]), abbr[data-syn-semantic])):where([title]) {
+    text-decoration: underline dotted;
+    text-underline-offset: .15em;
+    cursor: help;
+  }
+  /* Keep multiline code neutral, unlike the accented inline-code token. */
+  :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(pre:not([class]), pre[data-syn-semantic]) :is(code:not([class]), code[data-syn-semantic])) {
+    color: inherit;
+  }
+  /* Browser-native file and color controls (no custom pickers or runtime JS). */
+  /* Native chooser stays functional, but must not force a narrow fieldset
+     or 400%-enlarged document wider than its containing grid track. */
+  :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(input[type="file"]:not([class]), input[type="file"][data-syn-semantic])) {
+    inline-size: 100%;
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    overflow: clip;
+    color: var(--syn-text);
+    font: inherit;
+  }
+  /* Browsers often paint file inputs without a visible border: ensure the
+     invalid indication survives as a full logical border around the control. */
+  :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(input[type="file"]:not([class]), input[type="file"][data-syn-semantic])):where(:user-invalid, [aria-invalid="true"]) {
+    border: 1px solid var(--syn-danger);
+    border-radius: var(--syn-radius);
+  }
+  /* Preserve native search clear affordances with direction-aware spacing. */
+  :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(input[type="search"]:not([class]), input[type="search"][data-syn-semantic])) {
+    min-inline-size: 0;
+    padding-inline-end: 2.25rem;
+  }
+  :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(input[type="file"]:not([class]), input[type="file"][data-syn-semantic]))::file-selector-button {
+    min-block-size: var(--syn-control-height);
+    /* Let the native chooser label wrap rather than leak beyond a narrow input. */
+    max-inline-size: 100%; white-space: normal; overflow-wrap: anywhere;
+    margin-inline-end: .75rem;
+    padding-inline: .75rem;
+    border: 1px solid var(--syn-border-default);
+    border-radius: var(--syn-radius);
+    background: var(--syn-surface-interactive);
+    color: var(--syn-text);
+    font: inherit;
+    cursor: pointer;
+  }
+  :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(input[type="color"]:not([class]), input[type="color"][data-syn-semantic])) {
+    inline-size: min(4rem, 100%);
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    min-block-size: var(--syn-control-height);
+    padding: .25rem;
+    border: 1px solid var(--syn-border-default);
+    border-radius: var(--syn-radius);
+    background: var(--syn-bg);
+    cursor: pointer;
+  }
+  /* Additional semantic document elements. Native semantics, quote marks,
+     bidirectional text, Ruby annotation and intrinsic media behavior remain owned
+     by the user agent; presentation is opt-in and low-specificity. */
+  :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(hgroup:not([class]), hgroup[data-syn-semantic])) {
+    margin-block: var(--syn-space-3);
+    min-inline-size: 0;
+    overflow-wrap: anywhere;
+  }
+  :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(time:not([class]), time[data-syn-semantic]), :is(data:not([class]), data[data-syn-semantic])) {
+    font-variant-numeric: tabular-nums;
+    overflow-wrap: anywhere;
+  }
+  :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(cite:not([class]), cite[data-syn-semantic])) {
+    font-style: italic;
+    color: var(--syn-text-subtle);
+  }
+  :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(dfn:not([class]), dfn[data-syn-semantic])) {
+    font-weight: 650;
+    text-decoration: underline dotted;
+    text-underline-offset: .15em;
+  }
+  :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(var:not([class]), var[data-syn-semantic])) {
+    font-family: var(--syn-mono);
+    font-style: italic;
+  }
+  :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(q:not([class]), q[data-syn-semantic])) {
+    color: var(--syn-text-subtle);
+  }
+  :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(ins:not([class]), ins[data-syn-semantic])) {
+    text-decoration-color: var(--syn-accent);
+    text-decoration-thickness: .12em;
+    text-underline-offset: .15em;
+  }
+  :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(del:not([class]), del[data-syn-semantic])) {
+    color: var(--syn-text-subtle);
+    text-decoration-thickness: .12em;
+  }
+  /* No forced aspect ratio: image source selection and canvas bitmap dimensions
+     remain entirely native. Embedded frames can shrink in narrow containers. */
+  :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(picture:not([class]), picture[data-syn-semantic]), :is(iframe:not([class]), iframe[data-syn-semantic]), :is(canvas:not([class]), canvas[data-syn-semantic]), :is(svg:not([class]), svg[data-syn-semantic])) {
+    max-inline-size: 100%;
+  }
+  :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(iframe:not([class]), iframe[data-syn-semantic])) {
+    border: 1px solid var(--syn-border-default);
+    border-radius: var(--syn-radius);
+  }
+  :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(select[multiple]:not([class]), select[multiple][data-syn-semantic])) {
+    min-block-size: 8rem;
+  }
+  :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(textarea:not([rows]):not([class]), textarea:not([rows])[data-syn-semantic])) {
+    min-block-size: 7rem;
+    resize: vertical;
+  }
+  /* Extended document semantics: leave ruby annotations and table row grouping
+     native. Style only the table summary and optional quote attribution. */
+  :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(tfoot:not([class]), tfoot[data-syn-semantic])) {
+    border-block-start: 2px solid var(--syn-border-default);
+    font-weight: 650;
+  }
+  :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(
+    blockquote:not([class]) > footer:not([class]),
+    blockquote[data-syn-semantic] > footer[data-syn-semantic]
+  ) {
+    margin-block-start: var(--syn-space-2);
+    color: var(--syn-text-subtle);
+    font-size: var(--syn-type-sm);
+  }
+  /* Outdated offers are not editorial deletions: retain the browser's
+     native strikethrough on s, while de-emphasizing it within semantic mode. */
+  :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(s:not([class]), s[data-syn-semantic])) {
+    color: var(--syn-text-subtle);
+    text-decoration-color: currentColor;
+  }
+  /* Grouped column headers stay true table headers; only their surface changes. */
+  :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(thead:not([class]), thead[data-syn-semantic])) {
+    background: var(--syn-surface-recessed);
+  }
+  /* Enlarged root text must not let rem-based card padding consume
+     the entire 320px viewport. Preserve normal padding on wider screens. */
+  @media (max-width: 40rem) {
+    :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(
+      :is(article:not([class]), article[data-syn-semantic]),
+      :is(fieldset:not([class]), fieldset[data-syn-semantic])
+    ) {
+      padding: min(1rem, 5vw);
+    }
+  }
   @media (forced-colors: active) {
+    :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(details[open]:not([class]), details[open][data-syn-semantic])) {
+      border-color: CanvasText;
+    }
+    :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(thead:not([class]), thead[data-syn-semantic])) {
+      background: Canvas;
+      border-block-end: 2px solid CanvasText;
+    }
     :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(mark:not([class]), mark[data-syn-semantic])) {
       background: Highlight; color: HighlightText;
     }
-    :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(kbd:not([class]), kbd[data-syn-semantic]), :is(pre:not([class]), pre[data-syn-semantic])) {
+    :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(kbd:not([class]), kbd[data-syn-semantic]), :is(pre:not([class]), pre[data-syn-semantic]), :is(dialog:not([class]), dialog[data-syn-semantic]), :is([popover]:not([class]), [popover][data-syn-semantic])) {
       border-color: CanvasText;
     }
     :is(.syn-root.syn-semantic, .syn-root .syn-semantic) :where(:is(button:not([class]), button[data-syn-semantic]), :is(input:not([class]), input[data-syn-semantic]), :is(select:not([class]), select[data-syn-semantic]), :is(textarea:not([class]), textarea[data-syn-semantic]), :is(article:not([class]), article[data-syn-semantic]), :is(fieldset:not([class]), fieldset[data-syn-semantic])) { border-color: CanvasText; }

@@ -75,6 +75,8 @@ The frontmatter follows the [Google DESIGN.md alpha format](https://github.com/g
 - The DESIGN.md spec is currently alpha and models one palette. Other palettes, computed `color-mix()` roles, media-query values, motion timings, intensity, density, and state variants stay in CSS. Do **not** assume that exporting this frontmatter reproduces the entire library.
 - In the YAML, `spacing.xs` through `spacing.xl` correspond to `--syn-space-1` through `--syn-space-5`; `rounded.default` corresponds to Studio `--syn-radius`. Color token names are semantic aliases for `--syn-*` values. Components entries illustrate intended role pairings, not exhaustive component CSS.
 
+For cross-design-system conventions, component-state expectations, native composition recipes and the executable palette audit, see [the design principles guide](docs/design-principles.md).
+
 ## Design principles and precedence
 
 1. **Information before decoration.** Prioritize readable content, hierarchy, meaningful affordances, and stable layout over visual effects.

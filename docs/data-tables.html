@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Syntyr applies general design principles visible in permissively licensed design systems such as GitHub Primer (MIT), IBM Carbon (Apache-2.0), and…">
+  <meta name="syntyr-source-sha256" content="8bbbddd58cc5e3b68f20f35a307fc245120b8de134fb79928e4785b9c3fa3b00">
+  <meta name="theme-color" content="#f5f7fb">
+  <title>Enterprise data tables with native HTML — Syntyr CSS docs</title>
+  <link rel="canonical" href="https://syntyr-css.pages.dev/docs/data-tables">
+  <link rel="alternate" type="text/markdown" href="data-tables.md" title="Markdown source">
+  <link rel="icon" href="../assets/syntyr-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="docs.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <a class="syn-button docs-skip" href="#doc-main">Skip to guide</a>
+  <div class="syn-shell">
+    <header class="syn-header docs-header">
+      <a class="syn-logo" href="../index.html">SYNTYR / CSS</a>
+      <nav class="syn-nav" aria-label="Documentation navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav>
+      <details class="site-mobile-menu"><summary>Menu</summary><nav aria-label="Mobile navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav></details>
+    </header>
+    <main id="doc-main" class="docs-article-page">
+      <nav class="syn-breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="reference.html">Documentation</a></li><li aria-current="page">Enterprise data tables with native HTML</li></ol></nav>
+      <header class="docs-article-heading">
+        <p class="syn-eyebrow">SYNTYR / DOCUMENTATION</p>
+        <p class="syn-muted">Current source documentation may describe unreleased alpha.5 features. <a href="distribution.html">Check released version compatibility.</a></p>
+        <p class="syn-caption">Prefer a machine-readable version? <a href="data-tables.md">Markdown source</a> · <a href="../llms.txt">LLM index</a></p>
+      </header>
+      <div class="docs-article-layout">
+        <article class="docs-prose" aria-label="Enterprise data tables with native HTML">
+<h1 id="enterprise-data-tables-with-native-html">Enterprise data tables with native HTML</h1>
+<p>Syntyr applies general design principles visible in permissively licensed
+design systems such as GitHub Primer (MIT), IBM Carbon (Apache-2.0), and
+PatternFly (MIT): semantic tables, readable density, opt-in visual states,
+and keyboard focus. This is an original <strong>MIT-licensed</strong> implementation.
+No third-party source code, brand assets, or artwork is incorporated.</p>
+<p>See the <a href="../examples/data-tables.html">live no JavaScript example</a>.</p>
+<h2 id="import-only-what-you-use">Import only what you use</h2>
+<p>Load the Syntyr core CSS, or use the individual components/tokens.css,
+components/base.css, and components/data.css entrypoints in that order.
+Do not combine both import approaches.</p>
+<p>Three opt-in classes complement the existing syn-table class:</p>
+<ul>
+<li><strong>syn-table-wrap--scroll</strong> on syn-table-wrap creates a bounded two-axis
+scroll region. Set --syn-table-scroll-height (default 24rem).</li>
+<li><strong>syn-table--sticky</strong> keeps column headings visible in that scroll region,
+with an opaque theme-aware background and header separator.</li>
+<li><strong>syn-table--striped</strong> highlights alternating body rows. Selected-row
+styling takes precedence over striping.</li>
+<li><strong>syn-table-sort</strong> renders a decorative directional arrow when its header
+has aria-sort=&quot;ascending&quot; or aria-sort=&quot;descending&quot;.</li>
+</ul>
+<p>The browser still owns native table semantics. Do not use role=&quot;grid&quot;
+unless you implement and test the required grid keyboard interactions.</p>
+<h3 id="highlighting-a-record-without-inventing-grid-semantics">Highlighting a record without inventing grid semantics</h3>
+<p>On a normal data <code>&lt;table&gt;</code>, visual emphasis uses
+<code>&lt;tr data-syn-state=&quot;selected&quot;&gt;</code> (with a corresponding readable label or
+selection checkbox for real user selection). Do <strong>not</strong> put
+<code>aria-selected</code> on ordinary table rows just to change color. Syntyr's
+<code>aria-selected=&quot;true&quot;</code> row appearance is limited to a table carrying
+<code>role=&quot;grid&quot;</code> or <code>role=&quot;treegrid&quot;</code>; the host must implement the full
+interactive behavior before opting into those roles. This is an alpha.5
+source-candidate correction; it does not retroactively alter published
+alpha.4 CSS.</p>
+<p>For authoring checks, the optional <code>python3 scripts/syntyr_check.py --semantic your-page.html</code>
+emits advisory findings for ordinary table rows
+using ARIA selection and headed data tables without a caption/name.</p>
+<h2 id="keyboard-scrollable-table-example">Keyboard-scrollable table example</h2>
+<pre tabindex="0"><code>&lt;section class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot; data-syn-density=&quot;compact&quot;&gt;
+  &lt;div class=&quot;syn-table-wrap syn-table-wrap--scroll&quot;
+       role=&quot;region&quot; aria-label=&quot;Quarterly revenue table&quot; tabindex=&quot;0&quot;&gt;
+    &lt;table class=&quot;syn-table syn-table--sticky syn-table--striped&quot;&gt;
+      &lt;caption&gt;Revenue by account, sorted by account&lt;/caption&gt;
+      &lt;thead&gt;&lt;tr&gt;
+        &lt;th scope=&quot;col&quot; aria-sort=&quot;ascending&quot;&gt;&lt;span class=&quot;syn-table-sort&quot;&gt;Account&lt;/span&gt;&lt;/th&gt;
+        &lt;th scope=&quot;col&quot;&gt;Revenue&lt;/th&gt;
+      &lt;/tr&gt;&lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;&lt;th scope=&quot;row&quot;&gt;Acme&lt;/th&gt;&lt;td&gt;$12,000&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;th scope=&quot;row&quot;&gt;Beta&lt;/th&gt;&lt;td&gt;$7,000&lt;/td&gt;&lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+</code></pre>
+<p>The focusable region makes keyboard scrolling discoverable when overflow
+exists. Provide a real caption, column headings with scope=&quot;col&quot;, row
+headings with scope=&quot;row&quot;, and meaningful status text. Do not rely on
+stripe color, status color, or pseudo-element arrows as the only signal.</p>
+<h2 id="sorting-is-owned-by-get-and-the-server">Sorting is owned by GET and the server</h2>
+<p>The sorted state must reflect actual data order. When a server-rendered
+application supports sorting, it can render a real link:</p>
+<pre tabindex="0"><code>&lt;th scope=&quot;col&quot; aria-sort=&quot;ascending&quot;&gt;
+  &lt;a class=&quot;syn-table-sort&quot; href=&quot;/invoices?sort=account&amp;amp;direction=desc&quot;&gt;Account&lt;/a&gt;
+&lt;/th&gt;
+</code></pre>
+<p>The <strong>server</strong> must validate sort and direction against an allowlist,
+sort records, generate the next link, and render truthful aria-sort
+on only the currently sorted column. CSS cannot sort, filter,
+paginate, virtualize, or change selection. The static example
+intentionally shows a sorted snapshot without a nonfunctional sorting
+control.</p>
+<h2 id="accessibility-performance-and-themes">Accessibility, performance, and themes</h2>
+<p>The styles are scoped to syn-root and inherit the nearest theme and
+density tokens. An application may override --syn-table-sticky-offset
+for a local scrolling layout. Multi-row headers need individual offset
+testing.</p>
+<p>The sticky heading retains a visible border in forced-colors mode.
+Verify 200% and 400% reflow, keyboard scroll and focus, and real screen
+reader behavior in consuming applications. Do not confuse CSS-only
+presentation with an accessible grid widget implementation. Large
+datasets still need server pagination or selective delivery.</p>
+        </article>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+<a class="docs-article-toc-link docs-article-toc-2" href="#import-only-what-you-use">Import only what you use</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#highlighting-a-record-without-inventing-grid-semantics">Highlighting a record without inventing grid semantics</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#keyboard-scrollable-table-example">Keyboard-scrollable table example</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#sorting-is-owned-by-get-and-the-server">Sorting is owned by GET and the server</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#accessibility-performance-and-themes">Accessibility, performance, and themes</a>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#import-only-what-you-use">Import only what you use</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#highlighting-a-record-without-inventing-grid-semantics">Highlighting a record without inventing grid semantics</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#keyboard-scrollable-table-example">Keyboard-scrollable table example</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#sorting-is-owned-by-get-and-the-server">Sorting is owned by GET and the server</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#accessibility-performance-and-themes">Accessibility, performance, and themes</a>
+            </nav>
+          </details>
+        </aside>
+      </div>
+      <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="data-tables.md">Markdown source</a></nav>
+    </main>
+    <footer class="syn-header"><span class="syn-caption">SYNTYR CSS · MIT CORE · EXPERIMENTAL</span><a href="../index.html">Home</a></footer>
+  </div>
+</body>
+</html>

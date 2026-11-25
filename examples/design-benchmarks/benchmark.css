@@ -1,0 +1,21 @@
+/* Original, lightweight composition CSS; all Syntyr component styling comes from dist. */
+.bench-skip{position:absolute;inset-block-start:-5rem;inset-inline-start:1rem;z-index:10}.bench-skip:focus-visible{inset-block-start:1rem}
+.bench-header{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.bench-hero{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(15rem,1fr);align-items:center;gap:clamp(1.25rem,5vw,5rem);padding-block:clamp(3rem,8vw,7rem);border-block-end:1px solid var(--syn-frame)}
+.bench-display{font-size:clamp(2.3rem,6vw,5rem);line-height:1.07;letter-spacing:-.05em;max-width:15ch;margin-block:.7rem 1.3rem}
+.bench-art{padding:clamp(1.25rem,3vw,2.5rem);border:1px solid var(--syn-frame);border-radius:1rem;background:var(--syn-surface)}
+.bench-features{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(.8rem,2vw,1.4rem)}
+.bench-section{padding-block:clamp(2rem,5vw,4rem)}
+.bench-price{font-size:clamp(1.7rem,3.5vw,2.8rem);font-weight:700}
+.bench-footer{border-block-start:1px solid var(--syn-frame);padding-block:2rem;margin-block-start:3rem}
+.bench-note{border-inline-start:3px solid var(--syn-accent);padding-inline-start:1rem;max-width:70ch}
+.bench-filter{display:flex;flex-wrap:wrap;gap:1rem;align-items:end;margin-block:1.5rem}.bench-filter>label{flex:1 1 14rem}
+.bench-metrics{margin-block:1.5rem}.bench-flow{display:grid;gap:1.5rem}
+.bench-docs{display:grid;grid-template-columns:minmax(0,1fr) minmax(11rem,16rem);gap:clamp(1.5rem,4vw,4rem);align-items:start;padding-block:2rem}
+.bench-prose{min-width:0;max-width:74ch}.bench-prose>section{margin-block:2.5rem}
+.bench-toc{position:sticky;inset-block-start:1.5rem;border-inline-start:1px solid var(--syn-frame);padding-inline-start:1rem}.bench-toc>a{display:block;padding-block:.35rem}
+.bench-code{overflow-x:auto;max-width:100%;padding:1.2rem;background:var(--syn-surface);border:1px solid var(--syn-frame);border-radius:.65rem;white-space:pre}
+.bench-inline-code{overflow-wrap:anywhere}
+.bench-mini-chart{height:8rem;display:flex;gap:6%;align-items:flex-end;margin-block:1.5rem}.bench-mini-chart span{display:block;flex:1;background:var(--syn-accent);border-radius:.3rem .3rem 0 0}
+@media(max-width:56rem){.bench-hero,.bench-docs{grid-template-columns:minmax(0,1fr)}.bench-toc{position:static;grid-row:1;border-inline-start:0;border-block-end:1px solid var(--syn-frame);padding-inline-start:0;padding-block-end:1rem}.bench-features{grid-template-columns:repeat(auto-fit,minmax(min(100%,15rem),1fr))}}
+@media(forced-colors:active){.bench-mini-chart span{border:1px solid CanvasText}}

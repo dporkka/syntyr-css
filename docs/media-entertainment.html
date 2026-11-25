@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Syntyr&#x27;s optional Media &amp; Entertainment CSS is an original, framework-neutral, zero-runtime module for editorial catalogs, film/TV-inspired landing pages…">
+  <meta name="syntyr-source-sha256" content="5429c10d06b36876c764ca61ea676aa3cc916ccd180398be3d2515ed75bcf531">
+  <meta name="theme-color" content="#f5f7fb">
+  <title>Media &amp; Entertainment recipes — Syntyr CSS docs</title>
+  <link rel="canonical" href="https://syntyr-css.pages.dev/docs/media-entertainment">
+  <link rel="alternate" type="text/markdown" href="media-entertainment.md" title="Markdown source">
+  <link rel="icon" href="../assets/syntyr-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="docs.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <a class="syn-button docs-skip" href="#doc-main">Skip to guide</a>
+  <div class="syn-shell">
+    <header class="syn-header docs-header">
+      <a class="syn-logo" href="../index.html">SYNTYR / CSS</a>
+      <nav class="syn-nav" aria-label="Documentation navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav>
+      <details class="site-mobile-menu"><summary>Menu</summary><nav aria-label="Mobile navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav></details>
+    </header>
+    <main id="doc-main" class="docs-article-page">
+      <nav class="syn-breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="reference.html">Documentation</a></li><li aria-current="page">Media &amp; Entertainment recipes</li></ol></nav>
+      <header class="docs-article-heading">
+        <p class="syn-eyebrow">SYNTYR / DOCUMENTATION</p>
+        <p class="syn-muted">Current source documentation may describe unreleased alpha.5 features. <a href="distribution.html">Check released version compatibility.</a></p>
+        <p class="syn-caption">Prefer a machine-readable version? <a href="media-entertainment.md">Markdown source</a> · <a href="../llms.txt">LLM index</a></p>
+      </header>
+      <div class="docs-article-layout">
+        <article class="docs-prose" aria-label="Media &amp; Entertainment recipes">
+<h1 id="media-entertainment-recipes">Media &amp; Entertainment recipes</h1>
+<p>Syntyr's optional Media &amp; Entertainment CSS is an original, framework-neutral,
+zero-runtime module for editorial catalogs, film/TV-inspired landing pages,
+product galleries, libraries and media portfolios.</p>
+<h2 id="installation">Installation</h2>
+<p>Load Syntyr core first, then the optional media module:</p>
+<pre tabindex="0"><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;/dist/syntyr.core.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;/dist/syntyr.media.css&quot;&gt;
+</code></pre>
+<p>The unreleased source-candidate npm package also exports @syntyr/css/media.css.
+Unlike core and all CSS, this module is always opt-in. The zero-JavaScript
+<a href="../examples/media-entertainment.html">example collection</a> includes fictional
+titles and original SVG art with no network requests.</p>
+<h2 id="css-primitives">CSS primitives</h2>
+<ul>
+<li>syn-media-shell: page shell. Use on the same element as syn-root, or on a descendant.</li>
+<li>syn-media-navigation, syn-media-navigation__desktop,
+syn-media-navigation__mobile, syn-media-navigation__link: responsive
+navigation with one landmark for desktop and one for mobile. The 48rem
+breakpoint shows only the corresponding nav; the mobile fixed bar provides
+safe-area padding.</li>
+<li>syn-media-hero, syn-media-hero__content, syn-media-hero__title,
+syn-media-hero__eyebrow, syn-media-hero__description,
+syn-media-hero__actions: cinematic hero with configurable visual and
+contrast-preserving gradient. Set --syn-media-hero-image to a gradient or a
+licensed background image, and --syn-media-hero-position to a focal point.</li>
+<li>syn-media-card, syn-media-card__link, syn-media-card__visual,
+syn-media-card__badge, syn-media-card__title, syn-media-card__meta,
+syn-media-card__action: media cards with image aspect ratios. Set
+--syn-media-card-ratio to 16 / 9, 1 / 1 or 2 / 3. Place buttons outside
+the anchor link: nested links/buttons are not valid interaction semantics.</li>
+<li>syn-media-rail: horizontally scrollable, touch-friendly row of cards,
+with scroll-snap proximity and card sizing via --syn-media-rail-item-size.
+Rails and cards can be composed directly under syn-root without a media shell;
+they provide local fallbacks for gap, item size and poster aspect ratio.</li>
+<li>syn-media-section, syn-media-section__heading, syn-media-search:
+supporting title, section and search-form styling.</li>
+</ul>
+<h2 id="native-scroll-buttons-and-markers-opt-in">Native scroll buttons and markers (opt-in)</h2>
+<p>In the unreleased alpha.5 source candidate, an existing <code>syn-media-rail</code>
+can opt into browser-generated carousel controls with <strong>no JavaScript</strong>.
+The existing Scroll Snap row remains scrollable by touch, trackpad, keyboard
+and the browser's normal horizontal overflow behavior in Firefox, Safari
+and browsers without CSS Overflow Level 5 carousel pseudo-elements.</p>
+<p>Add <code>syn-media-rail--controls</code> for previous/next scroll buttons.
+Optionally add <code>syn-media-rail--markers</code> for one clickable position marker per
+labeled direct child. Each marker needs <code>data-syn-scroll-label</code> with a
+distinct, human-readable name (avoid empty or repeated names). This is the
+<code>syn-media-rail</code> CSS primitive, not a separate JavaScript carousel widget.</p>
+<pre tabindex="0"><code class="language-html">&lt;div class=&quot;syn-root&quot;&gt;
+  &lt;div class=&quot;syn-media-rail syn-media-rail--controls syn-media-rail--markers&quot;
+       role=&quot;region&quot; tabindex=&quot;0&quot; aria-label=&quot;Customer stories&quot;&gt;
+    &lt;article data-syn-scroll-label=&quot;Customer story: North&quot;&gt;
+      &lt;a href=&quot;/stories/north&quot;&gt;North&lt;/a&gt;
+    &lt;/article&gt;
+    &lt;article data-syn-scroll-label=&quot;Customer story: South&quot;&gt;
+      &lt;a href=&quot;/stories/south&quot;&gt;South&lt;/a&gt;
+    &lt;/article&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+<p>Both classes are progressive opt-ins. Supporting Chromium-family browsers
+create native scroll buttons, disable buttons at scroll boundaries, and expose
+marker navigation. Browsers without support ignore the pseudo-elements and
+keep the native Scroll Snap rail and horizontal scrolling. Browser and OS
+settings can hide scrollbar painting; keyboard and trackpad/wheel scrolling
+remain available. CSS anchor positioning places the generated controls;
+absent anchor support, they are not generated by Syntyr. There is no autoplay, looping, synchronization, remote fetching or
+scroll-driven application state. Use a host enhancement only if required and
+test keyboard and screen-reader behavior on supported engines.</p>
+<p>A large marker group is constrained to a locally horizontally scrollable row,
+avoiding page-width overflow at narrow viewports. Use
+<code>syn-media-rail--controls</code> without the marker modifier for many cards;
+even with local scrolling, dozens of markers become noisy. Marker labels are CSS generated
+and are not necessarily translated by translation tools: localize
+<code>data-syn-scroll-label</code> in your HTML output. For meaningful content, also
+retain a real link within each card.</p>
+<p>Browser references: <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Overflow/Carousels">MDN CSS carousels</a>
+and <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Scroll_snap">CSS scroll snap</a>.</p>
+<h2 id="real-images">Real images</h2>
+<p>Replace the original sample SVG illustrations with real images in production.
+For a typical poster, place an img inside syn-media-card__visual, with width,
+height, loading=&quot;lazy&quot; and decoding=&quot;async&quot;. Provide meaningful alt text
+where the picture contains additional information, or alt=&quot;&quot; when adjacent
+visible text fully conveys the same information. Only use licensed media art.</p>
+<h2 id="keyboard-motion-and-contrast">Keyboard, motion and contrast</h2>
+<ul>
+<li>Keyboard support uses native links, buttons, inputs and tab focus. Give a
+meaningful syn-media-rail role=&quot;region&quot;, tabindex=&quot;0&quot; and aria-label so
+users can identify and scroll the horizontal region even without pointing
+devices. Native link focus continues through each title.</li>
+<li>reduced motion preference disables poster zoom and auto-scrolling. There
+is no autoplay, scripted scroll or mandatory JavaScript.</li>
+<li>Forced colors mode removes the visual hero overlay and retains visible
+borders and focus outlines. Test your product's image and theme contrasts.</li>
+<li>At narrow screen widths, the nav switches at 48rem and reserves padding
+for the bottom navigation. Browser zoom remains available.</li>
+<li>The demo's search input is intentionally disabled. To offer functional
+search, provide a framework or backend integration (HTMX, Go, React, etc.)
+rather than presenting a fake search interaction.</li>
+<li>The CSS layer is syn.recipes and all selectors require a syn-root ancestor.
+It shares the --syn-* token system without requiring a new theme.</li>
+</ul>
+<h2 id="maintenance">Maintenance</h2>
+<p>Do not load the media module in enterprise admin screens that do not use it.
+No fonts, runtime dependencies, third-party images, or JavaScript are shipped
+with this optional recipe. See the <a href="../examples/media-entertainment.html">live example</a>
+and <a href="media-entertainment.html">HTML guide</a>.</p>
+        </article>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+<a class="docs-article-toc-link docs-article-toc-2" href="#installation">Installation</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#css-primitives">CSS primitives</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#native-scroll-buttons-and-markers-opt-in">Native scroll buttons and markers (opt-in)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#real-images">Real images</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#keyboard-motion-and-contrast">Keyboard, motion and contrast</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#maintenance">Maintenance</a>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#installation">Installation</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#css-primitives">CSS primitives</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#native-scroll-buttons-and-markers-opt-in">Native scroll buttons and markers (opt-in)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#real-images">Real images</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#keyboard-motion-and-contrast">Keyboard, motion and contrast</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#maintenance">Maintenance</a>
+            </nav>
+          </details>
+        </aside>
+      </div>
+      <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="media-entertainment.md">Markdown source</a></nav>
+    </main>
+    <footer class="syn-header"><span class="syn-caption">SYNTYR CSS · MIT CORE · EXPERIMENTAL</span><a href="../index.html">Home</a></footer>
+  </div>
+</body>
+</html>

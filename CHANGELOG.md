@@ -1,5 +1,18 @@
 ## Unreleased — v0.3.0-alpha.5 candidate
 
+- Keep classless native file inputs within 320px semantic fieldsets by using a shrinkable CSS Grid track and wrapping the native file-picker button; add cross-browser and enlarged-text reflow regression coverage.
+
+- Make the PR progressive-enhancement browser gate independent of PyPI access by
+  reusing the existing locked Node Playwright test infrastructure and the real
+  Python stdlib HTTP fixture. All three browser engines still run with
+  application JavaScript disabled; published CSS remains JS-free.
+
+- Add five native interaction recipes (exclusive `details[name]` accordion, GET `search` form, modal `dialog` choice, `datalist` suggestions, and `meter`/`output`) to the standard copyable catalog, static example, and documentation without a JS runtime or new CSS component classes.
+- Constrain classed dialogs and popovers to the physical viewport width/height (including anchored popovers), reserving the corner popover inset and margin even on very short viewports, with scrollable overflow for enlarged text and vertical writing modes; add script-disabled Chromium/Firefox keyboard and forced-colors regression checks.
+
+- Improve opt-in semantic HTML: classless native form composition, accessible disclosure targets and captioned tables; restrict `aria-selected` row styling to real grid/treegrid roles, with `data-syn-state` for static visual selection.
+- Add an optional stdlib `syntyr_check.py --semantic` lint pass, and extend the one-file zero-JS semantic starter with navigation and a named data table. Default lint behavior and published alpha.4 remain unchanged.
+
 - Change classed data table cells to wrap prose by default; apply `.syn-cell--nowrap` for codes and identifiers, while `.syn-cell--numeric` remains non-wrapping. **Prerelease layout change:** update existing tables that depend on implicit no-wrap.
 - Support `--syn-panel-cut-fill` for cut-corner panels on nested or tinted surfaces. Add browser and palette-contrast regression checks.
 - Ensure `.syn-flow` stacks inline siblings and fully suppress the horizon fade under increased-contrast preferences.

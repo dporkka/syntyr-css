@@ -1,0 +1,177 @@
+{
+  "schema_version": 1,
+  "frameworks": [
+    "syntyr",
+    "tailwind",
+    "daisyui"
+  ],
+  "common_prompt": "Create one standalone semantic HTML5 document with a title, viewport meta tag, html lang, main landmark, and h1. Use the supplied framework CSS only; no JavaScript, external CDN assets, placeholder links, or invented application behavior. Every form must have explicit method/action and labeled inputs. Include every required phrase exactly. Do not invent other styling APIs.",
+  "framework_setup": {
+    "syntyr": "Use Syntyr CSS source v0.3.0-alpha.5, with a linked local syntyr.core.css (and optional modules for documented classes), syn-root scope and documented syn-* selectors only.",
+    "tailwind": "Use Tailwind v4 with a linked local tailwind.css. Build only with documented utility classes; CSS compilation will be checked separately.",
+    "daisyui": "Use daisyUI v5 with its Tailwind v4 plugin and a linked local daisyui.css. Prefer idiomatic semantic component classes and documented Tailwind utilities."
+  },
+  "cases": [
+    {
+      "id": "overview-dashboard",
+      "prompt": "Design a SaaS overview dashboard with summary metrics and a recent activity list.",
+      "required_tags": [
+        "header",
+        "main",
+        "section",
+        "article",
+        "ul"
+      ],
+      "required_text": [
+        "Overview",
+        "Revenue",
+        "Active customers"
+      ]
+    },
+    {
+      "id": "customer-directory",
+      "prompt": "Design a customer directory with a search form and a labeled data table.",
+      "required_tags": [
+        "main",
+        "form",
+        "label",
+        "input",
+        "table",
+        "caption",
+        "th"
+      ],
+      "required_text": [
+        "Customers",
+        "Search customers",
+        "Status"
+      ]
+    },
+    {
+      "id": "marketing-hero",
+      "prompt": "Design a marketing landing-page hero, feature cards, and real links to plans/contact routes.",
+      "required_tags": [
+        "header",
+        "nav",
+        "main",
+        "section",
+        "article",
+        "a"
+      ],
+      "required_text": [
+        "Build with confidence",
+        "Features",
+        "Plans"
+      ]
+    },
+    {
+      "id": "pricing-plans",
+      "prompt": "Design a three-tier pricing comparison with named plan cards and links to plan routes.",
+      "required_tags": [
+        "main",
+        "section",
+        "article",
+        "a"
+      ],
+      "required_text": [
+        "Pricing",
+        "Starter",
+        "Growth",
+        "Scale"
+      ]
+    },
+    {
+      "id": "profile-form",
+      "prompt": "Design a profile settings form with name/email fields, a submit button and a real POST endpoint.",
+      "required_tags": [
+        "main",
+        "form",
+        "label",
+        "input",
+        "button"
+      ],
+      "required_text": [
+        "Profile settings",
+        "Name",
+        "Email"
+      ]
+    },
+    {
+      "id": "billing-invoices",
+      "prompt": "Design a billing overview with a captioned invoice table and payment status labels.",
+      "required_tags": [
+        "main",
+        "section",
+        "table",
+        "caption",
+        "th"
+      ],
+      "required_text": [
+        "Billing",
+        "Invoices",
+        "Amount"
+      ]
+    },
+    {
+      "id": "service-status",
+      "prompt": "Design three service status panels for healthy, warning and unavailable operations.",
+      "required_tags": [
+        "main",
+        "section",
+        "article"
+      ],
+      "required_text": [
+        "Service status",
+        "Operational",
+        "Degraded",
+        "Unavailable"
+      ]
+    },
+    {
+      "id": "workspace-navigation",
+      "prompt": "Design an application workspace with accessible navigation and main content cards.",
+      "required_tags": [
+        "header",
+        "nav",
+        "main",
+        "section",
+        "a"
+      ],
+      "required_text": [
+        "Workspace",
+        "Projects",
+        "Recent activity"
+      ]
+    },
+    {
+      "id": "onboarding-steps",
+      "prompt": "Design a first-use checklist with an ordered set of account onboarding steps.",
+      "required_tags": [
+        "main",
+        "section",
+        "ol",
+        "li"
+      ],
+      "required_text": [
+        "Get started",
+        "Create your workspace",
+        "Invite your team"
+      ]
+    },
+    {
+      "id": "notification-preferences",
+      "prompt": "Design a notifications preferences form with labeled native checkboxes and save button.",
+      "required_tags": [
+        "main",
+        "form",
+        "label",
+        "input",
+        "button"
+      ],
+      "required_text": [
+        "Notifications",
+        "Email updates",
+        "Product announcements"
+      ]
+    }
+  ]
+}

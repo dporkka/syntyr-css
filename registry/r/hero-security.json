@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "hero-security",
+  "type": "registry:item",
+  "title": "Security-first hero",
+  "description": "A restrained security product hero with an explicit trust message.",
+  "dependencies": [],
+  "registryDependencies": [
+    "https://syntyr-css.pages.dev/registry/r/core.json",
+    "https://syntyr-css.pages.dev/registry/r/recipes.json"
+  ],
+  "files": [
+    {
+      "path": "blocks/snippets/hero-security.html",
+      "type": "registry:file",
+      "target": "~/syntyr/blocks/hero-security.html",
+      "content": "<section class=\"syn-root syn-region\" data-syn-theme=\"studio\" aria-labelledby=\"syn-hero-security\">\n  <div class=\"syn-site-hero\">\n    <span class=\"syn-badge\">SECURITY BY DESIGN</span>\n    <h2 id=\"syn-hero-security\" class=\"syn-site-heading\">Ship fast. <strong>Stay in control.</strong></h2>\n    <p class=\"syn-lede\">Deploy reliable software without trading away visibility or ownership.</p>\n    <div class=\"syn-actions\"><a class=\"syn-button syn-button--primary\" href=\"/docs\">Read the docs</a></div>\n    <p class=\"syn-caption\">Self-hosting and access controls are supplied by your application, not by CSS.</p>\n  </div>\n</section>\n"
+    },
+    {
+      "path": "LICENSE",
+      "type": "registry:file",
+      "target": "~/syntyr/LICENSE",
+      "content": "MIT License\n\nCopyright (c) 2026 Syntyr CSS contributors\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n"
+    }
+  ],
+  "meta": {
+    "syntyrVersion": "0.3.0-alpha.5",
+    "source": "MIT source candidate",
+    "runtimeJavaScript": false,
+    "fileDigests": {
+      "~/syntyr/blocks/hero-security.html": "30147d2bab7425505f95fc076589c55e91ad876c580285cf5ebda6841f689b25",
+      "~/syntyr/LICENSE": "42f56369ac06362dbfe433d2d50b178bf74c369a55ea22337ab40fd9433521bf"
+    }
+  },
+  "docs": "Experimental source-candidate asset. Review exact version, HTML routes, keyboard behavior and integration before production use."
+}
