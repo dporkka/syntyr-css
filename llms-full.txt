@@ -6584,6 +6584,34 @@ composition and CLI exit code 2. Invalid input produces exit code 1.
 The planner does not parse natural-language prompts, guess missing features,
 select host controllers, certify functionality or make network calls.
 
+### One-command validated generation
+
+Use the optional source-checkout orchestration CLI (Python and Node.js)
+to run intent planning, composition preflight, canonical HTML rendering
+and the release-pinned markup validator in a single offline command.
+
+```sh
+python3 scripts/generate_ui.py <<'JSON'
+{"release":"0.3.0-alpha.5","title":"CRM dashboard","theme":"noir","requirements":["pipeline","metrics","inventory-search","account-management"]}
+JSON
+```
+
+A successful response contains `plan`, `preflight`, `validation` and
+`output` (HTML, editable project and asset references). The preflight
+lists exact individual module requirements; the output uses the aggregate
+stylesheet, checked separately by the markup validator. A blocked response
+has no generated artifact and identifies the stage that blocked it (exit 2).
+Invalid input or tool failure returns exit 1.
+
+Optional `interactions` declarations and `runtime_policy` are checked
+against the interaction contract and recipe inventory. Explicit interaction
+recipes are not yet emitted by the static section renderer, so even a valid
+explicit recipe declaration blocks generation until a renderer supports it.
+Documents above the markup validator's 20,000-character limit also block.
+The pipeline does not claim host functionality, live interaction behavior,
+security or accessibility certification; review the returned host obligations,
+sample content and destinations before deployment.
+
 ---
 
 ## Source: docs/editor-integration.md
