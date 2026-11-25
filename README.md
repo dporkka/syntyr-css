@@ -1,8 +1,22 @@
 # SYNTYR CSS
 
-**Experimental v0.3.0-alpha.5 (unreleased candidate)** — framework-neutral, low-dependency, CSS-first styling for modern SaaS apps, professional business websites and optional cinematic Grid/Noir designs.
+<p align="center">
+  <a href="https://syntyr-css.pages.dev/"><img src="assets/syntyr-mark.svg" width="72" height="72" alt="Syntyr mark"></a>
+</p>
+
+**Build expressive, durable interfaces with HTML and CSS.** Syntyr is a framework-neutral, CSS-first design system for SaaS dashboards, business websites, developer tools and cinematic interfaces. Copy a stylesheet, compose native HTML, and keep application behavior in your own stack.
+
+[Website](https://syntyr-css.pages.dev/) · [Documentation](https://syntyr-css.pages.dev/docs/) · [Examples](#visual-showcase) · [Releases](https://github.com/dporkka/syntyr-css/releases) · [Issues](https://github.com/dporkka/syntyr-css/issues) · [Contributing](https://github.com/dporkka/syntyr-css/blob/main/CONTRIBUTING.md) · [Roadmap](#roadmap)
+
+| Published release | Source candidate | License | Core runtime |
+| --- | --- | --- | --- |
+| [v0.3.0-alpha.4](https://github.com/dporkka/syntyr-css/releases/tag/v0.3.0-alpha.4) | Experimental v0.3.0-alpha.5 (unreleased candidate) | [MIT](LICENSE) | 0 required JS or runtime dependencies |
 
 **What can users install or buy today?** See the [release and commercial readiness overview](docs/launch-status.md). Published alpha.4 remains usable now; alpha.5, npm distribution, and paid kits have separate approval gates.
+
+[![Grid operations console with navigation, telemetry cards and cyan accents](assets/readme/operations-console.png)](https://syntyr-css.pages.dev/examples/operations-console.html)
+
+*Real browser screenshot of the alpha.5 source candidate; fictional data and static presentation. See the [console source](examples/operations-console.html).*
 
 ## Quick start — published alpha.4
 
@@ -63,7 +77,63 @@ stylesheets.
 - **Static page composition (alpha.5 source):** browse and rearrange all 99 copy-owned sections in the optional visual builder, then download a self-hostable HTML/CSS/image ZIP without application JavaScript. Backend forms remain host-owned. [Builder](docs/page-builder.html).
 - **Opt-in universal registry (alpha.5 source):** 99 copy-owned HTML blocks plus 9 CSS modules in shadcn-compatible static JSON; no consumer runtime dependency. See [blocks guide](docs/blocks-guide.md).
 
+**Next:** follow the [five-minute adoption tutorial](docs/distribution.md#your-first-five-minutes-published-alpha4) to build a small, self-hosted UI and change its theme without touching component markup.
+
+## Visual showcase
+
+The same CSS foundations support professional, restrained interfaces and optional expressive themes. These are screenshots of existing alpha.5 source examples, not mockups or released-feature guarantees.
+
+| Studio — business and SaaS | Noir — editorial and marketing |
+| --- | --- |
+| [![Light Studio dashboard with KPI cards](assets/readme/flagship-studio.png)](https://syntyr-css.pages.dev/examples/flagship-studio.html) | [![Dark Noir editorial landing page with amber typography](assets/readme/flagship-noir.png)](https://syntyr-css.pages.dev/examples/flagship-noir.html) |
+| [Live demo](https://syntyr-css.pages.dev/examples/flagship-studio.html) · [Source](examples/flagship-studio.html) | [Live demo](https://syntyr-css.pages.dev/examples/flagship-noir.html) · [Source](examples/flagship-noir.html) |
+
+[Compare all seven candidate themes](https://syntyr-css.pages.dev/examples/themes.html) · [Browse component catalog](https://syntyr-css.pages.dev/docs/catalog.html) · [Explore the Grid flagship](https://syntyr-css.pages.dev/examples/flagship-grid.html) · [Visual composition guide](docs/visual-composition.md)
+
+### Responsive components
+
+The same native markup at desktop and mobile viewport widths.
+
+| Desktop · 1280 × 800 | Mobile · 390 × 844 |
+| --- | --- |
+| [![Studio navigation, list groups, avatars and chips on desktop](assets/readme/components-desktop.png)](https://syntyr-css.pages.dev/examples/common-ui.html) | [![The same Studio components reflowed at mobile width](assets/readme/components-mobile.png)](https://syntyr-css.pages.dev/examples/common-ui.html) |
+
+[Live component example](https://syntyr-css.pages.dev/examples/common-ui.html) · [HTML source](examples/common-ui.html)
+
+### Seven themes, one component API
+
+[![All seven candidate themes showing the same card and button patterns: Grid, Noir, Studio, Industrial, Terminal, Corporate and Minimal](assets/readme/theme-gallery.png)](https://syntyr-css.pages.dev/examples/themes.html)
+
+Grid, Noir and Studio are available in the published alpha.4; the four additional themes are in the unreleased alpha.5 source candidate.
+
+## Find your next step
+
+| I want to… | Start here |
+| --- | --- |
+| Use Syntyr today | [Quick start](#quick-start--published-alpha4) · [Distribution](docs/distribution.md) |
+| Build a dashboard or website | [Component gallery](https://syntyr-css.pages.dev/docs/) · [Blocks](docs/blocks-guide.md) · [Examples](#visual-showcase) |
+| Integrate with my stack | [Framework integrations](docs/framework-integrations.md) · [Site builders](docs/site-builders.md) |
+| Use it with a coding agent | [AI quickstart](docs/ai-quickstart.md) · [DESIGN.md](DESIGN.md) · [llms.txt](llms.txt) |
+| Understand the internals | [Architecture](ARCHITECTURE.md) · [API stability](docs/api-stability.md) |
+| Help improve Syntyr | [Open issues](https://github.com/dporkka/syntyr-css/issues?q=is%3Aissue+is%3Aopen) · [Contributor guide](https://github.com/dporkka/syntyr-css/blob/main/CONTRIBUTING.md) |
+
+## How Syntyr compares
+
+| Choose | When it fits | Tradeoff |
+| --- | --- | --- |
+| Syntyr | Scoped, reusable UI for HTML-first apps; link prebuilt CSS | Experimental prerelease; smaller ecosystem; host owns behavior |
+| [Pico CSS](docs/compare-pico.md) | Minimal, semantic document and form styling | Less application-oriented styling out of the box |
+| [Tailwind CSS](docs/compare-tailwind.md) | Fine-grained utility composition and an established ecosystem | Production builds typically generate CSS; teams define component conventions |
+| [Bootstrap](docs/compare-bootstrap.md) | Mature component library, grid and optional widget plugins | Global styles and plugin behavior may require integration work |
+
+All four can display CSS without a required JavaScript runtime for styling. Some Bootstrap widgets use JavaScript, and all applications still own their behavior. This is an architectural decision guide, not a benchmark or accessibility ranking. See the [full comparison hub](docs/compare.md).
+
 ## Live gallery and installation
+
+Browse the curated entry points above, or expand the full reference index below.
+
+<details>
+<summary>All examples, integrations, guides and research references</summary>
 
 * [Three-page SaaS marketing site starter](examples/site-starters/saas-marketing/README.md): original responsive hero, features, workflow, pricing, about and native FAQs; [live source preview](https://syntyr-css.pages.dev/examples/site-starters/saas-marketing/) and dependency-free offline export with `scripts/export_site_starter.py`; [separate Vercel/Netlify deployment guide](deploy/saas-marketing/README.md). Illustrative alpha.5 source, not a commercial SaaS product.
 
@@ -140,6 +210,7 @@ stylesheets.
 - [Runnable Tailwind v4, Astro and shadcn-token adoption projects](docs/adoption-starters.md) and [editable Figma component kit pilot](docs/figma-component-kit.md)
 - [Opt-in shadcn/ui semantic token bridge](docs/shadcn-integration.md), [official CLI-generated React/Radix example](examples/syntyr-shadcn-react/), [Chromium visual regression](docs/visual-regression.md), and [release readiness](docs/release-readiness-ecosystem.md)
 - [Accessibility and browser-matrix methodology](docs/accessibility.md)
+- [Responsive compatibility evidence](docs/responsive-compatibility.html) ([JSON](metadata/responsive-compatibility.v1.json)); [optional local responsive audit CLI](https://github.com/dporkka/syntyr-css/blob/main/docs/visual-regression.md#optional-local-responsive-audit-cli)
 - [Progressive enhancement, automatic color scheme and print styling](docs/progressive-enhancement.md)
 - [Commercial Console Kit concept (not available for purchase)](docs/console-kit.html)
 - [Public design-partner review issue (seeking 10 participants)](https://github.com/dporkka/syntyr-css/issues/3)
@@ -173,6 +244,8 @@ stylesheets.
 - [Runnable Rust Axum / Askama dashboard starter](examples/rust-axum/README.md) — same-origin embedded CSS, real search and validation, no client JavaScript
 - [Static vs Hugo vs Zola decision](docs/site-generator-decision.md) and [isolated Hugo preview](experiments/hugo/README.md)
 
+</details>
+
 The linked alpha.4 release is already published; it does not include the four additional palettes or the optional utilities module. These are in the unreleased alpha.5 source candidate.
 
 Use the release ZIP, copy `dist/syntyr.core.css` into your static assets, and load it with a normal stylesheet link. The **unreleased alpha.5** ZIP candidate also includes `examples/saas.html`, a self-contained offline SaaS demo with relative CSS references (not included in the published alpha.4 archive). The candidate ZIP's interactive `examples/resizable-workspace.html`
@@ -185,6 +258,20 @@ can prevent interactive resizing. This example-specific JavaScript is
 not part of the Syntyr CSS runtime.
 
 No NPM, JS or build step is needed in an application. For package-manager projects, an optional CSS-only `@syntyr/css` manifest is now prepared for an **unpublished** alpha.5 candidate; [test it locally](docs/package-managers.md) until registry ownership and release approval are confirmed. No package installation is required by Syntyr itself.
+
+## Payload sizes and performance evidence
+
+These are **measured gzip asset sizes** for the immutable, published alpha.4 CSS, not HTTP transfer measurements or browser speed rankings. Each bar represents approximately 500 bytes; the exact byte count is authoritative. Bundles have different features.
+
+| Published alpha.4 asset | Relative gzip size | Gzip bytes |
+| --- | --- | ---: |
+| Core (default) | `█████████` | 4,324 |
+| Core + effects | `█████████` | 4,742 |
+| All modules | `██████████████` | 7,192 |
+
+Reproduce locally with Python's `gzip.compress(data, mtime=0)` on the three immutable files (`syntyr.core.css`, `syntyr.css`, `syntyr.all.css`) under [site-releases/0.3.0-alpha.4](site-releases/0.3.0-alpha.4/). The current source candidate has different sizes; run `python3 scripts/asset_report.py` to measure it.
+
+For actual browser measurements, see the [historical deployed-site mobile audit](docs/live-performance-audit.md) and [reproducible framework benchmark](docs/framework-performance.md). Neither asset sizes nor synthetic timing alone establish a cross-framework speed ranking.
 
 ## Documentation for humans and AI agents
 
@@ -373,9 +460,30 @@ an enforced required check until the GitHub/CI integration is verified.
 - Runtime zero dependencies does not mean zero maintainer/tooling dependencies. The standard library build script is deliberately small, and Playwright is only used for optional tests.
 - The `syn-root` scope works for compact embedded sections. `body.syn-root` gets full viewport height, or add `.syn-page` explicitly when needed.
 
+## Contribute and get help
+
+Contributions are welcome: documentation fixes, reproducible bugs, accessibility findings, cross-browser evidence and focused CSS improvements are especially useful.
+
+- [Browse open issues](https://github.com/dporkka/syntyr-css/issues?q=is%3Aissue+is%3Aopen) and [open pull requests](https://github.com/dporkka/syntyr-css/pulls) before starting. New contributors can browse [good first issues](https://github.com/dporkka/syntyr-css/labels/good%20first%20issue).
+- [Report a bug or request an improvement](https://github.com/dporkka/syntyr-css/issues/new/choose). Include a minimal HTML reproduction and the stylesheet version.
+- Follow the [contributor guide](https://github.com/dporkka/syntyr-css/blob/main/CONTRIBUTING.md), including the local setup, screenshot and verification requirements.
+- [Review the design-partner invitation](https://github.com/dporkka/syntyr-css/issues/3) if you want to give product feedback.
+- Report vulnerabilities privately using [SECURITY.md](https://github.com/dporkka/syntyr-css/blob/main/SECURITY.md), not the public issue tracker.
+
+Reading this from a package or ZIP? The [GitHub README](https://github.com/dporkka/syntyr-css#readme) has the complete visual showcase and repository links.
+
 ## Roadmap
 
-v0.2-alpha: free console + landing demos, accessible form-error styles, button variants, independent page/embedded scopes. v0.3-alpha: portable container-query recipes, attribute state styling, pricing example and Tailwind/Plus architectural study. v0.4: docs/theme editor; v1: stability + expanded browser/accessibility validation. Performance: raw/gzip sizes are reported per distributable, not bounded by arbitrary byte ceilings; runtime JS remains 0 bytes. Browser behavior and modular loading matter more than a fixed compressed-size target.
+The project prioritizes a stable native-HTML component contract and demonstrated adoption over an ever-growing class inventory.
+
+| Milestone | Status | Evidence / next step |
+| --- | --- | --- |
+| Alpha.4 | Published | [Immutable prerelease](https://github.com/dporkka/syntyr-css/releases/tag/v0.3.0-alpha.4) |
+| Alpha.5 | Unreleased candidate | [Release readiness](docs/launch-status.md), [accessibility review #24](https://github.com/dporkka/syntyr-css/issues/24), [CI gate #26](https://github.com/dporkka/syntyr-css/issues/26) |
+| Adoption and developer experience | Ongoing | [Design-partner feedback #3](https://github.com/dporkka/syntyr-css/issues/3), [discovery measurement #343](https://github.com/dporkka/syntyr-css/issues/343), [good first issues](https://github.com/dporkka/syntyr-css/labels/good%20first%20issue) |
+| v1 stability | Planned, no promised date | [API stability policy](docs/api-stability.md); approved compatibility and accessibility evidence |
+
+See the [public release roadmap and gates](docs/launch-status.md#public-roadmap) and [open issues](https://github.com/dporkka/syntyr-css/issues) for current work. Roadmap milestones are goals, not release dates or commercial availability claims.
 
 ## Provenance and license
 

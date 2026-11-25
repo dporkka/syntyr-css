@@ -20,6 +20,37 @@ class SearchUIContract(unittest.TestCase):
                 self.assertNotIn('results.textContent = "HTML', js)
                 self.assertEqual(js.count('results.textContent ='), 1)
 
+    def test_reference_search_indexes_only_public_guides_and_preserves_static_navigation(self):
+        from scripts.build_cloudflare_site import source_files
+
+        files = source_files()
+        class GuideIndex(HTMLParser):
+            def __init__(self):
+                super().__init__()
+                self.entries = []
+                self.pending = None
+            def handle_starttag(self, tag, attrs):
+                data = dict(attrs)
+                if tag == "li" and "data-doc-search" in data:
+                    self.pending = data["data-doc-search"]
+                elif tag == "a" and self.pending is not None:
+                    self.entries.append((data["href"], self.pending))
+                    self.pending = None
+
+        parser = GuideIndex()
+        page = files["docs/reference.html"].decode()
+        parser.feed(page)
+        expected = {name.removeprefix("docs/").removesuffix(".md") + ".html"
+                    for name in files if name.startswith("docs/") and name.endswith(".md")}
+        self.assertEqual({href for href, _ in parser.entries}, expected)
+        self.assertEqual(len(parser.entries), len(expected))
+        self.assertTrue(all(text.strip() for _, text in parser.entries))
+        self.assertIn((ROOT / "VERSION").read_text().strip(), page)
+        self.assertIn('id="docs-search-controls" class="docs-reference-search" hidden', page)
+        self.assertIn('role="status"', page)
+        self.assertIn('src="reference-search.js" defer', page)
+        self.assertIn("docs/reference-search.js", files)
+
     def test_catalog_browser_checks_count_from_actual_cards(self):
         browser = (ROOT / "tests/catalog_browser.js").read_text()
         self.assertIn("const total =", browser)

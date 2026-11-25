@@ -87,7 +87,12 @@ class CloudflareSiteTests(unittest.TestCase):
             self.assertFalse(any(
                 "<script" in re.sub(
                     r'<script type="application/ld\+json">.*?</script>', "",
-                    page.read_text(encoding="utf-8"), flags=re.I | re.S
+                    # The reference directory opts into exactly one first-party
+                    # deferred search script; all other script tags still fail.
+                    (page.read_text(encoding="utf-8").replace(
+                        '<script src="reference-search.js" defer></script>', '', 1)
+                     if page.relative_to(out).as_posix() == "docs/reference.html"
+                     else page.read_text(encoding="utf-8")), flags=re.I | re.S
                 ).lower()
                 for page in out.rglob("*.html")
                 if page.relative_to(out).as_posix() not in {

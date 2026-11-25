@@ -1462,10 +1462,11 @@
         "legend"
       ],
       "classes": [
-        "syn-button"
+        "syn-button",
+        "syn-check"
       ],
       "native_feature_requirements": [],
-      "html": "<form action=\"#catalog-top\" method=\"get\">\n  <fieldset>\n    <legend>Notification frequency</legend>\n    <label><input type=\"radio\" name=\"catalog-frequency\" value=\"daily\" checked> Daily</label>\n    <label><input type=\"radio\" name=\"catalog-frequency\" value=\"weekly\"> Weekly</label>\n  </fieldset>\n  <label><input type=\"checkbox\" name=\"catalog-updates\" checked> Product updates</label>\n  <button type=\"submit\" class=\"syn-button\">Apply</button>\n</form>"
+      "html": "<form action=\"#catalog-top\" method=\"get\">\n  <fieldset>\n    <legend>Notification frequency</legend>\n    <label class=\"syn-check\"><input type=\"radio\" name=\"catalog-frequency\" value=\"daily\" checked> Daily</label>\n    <label class=\"syn-check\"><input type=\"radio\" name=\"catalog-frequency\" value=\"weekly\"> Weekly</label>\n  </fieldset>\n  <label class=\"syn-check\"><input type=\"checkbox\" name=\"catalog-updates\" checked> Product updates</label>\n  <button type=\"submit\" class=\"syn-button\">Apply</button>\n</form>"
     },
     {
       "id": "catalog-select-and-textarea-title",

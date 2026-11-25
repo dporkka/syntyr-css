@@ -253,7 +253,20 @@ def main(argv=None) -> int:
     inspect = sub.add_parser('info', help='Read-only project inventory for agents and developers')
     inspect.add_argument('--project', default='.')
     inspect.add_argument('--json', action='store_true')
+    responsive = sub.add_parser('responsive', help='Optional local rendered-page audit (Playwright required)')
+    responsive.add_argument('url')
+    responsive.add_argument('--browsers', nargs='+', choices=('chromium', 'firefox', 'webkit'), default=['chromium'])
+    responsive.add_argument('--stress', action='store_true')
+    responsive.add_argument('--report', type=Path)
     args = parser.parse_args(argv)
+    if args.command == 'responsive':
+        from scripts.responsive_audit import main as audit_main
+        flags = [args.url, '--browsers', *args.browsers]
+        if args.stress:
+            flags.append('--stress')
+        if args.report:
+            flags.extend(['--report', str(args.report)])
+        return audit_main(flags)
     try:
         catalog = SyntyrCatalog()
         handlers = {'init': initialize, 'check': check, 'info': info}

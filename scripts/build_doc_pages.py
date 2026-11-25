@@ -265,6 +265,20 @@ def render_guide(name: str, allowed: set[str]) -> str:
 
 
 def render_directory(guides: dict[str, str]) -> str:
+    # The existing directory is the index: no second catalog or runtime fetch.
+    # Index only approved guide titles, descriptions and heading labels.
+    def item(name: str) -> str:
+        source = (ROOT / "docs" / name).read_text(encoding="utf-8")
+        tokens = renderer().parse(source)
+        headings = [tokens[i + 1].content for i, token in enumerate(tokens[:-1])
+                    if token.type == "heading_open" and token.tag in {"h2", "h3"}]
+        terms = " ".join((name.removesuffix(".md"), description_of(name, tokens), *headings))
+        terms = re.sub(r"\s+", " ", terms).strip()
+        stem = name.removesuffix(".md")
+        return (f'<li data-doc-search="{escape(terms, quote=True)}">'
+                f'<a href="{stem}.html">{escape(guides[name])}</a></li>')
+
+    source_version = (ROOT / "VERSION").read_text(encoding="utf-8").strip()
     listed: set[str] = set()
     sections = []
     for section, stems in SECTIONS:
@@ -272,14 +286,14 @@ def render_directory(guides: dict[str, str]) -> str:
         for stem in stems:
             filename = stem + ".md"
             if filename in guides:
-                items.append(f'<li><a href="{stem}.html">{escape(guides[filename])}</a></li>')
+                items.append(item(filename))
                 listed.add(filename)
         if items:
             sections.append(f'<section class="docs-reference-group"><h2>{escape(section)}</h2><ul>{"".join(items)}</ul></section>')
     remaining = sorted(set(guides) - listed)
     if remaining:
         sections.append('<section class="docs-reference-group"><h2>More guides</h2><ul>' + ''.join(
-            f'<li><a href="{name.removesuffix(".md")}.html">{escape(guides[name])}</a></li>' for name in remaining
+            item(name) for name in remaining
         ) + '</ul></section>')
     content = '\n'.join(sections)
     return f'''<!doctype html>
@@ -304,9 +318,17 @@ def render_directory(guides: dict[str, str]) -> str:
       <p class="syn-lede">Browse complete HTML guides with headings, code samples and tables. Markdown is still available for AI agents and source editing.</p>
       <p><a href="guides.html">Start with practical walkthroughs</a> · <a href="../llms.txt">Machine-readable documentation index</a></p>
     </section>
+    <p id="docs-search-scope">Source documentation for <strong>{escape(source_version)}</strong>. Search results may describe unreleased features; check <a href="distribution.html">published, version-pinned CSS</a> before copying examples.</p>
+    <section id="docs-search-controls" class="docs-reference-search" hidden aria-label="Guide search">
+      <label class="syn-label" for="docs-search-input">Search guides</label>
+      <input class="syn-input" id="docs-search-input" type="search" autocomplete="off" maxlength="160" aria-describedby="docs-search-scope docs-search-help" placeholder="e.g. SvelteKit or CSS tokens">
+      <p id="docs-search-help" class="syn-caption">Matches guide titles, descriptions and headings. Clear the field to browse all guides.</p>
+      <p id="docs-search-results" role="status" aria-live="polite" aria-atomic="true"></p>
+    </section>
     <div class="docs-reference-grid">{content}</div></main>
     <footer class="syn-header"><span class="syn-caption">SYNTYR CSS · MIT CORE · EXPERIMENTAL</span><a href="../index.html">Home</a></footer>
   </div>
+  <script src="reference-search.js" defer></script>
 </body>
 </html>
 '''

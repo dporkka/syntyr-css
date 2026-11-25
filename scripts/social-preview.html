@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Syntyr social preview — maintainer source</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;width:1200px;height:630px}
+body{background:#0b1520;color:#e9f4fa;font-family:system-ui,sans-serif;display:grid;grid-template-columns:440px 1fr;gap:34px;align-items:center;padding:48px;background-image:linear-gradient(#18303c66 1px,transparent 1px),linear-gradient(90deg,#18303c66 1px,transparent 1px);background-size:48px 48px}
+.brand{display:flex;align-items:center;gap:14px;font-size:24px;font-weight:750;letter-spacing:.11em}
+.brand img{width:52px;height:52px}
+h1{font-size:66px;line-height:1.03;letter-spacing:-.055em;margin:30px 0 20px}
+h1 span{color:#72e0ef}
+p{font-size:24px;line-height:1.45;color:#bed2de;margin:0 0 24px;max-width:420px}
+.tag{display:inline-block;border:1px solid #416a7d;color:#bdeff5;padding:8px 11px;font-size:15px;letter-spacing:.09em;font-weight:650}
+.previews{position:relative;width:630px;height:500px}
+.window{position:absolute;overflow:hidden;background:#0d1c27;border:2px solid #527485;border-radius:9px;box-shadow:0 14px 35px #0008}
+.window img{display:block;width:100%;height:auto}
+.grid{width:600px;top:8px;left:0}
+.studio{width:440px;bottom:18px;right:0;border-color:#8498af}
+.caption{position:absolute;bottom:0;left:0;font-size:13px;letter-spacing:.08em;color:#a9c3d0;font-weight:600}
+</style>
+</head>
+<body>
+<main>
+<div class="brand"><img src="../assets/syntyr-mark.svg" alt="">SYNTYR CSS</div>
+<h1>Modern UI.<br><span>Native HTML.</span></h1>
+<p>Framework-neutral CSS for SaaS, websites and developer tools.</p>
+<div class="tag">MIT · ZERO REQUIRED RUNTIME JS</div>
+</main>
+<div class="previews" aria-label="Actual Syntyr source-candidate screenshots">
+<div class="window grid"><img src="../assets/readme/operations-console.png" alt="Grid operations console"></div>
+<div class="window studio"><img src="../assets/readme/flagship-studio.png" alt="Studio operations dashboard"></div>
+<div class="caption">ALPHA.5 SOURCE PREVIEWS · SAMPLE DATA</div>
+</div>
+</body>
+</html>

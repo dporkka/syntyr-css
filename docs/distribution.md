@@ -3,6 +3,78 @@
 Syntyr CSS is MIT-licensed. No NPM install, JavaScript runtime, fonts,
 icons, Sass compiler or CSS framework is required to use the distributed CSS.
 
+## Your first five minutes (published alpha.4)
+
+Start with a small project overview that works without application JavaScript.
+These steps use only the immutable published alpha.4 core CSS, not source-candidate classes.
+
+### 1. Download the CSS
+
+Create a directory named `syntyr-demo`. Save the [pinned core stylesheet](https://syntyr-css.pages.dev/v/0.3.0-alpha.4/syntyr.core.css)
+as `syntyr.core.css` inside it. Alternatively, from a terminal:
+
+```sh
+mkdir -p syntyr-demo
+cd syntyr-demo
+curl -fsSLo syntyr.core.css https://syntyr-css.pages.dev/v/0.3.0-alpha.4/syntyr.core.css
+```
+
+### 2. Create index.html
+
+Save this complete file alongside the stylesheet:
+
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Project overview</title>
+  <link rel="stylesheet" href="./syntyr.core.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <main class="syn-shell">
+    <section class="syn-panel" aria-labelledby="project-title">
+      <h1 id="project-title" class="syn-heading">Project overview</h1>
+      <p class="syn-muted">Your first Syntyr interface.</p>
+      <details>
+        <summary>Project details</summary>
+        <p>This disclosure uses native HTML, not a widget runtime.</p>
+      </details>
+      <p><a class="syn-button syn-button--primary" href="#next">Next steps</a></p>
+    </section>
+    <section id="next">
+      <h2>Next steps</h2>
+      <p>Replace this sample content with your own.</p>
+    </section>
+  </main>
+</body>
+</html>
+```
+
+### 3. Open and try it
+
+Open `index.html` in a modern browser. The layout and native disclosure
+work offline. Activate the disclosure and the link with the keyboard.
+The link navigates to a real section on the page.
+
+### 4. Change the theme and check the viewport
+
+Change `data-syn-theme="studio"` to `grid` or `noir` and reload.
+The markup stays the same. Resize to a narrow window and check text wrapping
+and keyboard focus. These checks are a first step, not an accessibility audit.
+
+### 5. Adopt one real screen
+
+Copy the same pinned stylesheet into your application's public assets,
+choose one isolated `syn-root` region, and use real native links and forms
+connected to your application. Read the [component reference](components.md)
+and [integration guide](framework-integrations.md); check that any added
+classes exist in the alpha.4 stylesheet before using them.
+
+The [live component catalog](catalog.html) also includes unreleased
+alpha.5 examples; do not assume every catalog pattern is available in alpha.4.
+
 ## Recommended: self-host a versioned stylesheet
 
 1. Download the asset from the [GitHub release](https://github.com/dporkka/syntyr-css/releases/tag/v0.3.0-alpha.4), or copy the matching file from the tag.

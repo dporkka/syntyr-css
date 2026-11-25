@@ -87,3 +87,6 @@
 .syn-root .blocks-pathways .syn-panel { min-width:0; display:grid; gap:.5rem; align-content:start; }
 .syn-root .blocks-pathways .syn-panel > :where(h3,p) { margin:0; }
 .syn-root .blocks-pathways .syn-panel a { overflow-wrap:anywhere; }
+
+/* Native disclosures inside copy-owned previews retain a usable hit area. */
+.syn-root .blocks-preview summary { min-block-size: 24px; }

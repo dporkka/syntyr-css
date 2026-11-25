@@ -2963,6 +2963,78 @@ Original: https://syntyr-css.pages.dev/docs/distribution.md
 Syntyr CSS is MIT-licensed. No NPM install, JavaScript runtime, fonts,
 icons, Sass compiler or CSS framework is required to use the distributed CSS.
 
+## Your first five minutes (published alpha.4)
+
+Start with a small project overview that works without application JavaScript.
+These steps use only the immutable published alpha.4 core CSS, not source-candidate classes.
+
+### 1. Download the CSS
+
+Create a directory named `syntyr-demo`. Save the [pinned core stylesheet](https://syntyr-css.pages.dev/v/0.3.0-alpha.4/syntyr.core.css)
+as `syntyr.core.css` inside it. Alternatively, from a terminal:
+
+```sh
+mkdir -p syntyr-demo
+cd syntyr-demo
+curl -fsSLo syntyr.core.css https://syntyr-css.pages.dev/v/0.3.0-alpha.4/syntyr.core.css
+```
+
+### 2. Create index.html
+
+Save this complete file alongside the stylesheet:
+
+```html
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Project overview</title>
+  <link rel="stylesheet" href="./syntyr.core.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <main class="syn-shell">
+    <section class="syn-panel" aria-labelledby="project-title">
+      <h1 id="project-title" class="syn-heading">Project overview</h1>
+      <p class="syn-muted">Your first Syntyr interface.</p>
+      <details>
+        <summary>Project details</summary>
+        <p>This disclosure uses native HTML, not a widget runtime.</p>
+      </details>
+      <p><a class="syn-button syn-button--primary" href="#next">Next steps</a></p>
+    </section>
+    <section id="next">
+      <h2>Next steps</h2>
+      <p>Replace this sample content with your own.</p>
+    </section>
+  </main>
+</body>
+</html>
+```
+
+### 3. Open and try it
+
+Open `index.html` in a modern browser. The layout and native disclosure
+work offline. Activate the disclosure and the link with the keyboard.
+The link navigates to a real section on the page.
+
+### 4. Change the theme and check the viewport
+
+Change `data-syn-theme="studio"` to `grid` or `noir` and reload.
+The markup stays the same. Resize to a narrow window and check text wrapping
+and keyboard focus. These checks are a first step, not an accessibility audit.
+
+### 5. Adopt one real screen
+
+Copy the same pinned stylesheet into your application's public assets,
+choose one isolated `syn-root` region, and use real native links and forms
+connected to your application. Read the [component reference](components.md)
+and [integration guide](framework-integrations.md); check that any added
+classes exist in the alpha.4 stylesheet before using them.
+
+The [live component catalog](catalog.html) also includes unreleased
+alpha.5 examples; do not assume every catalog pattern is available in alpha.4.
+
 ## Recommended: self-host a versioned stylesheet
 
 1. Download the asset from the [GitHub release](https://github.com/dporkka/syntyr-css/releases/tag/v0.3.0-alpha.4), or copy the matching file from the tag.
@@ -3492,6 +3564,80 @@ Original: https://syntyr-css.pages.dev/docs/framework-integrations.md
 Syntyr is a **CSS presentation layer**, not a state manager, request client, or component runtime.
 It has no JavaScript initialization, no required build tool, and no runtime dependency.
 Every example uses the same `syn-` classes, CSS tokens and standard HTML.
+
+## Compatibility matrix and evidence
+
+Syntyr is compatible with HTML renderers by architecture, not by a blanket
+promise about every framework version or browser. Use the following routes
+and evidence levels when choosing an integration.
+
+**Published alpha.4:** pin the [immutable CSS release](distribution.md).
+**Unreleased alpha.5:** the fixtures and optional adapters below use the
+source candidate unless explicitly stated otherwise. Do not copy new classes
+or modules into an alpha.4 app. No framework or browser support floor has
+been approved for alpha.5; see [release readiness](launch-status.md).
+
+| Integration | Adoption route | Evidence available |
+| --- | --- | --- |
+| Plain HTML / server templates | Self-host pinned core CSS, scoped root | Published alpha.4 quickstart; alpha.5 browser sample below |
+| React / Vite and Next.js | Global CSS import, native JSX; optional typed wrappers | [Source consumer fixtures](node-react-next-integration.md), optional build/browser tests |
+| Preact and Solid | JSX/TSX with explicit classes | [Source consumer fixtures](jsx-tsx-integration.md), optional build/browser tests |
+| Astro, Eleventy, Hugo | Static output and copied or imported CSS | [Runnable source fixtures](adoption-starters.md); generator-specific deployment checks |
+| Svelte / SvelteKit | Global CSS, native actions, optional enhancement | [SvelteKit source app](https://github.com/dporkka/syntyr-css/tree/main/examples/sveltekit); build and action tests |
+| Go / templ, Rust / Axum, Node / Express | Static CSS and server-owned rendering | [Go HTMX](https://github.com/dporkka/syntyr-css/tree/main/examples/go-htmx), [Rust Axum](rust-saas-integration.md), [Node](node-react-next-integration.md) source examples |
+| HTMX, Datastar, Turbo, Unpoly, Lit | Stable theme root, host-managed interactions | [Interaction recipes](interaction-recipes.md) and source behavior fixtures |
+| Tailwind v4, shadcn/ui, Radix | Opt-in scoped token bridges; keep host behavior | [Ecosystem fixtures](adoption-starters.md); test actual host cascade |
+| Vue / Nuxt, Rails, Laravel, Django, Phoenix, Spring, ASP.NET | Native HTML/template classes; host-owned behavior | Integration guidance, not an independently verified framework-version guarantee |
+| WordPress, Shopify, Webflow, Wix and other builders | Scoped HTML/CSS embed; alpha.5 embed entrypoint where available | [Platform-specific guidance](site-builders.md); verify editor and host constraints |
+| React Native, Flutter, SwiftUI, Compose | Portable literal tokens, not browser CSS | [Token adapters and limitations](mobile-frameworks.md); no native component compatibility claim |
+| Electron, Tauri, Capacitor | HTML/CSS in a WebView | Browser-level route only; test the actual embedded engine |
+
+A fixture existing in the repository does not mean its latest dependency
+versions have been built, its package tarball consumed, or its accessibility
+review completed. The [package-manager guide](package-managers.md) separates
+archive verification from consumer installation.
+
+### Focused browser evidence (November 25, 2026)
+
+The following is a historical, **unreleased alpha.5** source sample at
+[45c86cf58bd0fb1decaaf391ba4dba69b00cefc8](https://github.com/dporkka/syntyr-css/commit/45c86cf58bd0fb1decaaf391ba4dba69b00cefc8).
+Playwright 1.65.2 ran on x86-64 Linux with glibc 2.43, headless.
+Three existing pages (console, native elements, semantic starter) were
+checked at 320, 390 and 1280 CSS-pixel widths with the existing
+`tests/browser_matrix.py` assertions.
+
+| Engine | Observed browser version | Result |
+| --- | --- | --- |
+| Chromium | 159.0.8154.6 | 9/9 focused cases passed |
+| Firefox | 159.0 | 9/9 focused cases passed |
+| WebKit | Not obtained | Blocked: browser launch failed; zero cases executed |
+
+This is a sample of 18 passing automated cases, not the full site/browser
+matrix. It does not establish support for physical Android/iOS devices,
+Safari, Chrome or Edge product versions, actual browser zoom, screen readers,
+OS forced colors or WCAG conformance. WebKit is unverified, not a passing or
+failing Syntyr layout result. The independently approved browser matrix
+and manual review remain open.
+
+To reproduce the broader automated matrix from a checked-out revision with
+the required Playwright engines and native libraries installed:
+
+```sh
+python3 tests/browser_matrix.py --browsers chromium firefox webkit
+```
+
+For the focused historical sample, call the same `assert_page` function
+from that script for `examples/console.html`, `examples/native-elements.html`
+and `examples/semantic-starter.html` at widths 320, 390 and 1280 (height 820,
+reduced motion). Record the exact commit, engine versions, case counts and
+blocked engines. Do not infer current support from historical test results.
+
+**Framework package evidence gap:** independent offline install attempts
+using the packed alpha.5 CSS and the Preact/Vite, Tailwind and Astro source
+fixtures were blocked at dependency resolution (missing third-party npm
+cache entries). No framework build passed or failed in those attempts.
+Resolve toolchain and dependency availability, then test actual installed
+tarballs in clean consumer apps before upgrading evidence claims.
 
 ## Copy a catalog example into your stack
 
@@ -6829,6 +6975,39 @@ selectors are scoped, those classes would otherwise silently render without
 Syntyr styles. Plain HTML fragments are exempt because the embedding app may
 supply the root; dynamic ancestor classes and inert `<template>` contents are
 also exempt because their rendered scope is unknown.
+
+### Inspect stylesheet loading with CSS Doctor
+
+Use the same validator with `--doctor` to inspect literal stylesheet links:
+
+```sh
+python3 scripts/syntyr_check.py --doctor --semantic --format json index.html
+```
+
+Repeated Syntyr links and distributions sharing canonical CSS sources produce
+advisory warnings; different explicit semantic-version pins in `/v/<version>/`
+paths produce errors. The source-ownership map comes from the generated current
+candidate contract, including presets and atomic component files. Conditional
+stylesheets may overlap intentionally; review warnings rather than automatically
+removing files. Unpinned local paths, bundler imports and actual downloaded CSS
+versions are not inferred. This is static inspection, not browser cascade,
+security or accessibility certification. Default validation is unchanged.
+
+### Inspect design token references
+
+Add `--tokens` to inspect literal inline `var(--syn-…)` references against
+the selected contract's token inventory. Unknown names include suggested
+canonical spellings and provider stylesheets. Known references without a
+declared provider produce advisory warnings. The check does not determine
+computed values, resolve inheritance or infer custom host definitions.
+It skips locally declared tokens, templates, CSS strings/comments and
+ambiguous escaped or URL-bearing inline styles; external CSS and style
+blocks are not analyzed. Warnings do not alter default validation or fail
+the CLI.
+
+```sh
+python3 scripts/syntyr_check.py --doctor --tokens --semantic --format json index.html
+```
 
 With `--semantic`, a second standard-library pass checks literal HTML for
 duplicate static IDs, missing form labels (including an unnamed `input

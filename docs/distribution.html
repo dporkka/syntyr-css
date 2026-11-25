@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Install and self-host Syntyr CSS using versioned stylesheets, optional modules, and immutable releases for production websites.">
-  <meta name="syntyr-source-sha256" content="767b9671506793272de5db16cdfadcd3ae1a1cbd2912b12f6dfeed3f2ef4b066">
+  <meta name="syntyr-source-sha256" content="25f08015304c6520f75942d603ef49a968ac60c8620208a3551b9200aedc1480">
   <meta name="theme-color" content="#f5f7fb">
   <title>Syntyr CSS distribution — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/distribution">
@@ -37,6 +37,61 @@
 <h1 id="syntyr-css-distribution">Syntyr CSS distribution</h1>
 <p>Syntyr CSS is MIT-licensed. No NPM install, JavaScript runtime, fonts,
 icons, Sass compiler or CSS framework is required to use the distributed CSS.</p>
+<h2 id="your-first-five-minutes-published-alpha4">Your first five minutes (published alpha.4)</h2>
+<p>Start with a small project overview that works without application JavaScript.
+These steps use only the immutable published alpha.4 core CSS, not source-candidate classes.</p>
+<h3 id="1-download-the-css">1. Download the CSS</h3>
+<p>Create a directory named <code>syntyr-demo</code>. Save the <a href="https://syntyr-css.pages.dev/v/0.3.0-alpha.4/syntyr.core.css">pinned core stylesheet</a>
+as <code>syntyr.core.css</code> inside it. Alternatively, from a terminal:</p>
+<pre tabindex="0"><code class="language-sh">mkdir -p syntyr-demo
+cd syntyr-demo
+curl -fsSLo syntyr.core.css https://syntyr-css.pages.dev/v/0.3.0-alpha.4/syntyr.core.css
+</code></pre>
+<h3 id="2-create-indexhtml">2. Create index.html</h3>
+<p>Save this complete file alongside the stylesheet:</p>
+<pre tabindex="0"><code class="language-html">&lt;!doctype html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;utf-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+  &lt;title&gt;Project overview&lt;/title&gt;
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;./syntyr.core.css&quot;&gt;
+&lt;/head&gt;
+&lt;body class=&quot;syn-root syn-page&quot; data-syn-theme=&quot;studio&quot;&gt;
+  &lt;main class=&quot;syn-shell&quot;&gt;
+    &lt;section class=&quot;syn-panel&quot; aria-labelledby=&quot;project-title&quot;&gt;
+      &lt;h1 id=&quot;project-title&quot; class=&quot;syn-heading&quot;&gt;Project overview&lt;/h1&gt;
+      &lt;p class=&quot;syn-muted&quot;&gt;Your first Syntyr interface.&lt;/p&gt;
+      &lt;details&gt;
+        &lt;summary&gt;Project details&lt;/summary&gt;
+        &lt;p&gt;This disclosure uses native HTML, not a widget runtime.&lt;/p&gt;
+      &lt;/details&gt;
+      &lt;p&gt;&lt;a class=&quot;syn-button syn-button--primary&quot; href=&quot;#next&quot;&gt;Next steps&lt;/a&gt;&lt;/p&gt;
+    &lt;/section&gt;
+    &lt;section id=&quot;next&quot;&gt;
+      &lt;h2&gt;Next steps&lt;/h2&gt;
+      &lt;p&gt;Replace this sample content with your own.&lt;/p&gt;
+    &lt;/section&gt;
+  &lt;/main&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h3 id="3-open-and-try-it">3. Open and try it</h3>
+<p>Open <code>index.html</code> in a modern browser. The layout and native disclosure
+work offline. Activate the disclosure and the link with the keyboard.
+The link navigates to a real section on the page.</p>
+<h3 id="4-change-the-theme-and-check-the-viewport">4. Change the theme and check the viewport</h3>
+<p>Change <code>data-syn-theme=&quot;studio&quot;</code> to <code>grid</code> or <code>noir</code> and reload.
+The markup stays the same. Resize to a narrow window and check text wrapping
+and keyboard focus. These checks are a first step, not an accessibility audit.</p>
+<h3 id="5-adopt-one-real-screen">5. Adopt one real screen</h3>
+<p>Copy the same pinned stylesheet into your application's public assets,
+choose one isolated <code>syn-root</code> region, and use real native links and forms
+connected to your application. Read the <a href="components.html">component reference</a>
+and <a href="framework-integrations.html">integration guide</a>; check that any added
+classes exist in the alpha.4 stylesheet before using them.</p>
+<p>The <a href="catalog.html">live component catalog</a> also includes unreleased
+alpha.5 examples; do not assume every catalog pattern is available in alpha.4.</p>
 <h2 id="recommended-self-host-a-versioned-stylesheet">Recommended: self-host a versioned stylesheet</h2>
 <ol>
 <li>Download the asset from the <a href="https://github.com/dporkka/syntyr-css/releases/tag/v0.3.0-alpha.4">GitHub release</a>, or copy the matching file from the tag.</li>
@@ -256,6 +311,12 @@ cross-browser and full accessibility audits are still release gates.</p>
         </article>
         <aside class="docs-article-sidebar">
           <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+<a class="docs-article-toc-link docs-article-toc-2" href="#your-first-five-minutes-published-alpha4">Your first five minutes (published alpha.4)</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#1-download-the-css">1. Download the CSS</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#2-create-indexhtml">2. Create index.html</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#3-open-and-try-it">3. Open and try it</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#4-change-the-theme-and-check-the-viewport">4. Change the theme and check the viewport</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#5-adopt-one-real-screen">5. Adopt one real screen</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#recommended-self-host-a-versioned-stylesheet">Recommended: self-host a versioned stylesheet</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#embed-inside-an-existing-cms-theme-unreleased-alpha5">Embed inside an existing CMS theme (unreleased alpha.5)</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#offline-saas-preview-in-the-next-release-zip-unreleased-alpha5">Offline SaaS preview in the next release ZIP (unreleased alpha.5)</a>
@@ -273,6 +334,12 @@ cross-browser and full accessibility audits are still release gates.</p>
           <details class="docs-article-toc-mobile">
             <summary>On this page <span>Jump to section</span></summary>
             <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#your-first-five-minutes-published-alpha4">Your first five minutes (published alpha.4)</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#1-download-the-css">1. Download the CSS</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#2-create-indexhtml">2. Create index.html</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#3-open-and-try-it">3. Open and try it</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#4-change-the-theme-and-check-the-viewport">4. Change the theme and check the viewport</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#5-adopt-one-real-screen">5. Adopt one real screen</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#recommended-self-host-a-versioned-stylesheet">Recommended: self-host a versioned stylesheet</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#embed-inside-an-existing-cms-theme-unreleased-alpha5">Embed inside an existing CMS theme (unreleased alpha.5)</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#offline-saas-preview-in-the-next-release-zip-unreleased-alpha5">Offline SaaS preview in the next release ZIP (unreleased alpha.5)</a>
