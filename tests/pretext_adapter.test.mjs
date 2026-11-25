@@ -89,3 +89,8 @@ test("accepts explicit zero word spacing and untransformed text", () => {
   const pretext = {prepare: () => "handle", layout: () => ({lineCount: 2, height: 48})};
   assert.equal(predictWithPretext(element({}, {textTransform: "none", wordSpacing: "0px"}), pretext).status, "measured");
 });
+
+test("counts tightly spaced adjacent lines even when glyph rectangles overlap", () => {
+  const rects = [{top: 0, bottom: 40}, {top: 10, bottom: 50}];
+  assert.equal(inspectText(element({rects}, {fontSize: "40px", lineHeight: "10px"})).actualLines, 2);
+});

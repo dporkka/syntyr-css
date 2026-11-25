@@ -9,13 +9,15 @@ export function inspectText(element) {
   range.selectNodeContents(element);
   // Font fallback may give fragments on one line different top coordinates.
   // Group overlapping text bands using their midpoints, not exact tops.
+  const lineHeight = Number.parseFloat(element.ownerDocument.defaultView.getComputedStyle(element).lineHeight);
+  const halfLine = Number.isFinite(lineHeight) && lineHeight > 0 ? lineHeight / 2 : Infinity;
   const bands = [];
   const fragments = Array.from(range.getClientRects(), rect => ({
     center: (rect.top + rect.bottom) / 2, height: rect.bottom - rect.top
   })).filter(rect => rect.height > 0).sort((a, b) => a.center - b.center);
   for (const fragment of fragments) {
     const band = bands[bands.length - 1];
-    if (!band || fragment.center - band.center >= Math.min(fragment.height, band.height) / 2)
+    if (!band || fragment.center - band.center >= Math.min(fragment.height / 2, band.height / 2, halfLine))
       bands.push(fragment);
   }
   return {

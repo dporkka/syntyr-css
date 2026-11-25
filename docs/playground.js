@@ -356,13 +356,15 @@ ${snippet.previewStylesheets(selectedModule())}
     const range = document.createRange();
     range.selectNodeContents(preview);
     // Font fallback can produce multiple fragment tops on the same visual line.
+    const lineHeight = Number.parseFloat(getComputedStyle(preview).lineHeight);
+    const halfLine = Number.isFinite(lineHeight) && lineHeight > 0 ? lineHeight / 2 : Infinity;
     const bands = [];
     const fragments = Array.from(range.getClientRects(), rect => ({
       center: (rect.top + rect.bottom) / 2, height: rect.bottom - rect.top
     })).filter(rect => rect.height > 0).sort((a, b) => a.center - b.center);
     for (const fragment of fragments) {
       const band = bands[bands.length - 1];
-      if (!band || fragment.center - band.center >= Math.min(fragment.height, band.height) / 2)
+      if (!band || fragment.center - band.center >= Math.min(fragment.height / 2, band.height / 2, halfLine))
         bands.push(fragment);
     }
     const lineCount = preview.textContent ? bands.length : 0;
