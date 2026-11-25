@@ -1,0 +1,252 @@
+{
+  "schema_version": 1,
+  "source_version": "0.3.0-alpha.5",
+  "note": "Candidate-only descriptive contracts; intentions are not callable actions or accessibility certification. Element names are examples, not exclusive restrictions.",
+  "contracts": [
+    {
+      "id": "combobox",
+      "behavior_owner": "host",
+      "stylesheets": [
+        "syntyr.core.css",
+        "headless/interactions.css"
+      ],
+      "parts": [
+        {
+          "id": "root",
+          "element": "div",
+          "classes": [
+            "syn-combobox"
+          ]
+        },
+        {
+          "id": "field",
+          "element": "div",
+          "classes": [
+            "syn-combobox-field"
+          ]
+        },
+        {
+          "id": "input",
+          "element": "input",
+          "classes": [
+            "syn-input"
+          ]
+        },
+        {
+          "id": "popup",
+          "element": "div",
+          "classes": [
+            "syn-combobox-popover"
+          ]
+        },
+        {
+          "id": "listbox",
+          "element": "ul",
+          "classes": [
+            "syn-combobox-listbox"
+          ]
+        },
+        {
+          "id": "option",
+          "element": "li",
+          "classes": [
+            "syn-combobox-option"
+          ]
+        }
+      ],
+      "state_hooks": [
+        "aria-expanded",
+        "aria-activedescendant",
+        "aria-selected",
+        "aria-disabled"
+      ],
+      "intentions": [
+        "filter",
+        "select",
+        "dismiss"
+      ],
+      "accessibility": [
+        "Provide a visible label and correct combobox/listbox relationships.",
+        "Host owns active option, keyboard navigation, IME and focus."
+      ],
+      "fallback": "Use a labeled native select for a short fixed list.",
+      "reference": "docs/headless-interactions.md"
+    },
+    {
+      "id": "dialog",
+      "behavior_owner": "browser-and-host",
+      "stylesheets": [
+        "syntyr.core.css"
+      ],
+      "parts": [
+        {
+          "id": "trigger",
+          "element": "button",
+          "classes": []
+        },
+        {
+          "id": "surface",
+          "element": "dialog",
+          "classes": [
+            "syn-dialog"
+          ]
+        },
+        {
+          "id": "close",
+          "element": "button",
+          "classes": []
+        }
+      ],
+      "state_hooks": [
+        "open"
+      ],
+      "intentions": [
+        "open",
+        "dismiss"
+      ],
+      "accessibility": [
+        "Use showModal or supported invoker commands for modal behavior; open alone is not modal.",
+        "Name the dialog and verify focus restoration and Escape."
+      ],
+      "fallback": "Provide a normal link to a dedicated page when modal invocation is unavailable.",
+      "reference": "docs/native-browser-apis.md"
+    },
+    {
+      "id": "disclosure",
+      "behavior_owner": "browser",
+      "stylesheets": [
+        "syntyr.core.css"
+      ],
+      "parts": [
+        {
+          "id": "root",
+          "element": "details",
+          "classes": [
+            "syn-details"
+          ]
+        },
+        {
+          "id": "trigger",
+          "element": "summary",
+          "classes": []
+        },
+        {
+          "id": "content",
+          "element": "div",
+          "classes": []
+        }
+      ],
+      "state_hooks": [
+        "open"
+      ],
+      "intentions": [
+        "expand",
+        "collapse"
+      ],
+      "accessibility": [
+        "Use a meaningful summary as the native disclosure control.",
+        "Do not replace native semantics with redundant ARIA."
+      ],
+      "fallback": "Keep content accessible as ordinary HTML when disclosure is unsupported.",
+      "reference": "docs/native-browser-apis.md"
+    },
+    {
+      "id": "dropdown",
+      "behavior_owner": "browser-and-host",
+      "stylesheets": [
+        "syntyr.core.css"
+      ],
+      "parts": [
+        {
+          "id": "trigger",
+          "element": "button",
+          "classes": []
+        },
+        {
+          "id": "surface",
+          "element": "div",
+          "classes": [
+            "syn-popover",
+            "syn-dropdown"
+          ]
+        },
+        {
+          "id": "item",
+          "element": "button",
+          "classes": [
+            "syn-dropdown__item"
+          ]
+        }
+      ],
+      "state_hooks": [
+        ":popover-open",
+        "aria-current",
+        "aria-disabled",
+        "disabled"
+      ],
+      "intentions": [
+        "open",
+        "dismiss",
+        "choose"
+      ],
+      "accessibility": [
+        "Native popover contains ordinary links or buttons with Tab navigation.",
+        "ARIA menu roles require explicit menu keyboard and focus behavior."
+      ],
+      "fallback": "Keep essential actions accessible as ordinary links or forms.",
+      "reference": "docs/dropdowns.md"
+    },
+    {
+      "id": "sortable-table",
+      "behavior_owner": "host",
+      "stylesheets": [
+        "syntyr.core.css"
+      ],
+      "parts": [
+        {
+          "id": "wrapper",
+          "element": "div",
+          "classes": [
+            "syn-table-wrap"
+          ]
+        },
+        {
+          "id": "table",
+          "element": "table",
+          "classes": [
+            "syn-table"
+          ]
+        },
+        {
+          "id": "heading",
+          "element": "th",
+          "classes": []
+        },
+        {
+          "id": "sort-control",
+          "element": "button",
+          "classes": [
+            "syn-table-sort"
+          ]
+        },
+        {
+          "id": "row",
+          "element": "tr",
+          "classes": []
+        }
+      ],
+      "state_hooks": [
+        "aria-sort"
+      ],
+      "intentions": [
+        "sort"
+      ],
+      "accessibility": [
+        "Use semantic headers and an accessible sort control.",
+        "Host sorts actual rows and sets truthful aria-sort; do not add grid roles without grid keyboard behavior."
+      ],
+      "fallback": "Use server-sorted links in a native table.",
+      "reference": "docs/data-tables.md"
+    }
+  ]
+}
