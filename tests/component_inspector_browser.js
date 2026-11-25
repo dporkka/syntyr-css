@@ -24,6 +24,8 @@ const {chromium} = require('playwright');
       assert.match(await page.locator('#playground-inspector-values').innerText(), /--syn-accent: #2458c6/i);
       await page.locator('#playground-theme').selectOption('grid');
       await page.waitForFunction(() => document.querySelector('#playground-inspector-values').textContent.includes('#76e7f7'));
+      await page.locator('#playground-example').selectOption('catalog-definition-list-title');
+      assert.match(await page.locator('#playground-inspector-sources').innerText(), /No Syntyr-class source files/);
       await page.locator('#playground-example').selectOption('actions');
       assert.match(await page.locator('#playground-inspector-sources').innerText(), /Starter/);
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), true);

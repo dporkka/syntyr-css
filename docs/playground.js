@@ -248,8 +248,9 @@ ${snippet.previewStylesheets(selectedModule())}
         : starterGuide[example.value]);
     byId("playground-reference-guidance").textContent = item ? item.guidance :
       "The documentation examples are illustrative. Implement real application actions yourself.";
-    byId("playground-inspector-sources").textContent = item?.source_files?.join(", ") ||
-      "Starter — see the component API for source ownership.";
+    byId("playground-inspector-sources").textContent = item
+      ? (item.source_files?.join(", ") || "No Syntyr-class source files in this canonical example.")
+      : "Starter — see the component API for source ownership.";
     const source = byId("playground-source-link");
     source.href = item?.kind === "block" ? `blocks.html#block-title-${item.id.slice(6)}` :
       item ? `catalog.html#${item.id}` : "catalog.html";
