@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Version: unreleased alpha.5 source candidate (0.3.0-alpha.5). The currently published immutable alpha.4 release does not contain every candidate adapter…">
+  <meta name="syntyr-source-sha256" content="9ca17ce0e21e55817301e121ec2d30f8178e4cf86b65b51cf2d2f7a2fc6928ed">
+  <meta name="theme-color" content="#f5f7fb">
+  <title>Interaction recipes: native first, headless when necessary — Syntyr CSS docs</title>
+  <link rel="canonical" href="https://syntyr-css.pages.dev/docs/interaction-recipes">
+  <link rel="alternate" type="text/markdown" href="interaction-recipes.md" title="Markdown source">
+  <link rel="icon" href="../assets/syntyr-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="docs.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio">
+  <a class="syn-button docs-skip" href="#doc-main">Skip to guide</a>
+  <div class="syn-shell">
+    <header class="syn-header docs-header">
+      <a class="syn-logo" href="../index.html">SYNTYR / CSS</a>
+      <nav class="syn-nav" aria-label="Documentation navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav>
+      <details class="site-mobile-menu"><summary>Menu</summary><nav aria-label="Mobile navigation">
+        <a href="index.html">Overview</a><a href="catalog.html">Components</a><a href="guides.html">Guides</a><a href="reference.html">All docs</a>
+      </nav></details>
+    </header>
+    <main id="doc-main" class="docs-article-page">
+      <nav class="syn-breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="reference.html">Documentation</a></li><li aria-current="page">Interaction recipes: native first, headless when necessary</li></ol></nav>
+      <header class="docs-article-heading">
+        <p class="syn-eyebrow">SYNTYR / DOCUMENTATION</p>
+        <p class="syn-muted">Current source documentation may describe unreleased alpha.5 features. <a href="distribution.html">Check released version compatibility.</a></p>
+        <p class="syn-caption">Prefer a machine-readable version? <a href="interaction-recipes.md">Markdown source</a> · <a href="../llms.txt">LLM index</a></p>
+      </header>
+      <div class="docs-article-layout">
+        <article class="docs-prose" aria-label="Interaction recipes: native first, headless when necessary">
+<h1 id="interaction-recipes-native-first-headless-when-necessary">Interaction recipes: native first, headless when necessary</h1>
+<p><strong>Version:</strong> unreleased alpha.5 source candidate (0.3.0-alpha.5). The currently
+published immutable alpha.4 release does not contain every candidate
+adapter or document here. Verify availability in your installed release.</p>
+<p>Syntyr styles interfaces; it does not implement widget state or keyboard
+controllers. Start with HTML's own behavior and add <strong>optional application
+dependencies</strong> for interactions that really require them.</p>
+<p>This is a source-validated, machine-readable set of integration references;
+the presence of regression tests does not certify accessibility, nor
+does it claim that every browser or assistive technology has been tested.
+The canonical data is <a href="../metadata/interaction-recipes.json">interaction-recipes.json</a>.</p>
+<h2 id="choose-the-lightest-behavior-owner">Choose the lightest behavior owner</h2>
+<table>
+<thead>
+<tr>
+<th>Recipe</th>
+<th>When to use</th>
+<th>Behavior owner</th>
+<th>Evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#native-single-select-and-form-submission">Native single select and form submission</a></td>
+<td>Choose from a short fixed list without search or custom option content.</td>
+<td>Browser controls; host receives and validates GET parameters</td>
+<td><a href="https://github.com/dporkka/syntyr-css/blob/main/tests/interaction_recipe_browser.py">test source</a></td>
+</tr>
+<tr>
+<td><a href="#native-action-popover">Native action popover</a></td>
+<td>Provide ordinary links or buttons in a lightweight nonmodal overlay.</td>
+<td>Browser Popover API, not ARIA menu-item arrow navigation</td>
+<td><a href="https://github.com/dporkka/syntyr-css/blob/main/tests/interaction_recipe_browser.py">test source</a></td>
+</tr>
+<tr>
+<td><a href="#native-modal-dialog-with-disclosure-fallback">Native modal dialog with disclosure fallback</a></td>
+<td>Require a short modal confirmation or preview on browsers supporting invoker commands.</td>
+<td>Browser dialog modal and focus behavior; application still owns side effects</td>
+<td><a href="https://github.com/dporkka/syntyr-css/blob/main/tests/interaction_recipe_browser.py">test source</a></td>
+</tr>
+<tr>
+<td><a href="#semantic-table-with-truthful-static-sort-state">Semantic table with truthful static sort state</a></td>
+<td>Read data or display a server-sorted snapshot without interactive grid editing.</td>
+<td>Browser table semantics; server must implement and validate real sorting</td>
+<td><a href="https://github.com/dporkka/syntyr-css/blob/main/tests/interaction_recipe_browser.py">test source</a></td>
+</tr>
+<tr>
+<td><a href="#radix-menu-with-real-menu-keyboard-behavior">Radix menu with real menu keyboard behavior</a></td>
+<td>Need ARIA menu semantics, roving focus, arrow navigation and focus restoration.</td>
+<td>Radix DropdownMenu; host owns action authorization</td>
+<td><a href="https://github.com/dporkka/syntyr-css/blob/main/examples/headless-react/tests/interactions.spec.ts">test source</a></td>
+</tr>
+<tr>
+<td><a href="#react-aria-searchable-combobox">React Aria searchable combobox</a></td>
+<td>Need filtered selection, keyboard option navigation and accessible active focus.</td>
+<td>React Aria ComboBox; host owns async fetching and persistence</td>
+<td><a href="https://github.com/dporkka/syntyr-css/blob/main/examples/headless-react/tests/interactions.spec.ts">test source</a></td>
+</tr>
+<tr>
+<td><a href="#react-aria-sortable-inventory-grid">React Aria sortable inventory grid</a></td>
+<td>Need real keyboard grid interactions and client-side sortable columns.</td>
+<td>React Aria Table for focus and ARIA; application sorts data</td>
+<td><a href="https://github.com/dporkka/syntyr-css/blob/main/examples/headless-react/tests/interactions.spec.ts">test source</a></td>
+</tr>
+<tr>
+<td><a href="#radix-noncritical-notification">Radix noncritical notification</a></td>
+<td>Show transient noncritical feedback with a tested dismissal lifecycle.</td>
+<td>Radix Toast; host owns notification semantics and timing</td>
+<td><a href="https://github.com/dporkka/syntyr-css/blob/main/examples/headless-react/tests/interactions.spec.ts">test source</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="integration-contracts">Integration contracts</h2>
+<h3 id="native-single-select-and-form-submission">Native single select and form submission</h3>
+<ul>
+<li><strong>Type:</strong> native — <strong>behavior:</strong> Browser controls; host receives and validates GET parameters.</li>
+<li><strong>Source:</strong> <a href="../examples/semantic-starter.html">examples/semantic-starter.html</a>; <a href="progressive-enhancement.html">guide</a>.</li>
+<li><strong>CSS:</strong> <code>dist/syntyr.semantic-bundle.css</code>.</li>
+<li><strong>Keyboard:</strong> Native Tab, arrow keys, typeahead and form submission.</li>
+<li><strong>Fallback:</strong> Keep the labeled native select; enhance only if requirements exceed it.</li>
+<li><strong>Regression source:</strong> <a href="https://github.com/dporkka/syntyr-css/blob/main/tests/interaction_recipe_browser.py">tests/interaction_recipe_browser.py</a>.</li>
+</ul>
+<h3 id="native-action-popover">Native action popover</h3>
+<ul>
+<li><strong>Type:</strong> native — <strong>behavior:</strong> Browser Popover API, not ARIA menu-item arrow navigation.</li>
+<li><strong>Source:</strong> <a href="../examples/native-apis.html">examples/native-apis.html</a>; <a href="native-browser-apis.html">guide</a>.</li>
+<li><strong>CSS:</strong> <code>dist/syntyr.css + dist/syntyr.motion.css</code>.</li>
+<li><strong>Keyboard:</strong> Tab through actual buttons and links; Escape dismisses.</li>
+<li><strong>Fallback:</strong> Keep essential actions accessible through regular links or forms.</li>
+<li><strong>Regression source:</strong> <a href="https://github.com/dporkka/syntyr-css/blob/main/tests/interaction_recipe_browser.py">tests/interaction_recipe_browser.py</a>.</li>
+</ul>
+<h3 id="native-modal-dialog-with-disclosure-fallback">Native modal dialog with disclosure fallback</h3>
+<ul>
+<li><strong>Type:</strong> native — <strong>behavior:</strong> Browser dialog modal and focus behavior; application still owns side effects.</li>
+<li><strong>Source:</strong> <a href="../examples/native-apis.html">examples/native-apis.html</a>; <a href="native-browser-apis.html">guide</a>.</li>
+<li><strong>CSS:</strong> <code>dist/syntyr.css + dist/syntyr.motion.css</code>.</li>
+<li><strong>Keyboard:</strong> Enter opens on supporting browsers, Escape closes, native modal focus management.</li>
+<li><strong>Fallback:</strong> A real details disclosure in the example remains available if invoker commands fail.</li>
+<li><strong>Regression source:</strong> <a href="https://github.com/dporkka/syntyr-css/blob/main/tests/interaction_recipe_browser.py">tests/interaction_recipe_browser.py</a>.</li>
+</ul>
+<h3 id="semantic-table-with-truthful-static-sort-state">Semantic table with truthful static sort state</h3>
+<ul>
+<li><strong>Type:</strong> native — <strong>behavior:</strong> Browser table semantics; server must implement and validate real sorting.</li>
+<li><strong>Source:</strong> <a href="../examples/data-tables.html">examples/data-tables.html</a>; <a href="data-tables.html">guide</a>.</li>
+<li><strong>CSS:</strong> <code>dist/syntyr.core.css</code>.</li>
+<li><strong>Keyboard:</strong> Tab into the named scroll region; regular links when server sorting is provided.</li>
+<li><strong>Fallback:</strong> Use actual GET sort links on a server endpoint; never fake interactive sorting with CSS.</li>
+<li><strong>Regression source:</strong> <a href="https://github.com/dporkka/syntyr-css/blob/main/tests/interaction_recipe_browser.py">tests/interaction_recipe_browser.py</a>.</li>
+</ul>
+<h3 id="radix-menu-with-real-menu-keyboard-behavior">Radix menu with real menu keyboard behavior</h3>
+<ul>
+<li><strong>Type:</strong> headless — <strong>behavior:</strong> Radix DropdownMenu; host owns action authorization.</li>
+<li><strong>Source:</strong> <a href="https://github.com/dporkka/syntyr-css/blob/main/examples/headless-react/src/App.tsx">examples/headless-react/src/App.tsx</a>; <a href="headless-interactions.html">guide</a>.</li>
+<li><strong>CSS:</strong> <code>dist/syntyr.core.css + integrations/headless/interactions.css</code>.</li>
+<li><strong>Keyboard:</strong> Arrow keys, Enter or Space, Escape and focus restoration.</li>
+<li><strong>Fallback:</strong> Use native popover with normal links and buttons when menu semantics are unnecessary.</li>
+<li><strong>Regression source:</strong> <a href="https://github.com/dporkka/syntyr-css/blob/main/examples/headless-react/tests/interactions.spec.ts">examples/headless-react/tests/interactions.spec.ts</a>.</li>
+</ul>
+<h3 id="react-aria-searchable-combobox">React Aria searchable combobox</h3>
+<ul>
+<li><strong>Type:</strong> headless — <strong>behavior:</strong> React Aria ComboBox; host owns async fetching and persistence.</li>
+<li><strong>Source:</strong> <a href="https://github.com/dporkka/syntyr-css/blob/main/examples/headless-react/src/App.tsx">examples/headless-react/src/App.tsx</a>; <a href="headless-interactions.html">guide</a>.</li>
+<li><strong>CSS:</strong> <code>dist/syntyr.core.css + integrations/headless/interactions.css</code>.</li>
+<li><strong>Keyboard:</strong> Typed filtering, arrow navigation, Enter selection and IME support from library.</li>
+<li><strong>Fallback:</strong> Use a native select or GET search form if live suggestions are not necessary.</li>
+<li><strong>Regression source:</strong> <a href="https://github.com/dporkka/syntyr-css/blob/main/examples/headless-react/tests/interactions.spec.ts">examples/headless-react/tests/interactions.spec.ts</a>.</li>
+</ul>
+<h3 id="react-aria-sortable-inventory-grid">React Aria sortable inventory grid</h3>
+<ul>
+<li><strong>Type:</strong> headless — <strong>behavior:</strong> React Aria Table for focus and ARIA; application sorts data.</li>
+<li><strong>Source:</strong> <a href="https://github.com/dporkka/syntyr-css/blob/main/examples/headless-react/src/App.tsx">examples/headless-react/src/App.tsx</a>; <a href="headless-interactions.html">guide</a>.</li>
+<li><strong>CSS:</strong> <code>dist/syntyr.core.css</code>.</li>
+<li><strong>Keyboard:</strong> Column-header activation, grid navigation, announced sort state and retained focus.</li>
+<li><strong>Fallback:</strong> Use a plain table with server-side GET sorting unless grid keyboard behavior is needed.</li>
+<li><strong>Regression source:</strong> <a href="https://github.com/dporkka/syntyr-css/blob/main/examples/headless-react/tests/interactions.spec.ts">examples/headless-react/tests/interactions.spec.ts</a>.</li>
+</ul>
+<h3 id="radix-noncritical-notification">Radix noncritical notification</h3>
+<ul>
+<li><strong>Type:</strong> headless — <strong>behavior:</strong> Radix Toast; host owns notification semantics and timing.</li>
+<li><strong>Source:</strong> <a href="https://github.com/dporkka/syntyr-css/blob/main/examples/headless-react/src/App.tsx">examples/headless-react/src/App.tsx</a>; <a href="headless-interactions.html">guide</a>.</li>
+<li><strong>CSS:</strong> <code>dist/syntyr.core.css + integrations/headless/interactions.css</code>.</li>
+<li><strong>Keyboard:</strong> Focus, dismiss and nonblocking access provided by the toast primitive.</li>
+<li><strong>Fallback:</strong> Keep critical or irreversible messages inline or in a real dialog; do not auto-dismiss them.</li>
+<li><strong>Regression source:</strong> <a href="https://github.com/dporkka/syntyr-css/blob/main/examples/headless-react/tests/interactions.spec.ts">examples/headless-react/tests/interactions.spec.ts</a>.</li>
+</ul>
+<h2 id="run-the-regressions">Run the regressions</h2>
+<p>For browser-native recipes (<strong>No JavaScript</strong> in the page):</p>
+<pre tabindex="0"><code class="language-sh">python3 tests/interaction_recipe_browser.py --browsers chromium firefox
+</code></pre>
+<p>Install Playwright and the selected browser binaries in your <strong>development</strong>
+environment. The script deliberately fails if an engine cannot launch.
+Feature-dependent dialog behavior is tested with a visible fallback when
+invoker commands are unavailable.</p>
+<p>For the optional React Aria/Radix examples:</p>
+<pre tabindex="0"><code class="language-sh">cd examples/headless-react
+npm ci
+npm run build
+npm test
+</code></pre>
+<p>The React fixture includes genuine keyboard navigation, filtering,
+selection, focus restoration, grid sorting, and notification dismissal.
+The React dependencies do <strong>not</strong> ship in Syntyr's CSS core.</p>
+<p>The zero-dependency manifest contract and documentation checks run with:</p>
+<pre tabindex="0"><code class="language-sh">python3 -m unittest tests.test_interaction_recipe_catalog -v
+python3 scripts/build_interaction_catalog.py --check
+</code></pre>
+<h2 id="responsibilities-that-css-cannot-satisfy">Responsibilities that CSS cannot satisfy</h2>
+<ul>
+<li>No CSS class implements ARIA semantics, roving focus, key handling,
+asynchronous selection, announcement timing, sorting, or persistence.</li>
+<li>For plain tables, preserve native HTML semantics; do not apply
+<code>role=&quot;grid&quot;</code> without implementing the full keyboard model.</li>
+<li>A native popover with links is <strong>not</strong> an ARIA menu. It uses normal Tab
+navigation; use Radix only when menu semantics are genuinely required.</li>
+<li>Form submission, server-side validation, authorization and actual data
+sorting belong to the host application. The static sorted-table example
+is a truthful snapshot, not an interactive sorting implementation.</li>
+<li>Portal-mounted headless controls must remain inside a themed
+<code>.syn-root</code> or explicitly receive the corresponding theme scope.</li>
+<li>Before production adoption, test NVDA/VoiceOver, keyboard-only use,
+high zoom/reflow, forced colors, reduced motion, IME and mobile touch
+with your chosen browser versions. Automated results are not certification.</li>
+</ul>
+<p>Use existing <a href="native-browser-apis.html">native browser documentation</a>,
+<a href="data-tables.html">data-table guidance</a> and
+<a href="headless-interactions.html">headless interaction guidance</a> for further details.</p>
+        </article>
+        <aside class="docs-article-sidebar">
+          <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+<a class="docs-article-toc-link docs-article-toc-2" href="#choose-the-lightest-behavior-owner">Choose the lightest behavior owner</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#integration-contracts">Integration contracts</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#native-single-select-and-form-submission">Native single select and form submission</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#native-action-popover">Native action popover</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#native-modal-dialog-with-disclosure-fallback">Native modal dialog with disclosure fallback</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#semantic-table-with-truthful-static-sort-state">Semantic table with truthful static sort state</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#radix-menu-with-real-menu-keyboard-behavior">Radix menu with real menu keyboard behavior</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#react-aria-searchable-combobox">React Aria searchable combobox</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#react-aria-sortable-inventory-grid">React Aria sortable inventory grid</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#radix-noncritical-notification">Radix noncritical notification</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#run-the-regressions">Run the regressions</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#responsibilities-that-css-cannot-satisfy">Responsibilities that CSS cannot satisfy</a>
+          </nav>
+          <details class="docs-article-toc-mobile">
+            <summary>On this page <span>Jump to section</span></summary>
+            <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#choose-the-lightest-behavior-owner">Choose the lightest behavior owner</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#integration-contracts">Integration contracts</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#native-single-select-and-form-submission">Native single select and form submission</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#native-action-popover">Native action popover</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#native-modal-dialog-with-disclosure-fallback">Native modal dialog with disclosure fallback</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#semantic-table-with-truthful-static-sort-state">Semantic table with truthful static sort state</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#radix-menu-with-real-menu-keyboard-behavior">Radix menu with real menu keyboard behavior</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#react-aria-searchable-combobox">React Aria searchable combobox</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#react-aria-sortable-inventory-grid">React Aria sortable inventory grid</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#radix-noncritical-notification">Radix noncritical notification</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#run-the-regressions">Run the regressions</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#responsibilities-that-css-cannot-satisfy">Responsibilities that CSS cannot satisfy</a>
+            </nav>
+          </details>
+        </aside>
+      </div>
+      <nav class="docs-guide-links" aria-label="More documentation"><a href="reference.html">All documentation</a><a href="guides.html">Practical guides</a><a href="interaction-recipes.md">Markdown source</a></nav>
+    </main>
+    <footer class="syn-header"><span class="syn-caption">SYNTYR CSS · MIT CORE · EXPERIMENTAL</span><a href="../index.html">Home</a></footer>
+  </div>
+</body>
+</html>

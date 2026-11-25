@@ -14,6 +14,7 @@ steps:
       - python3 tests/site_builder_upload_race_browser.py
       - python3 tests/synced_components_browser.py
       - python3 tests/browser_matrix.py --browsers chromium firefox webkit
+      - python3 tests/interaction_recipe_browser.py --browsers chromium firefox webkit
       - python3 tests/progressive_reliability_browser.py --browsers chromium firefox webkit
       - python3 tests/accessibility_regression_browser.py --browsers chromium firefox webkit
       - python3 tests/blocks_browser.py --browsers chromium firefox webkit

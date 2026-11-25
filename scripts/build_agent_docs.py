@@ -28,6 +28,7 @@ SOURCES = (
     "docs/site-builders.md",
     "docs/mobile-frameworks.md",
     "docs/native-browser-apis.md",
+    "docs/interaction-recipes.md",
     "docs/dropdowns.md",
     "docs/theme-customization.md",
     "docs/visual-intensity.md",
