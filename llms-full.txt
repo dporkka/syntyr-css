@@ -6621,6 +6621,26 @@ The pipeline does not claim host functionality, live interaction behavior,
 security or accessibility certification; review the returned host obligations,
 sample content and destinations before deployment.
 
+### Reproduce and share a generation demo
+
+With the optional local Python and Node authoring tools, build one of three
+portable demo ZIPs from the same validated generation pipeline:
+
+```sh
+python3 scripts/build_generation_demo.py saas syntyr-saas-demo.zip
+python3 scripts/build_generation_demo.py crm syntyr-crm-demo.zip
+python3 scripts/build_generation_demo.py native syntyr-native-demo.zip
+```
+
+Extract the ZIP and open `index.html` locally. It includes matching CSS,
+the license, any required local images, original `request.json`, editable
+`project.json`, and `validation.json` with coverage and host obligations.
+Use the matching source candidate to regenerate or edit. Existing output
+files are not overwritten. No model calls, API keys, or network requests
+are needed for generation. These demos are illustrative static presentation
+scaffolds; sample destinations and host-owned forms are not working
+backend integrations. Do not deploy them unchanged as real applications.
+
 ---
 
 ## Source: docs/editor-integration.md

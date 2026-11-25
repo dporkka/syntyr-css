@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Syntyr works with ChatGPT, Codex, Claude Code, Cursor and other agents that generate HTML or framework markup. No Syntyr-specific service, account, MCP…">
-  <meta name="syntyr-source-sha256" content="45bc8ab03f269857ca38149f647a2a1c4539a867aceb478ad45847f09f21c67a">
+  <meta name="syntyr-source-sha256" content="e02a0a1a4fdc9f0de40285bf75456035a4fa8bc0632ff5250b5ea9a2e3f3abb5">
   <meta name="theme-color" content="#f5f7fb">
   <title>Using Syntyr with coding agents — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/agent-integration">
@@ -192,6 +192,21 @@ documents block rather than bypass validation.
 The pipeline does not claim host functionality, live interaction behavior,
 security or accessibility certification; review the returned host obligations,
 sample content and destinations before deployment.</p>
+<h3 id="reproduce-and-share-a-generation-demo">Reproduce and share a generation demo</h3>
+<p>With the optional local Python and Node authoring tools, build one of three
+portable demo ZIPs from the same validated generation pipeline:</p>
+<pre tabindex="0"><code class="language-sh">python3 scripts/build_generation_demo.py saas syntyr-saas-demo.zip
+python3 scripts/build_generation_demo.py crm syntyr-crm-demo.zip
+python3 scripts/build_generation_demo.py native syntyr-native-demo.zip
+</code></pre>
+<p>Extract the ZIP and open <code>index.html</code> locally. It includes matching CSS,
+the license, any required local images, original <code>request.json</code>, editable
+<code>project.json</code>, and <code>validation.json</code> with coverage and host obligations.
+Use the matching source candidate to regenerate or edit. Existing output
+files are not overwritten. No model calls, API keys, or network requests
+are needed for generation. These demos are illustrative static presentation
+scaffolds; sample destinations and host-owned forms are not working
+backend integrations. Do not deploy them unchanged as real applications.</p>
         </article>
         <aside class="docs-article-sidebar">
           <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
@@ -206,6 +221,7 @@ sample content and destinations before deployment.</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#deterministic-section-composition-source-candidate">Deterministic section composition (source candidate)</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#select-sections-from-explicit-intent-ids">Select sections from explicit intent IDs</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#one-command-validated-generation">One-command validated generation</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#reproduce-and-share-a-generation-demo">Reproduce and share a generation demo</a>
           </nav>
           <details class="docs-article-toc-mobile">
             <summary>On this page <span>Jump to section</span></summary>
@@ -221,6 +237,7 @@ sample content and destinations before deployment.</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#deterministic-section-composition-source-candidate">Deterministic section composition (source candidate)</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#select-sections-from-explicit-intent-ids">Select sections from explicit intent IDs</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#one-command-validated-generation">One-command validated generation</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#reproduce-and-share-a-generation-demo">Reproduce and share a generation demo</a>
             </nav>
           </details>
         </aside>
