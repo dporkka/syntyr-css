@@ -69,7 +69,6 @@
     --syn-surface-pressed: var(--syn-accent-soft);
     /* Keep hover contrast identical to the approved accent/foreground pair by default. */
     --syn-primary-hover-bg: var(--syn-accent);
-    --syn-font-ui: var(--syn-font);
     --syn-font-display: var(--syn-font);
   }
   /* Compact presentation is an opt-in layout control, never a font-size override. */
@@ -292,13 +291,19 @@
   :where(.syn-root[data-syn-theme="grid"],
          .syn-root [data-syn-theme="grid"], .syn-root[data-syn-theme="terminal"],
          .syn-root [data-syn-theme="terminal"]) {
-    --syn-font-ui: var(--syn-mono);
     --syn-font-display: var(--syn-mono);
   }
 
-  /* Opt-in proportional interface typography; retain theme display and code fonts. */
-  :where(.syn-root[data-syn-typography="application"], .syn-root [data-syn-typography="application"]) {
+  /* One canonical UI default, including explicit application-profile scopes. */
+  :where(.syn-root, .syn-root [data-syn-theme],
+         .syn-root[data-syn-typography="application"], .syn-root [data-syn-typography="application"]) {
     --syn-font-ui: var(--syn-font);
+  }
+  :where(.syn-root[data-syn-theme="grid"]:not([data-syn-typography="application"]),
+         .syn-root [data-syn-theme="grid"]:not([data-syn-typography="application"]),
+         .syn-root[data-syn-theme="terminal"]:not([data-syn-typography="application"]),
+         .syn-root [data-syn-theme="terminal"]:not([data-syn-typography="application"])) {
+    --syn-font-ui: var(--syn-mono);
   }
 
   /* Higher contrast preserves nested theme and intensity overrides.

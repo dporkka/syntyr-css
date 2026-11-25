@@ -33,13 +33,13 @@
       <header class="syn-app-topbar" id="records">
         <div>
           <p class="syn-eyebrow">STUDIO / DATA OPERATIONS</p>
-          <h1>Record workflows</h1>
+          <h1 class="syn-page-title">Record workflows</h1>
           <p class="syn-muted">Search, filters, navigation, settings and content states built on semantic HTML.</p>
         </div>
         <a class="syn-button syn-button--outline" href="../docs/recipes.md">COPY HTML RECIPES</a>
       </header>
       <section class="syn-app-card syn-surface--accent syn-surface--lift workflow-section" aria-labelledby="search-title">
-        <div class="syn-app-card-header"><h2 id="search-title" class="syn-heading">Search and filters</h2><span class="syn-caption">SERVER-READY GET FORM</span></div>
+        <div class="syn-app-card-header"><h2 id="search-title" class="syn-card-heading">Search and filters</h2><span class="syn-caption">SERVER-READY GET FORM</span></div>
         <p id="filters-note" class="syn-muted">Illustrative static records. On a real product, a server must apply these query parameters, return matching results, and preserve the selected values.</p>
         <search aria-label="Filter records">
           <form method="get" action="saas-workflows.html#results" class="workflow-filter-grid" aria-describedby="filters-note">
@@ -77,7 +77,7 @@
         <p class="syn-caption">Pagination URLs are examples only. A server must return the corresponding page, count and current-page state.</p>
       </section>
       <section id="preferences" class="syn-app-card syn-surface--lift workflow-section" aria-labelledby="settings-title">
-        <div class="syn-app-card-header"><h2 id="settings-title" class="syn-heading">Settings and disclosures</h2><span class="syn-caption">NATIVE HTML / NO SCRIPT</span></div>
+        <div class="syn-app-card-header"><h2 id="settings-title" class="syn-card-heading">Settings and disclosures</h2><span class="syn-caption">NATIVE HTML / NO SCRIPT</span></div>
         <details class="syn-details" open>
           <summary>Display preferences</summary>
           <div class="workflow-settings">
@@ -90,12 +90,12 @@
       </section>
       <section id="patterns" class="workflow-pattern-grid workflow-section" aria-label="Other interface states">
         <article class="syn-app-card">
-          <h2 class="syn-heading">Empty state</h2>
+          <h2 class="syn-card-heading">Empty state</h2>
           <p class="syn-muted">Your server can render this section when a query has no matches.</p>
           <div class="syn-empty"><p>No results match these filters.</p><a class="syn-button" href="#records">CHANGE FILTERS</a></div>
         </article>
         <article class="syn-app-card">
-          <h2 class="syn-heading">Loading state</h2>
+          <h2 class="syn-card-heading">Loading state</h2>
           <p class="syn-muted">The application must manage loading announcements and remove placeholders when complete.</p>
           <div class="workflow-skeletons" role="group" aria-label="Loading preview">
             <span class="syn-skeleton" aria-hidden="true"></span>

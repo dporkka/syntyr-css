@@ -34,6 +34,20 @@ def verify(browser):
             if theme in ('grid','terminal'):
                 assert 'monospace' in result['display'] and 'monospace' in result['code'],result
             assert result['host']!=result['ui'],result
+    # Legacy Grid stays technical; nested opt-in scopes and theme resets
+    # must not change sibling regions or overwrite unrelated palette aliases.
+    page.set_content("""<main class="syn-root" data-syn-theme="grid">
+      <p id="legacy" class="syn-body">Legacy</p>
+      <section data-syn-typography="application">
+        <p id="profile" class="syn-body">Profile</p>
+        <section data-syn-theme="terminal"><p id="reset" class="syn-body">Reset</p></section>
+        <section data-syn-theme="terminal" data-syn-typography="application"><p id="both" class="syn-body">Both</p></section>
+      </section><p id="sibling" class="syn-body">Sibling</p>
+    </main>""")
+    page.add_style_tag(content=css)
+    fonts=page.evaluate("""() => Object.fromEntries(['legacy','profile','reset','both','sibling'].map(id=>[id,getComputedStyle(document.getElementById(id)).fontFamily]))""")
+    assert 'monospace' in fonts['legacy'] and fonts['legacy']==fonts['sibling']==fonts['reset'],fonts
+    assert 'system-ui' in fonts['profile'] and fonts['profile']==fonts['both'],fonts
     page.close()
 
 if __name__=='__main__':

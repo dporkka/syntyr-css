@@ -18,7 +18,7 @@ class ApplicationTypographyContract(unittest.TestCase):
         self.assertIn('.syn-root [data-syn-typography="application"]', text)
 
     def test_examples_adopt_application_roles(self):
-        for file in ('examples/saas.html', 'examples/crm.html'):
+        for file in ('examples/saas-workflows.html', 'examples/crm.html'):
             text = (ROOT / file).read_text()
             self.assertIn('class="syn-page-title"', text)
             self.assertIn('class="syn-card-heading"', text)
