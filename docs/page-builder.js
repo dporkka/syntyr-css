@@ -5,7 +5,7 @@ import {
   getBlockDefinition, createBlock, createDefaultDocument, parseDocument, moveBlock,
   duplicateBlock, insertBlockAfter, exportHtml, requiredAssets,
   replaceBlockImage, restoreBlockImage, getImageAssetBytes,
-  projectNeedsGalleryManifest, projectNeedsSectionManifest
+  projectNeedsGalleryManifest, projectNeedsSectionManifest, extractGeneratedProject
 } from "./page-builder-model.mjs";
 import {
   SITE_SCHEMA_VERSION, createSiteProject, parseSiteProject, addSitePage,
@@ -962,6 +962,9 @@ byId("builder-import").addEventListener("change", async (event) => {
     let candidate;
     try { candidate = JSON.parse(text); }
     catch { throw new Error("Invalid project JSON"); }
+    const originalCandidate = candidate;
+    candidate = extractGeneratedProject(candidate);
+    const generated = candidate !== originalCandidate;
     const candidatePages = candidate?.schema === SITE_SCHEMA_VERSION && Array.isArray(candidate.pages)
       ? candidate.pages.map(entry => entry?.document) : [candidate];
     if (candidatePages.some(projectNeedsGalleryManifest)) {
@@ -1005,7 +1008,7 @@ byId("builder-import").addEventListener("change", async (event) => {
       page = imported;
       selectedId = page.blocks[0]?.id ?? null;
       redraw();
-      notify("Project opened.");
+      notify(generated ? "Generated project opened. Review and revalidate before publishing." : "Project opened.");
       sequence = Math.max(sequence, imported.blocks.length + 5);
     }
   } catch (error) {

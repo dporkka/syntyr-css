@@ -378,6 +378,22 @@ export function projectNeedsSectionManifest(candidate) {
       typeof block.type === "string" && block.type.startsWith(SECTION_PREFIX));
 }
 
+// Import data, not the generator's HTML or purported validation evidence.
+// The existing parser validates the extracted project against local definitions.
+export function extractGeneratedProject(candidate) {
+  if (!plainObject(candidate) || (!own(candidate, "status") && !own(candidate, "output")))
+    return candidate;
+  if (candidate.status !== "generated" || candidate.stage !== "complete")
+    throw new Error("Only completed generation results can be opened");
+  if (candidate.release !== "0.3.0-alpha.5" ||
+      !plainObject(candidate.output) || candidate.output.release !== candidate.release ||
+      candidate.output.release_status !== "unreleased_candidate")
+    throw new Error("Generation result does not match the source candidate");
+  if (!plainObject(candidate.output.project) || candidate.output.project.schema !== SCHEMA_VERSION)
+    throw new Error("Generation result has no editable page project");
+  return candidate.output.project;
+}
+
 export function parseDocument(input) {
   let page;
   if (typeof input === "string") {

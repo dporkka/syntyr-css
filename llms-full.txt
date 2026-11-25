@@ -6631,6 +6631,17 @@ larger results. No output files are written or generated markup executed.
 Blocked plans contain diagnostics without partial HTML. The standard
 `validate_markup` MCP tool keeps its separate 20,000-character limit.
 
+### Edit a generated project in the visual builder
+
+Save the complete CLI result or MCP structured response as a local JSON file.
+In the [free visual builder](page-builder.html), choose **Open project /
+generation JSON** and select the file. Only completed results matching the
+source candidate are accepted. The builder extracts the editable project and
+validates it against the local block definitions; it ignores the supplied
+HTML and validation claims. Editing invalidates prior validation evidence;
+review and revalidate the final export before publication. The private
+[Studio concept](studio.html) remains unreleased and is not a hosted service.
+
 ### Reproduce and share a generation demo
 
 With the optional local Python and Node authoring tools, build one of three
