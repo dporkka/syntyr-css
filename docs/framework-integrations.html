@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Integrate Syntyr CSS with server-rendered HTML, HTMX, LiveView, Livewire, and frontend frameworks without requiring client-side JavaScript.">
-  <meta name="syntyr-source-sha256" content="666b88024c86a5c4383d11858f3946b68673e5edd4e5711bdc4fdf0b8ff99b95">
+  <meta name="syntyr-source-sha256" content="a886563caaa91380a8942efcfc362d69399f5e255eeb7c1b2eb3402d8228aabb">
   <meta name="theme-color" content="#f5f7fb">
   <title>Syntyr CSS integration guide: server-rendered HTML and frontend stacks — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/framework-integrations">
@@ -38,6 +38,51 @@
 <p>Syntyr is a <strong>CSS presentation layer</strong>, not a state manager, request client, or component runtime.
 It has no JavaScript initialization, no required build tool, and no runtime dependency.
 Every example uses the same <code>syn-</code> classes, CSS tokens and standard HTML.</p>
+<h2 id="first-screen-in-your-stack">First screen in your stack</h2>
+<p>Start with the <a href="distribution.html#your-first-five-minutes-published-alpha4">published alpha.4 five-minute tutorial</a> or <a href="starter-wizard.html">starter wizard</a>. Download its pinned stylesheet once into your application's static assets. The following are integration recipes for an <strong>existing</strong> application, not standalone framework installation guides.</p>
+<table>
+<thead>
+<tr>
+<th>Host</th>
+<th>Put the CSS here</th>
+<th>First integration step</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Go</td>
+<td><code>static/css/syntyr.core.css</code></td>
+<td>Mount the directory with <code>http.FileServer</code> and render the generated HTML with <code>html/template</code>.</td>
+</tr>
+<tr>
+<td>Django</td>
+<td><code>static/css/syntyr.core.css</code></td>
+<td>Load <code>static</code> in the base template and resolve the asset through Django staticfiles.</td>
+</tr>
+<tr>
+<td>HTMX</td>
+<td>Existing server static directory</td>
+<td>Render a full document first; enhance a stable inner region with a pinned, host-owned HTMX runtime only if needed.</td>
+</tr>
+<tr>
+<td>React</td>
+<td><code>public/css/syntyr.core.css</code> (Vite-style projects)</td>
+<td>Load the stylesheet once and translate the generated HTML to JSX; preserve native links and labels.</td>
+</tr>
+</tbody>
+</table>
+<p>For Go, mount a public directory (not your repository root):</p>
+<pre tabindex="0"><code class="language-go">mux.Handle(&quot;/static/&quot;, http.StripPrefix(&quot;/static/&quot;, http.FileServer(http.Dir(&quot;static&quot;))))
+</code></pre>
+<p>Link <code>/static/css/syntyr.core.css</code> from the base template. Use <code>html/template</code> to escape untrusted data; the Syntyr classes do not supply authorization.</p>
+<p>For Django, in the base template:</p>
+<pre tabindex="0"><code class="language-django">{% load static %}
+&lt;link rel=&quot;stylesheet&quot; href=&quot;{% static 'css/syntyr.core.css' %}&quot;&gt;
+</code></pre>
+<p>Keep Django's autoescaping and CSRF middleware enabled. Use the normal staticfiles deployment workflow, not the development static server in production.</p>
+<p>For HTMX, build the ordinary GET page first, then use the existing <a href="htmx-components.html">HTMX guide</a> to add fragment responses, history handling and accessible updates. Its advanced Syntyr patterns may require the unreleased alpha.5 source; verify every added class against your pinned release.</p>
+<p>For React, put the stylesheet link in your application HTML or load it once via the framework's supported global CSS entry. Use <code>className</code> and <code>htmlFor</code> in JSX; preserve the scoped <code>syn-root</code> ancestor. React owns behavior and state, not Syntyr.</p>
+<p>Verify that the actual stylesheet returns 200, the generated page renders at mobile and desktop widths, and keyboard navigation works. Test authorization, form validation and real persistence in the host application.</p>
 <h2 id="copy-a-catalog-example-into-your-stack">Copy a catalog example into your stack</h2>
 <p>The <a href="catalog.html">49-example component catalog</a> has a <strong>Copy HTML</strong> action for
 snippets and an optional <strong>Copy full page</strong> action that includes the
@@ -635,6 +680,7 @@ and unnecessary hydration. Measure actual page LCP, CLS and INP.</li>
         </article>
         <aside class="docs-article-sidebar">
           <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
+<a class="docs-article-toc-link docs-article-toc-2" href="#first-screen-in-your-stack">First screen in your stack</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#copy-a-catalog-example-into-your-stack">Copy a catalog example into your stack</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#plain-html-or-server-rendered-partial">Plain HTML or server-rendered partial</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#react-nextjs-jsx">React / Next.js JSX</a>
@@ -666,6 +712,7 @@ and unnecessary hydration. Measure actual page LCP, CLS and INP.</li>
           <details class="docs-article-toc-mobile">
             <summary>On this page <span>Jump to section</span></summary>
             <nav aria-label="On this page (mobile)">
+<a class="docs-article-toc-link docs-article-toc-2" href="#first-screen-in-your-stack">First screen in your stack</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#copy-a-catalog-example-into-your-stack">Copy a catalog example into your stack</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#plain-html-or-server-rendered-partial">Plain HTML or server-rendered partial</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#react-nextjs-jsx">React / Next.js JSX</a>

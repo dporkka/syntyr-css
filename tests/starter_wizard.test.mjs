@@ -39,3 +39,14 @@ test('starter handoff carries only validated choices and preserves editable frag
   assert.ok(!href.includes('<'));
   assert.throws(() => createPlaygroundHandoff({kind:'saas', theme:'grid', stack:'http://unsafe'}), /Unsupported/);
 });
+
+test('Django and HTMX handoffs use the published CSS and host-owned behavior', () => {
+  for (const stack of ['django', 'htmx']) {
+    const selection = {kind:'saas', theme:'studio', stack};
+    const result = createStarter(selection);
+    assert.match(result.html, /href="\.\/syntyr\.core\.css"/);
+    assert.doesNotMatch(result.html, /<script\b/i);
+    assert.match(result.instructions, stack === 'django' ? /staticfiles/ : /ordinary GET/);
+    assert.equal(createPlaygroundHandoff(selection), 'playground.html#starter=saas&theme=studio&stack='+stack);
+  }
+});

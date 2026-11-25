@@ -125,4 +125,4 @@ For browser readers, use the [human-readable HTML documentation directory](https
 
 - [Syntyr CSS Blog](https://syntyr-css.pages.dev/blog/): Practical articles on CSS-first design, semantic HTML, accessibility, and copy-owned UI blocks.
 
-- Guided first-project starter wizard: https://syntyr-css.pages.dev/docs/starter-wizard.html (docs-only optional JavaScript; published alpha.4 assets)
+- Guided first-project starter wizard: https://syntyr-css.pages.dev/docs/starter-wizard.html (docs-only optional JavaScript; published alpha.4 assets; HTML, Go, React, Django and HTMX handoffs)

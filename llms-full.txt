@@ -3565,6 +3565,40 @@ Syntyr is a **CSS presentation layer**, not a state manager, request client, or 
 It has no JavaScript initialization, no required build tool, and no runtime dependency.
 Every example uses the same `syn-` classes, CSS tokens and standard HTML.
 
+## First screen in your stack
+
+Start with the [published alpha.4 five-minute tutorial](distribution.md#your-first-five-minutes-published-alpha4) or [starter wizard](starter-wizard.html). Download its pinned stylesheet once into your application's static assets. The following are integration recipes for an **existing** application, not standalone framework installation guides.
+
+| Host | Put the CSS here | First integration step |
+| --- | --- | --- |
+| Go | `static/css/syntyr.core.css` | Mount the directory with `http.FileServer` and render the generated HTML with `html/template`. |
+| Django | `static/css/syntyr.core.css` | Load `static` in the base template and resolve the asset through Django staticfiles. |
+| HTMX | Existing server static directory | Render a full document first; enhance a stable inner region with a pinned, host-owned HTMX runtime only if needed. |
+| React | `public/css/syntyr.core.css` (Vite-style projects) | Load the stylesheet once and translate the generated HTML to JSX; preserve native links and labels. |
+
+For Go, mount a public directory (not your repository root):
+
+```go
+mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
+```
+
+Link `/static/css/syntyr.core.css` from the base template. Use `html/template` to escape untrusted data; the Syntyr classes do not supply authorization.
+
+For Django, in the base template:
+
+```django
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/syntyr.core.css' %}">
+```
+
+Keep Django's autoescaping and CSRF middleware enabled. Use the normal staticfiles deployment workflow, not the development static server in production.
+
+For HTMX, build the ordinary GET page first, then use the existing [HTMX guide](htmx-components.md) to add fragment responses, history handling and accessible updates. Its advanced Syntyr patterns may require the unreleased alpha.5 source; verify every added class against your pinned release.
+
+For React, put the stylesheet link in your application HTML or load it once via the framework's supported global CSS entry. Use `className` and `htmlFor` in JSX; preserve the scoped `syn-root` ancestor. React owns behavior and state, not Syntyr.
+
+Verify that the actual stylesheet returns 200, the generated page renders at mobile and desktop widths, and keyboard navigation works. Test authorization, form validation and real persistence in the host application.
+
 ## Copy a catalog example into your stack
 
 The [49-example component catalog](catalog.html) has a **Copy HTML** action for

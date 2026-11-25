@@ -8,7 +8,7 @@ const labels = Object.freeze({
   admin: { title: 'Operations console', intro: 'Prioritize the work that matters.' },
 });
 const themes = ['studio', 'grid', 'noir'];
-const stacks = ['html', 'go', 'react'];
+const stacks = ['html', 'go', 'react', 'django', 'htmx'];
 const cssRelease = 'https://syntyr-css.pages.dev/v/0.3.0-alpha.4/syntyr.core.css';
 
 export function createPlaygroundHandoff({ kind, theme, stack }) {
@@ -67,7 +67,11 @@ export function createStarter({ kind, theme, stack }) {
     ? 'Go: use html/template with automatic escaping, insert this markup in a template, and serve the pinned local CSS.'
     : stack === 'react'
       ? 'React: translate class to className and HTML attributes to JSX; import or serve the pinned local CSS. React supplies events, data and routing.'
-      : 'Plain HTML: save this output as index.html and serve it alongside the pinned local stylesheet.';
+      : stack === 'django'
+        ? 'Django: put the pinned CSS in staticfiles (for example static/css/syntyr.core.css), load the static template tag, and use the static URL in your base template. Keep automatic escaping and CSRF protection for real POST forms.'
+        : stack === 'htmx'
+          ? 'HTMX: serve the pinned stylesheet in the persistent page shell. Begin with ordinary GET forms and links; progressively enhance with your own pinned HTMX script and return escaped fragments for HTMX requests, full documents for direct navigation.'
+          : 'Plain HTML: save this output as index.html and serve it alongside the pinned local stylesheet.';
   return {
     html,
     fragment: body,

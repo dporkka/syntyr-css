@@ -77,7 +77,7 @@ stylesheets.
 - **Static page composition (alpha.5 source):** browse and rearrange all 99 copy-owned sections in the optional visual builder, then download a self-hostable HTML/CSS/image ZIP without application JavaScript. Backend forms remain host-owned. [Builder](docs/page-builder.html).
 - **Opt-in universal registry (alpha.5 source):** 99 copy-owned HTML blocks plus 9 CSS modules in shadcn-compatible static JSON; no consumer runtime dependency. See [blocks guide](docs/blocks-guide.md).
 
-**Next:** follow the [five-minute adoption tutorial](docs/distribution.md#your-first-five-minutes-published-alpha4) to build a small, self-hosted UI and change its theme without touching component markup.
+**Next:** [generate your first project](https://syntyr-css.pages.dev/docs/starter-wizard.html) or follow the [five-minute adoption tutorial](docs/distribution.md#your-first-five-minutes-published-alpha4) to build a small, self-hosted UI and change its theme without touching component markup.
 
 ## Visual showcase
 
