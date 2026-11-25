@@ -86,7 +86,7 @@ The same CSS foundations support professional, restrained interfaces and optiona
 | [![Light Studio dashboard with KPI cards](assets/readme/flagship-studio.png)](https://syntyr-css.pages.dev/examples/flagship-studio.html) | [![Dark Noir editorial landing page with amber typography](assets/readme/flagship-noir.png)](https://syntyr-css.pages.dev/examples/flagship-noir.html) |
 | [Live demo](https://syntyr-css.pages.dev/examples/flagship-studio.html) · [Source](examples/flagship-studio.html) | [Live demo](https://syntyr-css.pages.dev/examples/flagship-noir.html) · [Source](examples/flagship-noir.html) |
 
-[Compare all seven candidate themes](examples/themes.html) · [Browse component catalog](docs/catalog.html) · [Explore the Grid flagship](examples/flagship-grid.html) · [Visual composition guide](docs/visual-composition.md)
+[Compare all seven candidate themes](https://syntyr-css.pages.dev/examples/themes.html) · [Browse component catalog](https://syntyr-css.pages.dev/docs/catalog.html) · [Explore the Grid flagship](https://syntyr-css.pages.dev/examples/flagship-grid.html) · [Visual composition guide](docs/visual-composition.md)
 
 ## Find your next step
 
