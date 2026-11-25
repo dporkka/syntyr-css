@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Status: prepared for distribution, not published to npm. @syntyr/css is the intended package name, pending registry ownership/availability verification…">
-  <meta name="syntyr-source-sha256" content="f4730e4cbd7908fde0b43a3d6814fedd67066540e5f8481fcbf7f27d86386277">
+  <meta name="syntyr-source-sha256" content="f977184bb26effc5e85353c22fa437bb4385ba9cf9298aab2436c24660386e96">
   <meta name="theme-color" content="#f5f7fb">
   <title>Optional package-manager installation (alpha.5 candidate) — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/package-managers">
@@ -36,7 +36,7 @@
         <article class="docs-prose" aria-label="Optional package-manager installation (alpha.5 candidate)">
 <h1 id="optional-package-manager-installation-alpha5-candidate">Optional package-manager installation (alpha.5 candidate)</h1>
 <p><strong>Status: prepared for distribution, not published to npm.</strong> <code>@syntyr/css</code> is the intended package name, pending registry ownership/availability verification and an approved prerelease. Until then, use the <a href="distribution.html">published alpha.4 release</a> or locally pack the alpha.5 candidate. Do not claim that <code>npm install @syntyr/css</code> currently succeeds.</p>
-<p>Syntyr's canonical artifact remains the ordinary CSS files in <code>dist/</code>. The npm package is a second <strong>distribution path</strong> for projects that already use a package manager; it adds <strong>no JavaScript code, runtime dependencies, compiler, provider, or CSS-in-JS runtime</strong>. Plain HTML and server templates can continue to self-host the versioned CSS with no toolchain.</p>
+<p>Syntyr's canonical artifact remains the ordinary CSS files in <code>dist/</code>. The npm package is a second <strong>distribution path</strong> for projects that already use a package manager; it adds <strong>no mandatory JavaScript, runtime dependencies, compiler, provider, or CSS-in-JS runtime</strong>. Plain HTML and server templates can continue to self-host the versioned CSS with no toolchain.</p>
 <h2 id="local-verification-before-publication">Local verification before publication</h2>
 <p>From this repository checkout:</p>
 <pre tabindex="0"><code class="language-sh">python3 scripts/build.py --check
@@ -49,6 +49,18 @@ python3 scripts/audit_npm_package.py  # verifies the real tarball, requires npm 
 <pre tabindex="0"><code class="language-sh">npm install /path/to/syntyr-css-0.3.0-alpha.5.tgz
 </code></pre>
 <p>After the scoped name is verified, the release is approved, and the package is actually published, consumers can use <code>npm install @syntyr/css@&lt;published-version&gt;</code> instead.</p>
+<h2 id="clean-consumer-installation-check">Clean consumer installation check</h2>
+<p>On a maintainer machine or Node-based CI runner, run:</p>
+<pre tabindex="0"><code class="language-sh">node --test tests/npm_consumer.test.mjs
+</code></pre>
+<p>This test packs the candidate, installs that actual archive into a fresh
+temporary consumer with an isolated npm cache, offline mode and lifecycle
+scripts disabled, then verifies all exported paths and their source bytes,
+optional type declarations, the default CSS entrypoint, and the dependency-free
+lockfile. The consumer is not linked to the repository. The test cleans up
+its scratch directory and never publishes anything. It verifies package
+resolution, not browser rendering or every bundler; framework adoption fixtures
+remain separate.</p>
 <h2 id="import-the-css">Import the CSS</h2>
 <p>In an application CSS entrypoint processed by a bundler that supports package CSS imports:</p>
 <pre tabindex="0"><code class="language-css">@import &quot;@syntyr/css/core.css&quot;;
@@ -67,7 +79,7 @@ python3 scripts/audit_npm_package.py  # verifies the real tarball, requires npm 
 <li>The <code>VERSION</code> and <code>package.json</code> version must match. Tagged alpha.4 CDN assets remain immutable.</li>
 <li>npm package file inclusion is restricted to the generated <code>dist/</code> folder, the optional <code>integrations/tailwind/</code> and <code>integrations/shadcn/</code> CSS bridges, <code>README.md</code> and <code>LICENSE</code> (plus npm's required package metadata). It excludes business notes, local configuration, unpublished premium designs and tests.</li>
 <li>CSS exports and the published asset set are checked in the standard Python unit test suite. <code>npm pack --dry-run --json --ignore-scripts</code> confirms what the npm client would actually package.</li>
-<li>The package contains no runtime JavaScript and requires no npm lifecycle scripts to install or consume.</li>
+<li>The default CSS entrypoint requires no runtime JavaScript; optional JS companions are separate exports. No npm lifecycle scripts are required to install or consume the package.</li>
 <li>The scoped name and release version must be verified before any publish command is attempted.</li>
 </ul>
 <p>Individual CSS component exports (alpha.5 source candidate) are described in <a href="native-patterns.html">native patterns</a>. Load tokens and base before selected components. Do not combine full core with individual component imports.</p>
@@ -75,6 +87,7 @@ python3 scripts/audit_npm_package.py  # verifies the real tarball, requires npm 
         <aside class="docs-article-sidebar">
           <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#local-verification-before-publication">Local verification before publication</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#clean-consumer-installation-check">Clean consumer installation check</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#import-the-css">Import the CSS</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#release-safety">Release safety</a>
           </nav>
@@ -82,6 +95,7 @@ python3 scripts/audit_npm_package.py  # verifies the real tarball, requires npm 
             <summary>On this page <span>Jump to section</span></summary>
             <nav aria-label="On this page (mobile)">
 <a class="docs-article-toc-link docs-article-toc-2" href="#local-verification-before-publication">Local verification before publication</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#clean-consumer-installation-check">Clean consumer installation check</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#import-the-css">Import the CSS</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#release-safety">Release safety</a>
             </nav>
