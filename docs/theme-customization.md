@@ -389,3 +389,32 @@ recompute their own tokens; add the opt-in attribute to each theme scope
 you intentionally want to compare. Do not generalize this experiment to text
 colors or primary buttons without a contrast audit, and check the resulting
 hover backgrounds against text across all palettes and browser engines.
+
+## Inspect token dependencies and component variants (source candidate)
+
+From the source checkout, use the dependency-free Python inspection tool:
+
+```sh
+python3 scripts/inspect_design.py token -- --syn-focus-ring
+python3 scripts/inspect_design.py variants
+```
+
+The token report lists declarations and references by source file, direct
+dependencies, reverse token references, and transitively reachable tokens.
+It scans the public build inputs, ignoring CSS comments and quoted strings.
+Edges combine all theme scopes, conditional rules and fallback branches:
+they describe possible static relationships, not the cascade or computed
+values for any element. A reference without a declaration can represent an
+optional host override. The report is not a CSS parser, cycle validator or
+accessibility audit.
+
+The variant report derives its families from the curated component manifest
+and links each documented modifier to canonical gallery example IDs where
+the base and modifier actually occur on the same HTML element. An empty
+example list means no matching curated example was found, not that the
+modifier is unsupported. This is not a Cartesian combination matrix or
+proof of all valid states. See the [catalog](catalog.html) and
+[playground](playground.html) for rendering and accessibility guidance.
+
+Both commands are read-only, emit JSON, and report the unreleased source
+candidate version. No application runtime dependencies or CSS are added.
