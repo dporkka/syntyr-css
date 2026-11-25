@@ -302,7 +302,7 @@ function scopeGalleryIds(html, blockId) {
     }
   ));
 }
-function renderGalleryBlock(block, def, assetPrefix, media, preview) {
+function renderGalleryBlock(block, def, assetPrefix, media, preview, theme) {
   let html = def.chunks.map(part => {
     if (typeof part === "string") return part;
     const value = block.props[part.field];
@@ -321,7 +321,8 @@ function renderGalleryBlock(block, def, assetPrefix, media, preview) {
   // Every copied snippet's Studio theme is a preview default, not an override
   // of the composer-selected theme.
   if (block.type.startsWith(SECTION_PREFIX))
-    html = html.replace(/\sdata-syn-theme="studio"/g, "");
+    html = html.replace(/\sdata-syn-theme="studio"/g, theme === "studio" ? "" :
+      ' data-syn-theme="' + escapeHtml(theme) + '"');
   return '<section class="syn-region" id="block-' + escapeHtml(block.id) +
     '" data-syntyr-block-id="' + escapeHtml(block.id) +
     '" aria-label="' + escapeHtml(def.label) + '">' +
@@ -485,7 +486,7 @@ export function requiredAssets(page) {
     const def = getBlockDefinition(block.type);
     for (const [field, kind] of Object.entries(def.fieldKinds || {})) {
       if (kind !== "src" && kind !== "href") continue;
-      const value = block.props[field];
+      const value = kind === "href" ? block.props[field].trim() : block.props[field];
       const builtin = BUILTIN_ASSET.exec(value);
       if (builtin && def.assetNames?.includes(builtin[1])) names.add(builtin[1]);
       const uploaded = mediaNameFromPath(value);
@@ -505,8 +506,9 @@ export function getImageAssetBytes(page, name) {
 function pruneUnusedMedia(page) {
   const used = new Set();
   for (const block of page.blocks) {
-    for (const value of Object.values(block.props)) {
-      const name = mediaNameFromPath(value);
+    const def = getBlockDefinition(block.type);
+    for (const [field, value] of Object.entries(block.props)) {
+      const name = mediaNameFromPath(def.fieldKinds?.[field] === "href" ? value.trim() : value);
       if (name) used.add(name);
     }
   }
@@ -547,10 +549,10 @@ export function restoreBlockImage(page, blockId, field) {
   return parseDocument(pruneUnusedMedia(next));
 }
 
-function renderBlock(block, anchor, assetPrefix, media, preview) {
+function renderBlock(block, anchor, assetPrefix, media, preview, theme) {
   const p = block.props;
   const template = GALLERY_DEFINITIONS.get(block.type) || SECTION_DEFINITIONS.get(block.type);
-  if (template) return renderGalleryBlock(block, template, assetPrefix, media, preview);
+  if (template) return renderGalleryBlock(block, template, assetPrefix, media, preview, theme);
   const id = ' data-syntyr-block-id="' + escapeHtml(block.id) + '"';
   const sectionAnchor = anchor ? ' id="' + escapeHtml(anchor) + '"' : "";
   switch (block.type) {
@@ -603,7 +605,7 @@ export function renderSections(page, {previewAssets = false, assetPrefix} = {}) 
     const base = { hero: "top", features: "features", cta: "contact" }[block.type];
     const anchor = base ? (anchors.has(base) ? "section-" + block.id : base) : "";
     if (base) anchors.add(base);
-    return renderBlock(block, anchor, assetPrefix, normalized.media, previewAssets === true);
+    return renderBlock(block, anchor, assetPrefix, normalized.media, previewAssets === true, normalized.theme);
   }).join("\n");
 }
 
@@ -620,7 +622,7 @@ export function exportHtml(page, {
     if (block === null) return "";
     if (!block || block.type !== kind) throw new Error("Invalid shared " + kind);
     const checked = parseDocument({...normalized, blocks: [block]}).blocks[0];
-    return renderBlock(checked, "", assetPrefix, normalized.media, previewAssets === true);
+    return renderBlock(checked, "", assetPrefix, normalized.media, previewAssets === true, normalized.theme);
   }
   return [
     "<!doctype html>",

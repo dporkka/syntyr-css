@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Syntyr works with ChatGPT, Codex, Claude Code, Cursor and other agents that generate HTML or framework markup. No Syntyr-specific service, account, MCP…">
-  <meta name="syntyr-source-sha256" content="e127512aece035d12b591bf3b5285c9b07306329d4c42c2ef21b340a2fecf9d9">
+  <meta name="syntyr-source-sha256" content="5303318225e75d2d13b13bbcc01d36c34a6e94601bbdffe6fb241df9a8d4f457">
   <meta name="theme-color" content="#f5f7fb">
   <title>Using Syntyr with coding agents — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/agent-integration">
@@ -141,6 +141,27 @@ python3 scripts/build_cloudflare_site.py --check
 <p>The consolidated reference is deterministic and checked in CI through the Python test suite. The Cloudflare publisher uses a strict allowlist, so exposing new documentation does not expose internal files or business planning documents.</p>
 <h2 id="what-syntyr-does-not-do">What Syntyr does not do</h2>
 <p>Syntyr styles browser HTML/CSS. It does not supply a JavaScript component runtime, chart rendering engine, AI API, CRUD handlers, form submission or remote data access. The optional local read-only MCP adapter is a separate developer tool, never a CSS runtime dependency. Use your existing application technology for those responsibilities.</p>
+<h2 id="deterministic-section-composition-source-candidate">Deterministic section composition (source candidate)</h2>
+<p>From a source checkout, optional Node.js 22+ authoring tooling can discover the
+canonical website section fields and assemble ordinary HTML without a model
+generating arbitrary tags. No npm install or browser-side JavaScript is needed.
+This is separate from the Python-only CSS build and the immutable alpha.4 release.</p>
+<pre tabindex="0"><code class="language-sh">node scripts/compose.mjs --list 0.3.0-alpha.5
+node scripts/compose.mjs &lt;&lt;'JSON'
+{&quot;release&quot;:&quot;0.3.0-alpha.5&quot;,&quot;title&quot;:&quot;Product demo&quot;,&quot;theme&quot;:&quot;studio&quot;,&quot;sections&quot;:[{&quot;section_id&quot;:&quot;hero-product&quot;,&quot;fields&quot;:{&quot;text2&quot;:&quot;A clearer workspace.&quot;}},{&quot;section_id&quot;:&quot;faq&quot;}]}
+JSON
+</code></pre>
+<p>The JSON result includes an editable <code>syntyr.page.v1</code> project, complete HTML,
+required <code>syntyr.all.css</code> and a list of local image assets. Save the HTML next
+to the matching candidate stylesheet from <code>dist/</code> and copy the listed assets
+from <code>assets/</code> into an <code>assets/</code> directory alongside the HTML. The source
+model validates field names and values, escapes content, scopes repeated IDs
+and uses its existing safe-link fallback. Section order is preserved. Only
+known canonical sections and 1–50 section instances are accepted.</p>
+<p>This generator produces the static section layer; it does not compose or
+install host widget controllers, implement routes/forms, generate production
+copy, or certify accessibility. Review example content and destinations, and
+use the release-pinned markup validator and real browser tests before shipping.</p>
         </article>
         <aside class="docs-article-sidebar">
           <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
@@ -153,6 +174,7 @@ python3 scripts/build_cloudflare_site.py --check
 <a class="docs-article-toc-link docs-article-toc-2" href="#documentation-formats-html-for-people-markdown-for-agents">Documentation formats: HTML for people, Markdown for agents</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#validation-and-maintenance">Validation and maintenance</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#what-syntyr-does-not-do">What Syntyr does not do</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#deterministic-section-composition-source-candidate">Deterministic section composition (source candidate)</a>
           </nav>
           <details class="docs-article-toc-mobile">
             <summary>On this page <span>Jump to section</span></summary>
@@ -166,6 +188,7 @@ python3 scripts/build_cloudflare_site.py --check
 <a class="docs-article-toc-link docs-article-toc-2" href="#documentation-formats-html-for-people-markdown-for-agents">Documentation formats: HTML for people, Markdown for agents</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#validation-and-maintenance">Validation and maintenance</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#what-syntyr-does-not-do">What Syntyr does not do</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#deterministic-section-composition-source-candidate">Deterministic section composition (source candidate)</a>
             </nav>
           </details>
         </aside>
