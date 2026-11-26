@@ -7,6 +7,8 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 CLI = ROOT / "scripts" / "syntyr_cli.py"
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 
 
 class UnifiedCliTests(unittest.TestCase):
@@ -44,10 +46,44 @@ class UnifiedCliTests(unittest.TestCase):
             self.assertIsInstance(json.loads(result.stdout), dict)
             self.assertEqual(list(Path(directory).iterdir()), [])
 
+    def test_search_defaults_to_published_and_filters_candidate_only_components(self):
+        result = self.run_cli("search", "Content list", "--format", "json")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        published = json.loads(result.stdout)
+        self.assertEqual(published["release_status"], "published")
+        self.assertEqual(published["components"], [])
+        result = self.run_cli("search", "Content list", "--release",
+                              "0.3.0-alpha.5", "--format", "json")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        candidate = json.loads(result.stdout)
+        self.assertEqual(candidate["release_status"], "unreleased_candidate")
+        self.assertIn("Content list", [entry["name"] for entry in candidate["components"]])
+
+    def test_man_describes_component_and_public_api_without_inventing_markup(self):
+        for name, field in (("Button", "component"), ("syn-button", "entry"),
+                            ("--syn-accent", "entry")):
+            with self.subTest(name=name):
+                result = self.run_cli("man", "--format", "json", "--", name)
+                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertEqual(json.loads(result.stdout)[field]["name"], name)
+        result = self.run_cli("man", "Button")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertIn("syntyr.core.css", result.stdout)
+        self.assertIn("syn-button", result.stdout)
+        self.assertIn("0.3.0-alpha.4", result.stdout)
+
+    def test_man_unavailable_name_reports_error_only_on_stderr(self):
+        for name in ("Content list", "not-a-component"):
+            with self.subTest(name=name):
+                result = self.run_cli("man", name, "--format", "json")
+                self.assertEqual(result.returncode, 2)
+                self.assertEqual(result.stdout, "")
+                self.assertIn(name, result.stderr)
+
     def test_help_and_invalid_command(self):
         result = self.run_cli("--help")
         self.assertEqual(result.returncode, 0, result.stderr)
-        for name in ("version", "check", "diff", "info", "project-check"):
+        for name in ("version", "check", "diff", "info", "project-check", "search", "man"):
             self.assertIn(name, result.stdout)
         result = self.run_cli("not-a-command")
         self.assertEqual(result.returncode, 2)
