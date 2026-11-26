@@ -31,8 +31,9 @@ npm run preview
 ## Eleventy static-site generator
 
 [Source](../examples/eleventy/) — Eleventy 3 copying Syntyr's prebuilt CSS
-from `dist/` into a subpath-deployed output. Uses native Nunjucks and no
-Syntyr/Eleventy browser runtime.
+from `dist/` into a subpath-deployed output. Uses native Nunjucks to render
+the existing portable CMS JSON, with no Syntyr/Eleventy browser runtime.
+The output must match the Python renderer's semantic contract.
 
 ```sh
 cd examples/eleventy
@@ -40,6 +41,14 @@ npm install
 npm run build
 npm run verify
 ```
+
+## Soupault HTML processor
+
+[Source](https://github.com/dporkka/syntyr-css/tree/main/examples/soupault/) —
+optional head-selector stylesheet injection into a handwritten two-page site.
+Preserves the existing HTML and explicit scoped semantic opt-in. See
+[the static-site generator guide](static-site-generators.md) for commands
+and verification. No new template dialect or browser JS.
 
 ## Hugo + portable CMS JSON
 

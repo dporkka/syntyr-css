@@ -43,7 +43,8 @@ class Page(HTMLParser):
             self.stylesheets.append(attributes.get("href", ""))
 
 
-def verify_static_site(destination: Path, *, base_path: str = "/") -> int:
+def verify_static_site(destination: Path, *, base_path: str = "/",
+                       required_css_markers: tuple[str, ...] = ()) -> int:
     """Return verified HTML count; raise AssertionError on contract violations."""
     root = destination.resolve()
     if not root.is_dir():
@@ -76,6 +77,7 @@ def verify_static_site(destination: Path, *, base_path: str = "/") -> int:
                     or base_path_on_site.startswith(base_path)):
                 raise AssertionError(f"Document base URL ignores base path in {name}")
         has_syntyr_css = False
+        missing_css_markers = set(required_css_markers)
         for url in page.stylesheets:
             parsed = urlsplit(url)
             if parsed.scheme or parsed.netloc or url.startswith("//"):
@@ -94,9 +96,13 @@ def verify_static_site(destination: Path, *, base_path: str = "/") -> int:
             file_path = (root / output_name).resolve()
             if not file_path.is_relative_to(root) or not file_path.is_file():
                 raise AssertionError(f"Missing stylesheet in {name}: {url}")
-            has_syntyr_css |= ".syn-root" in file_path.read_text(encoding="utf-8")
+            css = file_path.read_text(encoding="utf-8")
+            has_syntyr_css |= ".syn-root" in css
+            missing_css_markers.difference_update(marker for marker in required_css_markers if marker in css)
         if not has_syntyr_css:
             raise AssertionError(f"Syntyr CSS missing from stylesheets in {name}")
+        if missing_css_markers:
+            raise AssertionError(f"Missing required CSS markers in {name}: {sorted(missing_css_markers)}")
     return len(pages)
 
 

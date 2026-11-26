@@ -1,0 +1,14 @@
+[settings]
+  generator_mode = false
+  caching = false
+  plugin_discovery = false
+  clean_urls = false
+  site_dir = "site"
+  build_dir = "build"
+
+# Transform only the HTML head. Content and semantic scope remain author-owned.
+[widgets.syntyr-css]
+  widget = "insert_html"
+  selector = "head"
+  html = '<link rel="stylesheet" href="/syntyr-soupault/assets/syntyr.semantic-bundle.css">'
+  parse = true

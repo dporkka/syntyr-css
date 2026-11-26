@@ -45,8 +45,9 @@ The example remains noindexed until its fictional content is replaced.
 | Generator | Recommended CSS delivery | Base path / deployment concern | Example |
 | --- | --- | --- | --- |
 | **Astro** | `import '@syntyr/css/core.css'` in an Astro page/layout (local archive or published package) | Astro `base` controls generated asset paths; prefer imported CSS to hardcoded root URLs | [Runnable Astro fixture](https://github.com/dporkka/syntyr-css/tree/main/examples/astro/) |
-| **Eleventy (11ty)** | Copy `dist/syntyr.core.css` through `addPassthroughCopy` | Use `pathPrefix` and Eleventy's `url` filter | [Runnable Eleventy fixture](https://github.com/dporkka/syntyr-css/tree/main/examples/eleventy/) |
+| **Eleventy (11ty)** | Copy core and recipes CSS through `addPassthroughCopy` | Use `pathPrefix` and Eleventy's `url` filter | [Runnable Eleventy fixture](https://github.com/dporkka/syntyr-css/tree/main/examples/eleventy/) |
 | **Hugo** | Serve prebuilt CSS from `static/` or a Hugo filesystem mount | Use `relURL` for assets, not a bare `/css/` URL on project subpaths | [Runnable CMS-driven Hugo starter](https://github.com/dporkka/syntyr-css/tree/main/examples/hugo-cms/); [isolated docs proof](https://github.com/dporkka/syntyr-css/tree/main/experiments/hugo/) |
+| **Soupault** | Inject one prebuilt semantic bundle using a head-selector widget | Configure the local stylesheet mount prefix; preserve author-owned scope | [Runnable HTML processor](https://github.com/dporkka/syntyr-css/tree/main/examples/soupault/) |
 | **Jekyll** | Copy prebuilt CSS into `assets/css/`; do not process it as Sass | Use Liquid `relative_url` and configure `baseurl` for GitHub project pages | Snippet below |
 | **Zola** | Copy prebuilt CSS into `static/assets/` | Use `get_url` and a correctly configured `base_url` | Snippet below |
 | **Next.js static export** | Import package CSS once in `app/layout.tsx` or host CSS in `public/` | Configure `output: 'export'` and `basePath` for project subpaths | Notes below |
@@ -80,8 +81,10 @@ and [base-path configuration](https://docs.astro.build/en/reference/configuratio
 
 ## Eleventy
 
-The [Eleventy example](https://github.com/dporkka/syntyr-css/tree/main/examples/eleventy/) copies the current dist CSS
-directly to `_site/assets/syntyr.core.css`; its Nunjucks template uses:
+The [Eleventy example](https://github.com/dporkka/syntyr-css/tree/main/examples/eleventy/) copies the current core
+and recipes CSS directly to `_site/assets/`. The independent Nunjucks template
+renders the same validated CMS JSON as the Hugo and Astro/Keystatic examples.
+For CSS delivery and the scope, it uses:
 
 ```njk
 <link rel="stylesheet" href="{{ '/assets/syntyr.core.css' | url }}">
@@ -127,6 +130,31 @@ and local links:
 ```sh
 python3 scripts/verify_hugo_preview.py --hugo /path/to/hugo
 ```
+
+## Soupault: incrementally adopt Syntyr in existing HTML
+
+Soupault can process a handwritten site (or another generator's output)
+without introducing a new template system. The [two-page processor fixture](https://github.com/dporkka/syntyr-css/tree/main/examples/soupault/)
+injects a self-hosted semantic bundle using a head selector:
+
+```toml
+[settings]
+  generator_mode = false
+  clean_urls = false
+
+[widgets.syntyr-css]
+  widget = "insert_html"
+  selector = "head"
+  html = '<link rel="stylesheet" href="/syntyr-soupault/assets/syntyr.semantic-bundle.css">'
+  parse = true
+```
+
+Opt in only on the region you intend to style, using
+`class="syn-root syn-semantic"`. Keep existing host styles and behavior.
+The processor does not infer ARIA, rewrite component markup, sanitize HTML,
+or add a runtime. Do not inject a second Syntyr bundle into a page that
+already loads one. See the fixture README for installation, commands and
+the nested-route checks.
 
 ## Jekyll / GitHub Pages
 
@@ -182,6 +210,38 @@ site when the generator itself uses client-side code. Gatsby, VitePress
 and Docusaurus can consume the same CSS through their respective global
 style entrypoints; these are integration instructions, not verified build
 fixtures.
+
+## Shared CMS rendering contract
+
+The Python standard-library renderer is the reference for the existing
+portable CMS v1 JSON. Independent Hugo, Eleventy and Astro/Keystatic
+templates consume the same content. This is not a new template language,
+a new content schema, or a CSS runtime dependency.
+
+Their optional build verifiers compare the generated landing page against
+the reference: ordered native HTML elements, decoded text, headings and
+anchor IDs, ARIA and Syntyr classes, theme, metadata and link targets.
+Formatting, class order, optional paragraph/list end tags and bundler CSS
+filenames may differ. The checker rejects unprefixed local links, missing
+core/recipe CSS markers and executable HTML scripts. It is a narrow
+regression contract, not an HTML5 parser, full CSS validator or browser
+accessibility test.
+
+```sh
+python3 scripts/build_hugo_cms_starter.py --output /tmp/syntyr-hugo-parity
+npm run build --prefix examples/eleventy
+npm run verify --prefix examples/eleventy
+npm run build --prefix examples/astro-keystatic
+npm run verify --prefix examples/astro-keystatic
+python3 -m unittest tests.test_cms_generator_parity -v
+```
+
+Install the optional generators/fixture dependencies first. Set
+`HUGO_BIN` and `SOUPAULT_BIN` to local executables to exercise binary-based
+tests; Node fixtures' real-output tests require their builds. Without
+optional tools those tests skip, while stdlib contract tests still run.
+The Soupault fixture intentionally checks preservation of handwritten
+source rather than treating it as a fourth CMS template engine.
 
 ## Verification and failure modes
 

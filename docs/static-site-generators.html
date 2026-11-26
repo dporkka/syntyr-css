@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Syntyr&#x27;s distribution is ordinary, scoped CSS. It does not require a JavaScript runtime, hydration, Sass, PostCSS, browser-specific components, or a…">
-  <meta name="syntyr-source-sha256" content="6d1575575531dd61b8cbd3c2ce3ee25d4ed4afaa5072ccbff574b94453fa8da0">
+  <meta name="syntyr-source-sha256" content="063499bf2dbad1576354b6bb7009650b08bc95976c1a503af07feb9599f56e9e">
   <meta name="theme-color" content="#f5f7fb">
   <title>Syntyr with static-site generators — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/static-site-generators">
@@ -86,7 +86,7 @@ The example remains noindexed until its fictional content is replaced.</p>
 </tr>
 <tr>
 <td><strong>Eleventy (11ty)</strong></td>
-<td>Copy <code>dist/syntyr.core.css</code> through <code>addPassthroughCopy</code></td>
+<td>Copy core and recipes CSS through <code>addPassthroughCopy</code></td>
 <td>Use <code>pathPrefix</code> and Eleventy's <code>url</code> filter</td>
 <td><a href="https://github.com/dporkka/syntyr-css/tree/main/examples/eleventy/">Runnable Eleventy fixture</a></td>
 </tr>
@@ -95,6 +95,12 @@ The example remains noindexed until its fictional content is replaced.</p>
 <td>Serve prebuilt CSS from <code>static/</code> or a Hugo filesystem mount</td>
 <td>Use <code>relURL</code> for assets, not a bare <code>/css/</code> URL on project subpaths</td>
 <td><a href="https://github.com/dporkka/syntyr-css/tree/main/examples/hugo-cms/">Runnable CMS-driven Hugo starter</a>; <a href="https://github.com/dporkka/syntyr-css/tree/main/experiments/hugo/">isolated docs proof</a></td>
+</tr>
+<tr>
+<td><strong>Soupault</strong></td>
+<td>Inject one prebuilt semantic bundle using a head-selector widget</td>
+<td>Configure the local stylesheet mount prefix; preserve author-owned scope</td>
+<td><a href="https://github.com/dporkka/syntyr-css/tree/main/examples/soupault/">Runnable HTML processor</a></td>
 </tr>
 <tr>
 <td><strong>Jekyll</strong></td>
@@ -144,8 +150,10 @@ account for <code>import.meta.env.BASE_URL</code>. See
 <a href="https://docs.astro.build/en/guides/styling/">Astro's CSS guidance</a>
 and <a href="https://docs.astro.build/en/reference/configuration-reference/">base-path configuration</a>.</p>
 <h2 id="eleventy">Eleventy</h2>
-<p>The <a href="https://github.com/dporkka/syntyr-css/tree/main/examples/eleventy/">Eleventy example</a> copies the current dist CSS
-directly to <code>_site/assets/syntyr.core.css</code>; its Nunjucks template uses:</p>
+<p>The <a href="https://github.com/dporkka/syntyr-css/tree/main/examples/eleventy/">Eleventy example</a> copies the current core
+and recipes CSS directly to <code>_site/assets/</code>. The independent Nunjucks template
+renders the same validated CMS JSON as the Hugo and Astro/Keystatic examples.
+For CSS delivery and the scope, it uses:</p>
 <pre tabindex="0"><code class="language-njk">&lt;link rel=&quot;stylesheet&quot; href=&quot;{{ '/assets/syntyr.core.css' | url }}&quot;&gt;
 &lt;main class=&quot;syn-root&quot; data-syn-theme=&quot;studio&quot;&gt;
   &lt;h1 class=&quot;syn-heading&quot;&gt;Static site&lt;/h1&gt;
@@ -177,6 +185,26 @@ not a requirement of the Syntyr CSS package.</p>
 and local links:</p>
 <pre tabindex="0"><code class="language-sh">python3 scripts/verify_hugo_preview.py --hugo /path/to/hugo
 </code></pre>
+<h2 id="soupault-incrementally-adopt-syntyr-in-existing-html">Soupault: incrementally adopt Syntyr in existing HTML</h2>
+<p>Soupault can process a handwritten site (or another generator's output)
+without introducing a new template system. The <a href="https://github.com/dporkka/syntyr-css/tree/main/examples/soupault/">two-page processor fixture</a>
+injects a self-hosted semantic bundle using a head selector:</p>
+<pre tabindex="0"><code class="language-toml">[settings]
+  generator_mode = false
+  clean_urls = false
+
+[widgets.syntyr-css]
+  widget = &quot;insert_html&quot;
+  selector = &quot;head&quot;
+  html = '&lt;link rel=&quot;stylesheet&quot; href=&quot;/syntyr-soupault/assets/syntyr.semantic-bundle.css&quot;&gt;'
+  parse = true
+</code></pre>
+<p>Opt in only on the region you intend to style, using
+<code>class=&quot;syn-root syn-semantic&quot;</code>. Keep existing host styles and behavior.
+The processor does not infer ARIA, rewrite component markup, sanitize HTML,
+or add a runtime. Do not inject a second Syntyr bundle into a page that
+already loads one. See the fixture README for installation, commands and
+the nested-route checks.</p>
 <h2 id="jekyll-github-pages">Jekyll / GitHub Pages</h2>
 <p>Jekyll needs only a copied prebuilt asset and native Liquid URL filtering.
 In a consumer Jekyll site's root:</p>
@@ -214,6 +242,32 @@ site when the generator itself uses client-side code. Gatsby, VitePress
 and Docusaurus can consume the same CSS through their respective global
 style entrypoints; these are integration instructions, not verified build
 fixtures.</p>
+<h2 id="shared-cms-rendering-contract">Shared CMS rendering contract</h2>
+<p>The Python standard-library renderer is the reference for the existing
+portable CMS v1 JSON. Independent Hugo, Eleventy and Astro/Keystatic
+templates consume the same content. This is not a new template language,
+a new content schema, or a CSS runtime dependency.</p>
+<p>Their optional build verifiers compare the generated landing page against
+the reference: ordered native HTML elements, decoded text, headings and
+anchor IDs, ARIA and Syntyr classes, theme, metadata and link targets.
+Formatting, class order, optional paragraph/list end tags and bundler CSS
+filenames may differ. The checker rejects unprefixed local links, missing
+core/recipe CSS markers and executable HTML scripts. It is a narrow
+regression contract, not an HTML5 parser, full CSS validator or browser
+accessibility test.</p>
+<pre tabindex="0"><code class="language-sh">python3 scripts/build_hugo_cms_starter.py --output /tmp/syntyr-hugo-parity
+npm run build --prefix examples/eleventy
+npm run verify --prefix examples/eleventy
+npm run build --prefix examples/astro-keystatic
+npm run verify --prefix examples/astro-keystatic
+python3 -m unittest tests.test_cms_generator_parity -v
+</code></pre>
+<p>Install the optional generators/fixture dependencies first. Set
+<code>HUGO_BIN</code> and <code>SOUPAULT_BIN</code> to local executables to exercise binary-based
+tests; Node fixtures' real-output tests require their builds. Without
+optional tools those tests skip, while stdlib contract tests still run.
+The Soupault fixture intentionally checks preservation of handwritten
+source rather than treating it as a fourth CMS template engine.</p>
 <h2 id="verification-and-failure-modes">Verification and failure modes</h2>
 <p>From the Syntyr repository root:</p>
 <pre tabindex="0"><code class="language-sh">python3 scripts/build.py --check
@@ -250,9 +304,11 @@ the generator chosen.</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#astro">Astro</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#eleventy">Eleventy</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#hugo">Hugo</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#soupault-incrementally-adopt-syntyr-in-existing-html">Soupault: incrementally adopt Syntyr in existing HTML</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#jekyll-github-pages">Jekyll / GitHub Pages</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#zola">Zola</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#nextjs-export-gatsby-and-documentation-generators">Next.js export, Gatsby and documentation generators</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#shared-cms-rendering-contract">Shared CMS rendering contract</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#verification-and-failure-modes">Verification and failure modes</a>
           </nav>
           <details class="docs-article-toc-mobile">
@@ -263,9 +319,11 @@ the generator chosen.</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#astro">Astro</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#eleventy">Eleventy</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#hugo">Hugo</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#soupault-incrementally-adopt-syntyr-in-existing-html">Soupault: incrementally adopt Syntyr in existing HTML</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#jekyll-github-pages">Jekyll / GitHub Pages</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#zola">Zola</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#nextjs-export-gatsby-and-documentation-generators">Next.js export, Gatsby and documentation generators</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#shared-cms-rendering-contract">Shared CMS rendering contract</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#verification-and-failure-modes">Verification and failure modes</a>
             </nav>
           </details>

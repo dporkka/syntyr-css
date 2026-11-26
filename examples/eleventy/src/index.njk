@@ -3,16 +3,67 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Syntyr + Eleventy</title>
+  <meta name="description" content="{{ pageContent.description }}">
+  <title>{{ pageContent.title }}</title>
   <link rel="stylesheet" href="{{ '/assets/syntyr.core.css' | url }}">
+  <link rel="stylesheet" href="{{ '/assets/syntyr.recipes.css' | url }}">
 </head>
-<body>
-  <main class="syn-root syn-page" data-syn-theme="studio">
-    <section class="syn-panel syn-region" aria-labelledby="overview">
-      <h1 id="overview" class="syn-heading">A static Eleventy page</h1>
-      <p class="syn-body">Native HTML, Syntyr CSS, no client-side runtime.</p>
-      <a href="{{ '/' | url }}" class="syn-button syn-button--primary">Home</a>
+<body class="syn-root" data-syn-theme="{{ pageContent.theme }}">
+  <a href="#content">Skip to content</a>
+  <header class="syn-region"><nav aria-label="Primary"><a href="{{ '/' | url }}">Home</a></nav></header>
+  <main id="content" class="syn-shell">
+  {% for section in pageContent.sections %}
+    {% set anchor = "section-" + section.id %}
+    {% if section.type == "hero" %}
+    <section class="syn-region" aria-labelledby="{{ anchor }}">
+      <div class="syn-site-hero">
+        <p class="syn-eyebrow">{{ section.eyebrow }}</p>
+        {% if loop.first %}<h1 id="{{ anchor }}" class="syn-site-heading">{{ section.heading }}</h1>
+        {% else %}<h2 id="{{ anchor }}" class="syn-site-heading">{{ section.heading }}</h2>{% endif %}
+        <p class="syn-lede">{{ section.description }}</p>
+        <div class="syn-actions"><a class="syn-button syn-button--primary" href="{{ section.button.url | cmsUrl }}">{{ section.button.label }}</a></div>
+      </div>
     </section>
+    {% elif section.type == "features" %}
+    <section class="syn-region" aria-labelledby="{{ anchor }}">
+      <h2 class="syn-heading" id="{{ anchor }}">{{ section.heading }}</h2>
+      <div class="syn-feature-grid">
+      {% for item in section.items %}
+        <article class="syn-feature-card"><h3>{{ item.title }}</h3><p>{{ item.description }}</p></article>
+      {% endfor %}
+      </div>
+    </section>
+    {% elif section.type == "pricing" %}
+    <section class="syn-region" aria-labelledby="{{ anchor }}">
+      <h2 class="syn-heading" id="{{ anchor }}">{{ section.heading }}</h2>
+      <div class="syn-pricing">
+      {% for plan in section.plans %}
+        <article class="syn-price-card">
+          <h3>{{ plan.name }}</h3><p class="syn-price-value">{{ plan.price }}</p>
+          <ul class="syn-feature-list">{% for feature in plan.features %}<li>{{ feature }}</li>{% endfor %}</ul>
+          <a class="syn-button syn-button--primary" href="{{ plan.button.url | cmsUrl }}">{{ plan.button.label }}</a>
+        </article>
+      {% endfor %}
+      </div>
+    </section>
+    {% elif section.type == "faq" %}
+    <section class="syn-region" aria-labelledby="{{ anchor }}">
+      <h2 class="syn-heading" id="{{ anchor }}">{{ section.heading }}</h2>
+      <div class="syn-stack">
+      {% for item in section.items %}
+        <details class="syn-panel"><summary>{{ item.question }}</summary><p>{{ item.answer }}</p></details>
+      {% endfor %}
+      </div>
+    </section>
+    {% elif section.type == "cta" %}
+    <section class="syn-region syn-panel" aria-labelledby="{{ anchor }}">
+      <h2 class="syn-heading" id="{{ anchor }}">{{ section.heading }}</h2>
+      <p class="syn-lede">{{ section.description }}</p>
+      <a class="syn-button syn-button--primary" href="{{ section.button.url | cmsUrl }}">{{ section.button.label }}</a>
+    </section>
+    {% endif %}
+  {% endfor %}
   </main>
+  <footer class="syn-region"><p class="syn-muted">{{ pageContent.title }}</p></footer>
 </body>
 </html>

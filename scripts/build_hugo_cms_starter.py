@@ -11,10 +11,10 @@ from urllib.parse import unquote, urlsplit
 
 if __package__:
     from scripts.render_cms_starter import validate_document
-    from scripts.verify_static_generators import verify_static_site
+    from scripts.verify_cms_parity import verify_cms_output
 else:
     from render_cms_starter import validate_document
-    from verify_static_generators import verify_static_site
+    from verify_cms_parity import verify_cms_output
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "examples/hugo-cms"
@@ -76,7 +76,7 @@ def build(destination: Path, *, hugo: str = "hugo", content_path: Path = CONTENT
                 [hugo, "--source", str(source), "--destination", str(candidate), "--minify"],
                 check=True,
             )
-            pages = verify_static_site(candidate, base_path=_base_path(base_url))
+            pages = verify_cms_output(candidate, base_path=_base_path(base_url), content_path=content_path)
             # A same-filesystem rename does not replace a nonempty destination.
             candidate.replace(destination)
             return pages
