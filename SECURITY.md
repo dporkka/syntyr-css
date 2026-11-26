@@ -19,6 +19,16 @@ or integration. Only test systems and accounts you are authorized to use.
 
 For non-security defects, use ordinary GitHub issues.
 
+## Public repository confidentiality
+
+This repository is public independently of the Cloudflare publishing allowlist.
+Tracked business plans, specifications and pilot templates must be suitable for
+public disclosure. Store confidential strategy, credentials, customer records
+and identifying research notes in an access-controlled private workspace, never
+in tracked source. In particular, keep real pilot data under the ignored
+`business/private/` path or outside the checkout. An ignored path does not erase
+files from existing Git history.
+
 ## Scope and handling
 
 - The free CSS runtime requires no JavaScript, npm packages or remote fonts,

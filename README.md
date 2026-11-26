@@ -109,7 +109,7 @@ Codex offline setup, keep it: the command below can replace its skill directory
 and remove the generated selector reference.
 
 ```sh
-npx skills@1.9.0 add https://github.com/dporkka/syntyr-css/tree/main/agents/syntyr --skill syntyr
+npx skills@1.9.0 add https://github.com/dporkka/syntyr-css/tree/c9b88cb5211edca58129181c8371caa66b8926b0/agents/syntyr --skill syntyr
 ```
 
 This installs agent instructions only, not CSS or application dependencies.

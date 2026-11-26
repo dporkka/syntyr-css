@@ -39,7 +39,11 @@ function updateOutput() {
       currentForm.theme + '">' + markup + '</body></html>';
     $("form-copy").disabled = false;
     $("form-download").disabled = false;
-    setStatus("Valid HTML ready. Connect the action to your own submission handler before publishing.");
+    const absolute = /^https?:\/\//i.test(currentForm.action.trim());
+    setStatus(absolute
+      ? "Valid HTML ready. Confirm the destination: " + new URL(currentForm.action.trim()).origin +
+        ". HTTP loopback endpoints are for development only."
+      : "Valid HTML ready. Connect the action to your own submission handler before publishing.");
   } catch (error) {
     $("form-code").value = "";
     $("form-copy").disabled = true;

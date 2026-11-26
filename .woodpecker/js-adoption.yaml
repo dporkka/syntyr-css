@@ -47,15 +47,15 @@ steps:
     commands:
       - node --version && npm --version
       - node --test tests/animate.test.mjs tests/copy.test.mjs tests/ascii_playground.test.mjs tests/ascii_cli.test.mjs tests/compose_cli.test.mjs tests/compose_intent.test.mjs
-      - npm install --prefix packages/react --no-audit --no-fund
+      - npm ci --prefix packages/react --ignore-scripts --no-audit --no-fund
       - npm test --prefix packages/react
-      - npm install --prefix examples/react-vite --no-audit --no-fund
+      - npm ci --prefix examples/react-vite --ignore-scripts --no-audit --no-fund
       - npm run build --prefix examples/react-vite
-      - npm install --prefix examples/preact-jsx --no-audit --no-fund
+      - npm ci --prefix examples/preact-jsx --ignore-scripts --no-audit --no-fund
       - npm run build --prefix examples/preact-jsx
-      - npm install --prefix examples/solid-tsx --no-audit --no-fund
+      - npm ci --prefix examples/solid-tsx --ignore-scripts --no-audit --no-fund
       - npm run build --prefix examples/solid-tsx
-      - npm install --prefix examples/next-app-router --no-audit --no-fund
+      - npm ci --prefix examples/next-app-router --ignore-scripts --no-audit --no-fund
       - npm run build --prefix examples/next-app-router
-      - npm install --prefix examples/node-express --no-audit --no-fund
+      - npm ci --prefix examples/node-express --ignore-scripts --no-audit --no-fund
       - npm test --prefix examples/node-express

@@ -449,6 +449,22 @@ export function parseDocument(input) {
   return { schema: SCHEMA_VERSION, title: page.title, description, language, theme: page.theme, media, blocks };
 }
 
+// Cryptographic checks happen at import/export boundaries, not on every
+// keystroke. Structural validation stays synchronous and dependency-free.
+export async function verifyDocumentMedia(input) {
+  const normalized = parseDocument(input);
+  for (const [name, dataURL] of Object.entries(normalized.media)) {
+    if (!globalThis.crypto?.subtle)
+      throw new Error("Image integrity verification requires a secure browser context");
+    const bytes = Uint8Array.from(atob(dataURL.split(",")[1]), c => c.charCodeAt(0));
+    const digest = new Uint8Array(await globalThis.crypto.subtle.digest("SHA-256", bytes));
+    const hash = Array.from(digest, n => n.toString(16).padStart(2, "0")).join("");
+    if (name.slice(7, 71) !== hash)
+      throw new Error("Uploaded image content hash mismatch: " + name);
+  }
+  return normalized;
+}
+
 export function moveBlock(page, from, to) {
   const normalized = parseDocument(page);
   if (!Number.isInteger(from) || !Number.isInteger(to) ||

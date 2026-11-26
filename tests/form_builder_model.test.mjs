@@ -134,3 +134,25 @@ test("rejects unsupported shapes, empty endpoints and excessive fields", () => {
   }));
   assert.throws(() => validateForm(form), /50|many/i);
 });
+
+test("requires HTTPS or an explicit loopback HTTP development endpoint", () => {
+  const form = createForm("contact");
+  for (const action of [
+    "http://example.test/contact", "http://localhost.example.test/contact",
+    "http://localhost@evil.example/contact", "http://2130706433/contact",
+    "https://user:pass@example.test/contact", "https:///example.test",
+    "https://example.test:99999", "/\\evil.example/collect",
+    "https://example.test/\u0001", "https://example.test/\u007fmore"
+  ]) {
+    form.action = action;
+    assert.throws(() => renderForm(form), /action/i, action);
+    assert.throws(() => exportStandalone(form), /action/i, action);
+  }
+  for (const action of ["/contact", "./contact", "../contact",
+    "https://example.test/contact?source=form", "http://localhost:3000/contact",
+    "http://127.0.0.1:8080/contact", "http://[::1]:8080/contact"]) {
+    form.action = action;
+    assert.equal(validateForm(form).action, action);
+    assert.doesNotThrow(() => exportStandalone(form));
+  }
+});

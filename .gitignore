@@ -57,3 +57,11 @@ deploy/saas-marketing/.public/
 
 # Optional Astro + Keystatic static starter: audited, pinned example lockfile.
 !examples/astro-keystatic/package-lock.json
+
+# Locked, optional framework adoption environments (never a core dependency).
+!packages/react/package-lock.json
+!examples/react-vite/package-lock.json
+!examples/preact-jsx/package-lock.json
+!examples/solid-tsx/package-lock.json
+!examples/next-app-router/package-lock.json
+!examples/node-express/package-lock.json

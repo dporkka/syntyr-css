@@ -105,6 +105,16 @@ class AgentSetupTests(unittest.TestCase):
             self.assertFalse((project / 'syntyr.agent.json').exists())
             self.assertFalse((project / '.agents').exists())
 
+    def test_init_preflights_nondirectory_ancestors_before_any_asset_write(self):
+        with TemporaryDirectory() as path:
+            project = Path(path)
+            (project / '.agents').write_text('consumer-owned file')
+            result = self.run_cli('init', '--project', project)
+            self.assertEqual(result.returncode, 1)
+            self.assertFalse((project / 'vendor').exists())
+            self.assertFalse((project / 'syntyr.agent.json').exists())
+            self.assertEqual((project / '.agents').read_text(), 'consumer-owned file')
+
     def test_check_does_not_silently_validate_jsx(self):
         with TemporaryDirectory() as path:
             project = Path(path)
@@ -160,6 +170,49 @@ class AgentSetupTests(unittest.TestCase):
             self.assertEqual({d['code'] for d in data['diagnostics']}, {'missing-asset', 'modified-asset'})
             self.assertEqual(recipes.read_text(), 'changed')
             self.assertFalse(core.exists())
+
+    def test_info_and_check_reject_modified_skill_and_reference(self):
+        for agent, directory in (('codex', '.agents'), ('claude', '.claude'), ('cursor', '.cursor')):
+            with self.subTest(agent=agent), TemporaryDirectory() as path:
+                project = Path(path)
+                self.assertEqual(self.run_cli('init', '--project', project, '--agent', agent).returncode, 0)
+                page = project / 'page.html'
+                page.write_text('<main class="syn-root"></main>')
+                original = project / directory / 'skills/syntyr'
+                pristine = self.run_cli('info', '--project', project)
+                self.assertEqual(pristine.returncode, 0)
+                self.assertTrue(all(a['integrity'] == 'verified' for a in
+                                    json.loads(pristine.stdout)['agent_artifacts']))
+                (original / 'SKILL.md').write_text('unexpected modification')
+                (original / 'references/api.json').write_text('{}')
+                for command in ('info', 'check'):
+                    result = self.run_cli(command, '--project', project)
+                    self.assertEqual(result.returncode, 1, result.stdout + result.stderr)
+                    self.assertEqual({d['code'] for d in json.loads(result.stdout)['diagnostics']},
+                                     {'modified-agent-skill', 'modified-api-reference'})
+                self.assertEqual((original / 'SKILL.md').read_text(), 'unexpected modification')
+
+    def test_check_matches_info_symlink_and_config_validation(self):
+        with TemporaryDirectory() as path:
+            project = Path(path)
+            self.assertEqual(self.run_cli('init', '--project', project).returncode, 0)
+            cfg = project / 'syntyr.agent.json'
+            config = json.loads(cfg.read_text())
+            target = project / config['agent_skill']
+            outside = project / 'outside.md'
+            outside.write_bytes(target.read_bytes())
+            target.unlink()
+            target.symlink_to(outside)
+            result = self.run_cli('check', '--project', project)
+            self.assertEqual(result.returncode, 1)
+            self.assertIn('symlink-agent-skill', [d['code'] for d in json.loads(result.stdout)['diagnostics']])
+            other = project / 'outside.json'
+            cfg.rename(other)
+            cfg.symlink_to(other)
+            for command in ('info', 'check'):
+                result = self.run_cli(command, '--project', project)
+                self.assertEqual(result.returncode, 1)
+                self.assertIn('symlinked Syntyr configuration', result.stdout)
 
     def test_info_agent_paths_are_valid_on_posix_and_windows(self):
         from pathlib import PurePosixPath, PureWindowsPath
