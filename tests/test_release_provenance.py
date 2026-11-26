@@ -1,5 +1,6 @@
 """Exact-source and detached-signature release evidence contracts."""
 import hashlib
+import os
 from pathlib import Path
 import shutil
 import subprocess
@@ -15,6 +16,14 @@ from scripts import release_provenance as provenance
 @unittest.skipUnless(shutil.which("git"), "Git is required for release provenance")
 class ReleaseProvenanceTests(unittest.TestCase):
     def setUp(self):
+        env = patch.dict(os.environ)
+        env.start()
+        self.addCleanup(env.stop)
+        for name in ("GIT_DIR", "GIT_WORK_TREE", "GIT_INDEX_FILE", "GIT_COMMON_DIR",
+                     "GIT_OBJECT_DIRECTORY", "GIT_ALTERNATE_OBJECT_DIRECTORIES",
+                     "GIT_NAMESPACE", "GIT_REPLACE_REF_BASE", "GIT_PREFIX",
+                     "GIT_CONFIG", "GIT_CONFIG_PARAMETERS", "GIT_CONFIG_COUNT"):
+            os.environ.pop(name, None)
         self.scratch = tempfile.TemporaryDirectory()
         self.addCleanup(self.scratch.cleanup)
         self.root = Path(self.scratch.name)
@@ -67,6 +76,48 @@ class ReleaseProvenanceTests(unittest.TestCase):
                                   (b"test license\n", False, 0o120777)):
             self.write_archive(data, extra, mode)
             with self.subTest(data=data, extra=extra, mode=mode), self.assertRaises(ValueError):
+                self.create()
+
+    def test_git_replacement_objects_cannot_change_reviewed_source(self):
+        (self.root / "LICENSE").write_bytes(b"replacement license\n")
+        self.git("add", "LICENSE")
+        self.git("commit", "-qm", "replacement")
+        replacement = self.git("rev-parse", "HEAD").strip()
+        self.git("reset", "--hard", self.commit)
+        self.git("replace", self.commit, replacement)
+        # A replaced commit can otherwise appear clean with the replacement tree.
+        self.git("reset", "--hard", self.commit)
+        self.write_archive(b"replacement license\n")
+        self.assertEqual(provenance.git_bytes(self.root, self.commit, "LICENSE"),
+                         b"test license\n")
+        with self.assertRaises(ValueError):
+            self.create()
+
+    def test_inherited_git_location_does_not_redirect_source_reads(self):
+        with patch.dict(os.environ, {"GIT_DIR": str(self.root / "nonexistent"),
+                                    "GIT_INDEX_FILE": str(self.root / "wrong-index")}):
+            self.assertEqual(self.create()["commit"], self.commit)
+
+    def test_archive_swap_cannot_validate_different_hashed_bytes(self):
+        self.write_archive()
+        valid = self.archive.read_bytes()
+        self.write_archive(b"tampered license\n")
+        tampered = self.archive.read_bytes()
+        actual_record = provenance.artifact_record
+        calls = 0
+
+        def swap(path, version, **kwargs):
+            nonlocal calls
+            calls += 1
+            if calls == 2:
+                path.write_bytes(tampered)
+            record = actual_record(path, version, **kwargs)
+            if calls == 1:
+                path.write_bytes(valid)
+            return record
+
+        with patch.object(provenance, "artifact_record", side_effect=swap):
+            with self.assertRaisesRegex(ValueError, "reviewed Git blob"):
                 self.create()
 
     def test_duplicate_or_missing_member_refused(self):

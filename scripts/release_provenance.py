@@ -13,14 +13,16 @@ from pathlib import Path
 import re
 import subprocess
 import sys
+import tempfile
+from typing import BinaryIO
 from zipfile import BadZipFile, ZipFile
 
 if __package__:
     from .package_release import FILES, ROOT
-    from .freeze_site_release import VERSION_PATTERN, checked_source_commit
+    from .freeze_site_release import VERSION_PATTERN, checked_source_commit, source_git
 else:
     from package_release import FILES, ROOT
-    from freeze_site_release import VERSION_PATTERN, checked_source_commit
+    from freeze_site_release import VERSION_PATTERN, checked_source_commit, source_git
 
 REPOSITORY = "https://github.com/dporkka/syntyr-css"
 SCHEMA = "syntyr.release-provenance.v1"
@@ -30,15 +32,14 @@ SHA = re.compile(r"[0-9a-f]{40}")
 
 def git_bytes(root: Path, commit: str, relative: str) -> bytes:
     # Reject non-regular Git objects, including symlinks, in the ZIP allowlist.
-    record = subprocess.check_output(
-        ["git", "ls-tree", commit, "--", relative], cwd=root
-    ).split(b"\t", 1)
+    record = source_git(root, "ls-tree", commit, "--", relative).split(b"\t", 1)
     if len(record) != 2 or record[0].split()[:2] != [b"100644", b"blob"]:
         raise ValueError(f"Not a regular tracked file at the reviewed commit: {relative}")
-    return subprocess.check_output(["git", "show", f"{commit}:{relative}"], cwd=root)
+    return source_git(root, "show", f"{commit}:{relative}")
 
 
-def artifact_record(archive: Path, version: str) -> dict:
+def artifact_record(archive: Path, version: str, *,
+                    snapshot: BinaryIO | None = None) -> dict:
     if not VERSION_PATTERN.fullmatch(version) or archive.name != f"syntyr-css-{version}.zip":
         raise ValueError("Archive name must match the exact release version")
     if not archive.is_file() or archive.is_symlink():
@@ -49,6 +50,8 @@ def artifact_record(archive: Path, version: str) -> dict:
         while chunk := stream.read(1024 * 1024):
             digest.update(chunk)
             size += len(chunk)
+            if snapshot is not None:
+                snapshot.write(chunk)
     return {"name": archive.name, "bytes": size, "sha256": digest.hexdigest()}
 
 
@@ -57,20 +60,24 @@ def make_provenance(root: Path, archive: Path, commit: str) -> dict:
     if not SHA.fullmatch(commit) or checked_source_commit(root) != commit:
         raise ValueError("Expected commit must be the exact clean checked-out HEAD")
     version = git_bytes(root, commit, "VERSION").decode("utf-8").strip()
-    before = artifact_record(archive, version)
     prefix = f"syntyr-css-{version}/"
     expected = {prefix + relative: relative for relative in FILES}
-    with ZipFile(archive) as zipped:
-        entries = zipped.infolist()
-        names = [entry.filename for entry in entries]
-        if len(names) != len(expected) or set(names) != set(expected):
-            raise ValueError("ZIP membership differs from the release allowlist")
-        for entry in entries:
-            source = git_bytes(root, commit, expected[entry.filename])
-            if ((entry.external_attr >> 16) & 0o170000 != 0o100000
-                    or entry.file_size != len(source)
-                    or zipped.read(entry) != source):
-                raise ValueError(f"ZIP member differs from the reviewed Git blob: {entry.filename}")
+    # Hash the same private byte snapshot that is parsed, even if the path
+    # changes during validation. Do not reopen an attacker-controlled path.
+    with tempfile.TemporaryFile() as snapshot:
+        before = artifact_record(archive, version, snapshot=snapshot)
+        snapshot.seek(0)
+        with ZipFile(snapshot) as zipped:
+            entries = zipped.infolist()
+            names = [entry.filename for entry in entries]
+            if len(names) != len(expected) or set(names) != set(expected):
+                raise ValueError("ZIP membership differs from the release allowlist")
+            for entry in entries:
+                source = git_bytes(root, commit, expected[entry.filename])
+                if ((entry.external_attr >> 16) & 0o170000 != 0o100000
+                        or entry.file_size != len(source)
+                        or zipped.read(entry) != source):
+                    raise ValueError(f"ZIP member differs from the reviewed Git blob: {entry.filename}")
     if checked_source_commit(root) != commit or artifact_record(archive, version) != before:
         raise ValueError("Source or archive changed while producing provenance")
     return {"schema": SCHEMA, "repository": REPOSITORY, "commit": commit,
