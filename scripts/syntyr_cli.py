@@ -129,6 +129,7 @@ def main(argv=None) -> int:
     args = list(sys.argv[1:] if argv is None else argv)
     delegates = {
         "check": (syntyr_check.main, [], "Validate literal HTML (source contract by default)"),
+        "doctor": (syntyr_check.main, ["--doctor"], "Diagnose stylesheet composition and version conflicts"),
         "diff": (contract_diff.main, [], "Compare two public CSS contracts"),
         "info": (syntyr_agent.main, ["info"], "Inspect a pinned consumer installation"),
         "project-check": (syntyr_agent.main, ["check"], "Validate a pinned consumer project"),

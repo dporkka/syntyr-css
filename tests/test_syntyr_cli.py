@@ -150,10 +150,28 @@ class UnifiedCliTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertEqual(json.loads(result.stdout)["release_status"], "unreleased_candidate")
 
+    def test_doctor_delegates_exact_validator_contract_for_piped_html(self):
+        html = ('<link rel="stylesheet" href="/v/0.3.0-alpha.4/syntyr.core.css">'
+                '<link rel="stylesheet" href="/v/0.3.0-alpha.5/syntyr.recipes.css">')
+        direct = self.run_cli("check", "--doctor", "-", "--format", "json", payload=html)
+        result = self.run_cli("doctor", "-", "--format", "json", payload=html)
+        self.assertEqual(result.returncode, 1, result.stderr)
+        self.assertEqual(result.returncode, direct.returncode)
+        self.assertEqual(result.stdout, direct.stdout)
+        self.assertEqual(json.loads(result.stdout)[0]["code"], "mixed-stylesheet-versions")
+
+    def test_doctor_tokens_preserves_advisory_status_for_inert_links(self):
+        html = ('<link rel="stylesheet" href="syntyr.recipes.css">'
+                '<template><link rel="stylesheet" href="syntyr.core.css"></template>'
+                '<div style="gap:var(--syn-space-2)"></div>')
+        result = self.run_cli("doctor", "--tokens", "-", "--format", "json", payload=html)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual([d["code"] for d in json.loads(result.stdout)], ["missing-token-stylesheet"])
+
     def test_help_and_invalid_command(self):
         result = self.run_cli("--help")
         self.assertEqual(result.returncode, 0, result.stderr)
-        for name in ("version", "check", "diff", "info", "project-check", "search", "man", "show", "deps"):
+        for name in ("version", "check", "diff", "info", "project-check", "search", "man", "show", "deps", "doctor"):
             self.assertIn(name, result.stdout)
         result = self.run_cli("not-a-command")
         self.assertEqual(result.returncode, 2)
