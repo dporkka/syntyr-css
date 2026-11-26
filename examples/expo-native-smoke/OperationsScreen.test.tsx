@@ -1,4 +1,5 @@
 import React from "react";
+import { View } from "react-native";
 import { fireEvent, render, waitFor } from "@testing-library/react-native";
 import App from "./src/App";
 import OperationsScreen from "./src/OperationsScreen";
@@ -63,21 +64,21 @@ describe("Syntyr native SaaS recipes", () => {
     const styles = createSyntyrNativeStyles("studio");
     const onPress = jest.fn();
     const { getByRole, getByLabelText, rerender, queryByRole } = await render(
-      <NativeAction styles={styles} label="Submit" onPress={onPress} disabled />,
+      <View><NativeAction styles={styles} label="Submit" onPress={onPress} disabled /></View>,
     );
     expect(getByRole("button", { name: "Submit" }).props.accessibilityState.disabled).toBe(true);
     await fireEvent.press(getByRole("button", { name: "Submit" }));
     expect(onPress).not.toHaveBeenCalled();
-    await rerender(<NativeAction styles={styles} label="Submit" onPress={onPress} busy />);
+    await rerender(<View><NativeAction styles={styles} label="Submit" onPress={onPress} busy /></View>);
     expect(getByRole("button", { name: "Submit" }).props.accessibilityState.busy).toBe(true);
     await fireEvent.press(getByRole("button", { name: "Submit" }));
     expect(onPress).not.toHaveBeenCalled();
-    await rerender(<NativeState styles={styles} kind="loading" title="Loading preview" description="Please wait."
-      action={{ label: "Retry", onPress }} />);
+    await rerender(<View><NativeState styles={styles} kind="loading" title="Loading preview" description="Please wait."
+      action={{ label: "Retry", onPress }} /></View>);
     expect(getByLabelText("Loading")).toBeTruthy();
     expect(queryByRole("button", { name: "Retry" })).toBeNull();
-    await rerender(<NativeState styles={styles} kind="error" title="Preview unavailable" description="Try again."
-      action={{ label: "Retry", onPress }} />);
+    await rerender(<View><NativeState styles={styles} kind="error" title="Preview unavailable" description="Try again."
+      action={{ label: "Retry", onPress }} /></View>);
     await fireEvent.press(getByRole("button", { name: "Retry" }));
     expect(onPress).toHaveBeenCalledTimes(1);
   });

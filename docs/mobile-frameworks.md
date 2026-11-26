@@ -105,6 +105,27 @@ and production Android/iOS Metro bundle exports. Run `npm ci`,
 devices or produce signed native binaries**; simulator/hardware checks are
 still required. The fixture imports the canonical adapter by an ignored
 build-local source copy, not a second design-system implementation.
+For a new application, the unreleased source checkout also provides a
+standalone, copy-owned Expo SaaS starter. Export it to a **new** directory:
+
+```sh
+python3 scripts/export_native_starter.py --output ../my-mobile-app
+cd ../my-mobile-app
+npm ci
+npm run typecheck
+npm test
+npm start
+```
+
+The export includes the exact fixture dependency lock, canonical tokens,
+styles and recipes, both sample screens, the safe-area root and tests. It
+never overwrites an existing path and does not need the Syntyr checkout after
+export. Commit its `src/` in your app; it is your code to maintain. The
+samples use fictional data and local preview state, not a backend, auth,
+access control or persistence. The starter requires no NativeWind or Uniwind.
+For an existing app, prefer copying just the needed adapter files rather
+than replacing its Expo project, dependency graph or navigation.
+
 Use the host application's safe-area provider and navigation system as usual.
 The example uses real `TextInput` and `Pressable` controls with accessibility
 labels; gestures, screen reader behavior, validation, keyboard handling and
@@ -185,7 +206,13 @@ For an app already using [Uniwind](https://uniwind.dev/) or
 [NativeWind v5](https://www.nativewind.dev/v5), copy one generated
 [palette file](https://github.com/dporkka/syntyr-css/tree/main/integrations/react-native/tailwind)
 into its app-owned CSS entrypoint directory. These files are experimental
-source adapters, not npm modules. NativeWind v4 (Tailwind v3) is not a target.
+source adapters, not npm modules. NativeWind v4 (Tailwind v3) is not a target
+for the generated CSS files. Existing NativeWind v4 apps can evaluate the
+copy-owned StyleSheet adapter without migrating the host styling engine.
+An [isolated Expo SDK 54 coexistence probe](https://github.com/dporkka/syntyr-css/tree/main/examples/native-sdk54-coexistence)
+with NativeWind 4.2.3 and Tailwind 3.3.2 passed TypeScript, 24 interaction
+tests, utility CSS generation and production Android/iOS Metro exports.
+This is not native runtime certification or a new utility bridge.
 Use the styling engine's own Expo/Metro configuration and installation guide.
 
 Uniwind entrypoint:
