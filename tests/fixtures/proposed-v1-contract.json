@@ -1,0 +1,184 @@
+{
+  "schema_version": 1,
+  "source_version": "0.3.0-alpha.5",
+  "note": "Proposed minimum v1 review fixture only; not an approved or published release contract.",
+  "stylesheets": [
+    "syntyr.core.css"
+  ],
+  "classes": [
+    {
+      "name": "syn-badge",
+      "stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "name": "syn-button",
+      "stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "name": "syn-grid",
+      "stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "name": "syn-heading",
+      "stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "name": "syn-inline",
+      "stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "name": "syn-input",
+      "stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "name": "syn-muted",
+      "stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "name": "syn-panel",
+      "stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "name": "syn-root",
+      "stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "name": "syn-select",
+      "stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "name": "syn-shell",
+      "stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "name": "syn-stack",
+      "stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "name": "syn-table",
+      "stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "name": "syn-table-wrap",
+      "stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "name": "syn-textarea",
+      "stylesheets": [
+        "syntyr.core.css"
+      ]
+    }
+  ],
+  "tokens": [
+    {
+      "name": "--syn-accent",
+      "stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "name": "--syn-bg",
+      "stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "name": "--syn-font",
+      "stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "name": "--syn-frame",
+      "stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "name": "--syn-muted",
+      "stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "name": "--syn-on-accent",
+      "stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "name": "--syn-radius",
+      "stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "name": "--syn-space-1",
+      "stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "name": "--syn-space-2",
+      "stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "name": "--syn-space-3",
+      "stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "name": "--syn-space-4",
+      "stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "name": "--syn-surface",
+      "stylesheets": [
+        "syntyr.core.css"
+      ]
+    },
+    {
+      "name": "--syn-text",
+      "stylesheets": [
+        "syntyr.core.css"
+      ]
+    }
+  ],
+  "themes": [],
+  "attributes": {
+    "data-syn-theme": []
+  }
+}
