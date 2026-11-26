@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Syntyr works with ChatGPT, Codex, Claude Code, Cursor and other agents that generate HTML or framework markup. No Syntyr-specific service, account, MCP…">
-  <meta name="syntyr-source-sha256" content="39df61d8c5ba545b7ab07e22ba91e3bbde929b264e5b95b1b813f9229b922792">
+  <meta name="syntyr-source-sha256" content="23c54bc88331705f330325484b4ea39f7dad184dbd2f0fcbc787a240da1fb867">
   <meta name="theme-color" content="#f5f7fb">
   <title>Using Syntyr with coding agents — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/agent-integration">
@@ -50,6 +50,30 @@
 <h2 id="project-level-integration">Project-level integration</h2>
 <p>A consumer may copy <a href="https://github.com/dporkka/syntyr-css/blob/main/agents/syntyr/SKILL.md"><code>agents/syntyr/SKILL.md</code></a> as an optional local skill in agent tooling that supports Skills. It is a portable instruction document, <strong>not a published package, automatic installation, or guaranteed discovery mechanism</strong>.</p>
 <p>The repository's root <code>AGENTS.md</code> guides agents contributing to Syntyr itself. It does <strong>not</strong> automatically become instructions in a separate application repository.</p>
+<h2 id="optional-skills-cli-distribution">Optional skills CLI distribution</h2>
+<p>The existing MIT-licensed consumer Skill can also be discovered and installed
+with the third-party <a href="https://skills.sh/">skills CLI</a>. There is no separate
+Syntyr skill package to maintain. From your application directory, inspect the
+<a href="https://github.com/dporkka/syntyr-css/tree/main/agents/syntyr">canonical Skill</a>
+before choosing a project-scoped installation.</p>
+<p>If you already use the Codex offline setup, keep that installation. Installing
+with Skills CLI in the same project can replace <code>.agents/skills/syntyr</code> and
+remove its generated <code>references/api.json</code>. Without that reference,
+<code>syntyr_agent.py info</code> reports the offline installation as degraded.</p>
+<pre tabindex="0"><code class="language-sh">npx skills@1.9.0 add https://github.com/dporkka/syntyr-css/tree/main/agents/syntyr --list
+npx skills@1.9.0 add https://github.com/dporkka/syntyr-css/tree/main/agents/syntyr --skill syntyr
+</code></pre>
+<p>The commands above pin the verified Skills CLI 1.9.0, which requires
+Node.js 22.20.0 or later, Git, and network access for this optional installation
+route only. Review the source and select your agent when prompted; do not
+install globally by default. For reproducible updates, review a specific
+source commit and use that Git ref instead of the moving main branch. The
+Skill installs instructions, <strong>not CSS</strong>, a pinned selector inventory,
+Syntyr tooling, or an application runtime. It does not change the installed
+CSS release or grant access to premium assets. Inspect your actual stylesheets
+before generating HTML; use the offline setup below when you also need
+release-pinned assets and a local reference. Automatic listing or ranking
+on skills.sh is not guaranteed.</p>
 <h2 id="offline-first-run-agent-setup-source-checkout">Offline first-run agent setup (source checkout)</h2>
 <p>An optional Python standard-library command installs a <strong>portable consumer Skill</strong>,
 release-pinned CSS, and a small verified selector reference into an existing app.
@@ -166,6 +190,7 @@ select host controllers, certify functionality or make network calls.</p>
           <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#recommended-context-to-supply-an-agent">Recommended context to supply an agent</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#project-level-integration">Project-level integration</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#optional-skills-cli-distribution">Optional skills CLI distribution</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#offline-first-run-agent-setup-source-checkout">Offline first-run agent setup (source checkout)</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#optional-local-mcp-adapter">Optional local MCP adapter</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#documents-and-machine-readable-inventory">Documents and machine-readable inventory</a>
@@ -180,6 +205,7 @@ select host controllers, certify functionality or make network calls.</p>
             <nav aria-label="On this page (mobile)">
 <a class="docs-article-toc-link docs-article-toc-2" href="#recommended-context-to-supply-an-agent">Recommended context to supply an agent</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#project-level-integration">Project-level integration</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#optional-skills-cli-distribution">Optional skills CLI distribution</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#offline-first-run-agent-setup-source-checkout">Offline first-run agent setup (source checkout)</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#optional-local-mcp-adapter">Optional local MCP adapter</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#documents-and-machine-readable-inventory">Documents and machine-readable inventory</a>

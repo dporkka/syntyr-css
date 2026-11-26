@@ -99,6 +99,23 @@ The same CSS foundations support professional, restrained interfaces and optiona
 | Understand the internals | [Architecture](ARCHITECTURE.md) · [API stability](docs/api-stability.md) |
 | Help improve Syntyr | [Open issues](https://github.com/dporkka/syntyr-css/issues?q=is%3Aissue+is%3Aopen) · [Contributor guide](https://github.com/dporkka/syntyr-css/blob/main/CONTRIBUTING.md) |
 
+## Optional coding-agent skill
+
+Use Syntyr with compatible coding agents via the existing consumer skill.
+Inspect the [Skill source](agents/syntyr/SKILL.md) before using the optional
+third-party Skills CLI 1.9.0 from your application directory. It requires
+Node.js 22.20.0 or later, Git, and network access. If you already use the
+Codex offline setup, keep it: the command below can replace its skill directory
+and remove the generated selector reference.
+
+```sh
+npx skills@1.9.0 add https://github.com/dporkka/syntyr-css/tree/main/agents/syntyr --skill syntyr
+```
+
+This installs agent instructions only, not CSS or application dependencies.
+Keep your CSS release pinned; see the [agent integration guide](docs/agent-integration.md#optional-skills-cli-distribution)
+for discovery, review, offline installation and validation.
+
 ## Live gallery and installation
 
 Browse the curated entry points above, or expand the full reference index below.
