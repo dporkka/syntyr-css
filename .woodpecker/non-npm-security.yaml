@@ -1,0 +1,13 @@
+# Optional public example/maintainer dependencies only, not Syntyr core.
+# Pilot on manual/tag events before making scanner egress a required PR gate.
+when:
+  - event: manual
+  - event: tag
+
+steps:
+  - name: audit-rust-go-python-inventories
+    image: python:3.14-slim@sha256:9aaa474097d094040649f2162a627c0049b408f52138d980916788d80f04802f
+    commands:
+      - apt-get update && apt-get install -y --no-install-recommends git && rm -rf /var/lib/apt/lists/*
+      - python3 -m unittest discover -s tests -p test_non_npm_dependency_audit.py -v
+      - python3 scripts/audit_non_npm_dependencies.py

@@ -53,6 +53,17 @@ class DocumentationDeliveryTests(unittest.TestCase):
         self.assertIn(b'Published GitHub prerelease</a> with an immutable CDN snapshot', page)
         self.assertIn(b'https://syntyr-css.pages.dev/docs/launch-status.md', files['llms.txt'])
 
+    def test_framework_compatibility_matrix_keeps_evidence_boundaries_public(self):
+        files = source_files()
+        page = files["docs/framework-integrations.html"].decode()
+        self.assertIn('id="compatibility-matrix-and-evidence"', page)
+        self.assertIn("45c86cf58bd0fb1decaaf391ba4dba69b00cefc8", page)
+        self.assertIn("Blocked: browser launch failed; zero cases executed", page)
+        self.assertIn("No framework or browser support floor has", page)
+        self.assertIn("no native component compatibility claim", page)
+        self.assertIn("framework-integrations.md", files["llms.txt"].decode())
+        self.assertIn("Version-aware compatibility matrix", files["llms.txt"].decode())
+
     def test_markdown_table_code_and_links_are_real_html(self):
         files = source_files()
         page = files['docs/components.html'].decode()

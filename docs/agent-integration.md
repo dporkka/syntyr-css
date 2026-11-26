@@ -19,6 +19,36 @@ A consumer may copy [`agents/syntyr/SKILL.md`](../agents/syntyr/SKILL.md) as an 
 
 The repository's root `AGENTS.md` guides agents contributing to Syntyr itself. It does **not** automatically become instructions in a separate application repository.
 
+## Optional skills CLI distribution
+
+The existing MIT-licensed consumer Skill can also be discovered and installed
+with the third-party [skills CLI](https://skills.sh/). There is no separate
+Syntyr skill package to maintain. From your application directory, inspect the
+[canonical Skill](https://github.com/dporkka/syntyr-css/tree/main/agents/syntyr)
+before choosing a project-scoped installation.
+
+If you already use the Codex offline setup, keep that installation. Installing
+with Skills CLI in the same project can replace `.agents/skills/syntyr` and
+remove its generated `references/api.json`. Without that reference,
+`syntyr_agent.py info` reports the offline installation as degraded.
+
+```sh
+npx skills@1.9.0 add https://github.com/dporkka/syntyr-css/tree/main/agents/syntyr --list
+npx skills@1.9.0 add https://github.com/dporkka/syntyr-css/tree/main/agents/syntyr --skill syntyr
+```
+
+The commands above pin the verified Skills CLI 1.9.0, which requires
+Node.js 22.20.0 or later, Git, and network access for this optional installation
+route only. Review the source and select your agent when prompted; do not
+install globally by default. For reproducible updates, review a specific
+source commit and use that Git ref instead of the moving main branch. The
+Skill installs instructions, **not CSS**, a pinned selector inventory,
+Syntyr tooling, or an application runtime. It does not change the installed
+CSS release or grant access to premium assets. Inspect your actual stylesheets
+before generating HTML; use the offline setup below when you also need
+release-pinned assets and a local reference. Automatic listing or ranking
+on skills.sh is not guaranteed.
+
 ## Offline first-run agent setup (source checkout)
 
 An optional Python standard-library command installs a **portable consumer Skill**,
@@ -138,6 +168,31 @@ This generator produces the static section layer; it does not compose or
 install host widget controllers, implement routes/forms, generate production
 copy, or certify accessibility. Review example content and destinations, and
 use the release-pinned markup validator and real browser tests before shipping.
+
+### Select sections from explicit intent IDs
+
+The optional composer also supports an offline, deterministic planner. Use
+`node scripts/compose.mjs --list-intents 0.3.0-alpha.5` to discover the
+reviewed requirement IDs, corresponding section IDs and host obligations.
+
+```sh
+node scripts/compose.mjs --plan <<'JSON'
+{"release":"0.3.0-alpha.5","title":"CRM dashboard","theme":"studio","requirements":["pipeline","metrics","inventory-search","account-management"]}
+JSON
+```
+
+The plan preserves requirement order, deduplicates overlapping section
+mappings and returns a separate coverage entry for every requirement.
+A ready plan includes a `composition` object accepted by the normal
+composer. Read every coverage entry before rendering. Generic resource
+sections require domain-specific customization; they do not implement
+account or inventory management. A presentation-only entry lists the
+remaining host work, and even static content contains example copy and links.
+
+Unknown, well-formed requirement IDs produce an unresolved plan, a null
+composition and CLI exit code 2. Invalid input produces exit code 1.
+The planner does not parse natural-language prompts, guess missing features,
+select host controllers, certify functionality or make network calls.
 
 ## Agent conversation, tools and human approval
 

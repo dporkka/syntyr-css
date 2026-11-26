@@ -85,14 +85,23 @@ def preflight(root: Path) -> tuple[str, Path, dict, dict[str, bytes]]:
     return version, manifest_path, manifest, css
 
 
+def source_git(root: Path, *args: str) -> bytes:
+    """Read the selected checkout, not inherited repository or replacement refs."""
+    env = os.environ.copy()
+    for name in ("GIT_DIR", "GIT_WORK_TREE", "GIT_INDEX_FILE", "GIT_COMMON_DIR",
+                 "GIT_OBJECT_DIRECTORY", "GIT_ALTERNATE_OBJECT_DIRECTORIES",
+                 "GIT_NAMESPACE", "GIT_REPLACE_REF_BASE", "GIT_PREFIX",
+                 "GIT_CONFIG", "GIT_CONFIG_PARAMETERS", "GIT_CONFIG_COUNT"):
+        env.pop(name, None)
+    return subprocess.check_output(["git", "--no-replace-objects", *args],
+                                   cwd=root, env=env)
+
+
 def checked_source_commit(root: Path) -> str:
     """Return the immutable source SHA only when tracked files match it."""
-    actual = subprocess.check_output(["git", "rev-parse", "HEAD"],
-                                     cwd=root, text=True).strip()
-    tracked_changes = subprocess.check_output(
-        ["git", "status", "--porcelain", "--untracked-files=no"],
-        cwd=root, text=True,
-    ).strip()
+    actual = source_git(root, "rev-parse", "HEAD").decode().strip()
+    tracked_changes = source_git(root, "status", "--porcelain",
+                                 "--untracked-files=no").decode().strip()
     if tracked_changes:
         raise ReleaseBlocked("Tracked source differs from the reviewed HEAD commit")
     return actual

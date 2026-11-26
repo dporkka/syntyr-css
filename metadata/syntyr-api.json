@@ -2229,6 +2229,16 @@
       "description": "Chart presentation design token chart tooltip bg; provide non-color chart labels."
     },
     {
+      "name": "--syn-content-gap",
+      "module": "tokens.css",
+      "description": "Content gap design token from tokens.css; override in the appropriate Syntyr scope when needed."
+    },
+    {
+      "name": "--syn-content-max",
+      "module": "tokens.css",
+      "description": "Content max design token from tokens.css; override in the appropriate Syntyr scope when needed."
+    },
+    {
       "name": "--syn-control-height",
       "module": "tokens.css",
       "description": "Shared native form control height; check accessible target sizing."
@@ -2609,6 +2619,11 @@
       "description": "Operation edge design token from recipes.css; override in the appropriate Syntyr scope when needed."
     },
     {
+      "name": "--syn-page-gutter",
+      "module": "tokens.css",
+      "description": "Page gutter design token from tokens.css; override in the appropriate Syntyr scope when needed."
+    },
+    {
       "name": "--syn-panel-border-width",
       "module": "components/layout.css",
       "description": "Per-panel border width; defaults to 1px."
@@ -2617,6 +2632,11 @@
       "name": "--syn-panel-padding",
       "module": "components/layout.css",
       "description": "Per-panel padding; defaults to the existing fluid panel padding."
+    },
+    {
+      "name": "--syn-panel-padding-default",
+      "module": "tokens.css",
+      "description": "Panel padding default design token from tokens.css; override in the appropriate Syntyr scope when needed."
     },
     {
       "name": "--syn-panel-radius",
@@ -2647,6 +2667,11 @@
       "name": "--syn-scanline-alpha",
       "module": "tokens.css",
       "description": "Scanline overlay opacity percentage."
+    },
+    {
+      "name": "--syn-section-space",
+      "module": "tokens.css",
+      "description": "Section space design token from tokens.css; override in the appropriate Syntyr scope when needed."
     },
     {
       "name": "--syn-shadow-overlay",

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Syntyr works with ChatGPT, Codex, Claude Code, Cursor and other agents that generate HTML or framework markup. No Syntyr-specific service, account, MCP…">
-  <meta name="syntyr-source-sha256" content="fd20ae758950b57cce65d8e952d45491f757423af041f130522a3362c7ed99ca">
+  <meta name="syntyr-source-sha256" content="94ecd36b40403204fdec48c7d6c48f9e8037182e599a5cee3c72d7c18c063105">
   <meta name="theme-color" content="#f5f7fb">
   <title>Using Syntyr with coding agents — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/agent-integration">
@@ -50,6 +50,30 @@
 <h2 id="project-level-integration">Project-level integration</h2>
 <p>A consumer may copy <a href="https://github.com/dporkka/syntyr-css/blob/main/agents/syntyr/SKILL.md"><code>agents/syntyr/SKILL.md</code></a> as an optional local skill in agent tooling that supports Skills. It is a portable instruction document, <strong>not a published package, automatic installation, or guaranteed discovery mechanism</strong>.</p>
 <p>The repository's root <code>AGENTS.md</code> guides agents contributing to Syntyr itself. It does <strong>not</strong> automatically become instructions in a separate application repository.</p>
+<h2 id="optional-skills-cli-distribution">Optional skills CLI distribution</h2>
+<p>The existing MIT-licensed consumer Skill can also be discovered and installed
+with the third-party <a href="https://skills.sh/">skills CLI</a>. There is no separate
+Syntyr skill package to maintain. From your application directory, inspect the
+<a href="https://github.com/dporkka/syntyr-css/tree/main/agents/syntyr">canonical Skill</a>
+before choosing a project-scoped installation.</p>
+<p>If you already use the Codex offline setup, keep that installation. Installing
+with Skills CLI in the same project can replace <code>.agents/skills/syntyr</code> and
+remove its generated <code>references/api.json</code>. Without that reference,
+<code>syntyr_agent.py info</code> reports the offline installation as degraded.</p>
+<pre tabindex="0"><code class="language-sh">npx skills@1.9.0 add https://github.com/dporkka/syntyr-css/tree/main/agents/syntyr --list
+npx skills@1.9.0 add https://github.com/dporkka/syntyr-css/tree/main/agents/syntyr --skill syntyr
+</code></pre>
+<p>The commands above pin the verified Skills CLI 1.9.0, which requires
+Node.js 22.20.0 or later, Git, and network access for this optional installation
+route only. Review the source and select your agent when prompted; do not
+install globally by default. For reproducible updates, review a specific
+source commit and use that Git ref instead of the moving main branch. The
+Skill installs instructions, <strong>not CSS</strong>, a pinned selector inventory,
+Syntyr tooling, or an application runtime. It does not change the installed
+CSS release or grant access to premium assets. Inspect your actual stylesheets
+before generating HTML; use the offline setup below when you also need
+release-pinned assets and a local reference. Automatic listing or ranking
+on skills.sh is not guaranteed.</p>
 <h2 id="offline-first-run-agent-setup-source-checkout">Offline first-run agent setup (source checkout)</h2>
 <p>An optional Python standard-library command installs a <strong>portable consumer Skill</strong>,
 release-pinned CSS, and a small verified selector reference into an existing app.
@@ -142,6 +166,25 @@ known canonical sections and 1–50 section instances are accepted.</p>
 install host widget controllers, implement routes/forms, generate production
 copy, or certify accessibility. Review example content and destinations, and
 use the release-pinned markup validator and real browser tests before shipping.</p>
+<h3 id="select-sections-from-explicit-intent-ids">Select sections from explicit intent IDs</h3>
+<p>The optional composer also supports an offline, deterministic planner. Use
+<code>node scripts/compose.mjs --list-intents 0.3.0-alpha.5</code> to discover the
+reviewed requirement IDs, corresponding section IDs and host obligations.</p>
+<pre tabindex="0"><code class="language-sh">node scripts/compose.mjs --plan &lt;&lt;'JSON'
+{&quot;release&quot;:&quot;0.3.0-alpha.5&quot;,&quot;title&quot;:&quot;CRM dashboard&quot;,&quot;theme&quot;:&quot;studio&quot;,&quot;requirements&quot;:[&quot;pipeline&quot;,&quot;metrics&quot;,&quot;inventory-search&quot;,&quot;account-management&quot;]}
+JSON
+</code></pre>
+<p>The plan preserves requirement order, deduplicates overlapping section
+mappings and returns a separate coverage entry for every requirement.
+A ready plan includes a <code>composition</code> object accepted by the normal
+composer. Read every coverage entry before rendering. Generic resource
+sections require domain-specific customization; they do not implement
+account or inventory management. A presentation-only entry lists the
+remaining host work, and even static content contains example copy and links.</p>
+<p>Unknown, well-formed requirement IDs produce an unresolved plan, a null
+composition and CLI exit code 2. Invalid input produces exit code 1.
+The planner does not parse natural-language prompts, guess missing features,
+select host controllers, certify functionality or make network calls.</p>
 <h2 id="agent-conversation-tools-and-human-approval">Agent conversation, tools and human approval</h2>
 <p>The unreleased v0.3.0-alpha.5 source candidate includes an agent workflow
 template and JSON contract. The template follows the
@@ -180,6 +223,7 @@ against its own allowlist and authorization rules.</p>
           <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#recommended-context-to-supply-an-agent">Recommended context to supply an agent</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#project-level-integration">Project-level integration</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#optional-skills-cli-distribution">Optional skills CLI distribution</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#offline-first-run-agent-setup-source-checkout">Offline first-run agent setup (source checkout)</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#optional-local-mcp-adapter">Optional local MCP adapter</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#documents-and-machine-readable-inventory">Documents and machine-readable inventory</a>
@@ -187,6 +231,7 @@ against its own allowlist and authorization rules.</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#validation-and-maintenance">Validation and maintenance</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#what-syntyr-does-not-do">What Syntyr does not do</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#deterministic-section-composition-source-candidate">Deterministic section composition (source candidate)</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#select-sections-from-explicit-intent-ids">Select sections from explicit intent IDs</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#agent-conversation-tools-and-human-approval">Agent conversation, tools and human approval</a>
           </nav>
           <details class="docs-article-toc-mobile">
@@ -194,6 +239,7 @@ against its own allowlist and authorization rules.</p>
             <nav aria-label="On this page (mobile)">
 <a class="docs-article-toc-link docs-article-toc-2" href="#recommended-context-to-supply-an-agent">Recommended context to supply an agent</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#project-level-integration">Project-level integration</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#optional-skills-cli-distribution">Optional skills CLI distribution</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#offline-first-run-agent-setup-source-checkout">Offline first-run agent setup (source checkout)</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#optional-local-mcp-adapter">Optional local MCP adapter</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#documents-and-machine-readable-inventory">Documents and machine-readable inventory</a>
@@ -201,6 +247,7 @@ against its own allowlist and authorization rules.</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#validation-and-maintenance">Validation and maintenance</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#what-syntyr-does-not-do">What Syntyr does not do</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#deterministic-section-composition-source-candidate">Deterministic section composition (source candidate)</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#select-sections-from-explicit-intent-ids">Select sections from explicit intent IDs</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#agent-conversation-tools-and-human-approval">Agent conversation, tools and human approval</a>
             </nav>
           </details>

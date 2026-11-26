@@ -25,6 +25,18 @@
       "requires_browser_validation": true
     },
     {
+      "css_variable": "--syn-content-gap",
+      "css_value": "var(--syn-space-3)",
+      "figma_px": null,
+      "requires_browser_validation": true
+    },
+    {
+      "css_variable": "--syn-content-max",
+      "css_value": "72rem",
+      "figma_px": 1152.0,
+      "requires_browser_validation": false
+    },
+    {
       "css_variable": "--syn-control-height",
       "css_value": "2.75rem",
       "figma_px": 44.0,
@@ -91,6 +103,18 @@
       "requires_browser_validation": true
     },
     {
+      "css_variable": "--syn-page-gutter",
+      "css_value": "clamp(1rem, 3vw, 2rem)",
+      "figma_px": null,
+      "requires_browser_validation": true
+    },
+    {
+      "css_variable": "--syn-panel-padding-default",
+      "css_value": "clamp(1rem, 2.8vw, 1.75rem)",
+      "figma_px": null,
+      "requires_browser_validation": true
+    },
+    {
       "css_variable": "--syn-radius",
       "css_value": ".25rem",
       "figma_px": 4.0,
@@ -101,6 +125,12 @@
       "css_value": ".7rem",
       "figma_px": 11.2,
       "requires_browser_validation": false
+    },
+    {
+      "css_variable": "--syn-section-space",
+      "css_value": "clamp(2rem, 5vw, 5rem)",
+      "figma_px": null,
+      "requires_browser_validation": true
     },
     {
       "css_variable": "--syn-shadow-overlay",
@@ -243,6 +273,12 @@
         "figma_px": 4.8,
         "requires_browser_validation": false
       },
+      "--syn-panel-padding-default": {
+        "css_variable": "--syn-panel-padding-default",
+        "css_value": "var(--syn-space-2)",
+        "figma_px": null,
+        "requires_browser_validation": true
+      },
       "--syn-row-padding-block": {
         "css_variable": "--syn-row-padding-block",
         "css_value": ".4rem",
@@ -269,6 +305,12 @@
         "figma_px": 11.2,
         "requires_browser_validation": false
       },
+      "--syn-panel-padding-default": {
+        "css_variable": "--syn-panel-padding-default",
+        "css_value": "clamp(1rem, 2.8vw, 1.75rem)",
+        "figma_px": null,
+        "requires_browser_validation": true
+      },
       "--syn-row-padding-block": {
         "css_variable": "--syn-row-padding-block",
         "css_value": ".7rem",
@@ -294,6 +336,12 @@
         "css_value": ".95rem",
         "figma_px": 15.2,
         "requires_browser_validation": false
+      },
+      "--syn-panel-padding-default": {
+        "css_variable": "--syn-panel-padding-default",
+        "css_value": "var(--syn-space-4)",
+        "figma_px": null,
+        "requires_browser_validation": true
       },
       "--syn-row-padding-block": {
         "css_variable": "--syn-row-padding-block",
