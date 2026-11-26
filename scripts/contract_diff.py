@@ -43,8 +43,15 @@ def _validate(contract: object) -> dict[str, Any]:
         raise ValueError("source_version must be a nonempty string")
     for field in ("stylesheets", "themes"):
         _strings(contract.get(field), field)
+    declared = set(contract["stylesheets"])
     for field in ("classes", "tokens"):
-        _items(contract, field)
+        for name, providers in _items(contract, field).items():
+            unknown = providers - declared
+            if unknown:
+                raise ValueError(
+                    f"{field}.{name}.stylesheets references undeclared stylesheets: "
+                    + ", ".join(sorted(unknown))
+                )
     attributes = contract.get("attributes")
     if not isinstance(attributes, dict) or any(not isinstance(name, str) or not name for name in attributes):
         raise ValueError("attributes must be a mapping of names to lists")
@@ -124,14 +131,20 @@ def _reject_duplicate_json_keys(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("before", type=Path, help="Old metadata/syntyr-contract.json")
-    parser.add_argument("after", type=Path, help="New metadata/syntyr-contract.json")
+    parser.add_argument("before", type=Path, help="Old metadata/syntyr-contract.json (or - for stdin)")
+    parser.add_argument("after", type=Path, help="New metadata/syntyr-contract.json (or - for stdin)")
     parser.add_argument("--json", action="store_true", help="Machine-readable JSON report")
     parser.add_argument("--fail-on-breaking", action="store_true", help="Exit 1 on potential public API removals")
     args = parser.parse_args(argv)
+    def read_manifest(path: Path) -> object:
+        source = sys.stdin.read() if path == Path("-") else path.read_text(encoding="utf-8")
+        return json.loads(source, object_pairs_hook=_reject_duplicate_json_keys)
+
     try:
-        before = json.loads(args.before.read_text(encoding="utf-8"), object_pairs_hook=_reject_duplicate_json_keys)
-        after = json.loads(args.after.read_text(encoding="utf-8"), object_pairs_hook=_reject_duplicate_json_keys)
+        if args.before == args.after == Path("-"):
+            raise ValueError("Only one manifest may be read from stdin")
+        before = read_manifest(args.before)
+        after = read_manifest(args.after)
         report = compare_contracts(before, after)
     except (OSError, ValueError, TypeError, json.JSONDecodeError) as exc:
         print(f"Cannot compare Syntyr CSS contracts: {exc}", file=sys.stderr)
