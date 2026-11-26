@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Status: experimental alpha; not a WCAG certification or professional audit.">
-  <meta name="syntyr-source-sha256" content="42ad02a487ba9bb8314faed7165227636d1f2e2048c964865cf7ac03b66bf961">
+  <meta name="syntyr-source-sha256" content="a5cb09e8f945c0039d543af31d347e63a257bb08629bd2a848818363a39cf3b0">
   <meta name="theme-color" content="#f5f7fb">
   <title>Syntyr CSS accessibility validation — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/accessibility">
@@ -103,6 +103,10 @@ behavior, or native OS high-contrast mode.</p>
 focus-visible outline, reduced-motion support, and forced-color hooks.</li>
 <li>Real browser matrix: Chromium, Firefox, and WebKit on desktop/mobile viewport widths,
 testing navigation, table semantics, native popover, disclosure, and overflow.</li>
+<li>Browser accessibility snapshots: named Markdown headings/links, disabled
+task controls, table headers and scrolling regions, authored Tab order,
+and native popover/dialog/disclosure keyboard transitions. These are
+browser-level assertions, not screen-reader speech or OS accessibility tests.</li>
 <li>Automated accessibility: axe-core WCAG 2.0/2.1/2.2 A/AA tagged checks on the
 public showcase and example pages (the audited set changes over time). The tool may return
 <strong>incomplete/manual-review</strong> findings even with zero confirmed violations.</li>
@@ -180,6 +184,19 @@ python3 tests/contrast_pixel_triage.py \
   --output /tmp/syntyr-contrast-triage.json \
   --widths 1280 390 320
 </code></pre>
+<p>Revisit unsampled, below-threshold and near-threshold observations on the
+same content using a fresh page for each target:</p>
+<pre tabindex="0"><code class="language-sh">python3 tests/contrast_pixel_triage.py \
+  --axe-report /tmp/syntyr-axe.json \
+  --reinspect-report /tmp/syntyr-contrast-triage.json \
+  --output /tmp/syntyr-contrast-reinspection.json
+</code></pre>
+<p>Reinspection opens only enclosing native disclosures with a summary and
+scrolls the target into view, including independently scrollable tables.
+It samples the current viewport and preserves the original observation's
+status; a selector that cannot be uniquely reached remains unsampled.
+Keep both reports. A higher reinspection sample does not certify contrast
+or close a manual-review target.</p>
 <p>The November 15, 2026 <code>9ff10ac</code> baseline contained 162 incomplete contrast
 elements. After rebasing the targeted contrast fixes onto <code>7e5c14d</code> (a newer
 main with additional unrelated changes), a fresh axe scan reported <strong>160
