@@ -104,7 +104,7 @@ class ServerFrameworkIntegrationTests(unittest.TestCase):
         fixture = ROOT / "examples/server-components-templ"
         module = (fixture / "go.mod").read_text()
         minimum = next(line.split()[1] for line in module.splitlines() if line.startswith("go "))
-        self.assertGreaterEqual(tuple(map(int, minimum.split("."))), (1, 26, 9))
+        self.assertGreaterEqual(tuple(map(int, minimum.split("."))), (1, 26, 11))
         self.assertIn("tool github.com/a-h/templ/cmd/templ", module)
         entries = [line.split()[1].removesuffix("/go.mod")
                    for line in (fixture / "go.sum").read_text().splitlines()
