@@ -42,7 +42,7 @@
       color: var(--syn-accent); background: var(--syn-accent-soft);
     }
     &.syn-app-nav a[aria-current="page"] { box-shadow: inset 3px 0 var(--syn-accent); }
-    &.syn-workspace { width: 100%; min-width: 0; overflow-wrap: anywhere; padding: clamp(1rem, 3vw, 2.5rem); }
+    &.syn-workspace { width: 100%; min-width: 0; overflow-wrap: anywhere; padding: var(--syn-page-gutter); }
     /* Optional resizable split workspace. CSS owns only layout and state
        presentation; a copied application module owns input and ARIA values.
        Fallback without JS is two readable columns, without a fake handle. */
@@ -380,17 +380,17 @@
       border: 1px solid var(--syn-frame); border-radius: var(--syn-radius);
       background: radial-gradient(ellipse at 80% 20%, var(--syn-accent-soft), transparent 56%), var(--syn-surface);
       color: var(--syn-text);
-      padding: clamp(2rem, 6vw, 5rem);
+      padding-block: var(--syn-section-space); padding-inline: clamp(2rem, 6vw, 5rem);
     }
     &.syn-site-hero::before {
       content: ""; position: absolute; inset-block-start: 0; inset-inline-start: 0;
       width: min(9rem, 40%); height: 3px; background: var(--syn-accent); pointer-events: none;
     }
-    &.syn-site-heading { font-family: var(--syn-font-display); font-size: clamp(2.3rem, 5.5vw, 4.7rem); line-height: 1.08; letter-spacing: -.055em; max-width: 16ch; }
+    &.syn-site-heading { font-family: var(--syn-font-display); font-size: clamp(2.3rem, 5.5vw, 4.7rem); line-height: 1.08; letter-spacing: -.055em; max-width: var(--syn-site-heading-measure, 16ch); }
     /* Optional editorial voice inspired by premium developer tooling; local serif only. */
     &.syn-site-heading--editorial { font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif; font-weight: 500; letter-spacing: -.045em; }
     &.syn-site-heading strong { color: var(--syn-accent); }
-    &.syn-feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); gap: var(--syn-space-2); }
+    &.syn-feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); gap: var(--syn-content-gap); }
     &.syn-feature-card { min-width: 0; padding: var(--syn-space-4); background: var(--syn-surface); color: var(--syn-text); border: 1px solid var(--syn-border-subtle); border-radius: var(--syn-radius); }
     &.syn-feature-card > :first-child { margin-block-start: 0; }
     &.syn-feature-card > :last-child { margin-block-end: 0; }

@@ -5,6 +5,47 @@ MIT-licensed, **CSS-first** design system. Changes should improve native HTML
 and CSS without requiring a JavaScript runtime, package manager, remote assets,
 or framework-specific component package.
 
+## Start here
+
+1. Browse [open issues](https://github.com/dporkka/syntyr-css/issues?q=is%3Aissue+is%3Aopen) and [pull requests](https://github.com/dporkka/syntyr-css/pulls). Small documentation, accessibility, and reproducible bug fixes are good first contributions.
+2. For a new bug or feature proposal, use the [issue chooser](https://github.com/dporkka/syntyr-css/issues/new/choose). For larger changes, discuss scope and compatibility in an issue before implementation.
+3. Fork the repository, create a focused branch, and open a PR against `main`. Link the relevant issue using `Fixes #123` only when the PR resolves it completely.
+
+## Local setup
+
+You need Git, Python 3.11+ and a modern browser. Node and browser automation
+are optional maintainer tools, not consumer dependencies.
+
+```sh
+git clone https://github.com/YOUR-USERNAME/syntyr-css.git
+cd syntyr-css
+git remote add upstream https://github.com/dporkka/syntyr-css.git
+git fetch upstream main
+git switch -c fix/describe-change upstream/main
+python3 scripts/build.py --check
+python3 -m http.server 8000 --bind 127.0.0.1
+```
+
+Replace `YOUR-USERNAME` with your GitHub username after creating a fork.
+Open [the local component gallery](http://127.0.0.1:8000/docs/) in your
+browser; use a second terminal for checks below. Stop the server with Ctrl+C.
+
+| Path | Purpose |
+| --- | --- |
+| `src/` | CSS source and design tokens |
+| `dist/` | Generated consumer CSS; do not hand-edit |
+| `examples/`, `docs/` | Real demos and canonical documentation |
+| `scripts/`, `tests/` | Build, validation and regression tests |
+| `integrations/` | Optional adapters outside the core runtime |
+
+## Report a useful issue
+
+Include the installed release or source commit, browser and operating system,
+expected and actual behavior, a minimal HTML/CSS reproduction, and relevant
+screenshots. Remove credentials and personal or customer data. For feature
+requests, describe the user need and existing composition alternatives rather
+than only a proposed API. Security reports follow [SECURITY.md](SECURITY.md).
+
 ## Before proposing changes
 
 - Search the existing issues and pull requests to avoid duplicating work.
@@ -82,6 +123,9 @@ and browser engines **only in development or CI**; consumers do not install
 these tools. See [docs/accessibility.md](docs/accessibility.md) for browser,
 reflow, keyboard, focus, screen-reader and contrast checks.
 
+For documentation-directory search changes, run `python3 tests/reference_search_browser.py`
+with the optional Playwright environment and Chromium/Firefox installed.
+
 For behavior changes, add a regression test that fails before the fix,
 then verify it passes afterward. Report any unrun or unavailable browser
 engines explicitly. A clean automated axe result is not a WCAG certification.
@@ -102,6 +146,31 @@ python3 tests/published_reflow_browser.py --browsers chromium --canonical-only -
 The full published reflow suite retains orientation and enlarged-text stress
 cases. Its layout and control geometry assertions do not certify WCAG or
 replace manual interaction and visual review. Report missing engines as blocked.
+
+## Visual contributions and README screenshots
+
+For visual changes, attach before/after screenshots at desktop and narrow
+viewport widths. Identify the theme, viewport, browser and source revision;
+use fictional data only. Check keyboard focus, reduced motion and text zoom
+where relevant. Screenshots complement tests; they do not prove accessibility.
+
+The README showcase images in `assets/readme/` are actual Chromium viewport
+captures at 1280 × 800 CSS pixels (device scale factor 1), using the following
+local examples and committed distribution CSS:
+
+| Image | Source |
+| --- | --- |
+| `operations-console.png` | [Operations console](examples/operations-console.html) |
+| `flagship-studio.png` | [Studio flagship](examples/flagship-studio.html) |
+| `flagship-noir.png` | [Noir flagship](examples/flagship-noir.html) |
+
+To refresh them, rebuild CSS, open each source example in Chromium at the
+specified viewport, wait for rendering, and save a viewport PNG using the
+same filename. Review every image for clipping, missing assets, and accurate
+release labeling. Keep README screenshots separate from regression baselines
+in `tests/visual-baselines/`; do not update test baselines just to change
+marketing imagery. Do not commit browser profiles, internal screenshots or
+unrelated generated files.
 
 ## Review and release
 
