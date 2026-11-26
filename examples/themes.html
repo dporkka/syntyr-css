@@ -8,11 +8,13 @@
   <link rel="stylesheet" href="../dist/syntyr.core.css">
   <link rel="stylesheet" href="../dist/syntyr.utilities.css">
   <style>
-    .theme-gallery { padding-block: clamp(1.5rem, 5vw, 4rem); }
+    .theme-gallery { padding-block: var(--syn-section-space); }
     .theme-gallery h1 { max-width: 20ch; }
-    .theme-gallery .syn-grid { margin-block: 1.5rem 2.5rem; }
+    .theme-gallery .syn-grid { margin-block: var(--syn-section-space); }
     .theme-tile { display: grid; align-content: start; gap: var(--syn-space-2); }
     .theme-tile .syn-button { justify-self: start; }
+    .theme-sample { display: grid; gap: var(--syn-space-1); min-inline-size: 0; }
+    .theme-sample .syn-badge { justify-self: start; }
     .theme-tile .syn-stat { padding: var(--syn-space-2); }
     .theme-tile .syn-stat-value { font-size: clamp(1.3rem, 3vw, 2rem); }
     .theme-tile .theme-code { color: var(--syn-muted); font: .7rem/1.5 var(--syn-mono); overflow-wrap: anywhere; }
@@ -31,42 +33,77 @@
         <span class="syn-eyebrow">01 / SIGNAL BLUE</span><h2 id="grid-title">Grid</h2>
         <p class="theme-code">data-syn-theme="grid"</p>
         <article class="syn-stat"><span class="syn-stat-label">NETWORK HEALTH</span><p class="syn-stat-value">99.8%</p></article>
+        <div class="theme-sample">
+          <span class="syn-badge">Component preview</span>
+          <label class="syn-label" for="grid-sample-input">Read-only field</label>
+          <input class="syn-input" id="grid-sample-input" type="text" value="Theme preview" readonly>
+        </div>
         <a class="syn-button syn-button--primary" href="../docs/#components">Explore components</a>
       </section>
       <section class="syn-panel theme-tile" data-syn-theme="noir" aria-labelledby="noir-title">
         <span class="syn-eyebrow">02 / TUNGSTEN</span><h2 id="noir-title">Noir</h2>
         <p class="theme-code">data-syn-theme="noir"</p>
         <article class="syn-stat"><span class="syn-stat-label">ARCHIVE STATUS</span><p class="syn-stat-value">ONLINE</p></article>
+        <div class="theme-sample">
+          <span class="syn-badge">Component preview</span>
+          <label class="syn-label" for="noir-sample-input">Read-only field</label>
+          <input class="syn-input" id="noir-sample-input" type="text" value="Theme preview" readonly>
+        </div>
         <a class="syn-button syn-button--primary" href="../docs/#components">Explore components</a>
       </section>
       <section class="syn-panel theme-tile" data-syn-theme="studio" aria-labelledby="studio-title">
         <span class="syn-eyebrow">03 / PROFESSIONAL LIGHT</span><h2 id="studio-title">Studio</h2>
         <p class="theme-code">data-syn-theme="studio"</p>
         <article class="syn-stat"><span class="syn-stat-label">SERVICE RELIABILITY</span><p class="syn-stat-value">99.9%</p></article>
+        <div class="theme-sample">
+          <span class="syn-badge">Component preview</span>
+          <label class="syn-label" for="studio-sample-input">Read-only field</label>
+          <input class="syn-input" id="studio-sample-input" type="text" value="Theme preview" readonly>
+        </div>
         <a class="syn-button syn-button--primary" href="../docs/#components">Explore components</a>
       </section>
       <section class="syn-panel theme-tile" data-syn-theme="industrial" aria-labelledby="industrial-title">
         <span class="syn-eyebrow">04 / MACHINE AMBER</span><h2 id="industrial-title">Industrial</h2>
         <p class="theme-code">data-syn-theme="industrial"</p>
         <article class="syn-stat"><span class="syn-stat-label">SYSTEM LOAD</span><p class="syn-stat-value">42.1%</p></article>
+        <div class="theme-sample">
+          <span class="syn-badge">Component preview</span>
+          <label class="syn-label" for="industrial-sample-input">Read-only field</label>
+          <input class="syn-input" id="industrial-sample-input" type="text" value="Theme preview" readonly>
+        </div>
         <a class="syn-button syn-button--primary" href="../docs/#components">Explore components</a>
       </section>
       <section class="syn-panel theme-tile" data-syn-theme="terminal" aria-labelledby="terminal-title">
         <span class="syn-eyebrow">05 / PHOSPHOR GREEN</span><h2 id="terminal-title">Terminal</h2>
         <p class="theme-code">data-syn-theme="terminal"</p>
         <article class="syn-stat"><span class="syn-stat-label">ACTIVE SESSIONS</span><p class="syn-stat-value">016</p></article>
+        <div class="theme-sample">
+          <span class="syn-badge">Component preview</span>
+          <label class="syn-label" for="terminal-sample-input">Read-only field</label>
+          <input class="syn-input" id="terminal-sample-input" type="text" value="Theme preview" readonly>
+        </div>
         <a class="syn-button syn-button--primary" href="../docs/#components">Explore components</a>
       </section>
       <section class="syn-panel theme-tile" data-syn-theme="corporate" aria-labelledby="corporate-title">
         <span class="syn-eyebrow">06 / TRUSTED BLUE</span><h2 id="corporate-title">Corporate</h2>
         <p class="theme-code">data-syn-theme="corporate"</p>
         <article class="syn-stat"><span class="syn-stat-label">QUARTERLY REVENUE</span><p class="syn-stat-value">$128.4k</p></article>
+        <div class="theme-sample">
+          <span class="syn-badge">Component preview</span>
+          <label class="syn-label" for="corporate-sample-input">Read-only field</label>
+          <input class="syn-input" id="corporate-sample-input" type="text" value="Theme preview" readonly>
+        </div>
         <a class="syn-button syn-button--primary" href="../docs/#components">Explore components</a>
       </section>
       <section class="syn-panel theme-tile" data-syn-theme="minimal" aria-labelledby="minimal-title">
         <span class="syn-eyebrow">07 / NEUTRAL</span><h2 id="minimal-title">Minimal</h2>
         <p class="theme-code">data-syn-theme="minimal"</p>
         <article class="syn-stat"><span class="syn-stat-label">ACTIVE WORKSPACES</span><p class="syn-stat-value">24</p></article>
+        <div class="theme-sample">
+          <span class="syn-badge">Component preview</span>
+          <label class="syn-label" for="minimal-sample-input">Read-only field</label>
+          <input class="syn-input" id="minimal-sample-input" type="text" value="Theme preview" readonly>
+        </div>
         <a class="syn-button syn-button--primary" href="../docs/#components">Explore components</a>
       </section>
     </div>

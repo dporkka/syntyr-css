@@ -3493,6 +3493,80 @@ Syntyr is a **CSS presentation layer**, not a state manager, request client, or 
 It has no JavaScript initialization, no required build tool, and no runtime dependency.
 Every example uses the same `syn-` classes, CSS tokens and standard HTML.
 
+## Compatibility matrix and evidence
+
+Syntyr is compatible with HTML renderers by architecture, not by a blanket
+promise about every framework version or browser. Use the following routes
+and evidence levels when choosing an integration.
+
+**Published alpha.4:** pin the [immutable CSS release](distribution.md).
+**Unreleased alpha.5:** the fixtures and optional adapters below use the
+source candidate unless explicitly stated otherwise. Do not copy new classes
+or modules into an alpha.4 app. No framework or browser support floor has
+been approved for alpha.5; see [release readiness](launch-status.md).
+
+| Integration | Adoption route | Evidence available |
+| --- | --- | --- |
+| Plain HTML / server templates | Self-host pinned core CSS, scoped root | Published alpha.4 quickstart; alpha.5 browser sample below |
+| React / Vite and Next.js | Global CSS import, native JSX; optional typed wrappers | [Source consumer fixtures](node-react-next-integration.md), optional build/browser tests |
+| Preact and Solid | JSX/TSX with explicit classes | [Source consumer fixtures](jsx-tsx-integration.md), optional build/browser tests |
+| Astro, Eleventy, Hugo | Static output and copied or imported CSS | [Runnable source fixtures](adoption-starters.md); generator-specific deployment checks |
+| Svelte / SvelteKit | Global CSS, native actions, optional enhancement | [SvelteKit source app](https://github.com/dporkka/syntyr-css/tree/main/examples/sveltekit); build and action tests |
+| Go / templ, Rust / Axum, Node / Express | Static CSS and server-owned rendering | [Go HTMX](https://github.com/dporkka/syntyr-css/tree/main/examples/go-htmx), [Rust Axum](rust-saas-integration.md), [Node](node-react-next-integration.md) source examples |
+| HTMX, Datastar, Turbo, Unpoly, Lit | Stable theme root, host-managed interactions | [Interaction recipes](interaction-recipes.md) and source behavior fixtures |
+| Tailwind v4, shadcn/ui, Radix | Opt-in scoped token bridges; keep host behavior | [Ecosystem fixtures](adoption-starters.md); test actual host cascade |
+| Vue / Nuxt, Rails, Laravel, Django, Phoenix, Spring, ASP.NET | Native HTML/template classes; host-owned behavior | Integration guidance, not an independently verified framework-version guarantee |
+| WordPress, Shopify, Webflow, Wix and other builders | Scoped HTML/CSS embed; alpha.5 embed entrypoint where available | [Platform-specific guidance](site-builders.md); verify editor and host constraints |
+| React Native, Flutter, SwiftUI, Compose | Portable literal tokens, not browser CSS | [Token adapters and limitations](mobile-frameworks.md); no native component compatibility claim |
+| Electron, Tauri, Capacitor | HTML/CSS in a WebView | Browser-level route only; test the actual embedded engine |
+
+A fixture existing in the repository does not mean its latest dependency
+versions have been built, its package tarball consumed, or its accessibility
+review completed. The [package-manager guide](package-managers.md) separates
+archive verification from consumer installation.
+
+### Focused browser evidence (November 25, 2026)
+
+The following is a historical, **unreleased alpha.5** source sample at
+[45c86cf58bd0fb1decaaf391ba4dba69b00cefc8](https://github.com/dporkka/syntyr-css/commit/45c86cf58bd0fb1decaaf391ba4dba69b00cefc8).
+Playwright 1.65.2 ran on x86-64 Linux with glibc 2.43, headless.
+Three existing pages (console, native elements, semantic starter) were
+checked at 320, 390 and 1280 CSS-pixel widths with the existing
+`tests/browser_matrix.py` assertions.
+
+| Engine | Observed browser version | Result |
+| --- | --- | --- |
+| Chromium | 159.0.8154.6 | 9/9 focused cases passed |
+| Firefox | 159.0 | 9/9 focused cases passed |
+| WebKit | Not obtained | Blocked: browser launch failed; zero cases executed |
+
+This is a sample of 18 passing automated cases, not the full site/browser
+matrix. It does not establish support for physical Android/iOS devices,
+Safari, Chrome or Edge product versions, actual browser zoom, screen readers,
+OS forced colors or WCAG conformance. WebKit is unverified, not a passing or
+failing Syntyr layout result. The independently approved browser matrix
+and manual review remain open.
+
+To reproduce the broader automated matrix from a checked-out revision with
+the required Playwright engines and native libraries installed:
+
+```sh
+python3 tests/browser_matrix.py --browsers chromium firefox webkit
+```
+
+For the focused historical sample, call the same `assert_page` function
+from that script for `examples/console.html`, `examples/native-elements.html`
+and `examples/semantic-starter.html` at widths 320, 390 and 1280 (height 820,
+reduced motion). Record the exact commit, engine versions, case counts and
+blocked engines. Do not infer current support from historical test results.
+
+**Framework package evidence gap:** independent offline install attempts
+using the packed alpha.5 CSS and the Preact/Vite, Tailwind and Astro source
+fixtures were blocked at dependency resolution (missing third-party npm
+cache entries). No framework build passed or failed in those attempts.
+Resolve toolchain and dependency availability, then test actual installed
+tarballs in clean consumer apps before upgrading evidence claims.
+
 ## Copy a catalog example into your stack
 
 The [49-example component catalog](catalog.html) has a **Copy HTML** action for
@@ -5138,10 +5212,48 @@ Useful tokens:
 | `--syn-type-display`, `--syn-type-section`, `--syn-type-heading`, `--syn-type-body`, `--syn-leading-body`, `--syn-tracking-display` | Composable typography roles |
 | `--syn-row-padding-block`, `--syn-card-padding`, `--syn-control-padding-block` | Density-aware spacing |
 | `--syn-space-1` … `--syn-space-5` | Spacing |
+| `--syn-page-gutter`, `--syn-content-max` | Responsive `.syn-shell` and application workspace gutters |
+| `--syn-content-gap`, `--syn-section-space` | Shared grid/form/section rhythm (local gap overrides still work) |
+| `--syn-display-measure`, `--syn-section-heading-measure`, `--syn-site-heading-measure` | Optional heading line-length overrides without changing semantic type roles |
 | `--syn-cut`, `--syn-radius`, `--syn-control-height` | Geometry |
 | `--syn-duration-fast`, `--syn-duration-standard`, `--syn-ease`, `--syn-ease-enter` | Optional transitions |
 | `--syn-panel-padding`, `--syn-panel-radius`, `--syn-panel-border-width` | Local panel customization |
 | `--syn-button-padding-inline`, `--syn-button-border-width` | Local button customization |
+
+### Page widths, stack rhythm, and density
+
+Use the built-in `.syn-shell` for centered content. Its default maximum is
+`72rem`, with fluid `--syn-page-gutter` (at least `1rem` per side). Set
+`--syn-content-max` on a Syntyr scope for editorial pages, wide dashboards, or
+embeds rather than copying a hard-coded width into every theme. Shared
+`--syn-content-gap` is the fallback for `.syn-grid`, `.syn-layout`,
+`.syn-feature-grid`, and `.syn-form`; the existing `--syn-grid-gap` and
+`--syn-layout-gap` local overrides still take priority. `--syn-section-space`
+controls site-hero vertical padding and can be overridden per page.
+
+```html
+<main class="syn-root syn-page" data-syn-theme="studio"
+      style="--syn-content-max: 64rem; --syn-content-gap: 1.5rem">
+  <div class="syn-shell">
+    <section class="syn-stack" aria-labelledby="intro-title">
+      <h1 id="intro-title" class="syn-display">An accessible interface</h1>
+      <p class="syn-lede">Shared rhythm across every Syntyr palette.</p>
+    </section>
+  </div>
+</main>
+```
+
+An intentional `.syn-stack` or `.syn-u-stack` owns its direct-child vertical
+spacing: native heading and paragraph margins are suppressed, so they do not
+add to the declared grid gap. Paragraphs *inside* `.syn-prose` retain their
+reading rhythm; utilities and app CSS can still add explicit separation.
+Do not globally reset margins in arbitrary host markup.
+
+`data-syn-density="compact"` and `"spacious"` also change `.syn-panel`
+padding; a nested `"comfortable"` region restores the regular fluid value.
+Density never shrinks font sizes. At narrow widths, verify labels, controls,
+and actions reflow without horizontal page scroll; do not infer accessibility
+solely from a good desktop screenshot.
 
 ## 3. Independent visual intensity
 
@@ -5513,6 +5625,21 @@ The Syntyr CSS public contract stays independent and MIT licensed.
    uppercase labels are intentional in Grid and Terminal, not the default.
 5. Use `--syn-accent` for real actions, selection, and a few signature
    details. Do not color every title, border, metric and icon at once.
+
+## Shared spacing and responsive composition
+
+- Use `--syn-page-gutter` and `--syn-content-max` for shell geometry instead
+  of repeating fixed per-theme page widths. Use `--syn-section-space` for
+  ordinary section separation, and `--syn-content-gap` for general layout.
+- Place headings and their copy in `.syn-stack` or `.syn-u-stack` when using
+  component spacing. These suppress only direct-child margins; preserve
+  `.syn-prose` for readable long-form copy and explicit utility margins for
+  intentional exceptions.
+- Preview compact, comfortable, and spacious panel padding across *nested*
+  themes. Preserve touch target sizing and readable type independent of density.
+- Keep mobile heroes content-led: shorten vertical padding before reducing
+  typography or truncating meaningful content. Test 320px and a larger
+  desktop width, including text-resize and right-to-left layout as applicable.
 
 ## Same components, three visual directions
 
@@ -6588,6 +6715,31 @@ This generator produces the static section layer; it does not compose or
 install host widget controllers, implement routes/forms, generate production
 copy, or certify accessibility. Review example content and destinations, and
 use the release-pinned markup validator and real browser tests before shipping.
+
+### Select sections from explicit intent IDs
+
+The optional composer also supports an offline, deterministic planner. Use
+`node scripts/compose.mjs --list-intents 0.3.0-alpha.5` to discover the
+reviewed requirement IDs, corresponding section IDs and host obligations.
+
+```sh
+node scripts/compose.mjs --plan <<'JSON'
+{"release":"0.3.0-alpha.5","title":"CRM dashboard","theme":"studio","requirements":["pipeline","metrics","inventory-search","account-management"]}
+JSON
+```
+
+The plan preserves requirement order, deduplicates overlapping section
+mappings and returns a separate coverage entry for every requirement.
+A ready plan includes a `composition` object accepted by the normal
+composer. Read every coverage entry before rendering. Generic resource
+sections require domain-specific customization; they do not implement
+account or inventory management. A presentation-only entry lists the
+remaining host work, and even static content contains example copy and links.
+
+Unknown, well-formed requirement IDs produce an unresolved plan, a null
+composition and CLI exit code 2. Invalid input produces exit code 1.
+The planner does not parse natural-language prompts, guess missing features,
+select host controllers, certify functionality or make network calls.
 
 ---
 

@@ -168,3 +168,28 @@ This generator produces the static section layer; it does not compose or
 install host widget controllers, implement routes/forms, generate production
 copy, or certify accessibility. Review example content and destinations, and
 use the release-pinned markup validator and real browser tests before shipping.
+
+### Select sections from explicit intent IDs
+
+The optional composer also supports an offline, deterministic planner. Use
+`node scripts/compose.mjs --list-intents 0.3.0-alpha.5` to discover the
+reviewed requirement IDs, corresponding section IDs and host obligations.
+
+```sh
+node scripts/compose.mjs --plan <<'JSON'
+{"release":"0.3.0-alpha.5","title":"CRM dashboard","theme":"studio","requirements":["pipeline","metrics","inventory-search","account-management"]}
+JSON
+```
+
+The plan preserves requirement order, deduplicates overlapping section
+mappings and returns a separate coverage entry for every requirement.
+A ready plan includes a `composition` object accepted by the normal
+composer. Read every coverage entry before rendering. Generic resource
+sections require domain-specific customization; they do not implement
+account or inventory management. A presentation-only entry lists the
+remaining host work, and even static content contains example copy and links.
+
+Unknown, well-formed requirement IDs produce an unresolved plan, a null
+composition and CLI exit code 2. Invalid input produces exit code 1.
+The planner does not parse natural-language prompts, guess missing features,
+select host controllers, certify functionality or make network calls.

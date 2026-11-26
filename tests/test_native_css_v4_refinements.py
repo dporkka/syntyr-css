@@ -14,9 +14,9 @@ class NativeCSSV4Refinements(unittest.TestCase):
     def test_core_layouts_accept_local_tokens_without_new_utilities(self):
         css = source("src/components/layout.css")
         for value in (
-            "var(--syn-grid-gap, 1rem)",
+            "var(--syn-grid-gap, var(--syn-content-gap))",
             "var(--syn-grid-min, 17rem)",
-            "var(--syn-layout-gap, 1.25rem)",
+            "var(--syn-layout-gap, var(--syn-content-gap))",
             "var(--syn-layout-min, 21rem)",
             "var(--syn-stack-gap, var(--syn-space-3))",
             "var(--syn-inline-gap, var(--syn-space-2))",

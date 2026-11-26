@@ -29,6 +29,21 @@ The Syntyr CSS public contract stays independent and MIT licensed.
 5. Use `--syn-accent` for real actions, selection, and a few signature
    details. Do not color every title, border, metric and icon at once.
 
+## Shared spacing and responsive composition
+
+- Use `--syn-page-gutter` and `--syn-content-max` for shell geometry instead
+  of repeating fixed per-theme page widths. Use `--syn-section-space` for
+  ordinary section separation, and `--syn-content-gap` for general layout.
+- Place headings and their copy in `.syn-stack` or `.syn-u-stack` when using
+  component spacing. These suppress only direct-child margins; preserve
+  `.syn-prose` for readable long-form copy and explicit utility margins for
+  intentional exceptions.
+- Preview compact, comfortable, and spacious panel padding across *nested*
+  themes. Preserve touch target sizing and readable type independent of density.
+- Keep mobile heroes content-led: shorten vertical padding before reducing
+  typography or truncating meaningful content. Test 320px and a larger
+  desktop width, including text-resize and right-to-left layout as applicable.
+
 ## Same components, three visual directions
 
 - [Studio operations](../examples/flagship-studio.html): compact density,

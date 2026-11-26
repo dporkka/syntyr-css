@@ -115,10 +115,48 @@ Useful tokens:
 | `--syn-type-display`, `--syn-type-section`, `--syn-type-heading`, `--syn-type-body`, `--syn-leading-body`, `--syn-tracking-display` | Composable typography roles |
 | `--syn-row-padding-block`, `--syn-card-padding`, `--syn-control-padding-block` | Density-aware spacing |
 | `--syn-space-1` … `--syn-space-5` | Spacing |
+| `--syn-page-gutter`, `--syn-content-max` | Responsive `.syn-shell` and application workspace gutters |
+| `--syn-content-gap`, `--syn-section-space` | Shared grid/form/section rhythm (local gap overrides still work) |
+| `--syn-display-measure`, `--syn-section-heading-measure`, `--syn-site-heading-measure` | Optional heading line-length overrides without changing semantic type roles |
 | `--syn-cut`, `--syn-radius`, `--syn-control-height` | Geometry |
 | `--syn-duration-fast`, `--syn-duration-standard`, `--syn-ease`, `--syn-ease-enter` | Optional transitions |
 | `--syn-panel-padding`, `--syn-panel-radius`, `--syn-panel-border-width` | Local panel customization |
 | `--syn-button-padding-inline`, `--syn-button-border-width` | Local button customization |
+
+### Page widths, stack rhythm, and density
+
+Use the built-in `.syn-shell` for centered content. Its default maximum is
+`72rem`, with fluid `--syn-page-gutter` (at least `1rem` per side). Set
+`--syn-content-max` on a Syntyr scope for editorial pages, wide dashboards, or
+embeds rather than copying a hard-coded width into every theme. Shared
+`--syn-content-gap` is the fallback for `.syn-grid`, `.syn-layout`,
+`.syn-feature-grid`, and `.syn-form`; the existing `--syn-grid-gap` and
+`--syn-layout-gap` local overrides still take priority. `--syn-section-space`
+controls site-hero vertical padding and can be overridden per page.
+
+```html
+<main class="syn-root syn-page" data-syn-theme="studio"
+      style="--syn-content-max: 64rem; --syn-content-gap: 1.5rem">
+  <div class="syn-shell">
+    <section class="syn-stack" aria-labelledby="intro-title">
+      <h1 id="intro-title" class="syn-display">An accessible interface</h1>
+      <p class="syn-lede">Shared rhythm across every Syntyr palette.</p>
+    </section>
+  </div>
+</main>
+```
+
+An intentional `.syn-stack` or `.syn-u-stack` owns its direct-child vertical
+spacing: native heading and paragraph margins are suppressed, so they do not
+add to the declared grid gap. Paragraphs *inside* `.syn-prose` retain their
+reading rhythm; utilities and app CSS can still add explicit separation.
+Do not globally reset margins in arbitrary host markup.
+
+`data-syn-density="compact"` and `"spacious"` also change `.syn-panel`
+padding; a nested `"comfortable"` region restores the regular fluid value.
+Density never shrinks font sizes. At narrow widths, verify labels, controls,
+and actions reflow without horizontal page scroll; do not infer accessibility
+solely from a good desktop screenshot.
 
 ## 3. Independent visual intensity
 
