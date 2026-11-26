@@ -39,6 +39,53 @@ Before authorizing any **separate npm publication**, run `python3 scripts/audit_
 
 After freezing, review the manifest diff and source hashes, commit the new immutable snapshot, verify the static-site build, deploy to staging and verify live Cloudflare paths/content hashes/headers. Only then tag and publish the release through the separate release process. **This script does not deploy, tag, enable payments or publish an npm package.**
 
+## Signed ZIP provenance (unreleased source candidate)
+
+After the separate release approval, package the reviewed, clean commit and
+create a deterministic provenance record. The creator checks every ZIP member
+against the regular, allowlisted Git blobs at that exact commit, and binds the
+repository, version, commit, ZIP name, byte count and SHA-256 digest. It refuses
+tracked changes, unexpected members and mismatched bytes. It does not publish
+or replace prior evidence.
+
+```sh
+commit=$(git rev-parse HEAD)
+version=$(cat VERSION)
+archive="release/syntyr-css-$version.zip"
+python3 scripts/package_release.py "$archive"
+python3 scripts/release_provenance.py create "$archive" release/provenance.json --commit "$commit"
+```
+
+The generated JSON is **unsigned**. A designated release maintainer can sign
+it with an existing securely managed OpenSSH signing key (OpenSSH 8.2+):
+
+```sh
+ssh-keygen -Y sign -f /secure/path/release-signing-key -n syntyr-release release/provenance.json
+```
+
+Publish the exact ZIP, `provenance.json`, and `provenance.json.sig` together
+only after release authorization. Keep signing keys outside the repository and
+CI checkout. Do not create or trust a key just because it accompanies an
+archive. Distribute the maintainer's verified public key and signer identity
+through an independently trusted channel (OpenSSH allowed-signers format:
+`syntyr-release ssh-ed25519 <verified-public-key>`). A consumer who has trusted
+the release commit, version, signer and public key can set `expected_commit`
+and `expected_version` from that trusted source, then verify:
+
+```sh
+python3 scripts/release_provenance.py verify "syntyr-css-$expected_version.zip" provenance.json \
+  --signature provenance.json.sig --allowed-signers /secure/path/trusted-signers \
+  --signer syntyr-release --commit "$expected_commit" --version "$expected_version"
+```
+
+Use the verifier from a trusted checkout or independently reviewed source,
+not from the unverified download. Verification fails on a wrong signer,
+commit, version, manifest or archive. This is a signed maintainer attestation,
+not an independently certified SLSA build, a substitute for human approval,
+or evidence for the separate unpublished npm package. The published alpha.4
+release has not been retroactively signed. No SSH or Python dependency is
+added to CSS consumers.
+
 ## Current status
 
 The alpha.5 manual reviews are **not signed off**. A historical November 18, 2026 source-only audit in [accessibility-alpha5-review.md](accessibility-alpha5-review.md) recorded 165 inconclusive contrast elements at commit `70ec764`. That count is **not** a measurement of the current source head; intervening commits invalidate any assumption that it remains accurate.

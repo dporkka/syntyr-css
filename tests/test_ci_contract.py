@@ -83,7 +83,9 @@ class ContinuousIntegrationContract(unittest.TestCase):
         ):
             with self.subTest(workflow=path):
                 content = (ROOT / path).read_text()
-                install_at = active_workflow_command_position(content, install)
+                expected_install = (install.replace("python3-markdown-it &&", "python3-markdown-it openssh-client &&")
+                                    if path == ".woodpecker/quality.yaml" else install)
+                install_at = active_workflow_command_position(content, expected_install)
                 version_at = active_workflow_command_position(content, verify_version)
                 runner_at = active_workflow_command_position(content, runner)
                 self.assertGreaterEqual(install_at, 0, "Package install must be an active step")
@@ -94,8 +96,20 @@ class ContinuousIntegrationContract(unittest.TestCase):
                 self.assertIn("\n      PYTHONPATH: /usr/lib/python3/dist-packages\n", content)
                 self.assertNotIn("pip install", content)
                 self.assertEqual(active_workflow_command_position(
-                    content.replace("      - " + install, "      # - " + install), install
+                    content.replace("      - " + expected_install, "      # - " + expected_install), expected_install
                 ), -1, "Commented-out installation must not satisfy the contract")
+
+    def test_quality_gate_creates_exact_commit_release_provenance(self):
+        content = (ROOT / ".woodpecker" / "quality.yaml").read_text()
+        package = 'python3 scripts/package_release.py "/tmp/syntyr-css-$(cat VERSION).zip"'
+        provenance = ('python3 scripts/release_provenance.py create '
+                      '"/tmp/syntyr-css-$(cat VERSION).zip" /tmp/syntyr-ci-provenance.json '
+                      '--commit "$(git rev-parse HEAD)"')
+        before = active_workflow_command_position(content, package)
+        after = active_workflow_command_position(content, provenance)
+        self.assertGreaterEqual(before, 0)
+        self.assertGreater(after, before)
+        self.assertNotIn("ssh-keygen -Y sign", content, "Release keys must not be used in PR CI")
 
     def test_commented_blocks_command_is_not_an_active_release_step(self):
         command = "python3 tests/blocks_browser.py --browsers chromium firefox webkit"
