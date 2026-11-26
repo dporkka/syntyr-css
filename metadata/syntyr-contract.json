@@ -5312,6 +5312,38 @@
       ]
     },
     {
+      "name": "--syn-content-gap",
+      "module": "tokens.css",
+      "description": "Content gap design token from tokens.css; override in the appropriate Syntyr scope when needed.",
+      "stylesheets": [
+        "components/tokens.css",
+        "presets/cinematic.css",
+        "presets/minimal.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.core.css",
+        "syntyr.css",
+        "syntyr.embed.css",
+        "syntyr.semantic-bundle.css"
+      ]
+    },
+    {
+      "name": "--syn-content-max",
+      "module": "tokens.css",
+      "description": "Content max design token from tokens.css; override in the appropriate Syntyr scope when needed.",
+      "stylesheets": [
+        "components/tokens.css",
+        "presets/cinematic.css",
+        "presets/minimal.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.core.css",
+        "syntyr.css",
+        "syntyr.embed.css",
+        "syntyr.semantic-bundle.css"
+      ]
+    },
+    {
       "name": "--syn-control-height",
       "module": "tokens.css",
       "description": "Shared native form control height; check accessible target sizing.",
@@ -6225,6 +6257,22 @@
       ]
     },
     {
+      "name": "--syn-page-gutter",
+      "module": "tokens.css",
+      "description": "Page gutter design token from tokens.css; override in the appropriate Syntyr scope when needed.",
+      "stylesheets": [
+        "components/tokens.css",
+        "presets/cinematic.css",
+        "presets/minimal.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.core.css",
+        "syntyr.css",
+        "syntyr.embed.css",
+        "syntyr.semantic-bundle.css"
+      ]
+    },
+    {
       "name": "--syn-panel-border-width",
       "module": "components/layout.css",
       "description": "Per-panel border width; defaults to 1px.",
@@ -6246,6 +6294,22 @@
       "description": "Per-panel padding; defaults to the existing fluid panel padding.",
       "stylesheets": [
         "components/layout.css",
+        "presets/cinematic.css",
+        "presets/minimal.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.core.css",
+        "syntyr.css",
+        "syntyr.embed.css",
+        "syntyr.semantic-bundle.css"
+      ]
+    },
+    {
+      "name": "--syn-panel-padding-default",
+      "module": "tokens.css",
+      "description": "Panel padding default design token from tokens.css; override in the appropriate Syntyr scope when needed.",
+      "stylesheets": [
+        "components/tokens.css",
         "presets/cinematic.css",
         "presets/minimal.css",
         "presets/saas.css",
@@ -6335,6 +6399,22 @@
       "name": "--syn-scanline-alpha",
       "module": "tokens.css",
       "description": "Scanline overlay opacity percentage.",
+      "stylesheets": [
+        "components/tokens.css",
+        "presets/cinematic.css",
+        "presets/minimal.css",
+        "presets/saas.css",
+        "syntyr.all.css",
+        "syntyr.core.css",
+        "syntyr.css",
+        "syntyr.embed.css",
+        "syntyr.semantic-bundle.css"
+      ]
+    },
+    {
+      "name": "--syn-section-space",
+      "module": "tokens.css",
+      "description": "Section space design token from tokens.css; override in the appropriate Syntyr scope when needed.",
       "stylesheets": [
         "components/tokens.css",
         "presets/cinematic.css",

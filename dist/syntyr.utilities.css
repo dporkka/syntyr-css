@@ -4,6 +4,8 @@
   .syn-root :where(.syn-u-flex) { display: flex; min-width: 0; }
   .syn-root :where(.syn-u-grid) { display: grid; min-width: 0; }
   .syn-root :where(.syn-u-stack) { display: grid; gap: var(--syn-space-2); min-width: 0; }
+  /* Do not add native heading/paragraph margins on top of the stack gap. */
+  .syn-root :where(.syn-u-stack > *) { margin-block: 0; }
   .syn-root :where(.syn-u-inline) { display: flex; flex-wrap: wrap; align-items: center; gap: var(--syn-space-2); }
   .syn-root :where(.syn-u-center) { align-items: center; justify-content: center; }
   .syn-root :where(.syn-u-between) { justify-content: space-between; }

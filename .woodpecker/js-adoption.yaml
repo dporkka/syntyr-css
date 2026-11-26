@@ -36,6 +36,7 @@ steps:
             - tests/ascii_cli.test.mjs
             - scripts/compose.mjs
             - tests/compose_cli.test.mjs
+            - tests/compose_intent.test.mjs
             - docs/page-builder-model.mjs
             - metadata/section-composer.v1.json
             - scripts/ascii.mjs
@@ -47,7 +48,7 @@ steps:
     commands:
       - node --version && npm --version
       - node --test tests/npm_consumer.test.mjs
-      - node --test tests/animate.test.mjs tests/copy.test.mjs tests/ascii_playground.test.mjs tests/ascii_cli.test.mjs tests/compose_cli.test.mjs
+      - node --test tests/animate.test.mjs tests/copy.test.mjs tests/ascii_playground.test.mjs tests/ascii_cli.test.mjs tests/compose_cli.test.mjs tests/compose_intent.test.mjs
       - npm install --prefix packages/react --no-audit --no-fund
       - npm test --prefix packages/react
       - npm install --prefix examples/react-vite --no-audit --no-fund

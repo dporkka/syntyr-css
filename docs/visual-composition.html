@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Explore Syntyr&#x27;s principles for layout hierarchy, typography, surfaces, visual restraint, and original product-led SaaS interface design.">
-  <meta name="syntyr-source-sha256" content="0ed5069b6d426ff004ccab3f1198c37331935ccadaef8e9bff9e80d758c69574">
+  <meta name="syntyr-source-sha256" content="c8fff7a2339af558565462e12575be32b8a886b8962afb3247902cc758c5641b">
   <meta name="theme-color" content="#f5f7fb">
   <title>Syntyr visual composition — premium restraint, distinct character — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/visual-composition">
@@ -63,6 +63,21 @@ uppercase labels are intentional in Grid and Terminal, not the default.</li>
 <li>Use <code>--syn-accent</code> for real actions, selection, and a few signature
 details. Do not color every title, border, metric and icon at once.</li>
 </ol>
+<h2 id="shared-spacing-and-responsive-composition">Shared spacing and responsive composition</h2>
+<ul>
+<li>Use <code>--syn-page-gutter</code> and <code>--syn-content-max</code> for shell geometry instead
+of repeating fixed per-theme page widths. Use <code>--syn-section-space</code> for
+ordinary section separation, and <code>--syn-content-gap</code> for general layout.</li>
+<li>Place headings and their copy in <code>.syn-stack</code> or <code>.syn-u-stack</code> when using
+component spacing. These suppress only direct-child margins; preserve
+<code>.syn-prose</code> for readable long-form copy and explicit utility margins for
+intentional exceptions.</li>
+<li>Preview compact, comfortable, and spacious panel padding across <em>nested</em>
+themes. Preserve touch target sizing and readable type independent of density.</li>
+<li>Keep mobile heroes content-led: shorten vertical padding before reducing
+typography or truncating meaningful content. Test 320px and a larger
+desktop width, including text-resize and right-to-left layout as applicable.</li>
+</ul>
 <h2 id="same-components-three-visual-directions">Same components, three visual directions</h2>
 <ul>
 <li><a href="../examples/flagship-studio.html">Studio operations</a>: compact density,
@@ -103,6 +118,7 @@ visual regressions a release gate.</li>
           <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#product-led-presentation">Product-led presentation</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#surface-and-typography-rules">Surface and typography rules</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#shared-spacing-and-responsive-composition">Shared spacing and responsive composition</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#same-components-three-visual-directions">Same components, three visual directions</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#accessibility-motion-and-maintenance">Accessibility, motion and maintenance</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#references">References</a>
@@ -112,6 +128,7 @@ visual regressions a release gate.</li>
             <nav aria-label="On this page (mobile)">
 <a class="docs-article-toc-link docs-article-toc-2" href="#product-led-presentation">Product-led presentation</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#surface-and-typography-rules">Surface and typography rules</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#shared-spacing-and-responsive-composition">Shared spacing and responsive composition</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#same-components-three-visual-directions">Same components, three visual directions</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#accessibility-motion-and-maintenance">Accessibility, motion and maintenance</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#references">References</a>
