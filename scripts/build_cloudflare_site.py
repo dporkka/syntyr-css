@@ -24,6 +24,7 @@ if __package__:
     from .build_section_composer import build as section_catalog
     from .build_catalog_release import build_release_matrix, render_release_matrix, verify_catalog_annotations
     from .static_deploy import validate_site_url
+    from .export_site_starter import STARTER_ROUTES
 else:
     from build import all_distributions, javascript_distributions
     from build_shadcn_registry import generate as universal_registry_files
@@ -32,11 +33,18 @@ else:
     from build_section_composer import build as section_catalog
     from build_catalog_release import build_release_matrix, render_release_matrix, verify_catalog_annotations
     from static_deploy import validate_site_url
+    from export_site_starter import STARTER_ROUTES
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_OUTPUT = ROOT / ".cloudflare-public"
 MARKER = ".syntyr-site-manifest.json"
 SITE_URL = "https://syntyr-css.pages.dev"
+# Explicit reviewed routes shared with the offline exporter. No recursive discovery.
+ARCHETYPE_EXAMPLES = tuple(
+    f"site-starters/{name}/{route}"
+    for name, routes in STARTER_ROUTES.items() if name != "saas-marketing"
+    for route in routes
+)
 # These pages are illustrative applications or an error response, not search
 # landing pages. Their HTML remains publicly available and linkable.
 NOINDEX_HTML = frozenset({
@@ -64,7 +72,7 @@ NOINDEX_HTML = frozenset({
     "examples/industry-sites/saas-developer/pricing.html",
     "examples/industry-sites/saas-developer/docs.html",
     "docs/htmx-playground.html",  # Interactive app demo, not an SEO landing page.
-})
+}) | frozenset("examples/" + name for name in ARCHETYPE_EXAMPLES)
 CANONICAL_LINK = re.compile(r'<link\s+rel="canonical"[^>]*>', re.IGNORECASE)
 ROBOTS_META = re.compile(r'<meta\s+name="robots"[^>]*>', re.IGNORECASE)
 
@@ -414,6 +422,7 @@ def source_files(site_url: str = SITE_URL, *, include_cloudflare_headers: bool =
         "design-benchmarks/documentation.html", "design-benchmarks/benchmark.css",
         "site-starters/saas-marketing/index.html", "site-starters/saas-marketing/pricing/index.html",
         "site-starters/saas-marketing/about/index.html", "site-starters/saas-marketing/assets/site.css",
+        *ARCHETYPE_EXAMPLES, "site-starters/shared/site.css",
         # Reviewed MIT site starters only; do not scan arbitrary template directories.
         "industry-sites/index.html", "industry-sites/site.css",
         "industry-sites/field-service/index.html", "industry-sites/field-service/services.html",

@@ -123,6 +123,7 @@ Browse the curated entry points above, or expand the full reference index below.
 <details>
 <summary>All examples, integrations, guides and research references</summary>
 
+* [Portable website starters](examples/site-starters/README.md): four original multi-page, framework-neutral documentation, blog, portfolio and SaaS marketing archetypes with a deterministic, no-overwrite static exporter. Alpha.5 source candidate.
 * [Three-page SaaS marketing site starter](examples/site-starters/saas-marketing/README.md): original responsive hero, features, workflow, pricing, about and native FAQs; [live source preview](https://syntyr-css.pages.dev/examples/site-starters/saas-marketing/) and dependency-free offline export with `scripts/export_site_starter.py`; [separate Vercel/Netlify deployment guide](deploy/saas-marketing/README.md). Illustrative alpha.5 source, not a commercial SaaS product.
 
 
