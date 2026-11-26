@@ -60,8 +60,8 @@ def _catalog_command(options) -> int:
     return 0
 
 
-def _show(options) -> int:
-    """Return exact catalog HTML, not a synthesized or historical snippet."""
+def _example_command(options) -> int:
+    """Inspect or emit the same validated canonical catalog example."""
     try:
         gallery = json.loads((ROOT / "metadata/component-gallery.v1.json").read_text(encoding="utf-8"))
         if gallery["schema_version"] != 1 or gallery["source_version"] != CANDIDATE:
@@ -102,9 +102,22 @@ def _show(options) -> int:
             "note": note,
         }
     except (OSError, ValueError, RuntimeError, KeyError, TypeError) as exc:
-        print(f"syntyr show: {exc}", file=sys.stderr)
+        print(f"syntyr {options.command}: {exc}", file=sys.stderr)
         return 2
-    if options.format == "json":
+    if options.command == "deps":
+        if options.format == "json":
+            report.pop("example")
+            report.update({
+                "id": example["id"],
+                "required_stylesheets": example["required_stylesheets"],
+                "native_feature_requirements": example["native_feature_requirements"],
+            })
+            print(json.dumps(report, indent=2, sort_keys=True))
+        else:
+            print(f"syntyr deps: target CSS {release}; {note}", file=sys.stderr)
+            for sheet in example["required_stylesheets"]:
+                print(sheet)
+    elif options.format == "json":
         print(json.dumps(report, indent=2, sort_keys=True))
     else:
         print(f"syntyr show: target CSS {release}; {note}", file=sys.stderr)
@@ -136,14 +149,18 @@ def main(argv=None) -> int:
     show.add_argument("name", help="Exact example ID from metadata/component-gallery.v1.json")
     show.add_argument("--release", choices=RELEASES, default=PUBLISHED)
     show.add_argument("--format", choices=("html", "json"), default="html")
+    deps = sub.add_parser("deps", help="Inspect ordered CSS and native feature requirements of an example")
+    deps.add_argument("name", help="Exact example ID from metadata/component-gallery.v1.json")
+    deps.add_argument("--release", choices=RELEASES, default=PUBLISHED)
+    deps.add_argument("--format", choices=("text", "json"), default="text")
     for command in (search, manual):
         command.add_argument("--release", choices=RELEASES, default=PUBLISHED)
         command.add_argument("--format", choices=("text", "json"), default="text")
     for name, (_, _, help_text) in delegates.items():
         sub.add_parser(name, help=help_text)
     options = parser.parse_args(args)
-    if options.command == "show":
-        return _show(options)
+    if options.command in ("show", "deps"):
+        return _example_command(options)
     if options.command in ("search", "man"):
         return _catalog_command(options)
     if options.command == "version":

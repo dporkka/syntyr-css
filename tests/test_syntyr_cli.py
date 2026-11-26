@@ -116,10 +116,44 @@ class UnifiedCliTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertEqual(json.loads(result.stdout)["release_status"], "unreleased_candidate")
 
+    def test_deps_uses_same_release_checked_requirements_as_show(self):
+        name = "catalog-buttons-title"
+        shown = self.run_cli("show", name, "--format", "json")
+        expected = json.loads(shown.stdout)
+        result = self.run_cli("deps", name, "--format", "json")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        report = json.loads(result.stdout)
+        self.assertEqual(report["release"], expected["release"])
+        self.assertEqual(report["source_version"], expected["source_version"])
+        self.assertEqual(report["required_stylesheets"], expected["example"]["required_stylesheets"])
+        self.assertEqual(report["native_feature_requirements"], expected["example"]["native_feature_requirements"])
+        self.assertNotIn("html", report)
+        self.assertEqual(result.stderr, "")
+        self.assertEqual(result.stdout, self.run_cli("deps", name, "--format", "json").stdout)
+
+    def test_deps_text_is_ordered_stylesheet_filter(self):
+        result = self.run_cli("deps", "catalog-buttons-title")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(result.stdout.splitlines(), ["syntyr.core.css"])
+        self.assertIn("0.3.0-alpha.4", result.stderr)
+        self.assertIn("host", result.stderr.lower())
+
+    def test_deps_rejects_unavailable_and_unknown_examples_without_output(self):
+        for name in ("catalog-breadcrumbs-title", "../README.md"):
+            with self.subTest(name=name):
+                result = self.run_cli("deps", name, "--format", "json")
+                self.assertEqual(result.returncode, 2)
+                self.assertEqual(result.stdout, "")
+                self.assertIn(name, result.stderr)
+        result = self.run_cli("deps", "catalog-breadcrumbs-title", "--release",
+                              "0.3.0-alpha.5", "--format", "json")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(json.loads(result.stdout)["release_status"], "unreleased_candidate")
+
     def test_help_and_invalid_command(self):
         result = self.run_cli("--help")
         self.assertEqual(result.returncode, 0, result.stderr)
-        for name in ("version", "check", "diff", "info", "project-check", "search", "man", "show"):
+        for name in ("version", "check", "diff", "info", "project-check", "search", "man", "show", "deps"):
             self.assertIn(name, result.stdout)
         result = self.run_cli("not-a-command")
         self.assertEqual(result.returncode, 2)
