@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Status: experimental alpha; not a WCAG certification or professional audit.">
-  <meta name="syntyr-source-sha256" content="29d0ba3393d5ae517abd4db6366dfcd79168e2e22638e14319fa1cd6fd729b73">
+  <meta name="syntyr-source-sha256" content="02b982131be29c79354c9077d1fc3ff917f8228544a6a6aa9cd3ba50592f0687">
   <meta name="theme-color" content="#f5f7fb">
   <title>Syntyr CSS accessibility validation — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/accessibility">
@@ -151,11 +151,30 @@ contrast inspection. These targets are unresolved, not automatically passing
 or failing; record measured contrast, viewport, state, and reviewer decision
 before approving a release. The enlarged-label tests change root font size,
 not genuine browser zoom; human zoom and screen-reader gates remain open.</p>
+<p>The component catalog initializes its published alpha.4 selector when
+JavaScript runs. A source-candidate audit must explicitly select
+<code>source-alpha5</code> (the audit script's default), wait for the actual stylesheet
+and release-specific filter, and record that context in the JSON report.
+To separately audit the immutable published catalog, use:</p>
+<pre tabindex="0"><code class="language-sh">python3 tests/axe_audit.py --axe-file /tmp/axe.min.js \
+  --catalog-mode published-alpha4 --pages docs/catalog.html \
+  --report /tmp/syntyr-catalog-published-alpha4.json
+</code></pre>
+<p>Do not combine the two catalog totals as if they measured the same CSS.
+The pixel sampler restores the report's recorded release context and
+refuses older catalog reports that lack it; rerun the audit rather than
+guessing. The candidate release audit does not modify frozen stylesheets.</p>
 <h2 id="contrast-pixel-triage-developer-only-not-a-conformance-result">Contrast pixel triage (developer-only; NOT a conformance result)</h2>
 <p>An optional Chromium screenshot sampler helps prioritize axe-core findings that
 cannot automatically evaluate gradients and pseudo-elements. It samples the
-painted background under temporarily transparent glyphs, groups results by
-page/viewport/selector, and retains non-text and unsampled targets explicitly.
+painted background in a bounded, scrolled viewport under temporarily hidden
+glyphs and foreground text decoration, restores original inline styles after
+each capture, groups results by
+page/viewport/selector, and retains non-text, obscured, hidden and unsampled
+targets explicitly. This avoids relying on enormous full-page bitmaps; it
+does not force hidden content open or treat an occluding element as background.
+For the Blocks gallery, it opens mobile previews using the actual <strong>Show all
+previews</strong> control to reproduce desktop review coverage and records that state.
 The helper is deliberately <strong>not a release gate</strong>: selected pixels do not prove
 the contrast of every glyph, hover/focus state, overlay or customized theme.
 Run it with pinned tooling in a disposable developer environment:</p>

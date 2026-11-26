@@ -1,15 +1,64 @@
 """Conservative pixel-sampling math/summary contracts (developer-only tooling)."""
-import importlib.util
-from pathlib import Path
 import unittest
-
-FILE = Path(__file__).with_name('contrast_pixel_triage.py')
-SPEC = importlib.util.spec_from_file_location('contrast_pixel_triage', FILE)
-MODULE = importlib.util.module_from_spec(SPEC)
-SPEC.loader.exec_module(MODULE)
+from unittest.mock import Mock
+from tests import contrast_pixel_triage as MODULE
 
 
 class PixelContrastMath(unittest.TestCase):
+    def test_blocks_expands_previews_through_real_visible_control(self):
+        page = Mock()
+        toggle = page.locator.return_value
+        toggle.is_visible.return_value = True
+        toggle.get_attribute.return_value = "false"
+        self.assertEqual(MODULE.prepare_blocks_preview_context(page), "expanded_via_show_all_previews")
+        page.locator.assert_called_once_with("#blocks-preview-toggle")
+        toggle.click.assert_called_once_with()
+        self.assertIn("preview.open", page.wait_for_function.call_args.args[0])
+        page.reset_mock()
+        toggle.is_visible.return_value = False
+        self.assertEqual(MODULE.prepare_blocks_preview_context(page), "already_expanded")
+        toggle.click.assert_not_called()
+
+
+    def test_viewport_capture_uses_scrolled_geometry_and_restores_paint(self):
+        page = Mock()
+        image_module = Mock()
+        item = {"page": "fixture.html", "selector": ["#test"], "failure_summary": "gradient"}
+        measured = {**item, "error": "non_text"}
+        page.evaluate.side_effect = [None, [measured], None]
+        actual = MODULE.capture_target(page, item, 320, image_module)
+        self.assertEqual(actual["status"], "non_text")
+        self.assertEqual(actual["viewport_width"], 320)
+        self.assertEqual(page.evaluate.call_args_list[0].args, (MODULE.SCROLL_JS, "#test"))
+        self.assertEqual(page.evaluate.call_args_list[1].args, (MODULE.MEASURE_JS, [item]))
+        self.assertEqual(page.evaluate.call_args_list[2].args, (MODULE.RESTORE_JS,))
+        page.screenshot.assert_not_called()
+        self.assertIn("window.innerHeight", MODULE.MEASURE_JS)
+        self.assertNotIn("+ scrollY", MODULE.MEASURE_JS)
+        self.assertIn("elementFromPoint", MODULE.MEASURE_JS)
+        self.assertIn("partially_obscured", MODULE.MEASURE_JS)
+        self.assertIn("removeAttribute('style')", MODULE.RESTORE_JS)
+
+    def test_capture_failure_is_unsampled_and_restores_inline_style(self):
+        page = Mock()
+        item = {"page": "fixture.html", "selector": ["p"], "failure_summary": "gradient"}
+        measured = {**item, "error": None, "fragments": []}
+        page.evaluate.side_effect = [None, [measured], None]
+        page.screenshot.side_effect = RuntimeError("screenshot failed")
+        result = MODULE.capture_target(page, item, 390, Mock())
+        self.assertEqual(result["status"], "unsampled")
+        self.assertIn("screenshot failed", result["reason"])
+        page.screenshot.assert_called_once_with(animations="disabled", timeout=10000)
+        self.assertEqual(page.evaluate.call_args_list[-1].args, (MODULE.RESTORE_JS,))
+
+    def test_restore_failure_abandons_viewport_instead_of_reusing_hidden_glyphs(self):
+        page = Mock()
+        item = {"page": "fixture.html", "selector": ["p"], "failure_summary": "gradient"}
+        page.evaluate.side_effect = [None, [{**item, "error": "non_text"}], RuntimeError("restore failed")]
+        with self.assertRaisesRegex(RuntimeError, "restore failed"):
+            MODULE.capture_target(page, item, 320, Mock())
+
+
     def test_black_white_ratio_is_21(self):
         self.assertAlmostEqual(MODULE.contrast_ratio((0, 0, 0), (255, 255, 255)), 21.0)
 
