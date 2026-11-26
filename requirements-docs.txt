@@ -1,2 +1,5 @@
 # Maintainer-only Markdown-to-HTML generation; never shipped with CSS or the static site.
 markdown-it-py==3.0.0
+
+# Transitive markdown-it-py parser dependency; pin for exact advisory checks.
+mdurl==0.1.2

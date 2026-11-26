@@ -33,6 +33,23 @@ For non-security defects, use ordinary GitHub issues.
 - Coordinate public disclosure through the private report where practical,
   allowing fixes and mitigation guidance to be prepared first.
 
+## Optional dependency advisory inventory
+
+Run `python3 scripts/audit_non_npm_dependencies.py` from the repository root
+before candidate release approval. The manual/tag Woodpecker pilot queries
+OSV for the public Rust `Cargo.lock`, Go example `go.sum`, and pinned Python
+`requirements-docs.txt`. Only package names and versions are submitted; no
+source code, secrets, or repository credentials are sent. The script fails
+on advisory matches or incomplete responses. New inventories must be added
+explicitly (the Git-tracked coverage test guards against omissions).
+
+Go checksum entries may include versions not selected in a build; RustSec
+also reports maintenance notices. A match requires upstream and reachability
+review, not automatic severity or a claim that CSS users are affected. The
+pilot does not scan the Go compiler/standard library, installed toolchains,
+CI images or secrets. Verify runner egress before treating it as a required
+pull-request gate. Review new toolchain advisories separately.
+
 Security reporting is not an alternative to the separate manual
 accessibility release checks in
 [docs/accessibility-alpha5-review.md](docs/accessibility-alpha5-review.md).
