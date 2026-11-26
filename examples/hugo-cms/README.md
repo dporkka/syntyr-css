@@ -45,7 +45,7 @@ unprocessed content JSON. No generator or CMS dependency is added to
 
 To use this in a standalone Hugo repository, keep the `layouts/`, `content/`
 and `hugo.toml` files, copy the JSON as `data/home.json`, and vendor a
-**pinned release** of `syntyr.core.css` and `syntyr.recipes.css` under
+**pinned release** of `syntyr.core.css`, `syntyr.recipes.css`, and `syntyr.semantic.css` under
 `static/assets/`. Run the portable JSON validator before building when the
 content is supplied by an editor. The builder script here automates that for
 the Syntyr monorepo.
@@ -64,3 +64,64 @@ CSS. Do not imply that an npm install supplies the unpublished candidate.
 The implementation is tested at Hugo v0.170.0 and should be reverified when
 upgrading Hugo. This is a developer starter, not a hosted production site or
 an authenticated CMS deployment.
+
+## Durable Markdown presets
+
+The same layouts also support three small, editable Markdown sites. The
+original JSON-driven CMS remains the default; there is no editor or
+JavaScript required for the Markdown presets.
+
+| Preset | Pages |
+| --- | --- |
+| `personal` | About, projects and writing |
+| `business` | Services and contact |
+| `documentation` | Guide index and reference pages |
+
+Export a self-contained source directory with vendored CSS (run
+`python3 scripts/build.py` first if using source CSS):
+
+```sh
+python3 scripts/build_hugo_cms_starter.py --preset personal \
+  --base-url https://example.org/portfolio/ --source-output /tmp/portfolio-source
+cd /tmp/portfolio-source
+sha256sum -c SHA256SUMS
+hugo --minify
+```
+
+Use `--preset business` or `--preset documentation` for the other sites.
+Use `--output /tmp/site-public` instead to stage, build and verify HTML,
+local links, fragment targets, CSS, RSS, sitemap and robots output in one
+step. All output modes reject nonempty existing destinations (source export
+requires a completely new directory). No npm, Go modules, or framework
+runtime are needed to build the exported source. Set your production
+`baseURL` before deployment and use Hugo 0.170.0 as the tested version.
+
+The exports use the selected local CSS bytes; `SHA256SUMS` records the
+actual bytes, not an asserted release version. To use an immutable release,
+supply its matching, locally downloaded CSS files with `--css-root` and
+verify their compatibility. The default source candidate is unpublished
+alpha.5; do not represent these assets as the published alpha.4.
+
+The Markdown preset home and section pages are implemented with native
+Hugo templates. Add pages under `content/` and assign `menus: main` to
+pages that should appear in the site navigation. The built-in RSS and
+sitemap are enabled; a custom robots template references the canonical
+sitemap. The presets include a 404 page and link metadata. Raw HTML in
+Markdown is disabled by default.
+
+For long-term preservation, keep the exported source, CSS checksums, the
+exact Hugo executable and a static build archive together. For example,
+on GNU/Linux from the source directory:
+
+```sh
+sha256sum -c SHA256SUMS
+hugo --minify
+tar --sort=name --mtime=@0 --owner=0 --group=0 --numeric-owner \
+  -cf ../portfolio-static.tar -C public .
+sha256sum ../portfolio-static.tar > ../portfolio-static.tar.sha256
+```
+
+This example archives deterministic file metadata; reproducibility still
+depends on the exact Hugo version, content inputs and any time-dependent
+template functions. Serve the result with any static HTTP server; links use
+the configured deployment prefix, not a file:// path.

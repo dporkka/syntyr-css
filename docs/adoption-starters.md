@@ -52,6 +52,14 @@ the source file; none run on the public page.
 python3 scripts/build_hugo_cms_starter.py --hugo hugo --output /tmp/syntyr-hugo-site
 ```
 
+The same Hugo adapter supports `--preset personal`, `--preset business`
+and `--preset documentation`, with ordinary Markdown, native navigation,
+RSS, sitemap and a 404 page. Export the complete source and checksummed
+local styles with `--source-output` instead of `--output`; after export,
+only the pinned Hugo executable is needed to rebuild. See the
+[source starter README](../examples/hugo-cms/README.md) for commands,
+release boundaries and archival guidance.
+
 For Hugo, Jekyll, Zola, and static Next.js export, see the
 [static-site generator compatibility guide](static-site-generators.md).
 
