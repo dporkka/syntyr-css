@@ -61,13 +61,23 @@ Several upstream tools otherwise select affected 9.x/10.x versions under
 This is a major-version override; after modifying this graph, repeat
 `npm ci`, `npm run typecheck`, `npm test`, and both platform export checks.
 
-**Residual issue:** [GHSA-fc5q-39xc-vjpf](https://github.com/advisories/GHSA-fc5q-39xc-vjpf)
-affects `picomatch` through its current 4.0.7 release, with no patched
-npm version available at this review date. Expo, React Native, and Jest
-pull it transitively. Do not accept untrusted glob patterns in fixture
-build or testing scripts; upgrade and retest promptly when upstream ships
-an actual fix. The high-severity advisory is **not resolved** by the
-`minimatch` override.
+The fixture also pins affected `glob` versions (9.0.0–14.0.1) to
+**14.0.2**, fixing [GHSA-3g3m-2fjr-6pw4](https://github.com/advisories/GHSA-3g3m-2fjr-6pw4)
+in the Jest development toolchain. Leave the unrelated `glob` 7.x copy outside
+this override's scope. This is a major-version compatibility override: remove
+it once the parent packages resolve a patched version without an override.
+Repeat `npm test -- --coverage` to exercise Jest's coverage file matching as
+well as the other fixture checks before accepting a lockfile update.
+
+The previously documented [picomatch advisory GHSA-fc5q-39xc-vjpf](https://github.com/advisories/GHSA-fc5q-39xc-vjpf)
+was withdrawn by the GitHub Advisory Database on November 18, 2026,
+because it was not considered a security issue. This is not a patched-version
+claim. Continue to avoid untrusted glob patterns in build and test tooling.
+
+Run `npm audit --package-lock-only --ignore-scripts --audit-level=moderate`
+in the fixture when refreshing the lockfile. The November 26, 2026 patched
+lock audit returned zero vulnerabilities; that is a point-in-time result,
+not a claim that future advisories cannot affect the Expo/Jest graph.
 
 ## Scope and maintenance
 
