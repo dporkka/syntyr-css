@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="This is the unreleased alpha.5 procedure. Published alpha.4 files are immutable. A passing unit test or automated axe-core scan is not authorization to…">
-  <meta name="syntyr-source-sha256" content="2918f1e1d2c7b02fd37b1061fd9eaf20199c2e913a8decbc42b4be45d01dc0c1">
+  <meta name="syntyr-source-sha256" content="72e913fad6488f53c6321fb26293f28d3fff0ed1cc6df9346cae50339de148b7">
   <meta name="theme-color" content="#f5f7fb">
   <title>Freezing a Syntyr CSS CDN release safely — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/release-freeze">
@@ -66,6 +66,42 @@ python3 scripts/freeze_site_release.py --apply
 <p>The freeze command stages only the public CSS distributions declared by the build script in a temporary directory, prepares SHA-256 hashes, and atomically replaces the manifest after placing the new immutable version directory. If an operation fails before manifest publication, it removes the uncommitted version directory and leaves earlier snapshots intact. It never overwrites a frozen version.</p>
 <p>Before authorizing any <strong>separate npm publication</strong>, run <code>python3 scripts/audit_npm_package.py</code> on the exact candidate source to inspect the actual packed bytes and exported CSS paths. This requires npm only in the maintainer environment, not for CSS consumers. The check does not confer release approval or publish anything.</p>
 <p>After freezing, review the manifest diff and source hashes, commit the new immutable snapshot, verify the static-site build, deploy to staging and verify live Cloudflare paths/content hashes/headers. Only then tag and publish the release through the separate release process. <strong>This script does not deploy, tag, enable payments or publish an npm package.</strong></p>
+<h2 id="signed-zip-provenance-unreleased-source-candidate">Signed ZIP provenance (unreleased source candidate)</h2>
+<p>After the separate release approval, package the reviewed, clean commit and
+create a deterministic provenance record. The creator checks every ZIP member
+against the regular, allowlisted Git blobs at that exact commit, and binds the
+repository, version, commit, ZIP name, byte count and SHA-256 digest. It refuses
+tracked changes, unexpected members and mismatched bytes. It does not publish
+or replace prior evidence.</p>
+<pre tabindex="0"><code class="language-sh">commit=$(git rev-parse HEAD)
+version=$(cat VERSION)
+archive=&quot;release/syntyr-css-$version.zip&quot;
+python3 scripts/package_release.py &quot;$archive&quot;
+python3 scripts/release_provenance.py create &quot;$archive&quot; release/provenance.json --commit &quot;$commit&quot;
+</code></pre>
+<p>The generated JSON is <strong>unsigned</strong>. A designated release maintainer can sign
+it with an existing securely managed OpenSSH signing key (OpenSSH 8.2+):</p>
+<pre tabindex="0"><code class="language-sh">ssh-keygen -Y sign -f /secure/path/release-signing-key -n syntyr-release release/provenance.json
+</code></pre>
+<p>Publish the exact ZIP, <code>provenance.json</code>, and <code>provenance.json.sig</code> together
+only after release authorization. Keep signing keys outside the repository and
+CI checkout. Do not create or trust a key just because it accompanies an
+archive. Distribute the maintainer's verified public key and signer identity
+through an independently trusted channel (OpenSSH allowed-signers format:
+<code>syntyr-release ssh-ed25519 &lt;verified-public-key&gt;</code>). A consumer who has trusted
+the release commit, version, signer and public key can set <code>expected_commit</code>
+and <code>expected_version</code> from that trusted source, then verify:</p>
+<pre tabindex="0"><code class="language-sh">python3 scripts/release_provenance.py verify &quot;syntyr-css-$expected_version.zip&quot; provenance.json \
+  --signature provenance.json.sig --allowed-signers /secure/path/trusted-signers \
+  --signer syntyr-release --commit &quot;$expected_commit&quot; --version &quot;$expected_version&quot;
+</code></pre>
+<p>Use the verifier from a trusted checkout or independently reviewed source,
+not from the unverified download. Verification fails on a wrong signer,
+commit, version, manifest or archive. This is a signed maintainer attestation,
+not an independently certified SLSA build, a substitute for human approval,
+or evidence for the separate unpublished npm package. The published alpha.4
+release has not been retroactively signed. No SSH or Python dependency is
+added to CSS consumers.</p>
 <h2 id="current-status">Current status</h2>
 <p>The alpha.5 manual reviews are <strong>not signed off</strong>. A historical November 18, 2026 source-only audit in <a href="accessibility-alpha5-review.html">accessibility-alpha5-review.md</a> recorded 165 inconclusive contrast elements at commit <code>70ec764</code>. That count is <strong>not</strong> a measurement of the current source head; intervening commits invalidate any assumption that it remains accurate.</p>
 <p>Before freezing, run the pinned axe and browser checks on the exact candidate SHA, record every incomplete contrast target and adjudication, and separately capture actual zoom, assistive-technology and native high-contrast evidence. Update the review record with the SHA and audit date, <strong>not</strong> a copied historical count. Until manual reviews and brand clearance have evidenced approval, freezing alpha.5 remains blocked. The <a href="https://github.com/dporkka/syntyr-css/blob/main/business/commercial-launch-gates.md">commercial sale/download gates</a> are separate and remain closed.</p>
@@ -75,6 +111,7 @@ python3 scripts/freeze_site_release.py --apply
 <a class="docs-article-toc-link docs-article-toc-2" href="#preconditions">Preconditions</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#approval-record">Approval record</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#candidate-check-then-freeze">Candidate check, then freeze</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#signed-zip-provenance-unreleased-source-candidate">Signed ZIP provenance (unreleased source candidate)</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#current-status">Current status</a>
           </nav>
           <details class="docs-article-toc-mobile">
@@ -83,6 +120,7 @@ python3 scripts/freeze_site_release.py --apply
 <a class="docs-article-toc-link docs-article-toc-2" href="#preconditions">Preconditions</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#approval-record">Approval record</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#candidate-check-then-freeze">Candidate check, then freeze</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#signed-zip-provenance-unreleased-source-candidate">Signed ZIP provenance (unreleased source candidate)</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#current-status">Current status</a>
             </nav>
           </details>

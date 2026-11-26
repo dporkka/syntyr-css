@@ -14,8 +14,8 @@ steps:
       PYTHONPATH: /usr/lib/python3/dist-packages
     commands:
       # Python slim omits Git, but source/release contracts verify tracked paths.
-      # The CI-only Git CLI is not a library runtime dependency.
-      - apt-get update && apt-get install -y --no-install-recommends git python3-markdown-it && rm -rf /var/lib/apt/lists/*
+      # The CI-only Git CLI and OpenSSH verifier are not runtime dependencies.
+      - apt-get update && apt-get install -y --no-install-recommends git python3-markdown-it openssh-client && rm -rf /var/lib/apt/lists/*
       - git --version
       # Woodpecker's PyPI egress is blocked (HTTP 403); use Debian's pure-Python
       # maintainer-only package and verify it matches requirements-docs.txt.
@@ -27,4 +27,5 @@ steps:
       - python3 -m unittest discover -s tests -v
       - python3 scripts/build_cloudflare_site.py
       - python3 scripts/build_cloudflare_site.py --check
-      - python3 scripts/package_release.py /tmp/syntyr-ci.zip
+      - python3 scripts/package_release.py "/tmp/syntyr-css-$(cat VERSION).zip"
+      - python3 scripts/release_provenance.py create "/tmp/syntyr-css-$(cat VERSION).zip" /tmp/syntyr-ci-provenance.json --commit "$(git rev-parse HEAD)"
