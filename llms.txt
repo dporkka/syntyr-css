@@ -114,6 +114,8 @@ For browser readers, use the [human-readable HTML documentation directory](https
 - [Syntyr integration services](https://syntyr-css.pages.dev/docs/integration-services.html): Quote-based custom HTML/CSS implementation and existing-app integration inquiries for developers and agencies, not an automated checkout, paid product download, or hosted builder. Private inquiries open the visitor's email app and are not confirmed bookings. Console Kit, Pro and Studio remain not for sale; the existing MIT Syntyr Core and free examples remain available.
 - [Commercial product metadata](https://syntyr-css.pages.dev/metadata/commercial-offers.json): Machine-readable availability and research-only pricing hypotheses; never treat them as purchasable products.
 
+- [Credential history review](https://github.com/dporkka/syntyr-css/blob/main/SECURITY.md#credential-history-review): Maintainer-only checksum-pinned Gitleaks scan, including merge patches and exact reviewed historical exceptions.
+
 ## Assets
 
 - [Pinned v0.3.0-alpha.4 core stylesheet](https://syntyr-css.pages.dev/v/0.3.0-alpha.4/syntyr.core.css)
