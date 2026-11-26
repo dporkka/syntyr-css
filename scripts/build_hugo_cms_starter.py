@@ -26,6 +26,8 @@ PRESET_TITLES = {"personal": "Personal portfolio", "business": "Business website
                  "documentation": "Documentation"}
 CSS_ROOT = ROOT / "dist"
 DEFAULT_BASE_URL = "https://example.com/syntyr-hugo/"
+STYLESHEETS = ("syntyr.core.css", "syntyr.recipes.css", "syntyr.semantic.css")
+VENDOR_ASSETS = (*STYLESHEETS, "LICENSE-SYNTYR")
 
 
 def _base_path(base_url: str) -> str:
@@ -71,13 +73,15 @@ def stage_site(destination: Path, *, content_path: Path = CONTENT, css_root: Pat
     config.write_text(config_text, encoding="utf-8")
     assets = destination / "static/assets"
     assets.mkdir(parents=True, exist_ok=True)
-    checksums = []
-    for name in ("syntyr.core.css", "syntyr.recipes.css", "syntyr.semantic.css"):
-        target = assets / name
-        shutil.copyfile(css_root / name, target)
-        checksums.append(f"{hashlib.sha256(target.read_bytes()).hexdigest()}  static/assets/{name}")
+    for name in STYLESHEETS:
+        shutil.copyfile(css_root / name, assets / name)
+    shutil.copyfile(ROOT / "LICENSE", assets / "LICENSE-SYNTYR")
+    shutil.copyfile(assets / "LICENSE-SYNTYR", destination / "LICENSE-SYNTYR")
+    checksums = [
+        f"{hashlib.sha256((assets / name).read_bytes()).hexdigest()}  static/assets/{name}"
+        for name in VENDOR_ASSETS
+    ]
     (destination / "SHA256SUMS").write_text("\n".join(checksums) + "\n", encoding="utf-8")
-    shutil.copyfile(ROOT / "LICENSE", destination / "LICENSE-SYNTYR")
 
 
 def build(destination: Path, *, hugo: str = "hugo", content_path: Path = CONTENT,
@@ -95,13 +99,17 @@ def build(destination: Path, *, hugo: str = "hugo", content_path: Path = CONTENT
         with TemporaryDirectory(prefix=".syntyr-hugo-", dir=destination.parent) as output_temp:
             candidate = Path(output_temp) / "public"
             subprocess.run(
-                [hugo, "--source", str(source), "--destination", str(candidate), "--minify"],
+                [hugo, "--source", str(source), "--destination", str(candidate), "--minify", "--panicOnWarning"],
                 check=True,
             )
             pages = verify_static_site(candidate, base_path=_base_path(base_url))
             for required in ("index.xml", "sitemap.xml", "robots.txt"):
                 if not (candidate / required).is_file():
                     raise AssertionError(f"Missing Hugo SEO output: {required}")
+            for name in VENDOR_ASSETS:
+                published = candidate / "assets" / name
+                if not published.is_file() or published.read_bytes() != (source / "static/assets" / name).read_bytes():
+                    raise AssertionError(f"Missing or changed vendored asset: {name}")
             if preset != "cms":
                 verify_preset_links(candidate, base_url=base_url)
             # A same-filesystem rename does not replace a nonempty destination.
@@ -163,6 +171,35 @@ def export_source(destination: Path, **kwargs) -> None:
     with TemporaryDirectory(prefix=".syntyr-hugo-source-", dir=destination.parent) as temp:
         candidate = Path(temp) / "site"
         stage_site(candidate, **kwargs)
+        preset = kwargs.get("preset", "cms")
+        content_note = (
+            "Edit data/home.json. Validate any editor-supplied changes using the "
+            "portable Syntyr CMS validator in the upstream repository before building."
+            if preset == "cms" else
+            "Edit Markdown in content/. Add menus: main to the front matter of "
+            "pages that should appear in the primary navigation."
+        )
+        (candidate / "README.md").write_text(
+            f"# Syntyr Hugo {preset} starter\n\n"
+            "A standalone static site. Install Hugo 0.170.0 (tested version); "
+            "no npm, Hugo modules, CSS CDN, or JavaScript runtime is required.\n\n"
+            "## Develop and build\n\n"
+            "Set baseURL in hugo.toml to the intended public deployment URL.\n\n"
+            "```sh\nsha256sum -c SHA256SUMS\nhugo server\n```\n\n"
+            "Open the local URL printed by Hugo. Stop the development server, then build:\n\n"
+            "```sh\nhugo --minify --panicOnWarning\n```\n\n"
+            "Publish only public/, not the source tree.\n\n"
+            f"## Content\n\n{content_note}\n\n"
+            "## Vendored CSS\n\n"
+            "The files in static/assets/ are the exact selected local Syntyr CSS bytes; "
+            "SHA256SUMS verifies those bytes and their license. No release version is "
+            "inferred from a caller-supplied CSS directory. Keep a record of the "
+            "source release or commit when upgrading these files. "
+            "The MIT license is included in assets/ of the public build. "
+            "See https://github.com/dporkka/syntyr-css for upstream documentation.\n",
+            encoding="utf-8",
+        )
+        (candidate / ".gitignore").write_text("public/\nresources/_gen/\n.hugo_build.lock\n", encoding="utf-8")
         candidate.rename(destination)
 
 

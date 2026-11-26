@@ -1,5 +1,5 @@
 {{ define "main" }}
-{{ with .Site.Data.home }}
+{{ with partial "cms-data.html" . }}
   {{ $page := . }}
   {{- range $index, $block := $page.sections }}
     {{- $anchor := printf "section-%s" $block.id }}
