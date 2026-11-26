@@ -40,6 +40,29 @@ Two exports of identical sources contain identical file bytes. The output is
 portable at the root or a subpath and has no mandatory build/runtime dependency.
 The checker is not a browser accessibility audit or general HTML sanitizer.
 
+## Versioned candidate ZIPs
+
+A maintainer can produce all four archives with the same explicit export
+allowlist and a SHA-256 manifest. No generator or npm is used to package them.
+
+```sh
+python3 scripts/package_site_starters.py --output /tmp/syntyr-starter-candidates
+python3 scripts/package_site_starters.py --output /tmp/syntyr-starter-candidates --check
+```
+
+Names are `syntyr-starter-<name>-<VERSION>.zip`; each has six files at its
+root, fixed timestamps and file modes, and stored bytes (no compressor-version
+drift). The manifest records each ZIP's byte count, SHA-256, and per-file
+hashes. The package builder verifies compiled CSS first, refuses existing
+destinations and publishes new directories atomically. Check mode rebuilds in
+a temporary directory and compares all bytes without modifying the originals.
+
+These are **unreleased candidate archives**, not downloads hosted by Syntyr
+or signed releases. An unsigned checksum detects drift relative to a trusted
+manifest; it does not authenticate the publisher. Do not advertise these
+archives as alpha.5 releases until the separate release approval process in
+[`docs/release-freeze.md`](../../docs/release-freeze.md) is complete.
+
 ## Adapt to an existing generator or website
 
 - Copy the complete exported site (including the MIT license), or copy the
@@ -60,7 +83,24 @@ The source folders are repository-relative previews. Do **not** copy one folder
 alone without exporting; its stylesheet references reach the shared sources.
 No additional CSS public API or premium SKU is introduced by these MIT examples.
 
-## Optional browser validation
+## Browser validation
+
+The `portable-starters.yaml` Woodpecker gate checks related PRs and main
+pushes, plus all manual/tag runs. It reuses the existing locked Lit-example
+Node Playwright development driver, avoiding Woodpecker's blocked PyPI
+access. Independently verify it locally with:
+
+```sh
+npm ci --prefix examples/lit --no-audit --no-fund
+node examples/lit/portable-starters-browser.mjs
+```
+
+The CI check compares exact PNG bytes in Chromium in the same run (no saved
+golden images). The optional Python runner below additionally supports
+cross-generator CMS fixtures and a small pixel tolerance. Neither runner is
+required by the library or exported sites.
+
+### Optional cross-generator browser validation
 
 From the repository root, with maintainer-only Playwright, Pillow and Chromium
 installed:

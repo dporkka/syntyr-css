@@ -51,6 +51,28 @@ Keep them unchanged when moving blocks, so links like `/#section-features`
 remain valid; duplicate IDs or unsafe slugs fail validation. All editor
 configurations expose this field.
 
+## Validate content before rendering
+
+The portable [v1 JSON Schema](blocks.schema.json) describes the allowlisted
+document and block shape for editor tooling. The canonical Python validator
+adds constraints that the structural schema cannot express, including unique
+stable IDs, nonblank strings and URL safety.
+
+```sh
+python3 scripts/render_cms_starter.py --validate-only
+# In the standalone site repository:
+python3 scripts/render_cms_starter.py --source . --validate-only
+```
+
+This read-only command fails before any HTML is emitted. Python rendering,
+Hugo staging and the Keystatic/Payload export adapters reuse strict UTF-8
+JSON ingestion: duplicate keys, invalid Unicode, non-finite numbers,
+documents larger than 16 MiB and excessive nesting are rejected. The bounds
+protect build tooling, not a live upload endpoint. Normal HTML escaping and
+URL validation still apply; raw HTML is not an allowed block. Generator
+integrations should invoke the canonical validator rather than parsing
+untrusted JSON separately.
+
 ## Choose an optional editor
 
 **Sveltia CMS (recommended default)**

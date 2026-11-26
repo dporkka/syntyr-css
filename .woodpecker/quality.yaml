@@ -25,6 +25,9 @@ steps:
       - python3 scripts/export_api_metadata.py --check
       - python3 scripts/build_agent_docs.py --check
       - python3 -m unittest discover -s tests -v
+      - python3 scripts/render_cms_starter.py --validate-only
+      - python3 scripts/package_site_starters.py --output /tmp/syntyr-starter-candidates
+      - python3 scripts/package_site_starters.py --output /tmp/syntyr-starter-candidates --check
       - python3 scripts/build_cloudflare_site.py
       - python3 scripts/build_cloudflare_site.py --check
       - python3 scripts/package_release.py "/tmp/syntyr-css-$(cat VERSION).zip"

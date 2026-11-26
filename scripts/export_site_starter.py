@@ -139,11 +139,15 @@ def stage_starter(name: str, staged: Path) -> None:
         raise ValueError(f"Unknown starter: {name}")
     source = STARTER_ROOT / name
     local_css = source / "assets/site.css" if name == "saas-marketing" else SHARED
+    routes = STARTER_ROUTES[name]
+    inputs = (CORE, local_css, ROOT / "LICENSE", *(source / route for route in routes))
+    for path in inputs:
+        if not path.is_file() or path.resolve() != path.absolute():
+            raise ValueError(f"Missing or symlinked starter input: {path}")
     (staged / "assets").mkdir(parents=True)
     shutil.copyfile(CORE, staged / "assets/syntyr.core.css")
     shutil.copyfile(local_css, staged / "assets/site.css")
     shutil.copyfile(ROOT / "LICENSE", staged / "LICENSE")
-    routes = STARTER_ROUTES[name]
     for route in routes:
         depth = len(Path(route).parts) - 1
         original_href = "../" * (depth + 3) + "dist/syntyr.core.css"

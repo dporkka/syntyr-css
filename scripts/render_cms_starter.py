@@ -8,6 +8,7 @@ from __future__ import annotations
 import argparse
 from html import escape
 import json
+import math
 import re
 from pathlib import Path
 import shutil
@@ -16,6 +17,8 @@ from urllib.parse import urlsplit
 ROOT = Path(__file__).resolve().parents[1]
 STARTER = ROOT / "examples/cms-starter"
 DESTINATION = STARTER / "_site"
+MAX_CONTENT_BYTES = 16 * 1024 * 1024
+MAX_CONTENT_DEPTH = 32
 THEMES = frozenset(("studio", "grid", "noir", "industrial", "terminal", "corporate", "minimal"))
 SECTION_FIELDS = {
     "hero": {"type", "id", "eyebrow", "heading", "description", "button"},
@@ -24,6 +27,55 @@ SECTION_FIELDS = {
     "faq": {"type", "id", "heading", "items"},
     "cta": {"type", "id", "heading", "description", "button"},
 }
+
+
+def _unique_keys(pairs):
+    result = {}
+    for key, value in pairs:
+        if key in result:
+            raise ValueError("Duplicate JSON object key")
+        result[key] = value
+    return result
+
+
+def _reject_constant(value):
+    raise ValueError(f"Non-JSON numeric constant: {value}")
+
+
+def load_content_json(source: Path) -> object:
+    """Read bounded, strict UTF-8 JSON before passing content to any renderer."""
+    with source.open("rb") as stream:
+        data = stream.read(MAX_CONTENT_BYTES + 1)
+    if len(data) > MAX_CONTENT_BYTES:
+        raise ValueError("CMS JSON exceeds the 16 MiB input limit")
+    try:
+        result = json.loads(data.decode("utf-8"), object_pairs_hook=_unique_keys,
+                            parse_constant=_reject_constant)
+        # Bound nesting consistently across Python versions, and reject lone
+        # surrogate escapes even inside metadata the CMS adapters discard.
+        pending = [(result, 0)]
+        while pending:
+            value, depth = pending.pop()
+            if depth > MAX_CONTENT_DEPTH:
+                raise ValueError("CMS JSON exceeds the nesting limit")
+            if isinstance(value, dict):
+                for key, item in value.items():
+                    key.encode("utf-8")
+                    pending.append((item, depth + 1))
+            elif isinstance(value, list):
+                pending.extend((item, depth + 1) for item in value)
+            elif isinstance(value, str):
+                value.encode("utf-8")
+            elif isinstance(value, float) and not math.isfinite(value):
+                raise ValueError("CMS JSON number must be finite")
+    except (UnicodeError, RecursionError) as exc:
+        raise ValueError("CMS JSON must contain valid UTF-8 Unicode and bounded nesting") from exc
+    return result
+
+
+def load_validated_document(source: Path) -> dict:
+    """The canonical, read-only preflight for portable CMS page v1."""
+    return validate_document(load_content_json(source))
 
 
 def _object(value: object, fields: set[str], required: set[str], path: str) -> dict:
@@ -37,7 +89,9 @@ def _object(value: object, fields: set[str], required: set[str], path: str) -> d
 
 
 def _text(value: object, path: str, limit: int = 2000) -> str:
-    if not isinstance(value, str) or not value.strip() or len(value) > limit or any(ord(c) < 32 and c not in "\n\t" for c in value):
+    if (not isinstance(value, str) or not value.strip() or len(value) > limit
+            or any((ord(c) < 32 and c not in "\n\t") or 0xD800 <= ord(c) <= 0xDFFF
+                   for c in value)):
         raise ValueError(f"{path}: expected non-empty text up to {limit} chars")
     return escape(value, quote=True)
 
@@ -45,13 +99,17 @@ def _text(value: object, path: str, limit: int = 2000) -> str:
 def _url(value: object, path: str) -> str:
     if not isinstance(value, str) or len(value) > 2048 or not value:
         raise ValueError(f"{path}: invalid URL")
-    if any(c.isspace() or c == "\\" or ord(c) < 32 for c in value):
+    if any(c.isspace() or c == "\\" or ord(c) < 32 or 0xD800 <= ord(c) <= 0xDFFF
+           for c in value):
         raise ValueError(f"{path}: unsafe URL")
     if value.startswith("/") and not value.startswith("//"):
         return escape(value, quote=True)
     parsed = urlsplit(value)
-    if parsed.scheme not in ("http", "https") or not parsed.netloc or parsed.username or parsed.password:
+    if (parsed.scheme not in ("http", "https") or not parsed.hostname
+            or parsed.username is not None or parsed.password is not None):
         raise ValueError(f"{path}: only root-relative or absolute HTTP(S) URLs allowed")
+    # Accessing port additionally rejects malformed or out-of-range ports.
+    _ = parsed.port
     return escape(value, quote=True)
 
 
@@ -196,7 +254,7 @@ def render_document(document: object) -> str:
 
 def build(source: Path = STARTER, destination: Path = DESTINATION, css_root: Path = ROOT / "dist") -> None:
     """Write one static site plus optional Sveltia admin; editor runs only at /admin."""
-    page = json.loads((source / "content/pages/home.json").read_text(encoding="utf-8"))
+    page = load_content_json(source / "content/pages/home.json")
     markup = render_document(page)  # Validate before writing any output.
     destination.mkdir(parents=True, exist_ok=True)
     css_dir = destination / "css"
@@ -215,6 +273,14 @@ if __name__ == "__main__":
     parser.add_argument("--source", type=Path, default=STARTER, help="Root of the CMS starter repository")
     parser.add_argument("--css-root", type=Path, default=ROOT / "dist", help="Directory with built Syntyr CSS")
     parser.add_argument("--output", type=Path, default=DESTINATION)
+    parser.add_argument("--validate-only", action="store_true", help="Validate CMS JSON without writing output")
     args = parser.parse_args()
-    build(source=args.source, destination=args.output, css_root=args.css_root)
-    print(f"Built Syntyr CMS starter at {args.output}")
+    try:
+        if args.validate_only:
+            load_validated_document(args.source / "content/pages/home.json")
+            print("PASS: portable CMS page v1")
+        else:
+            build(source=args.source, destination=args.output, css_root=args.css_root)
+            print(f"Built Syntyr CMS starter at {args.output}")
+    except (OSError, ValueError) as exc:
+        parser.exit(2, f"CMS content rejected: {exc}\n")

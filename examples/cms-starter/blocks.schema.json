@@ -3,6 +3,7 @@
   "$id": "https://github.com/dporkka/syntyr-css/blob/main/examples/cms-starter/blocks.schema.json",
   "title": "Syntyr CMS portable page v1",
   "description": "CMS-independent, allowlisted Syntyr marketing-page content. Not a raw HTML escape hatch.",
+  "$comment": "Structural v1 schema. The canonical Python validator also enforces unique section IDs, meaningful text, Unicode and URL safety; strict JSON ingestion rejects duplicate object keys.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -15,12 +16,14 @@
     "title": {
       "type": "string",
       "minLength": 1,
-      "maxLength": 180
+      "maxLength": 180,
+      "pattern": "\\S"
     },
     "description": {
       "type": "string",
       "minLength": 1,
-      "maxLength": 500
+      "maxLength": 500,
+      "pattern": "\\S"
     },
     "theme": {
       "type": "string",
@@ -70,7 +73,8 @@
             "heading": {
               "type": "string",
               "minLength": 1,
-              "maxLength": 180
+              "maxLength": 180,
+              "pattern": "\\S"
             },
             "items": {
               "type": "array",
@@ -87,12 +91,14 @@
                   "title": {
                     "type": "string",
                     "minLength": 1,
-                    "maxLength": 1000
+                    "maxLength": 1000,
+                    "pattern": "\\S"
                   },
                   "description": {
                     "type": "string",
                     "minLength": 1,
-                    "maxLength": 1000
+                    "maxLength": 1000,
+                    "pattern": "\\S"
                   }
                 }
               }
@@ -122,7 +128,8 @@
             "heading": {
               "type": "string",
               "minLength": 1,
-              "maxLength": 180
+              "maxLength": 180,
+              "pattern": "\\S"
             },
             "plans": {
               "type": "array",
@@ -141,12 +148,14 @@
                   "name": {
                     "type": "string",
                     "minLength": 1,
-                    "maxLength": 100
+                    "maxLength": 100,
+                    "pattern": "\\S"
                   },
                   "price": {
                     "type": "string",
                     "minLength": 1,
-                    "maxLength": 100
+                    "maxLength": 100,
+                    "pattern": "\\S"
                   },
                   "features": {
                     "type": "array",
@@ -155,7 +164,8 @@
                     "items": {
                       "type": "string",
                       "minLength": 1,
-                      "maxLength": 200
+                      "maxLength": 200,
+                      "pattern": "\\S"
                     }
                   },
                   "button": {
@@ -169,13 +179,15 @@
                       "label": {
                         "type": "string",
                         "minLength": 1,
-                        "maxLength": 100
+                        "maxLength": 100,
+                        "pattern": "\\S"
                       },
                       "url": {
                         "type": "string",
                         "minLength": 1,
                         "maxLength": 2048,
-                        "description": "Root-relative or http(s) URL; renderer enforces URL safety."
+                        "description": "Root-relative or http(s) URL; renderer enforces URL safety.",
+                        "pattern": "\\S"
                       }
                     }
                   }
@@ -207,7 +219,8 @@
             "heading": {
               "type": "string",
               "minLength": 1,
-              "maxLength": 180
+              "maxLength": 180,
+              "pattern": "\\S"
             },
             "items": {
               "type": "array",
@@ -224,12 +237,14 @@
                   "question": {
                     "type": "string",
                     "minLength": 1,
-                    "maxLength": 1000
+                    "maxLength": 1000,
+                    "pattern": "\\S"
                   },
                   "answer": {
                     "type": "string",
                     "minLength": 1,
-                    "maxLength": 1000
+                    "maxLength": 1000,
+                    "pattern": "\\S"
                   }
                 }
               }
@@ -260,12 +275,14 @@
             "heading": {
               "type": "string",
               "minLength": 1,
-              "maxLength": 180
+              "maxLength": 180,
+              "pattern": "\\S"
             },
             "description": {
               "type": "string",
               "minLength": 1,
-              "maxLength": 500
+              "maxLength": 500,
+              "pattern": "\\S"
             },
             "button": {
               "type": "object",
@@ -278,13 +295,15 @@
                 "label": {
                   "type": "string",
                   "minLength": 1,
-                  "maxLength": 100
+                  "maxLength": 100,
+                  "pattern": "\\S"
                 },
                 "url": {
                   "type": "string",
                   "minLength": 1,
                   "maxLength": 2048,
-                  "description": "Root-relative or http(s) URL; renderer enforces URL safety."
+                  "description": "Root-relative or http(s) URL; renderer enforces URL safety.",
+                  "pattern": "\\S"
                 }
               }
             },
@@ -317,17 +336,20 @@
         "eyebrow": {
           "type": "string",
           "minLength": 1,
-          "maxLength": 120
+          "maxLength": 120,
+          "pattern": "\\S"
         },
         "heading": {
           "type": "string",
           "minLength": 1,
-          "maxLength": 180
+          "maxLength": 180,
+          "pattern": "\\S"
         },
         "description": {
           "type": "string",
           "minLength": 1,
-          "maxLength": 500
+          "maxLength": 500,
+          "pattern": "\\S"
         },
         "button": {
           "type": "object",
@@ -340,13 +362,15 @@
             "label": {
               "type": "string",
               "minLength": 1,
-              "maxLength": 100
+              "maxLength": 100,
+              "pattern": "\\S"
             },
             "url": {
               "type": "string",
               "minLength": 1,
               "maxLength": 2048,
-              "description": "Root-relative or http(s) URL; renderer enforces URL safety."
+              "description": "Root-relative or http(s) URL; renderer enforces URL safety.",
+              "pattern": "\\S"
             }
           }
         },

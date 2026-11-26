@@ -41,8 +41,12 @@ def stage_site(destination: Path, *, content_path: Path = CONTENT, css_root: Pat
                base_url: str = DEFAULT_BASE_URL) -> None:
     """Validate untrusted content *before* writing files or launching Hugo."""
     _base_path(base_url)
-    document = json.loads(content_path.read_text(encoding="utf-8"))
-    validate_document(document)
+    # Use the same strict reader as other CMS adapters before Hugo sees JSON.
+    if __package__:
+        from scripts.render_cms_starter import load_content_json
+    else:
+        from render_cms_starter import load_content_json
+    document = validate_document(load_content_json(content_path))
     destination = Path(destination)
     shutil.copytree(SOURCE, destination, dirs_exist_ok=True)
     config = destination / "hugo.toml"
