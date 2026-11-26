@@ -104,20 +104,40 @@ def verify(browser, url):
     # A valid ten-page import can reference more files than a single-page ZIP.
     saved["pages"] = page.evaluate("""async (base) => {
       const {createBlock} = await import('/docs/page-builder-model.mjs');
-      const png = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9WlJnE8AAAAASUVORK5CYII=';
-      return Array.from({length: 10}, (_, i) => {
+      const png = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9WlJnE8AAAAASUVORK5CYII=';
+      const pages = [];
+      for (let i = 0; i < 10; i++) {
         const document = structuredClone(base);
         document.media = {};
-        document.blocks = Array.from({length: 12}, (_, j) => {
+        document.blocks = [];
+        for (let j = 0; j < 12; j++) {
           const block = createBlock('section:image-gallery', 'gallery-' + j);
-          const name = 'custom-' + (i * 12 + j).toString(16).padStart(64, '0') + '.png';
-          document.media[name] = png;
+          // Unique suffixes make distinct content-addressed fixtures.
+          const binary = atob(png) + String.fromCharCode(i * 12 + j);
+          const bytes = Uint8Array.from(binary, c => c.charCodeAt(0));
+          const digest = new Uint8Array(await crypto.subtle.digest('SHA-256', bytes));
+          const name = 'custom-' + Array.from(digest, n => n.toString(16).padStart(2, '0')).join('') + '.png';
+          document.media[name] = 'data:image/png;base64,' + btoa(binary);
           block.props.src1 = 'assets/' + name;
-          return block;
-        });
-        return {slug: i ? 'page-' + i : '', document};
-      });
+          document.blocks.push(block);
+        }
+        pages.push({slug: i ? 'page-' + i : '', document});
+      }
+      return pages;
     }""", saved["pages"][0]["document"])
+    # A forged content-addressed import must not replace the current project.
+    tampered = json.loads(json.dumps(saved))
+    media = tampered["pages"][0]["document"]["media"]
+    name = next(iter(media))
+    other = next(value for key, value in media.items() if key != name)
+    media[name] = other
+    page.locator("#builder-import").set_input_files({
+        "name": "tampered-site.json",
+        "mimeType": "application/json",
+        "buffer": json.dumps(tampered).encode(),
+    })
+    expect(page.locator("#builder-status")).to_contain_text("image content hash mismatch")
+    expect(page.locator("#builder-site-page-select option")).to_have_count(4)
     page.locator("#builder-import").set_input_files({
         "name": "large-site.json",
         "mimeType": "application/json",

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Syntyr works with ChatGPT, Codex, Claude Code, Cursor and other agents that generate HTML or framework markup. No Syntyr-specific service, account, MCP…">
-  <meta name="syntyr-source-sha256" content="23c54bc88331705f330325484b4ea39f7dad184dbd2f0fcbc787a240da1fb867">
+  <meta name="syntyr-source-sha256" content="df103590f8018ed8a5be8d17a0dadddfe72a1af59e5f0029ced39cca5b1699df">
   <meta name="theme-color" content="#f5f7fb">
   <title>Using Syntyr with coding agents — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/agent-integration">
@@ -60,14 +60,14 @@ before choosing a project-scoped installation.</p>
 with Skills CLI in the same project can replace <code>.agents/skills/syntyr</code> and
 remove its generated <code>references/api.json</code>. Without that reference,
 <code>syntyr_agent.py info</code> reports the offline installation as degraded.</p>
-<pre tabindex="0"><code class="language-sh">npx skills@1.9.0 add https://github.com/dporkka/syntyr-css/tree/main/agents/syntyr --list
-npx skills@1.9.0 add https://github.com/dporkka/syntyr-css/tree/main/agents/syntyr --skill syntyr
+<pre tabindex="0"><code class="language-sh">npx skills@1.9.0 add https://github.com/dporkka/syntyr-css/tree/c9b88cb5211edca58129181c8371caa66b8926b0/agents/syntyr --list
+npx skills@1.9.0 add https://github.com/dporkka/syntyr-css/tree/c9b88cb5211edca58129181c8371caa66b8926b0/agents/syntyr --skill syntyr
 </code></pre>
 <p>The commands above pin the verified Skills CLI 1.9.0, which requires
 Node.js 22.20.0 or later, Git, and network access for this optional installation
 route only. Review the source and select your agent when prompted; do not
-install globally by default. For reproducible updates, review a specific
-source commit and use that Git ref instead of the moving main branch. The
+install globally by default. The commands pin a reviewed source commit. For
+updates, review and explicitly select a new immutable Git revision. The
 Skill installs instructions, <strong>not CSS</strong>, a pinned selector inventory,
 Syntyr tooling, or an application runtime. It does not change the installed
 CSS release or grant access to premium assets. Inspect your actual stylesheets
@@ -98,13 +98,17 @@ actually present in the selected CSS files; source-only selectors cannot
 appear in an alpha.4 reference.</p>
 <p><code>info</code> is read-only project discovery for coding agents. It reports the configured
 release (published or source candidate), its actual pinned CSS asset hashes and
-integrity statuses, supported themes, and portable Skill/reference paths. Exit
+integrity statuses, supported themes, and portable Skill/reference paths. It
+also compares the installed Skill and API reference with trusted source bytes
+and reports their expected SHA-256 hashes in <code>agent_artifacts</code>. A changed
+checkout may legitimately produce a new reference: review differences before
+reinstalling from the intended trusted source revision. Exit
 code <strong>0</strong> means the pinned installation is healthy, <strong>1</strong> means degraded or
 invalid, and <strong>2</strong> means the project was not initialized. Do not infer active
 stylesheet imports or framework support from this inventory: the host
 application must still load and test the appropriate CSS. The command does
 not scan application code or need application dependencies.</p>
-<p><code>check</code> validates the installed CSS asset hashes and literal <code>.html</code> files\nagainst that project's pinned release, returning structured, source-located
+<p><code>check</code> validates the installed CSS, Skill and API reference integrity and literal <code>.html</code> files\nagainst that project's pinned release, returning structured, source-located
 JSON diagnostics. Its exit codes are <strong>0</strong> for checked and error-free HTML,
 <strong>1</strong> for errors, and <strong>2</strong> for incomplete coverage (for example, JSX/TSX or
 no HTML files). It is not a React/Vue/Svelte parser or a browser accessibility

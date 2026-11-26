@@ -4,7 +4,7 @@ import {readFileSync} from "node:fs";
 import {createHash} from "node:crypto";
 import {
   registerSectionManifest, createDefaultDocument, createBlock, parseDocument,
-  replaceBlockImage, restoreBlockImage, requiredAssets, exportHtml, getImageAssetBytes
+  replaceBlockImage, restoreBlockImage, requiredAssets, exportHtml, getImageAssetBytes, verifyDocumentMedia
 } from "../docs/page-builder-model.mjs";
 import {createStoredZip} from "../docs/page-builder-zip.mjs";
 
@@ -107,4 +107,21 @@ test("old editable gallery projects migrate missing image fields without losing 
   const broken=structuredClone(legacy);
   delete broken.blocks[0].props.text1;
   assert.throws(()=>parseDocument(broken),/field.*string/i);
+});
+
+test("verifies actual imported and exported image bytes, not only the filename and MIME", async () => {
+  const original = gallery();
+  const valid = replaceBlockImage(original, "gallery-1", "src1", {filename, dataURL});
+  assert.deepEqual(await verifyDocumentMedia(JSON.stringify(valid)), valid);
+  const forged = structuredClone(valid);
+  const fakeName = "custom-" + "0".repeat(64) + ".png";
+  delete forged.media[filename];
+  forged.media[fakeName] = dataURL;
+  forged.blocks[0].props.src1 = "assets/" + fakeName;
+  forged.blocks[0].props.href1 = "assets/" + fakeName;
+  await assert.rejects(verifyDocumentMedia(JSON.stringify(forged)), /content hash mismatch/i);
+  const changed = structuredClone(valid);
+  changed.media[filename] = "data:image/png;base64," + Buffer.concat([raw, Buffer.from([1])]).toString("base64");
+  await assert.rejects(verifyDocumentMedia(changed), /content hash mismatch/i);
+  assert.deepEqual(await verifyDocumentMedia(original), original);
 });

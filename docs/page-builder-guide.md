@@ -67,7 +67,9 @@ The builder reads raster images **locally in the browser**. Accepted formats are
 PNG, JPEG and WebP, with a 2 MiB limit per image, 20 embedded images maximum,
 and a 10 MiB aggregate media budget. Unsupported types, HTML and uploaded
 SVGs are rejected. Image filenames use SHA-256 hashes and a restricted
-`assets/custom-<hash>.<png|jpg|webp>` path.
+`assets/custom-<hash>.<png|jpg|webp>` path. Imports and downloads verify
+that embedded bytes match those hashes using Web Crypto in a secure context;
+a mismatched project is rejected instead of exporting mislabeled images.
 
 A downloaded **project JSON embeds uploaded images** (as base64 data URLs)
 alongside editable section fields; importing it restores images and URLs,
@@ -113,7 +115,7 @@ placing saved strings in different locations. Preserve an exported HTML copy
 for long-term rendering when the optional source catalog changes. The manifest is an **unreleased alpha.5 source candidate**; these
 examples are not promised in the published alpha.4 release.
 
-Single-page projects retain the `syntyr.page.v1` schema with title, theme, optional description/language and media, plus ordered id/type/props blocks. Multi-page projects use `syntyr.site.v1` with a list of slug/page-document entries and two optional shared native blocks (`header` and `footer`). No arbitrary HTML templates are accepted from project JSON. Both formats can be reopened. The canonical validation and renderer are in page-builder-model.mjs, a dependency-free ESM module with no browser globals.
+Single-page projects retain the `syntyr.page.v1` schema with title, theme, optional description/language and media, plus ordered id/type/props blocks. Multi-page projects use `syntyr.site.v1` with a list of slug/page-document entries and two optional shared native blocks (`header` and `footer`). No arbitrary HTML templates are accepted from project JSON. Both formats can be reopened. The canonical validation and renderer are in page-builder-model.mjs, a dependency-free ESM module. Structural validation is synchronous; the optional media integrity boundary uses Web Crypto.
 
 The exported index.html uses ordinary HTML sections, anchors, buttons-styled links, native FAQ disclosures, and existing syn-* classes. The local syntyr.all.css stylesheet must be hosted next to it; the page does not contain React, a builder script, or Syntyr editor dependencies. You can instead load CSS modules required by your chosen components using the [distribution guide](distribution.md).
 
