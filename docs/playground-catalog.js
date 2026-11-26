@@ -292,7 +292,7 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "title": "Primary navigation",
     "module": "syntyr.core.css",
     "description": "A named navigation landmark with a list of real destinations and one current-page indicator.",
-    "html": "\u003cnav aria-label=\"Primary navigation\">\n  \u003cul class=\"syn-inline\">\n    \u003cli>\u003ca href=\"index.html\">Overview\u003c/a>\u003c/li>\n    \u003cli>\u003ca href=\"catalog.html\" aria-current=\"page\">Components\u003c/a>\u003c/li>\n    \u003cli>\u003ca href=\"guides.html\">Guides\u003c/a>\u003c/li>\n  \u003c/ul>\n\u003c/nav>",
+    "html": "\u003cnav aria-label=\"Primary navigation\">\n  \u003cul class=\"syn-inline\" role=\"list\" style=\"list-style:none;margin:0;padding:0\">\n    \u003cli>\u003ca href=\"index.html\">Overview\u003c/a>\u003c/li>\n    \u003cli>\u003ca href=\"catalog.html\" aria-current=\"page\">Components\u003c/a>\u003c/li>\n    \u003cli>\u003ca href=\"guides.html\">Guides\u003c/a>\u003c/li>\n  \u003c/ul>\n\u003c/nav>",
     "keywords": "primary site navigation landmark active page aria-current list",
     "guidance": "See the component API reference for compatible classes and CSS modules."
   },
@@ -310,7 +310,7 @@ window.SYNTYR_PLAYGROUND_CATALOG = [
     "title": "Footer link groups",
     "module": "syntyr.core.css",
     "description": "Place a footer within its owning section and name each navigation landmark.",
-    "html": "\u003csection aria-labelledby=\"catalog-footer-example-title\">\n  \u003ch3 id=\"catalog-footer-example-title\">Documentation\u003c/h3>\n  \u003cfooter>\n    \u003cnav aria-label=\"Footer resources\">\n      \u003cul class=\"syn-inline\">\n        \u003cli>\u003ca href=\"guides.html\">Guides\u003c/a>\u003c/li>\n        \u003cli>\u003ca href=\"faq.html\">FAQ\u003c/a>\u003c/li>\n        \u003cli>\u003ca href=\"distribution.html\">Installation\u003c/a>\u003c/li>\n      \u003c/ul>\n    \u003c/nav>\n    \u003csmall>Example footer \u2014 update links for your own site.\u003c/small>\n  \u003c/footer>\n\u003c/section>",
+    "html": "\u003csection aria-labelledby=\"catalog-footer-example-title\">\n  \u003ch3 id=\"catalog-footer-example-title\">Documentation\u003c/h3>\n  \u003cfooter>\n    \u003cnav aria-label=\"Footer resources\">\n      \u003cul class=\"syn-inline\" role=\"list\" style=\"list-style:none;margin:0;padding:0\">\n        \u003cli>\u003ca href=\"guides.html\">Guides\u003c/a>\u003c/li>\n        \u003cli>\u003ca href=\"faq.html\">FAQ\u003c/a>\u003c/li>\n        \u003cli>\u003ca href=\"distribution.html\">Installation\u003c/a>\u003c/li>\n      \u003c/ul>\n    \u003c/nav>\n    \u003csmall>Example footer \u2014 update links for your own site.\u003c/small>\n  \u003c/footer>\n\u003c/section>",
     "keywords": "footer contentinfo navigation about legal links sitemap",
     "guidance": "See the component API reference for compatible classes and CSS modules."
   },

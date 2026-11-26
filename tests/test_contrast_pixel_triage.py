@@ -10,6 +10,14 @@ SPEC.loader.exec_module(MODULE)
 
 
 class PixelContrastMath(unittest.TestCase):
+    def test_closed_disclosure_remains_unsampled_for_review(self):
+        item = {'page': 'fixture.html', 'selector': ['#hidden'],
+                'failure_summary': 'Needs review', 'viewport_width': 320,
+                'error': 'closed_disclosure', 'fragments': []}
+        result = MODULE.score_item(item, object())
+        self.assertEqual(result['status'], 'unsampled')
+        self.assertEqual(result['reason'], 'closed_disclosure')
+
     def test_black_white_ratio_is_21(self):
         self.assertAlmostEqual(MODULE.contrast_ratio((0, 0, 0), (255, 255, 255)), 21.0)
 

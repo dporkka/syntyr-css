@@ -176,15 +176,30 @@ class BlocksAssetsTests(unittest.TestCase):
             '<form id="demo" action="/submit"><textarea name="notes">Keep literal '
             '</form> text</textarea><fieldset><input name="nested"></fieldset>'
             '<button type="submit">Inside</button></form>'
-            '<a aria-label=\'Documentation: href="/help"\' href="/help">Help</a>'
+            '<a title=\'Documentation: href="/help"\' aria-label="Help" href="/help">Help</a>'
             '<button type="submit" form="demo">Outside</button>'
         )
         preview = preview_markup(source)
         self.assertIn('<textarea name="notes">Keep literal </form> text</textarea>', preview)
         self.assertEqual(preview.count('</fieldset></form>'), 1)
-        self.assertIn('<a aria-label=\'Documentation: href="/help"\'>Help</a>', preview)
+        self.assertIn('<a title=\'Documentation: href="/help"\'>Help</a>', preview)
         self.assertIn('<button type="submit" form="demo" disabled>Outside</button>', preview)
-        self.assertNotIn('<a aria-label=\'Documentation: href="/help"\' href=', preview)
+        self.assertNotIn('aria-label="Help"', preview)
+
+    def test_preview_removes_names_from_generic_links_and_nested_landmarks(self):
+        from scripts.build_blocks import preview_markup
+        source = (
+            '<header aria-label="Site header"><nav aria-label="Main menu">Menu</nav></header>'
+            '<a HREF="/next" ARIA-LABEL="Next page" aria-labelledby="next">Next</a>'
+            '<footer aria-labelledby="footer-heading">Footer</footer>'
+            '<footer role="contentinfo" aria-label="Explicit landmark">Info</footer>'
+            '<a role="button" aria-label="Explicit control">Toggle</a>'
+        )
+        self.assertEqual(preview_markup(source),
+                         '<header><nav aria-label="Main menu">Menu</nav></header>'
+                         '<a>Next</a><footer>Footer</footer>'
+                         '<footer role="contentinfo" aria-label="Explicit landmark">Info</footer>'
+                         '<a role="button" aria-label="Explicit control">Toggle</a>')
 
     def test_preview_form_audit_handles_nested_fieldsets(self):
         from scripts.build_blocks import preview_markup

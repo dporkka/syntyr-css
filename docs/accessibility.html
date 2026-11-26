@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Status: experimental alpha; not a WCAG certification or professional audit.">
-  <meta name="syntyr-source-sha256" content="29d0ba3393d5ae517abd4db6366dfcd79168e2e22638e14319fa1cd6fd729b73">
+  <meta name="syntyr-source-sha256" content="42ad02a487ba9bb8314faed7165227636d1f2e2048c964865cf7ac03b66bf961">
   <meta name="theme-color" content="#f5f7fb">
   <title>Syntyr CSS accessibility validation — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/accessibility">
@@ -123,6 +123,8 @@ python3 tests/published_reflow_browser.py --browsers chromium firefox webkit
 python3 tests/minimalist_browser.py --browsers chromium firefox webkit
 # Opt-in: seven-theme enlarged-label, scroll keyboard, and link-target checks.
 python3 tests/accessibility_regression_browser.py --browsers chromium firefox webkit
+# Opt-in: actual Chromium tab zoom with a full extension-capable browser.
+python3 tests/document_prose_real_zoom_browser.py
 </code></pre>
 <p>For a pinned axe-core 4.10.3 audit, provide the checker at test time. No
 JavaScript file is shipped to application consumers:</p>
@@ -130,11 +132,22 @@ JavaScript file is shipped to application consumers:</p>
 python3 tests/axe_audit.py --axe-file /tmp/axe.min.js \
   --report /tmp/syntyr-axe-manual-review.json
 </code></pre>
+<p>The catalog is audited in its complete unreleased source mode, not the
+default frozen-release subset. The report records that mode so contrast
+triage can reproduce the same stylesheet and inventory. Collapsed disclosure
+content remains unsampled until reviewed in its open state.</p>
 <p>The published-site reflow test serves the actual Cloudflare-allowlisted HTML
 and hashed CSS locally, checks every page in multiple portrait and landscape
 viewports, and stresses root text at 150%/200%. It permits independently
 scrollable data regions but rejects page-level horizontal overflow and
 out-of-viewport controls. This is <strong>not</strong> 200%/400% native browser zoom.</p>
+<p>The document-starter zoom regression uses a temporary Chromium profile and
+test-only extension to set actual browser tab zoom to 200% and 400%. It
+checks the measured viewport, device pixel ratio, unchanged root font size,
+seven palettes, local overflow and keyboard-reachable code/table regions.
+Use a full Chromium binary with extension support (not the headless shell);
+<code>PLAYWRIGHT_CHROMIUM_EXECUTABLE</code> can select it. This is focused automated
+evidence, not a whole-site or human accessibility sign-off.</p>
 <p>For the remaining manual zoom gate, use the browser's own zoom control (not
 CSS <code>zoom</code>, a changed root font size, device pixel ratio, or pinch zoom):
 open the homepage, all-documentation index, free Noir landing, visualization

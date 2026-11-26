@@ -14,6 +14,7 @@ import argparse
 from collections import Counter
 from io import BytesIO
 import json
+import os
 from pathlib import Path
 import re
 import subprocess
@@ -60,11 +61,21 @@ def status_counts(items):
 MEASURE_JS = r'''(items) => {
   const output = [];
   const hide = new Set();
+  const hiddenByDisclosure = el => {
+    for (let details = el.parentElement; details; details = details.parentElement) {
+      if (details.matches('details:not([open])') &&
+          !details.querySelector(':scope > summary')?.contains(el)) return true;
+    }
+    return false;
+  };
   for (const item of items) {
     let el;
     try { el = document.querySelector(item.selector[0]); }
     catch (_) { el = null; }
     if (!el) { output.push({...item, error: 'selector_not_found', fragments: []}); continue; }
+    if (hiddenByDisclosure(el)) {
+      output.push({...item, error: 'closed_disclosure', fragments: []}); continue;
+    }
     if (el.closest('[aria-hidden="true"]') ||
         /Element content contains only non-text characters/i.test(item.failure_summary || '')) {
       output.push({...item, error: 'non_text', fragments: []}); continue;
@@ -76,7 +87,7 @@ MEASURE_JS = r'''(items) => {
     while ((node = walker.nextNode()) && fragments.length < 5) {
       if (!node.textContent.trim()) continue;
       const parent = node.parentElement;
-      if (!parent || parent.closest('[aria-hidden="true"]')) continue;
+      if (!parent || parent.closest('[aria-hidden="true"]') || hiddenByDisclosure(parent)) continue;
       const style = getComputedStyle(parent);
       if (style.display === 'none' || style.visibility !== 'visible') continue;
       const range = document.createRange(); range.selectNodeContents(node);
@@ -246,7 +257,9 @@ def main():
                                capture_output=True, text=True, check=True).stdout.strip()
     observations = []
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)
+        executable = os.environ.get("PLAYWRIGHT_CHROMIUM_EXECUTABLE")
+        browser = p.chromium.launch(headless=True, **(
+            {"executable_path": executable} if executable else {}))
         try:
             for row in report['pages']:
                 if args.pages and row['page'] not in args.pages:
@@ -259,6 +272,11 @@ def main():
                     page = browser.new_page(viewport={'width': width, 'height': 900}, device_scale_factor=1)
                     try:
                         page.goto((ROOT / row['page']).as_uri(), wait_until='load')
+                        # Older reports predate the explicit release-mode field
+                        # and used the default frozen catalog stylesheet.
+                        if row['page'] == 'docs/catalog.html' and report.get('catalog_release') == 'source-alpha5':
+                            from axe_audit import prepare_source_catalog
+                            prepare_source_catalog(page)
                         measured = page.evaluate(MEASURE_JS, items)
                         for item in measured:
                             item['viewport_width'] = width
