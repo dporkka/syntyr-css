@@ -2,6 +2,15 @@
 
 **Status:** experimental alpha; not a WCAG certification or professional audit.
 
+## Current candidate evidence — November 26, 2026
+
+The [candidate audit and reinspection record](accessibility-alpha5-review.md)
+supersedes the historical counts below. The 45-page source audit has zero
+confirmed axe violations, but 207 incomplete contrast targets; all 621
+automated observations now have classifications, including 33 non-text
+observations requiring an explicit graphics review. None of these results
+constitute human approval.
+
 ## Responsive follow-up — November 15, 2026
 
 On the source merged by PR #135 (commit 0b04607), the published-site
@@ -207,7 +216,7 @@ report closes any axe incompletes as certified passes. Verify actual glyph
 pixels, interaction states and screen reader/zoom/OS high-contrast behavior
 before making a conformance claim.
 Following a further rebase onto `c726dc3` (restored native-APIs page),
-the newest candidate scan found **161 incomplete elements across 28 pages**:
+the historical candidate scan found **161 incomplete elements across 28 pages**:
 450 text/viewport observations sampled above threshold, 27 non-text and six
 unsampled textarea observations. There were still zero sampled-below or
 narrow-margin observations. All 161 inconclusives remain open for manual
@@ -234,6 +243,31 @@ adjust for Docker hosts. Keep the Python and browser versions aligned.
 The remote URL is part of a **developer-only test**, not a browser runtime
 dependency. Pin the checker release, review its MIT license, and verify its
 provenance if incorporating it into build infrastructure.
+
+## Manual review queue
+
+Create a developer-only CSV from the complete axe report, three-width
+triage and optional targeted reinspection:
+
+```sh
+python3 tests/contrast_review_queue.py \
+  --axe-report /tmp/syntyr-axe.json \
+  --triage-report /tmp/syntyr-contrast-triage.json \
+  --reinspection-report /tmp/syntyr-contrast-reinspection.json \
+  --output /tmp/syntyr-contrast-manual-queue.csv
+```
+
+Use your actual report paths; omit the reinspection argument if not run.
+The script rejects missing, duplicate or unrelated observations, matches
+reinspection to its flagged original, retains source revisions and never
+overwrites a reviewer-edited CSV. Every review status is initially
+`pending`, even if all sampled values exceed a threshold. Unresolved
+samples come first, then non-text/graphics targets and the lowest-margin
+text/placeholder targets. Record the browser, theme, zoom, interaction
+states, manual measurement or non-text exception and reviewer-specific
+evidence. Keep the filled queue outside the public repository and verify
+that the audited page content and CSS correspond to the reviewed commit.
+
 
 ## Earlier automated baseline (November 14, 2026, unreleased alpha.5)
 

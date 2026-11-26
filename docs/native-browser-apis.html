@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Syntyr is a styling system, not a browser API abstraction layer. It ships no runtime JavaScript or polyfill. Use the browser&#x27;s built-in semantics and…">
-  <meta name="syntyr-source-sha256" content="2c75acc9b417208c269b3fe0425dfbaceead5bf0d3d9edd6b7d0adde9e8255d6">
+  <meta name="syntyr-source-sha256" content="2e2b967e3cdaf576856aef0ae91be44f2eaf5321663fb3a70026405f5cc1e0f4">
   <meta name="theme-color" content="#f5f7fb">
   <title>Native browser APIs in Syntyr — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/native-browser-apis">
@@ -163,6 +163,42 @@ validation for server-rendered templates. For a popover, use the declarative
 invoker rather than manually adding ARIA expansion state that the browser
 already manages; for modal content, use <code>&lt;dialog&gt;</code> and a real accessible name.</p>
 <h2 id="browser-compatibility-policy">Browser-compatibility policy</h2>
+<p><strong>Proposed validation targets, not supported minimum versions:</strong> Chrome /
+Chromium 130, Firefox 132, Safari 18.2 (desktop and iOS). These are
+conservative starting points for testing, based on the corrected source
+order of native nested declarations in the respective engines. Syntyr
+also uses cascade layers, custom properties, <code>color-mix()</code>, modern
+logical sizing, <code>:has()</code>, and container queries. Without the required
+CSS capabilities, native content may remain readable but styled-component
+compatibility is not assured. Do not recommend installing obsolete
+browsers for normal use; run isolated, trusted test builds only.</p>
+<p>The sources for the nesting milestones are
+<a href="https://developer.chrome.com/release-notes/130">Chrome 130</a>,
+<a href="https://developer.mozilla.org/en-US/docs/Mozilla/Firefox/Releases/132">Firefox 132</a>
+and <a href="https://webkit.org/blog/16301/webkit-features-in-safari-18-2/">Safari 18.2</a>.
+These describe browser feature availability, not tests of Syntyr. No
+browser support floor has been approved. Test the actual minimum
+versions before declaring one; optional enhancements and native commands
+may need newer releases or an author-owned alternative.</p>
+<p>To record the CSS capabilities and rendered starter behavior of any
+installed test browser, run the developer-only probe:</p>
+<pre tabindex="0"><code class="language-sh">python3 tests/document_prose_browser.py --browsers chromium firefox webkit
+</code></pre>
+<p>The probe exercises actual cascade order, nested styling and color
+mixing, records optional native features, and renders the script-free
+document across seven palettes, three widths and three root font sizes.
+Override a compatible Playwright test executable with
+<code>SYNTYR_CHROMIUM_EXECUTABLE</code>, <code>SYNTYR_FIREFOX_EXECUTABLE</code>, or
+<code>SYNTYR_WEBKIT_EXECUTABLE</code>. Not every historic browser accepts the
+current Playwright driver. Linux WebKit is not Safari on macOS/iOS.</p>
+<p>The November 26 focused test of the PR #443 rendering content passed
+the probe and all 189 combined starter reflow/palette configurations in Chromium
+151.0.7922.34, Firefox 159.0 and Linux WebKit 26.5 (63 per engine).
+Chromium 151 and WebKit 26.5 also passed the browser accessibility-tree
+and keyboard regression for document/native API fixtures. No test was
+performed at the proposed 130/132/18.2 targets, and the WebKit evidence
+is not a macOS or iOS Safari test. The broader matrix and native zoom,
+assistive-technology and OS high-contrast gates still apply.</p>
 <p>Test Chromium, Firefox, and WebKit at narrow widths and 200%/400% zoom. CSS feature queries guard anchor placement and scroll-driven timelines. Without the advanced feature, the controls remain styled, dismissible, and operable <strong>where the underlying HTML primitive is supported</strong>. For genuinely older browsers that lack the HTML primitive entirely, provide an alternative interaction or a conditionally loaded host-app polyfill; Syntyr never silently installs one.</p>
 <p>Always verify keyboard focus, Escape dismissal, forced-colors mode, native validation, and <code>prefers-reduced-motion</code>. Avoid animated content that conveys information unavailable as text. The scroll indicator uses <code>aria-hidden=&quot;true&quot;</code> and must not replace a semantic progress bar for tasks.</p>
 <p>Compatibility references: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Popover_API">Popover API</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/API/Invoker_Commands_API">Invoker Commands</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_anchor_positioning">CSS anchor positioning</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/field-sizing">field-sizing</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_scroll-driven_animations">scroll-driven animations</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/API/View_Transition_API">View Transition API</a>.</p>

@@ -3,9 +3,49 @@
 This report distinguishes the most recent automated findings from older
 pixel-sampling evidence. It is **not** a WCAG certification.
 
-## Fresh exact-head audit: `70ec764` (November 18, 2026)
+## Candidate audit and reinspection — November 26, 2026
 
-**Newest automated source snapshot, not alpha.5 release approval.**
+The following **source-candidate** results supersede the November 18 snapshot,
+not the frozen alpha.4 release. Rendering/content audit commit
+`c98a2c061d9238320dd32907689a9868ffdb1a1a` and follow-up
+`bbf664fe3a6a37d2756030c13c0fcad933d91fdc` have identical audited page
+contents and CSS; the latter extends the test harnesses and review guidance.
+The exact Git trees and the reports are retained separately; see
+[PR #443](https://github.com/dporkka/syntyr-css/pull/443).
+
+- Pinned axe-core 4.10.3, **45 candidate pages, zero confirmed violation
+  nodes, 207 incomplete contrast targets**. The catalog was explicitly
+  switched to the complete unreleased source inventory rather than the
+  frozen-release default. Counts are not comparable with different audit scopes.
+- Original three-width triage: 621 observations (466 sampled above
+  threshold, 9 computed opaque placeholder pairs above threshold, 33
+  non-text, 110 unsampled, 3 provisionally below). Targeted viewport
+  reinspection of all 113 flagged observations at the follow-up commit:
+  all sampled above their respective thresholds; 88 enclosing disclosures
+  opened where necessary. The combined result is **579 sampled text
+  observations above threshold, 9 computed placeholder pairs above, 33
+  non-text, zero unsampled/below/near-threshold**. Reinspection changes
+  automated classifications, not manual review status.
+- The 33 non-text observations correspond to 11 targets that still need
+  an explicit decorative/essential-graphics decision; the remaining 196
+  targets need text/placeholder review. Do not assume a decorative exception.
+- Browser accessibility-tree and keyboard checks passed Chromium, Firefox,
+  and WebKit; actual Chromium tab zoom passed 200% and 400% on the
+  document-starter fixture. Browser-level snapshots and focused zoom
+  remain distinct from native screen-reader speech and whole-site zoom.
+- The follow-up passed 1,435 Python tests (10 skipped, zero failures),
+  generated-site, maintenance and read-only release preflight. Hosted
+  exact-head results and manual release approvals remain separate gates.
+
+To turn the exact reports into a reviewer-owned checklist, run the
+[manual queue workflow](accessibility.md#manual-review-queue). It creates
+one pending row for each axe-incomplete contrast target, preserving the
+per-viewport evidence and prioritizing unresolved samples and low margins.
+The queue must be regenerated when audited page content or styles change.
+
+## Historical exact-head audit: `70ec764` (November 18, 2026)
+
+**Historical automated source snapshot, not alpha.5 release approval.**
 This source candidate includes the focused fixes to keyboard-inaccessible
 documentation code blocks and a prohibited ARIA label on a nested form footer.
 
@@ -364,20 +404,20 @@ Earlier automated browser evidence covered **126 viewport cases** across Chromiu
 
 ## Remaining release checklist
 
-- [ ] Measure or adjudicate each of the **165 axe-incomplete contrast elements** in the latest 37-page candidate audit above (70ec764). Earlier 161-, 162-, 345- and 325-entry figures are historical snapshots, not the current review queue.
+- [ ] Measure or adjudicate each of the **207 axe-incomplete contrast targets** in the November 26 candidate audit above. All 207 remain pending; the automated reinspection did not constitute manual sign-off. Earlier counts are historical snapshots.
 - [ ] Test keyboard-only navigation, native dialog/popover focus, table regions, disclosure and form semantics in a representative real app.
 - [ ] Perform real assistive-technology testing with NVDA, JAWS, VoiceOver or Orca and record evidence.
 - [ ] Test true 200% and 400% browser zoom on supported browsers; verify navigation, reflow and target visibility.
 - [ ] Check actual OS forced-colors/high-contrast and reduced-motion settings.
 - [x] Record browser versions used for automated testing (not a permanent
-  support guarantee). The **current** 16-page matrix and 64-case/engine
+  support guarantee). The **historical** 16-page matrix and 64-case/engine
   reflow run used Linux `mcr.microsoft.com/playwright/python:v1.64.1-noble`
   with Playwright Python 1.64.1: Chromium **156.0.8078.4**, Firefox
   **157.0**, and WebKit **27.2**. Versions were read directly using
   `browser.version` from the same pinned image.
 - [x] Preserve the **historical** 14-page baseline's separate browser
   versions: Chromium 159.0.8154.6, Firefox 159.0, WebKit 27.2 in the
-  Playwright 1.65.2 image. These do not describe the newer 1.64.1 run.
+  Playwright 1.65.2 image. These describe separate historical runs, not the current PR.
 - [ ] Establish browser support versions and unresolved exceptions before a stable release.
 
 A passing axe-core run alone is **not** sufficient to claim WCAG conformance.

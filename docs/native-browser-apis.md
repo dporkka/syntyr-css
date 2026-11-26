@@ -110,6 +110,50 @@ already manages; for modal content, use `<dialog>` and a real accessible name.
 
 ## Browser-compatibility policy
 
+**Proposed validation targets, not supported minimum versions:** Chrome /
+Chromium 130, Firefox 132, Safari 18.2 (desktop and iOS). These are
+conservative starting points for testing, based on the corrected source
+order of native nested declarations in the respective engines. Syntyr
+also uses cascade layers, custom properties, `color-mix()`, modern
+logical sizing, `:has()`, and container queries. Without the required
+CSS capabilities, native content may remain readable but styled-component
+compatibility is not assured. Do not recommend installing obsolete
+browsers for normal use; run isolated, trusted test builds only.
+
+The sources for the nesting milestones are
+[Chrome 130](https://developer.chrome.com/release-notes/130),
+[Firefox 132](https://developer.mozilla.org/en-US/docs/Mozilla/Firefox/Releases/132)
+and [Safari 18.2](https://webkit.org/blog/16301/webkit-features-in-safari-18-2/).
+These describe browser feature availability, not tests of Syntyr. No
+browser support floor has been approved. Test the actual minimum
+versions before declaring one; optional enhancements and native commands
+may need newer releases or an author-owned alternative.
+
+To record the CSS capabilities and rendered starter behavior of any
+installed test browser, run the developer-only probe:
+
+```sh
+python3 tests/document_prose_browser.py --browsers chromium firefox webkit
+```
+
+The probe exercises actual cascade order, nested styling and color
+mixing, records optional native features, and renders the script-free
+document across seven palettes, three widths and three root font sizes.
+Override a compatible Playwright test executable with
+`SYNTYR_CHROMIUM_EXECUTABLE`, `SYNTYR_FIREFOX_EXECUTABLE`, or
+`SYNTYR_WEBKIT_EXECUTABLE`. Not every historic browser accepts the
+current Playwright driver. Linux WebKit is not Safari on macOS/iOS.
+
+The November 26 focused test of the PR #443 rendering content passed
+the probe and all 189 combined starter reflow/palette configurations in Chromium
+151.0.7922.34, Firefox 159.0 and Linux WebKit 26.5 (63 per engine).
+Chromium 151 and WebKit 26.5 also passed the browser accessibility-tree
+and keyboard regression for document/native API fixtures. No test was
+performed at the proposed 130/132/18.2 targets, and the WebKit evidence
+is not a macOS or iOS Safari test. The broader matrix and native zoom,
+assistive-technology and OS high-contrast gates still apply.
+
+
 Test Chromium, Firefox, and WebKit at narrow widths and 200%/400% zoom. CSS feature queries guard anchor placement and scroll-driven timelines. Without the advanced feature, the controls remain styled, dismissible, and operable **where the underlying HTML primitive is supported**. For genuinely older browsers that lack the HTML primitive entirely, provide an alternative interaction or a conditionally loaded host-app polyfill; Syntyr never silently installs one.
 
 Always verify keyboard focus, Escape dismissal, forced-colors mode, native validation, and `prefers-reduced-motion`. Avoid animated content that conveys information unavailable as text. The scroll indicator uses `aria-hidden="true"` and must not replace a semantic progress bar for tasks.

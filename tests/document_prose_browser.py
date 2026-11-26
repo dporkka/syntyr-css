@@ -9,7 +9,51 @@ from playwright.sync_api import sync_playwright
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def check_core_css_capabilities(browser, engine):
+    """Test the parsing/cascade prerequisites; record optional native features."""
+    page = browser.new_page(java_script_enabled=False)
+    try:
+        # Mixed declarations retain their order after a nested rule. Earlier
+        # implementations hoisted them; CSS.supports alone cannot detect this.
+        page.set_content("""
+          <style>
+            @layer syn-probe {
+              .probe {
+                color: red;
+                & { color: green; }
+                color: blue;
+                p { background: color-mix(in srgb, red 50%, blue); }
+              }
+            }
+          </style>
+          <div class="probe"><p>CSS capability probe</p></div>
+        """)
+        features = page.evaluate("""() => ({
+          layers: 'CSSLayerBlockRule' in window,
+          orderedNesting: getComputedStyle(document.querySelector('.probe')).color === 'rgb(0, 0, 255)',
+          relaxedNestingAndColorMix: getComputedStyle(document.querySelector('.probe p')).backgroundColor
+            !== 'rgba(0, 0, 0, 0)',
+          has: CSS.supports('selector(:has(*))'),
+          containerQueries: CSS.supports('container-type: inline-size'),
+          dynamicViewport: CSS.supports('height: 1dvh'),
+          popover: 'showPopover' in HTMLElement.prototype,
+          invoker: 'commandForElement' in HTMLButtonElement.prototype,
+          anchorPlacement: CSS.supports('position-area: bottom'),
+          autosize: CSS.supports('field-sizing: content'),
+          scrollTimeline: CSS.supports('animation-timeline: scroll(root block)'),
+          automaticPalette: CSS.supports('color: light-dark(white, black)')
+        })""")
+        required = ('layers', 'orderedNesting', 'relaxedNestingAndColorMix',
+                    'has', 'containerQueries', 'dynamicViewport')
+        missing = [key for key in required if not features[key]]
+        print(f"CAPABILITIES {engine} {browser.version}: {features}", flush=True)
+        assert not missing, (engine, browser.version, "core compatibility prerequisites", missing)
+    finally:
+        page.close()
+
+
 def check(browser, engine):
+    check_core_css_capabilities(browser, engine)
     page = browser.new_page(viewport={"width": 320, "height": 800}, java_script_enabled=False)
     page.goto((ROOT / "examples/document-starter.html").as_uri())
     prose = page.locator("#prose")
@@ -64,7 +108,9 @@ if __name__ == "__main__":
     args = parser.parse_args()
     with sync_playwright() as p:
         for engine in args.browsers:
-            executable = os.environ.get("PLAYWRIGHT_CHROMIUM_EXECUTABLE") if engine == "chromium" else None
+            executable = os.environ.get(f"SYNTYR_{engine.upper()}_EXECUTABLE")
+            if engine == "chromium":
+                executable = executable or os.environ.get("PLAYWRIGHT_CHROMIUM_EXECUTABLE")
             browser = getattr(p, engine).launch(**({"executable_path": executable} if executable else {}))
             try:
                 check(browser, engine)
