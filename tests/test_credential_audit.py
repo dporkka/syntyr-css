@@ -63,6 +63,31 @@ class CredentialAuditTest(unittest.TestCase):
             self.assertEqual(result.returncode, 1)
             self.assertNotIn(fake, result.stdout + result.stderr)
 
+    @unittest.skipUnless(shutil.which("git") and shutil.which("sh") and
+                         (os.environ.get("GITLEAKS") or shutil.which("gitleaks")),
+                         "Gitleaks is opt-in maintainer tooling")
+    def test_merge_only_credential_is_detected_without_echoing_value(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.git(root, "init", "-q")
+            (root / ".gitleaksignore").write_text("")
+            self.commit(root, "README", "fixture\n")
+            self.git(root, "branch", "side")
+            self.commit(root, "main.txt", "main\n")
+            self.git(root, "checkout", "-q", "side")
+            self.commit(root, "side.txt", "side\n")
+            self.git(root, "checkout", "-q", "-")
+            self.git(root, "-c", "user.name=Fixture", "-c", "user.email=test@invalid.example",
+                     "merge", "--no-ff", "--no-commit", "side")
+            # Only the merge result contains this synthetic value.
+            fake = "ghp_" + secrets.token_hex(18)
+            self.commit(root, "settings.txt", "token=" + fake + "\n")
+
+            result = subprocess.run(["sh", str(SCRIPT)], cwd=root, capture_output=True, text=True)
+            self.assertEqual(result.returncode, 1)
+            self.assertNotIn("PASS:", result.stdout)
+            self.assertNotIn(fake, result.stdout + result.stderr)
+
     @staticmethod
     def git(root, *args):
         subprocess.run(["git", *args], cwd=root, check=True, capture_output=True)

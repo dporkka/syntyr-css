@@ -1,6 +1,10 @@
 # Reviewed immutable historical false positives only (November 26, 2026).
 # Example curl placeholder: no real credential.
 ba6280ce67953779af4359c2c435afcf90ce1bde:examples/industry-sites/saas-developer/docs.html:curl-auth-header:29
+# First-parent merge patches repeat the same reviewed placeholder blob and line.
+ec5f1392da7e8fc8e1f5e38248a4fa4b6d2b6779:examples/industry-sites/saas-developer/docs.html:curl-auth-header:29
+8aa509c115db9934c3391e330a0dac2c2f06eda0:examples/industry-sites/saas-developer/docs.html:curl-auth-header:29
+
 # Each 64-hex value equals the SHA-256 of the embedded registry file content.
 9e29f1b9b53543d5318fade1aeb2b7b610a4b088:registry/r/auth-sign-up.json:generic-api-key:31
 9e29f1b9b53543d5318fade1aeb2b7b610a4b088:registry/r/developer-api-settings.json:generic-api-key:31

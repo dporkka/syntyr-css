@@ -12,6 +12,7 @@ if [ -e "$root/.gitleaks.toml" ]; then
     echo 'Unexpected scanner configuration; review before scanning' >&2
     exit 2
 fi
-"${GITLEAKS:-gitleaks}" git --log-opts=HEAD --gitleaks-ignore-path "$root/.gitleaksignore" \
+# Emit merge patches against the first parent while walking all parents.
+"${GITLEAKS:-gitleaks}" git --log-opts="--diff-merges=first-parent HEAD" --gitleaks-ignore-path "$root/.gitleaksignore" \
     --ignore-gitleaks-allow --redact=100 --no-banner --log-level=warn "$root"
 echo 'PASS: no unreviewed Gitleaks matches in complete checked-out HEAD ancestry'
