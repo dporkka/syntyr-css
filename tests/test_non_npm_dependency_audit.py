@@ -61,7 +61,11 @@ class NonNpmAuditTest(unittest.TestCase):
                         {"results": [{"vulns": [{}]}]}, {"results": [{"next_page_token": "again"}]}):
             with self.subTest(payload=payload), self.assertRaises(ValueError):
                 advisories(keys, lambda _: payload)
+        for token in (False, 0, [], {}, None, True, 1):
+            with self.subTest(token=token), self.assertRaises(ValueError):
+                advisories(keys, lambda _: {"results": [{"next_page_token": token}]})
         self.assertEqual(advisories(keys, lambda _: {"results": [{}]}), {})
+        self.assertEqual(advisories(keys, lambda _: {"results": [{"next_page_token": ""}]}), {})
 
     def test_woodpecker_pilot_runs_offline_contract_then_live_scan(self):
         workflow = (ROOT / ".woodpecker/non-npm-security.yaml").read_text()
@@ -69,6 +73,8 @@ class NonNpmAuditTest(unittest.TestCase):
         self.assertIn("event: tag", workflow)
         test = "      - python3 -m unittest discover -s tests -p test_non_npm_dependency_audit.py -v"
         scan = "      - python3 scripts/audit_non_npm_dependencies.py"
+        install = "apt-get install -y --no-install-recommends git"
+        self.assertLess(workflow.index(install), workflow.index(test))
         self.assertLess(workflow.index(test), workflow.index(scan))
         self.assertNotIn("|| true", workflow)
 

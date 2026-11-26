@@ -105,10 +105,12 @@ def advisories(packages: dict, request=query_batch) -> dict:
                     if not isinstance(identifier, str) or not ADVISORY_ID.fullmatch(identifier):
                         raise ValueError("OSV advisory lacks a valid ID")
                     findings.setdefault(key, set()).add(identifier)
-                token = result.get("next_page_token")
+                token = result.get("next_page_token", "")
+                if not isinstance(token, str):
+                    raise ValueError("Invalid OSV pagination token")
                 if token:
-                    if not isinstance(token, str) or (key, token) in seen_tokens:
-                        raise ValueError("Invalid or repeated OSV pagination token")
+                    if (key, token) in seen_tokens:
+                        raise ValueError("Repeated OSV pagination token")
                     seen_tokens.add((key, token))
                     following.append((key, {**query, "page_token": token}))
             pending = following
