@@ -30,6 +30,7 @@
     "./viz.css": "./dist/syntyr.viz.css",
     "./geo.css": "./dist/syntyr.geo.css",
     "./data-grid.css": "./dist/syntyr.data-grid.css",
+    "./agent-workflow.json": "./metadata/agent-workflow.v1.json",
     "./components/tokens.css": "./dist/components/tokens.css",
     "./components/base.css": "./dist/components/base.css",
     "./components/layout.css": "./dist/components/layout.css",
@@ -72,6 +73,7 @@
     "integrations/htmx/",
     "metadata/css-contract.v1.json",
     "metadata/component-gallery.v1.json",
+    "metadata/agent-workflow.v1.json",
     "README.md",
     "LICENSE",
     "integrations/dropdown/"

@@ -1,0 +1,132 @@
+{
+  "schema_version": 1,
+  "source_version": "0.3.0-alpha.5",
+  "stability": "experimental-source-candidate",
+  "name": "Agent workflow",
+  "stylesheet": "syntyr.core.css",
+  "runtime_requirement": "none",
+  "scope": ".syn-root",
+  "states": [
+    "pending",
+    "running",
+    "awaiting-approval",
+    "completed",
+    "failed",
+    "canceled"
+  ],
+  "state_description": "Host workflow states; these are not data-syn-state attribute values.",
+  "components": [
+    {
+      "id": "run",
+      "element": "section",
+      "classes": [
+        "syn-panel",
+        "syn-stack"
+      ],
+      "required_attributes": [
+        "aria-labelledby"
+      ],
+      "description": "Container for one authoritative server-owned agent run."
+    },
+    {
+      "id": "status",
+      "element": "span",
+      "classes": [
+        "syn-status"
+      ],
+      "description": "Readable text label; never communicate state solely by color or shape."
+    },
+    {
+      "id": "conversation",
+      "element": "section",
+      "classes": [
+        "syn-panel",
+        "syn-stack"
+      ],
+      "required_attributes": [
+        "aria-labelledby"
+      ],
+      "description": "Ordered conversation entries with visible author labels, timestamps and escaped content. Host owns persistence and streaming."
+    },
+    {
+      "id": "tool-result",
+      "element": "section",
+      "classes": [
+        "syn-panel",
+        "syn-stack"
+      ],
+      "required_attributes": [
+        "aria-labelledby"
+      ],
+      "description": "Readable tool state and native details/summary disclosure of escaped structured evidence. Does not execute tools."
+    },
+    {
+      "id": "plan",
+      "element": "ol",
+      "classes": [
+        "syn-steps",
+        "syn-steps--vertical"
+      ],
+      "child_element": "li",
+      "child_class": "syn-step",
+      "required_attributes": [
+        "aria-label",
+        "role"
+      ],
+      "role": "list",
+      "child_state_attribute": "data-syn-state",
+      "child_state_values": {
+        "completed": "complete",
+        "failed": "error"
+      },
+      "current_child_attributes": {
+        "aria-current": "step"
+      },
+      "description": "Ordered real steps with readable status text and server-owned state."
+    },
+    {
+      "id": "approval",
+      "element": "section",
+      "classes": [
+        "syn-panel",
+        "syn-stack"
+      ],
+      "description": "Explicit action summary, impact, and native POST forms for human approval or rejection."
+    },
+    {
+      "id": "outcome",
+      "element": "section",
+      "classes": [
+        "syn-panel",
+        "syn-stack"
+      ],
+      "description": "Evidence and results linked to the actual run, including failures and recovery."
+    }
+  ],
+  "host_responsibilities": {
+    "authorization": "required",
+    "csrf_protection": "required",
+    "audit_log": "required",
+    "state_transitions": "required",
+    "idempotency": "required",
+    "data_provenance": "required",
+    "escaping_untrusted_content": "required",
+    "form_endpoints": "required"
+  },
+  "security_notes": [
+    "Rendering an approval form never grants permission or executes the action.",
+    "Host must verify run ID, tenant, user role, immutable action parameters, approval state, request integrity and idempotency server-side.",
+    "Treat plan text, outcome text and any agent-generated data as untrusted; escape HTML and never execute markup or JavaScript from a model.",
+    "Do not perform destructive operations by GET. Require an explicit, authorized POST from the user.",
+    "Use a real CSRF token supplied by the host application and record the actor, decision and resulting action.",
+    "Reflect pending, running, completed and failed states from authoritative backend data; CSS cannot infer them."
+  ],
+  "accessibility_notes": [
+    "Use semantic headings and a named ordered list with role=list to preserve list semantics when CSS hides native markers.",
+    "Render visible state labels independent of color.",
+    "Give approval forms real accessible button labels and maintain keyboard focus after updates.",
+    "Only announce new updates through an appropriately scoped live region in a host with dynamic rendering; never set the entire run to a live region."
+  ],
+  "example": "examples/agent-workflow.html",
+  "preview_decisions": "disabled-until-host-integrated"
+}

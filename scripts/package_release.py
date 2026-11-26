@@ -34,6 +34,7 @@ FILES = (
     "docs/email-components.md",
     "examples/email.html",
     "examples/saas.html",  # Offline-openable, no external assets or scripts.
+    "examples/agent-workflow.html",  # Script-free preview; decisions disabled.
     "examples/form-state-contracts.html",  # Native server-supplied form states.
     "examples/preset-preview.html",
     "examples/resource-outline.html",  # Script-free native navigation demo.
@@ -70,6 +71,7 @@ FILES = (
     "llms-full.txt",
     "metadata/components.json",
     "metadata/component-gallery.v1.json",
+    "metadata/agent-workflow.v1.json",
     "metadata/interaction-recipes.json",
     "metadata/css-contract.v1.json",
     "agents/syntyr/SKILL.md",
