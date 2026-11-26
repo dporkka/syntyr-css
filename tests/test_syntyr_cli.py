@@ -80,10 +80,46 @@ class UnifiedCliTests(unittest.TestCase):
                 self.assertEqual(result.stdout, "")
                 self.assertIn(name, result.stderr)
 
+    def test_show_outputs_exact_canonical_html_for_pipes(self):
+        gallery = json.loads((ROOT / "metadata/component-gallery.v1.json").read_text())
+        example = next(x for x in gallery["examples"] if x["id"] == "catalog-buttons-title")
+        result = self.run_cli("show", example["id"])
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(result.stdout, example["html"] + "\n")
+        self.assertIn("source", result.stderr.lower())
+        self.assertIn("0.3.0-alpha.4", result.stderr)
+        checked = self.run_cli("check", "-", "--format", "json", payload=result.stdout)
+        self.assertEqual(checked.returncode, 0, checked.stderr)
+
+    def test_show_json_labels_source_and_target_and_preserves_requirements(self):
+        gallery = json.loads((ROOT / "metadata/component-gallery.v1.json").read_text())
+        example = next(x for x in gallery["examples"] if x["id"] == "catalog-buttons-title")
+        result = self.run_cli("show", example["id"], "--format", "json")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        report = json.loads(result.stdout)
+        self.assertEqual(report["source_version"], gallery["source_version"])
+        self.assertEqual(report["release"], "0.3.0-alpha.4")
+        self.assertEqual(report["release_status"], "published")
+        self.assertEqual(report["example"]["html"], example["html"])
+        self.assertEqual(report["example"]["required_stylesheets"], example["required_stylesheets"])
+        self.assertEqual(result.stderr, "")
+
+    def test_show_rejects_candidate_only_and_unknown_examples_by_default(self):
+        for name in ("catalog-breadcrumbs-title", "../README.md", "missing-example"):
+            with self.subTest(name=name):
+                result = self.run_cli("show", name, "--format", "json")
+                self.assertEqual(result.returncode, 2)
+                self.assertEqual(result.stdout, "")
+                self.assertIn(name, result.stderr)
+        result = self.run_cli("show", "catalog-breadcrumbs-title", "--release",
+                              "0.3.0-alpha.5", "--format", "json")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(json.loads(result.stdout)["release_status"], "unreleased_candidate")
+
     def test_help_and_invalid_command(self):
         result = self.run_cli("--help")
         self.assertEqual(result.returncode, 0, result.stderr)
-        for name in ("version", "check", "diff", "info", "project-check", "search", "man"):
+        for name in ("version", "check", "diff", "info", "project-check", "search", "man", "show"):
             self.assertIn(name, result.stdout)
         result = self.run_cli("not-a-command")
         self.assertEqual(result.returncode, 2)

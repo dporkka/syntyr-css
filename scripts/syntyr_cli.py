@@ -7,6 +7,7 @@ parsers and exit statuses; discovery reads the version-aware catalog.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 from pathlib import Path
 import sys
@@ -15,7 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from agent_mcp.catalog import MAX_RESULTS, PUBLISHED, RELEASES, SyntyrCatalog  # noqa: E402
+from agent_mcp.catalog import CANDIDATE, MAX_RESULTS, PUBLISHED, RELEASES, SyntyrCatalog  # noqa: E402
 from scripts import contract_diff, syntyr_agent, syntyr_check  # noqa: E402
 
 
@@ -59,6 +60,58 @@ def _catalog_command(options) -> int:
     return 0
 
 
+def _show(options) -> int:
+    """Return exact catalog HTML, not a synthesized or historical snippet."""
+    try:
+        gallery = json.loads((ROOT / "metadata/component-gallery.v1.json").read_text(encoding="utf-8"))
+        if gallery["schema_version"] != 1 or gallery["source_version"] != CANDIDATE:
+            raise ValueError("Component gallery version needs review")
+        matches = [item for item in gallery["examples"] if item["id"] == options.name]
+        if len(matches) != 1:
+            raise ValueError(f"Unknown or ambiguous catalog example {options.name!r}")
+        example = matches[0]
+        release = options.release
+        if release == PUBLISHED:
+            matrix = json.loads((ROOT / "metadata/catalog-release-compatibility.v1.json").read_text(encoding="utf-8"))
+            if (matrix["schema_version"] != 1 or matrix["published_release"] != PUBLISHED
+                    or matrix["source_candidate"] != gallery["source_version"]):
+                raise ValueError("Catalog release matrix version needs review")
+            coverage = [row for row in matrix["examples"] if row["id"] == options.name]
+            if len(coverage) != 1 or coverage[0]["published_css_covered"] is not True:
+                raise ValueError(f"Catalog example {options.name!r} is unavailable for {release}")
+            frozen = json.loads((ROOT / "site-releases/manifest.json").read_text(encoding="utf-8"))[PUBLISHED]
+            for sheet in example["required_stylesheets"]:
+                # Only known frozen names are accepted; never use user paths.
+                if sheet not in frozen:
+                    raise ValueError(f"Unknown frozen stylesheet: {sheet}")
+                content = (ROOT / "site-releases" / PUBLISHED / sheet).read_bytes()
+                if hashlib.sha256(content).hexdigest() != frozen[sheet]:
+                    raise ValueError(f"Frozen stylesheet digest mismatch: {sheet}")
+        result = SyntyrCatalog().validate_markup(example["html"], release, example["required_stylesheets"])
+        if any(item["severity"] == "error" for item in result["diagnostics"]):
+            raise ValueError(f"Catalog example {options.name!r} failed {release} markup validation")
+        note = ("Current source catalog HTML, not a historical release snippet. "
+                "Literal markup and declared stylesheet coverage only; host behavior, assets "
+                "and browser/accessibility validation remain the consumer's responsibility.")
+        report = {
+            "source_version": gallery["source_version"],
+            "release": release,
+            "release_status": result["release_status"],
+            "example": example,
+            "diagnostics": result["diagnostics"],
+            "note": note,
+        }
+    except (OSError, ValueError, RuntimeError, KeyError, TypeError) as exc:
+        print(f"syntyr show: {exc}", file=sys.stderr)
+        return 2
+    if options.format == "json":
+        print(json.dumps(report, indent=2, sort_keys=True))
+    else:
+        print(f"syntyr show: target CSS {release}; {note}", file=sys.stderr)
+        print(example["html"])
+    return 0
+
+
 def main(argv=None) -> int:
     args = list(sys.argv[1:] if argv is None else argv)
     delegates = {
@@ -79,12 +132,18 @@ def main(argv=None) -> int:
     search.add_argument("query", nargs="?", default="")
     manual = sub.add_parser("man", help="Read a component, selector or token reference")
     manual.add_argument("name", help="Component name, class or token (use -- before --syn-* tokens)")
+    show = sub.add_parser("show", help="Emit a canonical HTML example by catalog ID")
+    show.add_argument("name", help="Exact example ID from metadata/component-gallery.v1.json")
+    show.add_argument("--release", choices=RELEASES, default=PUBLISHED)
+    show.add_argument("--format", choices=("html", "json"), default="html")
     for command in (search, manual):
         command.add_argument("--release", choices=RELEASES, default=PUBLISHED)
         command.add_argument("--format", choices=("text", "json"), default="text")
     for name, (_, _, help_text) in delegates.items():
         sub.add_parser(name, help=help_text)
     options = parser.parse_args(args)
+    if options.command == "show":
+        return _show(options)
     if options.command in ("search", "man"):
         return _catalog_command(options)
     if options.command == "version":
