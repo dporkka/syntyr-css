@@ -59,6 +59,48 @@ and opt in with `class="syn-root syn-semantic"`. For explicit components,
 load `syntyr.core.css` once and use classes such as `syn-panel` and
 `syn-button`. Do not combine a bundle with its constituent CSS.
 
+## Markdown and CMS documents (alpha.5 source candidate)
+
+Use the existing minimal preset and one document wrapper; generated descendants
+can keep their own heading-anchor, syntax-highlight, figure and table classes.
+
+```html
+<link rel="stylesheet" href="/css/minimal.css">
+<main class="syn-root syn-page" data-syn-theme="auto">
+  <article class="syn-shell syn-prose">
+    <h1>Release notes</h1>
+    <!-- Render trusted or sanitized HTML here. -->
+  </article>
+</main>
+```
+
+`.syn-prose` provides readable measure, token-based headings, document rhythm,
+wrapped identifiers, responsive images, and locally scrollable code even when
+the generator adds class names. It does not sanitize HTML, generate IDs,
+highlight source code, or implement interactive task lists. Do not use
+`.syn-semantic` on the entire document if you want only prose presentation;
+enable it separately for native form controls. Existing theme and application
+CSS can override the layered defaults.
+
+Keep application widgets in a separate sibling region, or wrap an inline widget
+with its own `.syn-root` inside the prose. The enhanced document descendant rules
+do not style that nested root or its contents; the outer prose still positions
+the widget in the flow, and ordinary inheritance/base styles still apply.
+Do not nest another prose region inside that embedded root; use sibling document
+regions instead.
+
+At the renderer/template level, wrap wide tables in a `.syn-table-wrap` region
+with an accessible name and `tabindex="0"`; preserve the real table semantics.
+For long code, give the scrolling `pre` a name, `role="region"` and
+`tabindex="0"` if needed for keyboard scrolling. Retain the highlighter's
+token colors and check contrast against the chosen theme. Optionally load
+`syntyr.print.css` after the preset to wrap long code lines on paper.
+Source-generated footnote and heading IDs must remain unique.
+
+The [document starter](../examples/document-starter.html) uses representative
+Hugo/Markdown and CMS-style markup without adding a generator dependency. It is
+a static specimen, not a claim of testing every generator's actual output.
+
 ## Astro
 
 ```astro

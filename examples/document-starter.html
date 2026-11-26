@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Portable document starter — Syntyr CSS</title>
+  <meta name="description" content="A script-free document starter for Markdown and CMS HTML, with readable typography, native tables and code, and scoped components.">
+  <link rel="stylesheet" href="../dist/presets/minimal.css">
+  <link rel="stylesheet" href="../dist/syntyr.print.css">
+</head>
+<body>
+  <main class="syn-root syn-page" data-syn-theme="studio">
+    <article class="syn-shell syn-prose" id="prose">
+      <h1 id="heading">Portable project notes</h1>
+      <p>A Markdown document with a <a href="#note-1" id="ref-1">reference</a>
+        and an identifier <code>averylongunbrokenidentifierthatmustfitinsideanarrowreader</code>.</p>
+      <h2 id="layout"><a class="heading-anchor" href="#layout">Layout and commands</a></h2>
+      <blockquote class="cms-quote"><p>Prepare ordinary HTML before enhancement.</p></blockquote>
+      <ul class="task-list"><li><label><input type="checkbox" checked disabled> Review document</label></li>
+        <li><label><input type="checkbox" disabled> Publish assets</label><ul><li>Nested item</li></ul></li></ul>
+      <div class="highlight"><pre class="chroma" role="region" aria-label="Configuration code" tabindex="0"><code class="language-sh"><span class="keyword">printf</span> '%s\n' 'a deliberately very long configuration line with a stable identifier aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'</code></pre></div>
+      <figure class="wp-block-image"><img width="800" height="100" alt="Fictional status bar" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20800%20100'%3E%3Crect%20width='800'%20height='100'%20fill='%232458c6'/%3E%3C/svg%3E"><figcaption>Generated figure and caption.</figcaption></figure>
+      <div class="syn-table-wrap" role="region" aria-label="Inventory" tabindex="0">
+        <table class="cms-table"><caption>Inventory</caption><thead><tr><th scope="col">Name</th><th scope="col">Value</th></tr></thead>
+        <tbody><tr><th scope="row">Long identifier</th><td>averylongunbrokenidentifierthatmustfitinsideanarrowreader</td></tr></tbody></table>
+      </div>
+      <section class="footnotes" aria-label="References"><ol><li id="note-1">Reference text. <a href="#ref-1">Return to reference</a></li></ol></section>
+      <section class="syn-root syn-panel" data-syn-theme="grid" aria-label="Embedded component" style="--syn-panel-padding:min(1rem,5vw)">
+        <h2 id="embedded-heading" class="syn-heading">Application widget</h2>
+        <pre id="embedded-pre" class="syn-code-scroll">widget output</pre>
+        <button id="embedded-button" class="syn-button" type="button">Action</button>
+      </section>
+    </article>
+  </main>
+  <section aria-label="Unstyled host">
+    <h2 id="host-heading">Host</h2><pre id="host-pre">host</pre>
+  </section>
+</body>
+</html>

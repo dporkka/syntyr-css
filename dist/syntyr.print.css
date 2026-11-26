@@ -39,6 +39,11 @@
     .syn-root :is(.syn-panel, .syn-app-card, .syn-feature-card, .syn-stat, .syn-price-card) {
       break-inside: avoid;
     }
+    /* Document code must remain readable on paper, not clipped inside a scroller. */
+    :where(.syn-root.syn-prose, .syn-root .syn-prose) pre:not(:where(.syn-prose .syn-root, .syn-prose .syn-root *)) {
+      white-space: pre-wrap; overflow-wrap: anywhere; overflow: visible;
+      background: transparent; color: #111;
+    }
     .syn-root a { text-decoration: underline; }
   }
 }

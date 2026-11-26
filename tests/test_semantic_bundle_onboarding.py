@@ -82,6 +82,24 @@ class SemanticStarterTests(unittest.TestCase):
         self.assertIn('href="from-pico.html"', guide_index)
         self.assertIn('href="../examples/semantic-starter.html"', guide_index)
 
+    def test_document_starter_uses_existing_preset_and_print_module(self):
+        source = (ROOT / "examples/document-starter.html").read_text()
+        parser = PageParser()
+        parser.feed(source)
+        self.assertEqual([attrs["href"] for tag, attrs in parser.nodes
+                          if tag == "link" and attrs.get("rel") == "stylesheet"],
+                         ["../dist/presets/minimal.css", "../dist/syntyr.print.css"])
+        self.assertFalse(any(tag == "script" for tag, _ in parser.nodes))
+        self.assertIn("examples/document-starter.html", source_files())
+        self.assertTrue({"h1", "h2", "pre", "code", "figure", "figcaption", "table", "ol", "ul"}
+                        <= {tag for tag, _ in parser.nodes})
+        self.assertIn('class="chroma"', source)
+        self.assertIn('class="syn-shell syn-prose"', source)
+        self.assertIn('class="syn-root syn-panel"', source)
+        self.assertIn('role="region" aria-label="Inventory" tabindex="0"', source)
+        self.assertIn("tests/document_prose_browser.py", (ROOT / ".woodpecker/browser.yaml").read_text())
+        self.assertIn("../examples/document-starter.html", (ROOT / "docs/from-pico.md").read_text())
+
     def test_documented_starter_is_not_misrepresented_as_published(self):
         for relative in ('README.md', 'docs/distribution.md', 'docs/ai-quickstart.md'):
             content = (ROOT / relative).read_text()

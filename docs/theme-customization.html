@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Customize Syntyr CSS themes and design tokens for SaaS dashboards, accessible business applications, and futuristic interfaces.">
-  <meta name="syntyr-source-sha256" content="d28fa32efe9cc95ec982ab7b5aea35bf352be6bc489178d67a686ca5232277fa">
+  <meta name="syntyr-source-sha256" content="86df3c8c026a2fd7403168f82d4d1a8ad023b21bee59a02a7a983b9cd3459627">
   <meta name="theme-color" content="#f5f7fb">
   <title>Syntyr theme customization — copy, override, ship — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/theme-customization">
@@ -329,6 +329,10 @@ Both use local fonts and static CSS without runtime dependencies.</p>
 <code>.syn-body</code>, <code>.syn-text-support</code>, and the opt-in <code>.syn-prose</code> content
 container. Typography roles inherit theme fonts and allow applications to
 override type scale without rewriting individual component selectors.</p>
+<p>The alpha.5 source candidate also gives <code>.syn-prose</code> document defaults for
+generator-owned HTML, including headings, blockquotes, figures, lists, tables
+and locally scrolling code. See <a href="static-site-generators.html">Markdown and CMS documents</a>
+for its nested-root boundary, keyboard scrolling and optional print CSS.</p>
 <p>Semantic aliases are derived separately in each nested <code>data-syn-theme</code>
 scope, so a Grid panel inside a Studio page retains Grid's own contrast and
 control appearance. To override theme colors, prefer changing the primitive

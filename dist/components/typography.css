@@ -8,10 +8,37 @@
     &.syn-section-heading { font: 650 var(--syn-type-section)/1.16 var(--syn-font-display); letter-spacing: -.03em; margin-block: .5rem 1rem; max-inline-size: var(--syn-section-heading-measure, 32ch); text-wrap: balance; }
     &.syn-body { font: 400 var(--syn-type-body)/var(--syn-leading-body) var(--syn-font-ui); }
     &.syn-text-support { font: 400 var(--syn-type-sm)/1.5 var(--syn-font-ui); color: var(--syn-text-subtle); }
-    /* Opt-in vertical rhythm; does not alter unwrapped host document styles. */
-    &.syn-prose { max-width: 65ch; font: 400 var(--syn-type-body)/var(--syn-leading-body) var(--syn-font-ui); }
+    /* Opt-in document presentation accepts generator-owned classes without
+       styling the contents of an embedded, separately scoped Syntyr component.
+       The existing top-level rhythm still places such a component in the flow. */
+    &.syn-prose { max-inline-size: 65ch; min-inline-size: 0; font: 400 var(--syn-type-body)/var(--syn-leading-body) var(--syn-font-ui); }
     &.syn-prose > :where(* + *) { margin-block-start: var(--syn-space-2); }
-    &.syn-prose > :where(h2, h3, h4) { margin-block-start: var(--syn-space-4); }
+    &.syn-prose > :where(h2, h3, h4, h5, h6):not(:first-child) { margin-block-start: var(--syn-space-4); }
+    &.syn-prose :where(:not(.syn-prose .syn-root, .syn-prose .syn-root *)) {
+      &:where(h1, h2, h3, h4, h5, h6) { font-family: var(--syn-font-display); line-height: 1.25; overflow-wrap: anywhere; }
+      &:where(h1) { font-size: var(--syn-type-section); }
+      &:where(h2) { font-size: var(--syn-type-heading); }
+      &:where(h3) { font-size: 1.125em; }
+      &:where(h4, h5, h6) { font-size: var(--syn-type-base); }
+      &:where(p, li, dd, figcaption, td, th) { overflow-wrap: anywhere; }
+      /* Keep nested lists usable even in narrow, enlarged-text columns. */
+      &:where(ul, ol) { padding-inline-start: min(1.5em, 12%); }
+      &:where(li + li) { margin-block-start: var(--syn-space-1); }
+      &:where(blockquote) { margin-inline: 0; padding-inline-start: var(--syn-space-3); border-inline-start: 2px solid var(--syn-frame); color: var(--syn-text-subtle); }
+      &:where(figure) { margin-inline: 0; max-inline-size: 100%; }
+      &:where(figcaption, caption) { color: var(--syn-text-subtle); font-size: var(--syn-type-sm); text-align: start; }
+      &:where(img, video) { max-inline-size: 100%; block-size: auto; }
+      &:where(pre) {
+        min-inline-size: 0; max-inline-size: 100%; overflow-x: auto;
+        padding: var(--syn-space-2); border: 1px solid var(--syn-frame);
+        border-radius: var(--syn-radius); background: var(--syn-surface-recessed);
+        font: var(--syn-type-sm)/1.5 var(--syn-mono); tab-size: 2;
+      }
+      &:where(code):not(:where(pre code)) { font-family: var(--syn-mono); overflow-wrap: anywhere; }
+      &:where(table) { inline-size: 100%; border-collapse: collapse; text-align: start; }
+      &:where(th, td) { padding: var(--syn-space-2); border-block-end: 1px solid var(--syn-frame); }
+      &:where(hr) { border: 0; border-block-start: 1px solid var(--syn-frame); }
+    }
     /* Explicit native content lists for core-only consumers. Native list markers,
        numbering, reversed/start/value semantics and wrapping remain intact. */
     &.syn-list {

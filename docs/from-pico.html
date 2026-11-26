@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Migrate from Pico CSS to Syntyr with semantic HTML, explicit component styling, theme tokens, and minimal runtime dependencies.">
-  <meta name="syntyr-source-sha256" content="923ea0b5a3449995aeec938203fb96740a92f1db0e0b001de86e02bfc687ce1d">
+  <meta name="syntyr-source-sha256" content="5f1061caa98dfa815d3ca22b4a6cb832443358e65fe92e68fa46af11e31ab317">
   <meta name="theme-color" content="#f5f7fb">
   <title>Moving from Pico.css to Syntyr — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/from-pico">
@@ -136,6 +136,24 @@ cross-framework performance advantage has been established.</p>
 <p>See <a href="distribution.html">distribution</a>, <a href="components.html">component contract</a>,
 <a href="framework-integrations.html">framework integrations</a>, and
 <a href="performance-validation.html">performance validation</a>.</p>
+<h2 id="moving-from-simplecss">Moving from Simple.css</h2>
+<p>Simple.css and Syntyr both support ordinary HTML with no required runtime
+JavaScript. Simple.css applies document styling globally; Syntyr intentionally
+scopes it to opted-in regions. This is not a drop-in replacement, and Simple.css
+custom properties are not Syntyr tokens.</p>
+<p>For the unreleased alpha.5 candidate, copy <code>dist/presets/minimal.css</code> to
+your site and remove the old global framework stylesheet from that page.
+This preset already contains core and semantic CSS; do not load either again.
+Use <code>syn-root syn-page</code> on the page, <code>syn-shell syn-prose</code> on a document,
+and <code>syn-semantic</code> on regions where you want classless form and other native
+control styling. Choose <code>data-syn-theme=&quot;auto&quot;</code> for system-aware appearance.</p>
+<p><a href="../examples/document-starter.html">Open the zero-script document starter</a>.
+It includes generated-content specimens, a named scrollable table,
+a focusable code region, a figure, task lists and a separate embedded component.
+It uses the minimal preset plus optional print CSS; the print stylesheet is
+not included in minimal. See the <a href="static-site-generators.html">static-site generator guide</a>
+for the document boundary and renderer responsibilities. The enhanced
+document presentation is candidate-only, not part of immutable alpha.4.</p>
         </article>
         <aside class="docs-article-sidebar">
           <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
@@ -143,6 +161,7 @@ cross-framework performance advantage has been established.</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#key-differences">Key differences</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#migration-sequence">Migration sequence</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#when-not-to-migrate">When not to migrate</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#moving-from-simplecss">Moving from Simple.css</a>
           </nav>
           <details class="docs-article-toc-mobile">
             <summary>On this page <span>Jump to section</span></summary>
@@ -151,6 +170,7 @@ cross-framework performance advantage has been established.</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#key-differences">Key differences</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#migration-sequence">Migration sequence</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#when-not-to-migrate">When not to migrate</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#moving-from-simplecss">Moving from Simple.css</a>
             </nav>
           </details>
         </aside>
