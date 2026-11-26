@@ -7,12 +7,21 @@ import shutil
 import subprocess
 import tempfile
 import unittest
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "scripts/audit_repository_secrets.sh"
 
 
 class CredentialAuditTest(unittest.TestCase):
+    def setUp(self):
+        env = patch.dict(os.environ)
+        env.start()
+        self.addCleanup(env.stop)
+        for name in ("GIT_DIR", "GIT_WORK_TREE", "GIT_INDEX_FILE", "GIT_COMMON_DIR",
+                     "GIT_OBJECT_DIRECTORY", "GIT_ALTERNATE_OBJECT_DIRECTORIES"):
+            os.environ.pop(name, None)
+
     def test_exceptions_are_exact_historical_fingerprints(self):
         entries = [line for line in (ROOT / ".gitleaksignore").read_text().splitlines()
                    if line and not line.startswith("#")]
@@ -32,6 +41,8 @@ class CredentialAuditTest(unittest.TestCase):
         self.assertIn("--is-shallow-repository", wrapper)
         self.assertIn("--redact=100", wrapper)
         self.assertIn("--ignore-gitleaks-allow", wrapper)
+        self.assertIn('--log-opts="--diff-merges=first-parent HEAD"', wrapper)
+        self.assertNotIn("--first-parent HEAD", wrapper)
         self.assertNotIn("--report-path", wrapper)
 
     @unittest.skipUnless(shutil.which("git") and shutil.which("sh"), "Git/sh are maintainer-only")
@@ -82,6 +93,13 @@ class CredentialAuditTest(unittest.TestCase):
             # Only the merge result contains this synthetic value.
             fake = "ghp_" + secrets.token_hex(18)
             self.commit(root, "settings.txt", "token=" + fake + "\n")
+            parents = subprocess.check_output(["git", "show", "-s", "--format=%P", "HEAD"],
+                                               cwd=root, text=True).split()
+            self.assertEqual(len(parents), 2)
+            for parent in parents:
+                paths = subprocess.check_output(["git", "ls-tree", "--name-only", parent],
+                                                 cwd=root, text=True).splitlines()
+                self.assertNotIn("settings.txt", paths)
 
             result = subprocess.run(["sh", str(SCRIPT)], cwd=root, capture_output=True, text=True)
             self.assertEqual(result.returncode, 1)

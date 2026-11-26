@@ -8,6 +8,7 @@ if [ "$(git -C "$root" rev-parse --is-shallow-repository)" != false ]; then
 fi
 # Use default built-in rules, not an ambient override or inline allow comment.
 unset GITLEAKS_CONFIG GITLEAKS_CONFIG_TOML
+export GIT_NO_REPLACE_OBJECTS=1
 if [ -e "$root/.gitleaks.toml" ]; then
     echo 'Unexpected scanner configuration; review before scanning' >&2
     exit 2

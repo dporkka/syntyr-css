@@ -44,7 +44,9 @@ Gitleaks binary after fetching full Git history. The manual/tag Woodpecker
 pilot uses a checksum-pinned official Gitleaks release. It refuses a shallow
 checkout, suppresses secret values from logs, and uses only exact historical
 fingerprints for reviewed false positives (one example authorization
-placeholder and four generated registry content digests). Do not broadly
+placeholder, its two merge-patch repetitions, and four generated registry
+content digests). The scan includes merge patches without limiting ancestry
+traversal to first parents. Do not broadly
 exclude file paths or normalize new findings into the ignore file without
 checking the underlying content. The scan covers the checked-out commit's
 ancestry, not arbitrary other branches, remote services or untracked secrets.
