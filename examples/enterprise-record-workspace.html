@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Original zero-JavaScript Syntyr enterprise record workspace, grouped tables, record inspectors and reconciled analytics.">
+  <title>Enterprise record workspace — Syntyr CSS</title>
+  <link rel="stylesheet" href="../dist/syntyr.core.css">
+  <link rel="stylesheet" href="../dist/syntyr.recipes.css">
+  <link rel="stylesheet" href="../dist/syntyr.viz.css">
+</head>
+<body class="syn-root syn-page" data-syn-theme="studio" data-syn-density="compact" data-syn-intensity="quiet">
+  <main id="main" class="syn-shell syn-stack">
+    <header class="syn-page-header">
+      <div>
+        <p class="syn-eyebrow">Syntyr / Enterprise workspaces</p>
+        <h1>Inventory workspace</h1>
+        <p class="syn-muted">Illustrative inventory snapshot · December 2026 · USD. Group disclosure, navigation and record inspection are native browser interactions. No live data or mutations.</p>
+      </div>
+      <div class="syn-page-header__actions">
+        <a class="syn-button" href="../docs/recipes.html#grouped-enterprise-record-workspace-alpha5-source-candidate">Composition guide</a>
+        <a class="syn-button syn-button--outline" href="../docs/data-grid.html">Grid integration</a>
+      </div>
+    </header>
+    <nav class="syn-view-switcher" aria-label="Workspace sections">
+      <a href="#records">Records</a>
+      <a href="#analytics">Analytics</a>
+      <a href="#integration">Integration notes</a>
+    </nav>
+
+    <section class="syn-stack" aria-labelledby="snapshot-title">
+      <h2 class="syn-heading" id="snapshot-title">Snapshot at a glance</h2>
+      <div class="syn-kpi-grid">
+        <article class="syn-app-card">
+          <h3 class="syn-stat-label">Total records</h3>
+          <p class="syn-stat-value" id="record-count">6</p>
+          <p class="syn-caption">All status groups</p>
+        </article>
+        <article class="syn-app-card">
+          <h3 class="syn-stat-label">Total estimated value</h3>
+          <p class="syn-stat-value" id="potential">$16,400</p>
+          <p class="syn-caption">Illustrative values, not recognized revenue</p>
+        </article>
+        <article class="syn-app-card">
+          <h3 class="syn-stat-label">Booked value</h3>
+          <p class="syn-stat-value" id="booked-amount">$7,000</p>
+          <p class="syn-caption">Subset of total estimated value</p>
+        </article>
+        <article class="syn-app-card">
+          <h3 class="syn-stat-label">Needs review</h3>
+          <p class="syn-stat-value" id="review-count">2</p>
+          <p class="syn-caption">Records awaiting review</p>
+        </article>
+      </div>
+    </section>
+
+    <div class="syn-detail-layout">
+      <section id="records" class="syn-detail-main syn-app-card syn-stack" aria-labelledby="records-title">
+        <div class="syn-collection-toolbar">
+          <div>
+            <h2 id="records-title" class="syn-heading">Records by status</h2>
+            <p class="syn-caption">6 records · grouped snapshot · collapse or expand each group below.</p>
+          </div>
+          <nav class="syn-view-switcher" aria-label="Jump to record group">
+            <a href="#booked">Booked</a>
+            <a href="#review">Needs review</a>
+            <a href="#available">Available</a>
+          </nav>
+        </div>
+        <p class="syn-muted">Collapsing a group only hides its rows. Counts and totals continue to describe the full snapshot.</p>
+        <details id="booked" class="syn-details" open>
+          <summary><span class="syn-status syn-status--success">Booked</span> · 2 records · $7,000</summary>
+          <div class="syn-table-wrap" role="region" tabindex="0" aria-label="Booked records; horizontally scrollable">
+            <table class="syn-table syn-table--compact">
+              <caption>Booked inventory records</caption>
+              <thead><tr><th scope="col">Record</th><th scope="col">Owner</th><th scope="col">Availability date</th><th scope="col" class="syn-cell--numeric">Estimated value</th></tr></thead>
+              <tbody>
+                <tr>
+                  <th scope="row"><button type="button" class="syn-button syn-button--ghost" popovertarget="record-inv-102">INV-102 · Harbor North<span class="syn-caption"> — inspect</span></button></th>
+                  <td>Operations</td><td><time datetime="2026-12-01">2026-12-01</time></td><td class="syn-cell--numeric"><data value="4200">$4,200</data></td>
+                </tr>
+                <tr>
+                  <th scope="row"><button type="button" class="syn-button syn-button--ghost" popovertarget="record-inv-108">INV-108 · Civic Loop<span class="syn-caption"> — inspect</span></button></th>
+                  <td>Sales</td><td><time datetime="2026-12-04">2026-12-04</time></td><td class="syn-cell--numeric"><data value="2800">$2,800</data></td>
+                </tr>
+              </tbody>
+              <tfoot><tr><th scope="row" colspan="3">Group estimated value</th><td class="syn-cell--numeric"><data value="7000">$7,000</data></td></tr></tfoot>
+            </table>
+          </div>
+        </details>
+        <details id="review" class="syn-details" open>
+          <summary><span class="syn-status syn-status--warning">Needs review</span> · 2 records · $5,500</summary>
+          <div class="syn-table-wrap" role="region" tabindex="0" aria-label="Needs review records; horizontally scrollable">
+            <table class="syn-table syn-table--compact">
+              <caption>Needs review inventory records</caption>
+              <thead><tr><th scope="col">Record</th><th scope="col">Owner</th><th scope="col">Availability date</th><th scope="col" class="syn-cell--numeric">Estimated value</th></tr></thead>
+              <tbody>
+                <tr>
+                  <th scope="row"><button type="button" class="syn-button syn-button--ghost" popovertarget="record-inv-214">INV-214 · Riverside East<span class="syn-caption"> — inspect</span></button></th>
+                  <td>Field</td><td><time datetime="2026-12-05">2026-12-05</time></td><td class="syn-cell--numeric"><data value="3600">$3,600</data></td>
+                </tr>
+                <tr>
+                  <th scope="row"><button type="button" class="syn-button syn-button--ghost" popovertarget="record-inv-219">INV-219 · Airport West<span class="syn-caption"> — inspect</span></button></th>
+                  <td>Operations</td><td><time datetime="2026-12-08">2026-12-08</time></td><td class="syn-cell--numeric"><data value="1900">$1,900</data></td>
+                </tr>
+              </tbody>
+              <tfoot><tr><th scope="row" colspan="3">Group estimated value</th><td class="syn-cell--numeric"><data value="5500">$5,500</data></td></tr></tfoot>
+            </table>
+          </div>
+        </details>
+        <details id="available" class="syn-details" open>
+          <summary><span class="syn-status">Available</span> · 2 records · $3,900</summary>
+          <div class="syn-table-wrap" role="region" tabindex="0" aria-label="Available records; horizontally scrollable">
+            <table class="syn-table syn-table--compact">
+              <caption>Available inventory records</caption>
+              <thead><tr><th scope="col">Record</th><th scope="col">Owner</th><th scope="col">Availability date</th><th scope="col" class="syn-cell--numeric">Estimated value</th></tr></thead>
+              <tbody>
+                <tr>
+                  <th scope="row"><button type="button" class="syn-button syn-button--ghost" popovertarget="record-inv-309">INV-309 · Summit Plaza<span class="syn-caption"> — inspect</span></button></th>
+                  <td>Sales</td><td><time datetime="2026-12-10">2026-12-10</time></td><td class="syn-cell--numeric"><data value="2400">$2,400</data></td>
+                </tr>
+                <tr>
+                  <th scope="row"><button type="button" class="syn-button syn-button--ghost" popovertarget="record-inv-316">INV-316 · Transit Hub<span class="syn-caption"> — inspect</span></button></th>
+                  <td>Field</td><td><time datetime="2026-12-12">2026-12-12</time></td><td class="syn-cell--numeric"><data value="1500">$1,500</data></td>
+                </tr>
+              </tbody>
+              <tfoot><tr><th scope="row" colspan="3">Group estimated value</th><td class="syn-cell--numeric"><data value="3900">$3,900</data></td></tr></tfoot>
+            </table>
+          </div>
+        </details>
+        <p><strong>All groups: <data id="grand-total" value="16400">$16,400</data> estimated value.</strong></p>
+      </section>
+
+      <aside id="analytics" class="syn-detail-aside syn-app-card syn-stack" aria-labelledby="analytics-title">
+        <div>
+          <h2 id="analytics-title" class="syn-heading">Value by status</h2>
+          <p class="syn-caption">December snapshot · all groups, including collapsed ones</p>
+        </div>
+        <figure class="syn-chart">
+          <figcaption class="syn-chart-title">Share of total estimated value</figcaption>
+          <ul class="syn-viz-bars">
+            <li class="syn-viz-bar">
+              <div class="syn-viz-bar-label"><span>Booked</span><data value="7000">$7,000 (42.7%)</data></div>
+              <div class="syn-viz-bar-track" aria-hidden="true"><div class="syn-viz-bar-fill" style="--syn-viz-value:42.682927"></div></div>
+            </li>
+            <li class="syn-viz-bar">
+              <div class="syn-viz-bar-label"><span>Needs review</span><data value="5500">$5,500 (33.5%)</data></div>
+              <div class="syn-viz-bar-track" aria-hidden="true"><div class="syn-viz-bar-fill" style="--syn-viz-value:33.536585"></div></div>
+            </li>
+            <li class="syn-viz-bar">
+              <div class="syn-viz-bar-label"><span>Available</span><data value="3900">$3,900 (23.8%)</data></div>
+              <div class="syn-viz-bar-track" aria-hidden="true"><div class="syn-viz-bar-fill" style="--syn-viz-value:23.780488"></div></div>
+            </li>
+          </ul>
+        </figure>
+        <p class="syn-caption">Bars are calculated from illustrative record values; legible amounts and percentages remain available without color.</p>
+        <hr>
+        <h3 class="syn-heading">Record inspection</h3>
+        <p>Select a record in any group to open its native, nonmodal detail sheet. Close the sheet to return to the collection.</p>
+        <a href="#records" class="syn-button syn-button--outline">Return to records</a>
+      </aside>
+    </div>
+
+    <section id="integration" class="syn-app-card syn-stack" aria-labelledby="integration-title">
+      <h2 id="integration-title" class="syn-heading">Host application responsibilities</h2>
+      <p>This is a static, copy-owned source-candidate composition. A backend computes grouping, filters, summary values, pagination and authorization from the same query. Native disclosure is not a saved view or a filter.</p>
+      <p>For real list-to-detail navigation and safe local-only record edits, use the <a href="https://github.com/dporkka/syntyr-css/tree/main/examples/go-resource-workbench">runnable Go resource workbench</a>. For an editable form, reuse the <a href="form-state-contracts.html">form-state contracts</a>; pending, failed and conflict states must reflect actual application outcomes.</p>
+      <p class="syn-caption">Requires matching unreleased alpha.5 source stylesheets. The sample contains no real customer data, JavaScript, persistent application state or remote runtime assets.</p>
+    </section>
+  </main>
+  <div id="record-inv-102" class="syn-sheet" popover="auto" role="dialog" aria-labelledby="record-inv-102-title">
+    <header class="syn-sheet-header">
+      <div><p class="syn-eyebrow">INV-102</p><h2 id="record-inv-102-title">Harbor North</h2><span class="syn-status syn-status--success">Booked</span></div>
+      <button type="button" class="syn-button syn-button--ghost" popovertarget="record-inv-102" popovertargetaction="hide">Close</button>
+    </header>
+    <section class="syn-sheet-body" tabindex="0" aria-labelledby="record-inv-102-details">
+      <h3 id="record-inv-102-details">Record details</h3>
+      <dl class="syn-record-fields">
+        <div><dt>Owner</dt><dd>Operations</dd></div>
+        <div><dt>Availability date</dt><dd><time datetime="2026-12-01">2026-12-01</time></dd></div>
+        <div><dt>Estimated value</dt><dd><data value="4200">$4,200</data></dd></div>
+      </dl>
+      <p>Installation confirmed; artwork is approved.</p>
+      <p class="syn-caption">Read-only sample. No record changes are available in this snapshot.</p>
+    </section>
+    <footer class="syn-sheet-footer">
+      <button type="button" class="syn-button syn-button--primary" popovertarget="record-inv-102" popovertargetaction="hide">Done</button>
+    </footer>
+  </div>
+  <div id="record-inv-108" class="syn-sheet" popover="auto" role="dialog" aria-labelledby="record-inv-108-title">
+    <header class="syn-sheet-header">
+      <div><p class="syn-eyebrow">INV-108</p><h2 id="record-inv-108-title">Civic Loop</h2><span class="syn-status syn-status--success">Booked</span></div>
+      <button type="button" class="syn-button syn-button--ghost" popovertarget="record-inv-108" popovertargetaction="hide">Close</button>
+    </header>
+    <section class="syn-sheet-body" tabindex="0" aria-labelledby="record-inv-108-details">
+      <h3 id="record-inv-108-details">Record details</h3>
+      <dl class="syn-record-fields">
+        <div><dt>Owner</dt><dd>Sales</dd></div>
+        <div><dt>Availability date</dt><dd><time datetime="2026-12-04">2026-12-04</time></dd></div>
+        <div><dt>Estimated value</dt><dd><data value="2800">$2,800</data></dd></div>
+      </dl>
+      <p>Booking confirmed; delivery is scheduled.</p>
+      <p class="syn-caption">Read-only sample. No record changes are available in this snapshot.</p>
+    </section>
+    <footer class="syn-sheet-footer">
+      <button type="button" class="syn-button syn-button--primary" popovertarget="record-inv-108" popovertargetaction="hide">Done</button>
+    </footer>
+  </div>
+  <div id="record-inv-214" class="syn-sheet" popover="auto" role="dialog" aria-labelledby="record-inv-214-title">
+    <header class="syn-sheet-header">
+      <div><p class="syn-eyebrow">INV-214</p><h2 id="record-inv-214-title">Riverside East</h2><span class="syn-status syn-status--warning">Needs review</span></div>
+      <button type="button" class="syn-button syn-button--ghost" popovertarget="record-inv-214" popovertargetaction="hide">Close</button>
+    </header>
+    <section class="syn-sheet-body" tabindex="0" aria-labelledby="record-inv-214-details">
+      <h3 id="record-inv-214-details">Record details</h3>
+      <dl class="syn-record-fields">
+        <div><dt>Owner</dt><dd>Field</dd></div>
+        <div><dt>Availability date</dt><dd><time datetime="2026-12-05">2026-12-05</time></dd></div>
+        <div><dt>Estimated value</dt><dd><data value="3600">$3,600</data></dd></div>
+      </dl>
+      <p>Verify the installation window before approval.</p>
+      <p class="syn-caption">Read-only sample. No record changes are available in this snapshot.</p>
+    </section>
+    <footer class="syn-sheet-footer">
+      <button type="button" class="syn-button syn-button--primary" popovertarget="record-inv-214" popovertargetaction="hide">Done</button>
+    </footer>
+  </div>
+  <div id="record-inv-219" class="syn-sheet" popover="auto" role="dialog" aria-labelledby="record-inv-219-title">
+    <header class="syn-sheet-header">
+      <div><p class="syn-eyebrow">INV-219</p><h2 id="record-inv-219-title">Airport West</h2><span class="syn-status syn-status--warning">Needs review</span></div>
+      <button type="button" class="syn-button syn-button--ghost" popovertarget="record-inv-219" popovertargetaction="hide">Close</button>
+    </header>
+    <section class="syn-sheet-body" tabindex="0" aria-labelledby="record-inv-219-details">
+      <h3 id="record-inv-219-details">Record details</h3>
+      <dl class="syn-record-fields">
+        <div><dt>Owner</dt><dd>Operations</dd></div>
+        <div><dt>Availability date</dt><dd><time datetime="2026-12-08">2026-12-08</time></dd></div>
+        <div><dt>Estimated value</dt><dd><data value="1900">$1,900</data></dd></div>
+      </dl>
+      <p>Awaiting site inspection evidence.</p>
+      <p class="syn-caption">Read-only sample. No record changes are available in this snapshot.</p>
+    </section>
+    <footer class="syn-sheet-footer">
+      <button type="button" class="syn-button syn-button--primary" popovertarget="record-inv-219" popovertargetaction="hide">Done</button>
+    </footer>
+  </div>
+  <div id="record-inv-309" class="syn-sheet" popover="auto" role="dialog" aria-labelledby="record-inv-309-title">
+    <header class="syn-sheet-header">
+      <div><p class="syn-eyebrow">INV-309</p><h2 id="record-inv-309-title">Summit Plaza</h2><span class="syn-status">Available</span></div>
+      <button type="button" class="syn-button syn-button--ghost" popovertarget="record-inv-309" popovertargetaction="hide">Close</button>
+    </header>
+    <section class="syn-sheet-body" tabindex="0" aria-labelledby="record-inv-309-details">
+      <h3 id="record-inv-309-details">Record details</h3>
+      <dl class="syn-record-fields">
+        <div><dt>Owner</dt><dd>Sales</dd></div>
+        <div><dt>Availability date</dt><dd><time datetime="2026-12-10">2026-12-10</time></dd></div>
+        <div><dt>Estimated value</dt><dd><data value="2400">$2,400</data></dd></div>
+      </dl>
+      <p>Open for allocation; no booking yet.</p>
+      <p class="syn-caption">Read-only sample. No record changes are available in this snapshot.</p>
+    </section>
+    <footer class="syn-sheet-footer">
+      <button type="button" class="syn-button syn-button--primary" popovertarget="record-inv-309" popovertargetaction="hide">Done</button>
+    </footer>
+  </div>
+  <div id="record-inv-316" class="syn-sheet" popover="auto" role="dialog" aria-labelledby="record-inv-316-title">
+    <header class="syn-sheet-header">
+      <div><p class="syn-eyebrow">INV-316</p><h2 id="record-inv-316-title">Transit Hub</h2><span class="syn-status">Available</span></div>
+      <button type="button" class="syn-button syn-button--ghost" popovertarget="record-inv-316" popovertargetaction="hide">Close</button>
+    </header>
+    <section class="syn-sheet-body" tabindex="0" aria-labelledby="record-inv-316-details">
+      <h3 id="record-inv-316-details">Record details</h3>
+      <dl class="syn-record-fields">
+        <div><dt>Owner</dt><dd>Field</dd></div>
+        <div><dt>Availability date</dt><dd><time datetime="2026-12-12">2026-12-12</time></dd></div>
+        <div><dt>Estimated value</dt><dd><data value="1500">$1,500</data></dd></div>
+      </dl>
+      <p>Open for allocation; confirm availability before booking.</p>
+      <p class="syn-caption">Read-only sample. No record changes are available in this snapshot.</p>
+    </section>
+    <footer class="syn-sheet-footer">
+      <button type="button" class="syn-button syn-button--primary" popovertarget="record-inv-316" popovertargetaction="hide">Done</button>
+    </footer>
+  </div>
+</body>
+</html>

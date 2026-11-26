@@ -44,6 +44,14 @@
               <option value="name" {{if .SortName}}selected{{end}}>Name A–Z</option>
             </select>
           </label>
+          <div class="syn-filter-field">
+            <label for="resource-group">Group by</label>
+            <select class="syn-select" id="resource-group" name="group">
+              <option value="" {{if eq .Group ""}}selected{{end}}>None</option>
+              <option value="status" {{if eq .Group "status"}}selected{{end}}>Status</option>
+              <option value="region" {{if eq .Group "region"}}selected{{end}}>Region</option>
+            </select>
+          </div>
           <label class="syn-filter-field" for="resource-theme">Theme
             <select class="syn-select" id="resource-theme" name="theme">
               <option value="studio" {{if .ThemeStudio}}selected{{end}}>Studio</option>
@@ -99,6 +107,7 @@
             <input type="hidden" name="q" value="{{.Query}}">
             <input type="hidden" name="status" value="{{.Status}}">
             <input type="hidden" name="sort" value="{{.Sort}}">
+            <input type="hidden" name="group" value="{{.Group}}">
             <input type="hidden" name="page" value="{{.Page}}">
             <input type="hidden" name="theme" value="{{.Theme}}">
             <input type="hidden" name="columns_present" value="1">
@@ -108,7 +117,9 @@
               <table class="syn-table syn-table--compact">
                 <caption>Server-filtered fictional resources. Select the IDs you want to preview.</caption>
                 <thead><tr><th scope="col">Select</th><th scope="col">Resource</th>{{if .ShowOwner}}<th scope="col">Owner</th>{{end}}{{if .ShowRegion}}<th scope="col">Region</th>{{end}}<th scope="col">Status</th><th scope="col">Updated</th></tr></thead>
+                {{range .Groups}}
                 <tbody>
+                  {{if $.Group}}<tr><th scope="rowgroup" colspan="{{$.ColumnCount}}">{{.Label}} · {{len .Rows}} on this page · {{.Total}} matching in group</th></tr>{{end}}
                   {{range .Rows}}
                     <tr>
                       <td><label for="check-{{.ID}}"><input id="check-{{.ID}}" type="checkbox" name="ids" value="{{.ID}}"> <span class="syn-caption">Select {{.ID}}</span></label></td>
@@ -120,6 +131,7 @@
                     </tr>
                   {{end}}
                 </tbody>
+                {{end}}
               </table>
             </div>
             <div class="syn-bulk-actions">
@@ -157,6 +169,7 @@
           <form method="post" action="/resource/edit" class="syn-stack" aria-label="Edit selected resource">
             <input type="hidden" name="id" value="{{.Selected.ID}}">
             <input type="hidden" name="theme" value="{{.Theme}}">
+            <input type="hidden" name="group" value="{{.Group}}">
             <input type="hidden" name="csrf_token" value="{{.EditToken}}">
             <h4 class="syn-heading">Edit this record</h4>
             <label for="edit-owner">Owner
@@ -169,8 +182,13 @@
                 <option value="done" {{if eq .Selected.Status "done"}}selected{{end}}>Done</option>
               </select>
             </label>
-            <button class="syn-button syn-button--primary" type="submit">Save local change</button>
-            <p class="syn-caption">Native POST + redirect + GET. This demo stores changes in memory only and has no user authentication. Do not expose it publicly.</p>
+            <div class="syn-form-actions">
+              <div class="syn-form-actions__buttons">
+                <button class="syn-button syn-button--primary" type="submit">Save local change</button>
+                <a class="syn-button" href="{{.ReturnURL}}">Cancel edit</a>
+              </div>
+            </div>
+            <p class="syn-caption">Native POST + redirect + GET. Saving returns to the edited record in the unfiltered collection, preserving the theme and grouping. This demo stores changes in memory only and has no user authentication. Do not expose it publicly.</p>
           </form>
           {{end}}
         {{else}}

@@ -129,6 +129,7 @@ Browse the curated entry points above, or expand the full reference index below.
 - [Live website on Cloudflare](https://syntyr-css.pages.dev/)
 - [Tailwind alternative decision guide](docs/tailwind-alternative.html): honest tradeoffs against Tailwind v4 and plain CSS, free SaaS demos, and HTML-first adoption guidance.
 - [Server-rendered validation states](examples/form-state-contracts.html) and [dependency-aware, collision-safe local registry planner](docs/blocks-guide.md) (unreleased alpha.5 candidate).
+- [Grouped enterprise record workspace](examples/enterprise-record-workspace.html): native group disclosure, record detail sheets, reconciled snapshot summaries and visualization using existing alpha.5 styles; read-only fictional data, zero JavaScript.
 - [Native enterprise data table example](examples/data-tables.html) and [accessible table guide](docs/data-tables.html)
 - [Design resources directory](https://syntyr-css.pages.dev/docs/design-resources.html): curated galleries, design systems, accessibility, typography, motion and Syntyr study priorities.
 - [Component gallery](https://syntyr-css.pages.dev/docs/)

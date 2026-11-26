@@ -182,3 +182,49 @@ func TestInspectorHonorsVisiblePage(t *testing.T) {
 		t.Fatal("inspector must open a visible current-page record")
 	}
 }
+
+func TestGroupingUsesAllMatchingCountsButOnlyVisibleRows(t *testing.T) {
+	code, body := request(t, "/resources?group=status&sort=name&columns_present=1")
+	if code != http.StatusOK ||
+		!strings.Contains(body, `<th scope="rowgroup" colspan="4">active · 2 on this page · 2 matching in group</th>`) ||
+		!strings.Contains(body, "done · 1 on this page · 2 matching in group") ||
+		strings.Contains(body, "review ·") {
+		t.Fatalf("incorrect grouping or page counts: code=%d", code)
+	}
+	if strings.Index(body, "Airport Loop") > strings.Index(body, "Civic Center") {
+		t.Fatal("the selected sort must be retained within the group")
+	}
+	_, body = request(t, "/resources?group=status&sort=name&page=2")
+	if !strings.Contains(body, "done · 1 on this page · 2 matching in group") ||
+		!strings.Contains(body, "review · 2 on this page · 2 matching in group") {
+		t.Fatal("a split group must retain its full matching count")
+	}
+	_, body = request(t, "/resources?group=region&q=North")
+	if !strings.Contains(body, "North · 2 on this page · 2 matching in group") ||
+		strings.Contains(body, "West ·") {
+		t.Fatal("group totals must use only filtered records")
+	}
+}
+
+func TestGroupingPersistsAcrossPaginationAndSelection(t *testing.T) {
+	code, body := request(t, "/resources?group=status&sort=name")
+	if code != http.StatusOK ||
+		!strings.Contains(body, "group=status&amp;") ||
+		!strings.Contains(body, `name="group" value="status"`) {
+		t.Fatal("grouping must survive navigation and checked selection")
+	}
+	_, body = request(t, "/preview?group=status&sort=name&page=2&ids=RS-301")
+	if !strings.Contains(body, "No resources selected") {
+		t.Fatal("checked selection must use the grouped, paginated result set")
+	}
+	_, body = request(t, "/preview?group=status&sort=name&page=2&scope=matching")
+	if !strings.Contains(body, "6 selected.") {
+		t.Fatal("matching preview must still span all grouped pages")
+	}
+	for _, path := range []string{"/resources?group=owner", "/resources?group=status&group=region", "/preview?scope=matching&group=unknown"} {
+		code, _ := request(t, path)
+		if code != http.StatusBadRequest {
+			t.Errorf("%s: expected 400, got %d", path, code)
+		}
+	}
+}

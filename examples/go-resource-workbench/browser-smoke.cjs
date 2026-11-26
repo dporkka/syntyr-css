@@ -96,6 +96,30 @@ async function run(browserType, name, base) {
     assert(await paged.getByText("1 selected.").count()>0);
     await paged.close();
 
+    const grouped=await browser.newPage({viewport:{width:390,height:844},javaScriptEnabled:false});
+    await grouped.goto(base+"/resources?sort=name");
+    await grouped.getByLabel("Group by").selectOption("status");
+    await grouped.getByRole("button",{name:"Apply view"}).click();
+    assert(grouped.url().includes("group=status"),"grouping must be owned by the GET query");
+    assert(await grouped.getByText("active · 2 on this page · 2 matching in group").count()>0);
+    assert(await grouped.getByText("done · 1 on this page · 2 matching in group").count()>0);
+    await grouped.getByRole("link",{name:"Next"}).click();
+    assert(grouped.url().includes("group=status") && grouped.url().includes("page=2"));
+    assert(await grouped.getByText("review · 2 on this page · 2 matching in group").count()>0);
+    await grouped.getByRole("checkbox",{name:/Select RS-204/}).check();
+    await grouped.getByRole("button",{name:"Preview checked"}).click();
+    assert(grouped.url().includes("group=status") && grouped.url().includes("ids=RS-204"));
+    assert(await grouped.getByText("1 selected.").count()>0);
+    await grouped.getByRole("link",{name:"Back to resource list"}).click();
+    await grouped.getByRole("link",{name:/Harbor East/}).click();
+    const ownerBefore=await grouped.locator("#edit-owner").inputValue();
+    await grouped.locator("#edit-owner").fill("Unsubmitted");
+    await grouped.getByRole("link",{name:"Cancel edit"}).click();
+    assert(grouped.url().includes("group=status") && grouped.url().includes("page=2"));
+    await grouped.getByRole("link",{name:/Harbor East/}).click();
+    assert.equal(await grouped.locator("#edit-owner").inputValue(),ownerBefore,"cancel must not mutate the record");
+    await grouped.close();
+
     const zoom=await browser.newPage({viewport:{width:320,height:740},javaScriptEnabled:false});
     await zoom.goto(base+"/resources?theme=studio");
     await zoom.evaluate(()=>document.documentElement.style.fontSize="64px");

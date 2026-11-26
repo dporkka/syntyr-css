@@ -25,15 +25,23 @@ type resourceRow struct {
 	DetailURL string
 }
 
+// A page may contain a slice of a larger matching group. Keep both scopes.
+type resourceGroup struct {
+	Label string
+	Total int
+	Rows  []resourceRow
+}
+
 const rowsPerPage = 3
 
 type pageData struct {
-	Query, Status, Sort, Theme                string
+	Query, Status, Sort, Theme, Group         string
 	ThemeStudio, ThemeGrid, ThemeNoir         bool
 	StatusActive, StatusReview, StatusDone    bool
 	SortName, SortUpdated                     bool
 	ShowOwner, ShowRegion                     bool
-	Rows                                      []resourceRow
+	Groups                                    []resourceGroup
+	ColumnCount                               int
 	Count                                     int
 	Page, TotalPages, FirstResult, LastResult int
 	HasPrevious, HasNext                      bool
@@ -87,7 +95,31 @@ func filterResources(rows []resource, q, status, ordering string) []resource {
 	})
 	return result
 }
-func baseValues(q, status, ordering string, showOwner, showRegion bool) url.Values {
+func validGroup(group string) bool {
+	return group == "" || group == "status" || group == "region"
+}
+
+func groupLabel(item resource, group string) string {
+	switch group {
+	case "status":
+		return item.Status
+	case "region":
+		return item.Region
+	default:
+		return ""
+	}
+}
+
+// Group before pagination, retaining the original sort order inside each group.
+func groupResources(rows []resource, group string) {
+	if group != "" {
+		sort.SliceStable(rows, func(i, j int) bool {
+			return groupLabel(rows[i], group) < groupLabel(rows[j], group)
+		})
+	}
+}
+
+func baseValues(q, status, ordering, group string, showOwner, showRegion bool) url.Values {
 	v := url.Values{"columns_present": {"1"}}
 	if q != "" {
 		v.Set("q", q)
@@ -97,6 +129,9 @@ func baseValues(q, status, ordering string, showOwner, showRegion bool) url.Valu
 	}
 	if ordering != "" {
 		v.Set("sort", ordering)
+	}
+	if group != "" {
+		v.Set("group", group)
 	}
 	if showOwner {
 		v.Add("columns", "owner")
@@ -130,14 +165,15 @@ func newHandler(distDir string) http.Handler {
 		q := limitedQuery(v.Get("q"))
 		status := v.Get("status")
 		ordering := v.Get("sort")
+		group := v.Get("group")
 		theme := v.Get("theme")
 		if theme == "" {
 			theme = "studio"
 		}
-		if (status != "" && status != "active" && status != "review" && status != "done") ||
+		if !validGroup(group) || len(v["group"]) > 1 || (status != "" && status != "active" && status != "review" && status != "done") ||
 			(ordering != "" && ordering != "updated" && ordering != "name") ||
 			(theme != "studio" && theme != "grid" && theme != "noir") {
-			http.Error(w, "Invalid filter or sort value", http.StatusBadRequest)
+			http.Error(w, "Invalid filter, sort or grouping value", http.StatusBadRequest)
 			return
 		}
 		showOwner, showRegion := true, true
@@ -157,6 +193,11 @@ func newHandler(distDir string) http.Handler {
 		}
 		rows := state.snapshot()
 		filtered := filterResources(rows, q, status, ordering)
+		groupResources(filtered, group)
+		groupTotals := make(map[string]int)
+		for _, item := range filtered {
+			groupTotals[groupLabel(item, group)]++
+		}
 		page := 1
 		if v.Has("page") {
 			var err error
@@ -174,39 +215,50 @@ func newHandler(distDir string) http.Handler {
 		first := (page - 1) * rowsPerPage
 		last := min(first+rowsPerPage, len(filtered))
 		visible := filtered[first:last]
-		params := baseValues(q, status, ordering, showOwner, showRegion)
+		params := baseValues(q, status, ordering, group, showOwner, showRegion)
 		params.Set("theme", theme)
 		params.Set("page", strconv.Itoa(page))
 		data := pageData{
-			Query: q, Status: status, Sort: ordering, Theme: theme,
+			Query: q, Status: status, Sort: ordering, Theme: theme, Group: group,
 			ThemeStudio: theme == "studio", ThemeGrid: theme == "grid", ThemeNoir: theme == "noir",
 			StatusActive: status == "active", StatusReview: status == "review", StatusDone: status == "done",
 			SortName: ordering == "name", SortUpdated: ordering != "name",
 			ShowOwner: showOwner, ShowRegion: showRegion,
-			Count: len(filtered), Rows: make([]resourceRow, 0, len(visible)),
+			Count: len(filtered), ColumnCount: 4,
 			Page: page, TotalPages: totalPages, FirstResult: first + 1, LastResult: last,
 			HasPrevious: page > 1, HasNext: page < totalPages,
 			AllPreviewURL: "", ReturnURL: link("/resources", params),
 			IsPreview: r.URL.Path == "/preview",
 		}
+		if showOwner {
+			data.ColumnCount++
+		}
+		if showRegion {
+			data.ColumnCount++
+		}
 		if data.HasPrevious {
-			previous := baseValues(q, status, ordering, showOwner, showRegion)
+			previous := baseValues(q, status, ordering, group, showOwner, showRegion)
 			previous.Set("theme", theme)
 			previous.Set("page", strconv.Itoa(page-1))
 			data.PreviousURL = link("/resources", previous)
 		}
 		if data.HasNext {
-			next := baseValues(q, status, ordering, showOwner, showRegion)
+			next := baseValues(q, status, ordering, group, showOwner, showRegion)
 			next.Set("theme", theme)
 			next.Set("page", strconv.Itoa(page+1))
 			data.NextURL = link("/resources", next)
 		}
 		for _, item := range visible {
-			detail := baseValues(q, status, ordering, showOwner, showRegion)
+			detail := baseValues(q, status, ordering, group, showOwner, showRegion)
 			detail.Set("id", item.ID)
 			detail.Set("theme", theme)
 			detail.Set("page", strconv.Itoa(page))
-			data.Rows = append(data.Rows, resourceRow{item, link("/resources", detail)})
+			label := groupLabel(item, group)
+			if len(data.Groups) == 0 || data.Groups[len(data.Groups)-1].Label != label {
+				data.Groups = append(data.Groups, resourceGroup{Label: label, Total: groupTotals[label]})
+			}
+			current := &data.Groups[len(data.Groups)-1]
+			current.Rows = append(current.Rows, resourceRow{item, link("/resources", detail)})
 			if item.ID == v.Get("id") && r.URL.Path != "/preview" {
 				selected := item
 				data.Selected = &selected
@@ -221,7 +273,7 @@ func newHandler(distDir string) http.Handler {
 			}
 		}
 		if len(filtered) > 0 {
-			all := baseValues(q, status, ordering, showOwner, showRegion)
+			all := baseValues(q, status, ordering, group, showOwner, showRegion)
 			all.Set("scope", "matching")
 			all.Set("theme", theme)
 			all.Set("page", strconv.Itoa(page))

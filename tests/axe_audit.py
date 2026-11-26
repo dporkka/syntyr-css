@@ -28,7 +28,7 @@ PAGES = ("index.html", "docs/index.html", "docs/catalog.html", "docs/blocks.html
          "examples/vertigo-admin.html", "examples/vertigo-resource-workflow.html", "examples/saas-workflows.html", "examples/data-tables.html", "examples/resource-workspace.html", "examples/native-workflows.html", "examples/crm.html", "examples/minimalist-patterns.html",
          "examples/design-states.html", "examples/symbols.html", "examples/native-elements.html",
          "examples/flagship-studio.html", "examples/flagship-noir.html", "examples/flagship-grid.html",
-         "examples/semantic-starter.html", "examples/native-apis.html", "examples/dropdowns.html", "examples/workflow-steps.html", "examples/enterprise-compositions.html", "examples/premium-compositions.html", "examples/operation-revisions.html",
+         "examples/semantic-starter.html", "examples/native-apis.html", "examples/dropdowns.html", "examples/workflow-steps.html", "examples/enterprise-compositions.html", "examples/enterprise-record-workspace.html", "examples/premium-compositions.html", "examples/operation-revisions.html",
 )
 
 def normalize_findings(page_path: str, result: dict) -> dict:
