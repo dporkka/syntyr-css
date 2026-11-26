@@ -7,7 +7,7 @@ when:
 
 steps:
   - name: html-inspector-go
-    image: golang:1.26.8-bookworm@sha256:dc9ad6c05acc7a88e5b71bde60a5fe3bd4b9f0db209011711b464107438a8107
+    image: golang:1.26.11-bookworm@sha256:ea47ee45f1284d60f9cc09cb2c3bb4f508c256b640bd8bb30342ff13d1adcb52
     commands:
       - cd tools/html-inspector
       - go mod download

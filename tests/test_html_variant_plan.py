@@ -1,5 +1,7 @@
 """Transactional preview planning through the real optional inspector."""
 import hashlib
+from contextlib import redirect_stdout
+import io
 import json
 import os
 from pathlib import Path
@@ -7,6 +9,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 
 from agent_mcp.catalog import CANDIDATE, PUBLISHED, CatalogError
 from agent_mcp.html_inspector import inspect_markup, plan_variants
@@ -120,6 +123,42 @@ class SourcePlanIntegrationTests(unittest.TestCase):
 
 @unittest.skipUnless(os.environ.get("SYNTYR_HTML_INSPECTOR"), "Configure optional inspector")
 class GuardedApplyTests(unittest.TestCase):
+    def test_cli_reports_creation_when_staging_cleanup_fails(self):
+        from scripts.syntyr_agent import main
+
+        report = inspect_markup(HTML, CANDIDATE, "button")
+        operation = {"element_id": report["elements"][0]["element_id"], "selector": "button",
+                     "from": "syn-button--primary", "to": "syn-button--outline"}
+        expected = HTML.replace("syn-button--primary", "syn-button--outline", 1).encode()
+        digest = hashlib.sha256(expected).hexdigest()
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source = root / "page.html"
+            output = root / "candidate.html"
+            request = root / "plan.json"
+            source.write_bytes(HTML.encode())
+            request.write_text(json.dumps({"document_sha256": report["document_sha256"],
+                                           "operations": [operation]}))
+            stdout = io.StringIO()
+            unlink = Path.unlink
+
+            def fail_staging_cleanup(path, *args, **kwargs):
+                if path.parent == root and path.name.startswith(".syntyr-"):
+                    raise PermissionError("staging cleanup denied")
+                return unlink(path, *args, **kwargs)
+
+            with patch.object(Path, "unlink", fail_staging_cleanup), redirect_stdout(stdout):
+                code = main(["apply-html", "--release", CANDIDATE, "--request", str(request),
+                             "--approve-result-sha256", digest, "--output", str(output), str(source)])
+            payload = json.loads(stdout.getvalue())
+            self.assertEqual(code, 0, payload)
+            self.assertEqual(payload["status"], "created")
+            self.assertEqual(payload["result_sha256"], digest)
+            staging, = root.glob(".syntyr-*")
+            self.assertIn(str(staging), payload["cleanup_warning"])
+            self.assertEqual(output.read_bytes(), expected)
+            self.assertEqual(source.read_bytes(), HTML.encode())
+
     def test_approved_candidate_only_and_no_overwrite(self):
         from agent_mcp.html_inspector import plan_source_patches
         with tempfile.TemporaryDirectory() as directory:

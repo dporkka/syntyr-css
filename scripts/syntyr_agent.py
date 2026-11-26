@@ -302,6 +302,8 @@ def apply_html(args: argparse.Namespace, catalog: SyntyrCatalog) -> tuple[int, d
     # never appears partially written and an existing path is never replaced.
     # Assumes a trusted local directory; this is not a hostile-filesystem sandbox.
     temporary = None
+    published = False
+    cleanup_warning = None
     try:
         with tempfile.NamedTemporaryFile(dir=output.parent, prefix=".syntyr-", delete=False) as handle:
             temporary = Path(handle.name)
@@ -311,12 +313,21 @@ def apply_html(args: argparse.Namespace, catalog: SyntyrCatalog) -> tuple[int, d
         if source.is_symlink() or _read_inspector_html(str(source)).encode("utf-8") != data:
             raise ValueError("Source changed during planning")
         os.link(temporary, output)
+        published = True
     finally:
         if temporary is not None:
-            temporary.unlink(missing_ok=True)
-    return 0, {"status": "created", "output": str(output), "source_unchanged": True,
+            try:
+                temporary.unlink(missing_ok=True)
+            except OSError as exc:
+                if not published:
+                    raise
+                cleanup_warning = f"Candidate created; could not remove staging file {temporary}: {exc}"
+    payload = {"status": "created", "output": str(output), "source_unchanged": True,
                "document_sha256": plan["document_sha256"], "result_sha256": plan["result_sha256"],
                "combined_dom_verified": True, "validation": plan["validation"]}
+    if cleanup_warning is not None:
+        payload["cleanup_warning"] = cleanup_warning
+    return 0, payload
 
 
 def main(argv=None) -> int:

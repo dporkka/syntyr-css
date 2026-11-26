@@ -115,6 +115,10 @@ python3 scripts/syntyr_agent.py apply-html --release 0.3.0-alpha.5 \
   --output candidate.html page.html
 ```
 
+<!-- coderabbit-ai-generated:v1 -->
+
+<!-- coderabbit-ai-generated-section:v1:faa2f3f73d37df03c3a0669b081323a57b02eccd5ec767e948c383e3a3c5ceb3 -->
+
 This recomputes the plan against the current source, verifies the combined
 DOM and static contract, checks the exact candidate digest, and atomically
 publishes a **new** .html file using an exclusive hard link. The original
@@ -123,6 +127,14 @@ Requires a local filesystem supporting hard links and a trusted output
 directory. In-place edits, automatic application, browser validation,
 and a hostile-filesystem sandbox are not supported. Delete the candidate
 to roll back; replacing the source remains a separate human decision.
+
+If publication succeeds but staging cleanup fails, the CLI returns success
+with a `cleanup_warning` identifying the leftover staging file. After an
+interrupted apply, compare the SHA-256 of any existing candidate with the
+approved digest before deciding whether to retry. The CLI refuses to replace
+an existing candidate.
+
+<!-- /coderabbit-ai-generated:v1 -->
 
  Use the existing
 `python3 scripts/syntyr_check.py FILE` for canonical class, attribute,
