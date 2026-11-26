@@ -65,16 +65,25 @@ def main():
                         arg={"base": baseline, "factor": factor}, timeout=5000)
                     assert page.evaluate("getComputedStyle(document.documentElement).fontSize") == baseline["font"]
                     for palette in PALETTES:
+                        # Start each palette with a fresh document so a
+                        # previous focus/animated scroll cannot cancel the
+                        # next user key's scroll. Native tab zoom persists.
+                        page.reload(wait_until="load")
+                        page.wait_for_function("""({base, factor}) =>
+                            Math.abs(innerWidth - base.width/factor) <= 2 &&
+                            Math.abs(devicePixelRatio - base.dpr*factor) < .02""",
+                            arg={"base": baseline, "factor": factor}, timeout=5000)
                         page.locator("main").evaluate("(e, p) => e.dataset.synTheme = p", palette)
                         assert page.evaluate(
                             "document.documentElement.scrollWidth <= document.documentElement.clientWidth + 1"), (factor, palette)
                         assert page.locator("#prose img").evaluate(
                             "e => e.width <= e.parentElement.clientWidth + 1"), (factor, palette)
                         pre = page.get_by_role("region", name="Configuration code")
+                        pre.evaluate("e => e.scrollIntoView({block:'center', behavior:'instant'})")
                         pre.focus()
                         assert pre.evaluate("e => document.activeElement === e")
                         assert pre.evaluate("e => e.scrollWidth > e.clientWidth")
-                        pre.evaluate("e => e.scrollTo({left:0, behavior:'instant'})")
+                        assert pre.evaluate("e => e.scrollLeft === 0")
                         page.keyboard.press("ArrowRight")
                         try:
                             page.wait_for_function(
