@@ -243,6 +243,45 @@ optional tools those tests skip, while stdlib contract tests still run.
 The Soupault fixture intentionally checks preservation of handwritten
 source rather than treating it as a fourth CMS template engine.
 
+## Automated fresh-build browser parity
+
+The opt-in `.woodpecker/static-generators.yaml` gate executes for relevant
+pull requests and main pushes, plus manual/tag runs. A pinned Linux/amd64
+Hugo release is checksum-verified before execution, and Eleventy, Astro
+and the development-only Playwright driver use their checked-in npm
+lockfiles. The builder creates **four fresh outputs** and never uses a
+previous `_site` or `dist` directory.
+
+From the repository root, with Node.js, Python and a reviewed Hugo binary:
+
+```sh
+npm ci --prefix examples/eleventy --no-audit --no-fund
+npm ci --prefix examples/astro-keystatic --no-audit --no-fund
+npm ci --prefix examples/lit --no-audit --no-fund
+python3 scripts/build_generator_parity.py --hugo /path/to/hugo --output /tmp/cms-parity
+node examples/lit/generator-parity-browser.mjs /tmp/cms-parity chromium firefox webkit
+```
+
+The output location must not exist. The first command sequence checks
+each independent renderer against the canonical CMS JSON (including Astro
+data drift), then stages verified HTML/CSS into an isolated directory. The
+browser command serves only built HTML/CSS, uses each generator's actual
+deployment mount, disables application JavaScript, blocks external
+requests, and exercises keyboard skip links, a local section link and
+native disclosures. It compares full-page PNGs against the Python reference
+in the same browser run at 320, 390 and 1280 pixels: 27 pairwise comparisons
+when all three engines are available. It uses no platform-dependent
+golden images. Missing browser binaries or a broken fixture are failures,
+not skipped passes in this gate.
+
+Browser binaries and OS dependencies are maintainer tooling, not shipped
+to Syntyr consumers. The pinned Woodpecker browser image supplies them.
+Local installations can use Playwright's supported installation procedure;
+an explicit `SYNTYR_CHROMIUM_EXECUTABLE`, `SYNTYR_FIREFOX_EXECUTABLE` or
+`SYNTYR_WEBKIT_EXECUTABLE` selects an already-installed compatible binary.
+This tests visual and semantic equivalence, not accessibility conformance,
+and cannot substitute for the separate human release gate.
+
 ## Verification and failure modes
 
 From the Syntyr repository root:
@@ -251,7 +290,7 @@ From the Syntyr repository root:
 python3 scripts/build.py --check
 python3 -m unittest tests.test_static_site_generators tests.test_adoption_starters
 cd examples/eleventy
-npm install
+npm ci
 npm run build
 npm run verify
 ```

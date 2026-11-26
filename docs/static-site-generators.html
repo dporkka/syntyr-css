@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Syntyr&#x27;s distribution is ordinary, scoped CSS. It does not require a JavaScript runtime, hydration, Sass, PostCSS, browser-specific components, or a…">
-  <meta name="syntyr-source-sha256" content="063499bf2dbad1576354b6bb7009650b08bc95976c1a503af07feb9599f56e9e">
+  <meta name="syntyr-source-sha256" content="8a5f41ec9f1ffca1c7dfa82ef82f0f7c2c22adb15313880c756a27c7cbf512e5">
   <meta name="theme-color" content="#f5f7fb">
   <title>Syntyr with static-site generators — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/static-site-generators">
@@ -268,12 +268,44 @@ tests; Node fixtures' real-output tests require their builds. Without
 optional tools those tests skip, while stdlib contract tests still run.
 The Soupault fixture intentionally checks preservation of handwritten
 source rather than treating it as a fourth CMS template engine.</p>
+<h2 id="automated-fresh-build-browser-parity">Automated fresh-build browser parity</h2>
+<p>The opt-in <code>.woodpecker/static-generators.yaml</code> gate executes for relevant
+pull requests and main pushes, plus manual/tag runs. A pinned Linux/amd64
+Hugo release is checksum-verified before execution, and Eleventy, Astro
+and the development-only Playwright driver use their checked-in npm
+lockfiles. The builder creates <strong>four fresh outputs</strong> and never uses a
+previous <code>_site</code> or <code>dist</code> directory.</p>
+<p>From the repository root, with Node.js, Python and a reviewed Hugo binary:</p>
+<pre tabindex="0"><code class="language-sh">npm ci --prefix examples/eleventy --no-audit --no-fund
+npm ci --prefix examples/astro-keystatic --no-audit --no-fund
+npm ci --prefix examples/lit --no-audit --no-fund
+python3 scripts/build_generator_parity.py --hugo /path/to/hugo --output /tmp/cms-parity
+node examples/lit/generator-parity-browser.mjs /tmp/cms-parity chromium firefox webkit
+</code></pre>
+<p>The output location must not exist. The first command sequence checks
+each independent renderer against the canonical CMS JSON (including Astro
+data drift), then stages verified HTML/CSS into an isolated directory. The
+browser command serves only built HTML/CSS, uses each generator's actual
+deployment mount, disables application JavaScript, blocks external
+requests, and exercises keyboard skip links, a local section link and
+native disclosures. It compares full-page PNGs against the Python reference
+in the same browser run at 320, 390 and 1280 pixels: 27 pairwise comparisons
+when all three engines are available. It uses no platform-dependent
+golden images. Missing browser binaries or a broken fixture are failures,
+not skipped passes in this gate.</p>
+<p>Browser binaries and OS dependencies are maintainer tooling, not shipped
+to Syntyr consumers. The pinned Woodpecker browser image supplies them.
+Local installations can use Playwright's supported installation procedure;
+an explicit <code>SYNTYR_CHROMIUM_EXECUTABLE</code>, <code>SYNTYR_FIREFOX_EXECUTABLE</code> or
+<code>SYNTYR_WEBKIT_EXECUTABLE</code> selects an already-installed compatible binary.
+This tests visual and semantic equivalence, not accessibility conformance,
+and cannot substitute for the separate human release gate.</p>
 <h2 id="verification-and-failure-modes">Verification and failure modes</h2>
 <p>From the Syntyr repository root:</p>
 <pre tabindex="0"><code class="language-sh">python3 scripts/build.py --check
 python3 -m unittest tests.test_static_site_generators tests.test_adoption_starters
 cd examples/eleventy
-npm install
+npm ci
 npm run build
 npm run verify
 </code></pre>
@@ -309,6 +341,7 @@ the generator chosen.</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#zola">Zola</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#nextjs-export-gatsby-and-documentation-generators">Next.js export, Gatsby and documentation generators</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#shared-cms-rendering-contract">Shared CMS rendering contract</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#automated-fresh-build-browser-parity">Automated fresh-build browser parity</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#verification-and-failure-modes">Verification and failure modes</a>
           </nav>
           <details class="docs-article-toc-mobile">
@@ -324,6 +357,7 @@ the generator chosen.</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#zola">Zola</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#nextjs-export-gatsby-and-documentation-generators">Next.js export, Gatsby and documentation generators</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#shared-cms-rendering-contract">Shared CMS rendering contract</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#automated-fresh-build-browser-parity">Automated fresh-build browser parity</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#verification-and-failure-modes">Verification and failure modes</a>
             </nav>
           </details>

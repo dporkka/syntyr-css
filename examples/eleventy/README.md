@@ -11,13 +11,14 @@ From the repository root, verify the prebuilt CSS with
 
 ```sh
 cd examples/eleventy
-npm install
+npm ci
 npm run build
 npm run verify
 ```
 
 The config copies the core and recipes CSS from `../../dist/` into
-`_site/assets/`, without requiring an npm release of `@syntyr/css`.
+`_site/assets/`, without requiring an npm release of `@syntyr/css`. The example dependency
+lockfile is maintainer-only; `npm ci` keeps the fixture reproducible.
 The Nunjucks `url` filter and `pathPrefix` exercise project-pages subpaths
 (`/syntyr-eleventy/`); the local CMS URL filter uses that same prefix.
 Edit the prefix and the package.json verifier's `--base-path` together

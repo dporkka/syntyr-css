@@ -5,3 +5,4 @@ src/data/home.json
 .env
 .env.*
 !.env.example
+.syntyr-astro-parity-*/

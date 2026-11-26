@@ -1,0 +1,58 @@
+# Optional SSG tools are isolated from the CSS build and consumer runtime.
+# Fresh independent outputs are verified in a separate pinned browser image.
+when:
+  - event: manual
+  - event: tag
+  - event: [pull_request, push]
+    branch: main
+    path:
+      include:
+        - src/**
+        - dist/**
+        - package.json
+        - examples/cms-starter/**
+        - examples/hugo-cms/**
+        - examples/eleventy/**
+        - examples/astro-keystatic/**
+        - examples/lit/generator-parity-browser.mjs
+        - examples/lit/package*.json
+        - scripts/build.py
+        - scripts/build_generator_parity.py
+        - scripts/build_hugo_cms_starter.py
+        - scripts/render_cms_starter.py
+        - scripts/export_cms_adapter.py
+        - scripts/export_site_starter.py
+        - scripts/verify_cms_parity.py
+        - scripts/verify_static_generators.py
+        - scripts/verify_astro_keystatic.py
+        - .woodpecker/static-generators.yaml
+      on_empty: true
+
+steps:
+  - name: fresh-locked-generator-builds
+    image: node:24-bookworm-slim@sha256:dc26ae92c9fb15cf6b1d63e20f0944b2efe0f115b20e00be48fb23fceb061c54
+    commands:
+      - apt-get update && apt-get install -y --no-install-recommends python3 curl ca-certificates && rm -rf /var/lib/apt/lists/*
+      - node --version && npm --version
+      - npm ci --prefix examples/eleventy --no-audit --no-fund
+      - npm ci --prefix examples/astro-keystatic --no-audit --no-fund
+      - mkdir -p previews
+      - |
+        # Official pinned Linux/amd64 Hugo release; never execute unverified bytes.
+        set -eu
+        test "$(uname -m)" = x86_64
+        tools_dir=$(mktemp -d)
+        trap 'rm -rf "$tools_dir"' EXIT
+        curl --proto '=https' --proto-redir '=https' --fail --location --silent --show-error --retry 2 --max-time 120 https://github.com/gohugoio/hugo/releases/download/v0.170.0/hugo_0.170.0_linux-amd64.tar.gz -o "$tools_dir/hugo.tgz"
+        echo "0930754ec22ad2dd1a252f8c31a5e57faccc9d15f1c3d381ddafcb96eeb8aef0  $tools_dir/hugo.tgz" | sha256sum -c -
+        tar -xzf "$tools_dir/hugo.tgz" -C "$tools_dir" hugo
+        "$tools_dir/hugo" version
+        python3 scripts/build_generator_parity.py --output previews/generator-parity --hugo "$tools_dir/hugo"
+
+  - name: three-engine-cms-parity
+    image: mcr.microsoft.com/playwright:v1.65.0-noble@sha256:9beb546099e11f52d62e505537914870e01a67e0e6b00ae41da4775324e73dbe
+    depends_on:
+      - fresh-locked-generator-builds
+    commands:
+      - npm ci --prefix examples/lit --no-audit --no-fund
+      - node examples/lit/generator-parity-browser.mjs previews/generator-parity chromium firefox webkit
