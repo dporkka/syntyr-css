@@ -176,15 +176,32 @@ class BlocksAssetsTests(unittest.TestCase):
             '<form id="demo" action="/submit"><textarea name="notes">Keep literal '
             '</form> text</textarea><fieldset><input name="nested"></fieldset>'
             '<button type="submit">Inside</button></form>'
-            '<a aria-label=\'Documentation: href="/help"\' href="/help">Help</a>'
+            '<a data-note=\'Documentation: href="/help"\' aria-label="Help URL" href="/help">Help</a>'
             '<button type="submit" form="demo">Outside</button>'
         )
         preview = preview_markup(source)
         self.assertIn('<textarea name="notes">Keep literal </form> text</textarea>', preview)
         self.assertEqual(preview.count('</fieldset></form>'), 1)
-        self.assertIn('<a aria-label=\'Documentation: href="/help"\'>Help</a>', preview)
+        self.assertIn('<a data-note=\'Documentation: href="/help"\'>Help</a>', preview)
         self.assertIn('<button type="submit" form="demo" disabled>Outside</button>', preview)
-        self.assertNotIn('<a aria-label=\'Documentation: href="/help"\' href=', preview)
+        self.assertNotIn('<a data-note=\'Documentation: href="/help"\' aria-label=', preview)
+
+    def test_preview_removes_names_only_from_generic_elements(self):
+        from scripts.build_blocks import preview_markup
+        source = (
+            '<header aria-label="Site header"><nav aria-label="Navigation">Nav</nav></header>'
+            '<footer aria-labelledby="footer-name"><p id="footer-name">Footer</p></footer>'
+            '<a href="/photo" aria-label="View photo"><img src="/photo.svg" alt="Photo"></a>'
+            '<a aria-labelledby="caption">Placeholder</a>'
+            '<footer role="contentinfo" aria-label="Explicit role">Metadata</footer>'
+        )
+        preview = preview_markup(source)
+        self.assertIn('<header><nav aria-label="Navigation">Nav</nav></header>', preview)
+        self.assertIn('<footer><p id="footer-name">Footer</p></footer>', preview)
+        self.assertIn('<a><img src="/photo.svg" alt="Photo"></a>', preview)
+        self.assertIn('<a>Placeholder</a>', preview)
+        self.assertIn('<footer role="contentinfo" aria-label="Explicit role">', preview)
+        self.assertIn('href="/photo" aria-label="View photo"', source)
 
     def test_preview_form_audit_handles_nested_fieldsets(self):
         from scripts.build_blocks import preview_markup
