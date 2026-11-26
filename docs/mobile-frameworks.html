@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Status: opt-in source adapter (alpha.5 candidate), not published as a native package. Syntyr&#x27;s web CSS does not execute in the native iOS or Android…">
-  <meta name="syntyr-source-sha256" content="2a32893e67496fa968ad5241ff04ddb60ed1dcabf11b1dacef86ddfef94aa536">
+  <meta name="syntyr-source-sha256" content="284fd01e48ce19c13fdf1ea0a62b74e73e6fc0e71f2703e420736fedd691f556">
   <meta name="theme-color" content="#f5f7fb">
   <title>Syntyr on mobile: React Native, Expo, Flutter, SwiftUI and Compose — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/mobile-frameworks">
@@ -165,7 +165,24 @@ and production Android/iOS Metro bundle exports. Run <code>npm ci</code>,
 devices or produce signed native binaries</strong>; simulator/hardware checks are
 still required. The fixture imports the canonical adapter by an ignored
 build-local source copy, not a second design-system implementation.
-Use the host application's safe-area provider and navigation system as usual.
+For a new application, the unreleased source checkout also provides a
+standalone, copy-owned Expo SaaS starter. Export it to a <strong>new</strong> directory:</p>
+<pre tabindex="0"><code class="language-sh">python3 scripts/export_native_starter.py --output ../my-mobile-app
+cd ../my-mobile-app
+npm ci
+npm run typecheck
+npm test
+npm start
+</code></pre>
+<p>The export includes the exact fixture dependency lock, canonical tokens,
+styles and recipes, both sample screens, the safe-area root and tests. It
+never overwrites an existing path and does not need the Syntyr checkout after
+export. Commit its <code>src/</code> in your app; it is your code to maintain. The
+samples use fictional data and local preview state, not a backend, auth,
+access control or persistence. The starter requires no NativeWind or Uniwind.
+For an existing app, prefer copying just the needed adapter files rather
+than replacing its Expo project, dependency graph or navigation.</p>
+<p>Use the host application's safe-area provider and navigation system as usual.
 The example uses real <code>TextInput</code> and <code>Pressable</code> controls with accessibility
 labels; gestures, screen reader behavior, validation, keyboard handling and
 focus management remain the native application's responsibility.</p>
@@ -260,7 +277,13 @@ component tests do not certify physical rendering or screen readers.</p>
 <a href="https://www.nativewind.dev/v5">NativeWind v5</a>, copy one generated
 <a href="https://github.com/dporkka/syntyr-css/tree/main/integrations/react-native/tailwind">palette file</a>
 into its app-owned CSS entrypoint directory. These files are experimental
-source adapters, not npm modules. NativeWind v4 (Tailwind v3) is not a target.
+source adapters, not npm modules. NativeWind v4 (Tailwind v3) is not a target
+for the generated CSS files. Existing NativeWind v4 apps can evaluate the
+copy-owned StyleSheet adapter without migrating the host styling engine.
+An <a href="https://github.com/dporkka/syntyr-css/tree/main/examples/native-sdk54-coexistence">isolated Expo SDK 54 coexistence probe</a>
+with NativeWind 4.2.3 and Tailwind 3.3.2 passed TypeScript, 24 interaction
+tests, utility CSS generation and production Android/iOS Metro exports.
+This is not native runtime certification or a new utility bridge.
 Use the styling engine's own Expo/Metro configuration and installation guide.</p>
 <p>Uniwind entrypoint:</p>
 <pre tabindex="0"><code class="language-css">@import &quot;tailwindcss&quot;;

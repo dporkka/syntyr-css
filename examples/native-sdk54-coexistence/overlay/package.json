@@ -1,0 +1,41 @@
+{
+  "name": "syntyr-native-sdk54-coexistence",
+  "version": "0.0.0",
+  "private": true,
+  "main": "index.ts",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "typecheck": "tsc --noEmit",
+    "test": "jest --runInBand",
+    "export:android": "expo export --platform android --output-dir dist/android",
+    "export:ios": "expo export --platform ios --output-dir dist/ios"
+  },
+  "dependencies": {
+    "expo": "54.0.37",
+    "react": "19.1.0",
+    "react-native": "0.81.5",
+    "react-native-safe-area-context": "5.6.0",
+    "nativewind": "4.2.3",
+    "react-native-reanimated": "4.1.1",
+    "react-native-worklets": "0.5.1"
+  },
+  "devDependencies": {
+    "@testing-library/react-native": "13.3.3",
+    "@types/jest": "29.5.14",
+    "@types/react": "19.1.0",
+    "jest": "29.7.0",
+    "jest-expo": "54.0.18",
+    "typescript": "5.9.3",
+    "tailwindcss": "3.3.2",
+    "react-test-renderer": "19.1.0",
+    "babel-preset-expo": "54.0.10"
+  },
+  "jest": {
+    "preset": "jest-expo"
+  },
+  "overrides": {
+    "minimatch": "11.0.9"
+  }
+}

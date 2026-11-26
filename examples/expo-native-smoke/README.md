@@ -57,6 +57,28 @@ server. Always verify native semantics, screen readers, text scaling, focus,
 software keyboard and safe areas on real devices before calling the adapter
 production-ready.
 
+## Export a standalone Expo SaaS starter
+
+From the Syntyr repository root:
+
+```sh
+python3 scripts/export_native_starter.py --output ../my-mobile-app
+cd ../my-mobile-app
+npm ci
+npm run typecheck
+npm test
+npm run export:android
+npm run export:ios
+npm start
+```
+
+The exporter uses Python only and copies the locked dependencies, source,
+tests, safe-area root, license and standalone instructions. It removes the
+repository sync command and makes the copied source consumer-owned. It will
+not overwrite any existing path. The result can be moved outside the checkout
+without a Syntyr dependency. This is a source-candidate example, not a
+production-certified app or a package published to npm.
+
 ## Compare identical-screen bundle sizes
 
 After creating separate, same-screen Expo production exports with the same
