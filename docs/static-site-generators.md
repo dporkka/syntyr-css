@@ -98,8 +98,53 @@ token colors and check contrast against the chosen theme. Optionally load
 Source-generated footnote and heading IDs must remain unique.
 
 The [document starter](../examples/document-starter.html) uses representative
-Hugo/Markdown and CMS-style markup without adding a generator dependency. It is
-a static specimen, not a claim of testing every generator's actual output.
+Markdown and CMS-style markup without adding a generator dependency. For real
+Hugo and Zola Markdown output, use a build-time shortcode to wrap wide native
+tables; the browser receives only ordinary HTML. A raw generated two-column
+table can overflow at 400% text scaling, so do not assume CSS alone will
+contain every Markdown table.
+
+For Hugo, save this as `layouts/shortcodes/prose-table.html`:
+
+~~~html
+<div class="syn-table-wrap" role="region" aria-label="Inventory" tabindex="0">
+  {{ .Inner | markdownify }}
+</div>
+~~~
+
+Wrap the Markdown table in `{{< prose-table >}}` and
+`{{< /prose-table >}}`. For Zola, save the equivalent as
+`templates/shortcodes/prose_table.html`:
+
+~~~html
+<div class="syn-table-wrap" role="region" aria-label="Inventory" tabindex="0">
+  {{ body | markdown | safe }}
+</div>
+~~~
+
+Wrap the Markdown table in `{% prose_table() %}` and `{% end %}`. Give each
+region a meaningful name for its contents. These example shortcodes are for
+trusted author content, not a substitute for sanitization.
+
+### Real generator verification (optional maintainer check)
+
+With Hugo **0.170.0**, Zola **0.22.1**, and developer-installed Playwright,
+run from the repository root:
+
+~~~sh
+python3 scripts/build.py --check
+python3 tests/generated_prose_browser.py --hugo hugo --zola zola
+~~~
+
+Add `--build-only` to verify static output, local stylesheet links, non-root
+deployment prefixes and absence of browser scripts without Playwright.
+The test builds the same Markdown with native renderers in a temporary
+directory, then requests the generated pages and assets on loopback HTTP.
+It checks seven palettes, 320/390/1280px widths, 100/200/400% root font
+scaling, footnote targets, task checkboxes, image loading, code containment
+and a keyboard-focusable table wrapper. It is not a full accessibility
+audit or a production CMS deployment: native code-block focusability
+varies by renderer and must be checked in the host application.
 
 ## Astro
 
