@@ -2,7 +2,7 @@
 
 **Status: prepared for distribution, not published to npm.** `@syntyr/css` is the intended package name, pending registry ownership/availability verification and an approved prerelease. Until then, use the [published alpha.4 release](distribution.md) or locally pack the alpha.5 candidate. Do not claim that `npm install @syntyr/css` currently succeeds.
 
-Syntyr's canonical artifact remains the ordinary CSS files in `dist/`. The npm package is a second **distribution path** for projects that already use a package manager; it adds **no JavaScript code, runtime dependencies, compiler, provider, or CSS-in-JS runtime**. Plain HTML and server templates can continue to self-host the versioned CSS with no toolchain.
+Syntyr's canonical artifact remains the ordinary CSS files in `dist/`. The npm package is a second **distribution path** for projects that already use a package manager; it adds **no mandatory JavaScript, runtime dependencies, compiler, provider, or CSS-in-JS runtime**. Plain HTML and server templates can continue to self-host the versioned CSS with no toolchain.
 
 ## Local verification before publication
 
@@ -23,6 +23,23 @@ npm install /path/to/syntyr-css-0.3.0-alpha.5.tgz
 ```
 
 After the scoped name is verified, the release is approved, and the package is actually published, consumers can use `npm install @syntyr/css@<published-version>` instead.
+
+## Clean consumer installation check
+
+On a maintainer machine or Node-based CI runner, run:
+
+```sh
+node --test tests/npm_consumer.test.mjs
+```
+
+This test packs the candidate, installs that actual archive into a fresh
+temporary consumer with an isolated npm cache, offline mode and lifecycle
+scripts disabled, then verifies all exported paths and their source bytes,
+optional type declarations, the default CSS entrypoint, and the dependency-free
+lockfile. The consumer is not linked to the repository. The test cleans up
+its scratch directory and never publishes anything. It verifies package
+resolution, not browser rendering or every bundler; framework adoption fixtures
+remain separate.
 
 ## Import the CSS
 
@@ -52,7 +69,7 @@ The default import is deliberately `core.css`; `all.css` is opt-in. Do not impor
 - The `VERSION` and `package.json` version must match. Tagged alpha.4 CDN assets remain immutable.
 - npm package file inclusion is restricted to the generated `dist/` folder, the optional `integrations/tailwind/` and `integrations/shadcn/` CSS bridges, `README.md` and `LICENSE` (plus npm's required package metadata). It excludes business notes, local configuration, unpublished premium designs and tests.
 - CSS exports and the published asset set are checked in the standard Python unit test suite. `npm pack --dry-run --json --ignore-scripts` confirms what the npm client would actually package.
-- The package contains no runtime JavaScript and requires no npm lifecycle scripts to install or consume.
+- The default CSS entrypoint requires no runtime JavaScript; optional JS companions are separate exports. No npm lifecycle scripts are required to install or consume the package.
 - The scoped name and release version must be verified before any publish command is attempted.
 
 Individual CSS component exports (alpha.5 source candidate) are described in [native patterns](native-patterns.md). Load tokens and base before selected components. Do not combine full core with individual component imports.
