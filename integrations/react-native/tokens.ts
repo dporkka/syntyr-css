@@ -17,6 +17,7 @@ export const syntyrMobileTokens = {
     "sm": 14,
     "base": 16
   },
+  "bodyLeading": 1.55,
   "controlHeight": 44,
   "themes": {
     "studio": {

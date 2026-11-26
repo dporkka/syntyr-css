@@ -39,6 +39,7 @@ class MobileAdaptersTest(unittest.TestCase):
         self.assertEqual(tokens["spacing"], {"1": 6, "2": 12, "3": 18, "4": 28, "5": 40})
         self.assertEqual(tokens["fontSize"], {"xs": 12, "sm": 14, "base": 16})
         self.assertEqual(tokens["controlHeight"], 44)
+        self.assertEqual(tokens["bodyLeading"], 1.55)
         self.assertNotIn("color-mix", MOBILE.read_text())
         self.assertNotIn("var(", MOBILE.read_text())
 
@@ -62,6 +63,41 @@ class MobileAdaptersTest(unittest.TestCase):
         typescript = (ROOT / "integrations/react-native/tokens.ts").read_text()
         literal = typescript.split("export const syntyrMobileTokens = ", 1)[1].split(" as const;", 1)[0]
         self.assertEqual(json.loads(literal), document)
+
+    def test_native_tailwind_bridges_are_literal_complete_and_namespaced(self):
+        from scripts.export_mobile_tokens import native_theme_css
+        tokens = json.loads(MOBILE.read_text())
+        directory = ROOT / "integrations/react-native/tailwind"
+        self.assertEqual({p.stem for p in directory.glob("*.css")}, set(PALETTES))
+        for name, palette in tokens["themes"].items():
+            with self.subTest(theme=name):
+                css = (directory / f"{name}.css").read_text()
+                self.assertEqual(css, native_theme_css(tokens, name))
+                self.assertEqual(css.count("@theme {"), 1)
+                self.assertNotIn("var(", css)
+                self.assertNotIn(".syn-root", css)
+                self.assertNotIn("@import", css)
+                declarations = {}
+                for line in css.splitlines():
+                    if line.strip().startswith("--"):
+                        declaration = line.strip().removesuffix(";")
+                        key, value = declaration.split(": ", 1)
+                        self.assertNotIn(key, declarations)
+                        declarations[key] = value
+                expected = {
+                    **{f"--color-syntyr-{key}": value for key, value in palette["colors"].items()},
+                    **{f"--spacing-syntyr-{key}": f"{value}px" for key, value in tokens["spacing"].items()},
+                    **{f"--text-syntyr-{key}": f"{value}px" for key, value in tokens["fontSize"].items()},
+                    "--spacing-syntyr-control": f'{tokens["controlHeight"]}px',
+                    "--radius-syntyr": f'{palette["radius"]}px',
+                }
+                self.assertEqual(declarations, expected)
+
+    def test_nonliteral_body_leading_is_rejected(self):
+        from scripts.export_mobile_tokens import mobile_tokens
+        css = (ROOT / "src/tokens.css").read_text()
+        with self.assertRaises(ValueError):
+            mobile_tokens(css.replace("--syn-leading-body: 1.55;", "--syn-leading-body: calc(1 + .55);"))
 
     def test_non_literal_native_dimension_is_rejected(self):
         from scripts.export_mobile_tokens import to_points

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Status: opt-in source adapter (alpha.5 candidate), not published as a native package. Syntyr&#x27;s web CSS does not execute in the native iOS or Android…">
-  <meta name="syntyr-source-sha256" content="b258efc59b975f81158419eb7738639a77ec22c27f0ddc9c78303531c537aa76">
+  <meta name="syntyr-source-sha256" content="5acd248cf2cf7a0f71c58ee38ccb113a85a77f8d208d612146e5c70aa4945bfb">
   <meta name="theme-color" content="#f5f7fb">
   <title>Syntyr on mobile: React Native, Expo, Flutter, SwiftUI and Compose — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/mobile-frameworks">
@@ -96,11 +96,15 @@ python3 -m unittest discover -s tests -p test_mobile_adapters.py -v
 <ul>
 <li><code>metadata/mobile/syntyr.tokens.json</code>: all seven named Syntyr palettes,
 with 13 literal SRGB color roles each, per-palette <code>radius</code>/<code>cut</code>,
-shared spacing <code>1–5</code>, font sizes <code>xs/sm/base</code>, and control height.</li>
+shared spacing <code>1–5</code>, font sizes <code>xs/sm/base</code>, body line-height multiplier,
+and control height.</li>
 <li><code>integrations/react-native/tokens.ts</code>: the <strong>same values</strong> as a standalone
 typed <code>as const</code> module, with <code>SyntyrMobileTheme</code>.</li>
 <li><code>integrations/react-native/styles.ts</code>: a small, copy-owned native recipe
 that uses those generated tokens. It is not a new component library.</li>
+<li><code>integrations/react-native/tailwind/&lt;palette&gt;.css</code>: one optional generated
+Tailwind v4 theme per palette, containing literal native-compatible values.
+Choose exactly one at build time.</li>
 </ul>
 <p>Unit <code>logical-points</code> means the generator converts Syntyr's literal CSS
 <code>rem</code> values using the explicit <strong>16px browser baseline</strong> (for example,
@@ -135,8 +139,19 @@ export function Example() {
 }
 </code></pre>
 <p>See <a href="../examples/react-native/App.tsx">the interactive native screen</a> for an
-email field, a stateful button and a light/dark palette switch based on
-<code>useColorScheme()</code>. The example is <strong>source to copy into an existing app</strong>,
+email field, a stateful button and a system/light/dark palette chooser.
+<code>resolveSyntyrNativeTheme(preference, useColorScheme())</code> resolves <code>auto</code> to
+Studio in light mode or when appearance is unavailable, and Grid in dark
+mode (matching the web auto palette); explicit named palettes win. The demo
+keeps preference in local component state; persistence is host-owned.
+Pass <code>Platform.OS</code> as the optional second argument to
+<code>createSyntyrNativeStyles</code> for 48dp Android and at least 44pt iOS control
+heights. Native text scaling remains enabled. The style recipes also include
+badge surfaces and text, semantic success/error text, and pressed/disabled
+button presentation. Apply disabled styles only together with <code>disabled</code>
+and the corresponding accessibility state. Use status words or icons with
+semantic colors rather than relying on color alone.
+The example is <strong>source to copy into an existing app</strong>,
 not a separate installable Expo project; in the app, adjust relative imports.
 A separate <a href="https://github.com/dporkka/syntyr-css/tree/main/examples/expo-native-smoke">Expo SDK 58 development smoke fixture</a>
 is provided for reproducible native TypeScript, Jest/RNTL interaction tests,
@@ -157,6 +172,70 @@ native components. Syntyr does not require NativeWind, Uniwind, Tamagui or
 Restyle. If your application already uses a CSS-to-native system, feed it the
 token values explicitly; don't assume Syntyr selectors, pseudo-classes or
 browser layout features will be compiled correctly.</p>
+<h2 id="optional-tailwind-v4-native-theme-bridge">Optional Tailwind v4 native theme bridge</h2>
+<p>For an app already using <a href="https://uniwind.dev/">Uniwind</a> or
+<a href="https://www.nativewind.dev/v5">NativeWind v5</a>, copy one generated
+<a href="https://github.com/dporkka/syntyr-css/tree/main/integrations/react-native/tailwind">palette file</a>
+into its app-owned CSS entrypoint directory. These files are experimental
+source adapters, not npm modules. NativeWind v4 (Tailwind v3) is not a target.
+Use the styling engine's own Expo/Metro configuration and installation guide.</p>
+<p>Uniwind entrypoint:</p>
+<pre tabindex="0"><code class="language-css">@import &quot;tailwindcss&quot;;
+@import &quot;uniwind&quot;;
+@import &quot;./studio.css&quot;;
+</code></pre>
+<p>Configure Metro with <code>withUniwindConfig(getDefaultConfig(__dirname), { cssEntryFile: &quot;./global.css&quot; })</code> from <code>uniwind/metro</code>.</p>
+<p>NativeWind v5 (release candidate) entrypoint:</p>
+<pre tabindex="0"><code class="language-css">@import &quot;tailwindcss/theme.css&quot; layer(theme);
+@import &quot;tailwindcss/preflight.css&quot; layer(base);
+@import &quot;tailwindcss/utilities.css&quot;;
+@import &quot;nativewind/theme&quot;;
+@import &quot;./studio.css&quot;;
+</code></pre>
+<p>Configure Metro with <code>withNativewind(getDefaultConfig(__dirname))</code> from
+<code>nativewind/metro</code>. Import the entrypoint once from the host's root module.
+Install each engine and all of its required peers in the host app; do not
+combine two Metro wrappers or install the vendor packages in Syntyr core.
+Never load Syntyr browser CSS or import several palette files together. The generated <code>@theme</code>
+block declares namespaced literal colors, spacing, text sizes, control size
+and radius; it does not redefine Tailwind defaults, import browser selectors,
+or include runtime theme switching.</p>
+<pre tabindex="0"><code class="language-tsx">import { View, Text, Pressable } from &quot;react-native&quot;;
+
+export function CampaignCard({ onOpen }: { onOpen: () =&gt; void }) {
+  return (
+    &lt;View className=&quot;bg-syntyr-surface border border-syntyr-frame rounded-syntyr p-syntyr-3&quot;&gt;
+      &lt;Text className=&quot;text-syntyr-text text-syntyr-base&quot;&gt;Campaign performance&lt;/Text&gt;
+      &lt;Pressable accessibilityRole=&quot;button&quot; onPress={onOpen}
+        className=&quot;bg-syntyr-accent rounded-syntyr min-h-syntyr-control android:min-h-[48px] items-center justify-center&quot;&gt;
+        &lt;Text className=&quot;text-syntyr-on-accent text-syntyr-sm&quot;&gt;Open details&lt;/Text&gt;
+      &lt;/Pressable&gt;
+    &lt;/View&gt;
+  );
+}
+</code></pre>
+<p>These names are generated and covered by the Tailwind v4 compiler smoke, not a claim all
+native properties or selectors work on every engine/version. Keep class
+names statically discoverable; use the host's documented platform variants
+and safe-area provider. For example, in an app already using
+<code>react-native-safe-area-context</code>, use <code>useSafeAreaInsets()</code> inside its
+provider and apply the insets to the screen container's padding; do not
+apply the same inset twice when navigation already handles it.
+The static bridge imports one palette at build time;
+for runtime palette switching use the existing <code>StyleSheet</code> adapter or the
+vendor's documented variable/theme API with the generated JSON/TS values.
+Use the vendor's version-specific configuration rather than attempting to
+compile Syntyr CSS or emulate DOM inheritance. Host dependencies, navigation,
+focus handling, keyboard behavior, and native release builds remain app-owned.</p>
+<p>To validate utility generation locally, install the existing optional
+<a href="https://github.com/dporkka/syntyr-css/tree/main/examples/tailwind-v4">example's Tailwind toolchain</a>
+and run <code>npm run check:native-palettes</code> there. This compiles every named
+palette and checks the utility-to-token mappings; it does not run Metro.</p>
+<p>Before rollout, compare identical screens using the same pinned Expo/RN
+versions, device, production bundle mode, and palette. Measure cold start,
+theme-change latency, large-list frame timing and bundle bytes; record median
+and p95 across repeated runs. Do not infer native performance from web CSS
+size or vendor marketing benchmarks.</p>
 <h2 id="flutter">Flutter</h2>
 <p>Declare the copied JSON under <code>flutter/assets/syntyr.tokens.json</code> in
 <code>pubspec.yaml</code>:</p>
@@ -244,9 +323,10 @@ Swift or Compose dependencies are added to Syntyr.</li>
 <li>Runtime controls remain genuinely native. Native keyboard navigation,
 gesture handling, accessibility and OS adaptations are not made equivalent
 by colors or spacing alone.</li>
-<li>Native builds have <strong>not</strong> been run by the Syntyr test suite; token/adapter
-contract tests are run in CI or locally. Validate a real iOS/Android app
-before claiming full platform certification.</li>
+<li>Python contract tests verify deterministic exports. The separate Expo fixture
+supports native component tests and Metro exports, not device/simulator
+certification. NativeWind and Uniwind have separate version and runtime
+requirements; validate them on real iOS/Android devices before rollout.</li>
 </ul>
 <p>References: <a href="https://reactnative.dev/docs/style.html">React Native styles</a>,
 <a href="https://docs.expo.dev/workflow/web/">Expo Web</a>,
@@ -256,6 +336,7 @@ before claiming full platform certification.</li>
           <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#exact-token-contract">Exact token contract</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#react-native-expo-copy-owned-no-adapter-dependency">React Native / Expo: copy-owned, no adapter dependency</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#optional-tailwind-v4-native-theme-bridge">Optional Tailwind v4 native theme bridge</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#flutter">Flutter</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#swiftui">SwiftUI</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#android-jetpack-compose">Android Jetpack Compose</a>
@@ -267,6 +348,7 @@ before claiming full platform certification.</li>
             <nav aria-label="On this page (mobile)">
 <a class="docs-article-toc-link docs-article-toc-2" href="#exact-token-contract">Exact token contract</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#react-native-expo-copy-owned-no-adapter-dependency">React Native / Expo: copy-owned, no adapter dependency</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#optional-tailwind-v4-native-theme-bridge">Optional Tailwind v4 native theme bridge</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#flutter">Flutter</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#swiftui">SwiftUI</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#android-jetpack-compose">Android Jetpack Compose</a>
