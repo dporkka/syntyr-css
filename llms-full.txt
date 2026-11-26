@@ -6637,7 +6637,7 @@ stylesheet imports or framework support from this inventory: the host
 application must still load and test the appropriate CSS. The command does
 not scan application code or need application dependencies.
 
-`check` validates the installed CSS, Skill and API reference integrity and literal `.html` files\nagainst that project's pinned release, returning structured, source-located
+`check` validates the installed CSS, Skill and API reference integrity and literal `.html` files against that project's pinned release, returning structured, source-located
 JSON diagnostics. Its exit codes are **0** for checked and error-free HTML,
 **1** for errors, and **2** for incomplete coverage (for example, JSX/TSX or
 no HTML files). It is not a React/Vue/Svelte parser or a browser accessibility
