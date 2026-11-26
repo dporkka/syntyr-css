@@ -11,20 +11,22 @@
     "typecheck": "npm run sync && tsc --noEmit",
     "test": "npm run sync && jest --runInBand",
     "export:android": "npm run sync && expo export --platform android --output-dir dist/android",
-    "export:ios": "npm run sync && expo export --platform ios --output-dir dist/ios"
+    "export:ios": "npm run sync && expo export --platform ios --output-dir dist/ios",
+    "report:bundle-size": "node scripts/report-bundle-size.mjs"
   },
   "dependencies": {
     "expo": "~58.0.25",
     "react": "19.3.0",
-    "react-native": "0.88.1"
+    "react-native": "0.88.1",
+    "react-native-safe-area-context": "5.11.1"
   },
   "devDependencies": {
+    "@testing-library/react-native": "^14.0.0",
+    "@types/jest": "^30.0.0",
     "@types/react": "~19.3.0",
-    "typescript": "~6.0.3",
     "jest": "^30.2.0",
     "jest-expo": "~58.0.14",
-    "@testing-library/react-native": "^14.0.0",
-    "@types/jest": "^30.0.0"
+    "typescript": "~6.0.3"
   },
   "jest": {
     "preset": "jest-expo"

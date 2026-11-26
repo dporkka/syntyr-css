@@ -8,8 +8,9 @@ reviewed consistently before `1.0.0`. It is not a new compatibility guarantee.
 
 The alpha.5 mobile source adapter adds optional, generated Tailwind v4 native
 bridges, a body-leading token, and native appearance/touch-size helpers. These
-are experimental adapter-only APIs; the web CSS package and alpha.4 remain
-unchanged. See [mobile integrations](mobile-frameworks.md).
+are experimental adapter-only APIs; the copy-owned native SaaS recipes and
+optional safe-area inset argument extend the same experimental boundary.
+The web CSS package and alpha.4 remain unchanged. See [mobile integrations](mobile-frameworks.md).
 
 | Surface | Current policy | Intent for v1 |
 | --- | --- | --- |

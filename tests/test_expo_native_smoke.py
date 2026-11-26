@@ -51,14 +51,15 @@ class ExpoNativeSmokeTest(unittest.TestCase):
             )
             self.assertEqual(result.returncode, 0, result.stderr)
             target = Path(temp)
-            for file in ("tokens.ts", "styles.ts"):
+            for file in ("tokens.ts", "styles.ts", "recipes.tsx"):
                 self.assertEqual(
                     (target / file).read_bytes(),
                     (ROOT / "integrations/react-native" / file).read_bytes(),
                 )
-            source = (ROOT / "examples/react-native/App.tsx").read_text()
-            rewritten = source.replace("../../integrations/react-native/", "./")
-            self.assertEqual((target / "App.tsx").read_text(), rewritten)
+            for name in ("App.tsx", "OperationsScreen.tsx"):
+                source = (ROOT / "examples/react-native" / name).read_text()
+                rewritten = source.replace("../../integrations/react-native/", "./")
+                self.assertEqual((target / name).read_text(), rewritten)
 
     def test_python_only_checkout_runs_core_contract_checks_without_node_or_git(self):
         # The optional Expo test must not break the Python-only Syntyr core suite.
@@ -74,6 +75,30 @@ class ExpoNativeSmokeTest(unittest.TestCase):
             )
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
             self.assertIn("skipped", result.stderr)
+
+    @unittest.skipUnless(shutil.which("node"), "Node is optional; bundle report requires Node")
+    def test_bundle_size_report_counts_only_platform_bundles_and_rejects_mixed_formats(self):
+        script = FIXTURE / "scripts/report-bundle-size.mjs"
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            for label, files in (("baseline", {"index.hbc": b"abc"}), ("other", {"index.hbc": b"12345", "split.hbc": b"6"})):
+                folder = root / label / "_expo/static/js/android"
+                folder.mkdir(parents=True)
+                for name, payload in files.items():
+                    (folder / name).write_bytes(payload)
+                (folder / "metadata.json").write_text("{}")
+            args = [shutil.which("node"), str(script), "android",
+                    f"baseline={root / 'baseline'}", f"other={root / 'other'}"]
+            result = subprocess.run(args, capture_output=True, text=True, timeout=30)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            data = json.loads(result.stdout)
+            self.assertEqual(data["metric"], "raw-production-js-bundle-bytes")
+            self.assertEqual([case["bytes"] for case in data["cases"]], [3, 6])
+            self.assertEqual(data["cases"][1]["deltaPercent"], 100)
+            (root / "other/_expo/static/js/android/extra.js").write_text("export {}")
+            result = subprocess.run(args, capture_output=True, text=True, timeout=30)
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("Mixed bundle formats", result.stderr)
 
     def test_fixture_has_native_interaction_tests_and_platform_exports(self):
         test = (FIXTURE / "App.test.tsx").read_text()

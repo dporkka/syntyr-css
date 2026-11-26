@@ -43,6 +43,8 @@ class CloudflareSiteTests(unittest.TestCase):
             self.assertTrue((out / "metadata/mobile/syntyr.tokens.json").is_file())
             self.assertTrue((out / "integrations/react-native/styles.ts").is_file())
             self.assertTrue((out / "examples/react-native/App.tsx").is_file())
+            self.assertTrue((out / "integrations/react-native/recipes.tsx").is_file())
+            self.assertTrue((out / "examples/react-native/OperationsScreen.tsx").is_file())
             self.assertTrue((out / "docs/performance-validation.md").is_file())
             self.assertTrue((out / "docs/performance-and-polish.md").is_file())
             self.assertTrue((out / "dist/syntyr.core.css").is_file())

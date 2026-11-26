@@ -93,6 +93,15 @@ class MobileAdaptersTest(unittest.TestCase):
                 }
                 self.assertEqual(declarations, expected)
 
+    def test_native_status_text_has_contrast_on_badge_surface(self):
+        from scripts.design_conformance import contrast_ratio
+        tokens = json.loads(MOBILE.read_text())
+        for theme, palette in tokens["themes"].items():
+            colors = palette["colors"]
+            for role in ("text", "success", "warning", "danger"):
+                with self.subTest(theme=theme, tone=role):
+                    self.assertGreaterEqual(contrast_ratio(colors[role], colors["surface-hi"]), 4.5)
+
     def test_nonliteral_body_leading_is_rejected(self):
         from scripts.export_mobile_tokens import mobile_tokens
         css = (ROOT / "src/tokens.css").read_text()
