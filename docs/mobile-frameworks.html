@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Status: opt-in source adapter (alpha.5 candidate), not published as a native package. Syntyr&#x27;s web CSS does not execute in the native iOS or Android…">
-  <meta name="syntyr-source-sha256" content="5acd248cf2cf7a0f71c58ee38ccb113a85a77f8d208d612146e5c70aa4945bfb">
+  <meta name="syntyr-source-sha256" content="2a32893e67496fa968ad5241ff04ddb60ed1dcabf11b1dacef86ddfef94aa536">
   <meta name="theme-color" content="#f5f7fb">
   <title>Syntyr on mobile: React Native, Expo, Flutter, SwiftUI and Compose — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/mobile-frameworks">
@@ -51,8 +51,8 @@ must be implemented with native controls.</p>
 <tbody>
 <tr>
 <td>React Native / Expo (iOS, Android)</td>
-<td>Copy <code>integrations/react-native/{tokens,styles}.ts</code></td>
-<td>Native colors, spacing, fonts, basic surface/input/button style objects</td>
+<td>Copy <code>integrations/react-native/{tokens,styles}.ts</code> and optional <code>recipes.tsx</code></td>
+<td>Native tokens, touch-safe styles, copy-owned SaaS presentation</td>
 </tr>
 <tr>
 <td>React Native Web / Expo Web</td>
@@ -102,6 +102,10 @@ and control height.</li>
 typed <code>as const</code> module, with <code>SyntyrMobileTheme</code>.</li>
 <li><code>integrations/react-native/styles.ts</code>: a small, copy-owned native recipe
 that uses those generated tokens. It is not a new component library.</li>
+<li><code>integrations/react-native/recipes.tsx</code>: optional copy-owned React Native
+presentation for metrics, statuses, fields, navigation tabs, records,
+actions and empty/error/loading states. Only React and native controls;
+no required styling engine, navigation library or browser runtime.</li>
 <li><code>integrations/react-native/tailwind/&lt;palette&gt;.css</code>: one optional generated
 Tailwind v4 theme per palette, containing literal native-compatible values.
 Choose exactly one at build time.</li>
@@ -172,6 +176,85 @@ native components. Syntyr does not require NativeWind, Uniwind, Tamagui or
 Restyle. If your application already uses a CSS-to-native system, feed it the
 token values explicitly; don't assume Syntyr selectors, pseudo-classes or
 browser layout features will be compiled correctly.</p>
+<h2 id="native-saas-workspace-recipes">Native SaaS workspace recipes</h2>
+<p>Copy <a href="../integrations/react-native/recipes.tsx">recipes.tsx</a> alongside the
+generated tokens and styles. The
+<a href="../examples/react-native/OperationsScreen.tsx">operations workspace example</a>
+composes seven native presentation recipes into a dashboard, searchable
+client list, and settings form. The existing sample app opens it from
+&quot;Open SaaS workspace&quot;; copy both example screens if using that entrypoint.
+All counts and records are fictional; search, selection, and save feedback
+are local state only. There are no network calls, real account mutations,
+or navigation dependencies.</p>
+<pre tabindex="0"><code class="language-tsx">import React, { useMemo } from &quot;react&quot;;
+import { Platform, StyleSheet, View } from &quot;react-native&quot;;
+import { createSyntyrNativeStyles } from &quot;./theme/styles&quot;;
+import { NativeAction, NativeMetric, NativeStatus } from &quot;./theme/recipes&quot;;
+
+export function Dashboard({ onOpen }: { onOpen: () =&gt; void }) {
+  const styles = useMemo(
+    () =&gt; StyleSheet.create(createSyntyrNativeStyles(&quot;studio&quot;, Platform.OS)),
+    [],
+  );
+  return (
+    &lt;View style={styles.stack}&gt;
+      &lt;View style={styles.metricGrid}&gt;
+        &lt;NativeMetric styles={styles} label=&quot;Open proposals&quot; value=&quot;7&quot; /&gt;
+        &lt;NativeMetric styles={styles} label=&quot;Tasks due&quot; value=&quot;4&quot; /&gt;
+      &lt;/View&gt;
+      &lt;NativeStatus styles={styles} tone=&quot;warning&quot; label=&quot;Needs review&quot; /&gt;
+      &lt;NativeAction styles={styles} label=&quot;Review proposals&quot; onPress={onOpen} /&gt;
+    &lt;/View&gt;
+  );
+}
+</code></pre>
+<p>Other recipes expose real native roles and host-owned callbacks:</p>
+<table>
+<thead>
+<tr>
+<th>Recipe</th>
+<th>Responsibility</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NativeAction</td>
+<td>Pressable, disabled/busy accessibility state, primary/secondary appearance</td>
+</tr>
+<tr>
+<td>NativeMetric / NativeStatus</td>
+<td>Native text, semantic role colors and wrap-friendly metrics</td>
+</tr>
+<tr>
+<td>NativeField</td>
+<td>Controlled input, visible label, hint/error text</td>
+</tr>
+<tr>
+<td>NativeTabs</td>
+<td>Selected tab semantics, callback to host navigation</td>
+</tr>
+<tr>
+<td>NativeRecord</td>
+<td>Read-only content or genuine Pressable; explicit status words</td>
+</tr>
+<tr>
+<td>NativeState</td>
+<td>Empty, loading or error content; retry/clear only when supplied</td>
+</tr>
+</tbody>
+</table>
+<p>Use a host SafeAreaProvider and pass its inset values as the optional third
+argument to <code>createSyntyrNativeStyles(theme, Platform.OS, insets)</code>, or let
+host navigation supply inset padding instead, never both. The Expo fixture
+pins Expo-compatible <code>react-native-safe-area-context</code> <strong>only in the test app</strong>
+and injects those values into the copy-owned example. With explicit insets,
+the fixture disables automatic scroll insets. Native scroll/list headers
+remain scrollable at larger text sizes. Host apps still own keyboard and
+focus recovery, input validation, persistent storage, access control and
+navigation.</p>
+<p>The optional Expo Jest fixture exercises the workspace interactions, all
+palettes, touch target floors, insets, and state semantics; automated native
+component tests do not certify physical rendering or screen readers.</p>
 <h2 id="optional-tailwind-v4-native-theme-bridge">Optional Tailwind v4 native theme bridge</h2>
 <p>For an app already using <a href="https://uniwind.dev/">Uniwind</a> or
 <a href="https://www.nativewind.dev/v5">NativeWind v5</a>, copy one generated
@@ -231,6 +314,12 @@ focus handling, keyboard behavior, and native release builds remain app-owned.</
 <a href="https://github.com/dporkka/syntyr-css/tree/main/examples/tailwind-v4">example's Tailwind toolchain</a>
 and run <code>npm run check:native-palettes</code> there. This compiles every named
 palette and checks the utility-to-token mappings; it does not run Metro.</p>
+<p>For an initial <strong>bundle-size</strong> comparison, use an identical simple screen
+with production Hermes exports and report raw bytes by platform. The
+fixture's optional <code>npm run report:bundle-size -- android stylesheet=/path/to/baseline uniwind=/path/to/uniwind nativewind=/path/to/nativewind</code> command hashes and measures only Expo's
+platform-specific JS/Hermes bundles. Use the paths to the exported
+directories; the first case is the baseline. Compare only matching bundle
+formats. It does not measure APK/IPA size, memory or runtime performance.</p>
 <p>Before rollout, compare identical screens using the same pinned Expo/RN
 versions, device, production bundle mode, and palette. Measure cold start,
 theme-change latency, large-list frame timing and bundle bytes; record median
@@ -336,6 +425,7 @@ requirements; validate them on real iOS/Android devices before rollout.</li>
           <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#exact-token-contract">Exact token contract</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#react-native-expo-copy-owned-no-adapter-dependency">React Native / Expo: copy-owned, no adapter dependency</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#native-saas-workspace-recipes">Native SaaS workspace recipes</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#optional-tailwind-v4-native-theme-bridge">Optional Tailwind v4 native theme bridge</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#flutter">Flutter</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#swiftui">SwiftUI</a>
@@ -348,6 +438,7 @@ requirements; validate them on real iOS/Android devices before rollout.</li>
             <nav aria-label="On this page (mobile)">
 <a class="docs-article-toc-link docs-article-toc-2" href="#exact-token-contract">Exact token contract</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#react-native-expo-copy-owned-no-adapter-dependency">React Native / Expo: copy-owned, no adapter dependency</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#native-saas-workspace-recipes">Native SaaS workspace recipes</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#optional-tailwind-v4-native-theme-bridge">Optional Tailwind v4 native theme bridge</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#flutter">Flutter</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#swiftui">SwiftUI</a>

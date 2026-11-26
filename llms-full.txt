@@ -3285,8 +3285,9 @@ reviewed consistently before `1.0.0`. It is not a new compatibility guarantee.
 
 The alpha.5 mobile source adapter adds optional, generated Tailwind v4 native
 bridges, a body-leading token, and native appearance/touch-size helpers. These
-are experimental adapter-only APIs; the web CSS package and alpha.4 remain
-unchanged. See [mobile integrations](mobile-frameworks.md).
+are experimental adapter-only APIs; the copy-owned native SaaS recipes and
+optional safe-area inset argument extend the same experimental boundary.
+The web CSS package and alpha.4 remain unchanged. See [mobile integrations](mobile-frameworks.md).
 
 | Surface | Current policy | Intent for v1 |
 | --- | --- | --- |
@@ -4507,7 +4508,7 @@ must be implemented with native controls.
 
 | Target | Adoption route | Scope |
 | --- | --- | --- |
-| React Native / Expo (iOS, Android) | Copy `integrations/react-native/{tokens,styles}.ts` | Native colors, spacing, fonts, basic surface/input/button style objects |
+| React Native / Expo (iOS, Android) | Copy `integrations/react-native/{tokens,styles}.ts` and optional `recipes.tsx` | Native tokens, touch-safe styles, copy-owned SaaS presentation |
 | React Native Web / Expo Web | Same native style adapter for shared screens; Syntyr CSS in web-only HTML | Native `View` / `Text` do not become Syntyr HTML components |
 | Flutter | Bundle `metadata/mobile/syntyr.tokens.json` as an asset | Theme data mapped to Flutter widgets |
 | SwiftUI | Add the JSON asset to an Xcode target | Colors, spacing and metrics mapped to SwiftUI controls |
@@ -4535,6 +4536,10 @@ The generated files are:
   typed `as const` module, with `SyntyrMobileTheme`.
 - `integrations/react-native/styles.ts`: a small, copy-owned native recipe
   that uses those generated tokens. It is not a new component library.
+- `integrations/react-native/recipes.tsx`: optional copy-owned React Native
+  presentation for metrics, statuses, fields, navigation tabs, records,
+  actions and empty/error/loading states. Only React and native controls;
+  no required styling engine, navigation library or browser runtime.
 - `integrations/react-native/tailwind/<palette>.css`: one optional generated
   Tailwind v4 theme per palette, containing literal native-compatible values.
   Choose exactly one at build time.
@@ -4613,6 +4618,67 @@ Restyle. If your application already uses a CSS-to-native system, feed it the
 token values explicitly; don't assume Syntyr selectors, pseudo-classes or
 browser layout features will be compiled correctly.
 
+## Native SaaS workspace recipes
+
+Copy [recipes.tsx](../integrations/react-native/recipes.tsx) alongside the
+generated tokens and styles. The
+[operations workspace example](../examples/react-native/OperationsScreen.tsx)
+composes seven native presentation recipes into a dashboard, searchable
+client list, and settings form. The existing sample app opens it from
+"Open SaaS workspace"; copy both example screens if using that entrypoint.
+All counts and records are fictional; search, selection, and save feedback
+are local state only. There are no network calls, real account mutations,
+or navigation dependencies.
+
+```tsx
+import React, { useMemo } from "react";
+import { Platform, StyleSheet, View } from "react-native";
+import { createSyntyrNativeStyles } from "./theme/styles";
+import { NativeAction, NativeMetric, NativeStatus } from "./theme/recipes";
+
+export function Dashboard({ onOpen }: { onOpen: () => void }) {
+  const styles = useMemo(
+    () => StyleSheet.create(createSyntyrNativeStyles("studio", Platform.OS)),
+    [],
+  );
+  return (
+    <View style={styles.stack}>
+      <View style={styles.metricGrid}>
+        <NativeMetric styles={styles} label="Open proposals" value="7" />
+        <NativeMetric styles={styles} label="Tasks due" value="4" />
+      </View>
+      <NativeStatus styles={styles} tone="warning" label="Needs review" />
+      <NativeAction styles={styles} label="Review proposals" onPress={onOpen} />
+    </View>
+  );
+}
+```
+
+Other recipes expose real native roles and host-owned callbacks:
+
+| Recipe | Responsibility |
+| --- | --- |
+| NativeAction | Pressable, disabled/busy accessibility state, primary/secondary appearance |
+| NativeMetric / NativeStatus | Native text, semantic role colors and wrap-friendly metrics |
+| NativeField | Controlled input, visible label, hint/error text |
+| NativeTabs | Selected tab semantics, callback to host navigation |
+| NativeRecord | Read-only content or genuine Pressable; explicit status words |
+| NativeState | Empty, loading or error content; retry/clear only when supplied |
+
+Use a host SafeAreaProvider and pass its inset values as the optional third
+argument to `createSyntyrNativeStyles(theme, Platform.OS, insets)`, or let
+host navigation supply inset padding instead, never both. The Expo fixture
+pins Expo-compatible `react-native-safe-area-context` **only in the test app**
+and injects those values into the copy-owned example. With explicit insets,
+the fixture disables automatic scroll insets. Native scroll/list headers
+remain scrollable at larger text sizes. Host apps still own keyboard and
+focus recovery, input validation, persistent storage, access control and
+navigation.
+
+The optional Expo Jest fixture exercises the workspace interactions, all
+palettes, touch target floors, insets, and state semantics; automated native
+component tests do not certify physical rendering or screen readers.
+
 ## Optional Tailwind v4 native theme bridge
 
 For an app already using [Uniwind](https://uniwind.dev/) or
@@ -4686,6 +4752,15 @@ To validate utility generation locally, install the existing optional
 [example's Tailwind toolchain](https://github.com/dporkka/syntyr-css/tree/main/examples/tailwind-v4)
 and run `npm run check:native-palettes` there. This compiles every named
 palette and checks the utility-to-token mappings; it does not run Metro.
+
+For an initial **bundle-size** comparison, use an identical simple screen
+with production Hermes exports and report raw bytes by platform. The
+fixture's optional `npm run report:bundle-size -- android
+stylesheet=/path/to/baseline uniwind=/path/to/uniwind
+nativewind=/path/to/nativewind` command hashes and measures only Expo's
+platform-specific JS/Hermes bundles. Use the paths to the exported
+directories; the first case is the baseline. Compare only matching bundle
+formats. It does not measure APK/IPA size, memory or runtime performance.
 
 Before rollout, compare identical screens using the same pinned Expo/RN
 versions, device, production bundle mode, and palette. Measure cold start,

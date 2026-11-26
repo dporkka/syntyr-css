@@ -6,7 +6,9 @@ components and generated Syntyr theme adapter without loading browser CSS.
 
 The pinned versions originate from the official Expo
 `blank-typescript@sdk-58` template, with development-only Jest and native
-testing-library dependencies.
+testing-library dependencies. The fixture alone pins Expo-compatible
+`react-native-safe-area-context@5.11.1` and injects safe-area insets into the
+copy-owned app; no safe-area dependency is added to the core CSS package.
 
 ## Run the checks
 
@@ -22,11 +24,14 @@ npm run export:ios
 
 The `sync` step runs before each check. It copies the **canonical** files in
 `../../integrations/react-native/` into ignored `src/`, along with the
-copy-owned `../react-native/App.tsx` screen. Never edit the generated files.
+copy-owned `../react-native/App.tsx` and `OperationsScreen.tsx` screens. Never
+edit the generated files.
 
 - `npm test` uses `jest-expo` and React Native Testing Library to verify
   accessible native `TextInput`/`Pressable` interactions and all seven
-  Syntyr palette mappings.
+  Syntyr palette mappings. The operations tests also cover navigation,
+  filtering/selection/empty states, local form error recovery, busy and
+  disabled controls, touch floors and safe-area padding.
 - `npm run typecheck` checks the screen and adapter against Expo's real
   TypeScript / React Native types.
 - The two `expo export` commands execute Metro's **production JavaScript
@@ -51,6 +56,23 @@ Expo Go on a physical compatible device can also connect to the development
 server. Always verify native semantics, screen readers, text scaling, focus,
 software keyboard and safe areas on real devices before calling the adapter
 production-ready.
+
+## Compare identical-screen bundle sizes
+
+After creating separate, same-screen Expo production exports with the same
+Expo/RN versions and Hermes settings, run:
+
+```sh
+npm run report:bundle-size -- android stylesheet=/path/to/baseline uniwind=/path/to/uniwind nativewind=/path/to/nativewind
+```
+
+Use `ios` for iOS exports. The first directory is the reference. The report
+includes total raw bundle bytes, per-file SHA-256, and size delta. It rejects
+empty/mixed-format exports. See the [initial measured campaign-card comparison](benchmarks/README.md)
+for the exact screen specimens and environment. This is a JS/Hermes artifact measurement, not an
+APK/IPA size, frame-rate, memory, or startup-time benchmark. Record real
+device, OS, renderer, font scale, safe area, and repeated startup/theme/list
+timings before making runtime performance claims.
 
 ## Dependency security boundary (November 2026)
 
