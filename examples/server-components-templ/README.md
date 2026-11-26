@@ -6,17 +6,26 @@ application starter. `github.com/a-h/templ` is isolated in this example's
 `go.mod` and is **not** a dependency of Syntyr Core or the Go standard-library
 server component example.
 
-Requires Go 1.26+ and pinned `github.com/a-h/templ v0.3.1100`. From the repo
+Requires patched Go 1.26.11+ and pinned `github.com/a-h/templ v0.3.1100`. From the repo
 root, with network access to obtain the optional compiler when not cached:
 
 ```sh
 python3 scripts/build.py
 cd examples/server-components-templ
-go run -mod=mod github.com/a-h/templ/cmd/templ generate
+go mod verify
+go tool templ generate
 go test ./...
 go vet ./...
 go run .  # http://127.0.0.1:8769/
 ```
+
+The `tool` directive pins the templ generator and its transitive module graph
+in the same isolated fixture. `golang.org/x/net` is pinned to v0.62.0 or
+later patched versions to address the Go HTTP/2 and HTML advisories identified
+in November 2026. The Go 1.26.11 minimum includes the relevant standard-library
+HTTP/2 fixes. Run `go mod tidy`, generation, tests and vet after dependency
+changes; verify the selected versions and the checksums rather than hand-editing
+`go.sum`. None of these packages are Syntyr CSS dependencies.
 
 Generated `components_templ.go` is **local and ignored**; do not commit it.
 The checked-in `.templ` source, module version and Go tests remain the source

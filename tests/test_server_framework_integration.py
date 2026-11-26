@@ -100,6 +100,19 @@ class ServerFrameworkIntegrationTests(unittest.TestCase):
         self.assertNotIn("<script", page.lower())
         self.assertNotIn("<script", component.lower())
 
+    def test_templ_toolchain_pins_patched_go_and_x_net(self):
+        fixture = ROOT / "examples/server-components-templ"
+        module = (fixture / "go.mod").read_text()
+        minimum = next(line.split()[1] for line in module.splitlines() if line.startswith("go "))
+        self.assertGreaterEqual(tuple(map(int, minimum.split("."))), (1, 26, 9))
+        self.assertIn("tool github.com/a-h/templ/cmd/templ", module)
+        entries = [line.split()[1].removesuffix("/go.mod")
+                   for line in (fixture / "go.sum").read_text().splitlines()
+                   if line.startswith("golang.org/x/net ")]
+        self.assertTrue(entries, "Missing locked x/net tool dependency")
+        for entry in entries:
+            self.assertGreaterEqual(tuple(map(int, entry.removeprefix("v").split("."))), (0, 62, 0))
+
     def test_optional_node_and_templ_adapters_share_native_component_contract(self):
         node = ROOT / "examples/server-components-node"
         go = ROOT / "examples/server-components-templ"
