@@ -80,7 +80,7 @@ def capture(browser, url, width, *, interactions=False):
             page.keyboard.press("Tab")
             assert "skip" in page.locator(":focus").inner_text().lower(), f"{url}: skip link not first"
             page.keyboard.press("Enter")
-            assert urlsplit(page.url).fragment in ("main", "content"), f"{url}: keyboard skip failed"
+            page.wait_for_url(lambda target: urlsplit(target).fragment in ("main", "content"), timeout=5000)
             details = page.locator("details").first
             if details.count():
                 assert not details.evaluate("e => e.open"), f"{url}: unexpected initial disclosure"
