@@ -30,6 +30,7 @@ PAGES = (
     "examples/design-states.html", "examples/symbols.html", "examples/native-elements.html",
     "examples/native-apis.html", "examples/flagship-studio.html", "examples/flagship-noir.html", "examples/flagship-grid.html",
     "examples/semantic-starter.html", "examples/workflow-steps.html", "examples/enterprise-compositions.html", "examples/premium-compositions.html", "examples/operation-revisions.html",
+    "examples/document-starter.html",
 )
 
 

@@ -276,6 +276,11 @@ Use `.syn-display` (also available as `.syn-title`), `.syn-section-heading` for 
 container. Typography roles inherit theme fonts and allow applications to
 override type scale without rewriting individual component selectors.
 
+The alpha.5 source candidate also gives `.syn-prose` document defaults for
+generator-owned HTML, including headings, blockquotes, figures, lists, tables
+and locally scrolling code. See [Markdown and CMS documents](static-site-generators.md)
+for its nested-root boundary, keyboard scrolling and optional print CSS.
+
 Semantic aliases are derived separately in each nested `data-syn-theme`
 scope, so a Grid panel inside a Studio page retains Grid's own contrast and
 control appearance. To override theme colors, prefer changing the primitive

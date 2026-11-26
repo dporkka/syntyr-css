@@ -1890,7 +1890,7 @@
         "syn-inline"
       ],
       "native_feature_requirements": [],
-      "html": "<nav aria-label=\"Primary navigation\">\n  <ul class=\"syn-inline\">\n    <li><a href=\"index.html\">Overview</a></li>\n    <li><a href=\"catalog.html\" aria-current=\"page\">Components</a></li>\n    <li><a href=\"guides.html\">Guides</a></li>\n  </ul>\n</nav>"
+      "html": "<nav aria-label=\"Primary navigation\">\n  <ul class=\"syn-inline\" role=\"list\" style=\"list-style:none;margin:0;padding:0\">\n    <li><a href=\"index.html\">Overview</a></li>\n    <li><a href=\"catalog.html\" aria-current=\"page\">Components</a></li>\n    <li><a href=\"guides.html\">Guides</a></li>\n  </ul>\n</nav>"
     },
     {
       "id": "catalog-table-of-contents-title",
@@ -1970,7 +1970,7 @@
         "syn-inline"
       ],
       "native_feature_requirements": [],
-      "html": "<section aria-labelledby=\"catalog-footer-example-title\">\n  <h3 id=\"catalog-footer-example-title\">Documentation</h3>\n  <footer>\n    <nav aria-label=\"Footer resources\">\n      <ul class=\"syn-inline\">\n        <li><a href=\"guides.html\">Guides</a></li>\n        <li><a href=\"faq.html\">FAQ</a></li>\n        <li><a href=\"distribution.html\">Installation</a></li>\n      </ul>\n    </nav>\n    <small>Example footer — update links for your own site.</small>\n  </footer>\n</section>"
+      "html": "<section aria-labelledby=\"catalog-footer-example-title\">\n  <h3 id=\"catalog-footer-example-title\">Documentation</h3>\n  <footer>\n    <nav aria-label=\"Footer resources\">\n      <ul class=\"syn-inline\" role=\"list\" style=\"list-style:none;margin:0;padding:0\">\n        <li><a href=\"guides.html\">Guides</a></li>\n        <li><a href=\"faq.html\">FAQ</a></li>\n        <li><a href=\"distribution.html\">Installation</a></li>\n      </ul>\n    </nav>\n    <small>Example footer — update links for your own site.</small>\n  </footer>\n</section>"
     },
     {
       "id": "catalog-pagination-title",

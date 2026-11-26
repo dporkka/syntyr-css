@@ -97,6 +97,13 @@ class SemanticCatalogTests(unittest.TestCase):
         self.assertIn(f'Components <span class="syn-badge">{count}</span>', self.page)
         self.assertEqual(self.page.count('class="catalog-index-link"'), count)
 
+    def test_wrapping_navigation_has_no_overlapping_native_markers(self):
+        for identifier in ("catalog-primary-nav-title", "catalog-footer-nav-title"):
+            with self.subTest(identifier=identifier):
+                body = self.cards[identifier]["body"]
+                self.assertIn('<ul class="syn-inline" role="list" style="list-style:none;margin:0;padding:0">', body)
+                self.assertIn('&lt;ul class=&quot;syn-inline&quot; role=&quot;list&quot; style=&quot;list-style:none;margin:0;padding:0&quot;&gt;', body)
+
 
 if __name__ == "__main__":
     unittest.main()

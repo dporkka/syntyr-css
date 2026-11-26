@@ -18,6 +18,12 @@ def pages_in(path: str) -> set[str]:
 
 
 class AuditPageCoverageTests(unittest.TestCase):
+    def test_document_starter_is_in_regular_browser_reflow_and_axe_gates(self):
+        for script in ("tests/browser_matrix.py", "tests/reflow_test.py", "tests/axe_audit.py"):
+            with self.subTest(script=script):
+                self.assertIn("examples/document-starter.html", pages_in(script))
+        self.assertIn("docs/static-site-generators.html", pages_in("tests/axe_audit.py"))
+
     def test_public_browser_matrix_pages_are_all_axe_audited(self):
         browser_pages = pages_in("tests/browser_matrix.py")
         axe_pages = pages_in("tests/axe_audit.py")

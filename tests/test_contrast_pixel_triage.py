@@ -10,6 +10,33 @@ SPEC.loader.exec_module(MODULE)
 
 
 class PixelContrastMath(unittest.TestCase):
+    def test_reinspection_revisits_only_matching_flagged_targets(self):
+        axe = {'pages': [{'page': 'fixture.html', 'incomplete': [
+            {'rule': 'color-contrast', 'selector': ['#text'], 'failure_summary': 'gradient'}
+        ]}]}
+        item = {'page': 'fixture.html', 'selector': ['#text'], 'failure_summary': 'gradient'}
+        prior = {'observations': [
+            dict(item, status='unsampled', viewport_width=320),
+            dict(item, status='sampled_above_threshold', viewport_width=320),
+            dict(item, status='narrow_margin', viewport_width=1280),
+            dict(item, status='sampled_below_threshold', viewport_width=390),
+        ]}
+        targets = MODULE.reinspection_targets(axe, prior, [320, 390], ['fixture.html'])
+        self.assertEqual([x['status'] for x in targets], ['unsampled', 'sampled_below_threshold'])
+        self.assertEqual(MODULE.reinspection_targets(axe, prior, [320], ['other.html']), [])
+        with self.assertRaises(ValueError):
+            MODULE.reinspection_targets(axe, {'observations': [
+                dict(item, selector=['#different'], status='unsampled', viewport_width=320)
+            ]}, [320])
+
+    def test_closed_disclosure_remains_unsampled_for_review(self):
+        item = {'page': 'fixture.html', 'selector': ['#hidden'],
+                'failure_summary': 'Needs review', 'viewport_width': 320,
+                'error': 'closed_disclosure', 'fragments': []}
+        result = MODULE.score_item(item, object())
+        self.assertEqual(result['status'], 'unsampled')
+        self.assertEqual(result['reason'], 'closed_disclosure')
+
     def test_black_white_ratio_is_21(self):
         self.assertAlmostEqual(MODULE.contrast_ratio((0, 0, 0), (255, 255, 255)), 21.0)
 

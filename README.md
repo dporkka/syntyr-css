@@ -208,6 +208,7 @@ Browse the curated entry points above, or expand the full reference index below.
 - [Design-system states and typography example](examples/design-states.html): semantic tokens, accessible control states, nested themes and compact density
 - [Minimalist patterns demo (system palette, fluid type, intrinsic layouts and classless form)](examples/minimalist-patterns.html)
 - [Single-file, Pico-style semantic starter (unreleased alpha.5)](examples/semantic-starter.html)
+- [Minimal document starter](examples/document-starter.html) and [Simple.css migration notes](docs/from-pico.md): generated Markdown/CMS markup, scoped prose, keyboard-scrollable code and optional print CSS (unreleased alpha.5).
 - [Alpha.5 integration and test evidence](RELEASE_CHECKS_ALPHA5.md)
 - [Alpha.5 manual accessibility review checklist](docs/accessibility-alpha5-review.md)
 - [Advanced frame and terminal lab](examples/geometry-terminal.html) with [geometry integration guide](docs/geometry-terminal.md) and [interactive geometry mixer](docs/playground.html#geometry-title)

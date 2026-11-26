@@ -49,8 +49,8 @@ ATTR_TOKEN = re.compile(
 )
 
 
-def _without_link_target(tag_text: str) -> str:
-    """Remove a genuine href attribute, never href-looking text in another value."""
+def _without_attributes(tag_text: str, names: set[str]) -> str:
+    """Remove genuine attributes, never attribute-looking text in another value."""
     element_name = re.match(r"<\s*[a-z][a-z0-9-]*", tag_text, re.IGNORECASE)
     if element_name is None:
         return tag_text
@@ -61,7 +61,7 @@ def _without_link_target(tag_text: str) -> str:
         if matched is None:
             pieces.append(tag_text[pos:])
             break
-        if matched.group("name").lower() != "href":
+        if matched.group("name").lower() not in names:
             pieces.append(matched.group())
         pos = matched.end()
     return "".join(pieces)
@@ -97,8 +97,14 @@ def preview_markup(source: str) -> str:
                                    '<fieldset class="blocks-preview-disabled" disabled>'))
                 if attributes.get("id"):
                     self.form_ids.add(attributes["id"])
-            elif tag == "a":
-                safe = _without_link_target(raw)
+            elif tag in {"a", "header", "footer"}:
+                # All previews live inside a gallery article. Inactive
+                # anchors and nested headers/footers without an explicit
+                # role are generic elements, which cannot be named by ARIA.
+                remove = {"href"} if tag == "a" else set()
+                if not attributes.get("role"):
+                    remove.update({"aria-label", "aria-labelledby"})
+                safe = _without_attributes(raw, remove)
                 if safe != raw:
                     self.edits.append((start, start + len(raw), safe))
             elif tag in {"button", "input", "select", "textarea"}:

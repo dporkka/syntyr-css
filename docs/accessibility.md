@@ -2,6 +2,15 @@
 
 **Status:** experimental alpha; not a WCAG certification or professional audit.
 
+## Current candidate evidence — November 26, 2026
+
+The [candidate audit and reinspection record](accessibility-alpha5-review.md)
+supersedes the historical counts below. The 45-page source audit has zero
+confirmed axe violations, but 207 incomplete contrast targets; all 621
+automated observations now have classifications, including 33 non-text
+observations requiring an explicit graphics review. None of these results
+constitute human approval.
+
 ## Responsive follow-up — November 15, 2026
 
 On the source merged by PR #135 (commit 0b04607), the published-site
@@ -81,6 +90,10 @@ behavior, or native OS high-contrast mode.
   focus-visible outline, reduced-motion support, and forced-color hooks.
 - Real browser matrix: Chromium, Firefox, and WebKit on desktop/mobile viewport widths,
   testing navigation, table semantics, native popover, disclosure, and overflow.
+- Browser accessibility snapshots: named Markdown headings/links, disabled
+  task controls, table headers and scrolling regions, authored Tab order,
+  and native popover/dialog/disclosure keyboard transitions. These are
+  browser-level assertions, not screen-reader speech or OS accessibility tests.
 - Automated accessibility: axe-core WCAG 2.0/2.1/2.2 A/AA tagged checks on the
   public showcase and example pages (the audited set changes over time). The tool may return
   **incomplete/manual-review** findings even with zero confirmed violations.
@@ -104,6 +117,8 @@ python3 tests/published_reflow_browser.py --browsers chromium firefox webkit
 python3 tests/minimalist_browser.py --browsers chromium firefox webkit
 # Opt-in: seven-theme enlarged-label, scroll keyboard, and link-target checks.
 python3 tests/accessibility_regression_browser.py --browsers chromium firefox webkit
+# Opt-in: actual Chromium tab zoom with a full extension-capable browser.
+python3 tests/document_prose_real_zoom_browser.py
 ```
 
 For a pinned axe-core 4.10.3 audit, provide the checker at test time. No
@@ -115,11 +130,24 @@ python3 tests/axe_audit.py --axe-file /tmp/axe.min.js \
   --report /tmp/syntyr-axe-manual-review.json
 ```
 
+The catalog is audited in its complete unreleased source mode, not the
+default frozen-release subset. The report records that mode so contrast
+triage can reproduce the same stylesheet and inventory. Collapsed disclosure
+content remains unsampled until reviewed in its open state.
+
 The published-site reflow test serves the actual Cloudflare-allowlisted HTML
 and hashed CSS locally, checks every page in multiple portrait and landscape
 viewports, and stresses root text at 150%/200%. It permits independently
 scrollable data regions but rejects page-level horizontal overflow and
 out-of-viewport controls. This is **not** 200%/400% native browser zoom.
+
+The document-starter zoom regression uses a temporary Chromium profile and
+test-only extension to set actual browser tab zoom to 200% and 400%. It
+checks the measured viewport, device pixel ratio, unchanged root font size,
+seven palettes, local overflow and keyboard-reachable code/table regions.
+Use a full Chromium binary with extension support (not the headless shell);
+`PLAYWRIGHT_CHROMIUM_EXECUTABLE` can select it. This is focused automated
+evidence, not a whole-site or human accessibility sign-off.
 
 For the remaining manual zoom gate, use the browser's own zoom control (not
 CSS `zoom`, a changed root font size, device pixel ratio, or pinch zoom):
@@ -159,6 +187,23 @@ python3 tests/contrast_pixel_triage.py \
   --widths 1280 390 320
 ```
 
+Revisit unsampled, below-threshold and near-threshold observations on the
+same content using a fresh page for each target:
+
+```sh
+python3 tests/contrast_pixel_triage.py \
+  --axe-report /tmp/syntyr-axe.json \
+  --reinspect-report /tmp/syntyr-contrast-triage.json \
+  --output /tmp/syntyr-contrast-reinspection.json
+```
+
+Reinspection opens only enclosing native disclosures with a summary and
+scrolls the target into view, including independently scrollable tables.
+It samples the current viewport and preserves the original observation's
+status; a selector that cannot be uniquely reached remains unsampled.
+Keep both reports. A higher reinspection sample does not certify contrast
+or close a manual-review target.
+
 The November 15, 2026 `9ff10ac` baseline contained 162 incomplete contrast
 elements. After rebasing the targeted contrast fixes onto `7e5c14d` (a newer
 main with additional unrelated changes), a fresh axe scan reported **160
@@ -171,7 +216,7 @@ report closes any axe incompletes as certified passes. Verify actual glyph
 pixels, interaction states and screen reader/zoom/OS high-contrast behavior
 before making a conformance claim.
 Following a further rebase onto `c726dc3` (restored native-APIs page),
-the newest candidate scan found **161 incomplete elements across 28 pages**:
+the historical candidate scan found **161 incomplete elements across 28 pages**:
 450 text/viewport observations sampled above threshold, 27 non-text and six
 unsampled textarea observations. There were still zero sampled-below or
 narrow-margin observations. All 161 inconclusives remain open for manual
@@ -198,6 +243,31 @@ adjust for Docker hosts. Keep the Python and browser versions aligned.
 The remote URL is part of a **developer-only test**, not a browser runtime
 dependency. Pin the checker release, review its MIT license, and verify its
 provenance if incorporating it into build infrastructure.
+
+## Manual review queue
+
+Create a developer-only CSV from the complete axe report, three-width
+triage and optional targeted reinspection:
+
+```sh
+python3 tests/contrast_review_queue.py \
+  --axe-report /tmp/syntyr-axe.json \
+  --triage-report /tmp/syntyr-contrast-triage.json \
+  --reinspection-report /tmp/syntyr-contrast-reinspection.json \
+  --output /tmp/syntyr-contrast-manual-queue.csv
+```
+
+Use your actual report paths; omit the reinspection argument if not run.
+The script rejects missing, duplicate or unrelated observations, matches
+reinspection to its flagged original, retains source revisions and never
+overwrites a reviewer-edited CSV. Every review status is initially
+`pending`, even if all sampled values exceed a threshold. Unresolved
+samples come first, then non-text/graphics targets and the lowest-margin
+text/placeholder targets. Record the browser, theme, zoom, interaction
+states, manual measurement or non-text exception and reviewer-specific
+evidence. Keep the filled queue outside the public repository and verify
+that the audited page content and CSS correspond to the reviewed commit.
+
 
 ## Earlier automated baseline (November 14, 2026, unreleased alpha.5)
 

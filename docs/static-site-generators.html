@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Syntyr&#x27;s distribution is ordinary, scoped CSS. It does not require a JavaScript runtime, hydration, Sass, PostCSS, browser-specific components, or a…">
-  <meta name="syntyr-source-sha256" content="6d1575575531dd61b8cbd3c2ce3ee25d4ed4afaa5072ccbff574b94453fa8da0">
+  <meta name="syntyr-source-sha256" content="b284d47809bddf02e6381ba16fcfcbb0c074e6e5deecaa89527acb1952016e14">
   <meta name="theme-color" content="#f5f7fb">
   <title>Syntyr with static-site generators — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/static-site-generators">
@@ -128,6 +128,73 @@ and native elements, choose <code>syntyr.semantic-bundle.css</code> <em>instead<
 and opt in with <code>class=&quot;syn-root syn-semantic&quot;</code>. For explicit components,
 load <code>syntyr.core.css</code> once and use classes such as <code>syn-panel</code> and
 <code>syn-button</code>. Do not combine a bundle with its constituent CSS.</p>
+<h2 id="markdown-and-cms-documents-alpha5-source-candidate">Markdown and CMS documents (alpha.5 source candidate)</h2>
+<p>Use the existing minimal preset and one document wrapper; generated descendants
+can keep their own heading-anchor, syntax-highlight, figure and table classes.</p>
+<pre tabindex="0"><code class="language-html">&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/minimal.css&quot;&gt;
+&lt;main class=&quot;syn-root syn-page&quot; data-syn-theme=&quot;auto&quot;&gt;
+  &lt;article class=&quot;syn-shell syn-prose&quot;&gt;
+    &lt;h1&gt;Release notes&lt;/h1&gt;
+    &lt;!-- Render trusted or sanitized HTML here. --&gt;
+  &lt;/article&gt;
+&lt;/main&gt;
+</code></pre>
+<p><code>.syn-prose</code> provides readable measure, token-based headings, document rhythm,
+wrapped identifiers, responsive images, and locally scrollable code even when
+the generator adds class names. It does not sanitize HTML, generate IDs,
+highlight source code, or implement interactive task lists. Do not use
+<code>.syn-semantic</code> on the entire document if you want only prose presentation;
+enable it separately for native form controls. Existing theme and application
+CSS can override the layered defaults.</p>
+<p>Keep application widgets in a separate sibling region, or wrap an inline widget
+with its own <code>.syn-root</code> inside the prose. The enhanced document descendant rules
+do not style that nested root or its contents; the outer prose still positions
+the widget in the flow, and ordinary inheritance/base styles still apply.
+Do not nest another prose region inside that embedded root; use sibling document
+regions instead.</p>
+<p>At the renderer/template level, wrap wide tables in a <code>.syn-table-wrap</code> region
+with an accessible name and <code>tabindex=&quot;0&quot;</code>; preserve the real table semantics.
+For long code, give the scrolling <code>pre</code> a name, <code>role=&quot;region&quot;</code> and
+<code>tabindex=&quot;0&quot;</code> if needed for keyboard scrolling. Retain the highlighter's
+token colors and check contrast against the chosen theme. Optionally load
+<code>syntyr.print.css</code> after the preset to wrap long code lines on paper.
+Source-generated footnote and heading IDs must remain unique.</p>
+<p>The <a href="../examples/document-starter.html">document starter</a> uses representative
+Markdown and CMS-style markup without adding a generator dependency. For real
+Hugo and Zola Markdown output, use a build-time shortcode to wrap wide native
+tables; the browser receives only ordinary HTML. A raw generated two-column
+table can overflow at 400% text scaling, so do not assume CSS alone will
+contain every Markdown table.</p>
+<p>For Hugo, save this as <code>layouts/shortcodes/prose-table.html</code>:</p>
+<pre tabindex="0"><code class="language-html">&lt;div class=&quot;syn-table-wrap&quot; role=&quot;region&quot; aria-label=&quot;Inventory&quot; tabindex=&quot;0&quot;&gt;
+  {{ .Inner | markdownify }}
+&lt;/div&gt;
+</code></pre>
+<p>Wrap the Markdown table in <code>{{&lt; prose-table &gt;}}</code> and
+<code>{{&lt; /prose-table &gt;}}</code>. For Zola, save the equivalent as
+<code>templates/shortcodes/prose_table.html</code>:</p>
+<pre tabindex="0"><code class="language-html">&lt;div class=&quot;syn-table-wrap&quot; role=&quot;region&quot; aria-label=&quot;Inventory&quot; tabindex=&quot;0&quot;&gt;
+  {{ body | markdown | safe }}
+&lt;/div&gt;
+</code></pre>
+<p>Wrap the Markdown table in <code>{% prose_table() %}</code> and <code>{% end %}</code>. Give each
+region a meaningful name for its contents. These example shortcodes are for
+trusted author content, not a substitute for sanitization.</p>
+<h3 id="real-generator-verification-optional-maintainer-check">Real generator verification (optional maintainer check)</h3>
+<p>With Hugo <strong>0.170.0</strong>, Zola <strong>0.22.1</strong>, and developer-installed Playwright,
+run from the repository root:</p>
+<pre tabindex="0"><code class="language-sh">python3 scripts/build.py --check
+python3 tests/generated_prose_browser.py --hugo hugo --zola zola
+</code></pre>
+<p>Add <code>--build-only</code> to verify static output, local stylesheet links, non-root
+deployment prefixes and absence of browser scripts without Playwright.
+The test builds the same Markdown with native renderers in a temporary
+directory, then requests the generated pages and assets on loopback HTTP.
+It checks seven palettes, 320/390/1280px widths, 100/200/400% root font
+scaling, footnote targets, task checkboxes, image loading, code containment
+and a keyboard-focusable table wrapper. It is not a full accessibility
+audit or a production CMS deployment: native code-block focusability
+varies by renderer and must be checked in the host application.</p>
 <h2 id="astro">Astro</h2>
 <pre tabindex="0"><code class="language-astro">---
 // examples/astro uses a local file:../.. development dependency.
@@ -247,6 +314,8 @@ the generator chosen.</p>
           <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#runnable-zero-javascript-marketing-site-starter">Runnable zero-JavaScript marketing site starter</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#integration-matrix">Integration matrix</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#markdown-and-cms-documents-alpha5-source-candidate">Markdown and CMS documents (alpha.5 source candidate)</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#real-generator-verification-optional-maintainer-check">Real generator verification (optional maintainer check)</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#astro">Astro</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#eleventy">Eleventy</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#hugo">Hugo</a>
@@ -260,6 +329,8 @@ the generator chosen.</p>
             <nav aria-label="On this page (mobile)">
 <a class="docs-article-toc-link docs-article-toc-2" href="#runnable-zero-javascript-marketing-site-starter">Runnable zero-JavaScript marketing site starter</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#integration-matrix">Integration matrix</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#markdown-and-cms-documents-alpha5-source-candidate">Markdown and CMS documents (alpha.5 source candidate)</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#real-generator-verification-optional-maintainer-check">Real generator verification (optional maintainer check)</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#astro">Astro</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#eleventy">Eleventy</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#hugo">Hugo</a>

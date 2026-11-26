@@ -3269,6 +3269,28 @@ See [distribution](distribution.md), [component contract](components.md),
 [framework integrations](framework-integrations.md), and
 [performance validation](performance-validation.md).
 
+## Moving from Simple.css
+
+Simple.css and Syntyr both support ordinary HTML with no required runtime
+JavaScript. Simple.css applies document styling globally; Syntyr intentionally
+scopes it to opted-in regions. This is not a drop-in replacement, and Simple.css
+custom properties are not Syntyr tokens.
+
+For the unreleased alpha.5 candidate, copy `dist/presets/minimal.css` to
+your site and remove the old global framework stylesheet from that page.
+This preset already contains core and semantic CSS; do not load either again.
+Use `syn-root syn-page` on the page, `syn-shell syn-prose` on a document,
+and `syn-semantic` on regions where you want classless form and other native
+control styling. Choose `data-syn-theme="auto"` for system-aware appearance.
+
+[Open the zero-script document starter](../examples/document-starter.html).
+It includes generated-content specimens, a named scrollable table,
+a focusable code region, a figure, task lists and a separate embedded component.
+It uses the minimal preset plus optional print CSS; the print stylesheet is
+not included in minimal. See the [static-site generator guide](static-site-generators.md)
+for the document boundary and renderer responsibilities. The enhanced
+document presentation is candidate-only, not part of immutable alpha.4.
+
 ---
 
 ## Source: docs/api-stability.md
@@ -4829,6 +4851,50 @@ already manages; for modal content, use `<dialog>` and a real accessible name.
 
 ## Browser-compatibility policy
 
+**Proposed validation targets, not supported minimum versions:** Chrome /
+Chromium 130, Firefox 132, Safari 18.2 (desktop and iOS). These are
+conservative starting points for testing, based on the corrected source
+order of native nested declarations in the respective engines. Syntyr
+also uses cascade layers, custom properties, `color-mix()`, modern
+logical sizing, `:has()`, and container queries. Without the required
+CSS capabilities, native content may remain readable but styled-component
+compatibility is not assured. Do not recommend installing obsolete
+browsers for normal use; run isolated, trusted test builds only.
+
+The sources for the nesting milestones are
+[Chrome 130](https://developer.chrome.com/release-notes/130),
+[Firefox 132](https://developer.mozilla.org/en-US/docs/Mozilla/Firefox/Releases/132)
+and [Safari 18.2](https://webkit.org/blog/16301/webkit-features-in-safari-18-2/).
+These describe browser feature availability, not tests of Syntyr. No
+browser support floor has been approved. Test the actual minimum
+versions before declaring one; optional enhancements and native commands
+may need newer releases or an author-owned alternative.
+
+To record the CSS capabilities and rendered starter behavior of any
+installed test browser, run the developer-only probe:
+
+```sh
+python3 tests/document_prose_browser.py --browsers chromium firefox webkit
+```
+
+The probe exercises actual cascade order, nested styling and color
+mixing, records optional native features, and renders the script-free
+document across seven palettes, three widths and three root font sizes.
+Override a compatible Playwright test executable with
+`SYNTYR_CHROMIUM_EXECUTABLE`, `SYNTYR_FIREFOX_EXECUTABLE`, or
+`SYNTYR_WEBKIT_EXECUTABLE`. Not every historic browser accepts the
+current Playwright driver. Linux WebKit is not Safari on macOS/iOS.
+
+The November 26 focused test of the PR #443 rendering content passed
+the probe and all 189 combined starter reflow/palette configurations in Chromium
+151.0.7922.34, Firefox 159.0 and Linux WebKit 26.5 (63 per engine).
+Chromium 151 and WebKit 26.5 also passed the browser accessibility-tree
+and keyboard regression for document/native API fixtures. No test was
+performed at the proposed 130/132/18.2 targets, and the WebKit evidence
+is not a macOS or iOS Safari test. The broader matrix and native zoom,
+assistive-technology and OS high-contrast gates still apply.
+
+
 Test Chromium, Firefox, and WebKit at narrow widths and 200%/400% zoom. CSS feature queries guard anchor placement and scroll-driven timelines. Without the advanced feature, the controls remain styled, dismissible, and operable **where the underlying HTML primitive is supported**. For genuinely older browsers that lack the HTML primitive entirely, provide an alternative interaction or a conditionally loaded host-app polyfill; Syntyr never silently installs one.
 
 Always verify keyboard focus, Escape dismissal, forced-colors mode, native validation, and `prefers-reduced-motion`. Avoid animated content that conveys information unavailable as text. The scroll indicator uses `aria-hidden="true"` and must not replace a semantic progress bar for tasks.
@@ -5372,6 +5438,11 @@ Use `.syn-display` (also available as `.syn-title`), `.syn-section-heading` for 
 `.syn-body`, `.syn-text-support`, and the opt-in `.syn-prose` content
 container. Typography roles inherit theme fonts and allow applications to
 override type scale without rewriting individual component selectors.
+
+The alpha.5 source candidate also gives `.syn-prose` document defaults for
+generator-owned HTML, including headings, blockquotes, figures, lists, tables
+and locally scrolling code. See [Markdown and CMS documents](static-site-generators.md)
+for its nested-root boundary, keyboard scrolling and optional print CSS.
 
 Semantic aliases are derived separately in each nested `data-syn-theme`
 scope, so a Grid panel inside a Studio page retains Grid's own contrast and
@@ -6177,6 +6248,15 @@ Original: https://syntyr-css.pages.dev/docs/accessibility.md
 
 **Status:** experimental alpha; not a WCAG certification or professional audit.
 
+## Current candidate evidence — November 26, 2026
+
+The [candidate audit and reinspection record](accessibility-alpha5-review.md)
+supersedes the historical counts below. The 45-page source audit has zero
+confirmed axe violations, but 207 incomplete contrast targets; all 621
+automated observations now have classifications, including 33 non-text
+observations requiring an explicit graphics review. None of these results
+constitute human approval.
+
 ## Responsive follow-up — November 15, 2026
 
 On the source merged by PR #135 (commit 0b04607), the published-site
@@ -6256,6 +6336,10 @@ behavior, or native OS high-contrast mode.
   focus-visible outline, reduced-motion support, and forced-color hooks.
 - Real browser matrix: Chromium, Firefox, and WebKit on desktop/mobile viewport widths,
   testing navigation, table semantics, native popover, disclosure, and overflow.
+- Browser accessibility snapshots: named Markdown headings/links, disabled
+  task controls, table headers and scrolling regions, authored Tab order,
+  and native popover/dialog/disclosure keyboard transitions. These are
+  browser-level assertions, not screen-reader speech or OS accessibility tests.
 - Automated accessibility: axe-core WCAG 2.0/2.1/2.2 A/AA tagged checks on the
   public showcase and example pages (the audited set changes over time). The tool may return
   **incomplete/manual-review** findings even with zero confirmed violations.
@@ -6279,6 +6363,8 @@ python3 tests/published_reflow_browser.py --browsers chromium firefox webkit
 python3 tests/minimalist_browser.py --browsers chromium firefox webkit
 # Opt-in: seven-theme enlarged-label, scroll keyboard, and link-target checks.
 python3 tests/accessibility_regression_browser.py --browsers chromium firefox webkit
+# Opt-in: actual Chromium tab zoom with a full extension-capable browser.
+python3 tests/document_prose_real_zoom_browser.py
 ```
 
 For a pinned axe-core 4.10.3 audit, provide the checker at test time. No
@@ -6290,11 +6376,24 @@ python3 tests/axe_audit.py --axe-file /tmp/axe.min.js \
   --report /tmp/syntyr-axe-manual-review.json
 ```
 
+The catalog is audited in its complete unreleased source mode, not the
+default frozen-release subset. The report records that mode so contrast
+triage can reproduce the same stylesheet and inventory. Collapsed disclosure
+content remains unsampled until reviewed in its open state.
+
 The published-site reflow test serves the actual Cloudflare-allowlisted HTML
 and hashed CSS locally, checks every page in multiple portrait and landscape
 viewports, and stresses root text at 150%/200%. It permits independently
 scrollable data regions but rejects page-level horizontal overflow and
 out-of-viewport controls. This is **not** 200%/400% native browser zoom.
+
+The document-starter zoom regression uses a temporary Chromium profile and
+test-only extension to set actual browser tab zoom to 200% and 400%. It
+checks the measured viewport, device pixel ratio, unchanged root font size,
+seven palettes, local overflow and keyboard-reachable code/table regions.
+Use a full Chromium binary with extension support (not the headless shell);
+`PLAYWRIGHT_CHROMIUM_EXECUTABLE` can select it. This is focused automated
+evidence, not a whole-site or human accessibility sign-off.
 
 For the remaining manual zoom gate, use the browser's own zoom control (not
 CSS `zoom`, a changed root font size, device pixel ratio, or pinch zoom):
@@ -6334,6 +6433,23 @@ python3 tests/contrast_pixel_triage.py \
   --widths 1280 390 320
 ```
 
+Revisit unsampled, below-threshold and near-threshold observations on the
+same content using a fresh page for each target:
+
+```sh
+python3 tests/contrast_pixel_triage.py \
+  --axe-report /tmp/syntyr-axe.json \
+  --reinspect-report /tmp/syntyr-contrast-triage.json \
+  --output /tmp/syntyr-contrast-reinspection.json
+```
+
+Reinspection opens only enclosing native disclosures with a summary and
+scrolls the target into view, including independently scrollable tables.
+It samples the current viewport and preserves the original observation's
+status; a selector that cannot be uniquely reached remains unsampled.
+Keep both reports. A higher reinspection sample does not certify contrast
+or close a manual-review target.
+
 The November 15, 2026 `9ff10ac` baseline contained 162 incomplete contrast
 elements. After rebasing the targeted contrast fixes onto `7e5c14d` (a newer
 main with additional unrelated changes), a fresh axe scan reported **160
@@ -6346,7 +6462,7 @@ report closes any axe incompletes as certified passes. Verify actual glyph
 pixels, interaction states and screen reader/zoom/OS high-contrast behavior
 before making a conformance claim.
 Following a further rebase onto `c726dc3` (restored native-APIs page),
-the newest candidate scan found **161 incomplete elements across 28 pages**:
+the historical candidate scan found **161 incomplete elements across 28 pages**:
 450 text/viewport observations sampled above threshold, 27 non-text and six
 unsampled textarea observations. There were still zero sampled-below or
 narrow-margin observations. All 161 inconclusives remain open for manual
@@ -6373,6 +6489,31 @@ adjust for Docker hosts. Keep the Python and browser versions aligned.
 The remote URL is part of a **developer-only test**, not a browser runtime
 dependency. Pin the checker release, review its MIT license, and verify its
 provenance if incorporating it into build infrastructure.
+
+## Manual review queue
+
+Create a developer-only CSV from the complete axe report, three-width
+triage and optional targeted reinspection:
+
+```sh
+python3 tests/contrast_review_queue.py \
+  --axe-report /tmp/syntyr-axe.json \
+  --triage-report /tmp/syntyr-contrast-triage.json \
+  --reinspection-report /tmp/syntyr-contrast-reinspection.json \
+  --output /tmp/syntyr-contrast-manual-queue.csv
+```
+
+Use your actual report paths; omit the reinspection argument if not run.
+The script rejects missing, duplicate or unrelated observations, matches
+reinspection to its flagged original, retains source revisions and never
+overwrites a reviewer-edited CSV. Every review status is initially
+`pending`, even if all sampled values exceed a threshold. Unresolved
+samples come first, then non-text/graphics targets and the lowest-margin
+text/placeholder targets. Record the browser, theme, zoom, interaction
+states, manual measurement or non-text exception and reviewer-specific
+evidence. Keep the filled queue outside the public repository and verify
+that the audited page content and CSS correspond to the reviewed commit.
+
 
 ## Earlier automated baseline (November 14, 2026, unreleased alpha.5)
 

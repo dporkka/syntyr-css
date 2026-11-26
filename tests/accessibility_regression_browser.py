@@ -11,7 +11,81 @@ from contrast_pixel_triage import contrast_ratio, parse_rgb
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def check_document_semantics(browser, engine):
+    """Browser accessibility snapshots and native keyboard paths, not AT speech."""
+    page = browser.new_page(viewport={"width": 320, "height": 850})
+    try:
+        page.goto((ROOT / "examples/document-starter.html").as_uri())
+        snapshot = page.locator("main").aria_snapshot()
+        for expected in (
+            'heading "Portable project notes" [level=1]',
+            'heading "Layout and commands" [level=2]',
+            'checkbox "Review document" [checked] [disabled]',
+            'checkbox "Publish assets" [disabled]',
+            'region "Configuration code"', 'region "Inventory"',
+            'table "Inventory"', 'columnheader "Name"', 'columnheader "Value"',
+            'rowheader "Long identifier"', 'region "References"',
+            'link "Return to reference"', 'img "Fictional status bar"',
+            'region "Embedded component"', 'button "Action"',
+        ):
+            assert expected in snapshot, (engine, expected, snapshot)
+        page.get_by_role("link", name="reference", exact=True).focus()
+        # Real tab navigation skips disabled task-list controls and follows
+        # the authored order through local scrolling regions and footnotes.
+        for target in (
+            page.get_by_role("link", name="Layout and commands"),
+            page.get_by_role("region", name="Configuration code"),
+            page.get_by_role("region", name="Inventory"),
+            page.get_by_role("link", name="Return to reference"),
+            page.get_by_role("button", name="Action"),
+        ):
+            page.keyboard.press("Tab")
+            assert target.evaluate("e => document.activeElement === e"), (engine, target)
+
+        page.goto((ROOT / "examples/native-apis.html").as_uri())
+        main = page.locator("main")
+        assert 'textbox "NOTES"' in main.aria_snapshot()
+        assert 'heading "Native command menu"' not in main.aria_snapshot()
+        assert 'dialog "System status"' not in main.aria_snapshot()
+        trigger = page.get_by_role("button", name="OPEN POPOVER")
+        trigger.focus()
+        page.keyboard.press("Enter")
+        popover = page.locator("#native-popover")
+        assert popover.evaluate('e => e.matches(":popover-open")'), engine
+        assert 'heading "Native command menu"' in popover.aria_snapshot()
+        assert 'button "CLOSE"' in popover.aria_snapshot()
+        page.keyboard.press("Escape")
+        assert not popover.evaluate('e => e.matches(":popover-open")'), engine
+        assert trigger.evaluate("e => document.activeElement === e"), engine
+
+        modal_trigger = page.get_by_role("button", name="OPEN MODAL")
+        if modal_trigger.evaluate("e => 'commandForElement' in e"):
+            modal_trigger.focus()
+            page.keyboard.press("Enter")
+            dialog = page.get_by_role("dialog", name="System status")
+            assert dialog.is_visible(), engine
+            assert 'button "ACKNOWLEDGE"' in dialog.aria_snapshot()
+            page.keyboard.press("Escape")
+            assert not dialog.is_visible(), engine
+            assert modal_trigger.evaluate("e => document.activeElement === e"), engine
+        # The fallback is available both with and without native invokers.
+        disclosure = page.locator("#overlays details")
+        fallback = "System status: operational."
+        assert fallback not in disclosure.aria_snapshot()
+        disclosure.locator("summary").focus()
+        page.keyboard.press("Enter")
+        assert disclosure.evaluate("e => e.open"), engine
+        assert fallback in disclosure.aria_snapshot()
+        page.keyboard.press("Enter")
+        assert not disclosure.evaluate("e => e.open"), engine
+        assert fallback not in disclosure.aria_snapshot()
+        print(f"PASS {engine}: document AX roles, authored Tab order, popover, dialog/fallback disclosure", flush=True)
+    finally:
+        page.close()
+
+
 def check(browser, engine):
+    check_document_semantics(browser, engine)
     # All shipping palettes, including focus/filled states. Test 2x/4x root text
     # enlargement rather than claiming to emulate browser-UI zoom.
     for theme in ('studio', 'grid', 'noir', 'industrial', 'terminal', 'corporate', 'minimal'):

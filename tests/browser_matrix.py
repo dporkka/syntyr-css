@@ -24,6 +24,7 @@ PAGES = ("index.html", "docs/index.html", "docs/catalog.html", "docs/blocks.html
          "examples/vertigo-admin.html", "examples/vertigo-resource-workflow.html", "examples/saas-workflows.html", "examples/crm.html", "examples/minimalist-patterns.html", "examples/design-states.html", "examples/symbols.html", "examples/native-elements.html",
          "examples/native-apis.html", "examples/dropdowns.html", "examples/flagship-studio.html", "examples/flagship-noir.html", "examples/flagship-grid.html",
          "examples/semantic-starter.html", "examples/workflow-steps.html", "examples/enterprise-compositions.html", "examples/premium-compositions.html", "examples/operation-revisions.html",
+         "examples/document-starter.html",
 )
 
 def assert_page(browser, name: str, viewport: int) -> None:
@@ -40,6 +41,17 @@ def assert_page(browser, name: str, viewport: int) -> None:
         # Existing catalog script remains isolated from consumer CSS.
         assert page.locator('script[src="catalog.js"]').count() == 1
         assert page.locator("script").count() == 1
+        page.wait_for_function("""() => {
+            const link = document.getElementById('catalog-framework-stylesheet');
+            return link?.href.includes('/site-releases/0.3.0-alpha.4/') &&
+                   link.sheet?.href === link.href;
+        }""")
+        # Native markers must not collide with adjacent wrapped nav links.
+        # Explicit list semantics preserve the group for WebKit/VoiceOver.
+        for label in ("Primary navigation", "Footer resources"):
+            links = page.get_by_role("navigation", name=label, exact=True).get_by_role("list")
+            assert links.get_by_role("listitem").count() == 3, label
+            assert links.evaluate("e => getComputedStyle(e).listStyleType") == "none", label
     elif name == "docs/blocks.html":
         # New Blocks gallery script is documentation-only as well.
         assert page.locator('script[src="blocks.js"]').count() == 1
@@ -48,7 +60,9 @@ def assert_page(browser, name: str, viewport: int) -> None:
         assert page.locator("script").count() == 0, name
     assert page.get_by_role("main").count() == 1, name
     assert page.locator('link[rel="stylesheet"]').count() >= 1
-    css = page.locator("body").evaluate("e => getComputedStyle(e).getPropertyValue('--syn-accent').trim()")
+    # The document starter deliberately keeps its host body unstyled.
+    token_root = "main.syn-root" if name == "examples/document-starter.html" else "body"
+    css = page.locator(token_root).evaluate("e => getComputedStyle(e).getPropertyValue('--syn-accent').trim()")
     if name == "examples/minimalist-patterns.html":
         assert "light-dark(" in css, (name, css)
     else:
@@ -140,6 +154,20 @@ def assert_page(browser, name: str, viewport: int) -> None:
         cards = page.locator(".catalog-card")
         total = cards.count()
         assert total >= 8, total
+        # The catalog now defaults to the immutable published CSS subset.
+        # Exercise that boundary before testing the complete source inventory.
+        release = page.locator("#catalog-release-filter")
+        assert release.input_value() == "published-alpha4"
+        published = page.locator('.catalog-card[data-catalog-alpha4="true"]').count()
+        assert 0 < published <= total
+        assert page.locator(".catalog-card:visible").count() == published
+        release.select_option("source-alpha5")
+        page.wait_for_function("""() => {
+            const link = document.getElementById('catalog-framework-stylesheet');
+            return link?.href.endsWith('/dist/syntyr.all.css') &&
+                   link.sheet?.href === link.href;
+        }""")
+        assert page.evaluate("document.documentElement.scrollWidth <= document.documentElement.clientWidth + 1"), (name, viewport, "source mode overflow")
         assert all(cards.nth(i).is_visible() for i in range(total))
         search = page.get_by_role("searchbox", name="Find a component")
         assert search.is_visible()
@@ -158,10 +186,10 @@ def assert_page(browser, name: str, viewport: int) -> None:
             # Clipboard permission handling is async; await the observable live
             # region update rather than asserting synchronously after a click.
             page.wait_for_function("""() => {
-                const message = document.getElementById('catalog-results')?.textContent || '';
+                const message = document.getElementById('catalog-feedback')?.textContent || '';
                 return message.includes('HTML copied.') || message.includes('HTML selected.');
             }""", timeout=3000)
-            status = page.locator("#catalog-results").inner_text()
+            status = page.locator("#catalog-feedback").inner_text()
             assert ("HTML copied." in status or "HTML selected." in status), status
             # Without documentation JavaScript, actual components and HTML source
             # must still be usable; do not ship a JS-only catalog by accident.

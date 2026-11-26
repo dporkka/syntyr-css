@@ -14,12 +14,15 @@ import argparse
 from collections import Counter
 from io import BytesIO
 import json
+import os
 from pathlib import Path
 import re
 import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
 COLOR = re.compile(r'^rgba?\(\s*(\d{1,3})[ ,]+(\d{1,3})[ ,]+(\d{1,3})(?:[ ,/]+([\d.]+))?\s*\)$')
+REINSPECT_STATUSES = {"unsampled", "sampled_below_threshold", "narrow_margin",
+                      "computed_placeholder_below_threshold"}
 
 
 def parse_rgb(css: str):
@@ -54,17 +57,108 @@ def status_counts(items):
     return dict(sorted(Counter(item['status'] for item in items).items()))
 
 
+def reinspection_targets(axe_report, prior, widths, pages=None):
+    """Revisit only flagged observations that match the original axe targets."""
+    def key(item):
+        return item['page'], tuple(item['selector']), item['failure_summary']
+
+    known = {key(dict(item, page=row['page']))
+             for row in axe_report['pages'] for item in row['incomplete']
+             if item['rule'] == 'color-contrast'}
+    targets = []
+    for item in prior['observations']:
+        if item['status'] not in REINSPECT_STATUSES or item['viewport_width'] not in widths:
+            continue
+        if pages and item['page'] not in pages:
+            continue
+        if key(item) not in known:
+            raise ValueError(f"Previous observation missing from axe report: {key(item)}")
+        targets.append(item)
+    return targets
+
+
+def load_review_page(page, path, report):
+    page.goto((ROOT / path).as_uri(), wait_until='load')
+    # Older reports predate the explicit release-mode field and used the
+    # default frozen catalog stylesheet.
+    if path == 'docs/catalog.html' and report.get('catalog_release') == 'source-alpha5':
+        from axe_audit import prepare_source_catalog
+        prepare_source_catalog(page)
+
+
+def reinspect(browser, report, prior, widths, pages):
+    """Reveal one reachable target at a time; capture a viewport, not a full page."""
+    from PIL import Image
+    results = []
+    for item in reinspection_targets(report, prior, widths, pages):
+        width = item['viewport_width']
+        result = {k: item[k] for k in ('page', 'selector', 'failure_summary', 'viewport_width')}
+        result.update(status='unsampled', prior_status=item['status'])
+        if 'reason' in item:
+            result['prior_reason'] = item['reason']
+        page = browser.new_page(viewport={'width': width, 'height': 900}, device_scale_factor=1)
+        try:
+            load_review_page(page, item['page'], report)
+            if len(item['selector']) != 1:
+                result['reason'] = 'unsupported_selector_chain'
+            else:
+                target = page.locator(item['selector'][0])
+                if target.count() != 1:
+                    result['reason'] = 'selector_not_unique'
+                else:
+                    # Open only ancestors the reviewer can reach through a
+                    # native disclosure. Do not unhide arbitrary author content.
+                    opened = target.evaluate("""e => {
+                        let opened = 0;
+                        for (let a = e.parentElement; a; a = a.parentElement) {
+                            if (!a.matches('details:not([open])') ||
+                                a.querySelector(':scope > summary')?.contains(e)) continue;
+                            if (!a.querySelector(':scope > summary')) continue;
+                            a.open = true; opened++;
+                        }
+                        e.scrollIntoView({block:'center', inline:'center', behavior:'instant'});
+                        return opened;
+                    }""")
+                    page.evaluate("() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)))")
+                    measured = page.evaluate(MEASURE_JS, [item])[0]
+                    scroll_y = page.evaluate('scrollY')
+                    for fragment in measured['fragments']:
+                        for rect in fragment['rects']:
+                            rect['top'] -= scroll_y
+                            rect['bottom'] -= scroll_y
+                    image = Image.open(BytesIO(page.screenshot(animations='disabled'))).convert('RGB')
+                    result.update(score_item(measured, image))
+                    result['opened_ancestor_disclosures'] = opened
+        except Exception as exc:
+            result['reason'] = f'capture_failed: {exc}'
+        finally:
+            page.close()
+        results.append(result)
+        print('REINSPECT', item['page'], width, item['selector'], result['status'], flush=True)
+    return results
+
+
 # Capture text-fragment foreground and geometry before hiding text. For sampling,
 # hide only the *glyph fill* (not the computed `color` used by currentColor
 # backgrounds/decoration), so gradients and pseudo-element paint remain visible.
 MEASURE_JS = r'''(items) => {
   const output = [];
   const hide = new Set();
+  const hiddenByDisclosure = el => {
+    for (let details = el.parentElement; details; details = details.parentElement) {
+      if (details.matches('details:not([open])') &&
+          !details.querySelector(':scope > summary')?.contains(el)) return true;
+    }
+    return false;
+  };
   for (const item of items) {
     let el;
     try { el = document.querySelector(item.selector[0]); }
     catch (_) { el = null; }
     if (!el) { output.push({...item, error: 'selector_not_found', fragments: []}); continue; }
+    if (hiddenByDisclosure(el)) {
+      output.push({...item, error: 'closed_disclosure', fragments: []}); continue;
+    }
     if (el.closest('[aria-hidden="true"]') ||
         /Element content contains only non-text characters/i.test(item.failure_summary || '')) {
       output.push({...item, error: 'non_text', fragments: []}); continue;
@@ -76,7 +170,7 @@ MEASURE_JS = r'''(items) => {
     while ((node = walker.nextNode()) && fragments.length < 5) {
       if (!node.textContent.trim()) continue;
       const parent = node.parentElement;
-      if (!parent || parent.closest('[aria-hidden="true"]')) continue;
+      if (!parent || parent.closest('[aria-hidden="true"]') || hiddenByDisclosure(parent)) continue;
       const style = getComputedStyle(parent);
       if (style.display === 'none' || style.visibility !== 'visible') continue;
       const range = document.createRange(); range.selectNodeContents(node);
@@ -237,6 +331,8 @@ def main():
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--widths', nargs='+', type=int, default=[1280, 390, 320])
     parser.add_argument('--pages', nargs='*', help='Optional exact page paths to sample')
+    parser.add_argument('--reinspect-report', type=Path,
+                        help='Revisit flagged observations from a previous triage report on the same content')
     args = parser.parse_args()
     from PIL import Image
     from playwright.sync_api import sync_playwright
@@ -246,9 +342,14 @@ def main():
                                capture_output=True, text=True, check=True).stdout.strip()
     observations = []
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)
+        executable = os.environ.get("PLAYWRIGHT_CHROMIUM_EXECUTABLE")
+        browser = p.chromium.launch(headless=True, **(
+            {"executable_path": executable} if executable else {}))
         try:
-            for row in report['pages']:
+            if args.reinspect_report:
+                prior = json.loads(args.reinspect_report.read_text(encoding='utf-8'))
+                observations = reinspect(browser, report, prior, args.widths, args.pages)
+            for row in (() if args.reinspect_report else report['pages']):
                 if args.pages and row['page'] not in args.pages:
                     continue
                 items = [dict(item, page=row['page']) for item in row['incomplete']
@@ -258,7 +359,7 @@ def main():
                 for width in args.widths:
                     page = browser.new_page(viewport={'width': width, 'height': 900}, device_scale_factor=1)
                     try:
-                        page.goto((ROOT / row['page']).as_uri(), wait_until='load')
+                        load_review_page(page, row['page'], report)
                         measured = page.evaluate(MEASURE_JS, items)
                         for item in measured:
                             item['viewport_width'] = width
@@ -278,6 +379,7 @@ def main():
             browser.close()
     review = {
         'method': 'Chromium pixel sampling plus computed opaque visible-placeholder colors; not WCAG certification',
+        'capture_mode': 'viewport_reinspection' if args.reinspect_report else 'full_page_initial',
         'source_commit': head,
         'source_worktree_clean': clean,
         'source_axe_report': str(args.axe_report),
@@ -290,6 +392,8 @@ def main():
         'summary': status_counts(observations),
         'observations': observations,
     }
+    if args.reinspect_report:
+        review['source_triage_report'] = str(args.reinspect_report)
     args.output.write_text(json.dumps(review, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
     print('TOTAL',review['summary'],'saved',args.output)
     for row in sorted((o for o in observations if o.get('minimum_sampled_ratio') is not None),

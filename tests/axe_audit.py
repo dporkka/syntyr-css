@@ -29,6 +29,7 @@ PAGES = ("index.html", "docs/index.html", "docs/catalog.html", "docs/blocks.html
          "examples/design-states.html", "examples/symbols.html", "examples/native-elements.html",
          "examples/flagship-studio.html", "examples/flagship-noir.html", "examples/flagship-grid.html",
          "examples/semantic-starter.html", "examples/native-apis.html", "examples/dropdowns.html", "examples/workflow-steps.html", "examples/enterprise-compositions.html", "examples/premium-compositions.html", "examples/operation-revisions.html",
+         "examples/document-starter.html", "docs/static-site-generators.html",
 )
 
 def normalize_findings(page_path: str, result: dict) -> dict:
@@ -68,6 +69,16 @@ def summarize_findings(pages: list[dict]) -> dict:
     }
 
 
+def prepare_source_catalog(page):
+    """Audit candidate CSS, not just the default frozen-release examples."""
+    page.locator("#catalog-release-filter").select_option("source-alpha5")
+    page.wait_for_function("""() => {
+        const link = document.getElementById('catalog-framework-stylesheet');
+        return link?.href.endsWith('/dist/syntyr.all.css') &&
+               link.sheet?.href === link.href;
+    }""")
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--axe-file", type=Path, required=True)
@@ -89,6 +100,8 @@ def main() -> int:
         for path in PAGES:
             page = browser.new_page(viewport={"width": 1280, "height": 900})
             page.goto((ROOT / path).as_uri())
+            if path == "docs/catalog.html":
+                prepare_source_catalog(page)
             page.add_script_tag(path=str(args.axe_file.resolve()))
             result = page.evaluate("""async () => axe.run(document, {
                 runOnly: { type: 'tag', values: ['wcag2a','wcag2aa','wcag21a','wcag21aa','wcag22aa'] }
@@ -106,7 +119,8 @@ def main() -> int:
         browser.close()
     summary = summarize_findings(findings)
     if args.report:
-        args.report.write_text(json.dumps({"schema_version": 1, "summary": summary, "pages": findings}, indent=2) + "\n", encoding="utf-8")
+        args.report.write_text(json.dumps({"schema_version": 1, "catalog_release": "source-alpha5",
+                                         "summary": summary, "pages": findings}, indent=2) + "\n", encoding="utf-8")
         print(f"WROTE manual review targets: {args.report}")
     print(f"TOTAL: {violations} confirmed violation rules, "
           f"{summary['confirmed_violation_nodes']} confirmed violation nodes, "

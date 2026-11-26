@@ -42,6 +42,18 @@ class StaticSiteGeneratorContract(unittest.TestCase):
         self.assertIn("base path", guide.lower())
         self.assertIn("unreleased", guide.lower())
 
+    def test_real_markdown_fixture_is_optional_and_has_one_table_insertion(self):
+        fixture = (ROOT / "tests/fixtures/generated-prose.md").read_text()
+        self.assertEqual(fixture.count("<!-- TABLE -->"), 1)
+        self.assertIn("[^ref]:", fixture)
+        self.assertIn("![Status bar](status.svg)", fixture)
+        self.assertIn("`" * 3 + "sh", fixture)
+        guide = (ROOT / "docs/static-site-generators.md").read_text()
+        self.assertIn("tests/generated_prose_browser.py", guide)
+        self.assertIn("--build-only", guide)
+        self.assertIn("{{ .Inner | markdownify }}", guide)
+        self.assertIn("{{ body | markdown | safe }}", guide)
+
     def _site(self, root: Path, stylesheet_href: str, css: bool = True, script: bool = False):
         (root / "guide").mkdir(parents=True)
         (root / "guide/index.html").write_text(

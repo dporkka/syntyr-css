@@ -79,3 +79,25 @@ cross-framework performance advantage has been established.
 See [distribution](distribution.md), [component contract](components.md),
 [framework integrations](framework-integrations.md), and
 [performance validation](performance-validation.md).
+
+## Moving from Simple.css
+
+Simple.css and Syntyr both support ordinary HTML with no required runtime
+JavaScript. Simple.css applies document styling globally; Syntyr intentionally
+scopes it to opted-in regions. This is not a drop-in replacement, and Simple.css
+custom properties are not Syntyr tokens.
+
+For the unreleased alpha.5 candidate, copy `dist/presets/minimal.css` to
+your site and remove the old global framework stylesheet from that page.
+This preset already contains core and semantic CSS; do not load either again.
+Use `syn-root syn-page` on the page, `syn-shell syn-prose` on a document,
+and `syn-semantic` on regions where you want classless form and other native
+control styling. Choose `data-syn-theme="auto"` for system-aware appearance.
+
+[Open the zero-script document starter](../examples/document-starter.html).
+It includes generated-content specimens, a named scrollable table,
+a focusable code region, a figure, task lists and a separate embedded component.
+It uses the minimal preset plus optional print CSS; the print stylesheet is
+not included in minimal. See the [static-site generator guide](static-site-generators.md)
+for the document boundary and renderer responsibilities. The enhanced
+document presentation is candidate-only, not part of immutable alpha.4.

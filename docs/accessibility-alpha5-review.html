@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="This report distinguishes the most recent automated findings from older pixel-sampling evidence. It is not a WCAG certification.">
-  <meta name="syntyr-source-sha256" content="c7993350a92901bc834840ddc5dcead0235bcbaed8f97b7edda033c4e2048029">
+  <meta name="syntyr-source-sha256" content="0aeca0de9ce645a4181559e94a9e1c18cc2aa6926a950f6ca54a23d0b1bbefac">
   <meta name="theme-color" content="#f5f7fb">
   <title>SYNTYR alpha.5 — outstanding accessibility review — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/accessibility-alpha5-review">
@@ -37,8 +37,46 @@
 <h1 id="syntyr-alpha5-outstanding-accessibility-review">SYNTYR alpha.5 — outstanding accessibility review</h1>
 <p>This report distinguishes the most recent automated findings from older
 pixel-sampling evidence. It is <strong>not</strong> a WCAG certification.</p>
-<h2 id="fresh-exact-head-audit-70ec764-november-18-2026">Fresh exact-head audit: <code>70ec764</code> (November 18, 2026)</h2>
-<p><strong>Newest automated source snapshot, not alpha.5 release approval.</strong>
+<h2 id="candidate-audit-and-reinspection-november-26-2026">Candidate audit and reinspection — November 26, 2026</h2>
+<p>The following <strong>source-candidate</strong> results supersede the November 18 snapshot,
+not the frozen alpha.4 release. Rendering/content audit commit
+<code>c98a2c061d9238320dd32907689a9868ffdb1a1a</code> and follow-up
+<code>bbf664fe3a6a37d2756030c13c0fcad933d91fdc</code> have identical audited page
+contents and CSS; the latter extends the test harnesses and review guidance.
+The exact Git trees and the reports are retained separately; see
+<a href="https://github.com/dporkka/syntyr-css/pull/443">PR #443</a>.</p>
+<ul>
+<li>Pinned axe-core 4.10.3, <strong>45 candidate pages, zero confirmed violation
+nodes, 207 incomplete contrast targets</strong>. The catalog was explicitly
+switched to the complete unreleased source inventory rather than the
+frozen-release default. Counts are not comparable with different audit scopes.</li>
+<li>Original three-width triage: 621 observations (466 sampled above
+threshold, 9 computed opaque placeholder pairs above threshold, 33
+non-text, 110 unsampled, 3 provisionally below). Targeted viewport
+reinspection of all 113 flagged observations at the follow-up commit:
+all sampled above their respective thresholds; 88 enclosing disclosures
+opened where necessary. The combined result is <strong>579 sampled text
+observations above threshold, 9 computed placeholder pairs above, 33
+non-text, zero unsampled/below/near-threshold</strong>. Reinspection changes
+automated classifications, not manual review status.</li>
+<li>The 33 non-text observations correspond to 11 targets that still need
+an explicit decorative/essential-graphics decision; the remaining 196
+targets need text/placeholder review. Do not assume a decorative exception.</li>
+<li>Browser accessibility-tree and keyboard checks passed Chromium, Firefox,
+and WebKit; actual Chromium tab zoom passed 200% and 400% on the
+document-starter fixture. Browser-level snapshots and focused zoom
+remain distinct from native screen-reader speech and whole-site zoom.</li>
+<li>The follow-up passed 1,435 Python tests (10 skipped, zero failures),
+generated-site, maintenance and read-only release preflight. Hosted
+exact-head results and manual release approvals remain separate gates.</li>
+</ul>
+<p>To turn the exact reports into a reviewer-owned checklist, run the
+<a href="accessibility.html#manual-review-queue">manual queue workflow</a>. It creates
+one pending row for each axe-incomplete contrast target, preserving the
+per-viewport evidence and prioritizing unresolved samples and low margins.
+The queue must be regenerated when audited page content or styles change.</p>
+<h2 id="historical-exact-head-audit-70ec764-november-18-2026">Historical exact-head audit: <code>70ec764</code> (November 18, 2026)</h2>
+<p><strong>Historical automated source snapshot, not alpha.5 release approval.</strong>
 This source candidate includes the focused fixes to keyboard-inaccessible
 documentation code blocks and a prohibited ARIA label on a nested form footer.</p>
 <ul>
@@ -604,27 +642,28 @@ and representative-product checks below remain open.</p>
 <p>Earlier automated browser evidence covered <strong>126 viewport cases</strong> across Chromium/Firefox/WebKit and <strong>168 enlarged-text reflow cases</strong> on a historical commit. These figures are not the latest branch coverage. The Chromium forced-colors primary-link screenshot and focus tests passed for all seven palettes in that snapshot. None of these checks substitute for native Windows High Contrast or other OS-level modes, real browser zoom, or a screen reader.</p>
 <h2 id="remaining-release-checklist">Remaining release checklist</h2>
 <ul>
-<li>[ ] Measure or adjudicate each of the <strong>165 axe-incomplete contrast elements</strong> in the latest 37-page candidate audit above (70ec764). Earlier 161-, 162-, 345- and 325-entry figures are historical snapshots, not the current review queue.</li>
+<li>[ ] Measure or adjudicate each of the <strong>207 axe-incomplete contrast targets</strong> in the November 26 candidate audit above. All 207 remain pending; the automated reinspection did not constitute manual sign-off. Earlier counts are historical snapshots.</li>
 <li>[ ] Test keyboard-only navigation, native dialog/popover focus, table regions, disclosure and form semantics in a representative real app.</li>
 <li>[ ] Perform real assistive-technology testing with NVDA, JAWS, VoiceOver or Orca and record evidence.</li>
 <li>[ ] Test true 200% and 400% browser zoom on supported browsers; verify navigation, reflow and target visibility.</li>
 <li>[ ] Check actual OS forced-colors/high-contrast and reduced-motion settings.</li>
 <li>[x] Record browser versions used for automated testing (not a permanent
-support guarantee). The <strong>current</strong> 16-page matrix and 64-case/engine
+support guarantee). The <strong>historical</strong> 16-page matrix and 64-case/engine
 reflow run used Linux <code>mcr.microsoft.com/playwright/python:v1.64.1-noble</code>
 with Playwright Python 1.64.1: Chromium <strong>156.0.8078.4</strong>, Firefox
 <strong>157.0</strong>, and WebKit <strong>27.2</strong>. Versions were read directly using
 <code>browser.version</code> from the same pinned image.</li>
 <li>[x] Preserve the <strong>historical</strong> 14-page baseline's separate browser
 versions: Chromium 159.0.8154.6, Firefox 159.0, WebKit 27.2 in the
-Playwright 1.65.2 image. These do not describe the newer 1.64.1 run.</li>
+Playwright 1.65.2 image. These describe separate historical runs, not the current PR.</li>
 <li>[ ] Establish browser support versions and unresolved exceptions before a stable release.</li>
 </ul>
 <p>A passing axe-core run alone is <strong>not</strong> sufficient to claim WCAG conformance.</p>
         </article>
         <aside class="docs-article-sidebar">
           <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
-<a class="docs-article-toc-link docs-article-toc-2" href="#fresh-exact-head-audit-70ec764-november-18-2026">Fresh exact-head audit: 70ec764 (November 18, 2026)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#candidate-audit-and-reinspection-november-26-2026">Candidate audit and reinspection — November 26, 2026</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#historical-exact-head-audit-70ec764-november-18-2026">Historical exact-head audit: 70ec764 (November 18, 2026)</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#historical-follow-up-audit-9f7f22b-november-15-2026">Historical follow-up audit: 9f7f22b (November 15, 2026)</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#follow-up-pixel-triage-after-pr-118-november-15-2026">Follow-up pixel triage after PR #118 (November 15, 2026)</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#verified-source-snapshot-038a24d-november-15-2026">Verified source snapshot: 038a24d (November 15, 2026)</a>
@@ -639,7 +678,8 @@ Playwright 1.65.2 image. These do not describe the newer 1.64.1 run.</li>
           <details class="docs-article-toc-mobile">
             <summary>On this page <span>Jump to section</span></summary>
             <nav aria-label="On this page (mobile)">
-<a class="docs-article-toc-link docs-article-toc-2" href="#fresh-exact-head-audit-70ec764-november-18-2026">Fresh exact-head audit: 70ec764 (November 18, 2026)</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#candidate-audit-and-reinspection-november-26-2026">Candidate audit and reinspection — November 26, 2026</a>
+<a class="docs-article-toc-link docs-article-toc-2" href="#historical-exact-head-audit-70ec764-november-18-2026">Historical exact-head audit: 70ec764 (November 18, 2026)</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#historical-follow-up-audit-9f7f22b-november-15-2026">Historical follow-up audit: 9f7f22b (November 15, 2026)</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#follow-up-pixel-triage-after-pr-118-november-15-2026">Follow-up pixel triage after PR #118 (November 15, 2026)</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#verified-source-snapshot-038a24d-november-15-2026">Verified source snapshot: 038a24d (November 15, 2026)</a>

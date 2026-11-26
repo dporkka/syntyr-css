@@ -1,5 +1,7 @@
 ## Unreleased — v0.3.0-alpha.5 candidate
 
+- Expand opt-in `.syn-prose` document presentation for classed Markdown/CMS HTML, preserve nested component scopes, constrain narrow lists and code overflow, and wrap code in the optional print stylesheet. Add a zero-script minimal document starter, Simple.css migration notes and browser regression coverage. No new public selectors, distributions or runtime dependencies.
+
 - Keep classless native file inputs within 320px semantic fieldsets by using a shrinkable CSS Grid track and wrapping the native file-picker button; add cross-browser and enlarged-text reflow regression coverage.
 
 - Make the PR progressive-enhancement browser gate independent of PyPI access by
