@@ -6,6 +6,11 @@ reviewed consistently before `1.0.0`. It is not a new compatibility guarantee.
 
 ## Public surface and intended v1 boundaries
 
+The alpha.5 mobile source adapter adds optional, generated Tailwind v4 native
+bridges, a body-leading token, and native appearance/touch-size helpers. These
+are experimental adapter-only APIs; the web CSS package and alpha.4 remain
+unchanged. See [mobile integrations](mobile-frameworks.md).
+
 | Surface | Current policy | Intent for v1 |
 | --- | --- | --- |
 | `syntyr.core.css`, `.syn-root`, stable component classes | Public prerelease API | Stable selectors and behavior |
