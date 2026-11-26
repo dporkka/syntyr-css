@@ -19,7 +19,7 @@ def run(folder, *args):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--install", action="store_true",
-                        help="npm install for each local optional consumer")
+                        help="npm ci for each local optional consumer")
     options = parser.parse_args()
     if not shutil.which("node") or not shutil.which("npm"):
         parser.error("Node.js and npm are required for this opt-in integration test")
@@ -35,7 +35,7 @@ def main():
     ]
     for folder, task in tasks:
         if options.install:
-            run(folder, "npm", "install", "--no-audit", "--no-fund")
+            run(folder, "npm", "ci", "--ignore-scripts", "--no-audit", "--no-fund")
         run(folder, "npm", "run", task)
     print("All Syntyr JSX/TSX, Node, React and Next adoption checks passed.", flush=True)
 

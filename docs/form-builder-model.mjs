@@ -76,12 +76,17 @@ const attr = (name, value) => value ? " " + name + '="' + escapeHtml(value) + '"
 const requiredAttr = value => value ? " required" : "";
 
 function validAction(action) {
-  // Protocol-relative and non-HTTP URLs are rejected to avoid surprise exfiltration.
-  if (/[<>"'\s\\]/.test(action) ||
-      !( /^https?:\/\/[^\s/?#]+(?:[/?#][^\s]*)?$/i.test(action) ||
-         /^(?:\/(?!\/)|\.\/|\.\.\/)[^\s]*$/.test(action) )) {
-    throw new Error("Form action must be a relative path or an HTTP(S) URL");
-  }
+  // Keep relative same-origin routes, HTTPS, and explicitly local HTTP development.
+  // Reject browser-normalized whitespace/backslashes and credentials in destinations.
+  const invalid = () => { throw new Error("Form action must be a relative path, an HTTPS URL, or a loopback HTTP development URL"); };
+  if (/[<>"'\s\\\x00-\x1f\x7f]/.test(action)) invalid();
+  if (/^(?:\/(?!\/)|\.\/|\.\.\/)[^\s]*$/.test(action)) return action;
+  if (!/^https?:\/\/[^/?#]+(?:[/?#].*)?$/i.test(action)) invalid();
+  let url;
+  try { url = new URL(action); } catch { invalid(); }
+  if (url.username || url.password) invalid();
+  if (url.protocol !== "https:" &&
+      !(url.protocol === "http:" && /^http:\/\/(?:localhost|127\.0\.0\.1|\[::1\])(?::[0-9]+)?(?:[/?#]|$)/i.test(action))) invalid();
   return action;
 }
 

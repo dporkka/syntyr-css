@@ -89,11 +89,18 @@ class SecurityHardeningTests(unittest.TestCase):
             for ref in images:
                 self.assertRegex(ref, r"@sha256:[0-9a-f]{64}$")
         audit = (ROOT / ".woodpecker/security.yaml").read_text(encoding="utf-8")
-        self.assertIn("npm audit", audit)
-        self.assertIn("examples/lit", audit)
-        self.assertIn("benchmarks/frameworks", audit)
-        for name in ("examples/lit/package-lock.json", "benchmarks/frameworks/package-lock.json"):
-            self.assertTrue((ROOT / name).is_file())
+        self.assertIn("node scripts/audit_npm_lockfiles.mjs", audit)
+        scanner = (ROOT / "scripts/audit_npm_lockfiles.mjs").read_text(encoding="utf-8")
+        for token in ('"package-lock.json"', '"audit"', '"--package-lock-only"',
+                      '"--ignore-scripts"', '"--audit-level=high"'):
+            self.assertIn(token, scanner)
+        adoption = (ROOT / ".woodpecker/js-adoption.yaml").read_text(encoding="utf-8")
+        self.assertNotIn("npm install --prefix", adoption)
+        consumers = re.findall(r"npm ci --prefix (\S+)", adoption)
+        self.assertEqual(len(consumers), 6)
+        for directory in consumers:
+            self.assertTrue((ROOT / directory / "package-lock.json").is_file(), directory)
+
 
 
 if __name__ == "__main__":
