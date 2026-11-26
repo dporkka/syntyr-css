@@ -4,11 +4,16 @@ import { execFileSync } from "node:child_process";
 const pathPrefix = "/syntyr-eleventy/";
 
 export default function (eleventyConfig) {
-  // Validate the existing CMS contract before the template sees the data.
+  // Reject ambiguous JSON at the canonical input boundary before templating.
+  // The transport cap accommodates the entire bounded UTF-8 source document,
+  // not just Node's default 1 MiB stdout buffer.
   const page = JSON.parse(execFileSync("python3", [
     "-c",
-    "import json; from scripts.render_cms_starter import validate_document, STARTER; page = json.loads((STARTER / 'content/pages/home.json').read_text()); validate_document(page); print(json.dumps(page))",
-  ], { cwd: new URL("../..", import.meta.url), encoding: "utf8" }));
+    `import json, sys
+from scripts.render_cms_starter import load_validated_document, STARTER
+page = load_validated_document(STARTER / "content/pages/home.json")
+sys.stdout.buffer.write(json.dumps(page, ensure_ascii=False, separators=(",", ":"), allow_nan=False).encode("utf-8"))`,
+  ], { cwd: new URL("../..", import.meta.url), encoding: "utf8", maxBuffer: 16 * 1024 * 1024 }));
   eleventyConfig.addGlobalData("pageContent", page);
   eleventyConfig.setNunjucksEnvironmentOptions({ autoescape: true });
   eleventyConfig.addFilter("cmsUrl", value => value.startsWith("/") ? pathPrefix + value.slice(1) : value);

@@ -25,6 +25,9 @@ when:
         - scripts/verify_cms_parity.py
         - scripts/verify_static_generators.py
         - scripts/verify_astro_keystatic.py
+        - tests/test_cms_content_preflight.py
+        - tests/test_cms_generator_parity.py
+        - tests/test_generator_parity_ci.py
         - .woodpecker/static-generators.yaml
       on_empty: true
 
@@ -36,6 +39,7 @@ steps:
       - node --version && npm --version
       - npm ci --prefix examples/eleventy --no-audit --no-fund
       - npm ci --prefix examples/astro-keystatic --no-audit --no-fund
+      - python3 -m unittest tests.test_cms_content_preflight tests.test_cms_generator_parity.EleventyStrictInput tests.test_generator_parity_ci -v
       - mkdir -p previews
       - |
         # Official pinned Linux/amd64 Hugo release; never execute unverified bytes.

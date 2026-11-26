@@ -2,8 +2,9 @@
 
 Eleventy 3 renders the same portable CMS JSON landing page as the existing
 Python, Hugo and Astro starters, with an independent Nunjucks template.
-The build validates the shared content with Syntyr's standard-library
-Python renderer before passing data to the template. Nunjucks escapes
+The build uses Syntyr's canonical, bounded UTF-8 JSON loader and page
+validator before passing data to the template. Duplicate keys, non-finite
+numbers, invalid Unicode and invalid page fields fail before templating. Nunjucks escapes
 text and attributes; no raw CMS HTML is inserted.
 
 From the repository root, verify the prebuilt CSS with

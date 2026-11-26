@@ -72,6 +72,18 @@ class GeneratorParityCI(unittest.TestCase):
                 self.assertFalse(target.exists())
                 self.assertEqual(list(Path(tmp).iterdir()), [])
 
+    def test_invalid_canonical_input_rejected_before_any_generator_runs(self):
+        with TemporaryDirectory() as tmp, patch("scripts.build_generator_parity.subprocess.run") as run:
+            root = Path(tmp)
+            content = root / "home.json"
+            original = CONTENT.read_text()
+            content.write_text('{"title":"shadowed",' + original.lstrip()[1:])
+            target = root / "parity"
+            with patch("scripts.build_generator_parity.CONTENT", content), self.assertRaisesRegex(ValueError, "Duplicate"):
+                gate.build_fixtures(target)
+            run.assert_not_called()
+            self.assertEqual(list(root.iterdir()), [content])
+
     def test_existing_output_or_symlink_rejected_before_any_generator_runs(self):
         with TemporaryDirectory() as tmp, patch("scripts.build_generator_parity.subprocess.run") as run:
             root = Path(tmp)

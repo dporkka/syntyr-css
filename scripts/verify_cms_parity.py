@@ -8,17 +8,16 @@ from __future__ import annotations
 
 import argparse
 from html.parser import HTMLParser
-import json
 import re
 from itertools import zip_longest
 from pathlib import Path
 from urllib.parse import unquote, urlsplit, urlunsplit
 
 if __package__:
-    from .render_cms_starter import render_document
+    from .render_cms_starter import load_validated_document, render_document
     from .verify_static_generators import verify_static_site
 else:
-    from render_cms_starter import render_document
+    from render_cms_starter import load_validated_document, render_document
     from verify_static_generators import verify_static_site
 
 CONTENT = Path(__file__).resolve().parents[1] / "examples/cms-starter/content/pages/home.json"
@@ -118,11 +117,11 @@ def signature(markup: str, base_path: str) -> list:
 def verify_cms_output(destination: Path, *, base_path: str = "/",
                       content_path: Path = CONTENT) -> int:
     """Validate the public landing page; compare its semantic output to JSON."""
+    document = load_validated_document(content_path)
     count = verify_static_site(destination, base_path=base_path,
                                required_css_markers=(".syn-button", ".syn-site-hero"))
     if count != 1 or not (destination / "index.html").is_file():
         raise AssertionError("Expected exactly one public CMS landing page")
-    document = json.loads(content_path.read_text(encoding="utf-8"))
     expected = signature(render_document(document), "/")
     actual = signature((destination / "index.html").read_text(encoding="utf-8"), base_path)
     for index, (want, got) in enumerate(zip_longest(expected, actual)):

@@ -6,7 +6,6 @@ installed and a reviewed Hugo binary is available. Never publishes a site.
 from __future__ import annotations
 
 import argparse
-import json
 from pathlib import Path
 import shutil
 import subprocess
@@ -16,13 +15,13 @@ from tempfile import TemporaryDirectory
 if __package__:
     from .build_hugo_cms_starter import build as build_hugo
     from .export_site_starter import publish_new_directory
-    from .render_cms_starter import render_document
+    from .render_cms_starter import load_validated_document, render_document
     from .verify_astro_keystatic import verify_public_site
     from .verify_cms_parity import CONTENT, verify_cms_output
 else:
     from build_hugo_cms_starter import build as build_hugo
     from export_site_starter import publish_new_directory
-    from render_cms_starter import render_document
+    from render_cms_starter import load_validated_document, render_document
     from verify_astro_keystatic import verify_public_site
     from verify_cms_parity import CONTENT, verify_cms_output
 
@@ -36,13 +35,13 @@ def build_fixtures(destination: Path, *, hugo: str = "hugo") -> None:
         raise FileExistsError(f"Refusing to overwrite {destination}")
     if not destination.parent.is_dir():
         raise ValueError(f"Create the destination parent first: {destination.parent}")
+    document = load_validated_document(CONTENT)
     subprocess.run([sys.executable, "scripts/build.py", "--check"], cwd=ROOT, check=True)
     with TemporaryDirectory(prefix=".syntyr-generator-parity-", dir=destination.parent) as temp:
         staged = Path(temp) / "fixtures"
         reference = staged / "reference"
         css = reference / "css"
         css.mkdir(parents=True)
-        document = json.loads(CONTENT.read_text(encoding="utf-8"))
         (reference / "index.html").write_text(render_document(document), encoding="utf-8")
         for name in ("syntyr.core.css", "syntyr.recipes.css"):
             shutil.copyfile(ROOT / "dist" / name, css / name)

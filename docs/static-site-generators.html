@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Syntyr&#x27;s distribution is ordinary, scoped CSS. It does not require a JavaScript runtime, hydration, Sass, PostCSS, browser-specific components, or a…">
-  <meta name="syntyr-source-sha256" content="8a5f41ec9f1ffca1c7dfa82ef82f0f7c2c22adb15313880c756a27c7cbf512e5">
+  <meta name="syntyr-source-sha256" content="ab54d6b13faa815634134fe2825a8debc49866aaa4461ebe3a2f6e93a06afc68">
   <meta name="theme-color" content="#f5f7fb">
   <title>Syntyr with static-site generators — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/static-site-generators">
@@ -247,6 +247,13 @@ fixtures.</p>
 portable CMS v1 JSON. Independent Hugo, Eleventy and Astro/Keystatic
 templates consume the same content. This is not a new template language,
 a new content schema, or a CSS runtime dependency.</p>
+<p>The Python renderer, Hugo staging, Eleventy configuration, Keystatic/Payload
+exports and parity builders/verifiers share the canonical strict JSON loader.
+It rejects duplicate object keys, invalid UTF-8/Unicode, non-finite numbers,
+inputs larger than 16 MiB and excessive nesting before page validation.
+Use <code>python3 scripts/render_cms_starter.py --validate-only</code> for read-only
+preflight; it does not render or publish anything. These are build-time
+content checks, not a live upload security boundary.</p>
 <p>Their optional build verifiers compare the generated landing page against
 the reference: ordered native HTML elements, decoded text, headings and
 anchor IDs, ARIA and Syntyr classes, theme, metadata and link targets.

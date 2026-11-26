@@ -43,6 +43,12 @@ class CmsGeneratorParity(unittest.TestCase):
                              .replace(">\n", ">"))
         self.assertEqual(self.verify(), 1)
 
+    def test_rejects_duplicate_keys_even_when_last_value_matches_output(self):
+        valid = json.dumps(self.document)
+        self.content.write_text('{"title":"Shadowed title",' + valid[1:], encoding="utf-8")
+        with self.assertRaisesRegex(ValueError, "Duplicate"):
+            self.verify()
+
     def test_rejects_missing_or_changed_content_and_semantics(self):
         mutations = (
             ("Built for long-lived websites", "Changed heading"),
@@ -112,6 +118,72 @@ class CmsGeneratorParity(unittest.TestCase):
         if not (site / "index.html").is_file():
             self.skipTest("Run npm run build in examples/astro-keystatic for actual output")
         self.assertEqual(verify_cms_output(site, base_path="/syntyr-astro-keystatic/"), 1)
+
+
+class EleventyStrictInput(unittest.TestCase):
+    @unittest.skipUnless(shutil.which("node") and shutil.which("python3"), "Node and Python needed")
+    def test_real_config_rejects_ambiguous_content_before_template_data(self):
+        # Isolate the actual JS config and canonical Python loader from the
+        # checkout; no npm installation or mutation of real editor data.
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            example = root / "examples/eleventy"
+            example.mkdir(parents=True)
+            for name in ("eleventy.config.js", "package.json"):
+                shutil.copyfile(ROOT / "examples/eleventy" / name, example / name)
+            scripts = root / "scripts"
+            scripts.mkdir()
+            shutil.copyfile(ROOT / "scripts/render_cms_starter.py", scripts / "render_cms_starter.py")
+            content = root / "examples/cms-starter/content/pages/home.json"
+            content.parent.mkdir(parents=True)
+            good = json.loads(CONTENT.read_text())
+            good["title"] = "Olá 🌐"
+            probe = """
+import configure from "./eleventy.config.js";
+configure({
+  addGlobalData(name, value) {
+    console.log("TEMPLATE_DATA", name, value.title, value.sections.length,
+      value.sections.at(-1).items?.at(-1).description.length ?? 0);
+  },
+  setNunjucksEnvironmentOptions() {}, addFilter() {}, addPassthroughCopy() {},
+});
+"""
+            def run(payload):
+                content.write_bytes(payload)
+                return subprocess.run(
+                    ["node", "--input-type=module", "-e", probe],
+                    cwd=example, capture_output=True, text=True, encoding="utf-8", timeout=30,
+                )
+
+            valid = json.dumps(good, ensure_ascii=False).encode("utf-8")
+            result = run(valid)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertIn("TEMPLATE_DATA pageContent Olá 🌐", result.stdout)
+            # Last-key-wins parsing would accept this exact page.
+            invalid = (
+                (b'{"title":"shadow",' + valid[1:], "Duplicate"),
+                (valid.replace(b'Ol\xc3\xa1', b'Ol\xff'), "Unicode"),
+                (valid.replace(b'Ol\xc3\xa1', b'\\ud800'), "Unicode"),
+                (b'{"metadata":NaN,' + valid[1:], "Non-JSON"),
+                (b'[' * 33 + b'0' + b']' * 33, "nesting"),
+            )
+            for payload, message in invalid:
+                with self.subTest(message=message, beginning=payload[:40]):
+                    result = run(payload)
+                    self.assertNotEqual(result.returncode, 0)
+                    self.assertIn(message, result.stderr)
+                    self.assertNotIn("TEMPLATE_DATA", result.stdout)
+            # Valid documents can exceed Node's default 1 MiB stdout limit.
+            good["sections"] = [good["sections"][0]] + [
+                {"type": "features", "id": f"features-{index}", "heading": "Features",
+                 "items": [{"title": "á" * 1000, "description": "é" * 1000}] * 24}
+                for index in range(23)
+            ]
+            large = json.dumps(good, ensure_ascii=False).encode("utf-8")
+            self.assertGreater(len(large), 1024 * 1024)
+            result = run(large)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertIn("TEMPLATE_DATA pageContent Olá 🌐 24 1000", result.stdout)
 
 
 class SoupaultExample(unittest.TestCase):

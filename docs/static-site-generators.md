@@ -218,6 +218,14 @@ portable CMS v1 JSON. Independent Hugo, Eleventy and Astro/Keystatic
 templates consume the same content. This is not a new template language,
 a new content schema, or a CSS runtime dependency.
 
+The Python renderer, Hugo staging, Eleventy configuration, Keystatic/Payload
+exports and parity builders/verifiers share the canonical strict JSON loader.
+It rejects duplicate object keys, invalid UTF-8/Unicode, non-finite numbers,
+inputs larger than 16 MiB and excessive nesting before page validation.
+Use `python3 scripts/render_cms_starter.py --validate-only` for read-only
+preflight; it does not render or publish anything. These are build-time
+content checks, not a live upload security boundary.
+
 Their optional build verifiers compare the generated landing page against
 the reference: ordered native HTML elements, decoded text, headings and
 anchor IDs, ARIA and Syntyr classes, theme, metadata and link targets.
