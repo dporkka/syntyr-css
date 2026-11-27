@@ -2,9 +2,11 @@
 from copy import deepcopy
 import json
 import os
+import re
 from pathlib import Path
 import shutil
 import subprocess
+import time
 from tempfile import TemporaryDirectory
 import unittest
 
@@ -38,10 +40,26 @@ class CmsGeneratorParity(unittest.TestCase):
         return verify_cms_output(self.output, base_path=BASE, content_path=self.content)
 
     def test_equivalent_formatting_and_optional_end_tags(self):
-        self.page.write_text(self.markup.replace("</li>", "").replace("</p>", "")
+        # A paragraph end before an inline link cannot be omitted: the
+        # browser would place that link inside the paragraph instead.
+        omitted = re.sub(r"</p>(?=\s*<(?:/|h[1-6]\b|div\b|ul\b|p\b))", "", self.markup)
+        self.page.write_text(omitted.replace("</li>", "")
                              .replace('class="syn-region syn-panel"', 'class="syn-panel syn-region"')
                              .replace(">\n", ">"))
         self.assertEqual(self.verify(), 1)
+
+    def test_paragraph_end_boundary_distinguishes_styled_and_unstyled_text(self):
+        expected = '<body><footer><p class="syn-muted">Title</p></footer></body>'
+        implicit = '<body><footer><p class="syn-muted">Title</footer></body>'
+        displaced = '<body><footer><p class="syn-muted"></p>Title</footer></body>'
+        self.assertEqual(signature(expected, "/"), signature(implicit, "/"))
+        self.assertNotEqual(signature(expected, "/"), signature(displaced, "/"))
+        explicit_siblings = '<body><div><p>One</p><p>Two</p></div></body>'
+        implicit_siblings = '<body><div><p>One<p>Two</div></body>'
+        self.assertEqual(signature(explicit_siblings, "/"), signature(implicit_siblings, "/"))
+        link_outside = '<body><div><p>One</p><a href="/">Link</a></div></body>'
+        link_inside = '<body><div><p>One<a href="/">Link</a></div></body>'
+        self.assertNotEqual(signature(link_outside, "/"), signature(link_inside, "/"))
 
     def test_rejects_duplicate_keys_even_when_last_value_matches_output(self):
         valid = json.dumps(self.document)
@@ -141,7 +159,11 @@ class EleventyStrictInput(unittest.TestCase):
             probe = """
 import configure from "./eleventy.config.js";
 configure({
-  addGlobalData(name, value) {
+  addWatchTarget(path, options) {
+    console.log("WATCH", path, options.resetConfig);
+  },
+  addGlobalData(name, load) {
+    const value = load();
     console.log("TEMPLATE_DATA", name, value.title, value.sections.length,
       value.sections.at(-1).items?.at(-1).description.length ?? 0);
   },
@@ -159,6 +181,7 @@ configure({
             result = run(valid)
             self.assertEqual(result.returncode, 0, result.stderr)
             self.assertIn("TEMPLATE_DATA pageContent Olá 🌐", result.stdout)
+            self.assertIn("WATCH ../cms-starter/content/pages/home.json true", result.stdout)
             # Last-key-wins parsing would accept this exact page.
             invalid = (
                 (b'{"title":"shadow",' + valid[1:], "Duplicate"),
@@ -184,6 +207,56 @@ configure({
             result = run(large)
             self.assertEqual(result.returncode, 0, result.stderr)
             self.assertIn("TEMPLATE_DATA pageContent Olá 🌐 24 1000", result.stdout)
+
+
+    @unittest.skipUnless(shutil.which("node"), "Node needed")
+    def test_real_eleventy_watch_refreshes_external_json_if_installed(self):
+        cli = ROOT / "examples/eleventy/node_modules/@11ty/eleventy/cmd.cjs"
+        if not cli.is_file():
+            self.skipTest("Run npm ci in examples/eleventy for live watch proof")
+        with TemporaryDirectory() as tmp:
+            fixture = Path(tmp)
+            example = fixture / "examples/eleventy"
+            shutil.copytree(ROOT / "examples/eleventy", example,
+                            ignore=shutil.ignore_patterns("node_modules", "_site"))
+            shutil.copytree(ROOT / "examples/cms-starter/content",
+                            fixture / "examples/cms-starter/content")
+            (fixture / "scripts").mkdir()
+            shutil.copyfile(ROOT / "scripts/render_cms_starter.py",
+                            fixture / "scripts/render_cms_starter.py")
+            (fixture / "dist").mkdir()
+            for name in ("syntyr.core.css", "syntyr.recipes.css"):
+                shutil.copyfile(ROOT / "dist" / name, fixture / "dist" / name)
+            content = fixture / "examples/cms-starter/content/pages/home.json"
+            output = example / "_site/index.html"
+            log = fixture / "watch.log"
+            changed = "Independent CMS watch refresh"
+            with log.open("w") as stream:
+                process = subprocess.Popen(["node", str(cli), "--watch"], cwd=example,
+                                           stdout=stream, stderr=subprocess.STDOUT)
+                try:
+                    def wait_for(predicate):
+                        deadline = time.monotonic() + 20
+                        while time.monotonic() < deadline:
+                            if process.poll() is not None or predicate():
+                                break
+                            time.sleep(.1)
+                        self.assertTrue(predicate(), log.read_text(encoding="utf-8"))
+
+                    wait_for(lambda: output.is_file() and
+                             "Watching" in log.read_text(encoding="utf-8"))
+                    page = json.loads(content.read_text(encoding="utf-8"))
+                    page["title"] = changed
+                    content.write_text(json.dumps(page), encoding="utf-8")
+                    wait_for(lambda: changed in output.read_text(encoding="utf-8"))
+                finally:
+                    if process.poll() is None:
+                        process.terminate()
+                        try:
+                            process.wait(timeout=5)
+                        except subprocess.TimeoutExpired:
+                            process.kill()
+                            process.wait()
 
 
 class SoupaultExample(unittest.TestCase):

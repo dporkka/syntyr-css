@@ -98,6 +98,21 @@ class StrictContentPreflightTests(unittest.TestCase):
             self.assertIn("Duplicate", bad.stderr)
             self.assertFalse(output.exists())
 
+    def test_rejects_dot_segments_before_rendering_deployment_local_links(self):
+        for bad in ("/../signup", "/./signup", "/a/../signup", "/%2e/signup",
+                    "/%2E%2e/signup", "/.%2e/signup", "/%2e./signup"):
+            with self.subTest(url=bad):
+                page = json.loads(SOURCE.read_text())
+                page["sections"][0]["button"]["url"] = bad
+                with self.assertRaisesRegex(ValueError, "traversal"):
+                    cms.validate_document(page)
+        for good in ("/signup", "/signup?next=../account", "/a%2Fb", "/.well-known",
+                     "https://example.org/signup"):
+            with self.subTest(url=good):
+                page = json.loads(SOURCE.read_text())
+                page["sections"][0]["button"]["url"] = good
+                self.assertEqual(cms.validate_document(page), page)
+
     def test_url_and_text_validation_fails_on_malformed_unicode_and_authority(self):
         for bad in ("https://:443/path", "https://example.org:99999/", "https://@example.org/",
                     "https://example.org:bad/", "/\ud800"):

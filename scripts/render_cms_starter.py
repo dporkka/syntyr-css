@@ -12,7 +12,7 @@ import math
 import re
 from pathlib import Path
 import shutil
-from urllib.parse import urlsplit
+from urllib.parse import unquote, urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 STARTER = ROOT / "examples/cms-starter"
@@ -103,6 +103,10 @@ def _url(value: object, path: str) -> str:
            for c in value):
         raise ValueError(f"{path}: unsafe URL")
     if value.startswith("/") and not value.startswith("//"):
+        # Browsers normalize literal/encoded dot segments before navigation;
+        # a CMS action must not escape the generator's deployment mount.
+        if any(unquote(segment) in (".", "..") for segment in urlsplit(value).path.split("/")):
+            raise ValueError(f"{path}: URL contains a traversal segment")
         return escape(value, quote=True)
     parsed = urlsplit(value)
     if (parsed.scheme not in ("http", "https") or not parsed.hostname

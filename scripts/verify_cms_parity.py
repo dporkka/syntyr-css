@@ -21,7 +21,15 @@ else:
     from verify_static_generators import verify_static_site
 
 CONTENT = Path(__file__).resolve().parents[1] / "examples/cms-starter/content/pages/home.json"
-OPTIONAL_END = frozenset(("html", "body", "p", "li"))
+OPTIONAL_END = frozenset(("body", "p", "li"))
+# Native block starts which imply the end of an open paragraph. This
+# verifier is intentionally scoped to the portable CMS's native markup.
+PARAGRAPH_END_START = frozenset((
+    "address", "article", "aside", "blockquote", "details", "div", "dl",
+    "fieldset", "figcaption", "figure", "footer", "form", "h1", "h2", "h3",
+    "h4", "h5", "h6", "header", "hgroup", "hr", "li", "main", "menu", "nav",
+    "ol", "p", "pre", "search", "section", "table", "ul",
+))
 VOID = frozenset(("area", "base", "br", "col", "embed", "hr", "img", "input",
                   "link", "meta", "param", "source", "track", "wbr"))
 
@@ -53,6 +61,7 @@ class Signature(HTMLParser):
         self.body = False
         self.title = False
         self.metadata = []
+        self.open_tags = []
 
     def flush(self):
         # Static CMS fields use normal HTML whitespace behavior.
@@ -60,6 +69,14 @@ class Signature(HTMLParser):
         if text:
             self.events.append(("text", text))
         self.pending.clear()
+
+    def close_element(self):
+        self.flush()
+        tag = self.open_tags.pop()
+        if tag != "body":
+            self.events.append(("end", tag))
+        else:
+            self.body = False
 
     def handle_starttag(self, tag, attrs):
         attributes = dict(attrs)
@@ -78,6 +95,12 @@ class Signature(HTMLParser):
         if not self.body:
             return
         self.flush()
+        if self.open_tags and self.open_tags[-1] == "p" and tag in PARAGRAPH_END_START:
+            self.close_element()
+        if self.open_tags and self.open_tags[-1] == "li" and tag == "li":
+            self.close_element()
+        if tag not in VOID:
+            self.open_tags.append(tag)
         if "class" in attributes:
             attributes["class"] = " ".join(sorted((attributes["class"] or "").split()))
         if tag == "a" and "href" in attributes:
@@ -89,17 +112,30 @@ class Signature(HTMLParser):
             self.metadata.append(("title", normalized_text("".join(self.pending))))
             self.pending.clear()
             self.title = False
-        if self.body:
-            self.flush()
-            if tag not in OPTIONAL_END and tag not in VOID:
-                self.events.append(("end", tag))
-            if tag in ("body", "html"):
-                self.body = False
+        if self.body and tag not in VOID:
+            if tag == "html":
+                tag = "body"  # The body's closing tag may be omitted.
+            if tag not in self.open_tags:
+                raise AssertionError(f"CMS parity mismatch: Unexpected closing tag: </{tag}>")
+            while self.open_tags[-1] != tag and self.open_tags[-1] in OPTIONAL_END:
+                self.close_element()
+            if self.open_tags[-1] != tag:
+                raise AssertionError(f"CMS parity mismatch: Mismatched closing tag: </{tag}>")
+            self.close_element()
 
     def handle_startendtag(self, tag, attrs):
         self.handle_starttag(tag, attrs)
         if tag not in VOID:
             self.handle_endtag(tag)
+
+    def finish(self):
+        # Normalize omitted trailing paragraph/list/body ends, but never
+        # silently treat an unclosed required container as equivalent.
+        while self.open_tags and self.open_tags[-1] in OPTIONAL_END:
+            self.close_element()
+        if self.open_tags:
+            raise AssertionError(f"CMS parity mismatch: Unclosed CMS element: <{self.open_tags[-1]}>")
+        self.flush()
 
     def handle_data(self, data):
         if self.body or self.title:
@@ -110,7 +146,7 @@ def signature(markup: str, base_path: str) -> list:
     parser = Signature(base_path)
     parser.feed(markup)
     parser.close()
-    parser.flush()
+    parser.finish()
     return sorted(parser.metadata, key=repr) + parser.events
 
 
