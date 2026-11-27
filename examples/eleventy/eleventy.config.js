@@ -14,9 +14,8 @@ from scripts.render_cms_starter import load_validated_document, STARTER
 page = load_validated_document(STARTER / "content/pages/home.json")
 sys.stdout.buffer.write(json.dumps(page, ensure_ascii=False, separators=(",", ":"), allow_nan=False).encode("utf-8"))`,
   ], { cwd: new URL("../..", import.meta.url), encoding: "utf8", maxBuffer: 16 * 1024 * 1024 }));
-  // Watch the external content and recompute it for each build. Eleventy
-  // may report parent-directory events relative to a detected project root,
-  // so a config-reset glob alone does not guarantee fresh global data.
+  // Load on every build: Eleventy may remap out-of-tree watch paths, so
+  // config reset alone does not reliably refresh external template data.
   eleventyConfig.addWatchTarget("../cms-starter/content/pages/home.json", { resetConfig: true });
   eleventyConfig.addGlobalData("pageContent", loadPage);
   eleventyConfig.setNunjucksEnvironmentOptions({ autoescape: true });

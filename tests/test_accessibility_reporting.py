@@ -1,12 +1,6 @@
 """Regression checks for reproducible, actionable axe manual-review reports."""
-from pathlib import Path
-import importlib.util
 import unittest
-
-ROOT = Path(__file__).resolve().parents[1]
-SPEC = importlib.util.spec_from_file_location('axe_audit', ROOT / 'tests/axe_audit.py')
-MODULE = importlib.util.module_from_spec(SPEC)
-SPEC.loader.exec_module(MODULE)
+from tests import axe_audit as MODULE
 
 
 class AuditReportingTests(unittest.TestCase):

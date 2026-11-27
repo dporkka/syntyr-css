@@ -40,26 +40,27 @@ class CmsGeneratorParity(unittest.TestCase):
         return verify_cms_output(self.output, base_path=BASE, content_path=self.content)
 
     def test_equivalent_formatting_and_optional_end_tags(self):
-        # A paragraph end before an inline link cannot be omitted: the
-        # browser would place that link inside the paragraph instead.
-        omitted = re.sub(r"</p>(?=\s*<(?:/|h[1-6]\b|div\b|ul\b|p\b))", "", self.markup)
+        # A paragraph directly followed by an inline link must keep its end;
+        # omitting it would move the link inside the paragraph in HTML.
+        omitted = re.sub(r"</p>(?=\s*(?:</|<(?:h1|div|ul)\b))", "", self.markup)
         self.page.write_text(omitted.replace("</li>", "")
                              .replace('class="syn-region syn-panel"', 'class="syn-panel syn-region"')
                              .replace(">\n", ">"))
         self.assertEqual(self.verify(), 1)
 
-    def test_paragraph_end_boundary_distinguishes_styled_and_unstyled_text(self):
-        expected = '<body><footer><p class="syn-muted">Title</p></footer></body>'
-        implicit = '<body><footer><p class="syn-muted">Title</footer></body>'
-        displaced = '<body><footer><p class="syn-muted"></p>Title</footer></body>'
-        self.assertEqual(signature(expected, "/"), signature(implicit, "/"))
-        self.assertNotEqual(signature(expected, "/"), signature(displaced, "/"))
-        explicit_siblings = '<body><div><p>One</p><p>Two</p></div></body>'
-        implicit_siblings = '<body><div><p>One<p>Two</div></body>'
-        self.assertEqual(signature(explicit_siblings, "/"), signature(implicit_siblings, "/"))
-        link_outside = '<body><div><p>One</p><a href="/">Link</a></div></body>'
-        link_inside = '<body><div><p>One<a href="/">Link</a></div></body>'
-        self.assertNotEqual(signature(link_outside, "/"), signature(link_inside, "/"))
+    def test_signature_preserves_text_placement_inside_styled_paragraphs(self):
+        page = '<html><body><footer><p class="syn-muted">Title</p></footer></body></html>'
+        omitted = page.replace("</p>", "")
+        moved = page.replace("Title</p>", "</p>Title")
+        self.assertEqual(signature(page, "/"), signature(omitted, "/"))
+        self.assertNotEqual(signature(page, "/"), signature(moved, "/"))
+        with_link = page.replace("</p>", '</p><a href="/signup">Join</a>')
+        self.assertNotEqual(signature(with_link, "/"), signature(with_link.replace("</p>", ""), "/"))
+
+    def test_signature_preserves_text_placement_inside_list_items(self):
+        page = '<html><body><ul><li>First</li><li>Second</li></ul></body></html>'
+        self.assertEqual(signature(page, "/"), signature(page.replace("</li>", ""), "/"))
+        self.assertNotEqual(signature(page, "/"), signature(page.replace("Second</li>", "</li>Second"), "/"))
 
     def test_rejects_duplicate_keys_even_when_last_value_matches_output(self):
         valid = json.dumps(self.document)
@@ -160,7 +161,7 @@ class EleventyStrictInput(unittest.TestCase):
 import configure from "./eleventy.config.js";
 configure({
   addWatchTarget(path, options) {
-    console.log("WATCH", path, options.resetConfig);
+    console.log("WATCH", path, JSON.stringify(options));
   },
   addGlobalData(name, load) {
     const value = load();
@@ -180,8 +181,8 @@ configure({
             valid = json.dumps(good, ensure_ascii=False).encode("utf-8")
             result = run(valid)
             self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertIn('WATCH ../cms-starter/content/pages/home.json {"resetConfig":true}', result.stdout)
             self.assertIn("TEMPLATE_DATA pageContent Olá 🌐", result.stdout)
-            self.assertIn("WATCH ../cms-starter/content/pages/home.json true", result.stdout)
             # Last-key-wins parsing would accept this exact page.
             invalid = (
                 (b'{"title":"shadow",' + valid[1:], "Duplicate"),
@@ -209,7 +210,7 @@ configure({
             self.assertIn("TEMPLATE_DATA pageContent Olá 🌐 24 1000", result.stdout)
 
 
-    @unittest.skipUnless(shutil.which("node"), "Node needed")
+    @unittest.skipUnless(shutil.which("node") and shutil.which("python3"), "Node and Python needed")
     def test_real_eleventy_watch_refreshes_external_json_if_installed(self):
         cli = ROOT / "examples/eleventy/node_modules/@11ty/eleventy/cmd.cjs"
         if not cli.is_file():

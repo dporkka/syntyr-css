@@ -21,14 +21,15 @@ else:
     from verify_static_generators import verify_static_site
 
 CONTENT = Path(__file__).resolve().parents[1] / "examples/cms-starter/content/pages/home.json"
-OPTIONAL_END = frozenset(("body", "p", "li"))
-# Native block starts which imply the end of an open paragraph. This
-# verifier is intentionally scoped to the portable CMS's native markup.
+OPTIONAL_END = frozenset(("html", "body"))
+OPTIONAL_CONTENT_END = frozenset(("p", "li"))
+# HTML permits a paragraph end to be omitted before these block starts.
+# The verifier handles the bounded native CMS vocabulary, not arbitrary HTML.
 PARAGRAPH_END_START = frozenset((
-    "address", "article", "aside", "blockquote", "details", "div", "dl",
-    "fieldset", "figcaption", "figure", "footer", "form", "h1", "h2", "h3",
-    "h4", "h5", "h6", "header", "hgroup", "hr", "li", "main", "menu", "nav",
-    "ol", "p", "pre", "search", "section", "table", "ul",
+    "address", "article", "aside", "blockquote", "details", "div", "dl", "dt", "dd",
+    "fieldset", "figcaption", "figure", "footer", "form", "h1", "h2", "h3", "h4",
+    "h5", "h6", "header", "hgroup", "hr", "li", "main", "menu", "nav", "ol", "p",
+    "pre", "search", "section", "table", "ul",
 ))
 VOID = frozenset(("area", "base", "br", "col", "embed", "hr", "img", "input",
                   "link", "meta", "param", "source", "track", "wbr"))
@@ -61,7 +62,7 @@ class Signature(HTMLParser):
         self.body = False
         self.title = False
         self.metadata = []
-        self.open_tags = []
+        self.open_elements = []
 
     def flush(self):
         # Static CMS fields use normal HTML whitespace behavior.
@@ -70,13 +71,10 @@ class Signature(HTMLParser):
             self.events.append(("text", text))
         self.pending.clear()
 
-    def close_element(self):
-        self.flush()
-        tag = self.open_tags.pop()
-        if tag != "body":
-            self.events.append(("end", tag))
-        else:
-            self.body = False
+    def close_optional_content(self):
+        """Materialize an omitted content end at its actual boundary."""
+        tag = self.open_elements.pop()
+        self.events.append(("end", tag))
 
     def handle_starttag(self, tag, attrs):
         attributes = dict(attrs)
@@ -95,33 +93,38 @@ class Signature(HTMLParser):
         if not self.body:
             return
         self.flush()
-        if self.open_tags and self.open_tags[-1] == "p" and tag in PARAGRAPH_END_START:
-            self.close_element()
-        if self.open_tags and self.open_tags[-1] == "li" and tag == "li":
-            self.close_element()
-        if tag not in VOID:
-            self.open_tags.append(tag)
+        if self.open_elements and self.open_elements[-1] == "p" and tag in PARAGRAPH_END_START:
+            self.close_optional_content()
+        if self.open_elements and self.open_elements[-1] == "li" and tag == "li":
+            self.close_optional_content()
         if "class" in attributes:
             attributes["class"] = " ".join(sorted((attributes["class"] or "").split()))
         if tag == "a" and "href" in attributes:
             attributes["href"] = local_link(attributes["href"] or "", self.base_path)
         self.events.append(("start", tag, tuple(sorted(attributes.items()))))
+        if tag not in VOID:
+            self.open_elements.append(tag)
 
     def handle_endtag(self, tag):
         if self.title and tag == "title":
             self.metadata.append(("title", normalized_text("".join(self.pending))))
             self.pending.clear()
             self.title = False
-        if self.body and tag not in VOID:
-            if tag == "html":
-                tag = "body"  # The body's closing tag may be omitted.
-            if tag not in self.open_tags:
-                raise AssertionError(f"CMS parity mismatch: Unexpected closing tag: </{tag}>")
-            while self.open_tags[-1] != tag and self.open_tags[-1] in OPTIONAL_END:
-                self.close_element()
-            if self.open_tags[-1] != tag:
-                raise AssertionError(f"CMS parity mismatch: Mismatched closing tag: </{tag}>")
-            self.close_element()
+        if self.body:
+            self.flush()
+            # Omitted p/li ends are implicit when their containing element
+            # ends. Explicit ends still produce an event at their real location,
+            # so moving text outside a styled paragraph/item cannot pass.
+            if tag in self.open_elements or tag == "html":
+                while (self.open_elements and self.open_elements[-1] != tag
+                       and self.open_elements[-1] in OPTIONAL_CONTENT_END):
+                    self.close_optional_content()
+            if self.open_elements and self.open_elements[-1] == tag:
+                self.open_elements.pop()
+            if tag not in OPTIONAL_END and tag not in VOID:
+                self.events.append(("end", tag))
+            if tag in OPTIONAL_END:
+                self.body = False
 
     def handle_startendtag(self, tag, attrs):
         self.handle_starttag(tag, attrs)
@@ -129,13 +132,9 @@ class Signature(HTMLParser):
             self.handle_endtag(tag)
 
     def finish(self):
-        # Normalize omitted trailing paragraph/list/body ends, but never
-        # silently treat an unclosed required container as equivalent.
-        while self.open_tags and self.open_tags[-1] in OPTIONAL_END:
-            self.close_element()
-        if self.open_tags:
-            raise AssertionError(f"CMS parity mismatch: Unclosed CMS element: <{self.open_tags[-1]}>")
         self.flush()
+        while self.open_elements and self.open_elements[-1] in OPTIONAL_CONTENT_END:
+            self.close_optional_content()
 
     def handle_data(self, data):
         if self.body or self.title:

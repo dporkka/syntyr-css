@@ -1,0 +1,7 @@
+{{ define "main" }}
+<article class="syn-region syn-stack syn-semantic">
+  {{ with .Parent }}{{ if not .IsHome }}<p><a href="{{ .RelPermalink }}">Back to {{ .LinkTitle }}</a></p>{{ end }}{{ end }}
+  <h1>{{ .Title }}</h1>
+  {{ .Content }}
+</article>
+{{ end }}

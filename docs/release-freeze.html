@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="This is the unreleased alpha.5 procedure. Published alpha.4 files are immutable. A passing unit test or automated axe-core scan is not authorization to…">
-  <meta name="syntyr-source-sha256" content="72e913fad6488f53c6321fb26293f28d3fff0ed1cc6df9346cae50339de148b7">
+  <meta name="syntyr-source-sha256" content="ed0aa2a1c27ae6b006b0a582aa111084003e56ddd2cf4007d00fb5b2fd3a2cae">
   <meta name="theme-color" content="#f5f7fb">
   <title>Freezing a Syntyr CSS CDN release safely — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/release-freeze">
@@ -104,7 +104,7 @@ release has not been retroactively signed. No SSH or Python dependency is
 added to CSS consumers.</p>
 <h2 id="current-status">Current status</h2>
 <p>The alpha.5 manual reviews are <strong>not signed off</strong>. A historical November 18, 2026 source-only audit in <a href="accessibility-alpha5-review.html">accessibility-alpha5-review.md</a> recorded 165 inconclusive contrast elements at commit <code>70ec764</code>. That count is <strong>not</strong> a measurement of the current source head; intervening commits invalidate any assumption that it remains accurate.</p>
-<p>Before freezing, run the pinned axe and browser checks on the exact candidate SHA, record every incomplete contrast target and adjudication, and separately capture actual zoom, assistive-technology and native high-contrast evidence. Update the review record with the SHA and audit date, <strong>not</strong> a copied historical count. Until manual reviews and brand clearance have evidenced approval, freezing alpha.5 remains blocked. The <a href="https://github.com/dporkka/syntyr-css/blob/main/business/commercial-launch-gates.md">commercial sale/download gates</a> are separate and remain closed.</p>
+<p>Before freezing, run the pinned axe and browser checks on the exact candidate SHA, record every incomplete contrast target and adjudication, and separately capture actual zoom, assistive-technology and native high-contrast evidence. Run the catalog audit with <code>--catalog-mode source-alpha5</code> (the default); the published alpha.4 catalog mode is a separate measurement and does not certify the candidate. Update the review record with the SHA and audit date, <strong>not</strong> a copied historical count. Until manual reviews and brand clearance have evidenced approval, freezing alpha.5 remains blocked. The <a href="https://github.com/dporkka/syntyr-css/blob/main/business/commercial-launch-gates.md">commercial sale/download gates</a> are separate and remain closed.</p>
         </article>
         <aside class="docs-article-sidebar">
           <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>

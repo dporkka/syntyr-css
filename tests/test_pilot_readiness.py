@@ -1,6 +1,7 @@
 """Developer feedback pilot and honest browser-support evidence."""
 from pathlib import Path
 import csv
+import subprocess
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -27,6 +28,14 @@ class PilotReadinessTests(unittest.TestCase):
         self.assertTrue(all(row["status"] in {
             "not_contacted", "invited", "accepted", "interviewed", "declined"
         } for row in rows))
+
+    def test_private_research_directory_is_excluded_from_public_git(self):
+        result = subprocess.run(["git", "ls-files", "--", "business/private/"],
+                                cwd=ROOT, capture_output=True, text=True, check=True)
+        self.assertEqual(result.stdout, "")
+        ignored = subprocess.run(["git", "check-ignore", "business/private/respondents.csv"],
+                                 cwd=ROOT, capture_output=True, text=True)
+        self.assertEqual(ignored.returncode, 0, ignored.stderr)
 
     def test_design_partner_pilot_includes_qualification_and_outreach_boundaries(self):
         guide = (ROOT / "business/design-partner-pilot.md").read_text()

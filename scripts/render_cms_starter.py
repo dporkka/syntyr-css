@@ -103,8 +103,8 @@ def _url(value: object, path: str) -> str:
            for c in value):
         raise ValueError(f"{path}: unsafe URL")
     if value.startswith("/") and not value.startswith("//"):
-        # Browsers normalize literal/encoded dot segments before navigation;
-        # a CMS action must not escape the generator's deployment mount.
+        # Browsers normalize literal and percent-encoded dot segments; a
+        # deployment prefix must not allow navigation outside its mount.
         if any(unquote(segment) in (".", "..") for segment in urlsplit(value).path.split("/")):
             raise ValueError(f"{path}: URL contains a traversal segment")
         return escape(value, quote=True)
@@ -246,11 +246,11 @@ def render_document(document: object) -> str:
 </head>
 <body class="syn-root" data-syn-theme="{theme}">
   <a href="#content">Skip to content</a>
-  <header class="syn-region"><nav aria-label="Primary"><a href="/">Home</a></nav></header>
-  <main id="content" class="syn-shell">
+  <header class="syn-shell syn-header"><nav class="syn-nav" aria-label="Primary"><a href="/" aria-current="page">Home</a></nav></header>
+  <main id="content" class="syn-shell" tabindex="-1">
 {sections}
   </main>
-  <footer class="syn-region"><p class="syn-muted">{title}</p></footer>
+  <footer class="syn-shell"><p class="syn-muted">{title}</p></footer>
 </body>
 </html>
 '''
