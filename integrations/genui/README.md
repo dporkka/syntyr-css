@@ -218,3 +218,53 @@ rate limits across requests, serialize access to each session, close the
 underlying transport on errors/cancellation, and safely place rendered HTML
 in its own trusted surface container. This is not an SSE or WebSocket client,
 does not perform incremental DOM patching and does not execute model actions.
+
+## Optional native browser snapshot renderer
+
+For applications that own a GenUI v1 JSON snapshot, import the source-only
+ES module. No framework, network fetch, runtime package, HTML parser or
+CSS changes are required. Serve the repository-owned module with the
+unreleased alpha.5 stylesheet in your own application.
+
+```js
+import { mountJson } from './integrations/genui/browser.mjs';
+
+const snapshot = JSON.stringify({
+  version: 1,
+  root: {type: 'Text', props: {text: 'Report ready'}}
+});
+mountJson(document.getElementById('report'), snapshot);
+```
+
+`validateJson(source)` validates a string and returns its parsed snapshot.
+`renderJson(source, document)` returns a detached DOM subtree, and
+`mountJson(container, source)` replaces the host-owned container only after
+successful validation and construction. All twelve v1 components are
+supported. Tags, classes and attributes are fixed by the implementation;
+model strings are assigned as text or safe attribute values, never parsed as
+HTML. The validator rejects duplicate decoded JSON keys, non-integer JSON
+number spellings, invalid shape, unknown properties, invalid text and
+oversized/deep trees. The browser and Python validators remain independent;
+the optional tests check catalog coverage and actual DOM parity on the
+example report.
+
+This adapter accepts the internal GenUI snapshot format, not raw A2UI
+messages, HTML from the server, or the NDJSON stream. Hosts must supply a
+trusted mount container, manage their session and transport, and control
+authorization. Full replacement does not preserve focus or disclosure state
+across successful updates; keyed reconciliation is not yet implemented.
+No action dispatch, URL handling, executable model expressions or package
+exports are added.
+
+Development verification:
+
+```sh
+node --test tests/genui_browser.test.mjs
+python3 tests/genui_browser_smoke.py --chromium /path/to/chromium
+```
+
+The first command is included in the optional JS-adoption CI step.
+The second uses an existing sandbox-capable Chromium installation to verify
+DOM parity, semantics, focus, native disclosure, narrow/wide container
+reflow, injection resistance and failed-mount rollback. It is not a
+cross-browser or WCAG conformance certification.

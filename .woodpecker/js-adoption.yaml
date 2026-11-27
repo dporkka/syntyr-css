@@ -29,6 +29,7 @@ steps:
             - scripts/export_ecosystem_adapters.py
             - scripts/test_js_adoption.py
             - tests/test_node_react_next_adoption.py
+            - tests/genui_browser.test.mjs
             - tests/animate.test.mjs
             - tests/copy.test.mjs
             - tests/ascii_playground.test.mjs
@@ -46,7 +47,7 @@ steps:
     image: node:24-bookworm-slim@sha256:dc26ae92c9fb15cf6b1d63e20f0944b2efe0f115b20e00be48fb23fceb061c54
     commands:
       - node --version && npm --version
-      - node --test tests/animate.test.mjs tests/copy.test.mjs tests/ascii_playground.test.mjs tests/ascii_cli.test.mjs tests/compose_cli.test.mjs tests/compose_intent.test.mjs
+      - node --test tests/genui_browser.test.mjs tests/animate.test.mjs tests/copy.test.mjs tests/ascii_playground.test.mjs tests/ascii_cli.test.mjs tests/compose_cli.test.mjs tests/compose_intent.test.mjs
       - npm ci --prefix packages/react --ignore-scripts --no-audit --no-fund
       - npm test --prefix packages/react
       - npm ci --prefix examples/react-vite --ignore-scripts --no-audit --no-fund
