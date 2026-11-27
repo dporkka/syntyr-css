@@ -1,5 +1,6 @@
 """Real MCP SDK discovery and tool calls, not a mocked JSON-RPC interface."""
 import asyncio
+import os
 import unittest
 
 try:
@@ -21,7 +22,7 @@ class AgentMcpSdkTests(unittest.TestCase):
                 self.assertGreaterEqual(names, {
                     "search_components", "get_component", "lookup_api",
                     "get_theme_tokens", "validate_markup", "get_interaction_contracts",
-                    "get_interaction_recipes",
+                    "get_interaction_recipes", "inspect_markup", "plan_variant_changes", "plan_html_source_patches",
                 })
                 contracts = await client.call_tool("get_interaction_contracts", {
                     "name": "dialog", "release": "0.3.0-alpha.5",
@@ -61,6 +62,38 @@ class AgentMcpSdkTests(unittest.TestCase):
                                  {"unknown-class", "invalid-attribute-value"})
                 typo = next(d for d in result["diagnostics"] if d["code"] == "unknown-class")
                 self.assertIn("syn-button", [s["name"] for s in typo["suggestions"]])
+                published_inspect = await client.call_tool("inspect_markup", {
+                    "html": "<p>Hi</p>", "release": "0.3.0-alpha.4",
+                })
+                self.assertTrue(published_inspect.is_error)
+                if os.environ.get("SYNTYR_HTML_INSPECTOR"):
+                    inspected = await client.call_tool("inspect_markup", {
+                        "html": '<button class="syn-button">Go</button>',
+                        "release": "0.3.0-alpha.5", "selector": "button",
+                    })
+                    self.assertFalse(inspected.is_error)
+                    self.assertEqual(inspected.structured_content["elements"][0]["components"], ["Button"])
+                    html = '<button class="syn-button syn-button--primary">Go</button>'
+                    snapshot = await client.call_tool("inspect_markup", {
+                        "html": html, "release": "0.3.0-alpha.5", "selector": "button",
+                    })
+                    report = snapshot.structured_content
+                    request = {"html": html, "release": "0.3.0-alpha.5",
+                               "document_sha256": report["document_sha256"],
+                               "operations": [{"element_id": report["elements"][0]["element_id"],
+                                               "selector": "button", "from": "syn-button--primary",
+                                               "to": "syn-button--outline"}]}
+                    plan = await client.call_tool("plan_variant_changes", request)
+                    self.assertFalse(plan.is_error)
+                    self.assertTrue(plan.structured_content["preview_only"])
+                    self.assertEqual(plan.structured_content["changes"][0]["after"], "syn-button syn-button--outline")
+                    patch = await client.call_tool("plan_html_source_patches", request)
+                    self.assertFalse(patch.is_error)
+                    self.assertTrue(patch.structured_content["validation"]["valid"])
+                    self.assertEqual(patch.structured_content["patches"][0]["replacement"], "syn-button--outline")
+                    request["operations"] *= 2
+                    duplicate = await client.call_tool("plan_variant_changes", request)
+                    self.assertTrue(duplicate.is_error)
                 for tool in listing.tools:
                     self.assertIs(tool.annotations.read_only_hint, True)
         asyncio.run(run())

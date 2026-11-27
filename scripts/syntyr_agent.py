@@ -9,6 +9,9 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
+import stat
+import tempfile
 from pathlib import Path
 import sys
 
@@ -16,7 +19,8 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from agent_mcp.catalog import PUBLISHED, RELEASES, SyntyrCatalog  # noqa: E402
+from agent_mcp.catalog import CANDIDATE, MAX_HTML_CHARS, PUBLISHED, RELEASES, SyntyrCatalog  # noqa: E402
+from agent_mcp.html_inspector import inspect_markup, plan_variants, plan_source_patches  # noqa: E402
 from scripts.syntyr_check import validate_html  # noqa: E402
 
 DEFAULT_SHEETS = ('syntyr.core.css', 'syntyr.recipes.css')
@@ -247,6 +251,94 @@ def check(args: argparse.Namespace, catalog: SyntyrCatalog) -> tuple[int, dict]:
                   'limitations': 'Static literal HTML and pinned file integrity only. CSS inclusion, browser behavior, JSX/TSX/Vue/Svelte, and WCAG require separate verification.'}
 
 
+def _read_inspector_html(file: str) -> str:
+    # Preserve CRLF and exact UTF-8 bytes so the digest agrees with standalone Go.
+    with Path(file).open(encoding="utf-8", newline="") as source:
+        return source.read(MAX_HTML_CHARS + 1)
+
+
+def inspect_html(args: argparse.Namespace, catalog: SyntyrCatalog) -> tuple[int, dict]:
+    return 0, inspect_markup(_read_inspector_html(args.file), args.release, args.selector)
+
+
+def _read_plan_request(file: str) -> dict:
+    with Path(file).open(encoding="utf-8") as source:
+        raw = source.read(16385)
+    if len(raw) > 16384:
+        raise ValueError("Plan request exceeds 16,384 characters")
+    request = json.loads(raw)
+    if not isinstance(request, dict) or set(request) != {"document_sha256", "operations"}:
+        raise ValueError("Expected document_sha256 and operations in plan request")
+    return request
+
+
+def plan_html(args: argparse.Namespace, catalog: SyntyrCatalog) -> tuple[int, dict]:
+    request = _read_plan_request(args.request)
+    planner = plan_source_patches if args.source_patches else plan_variants
+    return 0, planner(_read_inspector_html(args.file), args.release,
+                      request["document_sha256"], request["operations"])
+
+
+def apply_html(args: argparse.Namespace, catalog: SyntyrCatalog) -> tuple[int, dict]:
+    """Materialize a freshly verified, approved candidate without overwriting anything."""
+    source = Path(args.file).absolute()
+    output = Path(args.output).absolute()
+    if source.suffix.lower() != ".html" or output.suffix.lower() != ".html":
+        raise ValueError("Source and output must be .html files")
+    if any(p.is_symlink() for path in (source, output) for p in (path, *path.parents)):
+        raise ValueError("Symlink paths are not supported")
+    if not stat.S_ISREG(source.stat().st_mode) or not output.parent.is_dir():
+        raise ValueError("Expected a regular HTML source and existing output directory")
+    if output.exists():
+        raise ValueError("Refusing to overwrite an existing output")
+    request = _read_plan_request(args.request)
+    html = _read_inspector_html(str(source))
+    plan = plan_source_patches(html, args.release, request["document_sha256"], request["operations"])
+    if not plan["combined_dom_verified"] or not plan["validation"]["valid"]:
+        raise ValueError("Candidate failed combined proof or static validation")
+    if args.approve_result_sha256 != plan["result_sha256"]:
+        raise ValueError("Approval digest mismatch; review a fresh source-patch preview")
+    data = html.encode("utf-8")
+    candidate = data
+    for patch in reversed(plan["patches"]):
+        start, end = patch["start_byte"], patch["end_byte"]
+        if data[start:end] != patch["expected"].encode("ascii"):
+            raise ValueError("Patch precondition mismatch")
+        candidate = candidate[:start] + patch["replacement"].encode("ascii") + candidate[end:]
+    if _hash(candidate) != args.approve_result_sha256:
+        raise ValueError("Candidate digest mismatch")
+    # Exclusive publication via a hard link in the same directory. The output
+    # never appears partially written and an existing path is never replaced.
+    # Assumes a trusted local directory; this is not a hostile-filesystem sandbox.
+    temporary = None
+    published = False
+    cleanup_warning = None
+    try:
+        with tempfile.NamedTemporaryFile(dir=output.parent, prefix=".syntyr-", delete=False) as handle:
+            temporary = Path(handle.name)
+            handle.write(candidate)
+            handle.flush()
+            os.fsync(handle.fileno())
+        if source.is_symlink() or _read_inspector_html(str(source)).encode("utf-8") != data:
+            raise ValueError("Source changed during planning")
+        os.link(temporary, output)
+        published = True
+    finally:
+        if temporary is not None:
+            try:
+                temporary.unlink(missing_ok=True)
+            except OSError as exc:
+                if not published:
+                    raise
+                cleanup_warning = f"Candidate created; could not remove staging file {temporary}: {exc}"
+    payload = {"status": "created", "output": str(output), "source_unchanged": True,
+               "document_sha256": plan["document_sha256"], "result_sha256": plan["result_sha256"],
+               "combined_dom_verified": True, "validation": plan["validation"]}
+    if cleanup_warning is not None:
+        payload["cleanup_warning"] = cleanup_warning
+    return 0, payload
+
+
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__, prog='syntyr-agent')
     sub = parser.add_subparsers(dest='command', required=True)
@@ -262,10 +354,28 @@ def main(argv=None) -> int:
     inspect = sub.add_parser('info', help='Read-only project inventory for agents and developers')
     inspect.add_argument('--project', default='.')
     inspect.add_argument('--json', action='store_true')
+    markup = sub.add_parser('inspect-html', help='Inspect literal candidate HTML using the optional configured Go inspector')
+    markup.add_argument('--release', required=True, choices=[CANDIDATE])
+    markup.add_argument('--selector', default='')
+    markup.add_argument('--json', action='store_true')
+    markup.add_argument('file')
+    plan = sub.add_parser('plan-html', help='Preview bounded variant replacements without writing source')
+    plan.add_argument('--release', required=True, choices=[CANDIDATE])
+    plan.add_argument('--request', required=True, help='Local JSON plan request')
+    plan.add_argument('--source-patches', action='store_true', help='Preview exact source edits and static validation')
+    plan.add_argument('--json', action='store_true')
+    plan.add_argument('file')
+    apply = sub.add_parser('apply-html', help='Create a new approved HTML candidate; never overwrite source')
+    apply.add_argument('--release', required=True, choices=[CANDIDATE])
+    apply.add_argument('--request', required=True)
+    apply.add_argument('--approve-result-sha256', required=True)
+    apply.add_argument('--output', required=True)
+    apply.add_argument('--json', action='store_true')
+    apply.add_argument('file')
     args = parser.parse_args(argv)
     try:
         catalog = SyntyrCatalog()
-        handlers = {'init': initialize, 'check': check, 'info': info}
+        handlers = {'init': initialize, 'check': check, 'info': info, 'inspect-html': inspect_html, 'plan-html': plan_html, 'apply-html': apply_html}
         code, payload = handlers[args.command](args, catalog)
     except (ValueError, OSError, KeyError, json.JSONDecodeError) as exc:
         code, payload = 1, {'error': str(exc)}

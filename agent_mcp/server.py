@@ -12,6 +12,7 @@ from mcp.types import ToolAnnotations
 from mcp.server.mcpserver.exceptions import ToolError
 
 from .catalog import CatalogError, SyntyrCatalog, PUBLISHED
+from .html_inspector import inspect_markup as inspect_literal_markup, plan_variants, plan_source_patches
 
 catalog = SyntyrCatalog()
 READ_ONLY = ToolAnnotations(readOnlyHint=True, destructiveHint=False, idempotentHint=True, openWorldHint=False)
@@ -73,6 +74,26 @@ def validate_markup(html: str, release: str = PUBLISHED,
                     stylesheets: list[str] | None = None) -> dict[str, Any]:
     """Validate literal markup; return pinned-release diagnostics and repair hints, not WCAG."""
     return checked(catalog.validate_markup, html, release, stylesheets)
+
+
+@server.tool(annotations=READ_ONLY, structured_output=True)
+def inspect_markup(html: str, release: str, selector: str = "") -> dict[str, Any]:
+    """Inspect candidate-only literal HTML with an optional configured local binary."""
+    return checked(inspect_literal_markup, html, release, selector)
+
+
+@server.tool(annotations=READ_ONLY, structured_output=True)
+def plan_variant_changes(html: str, release: str, document_sha256: str,
+                         operations: list[dict[str, str]]) -> dict[str, Any]:
+    """Preview up to eight independent variant changes against one inspected snapshot."""
+    return checked(plan_variants, html, release, document_sha256, operations)
+
+
+@server.tool(annotations=READ_ONLY, structured_output=True)
+def plan_html_source_patches(html: str, release: str, document_sha256: str,
+                             operations: list[dict[str, str]]) -> dict[str, Any]:
+    """Preview exact source patches and validate the combined literal HTML."""
+    return checked(plan_source_patches, html, release, document_sha256, operations)
 
 
 if __name__ == "__main__":

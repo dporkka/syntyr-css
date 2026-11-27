@@ -1,0 +1,25 @@
+# Optional maintainer tooling; the CSS build/runtime remains independent of Go.
+when:
+  - event: pull_request
+  - event: push
+    branch: main
+  - event: manual
+
+steps:
+  - name: html-inspector-go
+    image: golang:1.26.11-bookworm@sha256:ea47ee45f1284d60f9cc09cb2c3bb4f508c256b640bd8bb30342ff13d1adcb52
+    commands:
+      - cd tools/html-inspector
+      - go mod download
+      - go mod verify
+      - go test -race ./...
+      - go vet ./...
+      - go run golang.org/x/vuln/cmd/govulncheck@v1.10.0 ./...
+      - CGO_ENABLED=0 go build -o .ci-inspector .
+  - name: html-inspector-bridge
+    image: python:3.14-slim@sha256:9aaa474097d094040649f2162a627c0049b408f52138d980916788d80f04802f
+    commands:
+      - export SYNTYR_HTML_INSPECTOR="$(pwd)/tools/html-inspector/.ci-inspector"
+      - python3 -m unittest discover -s tests -p test_html_inspector_bridge.py -v
+      - python3 -m unittest discover -s tests -p test_html_variant_plan.py -v
+      - rm tools/html-inspector/.ci-inspector
