@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "root": {
+    "type": "Stack",
+    "children": [
+      {"type": "Heading", "props": {"text": "Campaign operations", "level": 2}},
+      {"type": "Text", "props": {"text": "Illustrative data — not a live report."}},
+      {"type": "Grid", "children": [
+        {"type": "Metric", "props": {"label": "Active campaigns", "value": "24"}},
+        {"type": "Metric", "props": {"label": "At risk", "value": "5"}},
+        {"type": "Metric", "props": {"label": "Overdue", "value": "2"}}
+      ]},
+      {"type": "Panel", "children": [
+        {"type": "Heading", "props": {"text": "Installation progress", "level": 3}},
+        {"type": "Progress", "props": {"label": "Confirmed installations", "value": 18, "max": 24}},
+        {"type": "Table", "props": {"caption": "Campaign status", "columns": ["Campaign", "Status"], "rows": [["Retail", "Artwork pending"], ["Airport", "Confirmation missing"], ["Downtown", "Complete"]]}}
+      ]},
+      {"type": "Details", "props": {"summary": "Next steps"}, "children": [
+        {"type": "List", "props": {"items": ["Review artwork", "Request installation confirmation"]}}
+      ]}
+    ]
+  }
+}

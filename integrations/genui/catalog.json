@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "css_release": "0.3.0-alpha.5",
+  "stylesheet": "syntyr.core.css",
+  "components": {
+    "Panel": {"props": {}, "children": true},
+    "Stack": {"props": {}, "children": true},
+    "Grid": {"props": {}, "children": true},
+    "Heading": {"props": {"text": "text", "level": "heading"}, "children": false},
+    "Text": {"props": {"text": "text"}, "children": false},
+    "Badge": {"props": {"text": "label"}, "children": false},
+    "Metric": {"props": {"label": "label", "value": "text"}, "children": false},
+    "List": {"props": {"items": "strings"}, "children": false},
+    "Table": {"props": {"caption": "label", "columns": "labels", "rows": "rows"}, "children": false},
+    "Progress": {"props": {"label": "label", "value": "integer", "max": "integer"}, "children": false},
+    "Details": {"props": {"summary": "label"}, "children": true},
+    "Divider": {"props": {}, "children": false}
+  }
+}
