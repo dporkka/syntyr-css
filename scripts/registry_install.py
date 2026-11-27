@@ -6,10 +6,13 @@ Only the checked-in prerelease registry matching VERSION is supported.
 from __future__ import annotations
 
 import argparse
+import errno
 import hashlib
 import json
+import os
 from pathlib import Path
 import re
+import tempfile
 
 if __package__:
     from .build_shadcn_registry import ROOT, OUTPUT, DEFAULT_REGISTRY_URL
@@ -67,14 +70,21 @@ def plan_install(name: str, project: Path, registry_root: Path = OUTPUT) -> dict
             obj = json.loads(file.read_text(encoding="utf-8"))
         except (OSError, ValueError) as error:
             raise RegistryError("Missing or unreadable registry item: " + item_name) from error
+        if not isinstance(obj, dict):
+            raise RegistryError("Expected registry item object: " + item_name)
         if obj.get("name") != item_name or obj.get("type") != "registry:item":
             raise RegistryError("Unexpected registry item identity")
         meta = obj.get("meta", {})
+        if not isinstance(meta, dict):
+            raise RegistryError("Expected registry item metadata object: " + item_name)
         if meta.get("syntyrVersion") != version or meta.get("runtimeJavaScript") is not False:
             raise RegistryError("Incompatible item version or runtime")
         if obj.get("dependencies") != []:
             raise RegistryError("Runtime dependencies are not supported")
-        for dep in obj.get("registryDependencies", []):
+        dependencies = obj.get("registryDependencies", [])
+        if not isinstance(dependencies, list):
+            raise RegistryError("Expected registry dependency list: " + item_name)
+        for dep in dependencies:
             prefix = DEFAULT_REGISTRY_URL + "/"
             if not isinstance(dep, str) or not dep.startswith(prefix) or not dep.endswith(".json"):
                 raise RegistryError("Untrusted registry dependency URL")
@@ -131,48 +141,87 @@ def apply_install(plan: dict, project: Path) -> None:
         if entry["status"] == "conflict" or (target.exists() and
               (not target.is_file() or target.read_bytes() != entry["_content"].encode("utf-8"))):
             raise RegistryError("Would overwrite existing file: " + entry["path"])
-    for entry in plan["files"]:
-        target = _safe_destination(project, "~/" + entry["path"])
-        target.parent.mkdir(parents=True, exist_ok=True)
-        _safe_destination(project, "~/" + entry["path"])
-        content = entry["_content"].encode("utf-8")
-        if target.exists():
-            # Another process can modify a once-identical target after preflight.
-            if not target.is_file() or target.read_bytes() != content:
-                raise RegistryError("Changed during installation: " + entry["path"])
-            continue
-        created = False
-        try:
-            with target.open("xb") as stream:
-                created = True
-                stream.write(content)
-        except FileExistsError as error:
-            raise RegistryError("Concurrent installation conflict: " + entry["path"]) from error
-        except BaseException:
-            # Exclusive create succeeded: discard our partial file on write/close
-            # failure. Never remove files that existed before this attempt.
-            if created:
-                target.unlink(missing_ok=True)
-            raise
+    # Stage complete bytes in a private directory on the same filesystem.
+    # Install each complete file using atomic no-clobber hard links. We NEVER
+    # unlink published destinations on failure: another process might have
+    # replaced or edited them since creation. --verify exposes partial installs;
+    # a retry skips identical files and creates remaining ones.
+    project.mkdir(parents=True, exist_ok=True)
+    if project.is_symlink() or not project.is_dir():
+        raise RegistryError("Project directory is not safe")
+    with tempfile.TemporaryDirectory(prefix=".syntyr-stage-", dir=project) as staging:
+        staged: list[tuple[dict, Path, bytes]] = []
+        for i, entry in enumerate(plan["files"]):
+            content = entry["_content"].encode("utf-8")
+            temporary = Path(staging) / f"{i:04d}"
+            with temporary.open("xb") as stream:
+                count = stream.write(content)
+                if count != len(content):
+                    raise OSError("Incomplete staging write: " + entry["path"])
+            staged.append((entry, temporary, content))
+        for entry, temporary, content in staged:
+            target = _safe_destination(project, "~/" + entry["path"])
+            target.parent.mkdir(parents=True, exist_ok=True)
+            _safe_destination(project, "~/" + entry["path"])
+            if target.exists():
+                if not target.is_file() or target.read_bytes() != content:
+                    raise RegistryError("Changed during installation: " + entry["path"])
+                continue
+            try:
+                os.link(temporary, target, follow_symlinks=False)
+            except FileExistsError as error:
+                raise RegistryError("Concurrent installation conflict: " + entry["path"]) from error
+            except OSError as error:
+                if error.errno != errno.EXDEV:
+                    raise
+                raise RegistryError(
+                    "Cannot publish " + entry["path"]
+                    + ": hard links require the destination to share the project staging filesystem"
+                    + " (check for a separate mount)"
+                ) from error
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Plan or explicitly install a local Syntyr registry item")
+    parser = argparse.ArgumentParser(description="Plan, install, or verify a local Syntyr registry item")
     parser.add_argument("item", help="Name from registry/registry.json")
     parser.add_argument("--project", type=Path, required=True)
-    parser.add_argument("--apply", action="store_true", help="Opt in to creating missing assets; never overwrites")
+    action = parser.add_mutually_exclusive_group()
+    action.add_argument("--apply", action="store_true",
+                        help="Opt in to creating missing assets; never overwrites")
+    action.add_argument("--verify", action="store_true",
+                        help="Exit nonzero if any expected installed file is missing or modified")
+    parser.add_argument("--json", action="store_true",
+                        help="Output machine-readable paths, digests, and statuses (never source)")
     args = parser.parse_args()
     try:
         plan = plan_install(args.item, args.project)
-        for entry in plan["files"]:
-            print(f"{entry['status']:9} {entry['path']} ({entry['bytes']} bytes, sha256:{entry['sha256'][:12]})")
-        print(f"Syntyr {plan['version']} / {len(plan['files'])} files")
         if args.apply:
             apply_install(plan, args.project)
-            print("Installed; existing identical files untouched")
+            plan = plan_install(args.item, args.project)
+        verified = all(entry["status"] == "identical" for entry in plan["files"])
+        if args.json:
+            print(json.dumps({
+                "item": plan["item"], "version": plan["version"],
+                "project": plan["project"],
+                "verified": verified,
+                "canApply": all(entry["status"] != "conflict" for entry in plan["files"]),
+                "applied": args.apply,
+                "files": [
+                    {key: entry[key] for key in ("path", "status", "sha256", "bytes")}
+                    for entry in plan["files"]
+                ],
+            }, indent=2))
         else:
-            print("Dry run only. Pass --apply to copy missing files.")
-        return 0
+            for entry in plan["files"]:
+                print(f"{entry['status']:9} {entry['path']} ({entry['bytes']} bytes, sha256:{entry['sha256'][:12]})")
+            print(f"Syntyr {plan['version']} / {len(plan['files'])} files")
+            if args.apply:
+                print("Installed; existing identical files untouched")
+            elif args.verify:
+                print("Verified" if verified else "Verification failed: missing or modified assets")
+            else:
+                print("Dry run only. Pass --apply to copy missing files.")
+        return 0 if not args.verify or verified else 1
     except (RegistryError, OSError) as error:
         parser.exit(2, f"Registry installation rejected: {error}\n")
 

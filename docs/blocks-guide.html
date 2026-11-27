@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Status: Experimental alpha.5 source gallery, not an immutable release or published npm package.">
-  <meta name="syntyr-source-sha256" content="d031b64cc967b5ecd7f273573bd25c28e3445694b1cee24ecbabb5609b459a7f">
+  <meta name="syntyr-source-sha256" content="aa19a399d33046bbcd0fad27efee90ab28425a299bace8699c703bfaf7665035">
   <meta name="theme-color" content="#f5f7fb">
   <title>Syntyr Blocks &amp; Assets — integration guide — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/blocks-guide">
@@ -56,14 +56,46 @@ one MIT license notice) without modifying a project:</p>
 <pre tabindex="0"><code class="language-sh">python3 scripts/registry_install.py resource-workspace --project /path/to/app
 # After reviewing every path/digest, opt in to copying missing files only:
 python3 scripts/registry_install.py resource-workspace --project /path/to/app --apply
+# CI / agent verification: exit 0 only when every expected file matches.
+python3 scripts/registry_install.py resource-workspace --project /path/to/app --verify --json
 </code></pre>
+<p><code>--verify</code> is read-only. It exits <strong>0</strong> when all installed assets match this
+source-tree version, <strong>1</strong> when any asset is missing or customized, and <strong>2</strong>
+when the registry or installation path is invalid. <code>--json</code> exposes only
+paths, statuses (<code>create</code>, <code>identical</code>, <code>conflict</code>), byte counts, and SHA-256
+digests, not file contents. It also works with the dry-run and <code>--apply</code>
+commands for local agents and CI checks.</p>
+<p>&lt;!-- coderabbit-ai-generated:v1 --&gt;</p>
+<p>&lt;!-- coderabbit-ai-generated-section:v1:1b31530227404a94177786a3fcb96bac9705a6ad62f3ac8bdab2c903a814f58c --&gt;</p>
 <p>The script refuses incompatible versions, mismatched hashes, untrusted
 registry URLs, unsafe/symlinked paths, and changed existing files. It never
 executes installed markup or installs JavaScript dependencies. Re-running an
-identical installation is safe. The helper intentionally does <strong>not</strong> offer
-a force-overwrite mode; manage customization and upgrades through your own
-source control. Syntyr still works by copying a prebuilt CSS file directly,
-without Python in the consuming application.</p>
+identical installation is safe. The installer first stages complete files in
+a private temporary directory under the project and then publishes each file
+through an atomic no-overwrite hard link. No incomplete destination is exposed.
+If a later file fails, earlier complete files <strong>remain in place</strong>: deleting
+them could destroy concurrent edits or replacements. Run --verify --json
+to locate missing files and retry --apply to fill gaps without overwriting
+customer changes. Staged temporary files are cleaned up; empty destination
+directories may remain. This is <strong>not</strong> an atomic multi-file transaction.
+Previously existing identical customer files are never removed.
+The helper intentionally does <strong>not</strong> offer a force-overwrite mode; manage
+customization and upgrades through your own source control. Syntyr still
+works by copying a prebuilt CSS file directly, without Python in the
+consuming application.</p>
+<p>The project root must be writable for staging. Each new file's destination
+must be on the same mount as staging, and the filesystem must support hard
+links. If publication fails across mounts, put the destination on the same
+mount as the project root before retrying. The installer never falls back to
+copying partial files.</p>
+<p>&lt;!-- /coderabbit-ai-generated:v1 --&gt;</p>
+<p>&lt;!-- coderabbit-ai-generated:v1 --&gt;</p>
+<p>&lt;!-- coderabbit-ai-generated-section:v1:50803b19f481b23ea7fd179d38cb6d37f0247bc8bf4084735e7bf41c658eac3c --&gt;</p>
+<p>Run <code>--apply</code> only in a trusted project. Untrusted users and processes must
+not be able to rename or replace the project root, staging directory, or
+installation paths while apply runs. Private staging permissions do not
+protect the staging directory's name from writers to the project root.</p>
+<p>&lt;!-- /coderabbit-ai-generated:v1 --&gt;</p>
 <p>For reproducible developer-only checks (without shipping a browser runtime),
 run <code>node tests/registry_form_workflows_browser.cjs</code> with
 <code>SYNTYR_PLAYWRIGHT_MODULE</code> pointing to an installed Playwright package and

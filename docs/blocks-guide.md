@@ -30,15 +30,56 @@ one MIT license notice) without modifying a project:
 python3 scripts/registry_install.py resource-workspace --project /path/to/app
 # After reviewing every path/digest, opt in to copying missing files only:
 python3 scripts/registry_install.py resource-workspace --project /path/to/app --apply
+# CI / agent verification: exit 0 only when every expected file matches.
+python3 scripts/registry_install.py resource-workspace --project /path/to/app --verify --json
 ~~~
+
+`--verify` is read-only. It exits **0** when all installed assets match this
+source-tree version, **1** when any asset is missing or customized, and **2**
+when the registry or installation path is invalid. `--json` exposes only
+paths, statuses (`create`, `identical`, `conflict`), byte counts, and SHA-256
+digests, not file contents. It also works with the dry-run and `--apply`
+commands for local agents and CI checks.
+
+<!-- coderabbit-ai-generated:v1 -->
+
+<!-- coderabbit-ai-generated-section:v1:1b31530227404a94177786a3fcb96bac9705a6ad62f3ac8bdab2c903a814f58c -->
 
 The script refuses incompatible versions, mismatched hashes, untrusted
 registry URLs, unsafe/symlinked paths, and changed existing files. It never
 executes installed markup or installs JavaScript dependencies. Re-running an
-identical installation is safe. The helper intentionally does **not** offer
-a force-overwrite mode; manage customization and upgrades through your own
-source control. Syntyr still works by copying a prebuilt CSS file directly,
-without Python in the consuming application.
+identical installation is safe. The installer first stages complete files in
+a private temporary directory under the project and then publishes each file
+through an atomic no-overwrite hard link. No incomplete destination is exposed.
+If a later file fails, earlier complete files **remain in place**: deleting
+them could destroy concurrent edits or replacements. Run --verify --json
+to locate missing files and retry --apply to fill gaps without overwriting
+customer changes. Staged temporary files are cleaned up; empty destination
+directories may remain. This is **not** an atomic multi-file transaction.
+Previously existing identical customer files are never removed.
+The helper intentionally does **not** offer a force-overwrite mode; manage
+customization and upgrades through your own source control. Syntyr still
+works by copying a prebuilt CSS file directly, without Python in the
+consuming application.
+
+The project root must be writable for staging. Each new file's destination
+must be on the same mount as staging, and the filesystem must support hard
+links. If publication fails across mounts, put the destination on the same
+mount as the project root before retrying. The installer never falls back to
+copying partial files.
+
+<!-- /coderabbit-ai-generated:v1 -->
+
+<!-- coderabbit-ai-generated:v1 -->
+
+<!-- coderabbit-ai-generated-section:v1:50803b19f481b23ea7fd179d38cb6d37f0247bc8bf4084735e7bf41c658eac3c -->
+
+Run `--apply` only in a trusted project. Untrusted users and processes must
+not be able to rename or replace the project root, staging directory, or
+installation paths while apply runs. Private staging permissions do not
+protect the staging directory's name from writers to the project root.
+
+<!-- /coderabbit-ai-generated:v1 -->
 
 For reproducible developer-only checks (without shipping a browser runtime),
 run `node tests/registry_form_workflows_browser.cjs` with
