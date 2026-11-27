@@ -45,6 +45,9 @@ For browser readers, use the [human-readable HTML documentation directory](https
 
 ## Reference
 
+- [Versioned responsive probe contract](https://syntyr-css.pages.dev/metadata/responsive-probe.v1.json): Shared canonical viewport registry and read-only DOM geometry expressions; execute only trusted pinned source in a developer-owned browser.
+- [Responsive compatibility evidence](https://syntyr-css.pages.dev/metadata/responsive-compatibility.v1.json): Historical, revision-specific published-page reflow matrix; missing engines are not tested. [Human report](https://syntyr-css.pages.dev/docs/responsive-compatibility.html).
+
 - [Distribution and pinned CSS](https://syntyr-css.pages.dev/docs/distribution.md): Self-hosting, pinned asset URLs, and a downloadable offline SaaS demo in the **unreleased alpha.5** ZIP candidate (not in published alpha.4).
 - [Cloudflare hosting and cache contract](https://syntyr-css.pages.dev/docs/cloudflare-hosting.md): Content-addressed website CSS, mutable preview URLs and immutable consumer releases.
 - [Experimental Nulang Cloud hosting adapter](https://syntyr-css.pages.dev/docs/nulang-cloud-hosting.md): Prepare portable static websites and offline deployment bundles; live Nulang Cloud hosting is not yet available.
