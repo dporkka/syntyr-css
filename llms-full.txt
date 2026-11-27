@@ -6991,6 +6991,39 @@ Syntyr styles. Plain HTML fragments are exempt because the embedding app may
 supply the root; dynamic ancestor classes and inert `<template>` contents are
 also exempt because their rendered scope is unknown.
 
+### Inspect stylesheet loading with CSS Doctor
+
+Use the same validator with `--doctor` to inspect literal stylesheet links:
+
+```sh
+python3 scripts/syntyr_check.py --doctor --semantic --format json index.html
+```
+
+Repeated Syntyr links and distributions sharing canonical CSS sources produce
+advisory warnings; different explicit semantic-version pins in `/v/<version>/`
+paths produce errors. The source-ownership map comes from the generated current
+candidate contract, including presets and atomic component files. Conditional
+stylesheets may overlap intentionally; review warnings rather than automatically
+removing files. Unpinned local paths, bundler imports and actual downloaded CSS
+versions are not inferred. This is static inspection, not browser cascade,
+security or accessibility certification. Default validation is unchanged.
+
+### Inspect design token references
+
+Add `--tokens` to inspect literal inline `var(--syn-…)` references against
+the selected contract's token inventory. Unknown names include suggested
+canonical spellings and provider stylesheets. Known references without a
+declared provider produce advisory warnings. The check does not determine
+computed values, resolve inheritance or infer custom host definitions.
+It skips locally declared tokens, templates, CSS strings/comments and
+ambiguous escaped or URL-bearing inline styles; external CSS and style
+blocks are not analyzed. Warnings do not alter default validation or fail
+the CLI.
+
+```sh
+python3 scripts/syntyr_check.py --doctor --tokens --semantic --format json index.html
+```
+
 With `--semantic`, a second standard-library pass checks literal HTML for
 duplicate static IDs, missing form labels (including an unnamed `input
 type="image"` or `type="button"`), unmatched `label for` and
