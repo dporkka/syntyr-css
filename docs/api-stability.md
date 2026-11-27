@@ -57,7 +57,7 @@ as a permanent compatibility commitment by default.
 | `.syn-button`, `.syn-input`, `.syn-select`, `.syn-textarea`, `.syn-table`, `.syn-table-wrap` | Common native controls and readable tabular content | Advanced widget behavior, grid interaction and framework states |
 | `.syn-heading`, `.syn-muted`, `.syn-badge` | Small portable typographic affordances | Theme-specific graphic treatments and decorative variants |
 | `--syn-bg`, `--syn-surface`, `--syn-text`, `--syn-muted`, `--syn-accent`, `--syn-on-accent`, `--syn-frame` | Minimal semantic palette roles; values may change for contrast fixes | Internal derived shades and theme-specific effect tokens |
-| `--syn-font`, `--syn-radius`, `--syn-space-1` through `--syn-space-4` | Basic typography, shape and spacing customization | Experimental component-local layout overrides |
+| `--syn-font`, `--syn-radius`, `--syn-space-1`, `--syn-space-2`, `--syn-space-3`, `--syn-space-4` | Basic typography, shape and spacing customization | Experimental component-local layout overrides |
 | `data-syn-theme`, native HTML and semantic ARIA states | Token-based theme boundaries and state presentation | Freezing every named palette, intensity and density profile |
 
 The list is deliberately small and **not exhaustive**. Additional existing
@@ -68,6 +68,27 @@ two independent, non-showcase consumer contexts, has documented composition and
 extension behavior, passes browser/accessibility review, and has no necessary
 framework-specific coupling. Consider opt-in `.syn-semantic` independently
 once the accessibility and scope review is complete.
+
+### Machine-checked proposal
+
+The maintainer regression suite checks the proposed minimum surface against
+the current generated CSS contract. A reviewed fixture at
+`tests/fixtures/proposed-v1-contract.json` records only the core stylesheet
+entrypoint, the shortlisted selectors and token names provided by core, and
+the presence of the theme attribute (not a frozen set of theme names).
+The tests verify that the fixture agrees with this table and that the
+generated inventory still exports the proposal. Run from the source checkout:
+
+```sh
+python3 -m unittest discover -s tests -p test_api_stability_documentation.py -v
+```
+
+A failure requires explicit review of a proposed change, not automatic
+restoration of an experimental API. The fixture is a minimum-surface
+proposal, not a published release snapshot or a v1 certification. The
+existing full contract diff remains useful for migration analysis; its
+report alone cannot establish visual, behavioral, or accessibility
+compatibility. Browser and consumer adoption evidence remain separate gates.
 
 Versioned release assets and pre-v1 compatibility rules remain unchanged.
 Removal of unnecessary experimental aliases is possible **before** the v1

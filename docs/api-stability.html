@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Status: experimental 0.3.0-alpha.5 candidate; no v1 stability promise. This document names the intended public contracts so that changes can be reviewed…">
-  <meta name="syntyr-source-sha256" content="15585f00a737a2ab8d2badd64c8981513b090ea0dd3be7b0b9c61e7b7890b394">
+  <meta name="syntyr-source-sha256" content="12fa1ae1525946a3e4adb7b72bd5e298f5dd570f9abc26a7119ca6fc7311c752">
   <meta name="theme-color" content="#f5f7fb">
   <title>SYNTYR CSS public API and prerelease stability — Syntyr CSS docs</title>
   <link rel="canonical" href="https://syntyr-css.pages.dev/docs/api-stability">
@@ -206,7 +206,7 @@ as a permanent compatibility commitment by default.</p>
 <td>Internal derived shades and theme-specific effect tokens</td>
 </tr>
 <tr>
-<td><code>--syn-font</code>, <code>--syn-radius</code>, <code>--syn-space-1</code> through <code>--syn-space-4</code></td>
+<td><code>--syn-font</code>, <code>--syn-radius</code>, <code>--syn-space-1</code>, <code>--syn-space-2</code>, <code>--syn-space-3</code>, <code>--syn-space-4</code></td>
 <td>Basic typography, shape and spacing customization</td>
 <td>Experimental component-local layout overrides</td>
 </tr>
@@ -225,6 +225,22 @@ two independent, non-showcase consumer contexts, has documented composition and
 extension behavior, passes browser/accessibility review, and has no necessary
 framework-specific coupling. Consider opt-in <code>.syn-semantic</code> independently
 once the accessibility and scope review is complete.</p>
+<h3 id="machine-checked-proposal">Machine-checked proposal</h3>
+<p>The maintainer regression suite checks the proposed minimum surface against
+the current generated CSS contract. A reviewed fixture at
+<code>tests/fixtures/proposed-v1-contract.json</code> records only the core stylesheet
+entrypoint, the shortlisted selectors and token names provided by core, and
+the presence of the theme attribute (not a frozen set of theme names).
+The tests verify that the fixture agrees with this table and that the
+generated inventory still exports the proposal. Run from the source checkout:</p>
+<pre tabindex="0"><code class="language-sh">python3 -m unittest discover -s tests -p test_api_stability_documentation.py -v
+</code></pre>
+<p>A failure requires explicit review of a proposed change, not automatic
+restoration of an experimental API. The fixture is a minimum-surface
+proposal, not a published release snapshot or a v1 certification. The
+existing full contract diff remains useful for migration analysis; its
+report alone cannot establish visual, behavioral, or accessibility
+compatibility. Browser and consumer adoption evidence remain separate gates.</p>
 <p>Versioned release assets and pre-v1 compatibility rules remain unchanged.
 Removal of unnecessary experimental aliases is possible <strong>before</strong> the v1
 freeze; after stabilization, semver and migration documentation apply. Do not
@@ -342,6 +358,7 @@ without adding JavaScript or changing the base table styles.</p>
           <nav class="docs-article-toc-desktop" aria-label="On this page"><p class="syn-eyebrow">ON THIS PAGE</p>
 <a class="docs-article-toc-link docs-article-toc-2" href="#public-surface-and-intended-v1-boundaries">Public surface and intended v1 boundaries</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#proposed-minimum-v1-contract-not-yet-approved">Proposed minimum v1 contract (not yet approved)</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#machine-checked-proposal">Machine-checked proposal</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#alpha5-opt-in-crm-compositions-and-density-profiles">Alpha.5 opt-in CRM compositions and density profiles</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#alpha5-native-css-refinements">Alpha.5 native CSS refinements</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#alpha5-native-readonly-form-presentation">Alpha.5 native readonly form presentation</a>
@@ -358,6 +375,7 @@ without adding JavaScript or changing the base table styles.</p>
             <nav aria-label="On this page (mobile)">
 <a class="docs-article-toc-link docs-article-toc-2" href="#public-surface-and-intended-v1-boundaries">Public surface and intended v1 boundaries</a>
 <a class="docs-article-toc-link docs-article-toc-2" href="#proposed-minimum-v1-contract-not-yet-approved">Proposed minimum v1 contract (not yet approved)</a>
+<a class="docs-article-toc-link docs-article-toc-3" href="#machine-checked-proposal">Machine-checked proposal</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#alpha5-opt-in-crm-compositions-and-density-profiles">Alpha.5 opt-in CRM compositions and density profiles</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#alpha5-native-css-refinements">Alpha.5 native CSS refinements</a>
 <a class="docs-article-toc-link docs-article-toc-3" href="#alpha5-native-readonly-form-presentation">Alpha.5 native readonly form presentation</a>
