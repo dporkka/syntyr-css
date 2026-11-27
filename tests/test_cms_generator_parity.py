@@ -62,6 +62,27 @@ class CmsGeneratorParity(unittest.TestCase):
         self.assertEqual(signature(page, "/"), signature(page.replace("</li>", ""), "/"))
         self.assertNotEqual(signature(page, "/"), signature(page.replace("Second</li>", "</li>Second"), "/"))
 
+    def test_rejects_browser_visible_markup_after_body_or_html(self):
+        for boundary in ("</body>", "</html>"):
+            for extra in ('<p class="syn-muted">Unexpected text</p>',
+                          '<img src="unexpected.png" alt="Unexpected image">',
+                          "Unexpected text"):
+                with self.subTest(boundary=boundary, extra=extra):
+                    self.page.write_text(self.markup.replace(boundary, boundary + extra))
+                    with self.assertRaisesRegex(AssertionError, "CMS parity mismatch"):
+                        self.verify()
+
+    def test_allows_comments_whitespace_and_optional_document_ends(self):
+        for markup in (
+            self.markup + "  <!-- trailing comment -->\n",
+            self.markup.replace("</body>", ""),
+            self.markup.replace("</html>", ""),
+            self.markup.replace("</body>", "").replace("</html>", ""),
+        ):
+            with self.subTest(markup=markup[-100:]):
+                self.page.write_text(markup)
+                self.assertEqual(self.verify(), 1)
+
     def test_rejects_duplicate_keys_even_when_last_value_matches_output(self):
         valid = json.dumps(self.document)
         self.content.write_text('{"title":"Shadowed title",' + valid[1:], encoding="utf-8")

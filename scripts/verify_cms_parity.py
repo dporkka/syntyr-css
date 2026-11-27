@@ -60,6 +60,8 @@ class Signature(HTMLParser):
         self.events = []
         self.pending = []
         self.body = False
+        self.body_closed = False
+        self.html_closed = False
         self.title = False
         self.metadata = []
         self.open_elements = []
@@ -77,6 +79,10 @@ class Signature(HTMLParser):
         self.events.append(("end", tag))
 
     def handle_starttag(self, tag, attrs):
+        if self.body_closed:
+            # Browsers reprocess markup after </body> or </html> in the
+            # body; treating it as metadata would hide visible changes.
+            raise AssertionError(f"CMS parity mismatch: Unexpected <{tag}> after document body")
         attributes = dict(attrs)
         if len(attrs) != len(attributes):
             raise AssertionError(f"Duplicate attributes on <{tag}>")
@@ -106,6 +112,11 @@ class Signature(HTMLParser):
             self.open_elements.append(tag)
 
     def handle_endtag(self, tag):
+        if self.body_closed:
+            if tag == "html" and not self.html_closed:
+                self.html_closed = True
+                return
+            raise AssertionError(f"CMS parity mismatch: Unexpected </{tag}> after document body")
         if self.title and tag == "title":
             self.metadata.append(("title", normalized_text("".join(self.pending))))
             self.pending.clear()
@@ -125,6 +136,8 @@ class Signature(HTMLParser):
                 self.events.append(("end", tag))
             if tag in OPTIONAL_END:
                 self.body = False
+                self.body_closed = True
+                self.html_closed = tag == "html"
 
     def handle_startendtag(self, tag, attrs):
         self.handle_starttag(tag, attrs)
@@ -137,6 +150,8 @@ class Signature(HTMLParser):
             self.close_optional_content()
 
     def handle_data(self, data):
+        if self.body_closed and normalized_text(data):
+            raise AssertionError("CMS parity mismatch: Unexpected text after document body")
         if self.body or self.title:
             self.pending.append(data)
 
