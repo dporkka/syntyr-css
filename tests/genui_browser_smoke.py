@@ -45,6 +45,41 @@ try {
   checks.narrow=host.scrollWidth<=host.clientWidth;
   host.style.width='900px';
   checks.wide=host.scrollWidth<=host.clientWidth;
+
+  const changed=JSON.parse(fixture);
+  changed.root.children[1].props.text='Updated report';
+  changed.root.children[3].children[2].props.rows[0][1]='Complete';
+  region.focus();
+  const updated=reconcileJson(host,JSON.stringify(changed));
+  checks.sameRoot=updated===root;
+  checks.preservedFocus=document.activeElement===region&&updated.querySelector('[role=region]')===region;
+  checks.preservedDisclosure=updated.querySelector('details')===details&&details.open;
+  checks.updated=updated.textContent.includes('Updated report')&&region.querySelector('td:nth-child(2)').textContent==='Complete';
+  const tree=(order)=>JSON.stringify({version:1,root:{type:'Stack',children:order.map(label=>({type:'Details',props:{summary:label},children:[{type:'Text',props:{text:label}}]}))}});
+  const keysA=new Map([['root/0','a'],['root/1','b']]);
+  const keysB=new Map([['root/0','b'],['root/1','a']]);
+  const a=reconcileJson(host,tree(['Alpha','Beta']),{keys:keysA}).querySelector('details');
+  a.open=true; a.querySelector('summary').focus();
+  const reordered=reconcileJson(host,tree(['Beta','Alpha']),{keys:keysB});
+  checks.keyedMove=reordered.querySelectorAll('details')[1]===a&&a.open&&document.activeElement===a.querySelector('summary');
+  const before=host.firstChild;
+  try { reconcileJson(host,tree(['Beta','Alpha']),{keys:new Map([['root/0','a'],['root/1','a']])}); checks.badKeys=false; }
+  catch(e) { checks.badKeys=e instanceof GenUIError&&host.firstChild===before; }
+  try { reconcileJson(host,tree(['Beta','Alpha']),{keys:new Map([['root/9','unused']])}); checks.unknownKey=false; }
+  catch(e) { checks.unknownKey=e instanceof GenUIError&&host.firstChild===before; }
+  const replaced=reconcileJson(host,tree(['Beta','New']),{keys:new Map([['root/0','b'],['root/1','new']])});
+  checks.noStateLeak=replaced.querySelectorAll('details')[1]!==a&&!replaced.querySelectorAll('details')[1].open;
+
+  const columns=Array.from({length:20},(_,i)=>'Column '+i);
+  const tableSnapshot=(value)=>JSON.stringify({version:1,root:{type:'Table',props:{caption:'Wide report',columns,rows:[columns.map(()=>value)]}}});
+  host.style.width='220px';
+  const wide=reconcileJson(host,tableSnapshot('Before')).querySelector('[role=region]');
+  wide.scrollLeft=50;
+  const offset=wide.scrollLeft;
+  const wideUpdated=reconcileJson(host,tableSnapshot('After')).querySelector('[role=region]');
+  checks.preservedScroll=offset>0&&wideUpdated===wide&&wideUpdated.scrollLeft===offset;
+  try { reconcileJson(host,'{"version":1,"root":{"type":"Script"}}'); checks.reconcileRollback=false; }
+  catch(e) { checks.reconcileRollback=e instanceof GenUIError&&host.querySelector('[role=region]')===wide&&wide.scrollLeft===offset; }
   const payload='<img src=x onerror=alert(1)>';
   const malicious=JSON.stringify({version:1,root:{type:'Text',props:{text:payload}}});
   const safe=mountJson(host,malicious);
@@ -68,7 +103,7 @@ result.textContent=JSON.stringify(checks);
             raise RuntimeError("Browser produced no test result")
         checks = json.loads(match[1])
         print(json.dumps(checks, indent=2))
-        if len(checks) != 10 or not all(value is True for value in checks.values()):
+        if len(checks) != 20 or not all(value is True for value in checks.values()):
             raise SystemExit(1)
 
 

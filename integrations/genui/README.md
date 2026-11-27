@@ -268,3 +268,35 @@ The second uses an existing sandbox-capable Chromium installation to verify
 DOM parity, semantics, focus, native disclosure, narrow/wide container
 reflow, injection resistance and failed-mount rollback. It is not a
 cross-browser or WCAG conformance certification.
+
+### Opt-in incremental DOM reconciliation
+
+Use `reconcileJson(container, source, {keys})` for subsequent snapshots in a
+dedicated renderer-owned container. It validates and constructs the proposed
+tree before touching the live DOM, then reuses compatible nodes. Existing
+focus, open disclosures, and table scroll offsets are preserved when their
+nodes survive. A failed validation leaves the rendered interface untouched.
+
+```js
+import { reconcileJson } from './integrations/genui/browser.mjs';
+
+const keys = new Map([
+  ['root/0', 'report-heading'],
+  ['root/1', 'report-details'],
+]);
+reconcileJson(document.getElementById('report'), snapshot, {keys});
+```
+
+Keys are a separate host-supplied map from component paths (root, root/0,
+root/1, and so on) to stable unique strings, not a change to the GenUI JSON
+schema. Keys are held in private WeakMaps and do not become HTML attributes.
+Supply the updated path map when reordering. Keyed siblings may move within
+their existing parent; cross-parent moves or incompatible component types
+create new nodes. Unkeyed nodes match by position and type, so the host must
+key components whose logical identity can change with ordering. Unknown
+paths and duplicate keys are rejected before any DOM mutation. Hosts must
+not independently mutate renderer-owned descendants.
+
+Reconciliation does not implement raw A2UI stream consumption, action
+dispatch, form state, cross-parent identity or arbitrary host markup.
+`mountJson` remains the explicit full-replacement API.

@@ -93,24 +93,41 @@ export function validateJson(source) {
   return spec;
 }
 
-/** Construct a detached native subtree; never parse model content as HTML. */
-export function renderJson(source, doc = globalThis.document) {
+// Private identity metadata: keys never become DOM attributes.
+const identities = new WeakMap();
+const mounted = new WeakMap();
+
+function buildJson(source, doc, keys = new Map()) {
   const spec = validateJson(source);
+  require(keys instanceof Map && keys.size <= MAX_NODES, 'Invalid key map');
+  const used = new Set(), visited = new Set();
+  for (const [path, key] of keys) {
+    require(typeof path === 'string' && path.length <= 128, 'Invalid key path');
+    text(key,true);
+    require(key.length <= 128 && !used.has(key), 'Duplicate or oversized key');
+    used.add(key);
+  }
   const el = (tag, cls, content) => {
     const e = doc.createElement(tag);
     if (cls) e.className = cls;
     if (content !== undefined) e.textContent = content;
     return e;
   };
-  function render(n) {
+  function render(n, path) {
+    const element = renderElement(n,path);
+    visited.add(path);
+    identities.set(element,{type:n.type,key:keys.get(path)});
+    return element;
+  }
+  function renderElement(n, path) {
     const p = n.props ?? {};
     let e;
     switch (n.type) {
       case 'Panel': case 'Stack': case 'Grid':
         e = el('div', 'syn-' + n.type.toLowerCase());
-        e.append(...n.children.map(render)); return e;
+        e.append(...n.children.map((child,i)=>render(child,path+'/'+i))); return e;
       case 'Details':
-        e = el('details'); e.append(el('summary',null,p.summary),...n.children.map(render)); return e;
+        e = el('details'); e.append(el('summary',null,p.summary),...n.children.map((child,i)=>render(child,path+'/'+i))); return e;
       case 'Heading': return el('h'+p.level,'syn-heading',p.text);
       case 'Text': return el('p',null,p.text);
       case 'Badge': return el('span','syn-badge',p.text);
@@ -140,12 +157,100 @@ export function renderJson(source, doc = globalThis.document) {
       case 'Divider': return el('hr');
     }
   }
-  const root=el('div','syn-root'); root.append(render(spec.root)); return root;
+  const root=el('div','syn-root');
+  root.append(render(spec.root,'root'));
+  require([...keys.keys()].every(path=>visited.has(path)), 'Unknown key path');
+  return root;
+}
+
+/** Construct a detached native subtree; never parse model content as HTML. */
+export function renderJson(source, doc = globalThis.document) {
+  return buildJson(source,doc);
 }
 
 /** Replace only the host-owned container after successful validation/render. */
 export function mountJson(container, source) {
   const root = renderJson(source,container.ownerDocument);
   container.replaceChildren(root);
+  mounted.set(container,root);
   return root;
+}
+
+
+// Match only compatible generated nodes. Unkeyed nodes have positional identity;
+// keyed components may move among siblings but cannot move across parents.
+function compatible(oldNode,newNode) {
+  if (!oldNode || oldNode.nodeType !== newNode.nodeType ||
+      oldNode.nodeName !== newNode.nodeName) return false;
+  const old = identities.get(oldNode), next = identities.get(newNode);
+  return old?.type === next?.type && old?.key === next?.key;
+}
+
+function patchNode(oldNode,newNode) {
+  if (oldNode.nodeType === 3) {
+    if (oldNode.data !== newNode.data) oldNode.data = newNode.data;
+    return;
+  }
+  const preserveOpen = oldNode.localName === 'details';
+  for (const attr of [...oldNode.attributes]) {
+    if (!(preserveOpen && attr.name === 'open') && !newNode.hasAttribute(attr.name))
+      oldNode.removeAttribute(attr.name);
+  }
+  for (const attr of newNode.attributes) {
+    if (oldNode.getAttribute(attr.name) !== attr.value)
+      oldNode.setAttribute(attr.name,attr.value);
+  }
+  const oldChildren = [...oldNode.childNodes], nextChildren = [...newNode.childNodes];
+  const keyed = new Map();
+  for (const child of oldChildren) {
+    const key = identities.get(child)?.key;
+    if (key !== undefined) keyed.set(key,child);
+  }
+  const retained = new Set();
+  const ordered = nextChildren.map((child,index)=>{
+    const key = identities.get(child)?.key;
+    const candidate = key === undefined ? oldChildren[index] : keyed.get(key);
+    if (!retained.has(candidate) && compatible(candidate,child)) {
+      retained.add(candidate);
+      patchNode(candidate,child);
+      return candidate;
+    }
+    return child;
+  });
+  // Remove discarded nodes first, then reorder retained nodes with minimal moves.
+  for (const child of oldChildren) if (!retained.has(child)) child.remove();
+  for (const [index,child] of ordered.entries()) {
+    if (oldNode.childNodes[index] !== child)
+      oldNode.insertBefore(child,oldNode.childNodes[index] ?? null);
+  }
+}
+
+/**
+ * Reconcile a validated snapshot into a dedicated renderer-owned container.
+ * Host-provided keys map component paths (root, root/0, ...) to stable IDs.
+ * Unkeyed children are matched by position; key interactive components if
+ * their order can change. Never reuse unknown host DOM as a starting tree.
+ */
+export function reconcileJson(container,source,{keys=new Map()}={}) {
+  const next = buildJson(source,container.ownerDocument,keys);
+  const previous = mounted.get(container);
+  if (!previous || container.childNodes.length !== 1 || container.firstChild !== previous) {
+    container.replaceChildren(next);
+    mounted.set(container,next);
+    return next;
+  }
+  const active = container.ownerDocument.activeElement;
+  const focused = previous.contains(active) ? active : null;
+  const scroll = [...previous.querySelectorAll('.syn-table-wrap')]
+    .map(node=>[node,node.scrollLeft,node.scrollTop]);
+  patchNode(previous,next);
+  if (focused && previous.contains(focused) &&
+      container.ownerDocument.activeElement !== focused) {
+    focused.focus({preventScroll:true});
+  }
+  for (const [node,x,y] of scroll) if (previous.contains(node)) {
+    if (node.scrollLeft !== x) node.scrollLeft = x;
+    if (node.scrollTop !== y) node.scrollTop = y;
+  }
+  return previous;
 }
