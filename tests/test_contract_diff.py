@@ -124,6 +124,52 @@ class ContractDiffTests(unittest.TestCase):
                 self.assertEqual(result.returncode, 2, result.stdout)
                 self.assertIn("duplicate", result.stderr.lower())
 
+    def test_cli_accepts_either_manifest_from_stdin(self):
+        with tempfile.TemporaryDirectory() as folder:
+            manifest = Path(folder) / "contract.json"
+            old, new = contract(), contract()
+            new["classes"] = []
+            for before, after, piped, on_disk in (
+                ("-", str(manifest), old, new),
+                (str(manifest), "-", new, old),
+            ):
+                with self.subTest(before=before):
+                    manifest.write_text(json.dumps(on_disk), encoding="utf-8")
+                    result = subprocess.run(
+                        [sys.executable, str(ROOT / "scripts" / "contract_diff.py"),
+                         before, after, "--json", "--fail-on-breaking"],
+                        input=json.dumps(piped), text=True, capture_output=True,
+                    )
+                    self.assertEqual(result.returncode, 1, result.stderr)
+                    self.assertTrue(json.loads(result.stdout)["breaking"])
+                    self.assertEqual(result.stderr, "")
+
+    def test_cli_rejects_two_stdin_operands_and_malformed_pipe(self):
+        with tempfile.TemporaryDirectory() as folder:
+            manifest = Path(folder) / "contract.json"
+            manifest.write_text(json.dumps(contract()), encoding="utf-8")
+            for operands, payload in (
+                (["-", "-"], json.dumps(contract())),
+                (["-", str(manifest)], "{invalid"),
+            ):
+                with self.subTest(operands=operands):
+                    result = subprocess.run(
+                        [sys.executable, str(ROOT / "scripts" / "contract_diff.py"),
+                         *operands, "--json"],
+                        input=payload, text=True, capture_output=True,
+                    )
+                    self.assertEqual(result.returncode, 2)
+                    self.assertEqual(result.stdout, "")
+                    self.assertTrue(result.stderr)
+
+    def test_rejects_undeclared_stylesheet_providers(self):
+        for field in ("classes", "tokens"):
+            with self.subTest(field=field):
+                bad = contract()
+                bad[field][0]["stylesheets"].append("not-declared.css")
+                with self.assertRaisesRegex(ValueError, "not-declared.css"):
+                    compare_contracts(contract(), bad)
+
     def test_live_manifest_is_well_formed_and_comparable(self):
         live = json.loads((ROOT / "metadata" / "syntyr-contract.json").read_text())
         diff = compare_contracts(live, live)
