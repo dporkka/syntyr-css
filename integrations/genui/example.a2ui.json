@@ -1,0 +1,14 @@
+{
+  "version": "1.0",
+  "createSurface": {
+    "surfaceId": "report",
+    "catalogId": "https://a2ui.org/specification/v1_0/catalogs/basic/catalog.json",
+    "components": [
+      {"id": "root", "component": "Card", "child": "content"},
+      {"id": "content", "component": "Column", "children": ["summary", "line", "next"]},
+      {"id": "summary", "component": "Text", "text": "24 active campaigns; 5 require attention."},
+      {"id": "line", "component": "Divider"},
+      {"id": "next", "component": "Text", "text": "Review outstanding installation confirmations."}
+    ]
+  }
+}

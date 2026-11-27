@@ -60,3 +60,28 @@ attribute, or URL. The host should apply its usual CSP.
 Keep A2UI interoperability, event streaming, action dispatch, bindings and
 browser adapters separate and experimental until conformance and authorization
 tests exist. Do not add any dependency from CSS to this adapter.
+
+## Experimental A2UI 1.0 snapshot adapter
+
+Based on the [A2UI 1.0 wire schema](https://github.com/a2ui-project/a2ui/blob/main/specification/v1_0/json/agent_to_renderer.json)
+and [basic catalog](https://github.com/a2ui-project/a2ui/blob/main/catalogs/basic/v1/catalog.json).
+Accepts one complete createSurface message with inline components, the exact
+basic catalog identifier, a root ID of "root", and fixed child references.
+The supported subset is Card, Column, body Text (plain text only, Markdown
+is not interpreted), and horizontal Divider. No catalog is fetched.
+Every component must be reachable once; cycles, shared child references,
+orphans and duplicates are rejected. No state is retained between calls.
+Unsupported properties, bindings, function calls, actions, metadata, data
+models, catalog mixing, other message types and other protocol versions
+are rejected rather than partially rendered.
+
+```python
+from pathlib import Path
+from integrations.genui.a2ui import render_a2ui
+
+html = render_a2ui(Path("integrations/genui/example.a2ui.json").read_text())
+```
+
+This is an interoperability experiment, **not** a complete A2UI renderer,
+catalog conformance claim, streaming transport or agent client. The resulting
+HTML is validated by the same bounded Syntyr renderer.
