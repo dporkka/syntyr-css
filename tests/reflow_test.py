@@ -25,7 +25,7 @@ PAGES = (
          "examples/app-integrations.html", "examples/app-security.html",
     "examples/business.html", "examples/terminal.html",
          "examples/geometry-terminal.html",
-         "examples/operations-console.html", "examples/themes.html",
+         "examples/operations-console.html", "examples/developer-workspace.html", "examples/themes.html",
     "examples/vertigo-admin.html", "examples/vertigo-resource-workflow.html", "examples/saas-workflows.html", "examples/crm.html", "examples/minimalist-patterns.html",
     "examples/design-states.html", "examples/symbols.html", "examples/native-elements.html",
     "examples/native-apis.html", "examples/flagship-studio.html", "examples/flagship-noir.html", "examples/flagship-grid.html",
