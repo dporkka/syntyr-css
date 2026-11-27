@@ -14,9 +14,16 @@ import argparse
 from collections import Counter
 from io import BytesIO
 import json
+import os
 from pathlib import Path
 import re
 import subprocess
+import shutil
+
+if __package__:
+    from .catalog_audit_context import catalog_context_from_report, select_catalog_context
+else:
+    from catalog_audit_context import catalog_context_from_report, select_catalog_context
 
 ROOT = Path(__file__).resolve().parents[1]
 COLOR = re.compile(r'^rgba?\(\s*(\d{1,3})[ ,]+(\d{1,3})[ ,]+(\d{1,3})(?:[ ,/]+([\d.]+))?\s*\)$')
@@ -54,9 +61,22 @@ def status_counts(items):
     return dict(sorted(Counter(item['status'] for item in items).items()))
 
 
-# Capture text-fragment foreground and geometry before hiding text. For sampling,
-# hide only the *glyph fill* (not the computed `color` used by currentColor
-# backgrounds/decoration), so gradients and pseudo-element paint remain visible.
+# Scroll each target into view before sampling a bounded viewport. Capturing a
+# single enormous gallery bitmap can crash the browser or sample the wrong
+# locations. Do not expand hidden details or force content visibility.
+SCROLL_JS = r'''async selector => {
+  let el;
+  try { el = document.querySelector(selector); } catch (_) { return; }
+  if (!el || !el.getClientRects().length) return;
+  el.scrollIntoView({block: 'center', inline: 'nearest', behavior: 'instant'});
+  await Promise.race([
+    new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))),
+    new Promise(resolve => setTimeout(resolve, 150)),
+  ]);
+}'''
+
+# Hide foreground paint, not the computed color used by currentColor
+# backgrounds. Restore original inline attributes before the next target.
 MEASURE_JS = r'''(items) => {
   const output = [];
   const hide = new Set();
@@ -69,7 +89,7 @@ MEASURE_JS = r'''(items) => {
         /Element content contains only non-text characters/i.test(item.failure_summary || '')) {
       output.push({...item, error: 'non_text', fragments: []}); continue;
     }
-    hide.add(el);
+    let obscured = false;
     const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
     const fragments = [];
     let node;
@@ -83,8 +103,8 @@ MEASURE_JS = r'''(items) => {
       const rects = [];
       for (const rect of range.getClientRects()) {
         if (rect.width <= 1 || rect.height <= 1) continue;
-        let left = Math.max(0, rect.left), top = rect.top;
-        let right = Math.min(window.innerWidth, rect.right), bottom = rect.bottom;
+        let left = Math.max(0, rect.left), top = Math.max(0, rect.top);
+        let right = Math.min(window.innerWidth, rect.right), bottom = Math.min(window.innerHeight, rect.bottom);
         for (let a = parent; a && a !== document.body; a = a.parentElement) {
           const s = getComputedStyle(a), b = a.getBoundingClientRect();
           if (/auto|hidden|scroll|clip/.test(s.overflowX)) {
@@ -95,7 +115,18 @@ MEASURE_JS = r'''(items) => {
           }
         }
         if (right - left < 3 || bottom - top < 3) continue;
-        rects.push({left, right, top: top + scrollY, bottom: bottom + scrollY});
+        // An unrelated element over the measured glyphs is not background.
+        // Keep the target unresolved rather than treating occlusion as contrast.
+        for (const fx of [0.12, 0.30, 0.5, 0.7, 0.88]) {
+          for (const fy of [0.20, 0.5, 0.80]) {
+            const x = Math.min(window.innerWidth - 1, Math.round(left + (right-left)*fx));
+            const y = Math.min(window.innerHeight - 1, Math.round(top + (bottom-top)*fy));
+            const hit = document.elementFromPoint(x, y);
+            if (hit && hit !== parent && !parent.contains(hit) && !hit.contains(parent))
+              obscured = true;
+          }
+        }
+        rects.push({left, right, top, bottom});
         if (rects.length >= 4) break;
       }
       if (!rects.length) continue;
@@ -126,17 +157,32 @@ MEASURE_JS = r'''(items) => {
         };
       }
     }
-    output.push({...item, fragments, placeholder,
-      error: fragments.length ? null : 'no_visible_text_rect'});
+    let error = obscured ? 'partially_obscured' : fragments.length ? null : 'no_visible_text_rect';
+    if (!error) hide.add(el);
+    output.push({...item, fragments, placeholder, error});
   }
+  const restore = new Map();
+  window.__syntyrContrastRestore = restore;
   for (const el of hide) {
     for (const node of [el, ...el.querySelectorAll('*')]) {
+      if (!node.style || restore.has(node)) continue;
+      restore.set(node, node.getAttribute('style'));
       node.style.setProperty('-webkit-text-fill-color', 'transparent', 'important');
       node.style.setProperty('text-shadow', 'none', 'important');
+      node.style.setProperty('text-decoration-color', 'transparent', 'important');
     }
   }
   return output;
 }'''
+
+RESTORE_JS = r'''() => {
+  for (const [el, previous] of window.__syntyrContrastRestore || []) {
+    if (previous === null) el.removeAttribute('style');
+    else el.setAttribute('style', previous);
+  }
+  delete window.__syntyrContrastRestore;
+}'''
+
 
 
 def sample_rect_pixels(img, rect):
@@ -231,6 +277,47 @@ def score_item(item, img):
     return result
 
 
+
+
+def prepare_blocks_preview_context(page) -> str:
+    """Reproduce desktop's expanded preview state using the real mobile UI."""
+    toggle = page.locator('#blocks-preview-toggle')
+    if toggle.is_visible() and toggle.get_attribute('aria-pressed') != 'true':
+        toggle.click()
+        mode = 'expanded_via_show_all_previews'
+    else:
+        mode = 'already_expanded'
+    page.wait_for_function(
+        """() => {
+          const previews = [...document.querySelectorAll('.blocks-preview-disclosure')];
+          return previews.length > 0 && previews.every(preview => preview.open);
+        }""",
+        timeout=10000,
+    )
+    return mode
+
+
+def capture_target(page, item, width, image_module):
+    """Capture a single visible target; bound failures to that target."""
+    try:
+        page.evaluate(SCROLL_JS, item['selector'][0] if item['selector'] else '')
+        measured = page.evaluate(MEASURE_JS, [item])[0]
+        measured['viewport_width'] = width
+        if measured.get('error'):
+            return score_item(measured, None)
+        png = page.screenshot(animations='disabled', timeout=10000)
+        with image_module.open(BytesIO(png)) as image:
+            return score_item(measured, image.convert('RGB'))
+    except Exception as exc:
+        return {'page': item['page'], 'viewport_width': width,
+                'selector': item['selector'], 'failure_summary': item['failure_summary'],
+                'status': 'unsampled', 'reason': f'capture_failed: {exc}'}
+    finally:
+        # If restoration fails, abandon the viewport; do not reuse a page
+        # whose paint may still be modified. The caller marks it unresolved.
+        page.evaluate(RESTORE_JS)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--axe-report', type=Path, required=True)
@@ -241,16 +328,25 @@ def main():
     from PIL import Image
     from playwright.sync_api import sync_playwright
     report = json.loads(args.axe_report.read_text(encoding='utf-8'))
+    rows = [row for row in report['pages'] if not args.pages or row['page'] in args.pages]
+    try:
+        contexts = {row['page']: catalog_context_from_report(row) for row in rows}
+    except ValueError as error:
+        parser.error(str(error))
     head = subprocess.run(['git', 'rev-parse', 'HEAD'], cwd=ROOT, capture_output=True, text=True, check=True).stdout.strip()
     clean = not subprocess.run(['git', 'status', '--porcelain'], cwd=ROOT,
                                capture_output=True, text=True, check=True).stdout.strip()
     observations = []
+    blocks_preview_contexts = {}
+    executable = (os.environ.get('PLAYWRIGHT_CHROMIUM_EXECUTABLE')
+                  or shutil.which('chromium') or shutil.which('chromium-browser'))
+    options = {'headless': True}
+    if executable:
+        options.update(executable_path=executable, args=['--no-sandbox'])
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)
+        browser = p.chromium.launch(**options)
         try:
-            for row in report['pages']:
-                if args.pages and row['page'] not in args.pages:
-                    continue
+            for row in rows:
                 items = [dict(item, page=row['page']) for item in row['incomplete']
                          if item['rule'] == 'color-contrast']
                 if not items:
@@ -259,14 +355,14 @@ def main():
                     page = browser.new_page(viewport={'width': width, 'height': 900}, device_scale_factor=1)
                     try:
                         page.goto((ROOT / row['page']).as_uri(), wait_until='load')
-                        measured = page.evaluate(MEASURE_JS, items)
-                        for item in measured:
-                            item['viewport_width'] = width
-                        png = page.screenshot(full_page=True, animations='disabled')
-                        image = Image.open(BytesIO(png)).convert('RGB')
-                        observations.extend(score_item(item, image) for item in measured)
-                        counts = status_counts(observations[-len(measured):])
-                        print(row['page'], width, counts, flush=True)
+                        context = contexts[row['page']]
+                        if context:
+                            select_catalog_context(page, context['mode'])
+                        if row['page'] == 'docs/blocks.html':
+                            blocks_preview_contexts[str(width)] = prepare_blocks_preview_context(page)
+                        measured = [capture_target(page, item, width, Image) for item in items]
+                        observations.extend(measured)
+                        print(row['page'], width, status_counts(measured), flush=True)
                     except Exception as exc:
                         print('ERROR', row['page'], width, str(exc)[:150], flush=True)
                         observations.extend({'page': row['page'], 'viewport_width': width,
@@ -277,15 +373,18 @@ def main():
         finally:
             browser.close()
     review = {
-        'method': 'Chromium pixel sampling plus computed opaque visible-placeholder colors; not WCAG certification',
+        'method': 'Chromium scrolled viewport pixel sampling plus computed opaque visible-placeholder colors; not WCAG certification',
         'source_commit': head,
         'source_worktree_clean': clean,
         'source_axe_report': str(args.axe_report),
+        'catalog_contexts': {path: context for path, context in contexts.items() if context},
+        'blocks_preview_contexts': blocks_preview_contexts,
         'viewport_widths': args.widths,
         'limitations': ['Computed placeholder pairs do not certify painted glyphs, overlays or ancestor effects',
                         'Sampling does not certify glyph-level contrast or compositing accuracy',
                         'Pseudo-elements, occlusion, partial visibility and text shadows may affect samples',
-                        'Interactive states, native OS contrast, real browser zoom, screen readers not tested',
+                        'Blocks mobile preview disclosure is expanded via the documented Show all previews control',
+                        'Other interactive states, native OS contrast, real browser zoom, screen readers not tested',
                         'Manual adjudication of all axe incomplete nodes remains required'],
         'summary': status_counts(observations),
         'observations': observations,

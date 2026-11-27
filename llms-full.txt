@@ -6314,12 +6314,36 @@ or failing; record measured contrast, viewport, state, and reviewer decision
 before approving a release. The enlarged-label tests change root font size,
 not genuine browser zoom; human zoom and screen-reader gates remain open.
 
+
+The component catalog initializes its published alpha.4 selector when
+JavaScript runs. A source-candidate audit must explicitly select
+`source-alpha5` (the audit script's default), wait for the actual stylesheet
+and release-specific filter, and record that context in the JSON report.
+To separately audit the immutable published catalog, use:
+
+```sh
+python3 tests/axe_audit.py --axe-file /tmp/axe.min.js \
+  --catalog-mode published-alpha4 --pages docs/catalog.html \
+  --report /tmp/syntyr-catalog-published-alpha4.json
+```
+
+Do not combine the two catalog totals as if they measured the same CSS.
+The pixel sampler restores the report's recorded release context and
+refuses older catalog reports that lack it; rerun the audit rather than
+guessing. The candidate release audit does not modify frozen stylesheets.
+
 ## Contrast pixel triage (developer-only; NOT a conformance result)
 
 An optional Chromium screenshot sampler helps prioritize axe-core findings that
 cannot automatically evaluate gradients and pseudo-elements. It samples the
-painted background under temporarily transparent glyphs, groups results by
-page/viewport/selector, and retains non-text and unsampled targets explicitly.
+painted background in a bounded, scrolled viewport under temporarily hidden
+glyphs and foreground text decoration, restores original inline styles after
+each capture, groups results by
+page/viewport/selector, and retains non-text, obscured, hidden and unsampled
+targets explicitly. This avoids relying on enormous full-page bitmaps; it
+does not force hidden content open or treat an occluding element as background.
+For the Blocks gallery, it opens mobile previews using the actual **Show all
+previews** control to reproduce desktop review coverage and records that state.
 The helper is deliberately **not a release gate**: selected pixels do not prove
 the contrast of every glyph, hover/focus state, overlay or customized theme.
 Run it with pinned tooling in a disposable developer environment:
