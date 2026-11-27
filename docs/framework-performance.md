@@ -1,13 +1,14 @@
 # Reproducible framework performance comparison (experimental)
 
 This optional developer-only benchmark compares Syntyr, handwritten plain CSS,
-Pure.css, Tailwind CSS v4, UnoCSS, and daisyUI 5 (built as a Tailwind v4 plugin). Syntyr consumers need none of these
-npm/Python development tools.
+Pure.css, Tailwind CSS v4, UnoCSS, daisyUI 5 (built as a Tailwind v4 plugin),
+Blades 3 and Bulma 1. Syntyr consumers need none of these npm/Python development tools.
 
 **Not a fastest-framework ranking.** The variants preserve document structure,
 text and application data, but use idiomatic CSS frameworks and are not
-pixel-identical. Pure requires small layout styles because it does not supply a
-complete dashboard system. Therefore style, layout and LCP comparisons are
+pixel-identical. Pure, classless Blades, and component-oriented Bulma use
+explicit benchmark-only layout adapters because their default compositions
+do not provide the exact target dashboard layout. Therefore style, layout and LCP comparisons are
 confounded by visual differences. Inspect warnings and screenshots before
 drawing conclusions; further visual parity is necessary for speed claims.
 
@@ -40,19 +41,45 @@ python3 -m venv /tmp/syntyr-benchmark-venv
   --viewports mobile,desktop --fixtures marketing,dashboard \
   --screenshots /tmp/syntyr-framework-shots \
   --output /tmp/syntyr-framework-report.json
+
+# Focused no-JavaScript CSS comparison (identical DOM, NOT identical pixels):
+/tmp/syntyr-benchmark-venv/bin/python scripts/perf_framework_compare.py \
+  --frameworks syntyr,blades,bulma --runs 10 --browsers chromium \
+  --screenshots /tmp/syntyr-blades-bulma-shots \
+  --output /tmp/syntyr-blades-bulma-report.json
 ~~~
 
 For a quick smoke test, use --runs 2 --browsers chromium. A blocked browser
 launch is a failure to validate that lane, not evidence of compatibility.
 
-The benchmark-only `daisyui@5.8.0` dependency is pinned in the nested lockfile.
+The benchmark-only `daisyui@5.8.0`, `@anyblades/blades@3.1.3`, and
+`bulma@1.0.4` dependencies are pinned in the nested lockfile.
 It is **not** installed by Syntyr core or included in browser-facing Syntyr
 CSS. The compiler uses the actual daisyUI Tailwind 4 plugin with a single
-light theme and the same HTML tags and content as all five other fixtures.
+light theme and the same HTML tags and content as all seven other fixtures.
 
 Generated CSS/HTML, node_modules and browser artifacts are not committed to
-Syntyr or included in its release. Pure, Tailwind, Uno and daisyUI are independent
-third-party frameworks; their source licenses remain with their authors.
+Syntyr or included in its release. Pure, Tailwind, Uno, daisyUI, Blades and
+Bulma are independent third-party frameworks; their source licenses remain
+with their authors. These third-party packages are development-only.
+
+### Blades and Bulma controls
+
+- Blades uses its actual classless CSS stylesheet. Native article, form, table
+  and button rules come from Blades; a clearly labeled local adapter supplies
+  dashboard grid/shell, status badge and link-as-button styling Blades does not
+  natively offer. This is not a no-custom-CSS assertion.
+- Bulma uses its actual compiled package CSS, with Bulma's box, input, tag,
+  table, title and button component classes. A labeled adapter supplies missing
+  grid, shell and form alignment compositions for the fixed semantic DOM.
+- Vendor CSS is copied from *installed, pinned npm packages*, not mocked or
+  fetched from a runtime CDN. Missing vendor files fail fixture generation.
+- Since the comparator includes full vendor distributions and custom layout
+  helpers, it measures these chosen installation configurations, **not** an
+  optimized production bundle or an intrinsically fair framework size ranking.
+- Semantic tree equality is validated programmatically. Screenshots, component
+  bounding boxes, contrast, keyboard behavior, appearance, and responsive
+  wrapping must still be manually evaluated before publishing comparisons.
 
 ## Measurements and methodological limits
 
@@ -110,6 +137,7 @@ See [performance validation](performance-validation.md),
 
 ~~~sh
 python3 -m unittest discover -s tests -p 'test_framework_performance.py' -v
+python3 -m unittest discover -s tests -p 'test_blades_bulma_framework_comparison.py' -v
 python3 scripts/build.py --check
 ~~~
 

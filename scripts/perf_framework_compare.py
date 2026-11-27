@@ -1,4 +1,4 @@
-"""Cross-framework browser benchmark for Syntyr, plain CSS, Pure, Tailwind, Uno, daisyUI.
+"""Cross-framework browser benchmark for Syntyr, plain CSS, Pure, Tailwind, Uno, daisyUI, Blades, Bulma.
 
 This benchmark compares idiomatic styling implementations of the same semantic
 DOM and text. It does NOT prove visual pixel parity or field Core Web Vitals.
@@ -18,19 +18,21 @@ import argparse
 from contextlib import contextmanager
 from functools import partial
 import gzip
+import hashlib
 from html.parser import HTMLParser
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 import json
 from pathlib import Path
 import platform
 import statistics
+import subprocess
 import sys
 import threading
 import time
 
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "benchmarks/frameworks/generated"
-FRAMEWORKS = ("syntyr", "plain", "pure", "tailwind", "uno", "daisyui")
+FRAMEWORKS = ("syntyr", "plain", "pure", "tailwind", "uno", "daisyui", "blades", "bulma")
 FIXTURES = ("dashboard", "marketing")
 BROWSERS = ("chromium", "firefox", "webkit")
 VIEWPORTS = {"mobile": {"width": 390, "height": 844},
@@ -69,6 +71,31 @@ def validate_selection(frameworks: list[str], browsers: list[str],
             raise ValueError(f"Invalid or duplicate {name}: {selected}")
     if runs <= 0:
         raise ValueError("runs must be positive")
+
+
+def benchmark_provenance(root: Path = ROOT) -> dict:
+    """Record immutable inputs, including when checkout metadata is unavailable."""
+    lock = root / "benchmarks/frameworks/package-lock.json"
+    manifest = root / "benchmarks/frameworks/package.json"
+    versions = json.loads(manifest.read_text(encoding="utf8"))["devDependencies"]
+    def git(*args: str) -> str | None:
+        try:
+            result = subprocess.run(["git", "-C", str(root), *args],
+                                    check=True, capture_output=True, text=True,
+                                    timeout=5)
+        except (OSError, subprocess.CalledProcessError, subprocess.TimeoutExpired):
+            return None
+        return result.stdout.strip()
+    status = git("status", "--porcelain")
+    return {
+        "git_revision": git("rev-parse", "HEAD"),
+        "working_tree_dirty": None if status is None else bool(status),
+        "benchmark_lock_sha256": hashlib.sha256(lock.read_bytes()).hexdigest(),
+        "vendor_versions": {
+            "blades": versions["@anyblades/blades"],
+            "bulma": versions["bulma"],
+        },
+    }
 
 
 def markup_stats(path: Path) -> dict:
@@ -299,6 +326,7 @@ def benchmark(output: Path, frameworks: list[str], browsers: list[str],
                         "runs_per_variant": runs,
                         "fixtures": fixtures,
                         "frameworks": frameworks,
+                        "provenance": benchmark_provenance(ROOT),
                         "cold": "fresh browser context",
                         "warm": "second navigation in the same context"},
             "stylesheets": {name: css_sizes(output / f"{name}.css")
