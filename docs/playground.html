@@ -71,6 +71,15 @@
               <p class="syn-caption"><a href="components.html">Component API</a> · <a href="component-recipes.html">HTML recipes</a> · <a id="playground-source-link" href="catalog.html">View original component</a> · <a href="blocks.html">Free UI blocks</a> · <a href="how-to.html">How-To guides</a></p>
             </aside>
           </div>
+          <details class="playground-reference" id="playground-inspector">
+            <summary class="syn-heading">Component inspector</summary>
+            <p class="syn-caption">Canonical example CSS source files (not a complete dependency graph):</p>
+            <p><code id="playground-inspector-sources">Choose a catalog example.</code></p>
+            <label class="syn-label" for="playground-inspector-target">Rendered element (first 200 Syntyr-class elements)</label>
+            <select class="syn-select" id="playground-inspector-target" disabled><option>No rendered elements</option></select>
+            <p class="syn-caption">Computed styles and resolved theme context for the selected element. This is not a list of all tokens it consumes or an accessibility audit.</p>
+            <pre class="playground-inspector-values" id="playground-inspector-values">Open the live preview to inspect.</pre>
+          </details>
           <label class="syn-label" for="playground-markup" id="playground-markup-label">EDITABLE HTML</label>
           <textarea class="syn-textarea playground-code" id="playground-markup" spellcheck="false" rows="17" aria-describedby="playground-help"></textarea>
           <div id="playground-editor-mount" class="playground-codemirror" hidden></div>
