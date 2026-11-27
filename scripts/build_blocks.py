@@ -140,6 +140,38 @@ def preview_markup(source: str) -> str:
     return preview
 
 
+def grouped_gallery(cards: list[str], batch_size: int, *, kind: str) -> str:
+    """Static batches: every HTML example is pre-rendered and directly linkable.
+
+    HTML details/summary is the only reveal mechanism required for no-JS users.
+    JS search can open these same groups, but does not own their contents.
+    """
+    assert kind in {"blocks", "icons"}
+    total = len(cards)
+    group_class = "blocks-batch" if kind == "blocks" else "blocks-icons-batch"
+    attr = "data-block-batch" if kind == "blocks" else "data-icon-batch"
+    grid_class = "blocks-grid" if kind == "blocks" else "blocks-icons-grid"
+    noun = "blocks" if kind == "blocks" else "SVG icons"
+    chunks = [cards[start:start + batch_size] for start in range(0, total, batch_size)]
+    rendered = []
+    for index, chunk in enumerate(chunks):
+        first = index * batch_size + 1
+        last = min(total, first + len(chunk) - 1)
+        grid = f'<div class="{grid_class}">{"".join(chunk)}</div>'
+        if index == 0:
+            rendered.append(
+                f'<section class="{group_class} {group_class}--first" '
+                f'aria-label="{noun.capitalize()} {first}–{last} of {total}">{grid}</section>'
+            )
+        else:
+            rendered.append(
+                f'<details class="{group_class}" {attr}="{index + 1}">'
+                f'<summary>Show more {noun} <span>{first}–{last} of {total}</span></summary>'
+                f'{grid}</details>'
+            )
+    return "".join(rendered)
+
+
 def build() -> str:
     blocks = json.loads((ROOT / "blocks/manifest.json").read_text(encoding="utf-8"))["blocks"]
     count = len(blocks)
@@ -341,7 +373,11 @@ def build() -> str:
       <p id="blocks-results" class="syn-caption" role="status" aria-live="polite">{count} blocks available.</p>
       <p id="blocks-feedback" class="syn-caption" role="status" aria-live="polite" aria-atomic="true"></p>
       <p id="blocks-empty" class="syn-alert" hidden>No blocks found. Try a different search or category.</p>
-      <div id="blocks-grid" class="blocks-grid">{''.join(cards)}
+      <p class="syn-caption">No JavaScript needed: the first 12 blocks are visible immediately.
+        Open a numbered batch below for more examples, or jump directly to any block with a link.
+        All {count} examples are already included in this HTML document.</p>
+      <div id="blocks-grid" class="blocks-pages">
+        {grouped_gallery(cards, 12, kind="blocks")}
       </div>
     </section>
     <section class="docs-section" aria-labelledby="blocks-assets-heading">
@@ -364,7 +400,11 @@ def build() -> str:
         <input class="syn-input" type="search" id="blocks-icon-search" placeholder="Search icons, e.g. mail, home, copy" autocomplete="off">
       </div>
       <p class="syn-caption" id="blocks-icon-results" role="status" aria-live="polite">{icon_count} icons available.</p>
-      <div class="blocks-icons-grid">{''.join(icon_cards)}</div>
+      <p class="syn-caption">The first 30 icons are visible now. Open another batch to browse the
+        remaining examples. No JavaScript needed.</p>
+      <div class="blocks-icons-pages">
+        {grouped_gallery(icon_cards, 30, kind="icons")}
+      </div>
       <h3 class="syn-heading">Icon animation presets</h3>
       <p class="syn-muted">Hover or keyboard-focus these examples. Add a motion class to any icon,
       plus <code>syn-icon--on-interact</code> to animate only during interaction. Continuous

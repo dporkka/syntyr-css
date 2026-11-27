@@ -70,8 +70,8 @@ def layout_check(browser, engine, width, scale):
             require(page.locator("[data-icon-id]:visible").count() == 1,
                     "Icon search did not filter to a matching icon")
             icon_search.fill("")
-            require(page.locator("[data-icon-id]:visible").count() == expected,
-                    "Icon search did not restore the catalog")
+            require(page.locator("[data-icon-id]:visible").count() == min(30, expected),
+                    "Icon search did not restore the first native batch")
             motion_button = page.locator(".blocks-motion-example").first
             motion_icon = motion_button.locator(".syn-icon")
             require(page.locator(".blocks-motion-example").count() == 14,
@@ -210,6 +210,14 @@ def progressive_checks(browser, engine, screenshots):
     require(display == "flex", f"{engine}: gallery site-header preview must preserve native flex, got {display}")
     wrap = header.evaluate("e => getComputedStyle(e).flexWrap")
     require(wrap == "wrap", f"{engine}: gallery header must keep mobile flex wrap, got {wrap}")
+    # Native batches are intentionally closed until the visitor expands them.
+    # Open the containing batch via the same keyboard interaction used by users.
+    mega_batch = page.locator('[data-block-id="mega-navigation"]').locator(
+        'xpath=ancestor::details[@data-block-batch]').first
+    if mega_batch.count() and not mega_batch.evaluate("e => e.open"):
+        mega_batch.locator(":scope > summary").focus()
+        page.keyboard.press("Enter")
+        require(mega_batch.evaluate("e => e.open"), "No-JS: keyboard cannot open a block batch")
     mega = page.locator('[data-block-id="mega-navigation"] .blocks-preview details.syn-details')
     require(mega.count() == 1, f"{engine}: native mega-navigation disclosure missing")
     require(mega.get_attribute("open") is not None, f"{engine}: mega-navigation should start open")
@@ -249,6 +257,12 @@ def progressive_checks(browser, engine, screenshots):
                 f"{engine}: {ident} demo controls not disabled")
     # The preview intentionally strips hrefs. Verify that its named, scrollable
     # pipeline is reachable via Tab and exposes later lanes using keyboard arrows.
+    pipeline_batch = page.locator('[data-block-id="crm-workspace"]').locator(
+        'xpath=ancestor::details[@data-block-batch]').first
+    if pipeline_batch.count() and not pipeline_batch.evaluate("e => e.open"):
+        pipeline_batch.locator(":scope > summary").focus()
+        page.keyboard.press("Enter")
+        require(pipeline_batch.evaluate("e => e.open"), "No-JS: keyboard cannot reach CRM batch")
     pipeline = page.locator('[data-block-id="crm-workspace"] .syn-pipeline')
     focused = False
     # Expanded icon galleries add keyboard-reachable source disclosures.
@@ -290,7 +304,7 @@ def progressive_checks(browser, engine, screenshots):
             "Accessibility: search input lacks expected accessible name")
     require(page.get_by_role("button", name="Copy HTML for Product launch hero").count() == 1,
             "Accessibility: copy button lacks block context")
-    require(f"{BLOCK_COUNT} of {BLOCK_COUNT}" in page.locator("#blocks-results").inner_text(), "JS: count wrong")
+    require(f"12 of {BLOCK_COUNT}" in page.locator("#blocks-results").inner_text(), "JS: initial native batch count wrong")
     page.locator("#blocks-search").fill("pricing")
     expected_pricing = sum(
         "pricing" in " ".join([block["title"], block["description"], *block["tags"]]).lower()
@@ -326,7 +340,7 @@ def progressive_checks(browser, engine, screenshots):
     )
     status = page.locator("#blocks-feedback").inner_text().lower()
     require("copied" in status or "selected" in status, "JS: copy/fallback failed")
-    require(f"{BLOCK_COUNT} of {BLOCK_COUNT}" in page.locator("#blocks-results").inner_text(), "JS: count overwritten by copy feedback")
+    require(f"12 of {BLOCK_COUNT}" in page.locator("#blocks-results").inner_text(), "JS: count overwritten by copy feedback")
     require(not console_errors, f"{engine}: script errors {console_errors}")
     context.close()
 
@@ -346,6 +360,10 @@ def documentation_sidecar_check(browser, engine):
         # Show the entire block card at desktop width to exercise the intended
         # two-column sidecar rather than the gallery's multi-card grid.
         page.add_style_tag(content=".blocks-grid {grid-template-columns:minmax(0,1fr) !important;}")
+        docs_batch = page.locator('[data-block-id="docs-layout"]').locator(
+            'xpath=ancestor::details[@data-block-batch]').first
+        if docs_batch.count():
+            docs_batch.locator(":scope > summary").click()
         region = page.locator('[data-block-id="docs-layout"] .blocks-preview .syn-sidecar')
         metrics = region.evaluate("""root => {
             const article = root.querySelector(':scope > article');
