@@ -2,6 +2,7 @@
 from copy import deepcopy
 import json
 import os
+import re
 from pathlib import Path
 import shutil
 import subprocess
@@ -38,10 +39,27 @@ class CmsGeneratorParity(unittest.TestCase):
         return verify_cms_output(self.output, base_path=BASE, content_path=self.content)
 
     def test_equivalent_formatting_and_optional_end_tags(self):
-        self.page.write_text(self.markup.replace("</li>", "").replace("</p>", "")
+        # A paragraph directly followed by an inline link must keep its end;
+        # omitting it would move the link inside the paragraph in HTML.
+        omitted = re.sub(r"</p>(?=\s*(?:</|<(?:h1|div|ul)\b))", "", self.markup)
+        self.page.write_text(omitted.replace("</li>", "")
                              .replace('class="syn-region syn-panel"', 'class="syn-panel syn-region"')
                              .replace(">\n", ">"))
         self.assertEqual(self.verify(), 1)
+
+    def test_signature_preserves_text_placement_inside_styled_paragraphs(self):
+        page = '<html><body><footer><p class="syn-muted">Title</p></footer></body></html>'
+        omitted = page.replace("</p>", "")
+        moved = page.replace("Title</p>", "</p>Title")
+        self.assertEqual(signature(page, "/"), signature(omitted, "/"))
+        self.assertNotEqual(signature(page, "/"), signature(moved, "/"))
+        with_link = page.replace("</p>", '</p><a href="/signup">Join</a>')
+        self.assertNotEqual(signature(with_link, "/"), signature(with_link.replace("</p>", ""), "/"))
+
+    def test_signature_preserves_text_placement_inside_list_items(self):
+        page = '<html><body><ul><li>First</li><li>Second</li></ul></body></html>'
+        self.assertEqual(signature(page, "/"), signature(page.replace("</li>", ""), "/"))
+        self.assertNotEqual(signature(page, "/"), signature(page.replace("Second</li>", "</li>Second"), "/"))
 
     def test_rejects_duplicate_keys_even_when_last_value_matches_output(self):
         valid = json.dumps(self.document)
@@ -141,7 +159,11 @@ class EleventyStrictInput(unittest.TestCase):
             probe = """
 import configure from "./eleventy.config.js";
 configure({
-  addGlobalData(name, value) {
+  addWatchTarget(path, options) {
+    console.log("WATCH", path, JSON.stringify(options));
+  },
+  addGlobalData(name, load) {
+    const value = load();
     console.log("TEMPLATE_DATA", name, value.title, value.sections.length,
       value.sections.at(-1).items?.at(-1).description.length ?? 0);
   },
@@ -158,6 +180,7 @@ configure({
             valid = json.dumps(good, ensure_ascii=False).encode("utf-8")
             result = run(valid)
             self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertIn('WATCH ../cms-starter/content/pages/home.json {"resetConfig":true}', result.stdout)
             self.assertIn("TEMPLATE_DATA pageContent Olá 🌐", result.stdout)
             # Last-key-wins parsing would accept this exact page.
             invalid = (

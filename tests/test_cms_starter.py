@@ -48,6 +48,21 @@ class CmsStarterTests(unittest.TestCase):
                 with self.assertRaises(ValueError):
                     cms.render_document(page)
 
+    def test_root_relative_url_rejects_dot_segments(self):
+        for url in ("/../signup", "/./signup", "/a/%2e%2E/signup", "/a/.%2e/signup",
+                    "/a/%2e./signup", "/a/%2E/signup?next=ok"):
+            with self.subTest(url=url):
+                page = self.sample()
+                page["sections"][0]["button"]["url"] = url
+                with self.assertRaisesRegex(ValueError, "traversal"):
+                    cms.render_document(page)
+        for url in ("/signup", "/a%2Fb?next=../ok", "/signup#../ok",
+                    "https://example.test/signup"):
+            with self.subTest(url=url):
+                page = self.sample()
+                page["sections"][0]["button"]["url"] = url
+                self.assertIn(url, cms.render_document(page))
+
     def test_unknown_block_types_are_rejected(self):
         page = self.sample()
         page["sections"].append({"type": "html", "body": '<script>alert(1)</script>'})
