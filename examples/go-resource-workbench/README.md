@@ -11,7 +11,7 @@ go test ./...
 go run . -addr 127.0.0.1:8767
 ```
 
-Open http://127.0.0.1:8767/resources. Select a record, change its owner or status, and save. The result uses an ordinary HTML POST and **303 See Other** redirect back to the updated inspector. Changes reset when the process restarts.
+Open http://127.0.0.1:8767/resources. Select a record, change its owner or status, and save. The result uses an ordinary HTML POST and **303 See Other** redirect back to the updated inspector. Changes reset when the process restarts. Cancel edit returns to the filtered list without submitting. Save returns to the edited record in the unfiltered collection, preserving theme and grouping.
 
 The demo serves the repository's already-built CSS from `../../dist`. Run from `examples/go-resource-workbench/`; if your CSS is elsewhere, pass `-dist /absolute/path/to/dist`. The server refuses non-loopback `-addr` values because edit actions are **not authenticated**.
 
@@ -30,6 +30,7 @@ The test compiles and runs the Go app on localhost, allocates a temporary binary
 ## Working behaviors
 
 - Native GET search over resource name, ID, owner and region; status filtering; explicit name or updated-date sort.
+- Optional grouping by status or region, applied **before pagination** with the chosen ordering retained inside each group. A group header distinguishes visible-page count from its total across all filtered pages. Group preferences persist in the URL through pagination, inspectors and both preview scopes.
 - Three-row, server-owned pagination with bounded page numbers, preserved sort/theme/column options, current-page announcement and native previous/next links. Changing filters starts at page one.
 - Column visibility controls (Owner and Region) stored in URL query parameters; resource ID, status and update date remain visible.
 - Studio, Grid and Noir tokens selected via a GET control, preserved in inspector and selection-preview links.

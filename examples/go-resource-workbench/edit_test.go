@@ -170,3 +170,27 @@ func TestEditRedirectKeepsRecordVisibleAfterSameDayUpdates(t *testing.T) {
 		t.Fatalf("redirected inspector lost edited record: code=%d", got.Code)
 	}
 }
+
+func TestGroupedEditRedirectKeepsRecordVisible(t *testing.T) {
+	h := newHandler("../../dist")
+	cookie, token := getEditor(t, h)
+	form := url.Values{"id": {"RS-204"}, "owner": {"Local team"}, "status": {"review"}, "theme": {"grid"}, "group": {"status"}, "csrf_token": {token}}
+	rec := postEdit(h, cookie, form)
+	location := rec.Header().Get("Location")
+	if rec.Code != http.StatusSeeOther || !strings.Contains(location, "group=status") || !strings.Contains(location, "page=2") {
+		t.Fatalf("expected regrouped page redirect: code=%d, location=%s", rec.Code, location)
+	}
+	got := httptest.NewRecorder()
+	h.ServeHTTP(got, httptest.NewRequest(http.MethodGet, location, nil))
+	if got.Code != http.StatusOK || !strings.Contains(got.Body.String(), "Selected record: Harbor East") {
+		t.Fatal("saved record must remain visible in the grouped inspector")
+	}
+	form.Set("group", "unknown")
+	if postEdit(h, cookie, form).Code != http.StatusBadRequest {
+		t.Fatal("invalid grouping must not be accepted from edit forms")
+	}
+	form["group"] = []string{"status", "region"}
+	if postEdit(h, cookie, form).Code != http.StatusBadRequest {
+		t.Fatal("ambiguous grouping must not be accepted from edit forms")
+	}
+}

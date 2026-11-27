@@ -470,7 +470,7 @@ The optional recipes stylesheet contains `.syn-collection-toolbar`, `.syn-collec
 
 The example is illustrative, **not a configured server**. Avoid relying on color alone to convey status. Test with a keyboard, screen reader, 320 CSS-pixel viewport, text zoom and forced-colors mode.
 
-For a **runnable, zero-JavaScript reference**, see the [Go resource workbench](https://github.com/dporkka/syntyr-css/tree/main/examples/go-resource-workbench). It composes the existing filter, table, bulk-action and inspector classes with real server-side GET filtering, status filters, sorting, column and theme settings, record links and read-only bulk-selection previews, and real previous/next pagination with preserved view state. Checked-row previews are limited to records on the current server-rendered page, whereas an explicit matching-scope preview spans all filtered pages. Unlike the static markup, the Go example actually constrains result sets. An empty checked selection never means all matching records: selecting the full matching set is an explicit separate link. The example additionally demonstrates a local-only native POST edit for owner and status with a signed CSRF form token, input validation and a safe redirect. Its in-memory changes reset on restart; the unauthenticated server refuses non-loopback binds. It has no accounts, tenant isolation, persistent records or durable authorization; production apps must supply those behaviors.
+For a **runnable, zero-JavaScript reference**, see the [Go resource workbench](https://github.com/dporkka/syntyr-css/tree/main/examples/go-resource-workbench). It composes the existing filter, table, bulk-action and inspector classes with real server-side GET filtering, status filters, sorting, column and theme settings, record links and read-only bulk-selection previews, and real previous/next pagination with preserved view state. Optional status or region grouping uses the full filtered result set before pagination; each group header distinguishes page rows from all-matching group counts. Checked-row previews are limited to records on the current server-rendered page, whereas an explicit matching-scope preview spans all filtered pages. Unlike the static markup, the Go example actually constrains result sets. An empty checked selection never means all matching records: selecting the full matching set is an explicit separate link. The example additionally demonstrates a local-only native POST edit for owner and status with a signed CSRF form token, input validation and a safe redirect. Its in-memory changes reset on restart; the unauthenticated server refuses non-loopback binds. It has no accounts, tenant isolation, persistent records or durable authorization; production apps must supply those behaviors.
 
 ## Native query filters and record review (alpha.5 source candidate)
 
@@ -523,6 +523,48 @@ excluded from `syntyr.core.css`. The illustration uses labeled placeholders,
 not real customer evidence. Test keyboard and touch interactions, actual
 screen-reader focus behavior, 400% zoom, forced colors, RTL, and lengthy
 translated metadata in the consuming app before production use.
+
+## Grouped enterprise record workspace (alpha.5 source candidate)
+
+The [copy-owned enterprise workspace](../examples/enterprise-record-workspace.html)
+combines existing core, recipes and optional visualization styles without
+introducing a CSS API or JavaScript runtime. It is a static, original MIT
+composition inspired by general spreadsheet, record-management and analytics
+patterns, not a port of another application's design or code.
+
+- Use a native `<details open>` per group, with a truthful count and subtotal
+  in its `<summary>` and a separate, captioned semantic table inside. Every
+  table has row and column headers, an explicit summary footer, and a
+  named, keyboard-focusable overflow region. Collapsing a group changes
+  visibility, not query membership or aggregate values.
+- Compose `.syn-kpi-grid`, `.syn-app-card`, `.syn-stat-value`, and the
+  opt-in `.syn-viz-bars` to report aggregates derived from the same set of
+  records. Show units, time scope and readable amounts; bars are decorative,
+  and share percentages need a defined denominator. Here estimated value is
+  not recognized revenue, and booked value is a subset rather than an extra
+  amount. The sample's tests reconcile every subtotal, count and chart bar.
+- Use `.syn-view-switcher` for actual section/group navigation. A jump link
+  is not a filter, and an open disclosure is not a saved view. For real saved
+  views, give each stable server route its validated filter/sort/group
+  parameters; re-render the active link, record groups, counts, and summaries
+  from the same authorized query. Name the aggregation scope (current page
+  or all matching records). Do not sum only loaded pages while labelling the
+  result as an all-matching total.
+- Open each record's native nonmodal `.syn-sheet` with a uniquely associated
+  `popovertarget`; provide a captioned details region, readable status text,
+  and explicit close actions. In apps requiring older browser support, use
+  real record detail links as the baseline and enhance them where appropriate.
+- For writes, reuse the existing [form-state example](../examples/form-state-contracts.html),
+  `.syn-form-actions`, and `.syn-operation-feedback` with real save/cancel
+  actions and host-owned pending, saved, failed or conflict states. The
+  static workspace is read-only; the Go workbench above supplies a bounded
+  localhost native POST example.
+
+The host still owns query execution, persisted views, aggregate calculations,
+virtualization, accessibility of custom grid interactions, authorization,
+and mutation concurrency. No additional core rules, framework dependencies
+or third-party assets are needed. This example requires matching experimental
+alpha.5 assets; it does not extend the published alpha.4 release.
 
 ## Permission matrix — role/capability review
 

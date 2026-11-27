@@ -162,9 +162,13 @@ func editHandler(state *resourceState, secret [32]byte) http.HandlerFunc {
 				theme = ""
 			}
 		}
+		group, okGroup := singleValue(r.PostForm, "group")
+		if !okGroup && !r.PostForm.Has("group") {
+			okGroup = true
+		}
 		owner = strings.TrimSpace(owner)
 		if !okID || !okOwner || !okStatus || !okTheme || !validOwner(owner) ||
-			!validStatus(status) || !validTheme(theme) {
+			!validStatus(status) || !validTheme(theme) || !okGroup || !validGroup(group) {
 			http.Error(w, "Invalid resource edit", http.StatusBadRequest)
 			return
 		}
@@ -176,7 +180,9 @@ func editHandler(state *resourceState, secret [32]byte) http.HandlerFunc {
 		// The inspector only selects records visible on the current page.
 		// Find the record's page after updating its sort key, rather than
 		// redirecting blindly to page 1 (which can hide the saved record).
-		for index, item := range filterResources(state.snapshot(), "", "", "") {
+		updated := filterResources(state.snapshot(), "", "", "")
+		groupResources(updated, group)
+		for index, item := range updated {
 			if item.ID == id {
 				if page := index/rowsPerPage + 1; page > 1 {
 					values.Set("page", strconv.Itoa(page))
@@ -186,6 +192,9 @@ func editHandler(state *resourceState, secret [32]byte) http.HandlerFunc {
 		}
 		if theme != "" {
 			values.Set("theme", theme)
+		}
+		if group != "" {
+			values.Set("group", group)
 		}
 		http.Redirect(w, r, link("/resources", values), http.StatusSeeOther)
 	}
