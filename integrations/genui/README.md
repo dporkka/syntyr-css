@@ -85,3 +85,47 @@ html = render_a2ui(Path("integrations/genui/example.a2ui.json").read_text())
 This is an interoperability experiment, **not** a complete A2UI renderer,
 catalog conformance claim, streaming transport or agent client. The resulting
 HTML is validated by the same bounded Syntyr renderer.
+
+## Experimental surface lifecycle
+
+Use one `SurfaceSession` per host-owned conversation. It accepts individual
+A2UI 1.0 JSON messages for the same restricted basic-catalog subset:
+
+```python
+import json
+from pathlib import Path
+from integrations.genui.lifecycle import SurfaceSession
+
+session = SurfaceSession()
+message = Path("integrations/genui/example.a2ui.json").read_text()
+session.apply(message)
+html = session.apply(json.dumps({
+    "version": "1.0",
+    "updateComponents": {
+        "surfaceId": "report",
+        "components": [
+            {"id": "summary", "component": "Text", "text": "New report available."}
+        ]
+    }
+}))
+session.apply(json.dumps({
+    "version": "1.0", "deleteSurface": {"surfaceId": "report"}
+}))
+```
+
+The initial create must contain a complete valid tree. Updates replace whole
+component records by ID or add referenced components, not merge properties.
+Each message is validated atomically against the complete resulting snapshot;
+rejected events leave the last valid HTML and component graph untouched.
+Orphans, unresolved references, shared children and cycles remain unsupported,
+so deleting individual components and incomplete intermediate graphs are not
+supported. Delete removes a whole surface; IDs cannot be reused in a session.
+
+Defaults are at most eight active surfaces and 128 lifetime surface IDs;
+hosts can lower either limit. Both incoming messages and cumulative serialized
+snapshots are limited to 256 KiB, with the existing component and depth limits.
+No persistent storage, data bindings, function execution, actions, incremental
+DOM patching or network transport are implemented. The session is synchronous
+and not thread-safe; hosts must serialize message processing, isolate sessions
+by authenticated user/conversation, manage their expiration and enforce access
+control. HTML is a full body fragment, not a DOM mutation command.
