@@ -124,8 +124,60 @@ supported. Delete removes a whole surface; IDs cannot be reused in a session.
 Defaults are at most eight active surfaces and 128 lifetime surface IDs;
 hosts can lower either limit. Both incoming messages and cumulative serialized
 snapshots are limited to 256 KiB, with the existing component and depth limits.
-No persistent storage, data bindings, function execution, actions, incremental
+No persistent storage, function execution, actions, incremental
 DOM patching or network transport are implemented. The session is synchronous
 and not thread-safe; hosts must serialize message processing, isolate sessions
 by authenticated user/conversation, manage their expiration and enforce access
 control. HTML is a full body fragment, not a DOM mutation command.
+
+## Experimental reactive text bindings
+
+The stateful session (not the stateless snapshot adapter) accepts an optional
+initial `dataModel` on createSurface and supports updateDataModel:
+
+```python
+import json
+from integrations.genui.a2ui import BASIC_CATALOG_ID
+from integrations.genui.lifecycle import SurfaceSession
+
+session = SurfaceSession()
+session.apply(json.dumps({
+    "version": "1.0",
+    "createSurface": {
+        "surfaceId": "report",
+        "catalogId": BASIC_CATALOG_ID,
+        "dataModel": {"report": {"status": "Preparing report"}},
+        "components": [
+            {"id": "root", "component": "Text",
+             "text": {"@path": "/report/status"}}
+        ]
+    }
+}))
+html = session.apply(json.dumps({
+    "version": "1.0",
+    "updateDataModel": {
+        "surfaceId": "report",
+        "path": "/report/status",
+        "value": "Report ready"
+    }
+}))
+```
+
+Only Text.text supports a binding; it must resolve to a string in the current
+surface's model. Models are nested JSON objects with string leaves only.
+Numbers, booleans, arrays, null values in stored models, relative paths, empty
+key names, reserved prototype keys, function calls and template bindings are
+unsupported. JSON Pointer ~0 and ~1 escapes are decoded. Omitted update path
+or "/" replaces the entire model with an object. Other paths replace/add a
+key under an existing object parent; null deletes an existing key. Removing
+a bound key or replacing it with a non-string fails atomically. Limits: 12
+model levels, 1024 total keys, 128 characters per key, 4000 per string.
+The serialized unresolved graph plus model and the resolved graph each have
+the existing 256 KiB cap (ASCII-escaped JSON for the session). Values are
+escaped by the existing renderer; no model-provided code runs.
+
+Hosts must supply only data authorized for the current conversation; bindings
+are not an authorization boundary within a model. The adapter returns a new
+full HTML fragment after each valid event, not a live DOM mutation. The host
+owns transport, DOM replacement, focus preservation and session cleanup.
+This is a restricted A2UI interoperability experiment, not full conformance.

@@ -4,6 +4,7 @@ import json
 
 from . import MAX_BYTES, MAX_NODES, GenUIError, _invalid_constant, _pairs, _require
 from .a2ui import BASIC_CATALOG_ID, _identifier, render_a2ui
+from .bindings import resolve_components, update_model, validate_model
 
 MAX_ACTIVE = 8
 MAX_CREATED = 128
@@ -45,9 +46,12 @@ class SurfaceSession:
             "createSurface": {"surfaceId", "catalogId", "components"},
             "updateComponents": {"surfaceId", "components"},
             "deleteSurface": {"surfaceId"},
+            "updateDataModel": {"surfaceId", "value"},
         }
+        optional = {"createSurface": {"dataModel"}, "updateDataModel": {"path"}}
         _require(kind in fields and type(payload) is dict
-                 and set(payload) == fields[kind], "Unsupported event")
+                 and fields[kind] <= set(payload) <= fields[kind] | optional.get(kind, set()),
+                 "Unsupported event")
         sid = _identifier(payload["surfaceId"])
         if kind == "deleteSurface":
             _require(sid in self._surfaces, "Unknown surface")
@@ -60,32 +64,45 @@ class SurfaceSession:
                      and len(self._created) < self._max_created, "Session capacity exceeded")
             _require(payload["catalogId"] == BASIC_CATALOG_ID, "Unsupported catalog")
             proposed = {}
+            model = payload.get("dataModel", {})
+            validate_model(model)
         else:
             _require(sid in self._surfaces, "Unknown surface")
             proposed = self._surfaces[sid][0].copy()
+            model = self._surfaces[sid][2]
 
-        changes = payload["components"]
-        _require(type(changes) is list and 1 <= len(changes) <= MAX_NODES,
-                 "Invalid component list")
-        seen = set()
-        for component in changes:
-            _require(type(component) is dict and "id" in component, "Invalid component")
-            cid = _identifier(component["id"])
-            _require(cid not in seen, "Duplicate component ID in event")
-            seen.add(cid)
-            proposed[cid] = component
+        if kind == "updateDataModel":
+            model = update_model(model, payload.get("path", "/"), payload["value"])
+        else:
+            changes = payload["components"]
+            _require(type(changes) is list and 1 <= len(changes) <= MAX_NODES,
+                     "Invalid component list")
+            seen = set()
+            for component in changes:
+                _require(type(component) is dict and "id" in component, "Invalid component")
+                cid = _identifier(component["id"])
+                _require(cid not in seen, "Duplicate component ID in event")
+                seen.add(cid)
+                proposed[cid] = component
+
         _require(len(proposed) <= MAX_NODES, "Component count exceeded")
         # Validate the entire merged graph, including its cumulative byte budget.
         # Serialize with ASCII escaping to ensure lone surrogates remain invalid
         # input to the snapshot validator, rather than failing at the encoder.
-        snapshot = json.dumps({
+        envelope = {
             "version": "1.0",
             "createSurface": {
                 "surfaceId": sid, "catalogId": BASIC_CATALOG_ID,
-                "components": list(proposed.values()),
+                "components": list(proposed.values()), "dataModel": model,
             },
-        }, ensure_ascii=True, separators=(",", ":"))
-        html = render_a2ui(snapshot)
-        self._surfaces[sid] = (proposed, html)
+        }
+        # Bound the stored model and unresolved graph together before resolving.
+        snapshot = json.dumps(envelope, ensure_ascii=True, separators=(",", ":"))
+        _require(len(snapshot) <= MAX_BYTES, "Cumulative snapshot size exceeded")
+        surface = envelope["createSurface"]
+        del surface["dataModel"]
+        surface["components"] = resolve_components(surface["components"], model)
+        html = render_a2ui(json.dumps(envelope, ensure_ascii=True, separators=(",", ":")))
+        self._surfaces[sid] = (proposed, html, model)
         self._created.add(sid)
         return html
