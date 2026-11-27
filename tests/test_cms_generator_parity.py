@@ -6,6 +6,7 @@ import re
 from pathlib import Path
 import shutil
 import subprocess
+import time
 from tempfile import TemporaryDirectory
 import unittest
 
@@ -207,6 +208,56 @@ configure({
             result = run(large)
             self.assertEqual(result.returncode, 0, result.stderr)
             self.assertIn("TEMPLATE_DATA pageContent Olá 🌐 24 1000", result.stdout)
+
+
+    @unittest.skipUnless(shutil.which("node") and shutil.which("python3"), "Node and Python needed")
+    def test_real_eleventy_watch_refreshes_external_json_if_installed(self):
+        cli = ROOT / "examples/eleventy/node_modules/@11ty/eleventy/cmd.cjs"
+        if not cli.is_file():
+            self.skipTest("Run npm ci in examples/eleventy for live watch proof")
+        with TemporaryDirectory() as tmp:
+            fixture = Path(tmp)
+            example = fixture / "examples/eleventy"
+            shutil.copytree(ROOT / "examples/eleventy", example,
+                            ignore=shutil.ignore_patterns("node_modules", "_site"))
+            shutil.copytree(ROOT / "examples/cms-starter/content",
+                            fixture / "examples/cms-starter/content")
+            (fixture / "scripts").mkdir()
+            shutil.copyfile(ROOT / "scripts/render_cms_starter.py",
+                            fixture / "scripts/render_cms_starter.py")
+            (fixture / "dist").mkdir()
+            for name in ("syntyr.core.css", "syntyr.recipes.css"):
+                shutil.copyfile(ROOT / "dist" / name, fixture / "dist" / name)
+            content = fixture / "examples/cms-starter/content/pages/home.json"
+            output = example / "_site/index.html"
+            log = fixture / "watch.log"
+            changed = "Independent CMS watch refresh"
+            with log.open("w") as stream:
+                process = subprocess.Popen(["node", str(cli), "--watch"], cwd=example,
+                                           stdout=stream, stderr=subprocess.STDOUT)
+                try:
+                    def wait_for(predicate):
+                        deadline = time.monotonic() + 20
+                        while time.monotonic() < deadline:
+                            if process.poll() is not None or predicate():
+                                break
+                            time.sleep(.1)
+                        self.assertTrue(predicate(), log.read_text(encoding="utf-8"))
+
+                    wait_for(lambda: output.is_file() and
+                             "Watching" in log.read_text(encoding="utf-8"))
+                    page = json.loads(content.read_text(encoding="utf-8"))
+                    page["title"] = changed
+                    content.write_text(json.dumps(page), encoding="utf-8")
+                    wait_for(lambda: changed in output.read_text(encoding="utf-8"))
+                finally:
+                    if process.poll() is None:
+                        process.terminate()
+                        try:
+                            process.wait(timeout=5)
+                        except subprocess.TimeoutExpired:
+                            process.kill()
+                            process.wait()
 
 
 class SoupaultExample(unittest.TestCase):
