@@ -19,10 +19,10 @@ const idFor = (section: { id: string }) => `section-${section.id}`;
 </head>
 <body class="syn-root" data-syn-theme={page.theme}>
   <a href="#content">Skip to content</a>
-  <header class="syn-region">
-    <nav aria-label="Primary"><a href={base}>Home</a></nav>
+  <header class="syn-shell syn-header">
+    <nav class="syn-nav" aria-label="Primary"><a href={base} aria-current="page">Home</a></nav>
   </header>
-  <main class="syn-shell" id="content">
+  <main class="syn-shell" id="content" tabindex="-1">
     {page.sections.map((section, index) => (
       section.type === 'hero' ? (
         <section class="syn-region" aria-labelledby={idFor(section)}>
@@ -75,6 +75,6 @@ const idFor = (section: { id: string }) => `section-${section.id}`;
       ) : null
     ))}
   </main>
-  <footer class="syn-region"><p class="syn-muted">{page.title}</p></footer>
+  <footer class="syn-shell"><p class="syn-muted">{page.title}</p></footer>
 </body>
 </html>

@@ -40,6 +40,18 @@ class ExpoNativeSmokeTest(unittest.TestCase):
                 affected.append((name, meta["version"]))
         self.assertEqual(affected, [], f"GHSA-g3hv-75wg-m249 in lock: {affected}")
 
+    def test_expo_lock_avoids_glob_cancellation_range(self):
+        """GHSA-3g3m-2fjr-6pw4 affects glob 9.0.0 through 14.0.1."""
+        lock = json.loads((FIXTURE / "package-lock.json").read_text())
+        affected = []
+        for name, meta in lock["packages"].items():
+            if name.rsplit("/", 1)[-1] != "glob":
+                continue
+            version = tuple(int(n) for n in meta["version"].split(".")[:3])
+            if (9, 0, 0) <= version < (14, 0, 2):
+                affected.append((name, meta["version"]))
+        self.assertEqual(affected, [], f"GHSA-3g3m-2fjr-6pw4 in lock: {affected}")
+
     @unittest.skipUnless(shutil.which("node"), "Node is optional; Expo sync requires Node")
     def test_source_sync_reuses_exact_canonical_adapter(self):
         with tempfile.TemporaryDirectory() as temp:

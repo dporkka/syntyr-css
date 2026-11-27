@@ -246,11 +246,11 @@ def render_document(document: object) -> str:
 </head>
 <body class="syn-root" data-syn-theme="{theme}">
   <a href="#content">Skip to content</a>
-  <header class="syn-region"><nav aria-label="Primary"><a href="/">Home</a></nav></header>
-  <main id="content" class="syn-shell">
+  <header class="syn-shell syn-header"><nav class="syn-nav" aria-label="Primary"><a href="/" aria-current="page">Home</a></nav></header>
+  <main id="content" class="syn-shell" tabindex="-1">
 {sections}
   </main>
-  <footer class="syn-region"><p class="syn-muted">{title}</p></footer>
+  <footer class="syn-shell"><p class="syn-muted">{title}</p></footer>
 </body>
 </html>
 '''

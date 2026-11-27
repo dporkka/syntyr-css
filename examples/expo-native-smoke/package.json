@@ -30,6 +30,7 @@
     "preset": "jest-expo"
   },
   "overrides": {
-    "minimatch": "11.0.9"
+    "minimatch": "11.0.9",
+    "glob@9 - 14.0.1": "14.0.2"
   }
 }

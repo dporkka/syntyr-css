@@ -10,8 +10,8 @@
 </head>
 <body class="syn-root" data-syn-theme="{{ pageContent.theme }}">
   <a href="#content">Skip to content</a>
-  <header class="syn-region"><nav aria-label="Primary"><a href="{{ '/' | url }}">Home</a></nav></header>
-  <main id="content" class="syn-shell">
+  <header class="syn-shell syn-header"><nav class="syn-nav" aria-label="Primary"><a href="{{ '/' | url }}" aria-current="page">Home</a></nav></header>
+  <main id="content" class="syn-shell" tabindex="-1">
   {% for section in pageContent.sections %}
     {% set anchor = "section-" + section.id %}
     {% if section.type == "hero" %}
@@ -64,6 +64,6 @@
     {% endif %}
   {% endfor %}
   </main>
-  <footer class="syn-region"><p class="syn-muted">{{ pageContent.title }}</p></footer>
+  <footer class="syn-shell"><p class="syn-muted">{{ pageContent.title }}</p></footer>
 </body>
 </html>

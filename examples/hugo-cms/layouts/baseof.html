@@ -1,0 +1,46 @@
+{{- $cms := partial "cms-data.html" . -}}
+{{- $title := .Title | default site.Title -}}
+{{- $description := .Description | default site.Params.description -}}
+{{- $theme := site.Params.theme | default "studio" -}}
+{{- if and .IsHome $cms -}}
+  {{- $title = $cms.title -}}
+  {{- $description = $cms.description -}}
+  {{- $theme = $cms.theme -}}
+{{- end -}}
+<!doctype html>
+<html lang="{{ site.Language.Lang | default "en" }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ if or .IsHome (eq $title site.Title) }}{{ $title }}{{ else }}{{ $title }} | {{ site.Title }}{{ end }}</title>
+  {{ with $description }}<meta name="description" content="{{ . }}">{{ end }}
+  {{ if eq .Kind "404" }}
+  <meta name="robots" content="noindex">
+  {{ else }}
+  <link rel="canonical" href="{{ .Permalink }}">
+  <meta property="og:title" content="{{ $title }}">
+  {{ with $description }}<meta property="og:description" content="{{ . }}">{{ end }}
+  <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
+  <meta property="og:url" content="{{ .Permalink }}">
+  {{ end }}
+  {{ with .OutputFormats.Get "rss" }}<link rel="alternate" type="application/rss+xml" href="{{ .RelPermalink }}">{{ end }}
+  <link rel="stylesheet" href="{{ "assets/syntyr.core.css" | relURL }}">
+  <link rel="stylesheet" href="{{ "assets/syntyr.recipes.css" | relURL }}">
+  <link rel="stylesheet" href="{{ "assets/syntyr.semantic.css" | relURL }}">
+</head>
+<body class="syn-root" data-syn-theme="{{ $theme }}">
+  <a href="#content">Skip to content</a>
+  <header class="syn-shell syn-header">
+    <nav class="syn-nav" aria-label="Primary">
+      <a href="{{ site.Home.RelPermalink }}"{{ if .IsHome }} aria-current="page"{{ end }}>Home</a>
+      {{ range site.Menus.main }}
+      <a href="{{ .URL }}"{{ if $.IsMenuCurrent "main" . }} aria-current="page"{{ end }}>{{ .Name }}</a>
+      {{ end }}
+    </nav>
+  </header>
+  <main id="content" class="syn-shell" tabindex="-1">
+    {{ block "main" . }}{{ end }}
+  </main>
+  <footer class="syn-shell"><p class="syn-muted">{{ if $cms }}{{ $cms.title }}{{ else }}{{ site.Title }}{{ end }}</p></footer>
+</body>
+</html>
