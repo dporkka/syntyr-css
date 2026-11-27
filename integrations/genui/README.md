@@ -181,3 +181,40 @@ are not an authorization boundary within a model. The adapter returns a new
 full HTML fragment after each valid event, not a live DOM mutation. The host
 owns transport, DOM replacement, focus preservation and session cleanup.
 This is a restricted A2UI interoperability experiment, not full conformance.
+
+## Optional bounded NDJSON stream adapter
+
+The host can consume a stream of UTF-8 JSON messages using the Python standard
+library. This adapter defines host-side newline framing, not an A2UI transport
+standard or a network client. Supply an iterable of bytes from an authenticated
+source; a record is exactly one JSON message terminated by LF (CRLF accepted).
+
+```python
+from integrations.genui.lifecycle import SurfaceSession
+from integrations.genui.stream import iter_surface_updates
+
+session = SurfaceSession()
+with open("messages.ndjson", "rb") as source:
+    chunks = iter(lambda: source.read(8192), b"")
+    for update in iter_surface_updates(chunks, session):
+        # Host-owned rendering or deletion, keyed by update.surface_id.
+        # update.html is None for deleteSurface.
+        print(update.surface_id, update.html)
+```
+
+Chunk and record sizes are capped at 256 KiB (record bytes exclude LF but
+include an optional CR). Each iterator is capped at 8 MiB of input and 1024
+records; hosts may lower these limits. UTF-8 characters can span chunks.
+Empty chunks are ignored, but blank records, BOMs, invalid UTF-8 and
+unterminated final records are rejected. Use iter_messages for framing only;
+iter_surface_updates additionally validates and applies each record using
+SurfaceSession. A failed record ends iteration without applying subsequent
+records; earlier accepted records remain committed. An entire chunk is counted
+against the total byte budget before its records are processed. No prefetching
+of later messages is required; close the iterator to cancel consumption.
+
+The host must enforce authentication, authorization, stream timeouts and
+rate limits across requests, serialize access to each session, close the
+underlying transport on errors/cancellation, and safely place rendered HTML
+in its own trusted surface container. This is not an SSE or WebSocket client,
+does not perform incremental DOM patching and does not execute model actions.
