@@ -75,6 +75,42 @@ class AstroKeystaticSiteTests(unittest.TestCase):
             root = subprocess.run(command + ["--base-path", "/"], capture_output=True, text=True)
             self.assertEqual(root.returncode, 0, root.stderr)
 
+    @unittest.skipUnless(shutil.which("npm"), "npm required to test package script")
+    def test_package_verify_forwards_base_to_public_and_semantic_checks(self):
+        from scripts.render_cms_starter import render_document
+        from scripts.verify_cms_parity import CONTENT
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            example = root / "examples/astro-keystatic"
+            output = example / "dist"
+            (output / "css").mkdir(parents=True)
+            data = example / "src/data"
+            data.mkdir(parents=True)
+            shutil.copyfile(CONTENT, data / "home.json")
+            shutil.copyfile(SITE / "package.json", example / "package.json")
+            scripts = root / "scripts"
+            scripts.mkdir()
+            for name in ("verify_astro_keystatic.py", "verify_cms_parity.py",
+                         "verify_static_generators.py", "render_cms_starter.py"):
+                shutil.copyfile(ROOT / "scripts" / name, scripts / name)
+            for name in ("syntyr.core.css", "syntyr.recipes.css"):
+                shutil.copyfile(ROOT / "dist" / name, output / "css" / name)
+            markup = render_document(json.loads(CONTENT.read_text()))
+            for base, args in (("/", ["--", "--base-path", "/"]),
+                               ("/syntyr-astro-keystatic/", []),
+                               ("/custom/site/", ["--", "--base-path", "/custom/site/"])):
+                with self.subTest(base=base):
+                    (output / "index.html").write_text(markup.replace('href="/', f'href="{base}'))
+                    command = ["npm", "run", "verify", *args]
+                    result = subprocess.run(command, cwd=example, capture_output=True, text=True, timeout=30)
+                    self.assertEqual(result.returncode, 0, result.stderr)
+                    # The second check must still reject a semantic mismatch.
+                    (output / "index.html").write_text((output / "index.html").read_text().replace(
+                        "Built for long-lived websites", "Unexpected heading"))
+                    result = subprocess.run(command, cwd=example, capture_output=True, text=True, timeout=30)
+                    self.assertNotEqual(result.returncode, 0)
+                    self.assertIn("CMS parity mismatch", result.stderr)
+
     def test_verifier_rejects_extra_editor_route_even_when_script_free(self):
         if not (SITE / "dist").is_dir():
             self.skipTest("Run npm run build to exercise a copied real output")

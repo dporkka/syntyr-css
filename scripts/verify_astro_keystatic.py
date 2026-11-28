@@ -10,8 +10,10 @@ import argparse
 from pathlib import Path
 
 if __package__:
+    from .verify_cms_parity import verify_cms_output
     from .verify_static_generators import verify_static_site
 else:
+    from verify_cms_parity import verify_cms_output
     from verify_static_generators import verify_static_site
 
 BASE = "/syntyr-astro-keystatic/"
@@ -42,6 +44,10 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("destination", type=Path, help="Astro dist directory")
     parser.add_argument("--base-path", default=BASE, help="Published mount path, including trailing slash")
+    parser.add_argument("--content", type=Path, help="Also verify semantic parity against this CMS document")
     args = parser.parse_args()
     verified = verify_public_site(args.destination, base_path=args.base_path)
     print(f"PASS: {verified} HTML page, local CSS, no JS, no Keystatic/editor/API output")
+    if args.content is not None:
+        verify_cms_output(args.destination, base_path=args.base_path, content_path=args.content)
+        print("PASS: portable CMS HTML matches the canonical renderer.")

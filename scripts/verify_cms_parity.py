@@ -60,6 +60,7 @@ class Signature(HTMLParser):
         self.events = []
         self.pending = []
         self.body = False
+        self.head_closed = False
         self.body_closed = False
         self.html_closed = False
         self.title = False
@@ -83,6 +84,10 @@ class Signature(HTMLParser):
             # Browsers reprocess markup after </body> or </html> in the
             # body; treating it as metadata would hide visible changes.
             raise AssertionError(f"CMS parity mismatch: Unexpected <{tag}> after document body")
+        if self.head_closed and not self.body and tag != "body":
+            # Unexpected markup can start an implicit browser body. The
+            # bounded CMS output requires an explicit body boundary.
+            raise AssertionError(f"CMS parity mismatch: Unexpected <{tag}> before document body")
         attributes = dict(attrs)
         if len(attrs) != len(attributes):
             raise AssertionError(f"Duplicate attributes on <{tag}>")
@@ -117,6 +122,10 @@ class Signature(HTMLParser):
                 self.html_closed = True
                 return
             raise AssertionError(f"CMS parity mismatch: Unexpected </{tag}> after document body")
+        if self.head_closed and not self.body:
+            raise AssertionError(f"CMS parity mismatch: Unexpected </{tag}> before document body")
+        if tag == "head" and not self.body:
+            self.head_closed = True
         if self.title and tag == "title":
             self.metadata.append(("title", normalized_text("".join(self.pending))))
             self.pending.clear()
@@ -152,6 +161,8 @@ class Signature(HTMLParser):
     def handle_data(self, data):
         if self.body_closed and normalized_text(data):
             raise AssertionError("CMS parity mismatch: Unexpected text after document body")
+        if self.head_closed and not self.body and not self.body_closed and normalized_text(data):
+            raise AssertionError("CMS parity mismatch: Unexpected text before document body")
         if self.body or self.title:
             self.pending.append(data)
 

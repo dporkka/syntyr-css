@@ -72,6 +72,17 @@ class CmsGeneratorParity(unittest.TestCase):
                     with self.assertRaisesRegex(AssertionError, "CMS parity mismatch"):
                         self.verify()
 
+    def test_rejects_visible_content_between_head_and_body(self):
+        for extra in ('<p>Unexpected text</p>', '<img src="unexpected.png">', "Unexpected text"):
+            with self.subTest(extra=extra):
+                self.page.write_text(self.markup.replace("</head>", "</head>" + extra))
+                with self.assertRaisesRegex(AssertionError, "CMS parity mismatch"):
+                    self.verify()
+
+    def test_allows_comments_and_whitespace_between_head_and_body(self):
+        self.page.write_text(self.markup.replace("</head>", "</head> <!-- separator -->\n"))
+        self.assertEqual(self.verify(), 1)
+
     def test_allows_comments_whitespace_and_optional_document_ends(self):
         for markup in (
             self.markup + "  <!-- trailing comment -->\n",
