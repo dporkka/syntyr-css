@@ -1,0 +1,43 @@
+/* Private compositions shared by three portable starters, not part of core. */
+.kit-wrap { width: min(100% - 2.5rem, 68rem); margin-inline: auto; }
+.kit-skip { position: absolute; inset: -10rem auto auto 1rem; z-index: 10; padding: .75rem 1rem; background: var(--syn-surface); color: var(--syn-text); }
+.kit-skip:focus { inset-block-start: 1rem; }
+.kit-header, .kit-footer { border-block-end: 1px solid var(--syn-border-default); }
+.kit-header > div, .kit-footer > div { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .5rem 1.5rem; padding-block: 1rem; }
+.kit-brand { font-weight: 800; letter-spacing: -.035em; color: var(--syn-text); font-size: 1.25rem; }
+.kit-nav { display: flex; flex-wrap: wrap; gap: .25rem 1rem; }
+.kit-nav a, .kit-next a { display: inline-flex; align-items: center; min-height: 44px; color: var(--syn-text); }
+.kit-nav a[aria-current="page"] { color: var(--syn-accent); text-decoration: underline; text-underline-offset: .3em; }
+.kit-hero { padding-block: clamp(3rem, 7vw, 6rem) 2.5rem; }
+.kit-hero h1, .kit-prose h1 { font-size: clamp(2.25rem, 5.5vw, 4.75rem); line-height: 1.08; letter-spacing: -.055em; max-width: 19ch; margin-block: .5rem 1.1rem; overflow-wrap: anywhere; }
+.kit-lede { max-width: 62ch; font-size: clamp(1.1rem, 1.7vw, 1.3rem); line-height: 1.65; color: var(--syn-muted); }
+.kit-section { padding-block: 1.5rem clamp(3rem, 5vw, 5rem); }
+.kit-section h2, .kit-prose h2 { font-size: clamp(1.35rem, 2.5vw, 2.1rem); line-height: 1.25; letter-spacing: -.025em; margin-block: 1.5rem .75rem; }
+.kit-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); gap: 1rem; }
+.kit-card { display: flex; flex-direction: column; gap: .8rem; min-width: 0; padding: clamp(1rem, 3vw, 1.75rem); }
+.kit-card h2, .kit-card h3, .kit-card p { margin: 0; }
+.kit-card .syn-button { align-self: start; margin-top: auto; white-space: normal; }
+.kit-meta { color: var(--syn-muted); font-size: .875rem; }
+.kit-doc-layout { display: grid; grid-template-columns: minmax(10rem, 14rem) minmax(0, 1fr); gap: clamp(1.5rem, 5vw, 4rem); padding-block: 2.5rem 4rem; }
+.kit-sidebar { min-width: 0; align-self: start; border-inline-end: 1px solid var(--syn-border-default); padding-inline-end: 1rem; }
+.kit-sidebar nav { display: grid; }
+.kit-sidebar nav a { padding-block: .7rem; overflow-wrap: anywhere; }
+.kit-prose { min-width: 0; max-width: 70ch; }
+.kit-prose p, .kit-prose li { line-height: 1.75; overflow-wrap: anywhere; }
+.kit-prose li + li { margin-top: .4rem; }
+.kit-prose pre { background: var(--syn-surface-recessed); color: var(--syn-text); padding: 1rem; border: 1px solid var(--syn-border-default); overflow-x: auto; border-radius: var(--syn-radius); }
+.kit-prose code { font-family: var(--syn-mono); font-size: .9em; }
+.kit-prose details { border: 1px solid var(--syn-border-default); padding: 1rem; margin-block: .75rem; }
+.kit-prose summary { cursor: pointer; font-weight: 650; min-height: 44px; display: list-item; }
+.kit-next { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .75rem; border-block-start: 1px solid var(--syn-border-default); margin-top: 2rem; padding-top: 1rem; }
+.kit-posts { display: grid; gap: 1.25rem; max-width: 54rem; }
+.kit-posts > article { padding-block: 1.25rem; border-block-start: 1px solid var(--syn-border-default); }
+.kit-posts h3 { margin-block: .25rem .5rem; font-size: clamp(1.25rem, 2.5vw, 1.8rem); }
+.kit-article { padding-block: clamp(2.5rem, 6vw, 5rem); margin-inline: auto; }
+.kit-artwork { min-height: 9rem; display: grid; place-items: center; background: var(--syn-surface-recessed); border: 1px solid var(--syn-border-default); font-size: 2rem; font-weight: 800; font-family: var(--syn-mono); color: var(--syn-accent); }
+.kit-footer { border-block-start: 1px solid var(--syn-border-default); border-block-end: 0; margin-top: 2rem; }
+@media (max-width: 48rem) {
+  .kit-doc-layout { grid-template-columns: minmax(0, 1fr); }
+  .kit-sidebar { border-inline-end: 0; border-block-end: 1px solid var(--syn-border-default); padding-block-end: 1rem; }
+  .kit-sidebar nav { display: flex; flex-wrap: wrap; gap: 0 1rem; }
+}

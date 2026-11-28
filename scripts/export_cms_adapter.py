@@ -12,9 +12,9 @@ from pathlib import Path
 import tempfile
 
 if __package__:
-    from .render_cms_starter import SECTION_FIELDS, validate_document
+    from .render_cms_starter import SECTION_FIELDS, load_content_json, validate_document
 else:
-    from render_cms_starter import SECTION_FIELDS, validate_document
+    from render_cms_starter import SECTION_FIELDS, load_content_json, validate_document
 
 
 ROOT_FIELDS = frozenset(("title", "description", "theme", "sections"))
@@ -109,7 +109,7 @@ def convert(adapter: str, document: object) -> dict:
 def export(adapter: str, source: Path, destination: Path) -> None:
     if source.resolve() == destination.resolve():
         raise ValueError("Input and output paths must differ")
-    content = json.loads(source.read_text(encoding="utf-8"))
+    content = load_content_json(source)
     validated = convert(adapter, content)  # No filesystem mutation before validation.
     destination.parent.mkdir(parents=True, exist_ok=True)
     tmp_path = None

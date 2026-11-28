@@ -12,10 +12,10 @@ from tempfile import TemporaryDirectory
 from urllib.parse import unquote, urljoin, urlsplit
 
 if __package__:
-    from scripts.render_cms_starter import validate_document
+    from scripts.render_cms_starter import load_validated_document
     from scripts.verify_static_generators import verify_static_site
 else:
-    from render_cms_starter import validate_document
+    from render_cms_starter import load_validated_document
     from verify_static_generators import verify_static_site
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -52,10 +52,7 @@ def stage_site(destination: Path, *, content_path: Path = CONTENT, css_root: Pat
         raise ValueError(f"Unknown Hugo preset: {preset}")
     if preset != "cms" and content_path != CONTENT:
         raise ValueError("Custom CMS content is only supported with the cms preset")
-    document = None
-    if preset == "cms":
-        document = json.loads(content_path.read_text(encoding="utf-8"))
-        validate_document(document)
+    document = load_validated_document(content_path) if preset == "cms" else None
     destination = Path(destination)
     shutil.copytree(SOURCE, destination, dirs_exist_ok=True)
     config = destination / "hugo.toml"

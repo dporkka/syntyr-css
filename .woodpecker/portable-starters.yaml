@@ -1,0 +1,33 @@
+# Focused Chromium parity on changes that affect portable starter previews/exports.
+# The unscoped manual/tag three-engine release gate remains separate.
+when:
+  - event: pull_request
+  - event: push
+    branch: main
+  - event: manual
+  - event: tag
+
+steps:
+  - name: portable-starter-browser
+    when:
+      - event: [manual, tag]
+      - event: [pull_request, push]
+        path:
+          include:
+            - src/**
+            - dist/**
+            - examples/site-starters/**
+            - scripts/build.py
+            - scripts/export_site_starter.py
+            - scripts/verify_static_generators.py
+            - examples/lit/portable-starters-browser.mjs
+            - examples/lit/package-lock.json
+            - examples/lit/package.json
+            - .woodpecker/portable-starters.yaml
+          on_empty: true
+    image: mcr.microsoft.com/playwright:v1.65.0-noble@sha256:9beb546099e11f52d62e505537914870e01a67e0e6b00ae41da4775324e73dbe
+    commands:
+      - command -v python3 >/dev/null || (apt-get update && apt-get install -y --no-install-recommends python3 && rm -rf /var/lib/apt/lists/*)
+      - npm ci --prefix examples/lit --no-audit --no-fund
+      - python3 scripts/build.py --check
+      - node examples/lit/portable-starters-browser.mjs
