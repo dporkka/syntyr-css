@@ -50,6 +50,12 @@ def check_page(browser, path: str, width: int, scale: float) -> None:
                 // Keep naturally horizontal data regions scrollable while
                 // rejecting links clipped by regular containers.
                 if(e.closest('.syn-table-wrap')) return false;
+                // CSS-only scroll-snap category navigation is an intentional
+                // horizontal scroller. Its offscreen links remain keyboard
+                // reachable: focusing them scrolls the strip into view.
+                const categories = e.closest('.blocks-category-nav');
+                if (categories && getComputedStyle(categories).overflowX === 'auto' &&
+                    categories.scrollWidth > categories.clientWidth + 1) return false;
                 const pipeline = e.closest('.syn-pipeline');
                 if(pipeline && pipeline.matches('[tabindex="0"][aria-label]') &&
                    getComputedStyle(pipeline).overflowX === 'auto' &&

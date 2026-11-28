@@ -49,8 +49,8 @@ ATTR_TOKEN = re.compile(
 )
 
 
-def _without_link_target(tag_text: str) -> str:
-    """Remove a genuine href attribute, never href-looking text in another value."""
+def _without_attributes(tag_text: str, names: set[str]) -> str:
+    """Remove only named attributes, never similarly spelled text in values."""
     element_name = re.match(r"<\s*[a-z][a-z0-9-]*", tag_text, re.IGNORECASE)
     if element_name is None:
         return tag_text
@@ -61,7 +61,7 @@ def _without_link_target(tag_text: str) -> str:
         if matched is None:
             pieces.append(tag_text[pos:])
             break
-        if matched.group("name").lower() != "href":
+        if matched.group("name").lower() not in names:
             pieces.append(matched.group())
         pos = matched.end()
     return "".join(pieces)
@@ -97,8 +97,15 @@ def preview_markup(source: str) -> str:
                                    '<fieldset class="blocks-preview-disabled" disabled>'))
                 if attributes.get("id"):
                     self.form_ids.add(attributes["id"])
-            elif tag == "a":
-                safe = _without_link_target(raw)
+            elif tag in {"a", "header", "footer"}:
+                # A preview anchor has no href, and site headers/footers are
+                # nested in the gallery's article. They are generic elements
+                # here (not named links or landmarks). Remove prohibited
+                # naming attributes, but retain real names on explicit roles.
+                removed = {"href"} if tag == "a" else set()
+                if not attributes.get("role"):
+                    removed.update(("aria-label", "aria-labelledby"))
+                safe = _without_attributes(raw, removed)
                 if safe != raw:
                     self.edits.append((start, start + len(raw), safe))
             elif tag in {"button", "input", "select", "textarea"}:
@@ -131,6 +138,38 @@ def preview_markup(source: str) -> str:
     for start, end, replacement in sorted(parser.edits, key=lambda edit: edit[0], reverse=True):
         preview = preview[:start] + replacement + preview[end:]
     return preview
+
+
+def grouped_gallery(cards: list[str], batch_size: int, *, kind: str) -> str:
+    """Static batches: every HTML example is pre-rendered and directly linkable.
+
+    HTML details/summary is the only reveal mechanism required for no-JS users.
+    JS search can open these same groups, but does not own their contents.
+    """
+    assert kind in {"blocks", "icons"}
+    total = len(cards)
+    group_class = "blocks-batch" if kind == "blocks" else "blocks-icons-batch"
+    attr = "data-block-batch" if kind == "blocks" else "data-icon-batch"
+    grid_class = "blocks-grid" if kind == "blocks" else "blocks-icons-grid"
+    noun = "blocks" if kind == "blocks" else "SVG icons"
+    chunks = [cards[start:start + batch_size] for start in range(0, total, batch_size)]
+    rendered = []
+    for index, chunk in enumerate(chunks):
+        first = index * batch_size + 1
+        last = min(total, first + len(chunk) - 1)
+        grid = f'<div class="{grid_class}">{"".join(chunk)}</div>'
+        if index == 0:
+            rendered.append(
+                f'<section class="{group_class} {group_class}--first" '
+                f'aria-label="{noun.capitalize()} {first}–{last} of {total}">{grid}</section>'
+            )
+        else:
+            rendered.append(
+                f'<details class="{group_class}" {attr}="{index + 1}">'
+                f'<summary>Show more {noun} <span>{first}–{last} of {total}</span></summary>'
+                f'{grid}</details>'
+            )
+    return "".join(rendered)
 
 
 def build() -> str:
@@ -334,7 +373,11 @@ def build() -> str:
       <p id="blocks-results" class="syn-caption" role="status" aria-live="polite">{count} blocks available.</p>
       <p id="blocks-feedback" class="syn-caption" role="status" aria-live="polite" aria-atomic="true"></p>
       <p id="blocks-empty" class="syn-alert" hidden>No blocks found. Try a different search or category.</p>
-      <div id="blocks-grid" class="blocks-grid">{''.join(cards)}
+      <p class="syn-caption">No JavaScript needed: the first 12 blocks are visible immediately.
+        Open a numbered batch below for more examples, or jump directly to any block with a link.
+        All {count} examples are already included in this HTML document.</p>
+      <div id="blocks-grid" class="blocks-pages">
+        {grouped_gallery(cards, 12, kind="blocks")}
       </div>
     </section>
     <section class="docs-section" aria-labelledby="blocks-assets-heading">
@@ -357,7 +400,11 @@ def build() -> str:
         <input class="syn-input" type="search" id="blocks-icon-search" placeholder="Search icons, e.g. mail, home, copy" autocomplete="off">
       </div>
       <p class="syn-caption" id="blocks-icon-results" role="status" aria-live="polite">{icon_count} icons available.</p>
-      <div class="blocks-icons-grid">{''.join(icon_cards)}</div>
+      <p class="syn-caption">The first 30 icons are visible now. Open another batch to browse the
+        remaining examples. No JavaScript needed.</p>
+      <div class="blocks-icons-pages">
+        {grouped_gallery(icon_cards, 30, kind="icons")}
+      </div>
       <h3 class="syn-heading">Icon animation presets</h3>
       <p class="syn-muted">Hover or keyboard-focus these examples. Add a motion class to any icon,
       plus <code>syn-icon--on-interact</code> to animate only during interaction. Continuous

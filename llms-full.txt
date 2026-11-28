@@ -6314,12 +6314,36 @@ or failing; record measured contrast, viewport, state, and reviewer decision
 before approving a release. The enlarged-label tests change root font size,
 not genuine browser zoom; human zoom and screen-reader gates remain open.
 
+
+The component catalog initializes its published alpha.4 selector when
+JavaScript runs. A source-candidate audit must explicitly select
+`source-alpha5` (the audit script's default), wait for the actual stylesheet
+and release-specific filter, and record that context in the JSON report.
+To separately audit the immutable published catalog, use:
+
+```sh
+python3 tests/axe_audit.py --axe-file /tmp/axe.min.js \
+  --catalog-mode published-alpha4 --pages docs/catalog.html \
+  --report /tmp/syntyr-catalog-published-alpha4.json
+```
+
+Do not combine the two catalog totals as if they measured the same CSS.
+The pixel sampler restores the report's recorded release context and
+refuses older catalog reports that lack it; rerun the audit rather than
+guessing. The candidate release audit does not modify frozen stylesheets.
+
 ## Contrast pixel triage (developer-only; NOT a conformance result)
 
 An optional Chromium screenshot sampler helps prioritize axe-core findings that
 cannot automatically evaluate gradients and pseudo-elements. It samples the
-painted background under temporarily transparent glyphs, groups results by
-page/viewport/selector, and retains non-text and unsampled targets explicitly.
+painted background in a bounded, scrolled viewport under temporarily hidden
+glyphs and foreground text decoration, restores original inline styles after
+each capture, groups results by
+page/viewport/selector, and retains non-text, obscured, hidden and unsampled
+targets explicitly. This avoids relying on enormous full-page bitmaps; it
+does not force hidden content open or treat an occluding element as background.
+For the Blocks gallery, it opens mobile previews using the actual **Show all
+previews** control to reproduce desktop review coverage and records that state.
 The helper is deliberately **not a release gate**: selected pixels do not prove
 the contrast of every glyph, hover/focus state, overlay or customized theme.
 Run it with pinned tooling in a disposable developer environment:
@@ -6580,15 +6604,15 @@ remove its generated `references/api.json`. Without that reference,
 `syntyr_agent.py info` reports the offline installation as degraded.
 
 ```sh
-npx skills@1.9.0 add https://github.com/dporkka/syntyr-css/tree/main/agents/syntyr --list
-npx skills@1.9.0 add https://github.com/dporkka/syntyr-css/tree/main/agents/syntyr --skill syntyr
+npx skills@1.9.0 add https://github.com/dporkka/syntyr-css/tree/c9b88cb5211edca58129181c8371caa66b8926b0/agents/syntyr --list
+npx skills@1.9.0 add https://github.com/dporkka/syntyr-css/tree/c9b88cb5211edca58129181c8371caa66b8926b0/agents/syntyr --skill syntyr
 ```
 
 The commands above pin the verified Skills CLI 1.9.0, which requires
 Node.js 22.20.0 or later, Git, and network access for this optional installation
 route only. Review the source and select your agent when prompted; do not
-install globally by default. For reproducible updates, review a specific
-source commit and use that Git ref instead of the moving main branch. The
+install globally by default. The commands pin a reviewed source commit. For
+updates, review and explicitly select a new immutable Git revision. The
 Skill installs instructions, **not CSS**, a pinned selector inventory,
 Syntyr tooling, or an application runtime. It does not change the installed
 CSS release or grant access to premium assets. Inspect your actual stylesheets
@@ -6626,14 +6650,18 @@ appear in an alpha.4 reference.
 
 `info` is read-only project discovery for coding agents. It reports the configured
 release (published or source candidate), its actual pinned CSS asset hashes and
-integrity statuses, supported themes, and portable Skill/reference paths. Exit
+integrity statuses, supported themes, and portable Skill/reference paths. It
+also compares the installed Skill and API reference with trusted source bytes
+and reports their expected SHA-256 hashes in `agent_artifacts`. A changed
+checkout may legitimately produce a new reference: review differences before
+reinstalling from the intended trusted source revision. Exit
 code **0** means the pinned installation is healthy, **1** means degraded or
 invalid, and **2** means the project was not initialized. Do not infer active
 stylesheet imports or framework support from this inventory: the host
 application must still load and test the appropriate CSS. The command does
 not scan application code or need application dependencies.
 
-`check` validates the installed CSS asset hashes and literal `.html` files\nagainst that project's pinned release, returning structured, source-located
+`check` validates the installed CSS, Skill and API reference integrity and literal `.html` files against that project's pinned release, returning structured, source-located
 JSON diagnostics. Its exit codes are **0** for checked and error-free HTML,
 **1** for errors, and **2** for incomplete coverage (for example, JSX/TSX or
 no HTML files). It is not a React/Vue/Svelte parser or a browser accessibility

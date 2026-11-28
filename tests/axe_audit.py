@@ -16,6 +16,11 @@ import os
 import shutil
 import sys
 
+if __package__:
+    from .catalog_audit_context import CATALOG_PAGE, CATALOG_STYLESHEETS, select_catalog_context
+else:
+    from catalog_audit_context import CATALOG_PAGE, CATALOG_STYLESHEETS, select_catalog_context
+
 
 ROOT = Path(__file__).resolve().parents[1]
 PAGES = ("index.html", "docs/index.html", "docs/catalog.html", "docs/blocks.html", "docs/guides.html", "docs/design-principles.html", "examples/console.html",
@@ -72,6 +77,9 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--axe-file", type=Path, required=True)
     parser.add_argument("--report", type=Path, help="write actionable JSON findings for manual review")
+    parser.add_argument("--catalog-mode", choices=tuple(CATALOG_STYLESHEETS), default="source-alpha5",
+                        help="audit the source candidate (default) or immutable published catalog CSS")
+    parser.add_argument("--pages", nargs="+", choices=PAGES, help="optional exact pages from the audit matrix")
     args = parser.parse_args()
     if not args.axe_file.is_file():
         parser.error(f"Missing local axe-core script: {args.axe_file}")
@@ -86,14 +94,19 @@ def main() -> int:
     findings = []
     with sync_playwright() as p:
         browser = p.chromium.launch(**kwargs)
-        for path in PAGES:
+        for path in args.pages or PAGES:
             page = browser.new_page(viewport={"width": 1280, "height": 900})
-            page.goto((ROOT / path).as_uri())
+            page.goto((ROOT / path).as_uri(), wait_until="load")
+            context = select_catalog_context(page, args.catalog_mode) if path == CATALOG_PAGE else None
             page.add_script_tag(path=str(args.axe_file.resolve()))
             result = page.evaluate("""async () => axe.run(document, {
                 runOnly: { type: 'tag', values: ['wcag2a','wcag2aa','wcag21a','wcag21aa','wcag22aa'] }
             })""")
-            findings.append(normalize_findings(path, result))
+            row = normalize_findings(path, result)
+            if context:
+                row["catalog_context"] = context
+                print(f"{path} CSS release: {context['mode']} ({context['stylesheet']})")
+            findings.append(row)
             count = len(result["violations"])
             incomplete = len(result["incomplete"])
             violations += count

@@ -1,6 +1,5 @@
 # Optional development environments only; the distributed CSS has no npm deps.
-# Fail PRs for new high/critical npm advisories in the two locked examples.
-# Other examples without lockfiles are not yet covered by this audit gate.
+# Discover every checked-out npm lockfile; fail on high/critical advisories or audit errors.
 when:
   - event: pull_request
   - event: push
@@ -12,5 +11,5 @@ steps:
     image: node:24-bookworm-slim@sha256:dc26ae92c9fb15cf6b1d63e20f0944b2efe0f115b20e00be48fb23fceb061c54
     commands:
       - node --version && npm --version
-      - npm audit --prefix examples/lit --package-lock-only --ignore-scripts --audit-level=high
-      - npm audit --prefix benchmarks/frameworks --package-lock-only --ignore-scripts --audit-level=high
+      - node --test tests/audit_npm_lockfiles.test.mjs tests/form_builder_model.test.mjs tests/page_builder_custom_media.test.mjs tests/site_builder_model.test.mjs
+      - node scripts/audit_npm_lockfiles.mjs

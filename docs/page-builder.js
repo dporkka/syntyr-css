@@ -5,7 +5,7 @@ import {
   getBlockDefinition, createBlock, createDefaultDocument, parseDocument, moveBlock,
   duplicateBlock, insertBlockAfter, exportHtml, requiredAssets,
   replaceBlockImage, restoreBlockImage, getImageAssetBytes,
-  projectNeedsGalleryManifest, projectNeedsSectionManifest
+  projectNeedsGalleryManifest, projectNeedsSectionManifest, verifyDocumentMedia
 } from "./page-builder-model.mjs";
 import {
   SITE_SCHEMA_VERSION, createSiteProject, parseSiteProject, addSitePage,
@@ -884,9 +884,13 @@ function download(filename, data, type) {
   // Keep the object URL alive while the browser finalizes its download.
   setTimeout(() => URL.revokeObjectURL(url), 30000);
 }
-byId("builder-export-html").addEventListener("click", () => {
-  download("index.html", currentPageHtml(), "text/html;charset=utf-8");
-  notify("HTML downloaded. Add syntyr.all.css and referenced images, or use the complete static-site ZIP.");
+byId("builder-export-html").addEventListener("click", async () => {
+  try {
+    const options = {sharedHeader: site?.shared.header ?? null, sharedFooter: site?.shared.footer ?? null};
+    const snapshot = await verifyDocumentMedia(page);
+    download("index.html", exportHtml(snapshot, options), "text/html;charset=utf-8");
+    notify("HTML downloaded. Add syntyr.all.css and referenced images, or use the complete static-site ZIP.");
+  } catch (error) { notify("HTML export failed: " + error.message); }
 });
 byId("builder-export-zip").addEventListener("click", async () => {
   const button = byId("builder-export-zip");
@@ -897,9 +901,12 @@ byId("builder-export-zip").addEventListener("click", async () => {
       {credentials: "same-origin"});
     if (!cssResponse.ok) throw new Error("Syntyr stylesheet unavailable");
     const project = currentSite();
-    const sitePages = project ? project.pages.map(entry => entry.document) : [page];
+    // Snapshot the entire export before awaiting image hashing; later editor
+    // changes must not swap unverified bytes into the resulting archive.
+    const sitePages = project ? project.pages.map(entry => entry.document) : [parseDocument(page)];
+    for (const document of sitePages) await verifyDocumentMedia(document);
     const entries = [
-      ...(project ? exportSitePages(project) : [{name: "index.html", content: currentPageHtml()}]),
+      ...(project ? exportSitePages(project) : [{name: "index.html", content: exportHtml(sitePages[0])}]),
       {name: "syntyr.all.css", content: await cssResponse.text()}
     ];
     const assets = new Map();
@@ -941,12 +948,16 @@ byId("builder-export-zip").addEventListener("click", async () => {
     button.disabled = false;
   }
 });
-byId("builder-export-json").addEventListener("click", () => {
+byId("builder-export-json").addEventListener("click", async () => {
   try {
-    const content = JSON.stringify(site ? currentSite() : parseDocument(page), null, 2) + "\n";
+    const project = site ? currentSite() : parseDocument(page);
+    const isSite = project.schema === SITE_SCHEMA_VERSION;
+    for (const document of isSite ? project.pages.map(entry => entry.document) : [project])
+      await verifyDocumentMedia(document);
+    const content = JSON.stringify(project, null, 2) + "\n";
     if (new TextEncoder().encode(content).length > MAX_PROJECT_BYTES)
       throw new Error("Project exceeds 32 MiB; remove images or shorten content");
-    download(site ? "syntyr-site.json" : "syntyr-page.json", content, "application/json");
+    download(isSite ? "syntyr-site.json" : "syntyr-page.json", content, "application/json");
     notify("Editable JSON project downloaded, including any embedded photos.");
   } catch (error) { notify("Cannot save project: " + error.message); }
 });
@@ -995,10 +1006,13 @@ byId("builder-import").addEventListener("change", async (event) => {
     if (generation !== importGeneration) return;
     if (candidate?.schema === SITE_SCHEMA_VERSION) {
       const imported = parseSiteProject(candidate);
+      for (const entry of imported.pages) await verifyDocumentMedia(entry.document);
+      if (generation !== importGeneration) return;
       applySite(imported, "", "Site project opened.");
       sequence = Math.max(sequence, ...imported.pages.map(entry => entry.document.blocks.length + 5));
     } else {
-      const imported = parseDocument(candidate);
+      const imported = await verifyDocumentMedia(candidate);
+      if (generation !== importGeneration) return;
       remember();
       site = null;
       activeSlug = "";

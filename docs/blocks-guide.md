@@ -10,10 +10,32 @@ The 99 copy-owned HTML compositions cover marketing, application, services, port
 cases. Each contains its own Syntyr root, uses accessible native markup and requires
 no application JavaScript. The data, testimonials and prices are illustrative, not live.
 
-The gallery script powers optional documentation search, theme switching and copy
-buttons. Disable JavaScript and all 99 static previews remain visible, with
-selectable source under native disclosure elements. No scripts are included in
-application CSS; the added gallery rules remain CSS-only.
+The gallery keeps all 99 static previews and 150 SVG icons pre-rendered
+in the HTML, but initially shows only 12 blocks and 30 icons. Native
+disclosure batches reveal the rest without JavaScript or additional network requests. Direct links to
+individual blocks remain functional; browsers reveal their containing native
+disclosure on fragment navigation. All copyable source is available inside
+native details elements, including when JavaScript is disabled.
+
+The gallery script powers optional documentation search, theme switching,
+and copy buttons. With JavaScript enabled, filtering opens matching batches;
+without it, visitors can open any batch and copy its source manually.
+No scripts are included in application CSS.
+
+**Not infinite loading:** CSS cannot fetch subsequent pages, append new DOM
+nodes, or react to reaching a scroll threshold as an application data source.
+For truly unbounded remote collections, use normal server-rendered Next/Previous
+links (zero JavaScript), or an optional IntersectionObserver enhancement with
+server-side pagination and an accessible fallback. Syntyr does not require the
+latter.
+
+**Modern native scrolling:** the small-screen category strip uses CSS
+scroll-snapping and ordinary anchors; the Syntyr recipes include horizontal
+snap rails, and the optional motion module offers scroll-progress and
+view-driven effects when supported. Keep reduced-motion fallbacks and do not
+use animation for essential content. The opt-in defer-section recipe offers
+content-visibility-based paint deferral, but it does not fetch data or shorten
+the document's scroll range.
 
 ## Safe local registry installation (experimental alpha.5 source)
 

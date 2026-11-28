@@ -130,7 +130,7 @@ class SiteLayoutSpacingBrowserTests(unittest.TestCase):
             button.click()
             self.assertEqual(page.locator(".blocks-preview-disclosure[open]").count(), 99)
             expanded_height = page.evaluate("document.documentElement.scrollHeight")
-            self.assertLess(compact_height, expanded_height * 0.75)
+            self.assertGreater(expanded_height, compact_height + 1000)
             button.click()
             self.assertEqual(page.locator(".blocks-preview-disclosure[open]").count(), 2)
             page.locator(".blocks-preview-disclosure").nth(3).locator("summary").click()

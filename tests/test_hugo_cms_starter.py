@@ -1,5 +1,6 @@
 """Hugo must consume the same validated CMS JSON without runtime dependencies."""
 from html.parser import HTMLParser
+import hashlib
 import json
 import os
 import re
@@ -10,7 +11,7 @@ from tempfile import TemporaryDirectory
 import unittest
 from unittest.mock import patch
 
-from scripts.build_hugo_cms_starter import build, stage_site
+from scripts.build_hugo_cms_starter import build, export_source, stage_site, verify_preset_links, VENDOR_ASSETS
 
 ROOT = Path(__file__).resolve().parents[1]
 CMS = ROOT / "examples/cms-starter"
@@ -26,6 +27,8 @@ class HugoCmsStarterTests(unittest.TestCase):
             self.assertEqual(generated, source)
             self.assertTrue((site / "static/assets/syntyr.core.css").exists())
             self.assertTrue((site / "static/assets/syntyr.recipes.css").exists())
+            self.assertEqual((site / "static/assets/LICENSE-SYNTYR").read_bytes(),
+                             (ROOT / "LICENSE").read_bytes())
             self.assertFalse((site / "static/admin").exists())
             self.assertIn("/syntyr-hugo/", (site / "hugo.toml").read_text())
 
@@ -115,6 +118,8 @@ class HugoCmsStarterTests(unittest.TestCase):
             self.assertIn("id=section-pricing", html)
             self.assertEqual(html.count("<h1 "), 1)
             self.assertNotIn("<script", html.lower())
+            self.assertEqual((output / "assets/LICENSE-SYNTYR").read_bytes(),
+                             (ROOT / "LICENSE").read_bytes())
 
     def test_real_hugo_build_custom_base_path(self):
         hugo = os.environ.get("HUGO_BIN") or shutil.which("hugo")
@@ -172,18 +177,124 @@ class HugoCmsStarterTests(unittest.TestCase):
             self.assertNotIn('<img src=x', html)
             self.assertIn('&lt;img', html)
 
+    def test_markdown_preset_exports_reusable_local_source(self):
+        for preset in ("personal", "business", "documentation"):
+            with self.subTest(preset=preset), TemporaryDirectory() as temp:
+                source = Path(temp) / "site"
+                export_source(source, preset=preset, base_url="https://example.org/site/")
+                self.assertFalse((source / "data/home.json").exists())
+                self.assertTrue((source / "content/_index.md").is_file())
+                self.assertTrue((source / "static/assets/syntyr.semantic.css").is_file())
+                self.assertTrue((source / "LICENSE-SYNTYR").is_file())
+                self.assertIn("hugo --minify --panicOnWarning", (source / "README.md").read_text())
+                self.assertIn("content/", (source / "README.md").read_text())
+                self.assertIn("public/", (source / ".gitignore").read_text().splitlines())
+                names = []
+                for line in (source / "SHA256SUMS").read_text().splitlines():
+                    digest, name = line.split("  ", 1)
+                    names.append(name)
+                    self.assertEqual(hashlib.sha256((source / name).read_bytes()).hexdigest(), digest)
+                self.assertEqual(set(names), {"static/assets/" + name for name in VENDOR_ASSETS})
+                self.assertIn("https://example.org/site/", (source / "hugo.toml").read_text())
+                self.assertFalse((source / "package.json").exists())
+                self.assertFalse((source / "go.mod").exists())
+                with self.assertRaises(ValueError):
+                    export_source(source, preset=preset)
+                self.assertTrue((source / "hugo.toml").is_file())
+
+    def test_unknown_preset_does_not_write_files(self):
+        with TemporaryDirectory() as temp:
+            source = Path(temp) / "site"
+            with self.assertRaisesRegex(ValueError, "Unknown Hugo preset"):
+                stage_site(source, preset="../other")
+            self.assertFalse(source.exists())
+
+    def test_preset_verifier_rejects_broken_links_and_fragments(self):
+        with TemporaryDirectory() as temp:
+            root = Path(temp)
+            for href in ("/unscoped/", "/site/missing/", "#missing"):
+                with self.subTest(href=href):
+                    (root / "index.html").write_text(f'<a href="{href}">bad</a>')
+                    with self.assertRaises(AssertionError):
+                        verify_preset_links(root, base_url="https://example.org/site/")
+
+    def test_real_hugo_markdown_presets_build_with_seo_and_navigation(self):
+        hugo = os.environ.get("HUGO_BIN") or shutil.which("hugo")
+        if not hugo:
+            self.skipTest("Hugo not installed; set HUGO_BIN to exercise real output")
+        for preset, route in (("personal", "projects/example/"), ("business", "services/example/"),
+                              ("documentation", "guides/reference/")):
+            for prefix in ("/", "/customer/site/"):
+                with self.subTest(preset=preset, prefix=prefix), TemporaryDirectory() as temp:
+                    output = Path(temp) / "public"
+                    self.assertGreaterEqual(build(output, hugo=hugo, preset=preset,
+                                                  base_url=f"https://example.org{prefix}"), 5)
+                    for file in ("index.xml", "sitemap.xml", "robots.txt", "404.html", route + "index.html"):
+                        self.assertTrue((output / file).is_file(), file)
+                    html = (output / route / "index.html").read_text()
+                    self.assertIn(f"https://example.org{prefix}{route}", html)
+                    self.assertIn("og:description", html)
+                    self.assertIn("syn-semantic", html)
+                    self.assertIn("Skip to content", html)
+                    self.assertNotIn("<script", html.lower())
+                    self.assertIn(f"https://example.org{prefix}sitemap.xml", (output / "robots.txt").read_text())
+                    self.assertIn("noindex", (output / "404.html").read_text())
+
+    def test_real_hugo_exported_source_builds_without_staging_tool(self):
+        hugo = os.environ.get("HUGO_BIN") or shutil.which("hugo")
+        if not hugo:
+            self.skipTest("Hugo not installed; set HUGO_BIN to exercise real output")
+        with TemporaryDirectory() as temp:
+            source = Path(temp) / "site"
+            export_source(source, preset="personal", base_url="https://example.org/")
+            subprocess.run([hugo, "--source", str(source), "--minify", "--panicOnWarning"], check=True)
+            verify_preset_links(source / "public", base_url="https://example.org/")
+            self.assertTrue((source / "public/projects/example/index.html").is_file())
+
+
+    def test_exported_cms_readme_retains_validation_guidance(self):
+        with TemporaryDirectory() as temp:
+            source = Path(temp) / "site"
+            export_source(source)
+            readme = (source / "README.md").read_text()
+            self.assertIn("data/home.json", readme)
+            self.assertIn("portable Syntyr CMS validator", readme)
+
+    def test_real_hugo_presets_build_reproducibly(self):
+        hugo = os.environ.get("HUGO_BIN") or shutil.which("hugo")
+        if not hugo:
+            self.skipTest("Hugo not installed; set HUGO_BIN to exercise real output")
+
+        def contents(root):
+            return {path.relative_to(root).as_posix(): hashlib.sha256(path.read_bytes()).hexdigest()
+                    for path in root.rglob("*") if path.is_file()}
+
+        for preset in ("cms", "personal", "business", "documentation"):
+            with self.subTest(preset=preset), TemporaryDirectory() as temp:
+                first, second = Path(temp) / "first", Path(temp) / "second"
+                options = dict(hugo=hugo, preset=preset, base_url="https://example.org/site/")
+                self.assertEqual(build(first, **options), build(second, **options))
+                self.assertEqual(contents(first), contents(second))
+                self.assertEqual((first / "assets/LICENSE-SYNTYR").read_bytes(),
+                                 (ROOT / "LICENSE").read_bytes())
+
     def test_hugo_template_covers_all_portable_block_types(self):
         source = (ROOT / "examples/hugo-cms/layouts/home.html").read_text()
-        # .Site.Data works on Cloudflare Pages' preinstalled Hugo 0.147.7
-        # and newer Hugo. The 'hugo' namespace has no Data property there.
-        self.assertIn(".Site.Data.home", source)
-        self.assertNotIn("hugo.Data.home", source)
+        # The compatibility boundary lives in one partial, so current Hugo
+        # avoids warnings and older preinstalled binaries remain supported.
+        data = (ROOT / "examples/hugo-cms/layouts/partials/cms-data.html").read_text()
+        self.assertIn('ge hugo.Version "0.156.0"', data)
+        self.assertIn("hugo.Data", data)
+        self.assertIn("site.Data", data)
+        self.assertIn('partial "cms-data.html" .', source)
         for kind in ("hero", "features", "pricing", "faq", "cta"):
             with self.subTest(kind=kind):
                 self.assertIn('eq $block.type "' + kind + '"', source)
-        self.assertIn("relURL", source)
-        self.assertIn("syn-root", source)
-        self.assertNotIn("<script", source.lower())
+        base = (ROOT / "examples/hugo-cms/layouts/baseof.html").read_text()
+        self.assertIn("relURL", base)
+        self.assertIn("syn-root", base)
+        self.assertIn('id="content" class="syn-shell" tabindex="-1"', base)
+        self.assertNotIn("<script", (source + base).lower())
 
 
 if __name__ == "__main__":

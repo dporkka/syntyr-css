@@ -1,18 +1,6 @@
-{{- $page := .Site.Data.home -}}
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="{{ $page.description }}">
-  <title>{{ $page.title }}</title>
-  <link rel="stylesheet" href="{{ "assets/syntyr.core.css" | relURL }}">
-  <link rel="stylesheet" href="{{ "assets/syntyr.recipes.css" | relURL }}">
-</head>
-<body class="syn-root" data-syn-theme="{{ $page.theme }}">
-  <a href="#content">Skip to content</a>
-  <header class="syn-region"><nav aria-label="Primary"><a href="{{ "" | relURL }}">Home</a></nav></header>
-  <main id="content" class="syn-shell">
+{{ define "main" }}
+{{ with partial "cms-data.html" . }}
+  {{ $page := . }}
   {{- range $index, $block := $page.sections }}
     {{- $anchor := printf "section-%s" $block.id }}
     {{- if eq $block.type "hero" }}
@@ -67,7 +55,16 @@
     </section>
     {{- end }}
   {{- end }}
-  </main>
-  <footer class="syn-region"><p class="syn-muted">{{ $page.title }}</p></footer>
-</body>
-</html>
+{{ else }}
+  <article class="syn-region syn-stack syn-semantic">
+    <h1>{{ .Title }}</h1>
+    {{ .Content }}
+  </article>
+  {{ with .Site.Sections }}
+    <nav aria-label="Explore sections" class="syn-region syn-stack">
+      <h2 class="syn-heading">Explore</h2>
+      <ul>{{ range . }}<li><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></li>{{ end }}</ul>
+    </nav>
+  {{ end }}
+{{ end }}
+{{ end }}
