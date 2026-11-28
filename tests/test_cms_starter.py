@@ -22,7 +22,8 @@ class CmsStarterTests(unittest.TestCase):
             destination = Path(tmp)
             cms.build(STARTER, destination, ROOT / "dist")
             html = (destination / "index.html").read_text(encoding="utf-8")
-            self.assertIn('<main id="content"', html)
+            self.assertIn('<main id="content" class="syn-shell" tabindex="-1">', html)
+            self.assertIn('<a href="/" aria-current="page">Home</a>', html)
             self.assertIn('class="syn-site-hero"', html)
             self.assertIn('class="syn-feature-grid"', html)
             self.assertIn('class="syn-pricing"', html)
@@ -47,6 +48,21 @@ class CmsStarterTests(unittest.TestCase):
                 page["sections"][0]["button"]["url"] = url
                 with self.assertRaises(ValueError):
                     cms.render_document(page)
+
+    def test_root_relative_url_rejects_dot_segments(self):
+        for url in ("/../signup", "/./signup", "/a/%2e%2E/signup", "/a/.%2e/signup",
+                    "/a/%2e./signup", "/a/%2E/signup?next=ok"):
+            with self.subTest(url=url):
+                page = self.sample()
+                page["sections"][0]["button"]["url"] = url
+                with self.assertRaisesRegex(ValueError, "traversal"):
+                    cms.render_document(page)
+        for url in ("/signup", "/a%2Fb?next=../ok", "/signup#../ok",
+                    "https://example.test/signup"):
+            with self.subTest(url=url):
+                page = self.sample()
+                page["sections"][0]["button"]["url"] = url
+                self.assertIn(url, cms.render_document(page))
 
     def test_unknown_block_types_are_rejected(self):
         page = self.sample()

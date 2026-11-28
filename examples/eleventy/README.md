@@ -1,27 +1,32 @@
 # Syntyr + Eleventy (optional static-site fixture)
 
-This example uses Eleventy 3 at **build time only**. No dependency is added
-to Syntyr itself, and the generated site contains no client JavaScript.
+Eleventy 3 renders the same portable CMS JSON landing page as the existing
+Python, Hugo and Astro starters, with an independent Nunjucks template.
+The build uses Syntyr's canonical, bounded UTF-8 JSON loader and page
+validator before passing data to the template. Duplicate keys, non-finite
+numbers, invalid Unicode and invalid page fields fail before templating. Nunjucks escapes
+text and attributes; no raw CMS HTML is inserted.
 
-From the repository root, first verify the prebuilt CSS with
+From the repository root, verify the prebuilt CSS with
 `python3 scripts/build.py --check`. Then:
 
 ```sh
 cd examples/eleventy
-npm install
+npm ci
 npm run build
 npm run verify
 ```
 
-The config directly copies `../../dist/syntyr.core.css` into the output
-`assets/` folder; no npm version of `@syntyr/css` is required. The Nunjucks
-`url` filter and `pathPrefix` exercise a GitHub Pages-style subpath
-(`/syntyr-eleventy/`). Change the prefix for your deployment, or use `/`
-for a root deployment. Serve `_site/` under that prefix and ensure the CSS
-is present. To test locally at the root, set `pathPrefix: "/"` in the config
-and rebuild. Also update the --base-path argument in the package.json verify
-script to match the new pathPrefix (including / for root deployment).
-Never add Syntyr's bundle and its core stylesheet together.
+The config copies the core and recipes CSS from `../../dist/` into
+`_site/assets/`, without requiring an npm release of `@syntyr/css`. The example dependency
+lockfile is maintainer-only; `npm ci` keeps the fixture reproducible.
+The Nunjucks `url` filter and `pathPrefix` exercise project-pages subpaths
+(`/syntyr-eleventy/`); the local CMS URL filter uses that same prefix.
+Edit the prefix and the package.json verifier's `--base-path` together
+for another deployment. Serve `_site/` under the configured prefix.
 
-The local example is not a Syntyr documentation-site migration and is not
-included in the published CSS package.
+The verifier compares the actual generated document to the canonical CMS
+renderer, including ordered blocks, text, native HTML, ARIA, class names
+and deployment-aware links. It also checks local CSS and zero browser JS.
+This is a candidate-only, optional fixture, not a documentation-site
+migration, and is not included in the published CSS package.

@@ -12,10 +12,12 @@ from tempfile import TemporaryDirectory
 from urllib.parse import unquote, urljoin, urlsplit
 
 if __package__:
-    from scripts.render_cms_starter import validate_document
+    from scripts.render_cms_starter import load_validated_document
+    from scripts.verify_cms_parity import verify_cms_output
     from scripts.verify_static_generators import verify_static_site
 else:
-    from render_cms_starter import validate_document
+    from render_cms_starter import load_validated_document
+    from verify_cms_parity import verify_cms_output
     from verify_static_generators import verify_static_site
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -52,10 +54,8 @@ def stage_site(destination: Path, *, content_path: Path = CONTENT, css_root: Pat
         raise ValueError(f"Unknown Hugo preset: {preset}")
     if preset != "cms" and content_path != CONTENT:
         raise ValueError("Custom CMS content is only supported with the cms preset")
-    document = None
-    if preset == "cms":
-        document = json.loads(content_path.read_text(encoding="utf-8"))
-        validate_document(document)
+    # Use the same strict reader as the other CMS adapters before Hugo sees JSON.
+    document = load_validated_document(content_path) if preset == "cms" else None
     destination = Path(destination)
     shutil.copytree(SOURCE, destination, dirs_exist_ok=True)
     config = destination / "hugo.toml"
@@ -102,7 +102,10 @@ def build(destination: Path, *, hugo: str = "hugo", content_path: Path = CONTENT
                 [hugo, "--source", str(source), "--destination", str(candidate), "--minify", "--panicOnWarning"],
                 check=True,
             )
-            pages = verify_static_site(candidate, base_path=_base_path(base_url))
+            if preset == "cms":
+                pages = verify_cms_output(candidate, base_path=_base_path(base_url), content_path=content_path)
+            else:
+                pages = verify_static_site(candidate, base_path=_base_path(base_url))
             for required in ("index.xml", "sitemap.xml", "robots.txt"):
                 if not (candidate / required).is_file():
                     raise AssertionError(f"Missing Hugo SEO output: {required}")
