@@ -11,7 +11,7 @@
     "dev": "astro dev --host 127.0.0.1",
     "predev:editor": "npm run export:data",
     "dev:editor": "SYNTYR_ENABLE_LOCAL_EDITOR=1 astro dev --host 127.0.0.1",
-    "verify": "python3 ../../scripts/verify_astro_keystatic.py dist && python3 ../../scripts/verify_cms_parity.py dist --base-path /syntyr-astro-keystatic/ --content src/data/home.json"
+    "verify": "python3 ../../scripts/verify_astro_keystatic.py dist --content src/data/home.json"
   },
   "dependencies": {
     "@syntyr/css": "file:../..",
